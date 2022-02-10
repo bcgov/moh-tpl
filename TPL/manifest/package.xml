@@ -32,6 +32,15 @@
         <members>*</members>
         <name>StaticResource</name>
     </types>
+        <types>
+        <members>*</members>
+        <name>PermissionSet</name>
+    </types>
+        </types>
+        <types>
+        <members>*</members>
+        <name>Profile</name>
+    </types>
     <types>
         <members>MyDomain</members>
         <name>Settings</name>
