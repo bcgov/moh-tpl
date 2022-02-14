@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Closed_Case_Validation</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(ISPICKVAL(Status, &quot;Closed&quot; ),ISCHANGED( OwnerId ))</errorConditionFormula>
+    <errorMessage>Can&apos;t Transfer the Closed Cases</errorMessage>
+</ValidationRule>
