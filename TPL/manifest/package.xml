@@ -37,8 +37,7 @@
         <name>PermissionSet</name>
     </types>
         </types>
-        <types>
-        <members>*</members>
+                <members>*</members>
         <name>Profile</name>
     </types>
     <types>
