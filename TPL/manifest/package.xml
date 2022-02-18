@@ -32,18 +32,95 @@
         <members>*</members>
         <name>StaticResource</name>
     </types>
-        <types>
-        <members>*</members>
-        <name>PermissionSet</name>
-    </types>
-        </types>
-        <types>
-        <members>*</members>
-        <name>Profile</name>
-    </types>
     <types>
         <members>MyDomain</members>
         <name>Settings</name>
     </types>
+    <types>
+        <members>*</members>
+        <name>Flow</name>
+    </types>
+    <types>
+        <members>*</members>
+        <name>RecordType</name>
+    </types>
+    <types>
+        <members>*</members>
+        <name>CustomObject</name>
+    </types>
+    <types>
+        <members>*</members>
+        <name>Layout</name>
+    </types>
+
+    <types>
+        <members>*</members>
+        <name>FlexiPage</name>
+    </types>
+    <types>
+        <members>*</members>
+        <name>ContentAsset</name>
+    </types>
+    <types>
+        <members>duplicate_notification_builder</members>
+        <name>CustomNotificationType</name> 
+    </types>
+    <types>
+        <members>*</members>
+        <name>StandardValueSet</name>
+    </types>
+    <types>
+        <members>*</members>
+        <name>CustomApplication</name>
+    </types>
+    <types>
+        <members>*</members>
+        <name>ValidationRule</name>
+    </types>
+    <types>
+        <members>*</members>
+        <name>MatchingRule</name>
+    </types>  
+    <types>
+        <members>*</members>
+        <name>DuplicateRule</name>
+    </types>    
+    <types>
+        <members>*</members>
+        <name>Profile</name>
+    </types>
+    <types>
+        <members>*</members>
+        <name>PermissionSet</name>
+    </types>
+    <types>
+         <members>*</members>
+         <name>Role</name>
+    </types>
+    <types>
+        <members>*</members>
+        <name>ListView</name>
+    </types>
+    <types>
+        <members>*</members>
+        <name>ReportFolder</name>
+    </types>  
+    <types>
+        <members>*</members>
+        <name>Report</name>
+    </types>
+    <types>
+        <members>*</members>
+        <name>EntitlementProcess</name>
+    </types> 
+    <types>
+        <members>*</members>
+        <name>MilestoneType</name>
+    </types>                  
+    <types>
+        <members>Activities</members>
+        <members>PlatformEncryption</members>
+        <name>Settings</name>
+    </types>    
     <version>52.0</version>
 </Package>
