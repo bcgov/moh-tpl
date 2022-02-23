@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>PHN__c</fullName>
+    <caseSensitive>false</caseSensitive>
     <complianceGroup>PII</complianceGroup>
-    <externalId>true</externalId>
+    <externalId>false</externalId>
     <label>PHN</label>
-    <precision>10</precision>
+    <length>10</length>
     <required>true</required>
-    <scale>0</scale>
     <trackFeedHistory>false</trackFeedHistory>
-    <type>Number</type>
+    <type>Text</type>
     <unique>true</unique>
 </CustomField>
