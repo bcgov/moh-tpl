@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Prevent_Save_if_duplicate_detected</fullName>
-    <active>true</active>
-    <description>Prevent Save if the duplicate client record is detected.</description>
-    <errorConditionFormula>Prevent_Save_on_Duplicate__c</errorConditionFormula>
-    <errorMessage>A duplicate client record exists.</errorMessage>
-</ValidationRule>
