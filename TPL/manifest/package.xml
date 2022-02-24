@@ -122,5 +122,9 @@
         <members>PlatformEncryption</members>
         <name>Settings</name>
     </types>    
+    <types>
+    <members>bcps</members>
+    <name>ContentAsset</name>
+    </types>
     <version>52.0</version>
 </Package>

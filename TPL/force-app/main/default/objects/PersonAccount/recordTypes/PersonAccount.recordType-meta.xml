@@ -2,7 +2,8 @@
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>PersonAccount</fullName>
     <active>true</active>
-    <label>Person Account</label>
+    <description>Record Type for Client /Class Member</description>
+    <label>Individual</label>
     <picklistValues>
         <picklist>AccountSource</picklist>
         <values>
@@ -218,43 +219,11 @@
     <picklistValues>
         <picklist>Type</picklist>
         <values>
-            <fullName>Analyst</fullName>
+            <fullName>Class Member</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Competitor</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Customer</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Integrator</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Investor</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Other</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Partner</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Press</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Prospect</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Reseller</fullName>
+            <fullName>Client</fullName>
             <default>false</default>
         </values>
     </picklistValues>
