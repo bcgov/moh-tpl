@@ -3,7 +3,7 @@
     <fullName>PersonAccount</fullName>
     <active>true</active>
     <description>To be used with Client and Class Member</description>
-    <label>Person</label>
+    <label>Individual</label>
     <picklistValues>
         <picklist>AccountSource</picklist>
         <values>
