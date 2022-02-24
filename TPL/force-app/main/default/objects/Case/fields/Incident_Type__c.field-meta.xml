@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Incident_Type__c</fullName>
+    <externalId>false</externalId>
+    <label>Incident Type</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>01 - MVA Passenger</fullName>
+                <default>false</default>
+                <label>01 - MVA Passenger</label>
+            </value>
+            <value>
+                <fullName>05 - MV vs non-MV</fullName>
+                <default>false</default>
+                <label>05 - MV vs non-MV</label>
+            </value>
+            <value>
+                <fullName>09 - Unknown MVA</fullName>
+                <default>false</default>
+                <label>09 - Unknown MVA</label>
+            </value>
+            <value>
+                <fullName>11 - MVA Driver</fullName>
+                <default>false</default>
+                <label>11 - MVA Driver</label>
+            </value>
+            <value>
+                <fullName>30 - Unknown</fullName>
+                <default>false</default>
+                <label>30 - Unknown</label>
+            </value>
+            <value>
+                <fullName>49 - Municipality Policy Claim</fullName>
+                <default>false</default>
+                <label>49 - Municipality Policy Claim</label>
+            </value>
+            <value>
+                <fullName>50 - Business Policy Claim</fullName>
+                <default>false</default>
+                <label>50 - Business Policy Claim</label>
+            </value>
+            <value>
+                <fullName>51 - Homeowner Policy Claim</fullName>
+                <default>false</default>
+                <label>51 - Homeowner Policy Claim</label>
+            </value>
+            <value>
+                <fullName>53 - Other Craft</fullName>
+                <default>false</default>
+                <label>53 - Other Craft</label>
+            </value>
+            <value>
+                <fullName>56 - Sports Injury</fullName>
+                <default>false</default>
+                <label>56 - Sports Injury</label>
+            </value>
+            <value>
+                <fullName>59 - Misc</fullName>
+                <default>false</default>
+                <label>59 - Misc</label>
+            </value>
+            <value>
+                <fullName>60 - Malpractice</fullName>
+                <default>false</default>
+                <label>60 - Malpractice</label>
+            </value>
+            <value>
+                <fullName>61 - Criminal Activity</fullName>
+                <default>false</default>
+                <label>61 - Criminal Activity</label>
+            </value>
+            <value>
+                <fullName>62 - WorkSafeBC</fullName>
+                <default>false</default>
+                <label>62 - WorkSafeBC</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>
