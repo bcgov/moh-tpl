@@ -32,17 +32,23 @@
         <members>*</members>
         <name>StaticResource</name>
     </types>
-        <types>
-        <members>*</members>
-        <name>PermissionSet</name>
-    </types>
-        </types>
-                <members>*</members>
+
+    <types>
+        <members>TPL_Standard_User</members>
         <name>Profile</name>
     </types>
     <types>
         <members>MyDomain</members>
         <name>Settings</name>
     </types>
+    <types>
+        <members>*</members>
+        <name>ContentAsset</name>
+    </types>
+    <types>
+        <members>*</members>
+        <name>CustomApplication</name>
+    </types>
+
     <version>52.0</version>
 </Package>
