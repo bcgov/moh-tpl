@@ -32,12 +32,9 @@
         <members>*</members>
         <name>StaticResource</name>
     </types>
+
     <types>
-        <members>*</members>
-        <name>PermissionSet</name>
-    </types>
-    <types>
-        <members>*</members>
+        <members>TPL_Standard_User</members>
         <name>Profile</name>
     </types>
     <types>
@@ -52,5 +49,6 @@
         <members>*</members>
         <name>CustomApplication</name>
     </types>
+
     <version>52.0</version>
 </Package>
