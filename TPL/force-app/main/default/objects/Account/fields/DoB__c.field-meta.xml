@@ -3,7 +3,7 @@
     <fullName>DoB__c</fullName>
     <complianceGroup>PII</complianceGroup>
     <externalId>false</externalId>
-    <label>DoB</label>
+    <label>Date of Birth</label>
     <required>true</required>
     <trackFeedHistory>false</trackFeedHistory>
     <type>Date</type>
