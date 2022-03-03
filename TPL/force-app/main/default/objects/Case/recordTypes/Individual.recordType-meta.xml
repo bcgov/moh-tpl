@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Individual</fullName>
+    <active>true</active>
+    <businessProcess>Individual Case Support</businessProcess>
+    <description>This is for Private or Motor Vehicle case</description>
+    <label>Individual</label>
+    <picklistValues>
+        <picklist>Case_Category__c</picklist>
+        <values>
+            <fullName>Motor Vehicle</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Private</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Health_Care_Cost_Recovery_Act_Claimed__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Incident_Type__c</picklist>
+        <values>
+            <fullName>01 - MVA Passenger</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>05 - MV vs non-MV</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>09 - Unknown MVA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>11 - MVA Driver</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>30 - Unknown</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>49 - Municipality Policy Claim</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>50 - Business Policy Claim</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>51 - Homeowner Policy Claim</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>53 - Other Craft</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>56 - Sports Injury</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>59 - Misc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>60 - Malpractice</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>61 - Criminal Activity</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>62 - WorkSafeBC</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Legal_Service_Branch_LSB__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Maxpath_for_Emergency_Visit__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Origin</picklist>
+        <values>
+            <fullName>Email</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Phone</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Web</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Plantiff_Counsel_Acting_PC__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Priority</picklist>
+        <values>
+            <fullName>High</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Low</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Medium</fullName>
+            <default>true</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Reason</picklist>
+        <values>
+            <fullName>Complex functionality</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Existing problem</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Instructions not clear</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>New problem</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>User didn%27t attend training</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Reason_for_Closing__c</picklist>
+        <values>
+            <fullName>00 - Unpaid%2FUnrequested</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>01 - Unpaid%2FRequested</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>02 - Paid</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>03 - No Third Party Liability</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>04 - No Claim</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>07 - Policy Limits</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>08 - Workers Compensation Board</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>09 - Non-Beneficiary</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>11 - Abandoned</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>16 - RMB</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>17 - Other Federal Gov%27t</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>31 - HCCRA Not Applicable</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32 - VMP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>33 - RCMP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>50 - File Merged into Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>99 - No Hospital MSP Closed</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Type</picklist>
+        <values>
+            <fullName>Feature Request</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Problem</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Question</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>
