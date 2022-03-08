@@ -10,23 +10,6 @@
     <type>Picklist</type>
     <valueSet>
         <restricted>true</restricted>
-        <valueSetDefinition>
-            <sorted>false</sorted>
-            <value>
-                <fullName>Private</fullName>
-                <default>false</default>
-                <label>Private</label>
-            </value>
-            <value>
-                <fullName>Class Action</fullName>
-                <default>false</default>
-                <label>Class Action</label>
-            </value>
-            <value>
-                <fullName>Motor Vehicle</fullName>
-                <default>false</default>
-                <label>Motor Vehicle</label>
-            </value>
-        </valueSetDefinition>
+        <valueSetName>Case_Category</valueSetName>
     </valueSet>
 </CustomField>

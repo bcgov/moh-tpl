@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>54.0</apiVersion>
+    <decisions>
+        <name>Status_Closed</name>
+        <label>Status Closed</label>
+        <locationX>314</locationX>
+        <locationY>311</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Status_Closed1</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Closed</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Date_Closed</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>Status Closed1</label>
+        </rules>
+        <rules>
+            <name>Date_Reopened</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Open</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Closed_Case_Reopened</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>Date Reopened</label>
+        </rules>
+    </decisions>
+    <description>Version 3</description>
+    <interviewLabel>Case Field Updates {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Case Field Updates</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>Closed_Case_Reopened</name>
+        <label>Closed Case Reopened</label>
+        <locationX>314</locationX>
+        <locationY>431</locationY>
+        <inputAssignments>
+            <field>Case_Reopened_Date__c</field>
+            <value>
+                <elementReference>$Flow.CurrentDateTime</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Reason_for_Closing__c</field>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Date_Closed</name>
+        <label>Date Closed</label>
+        <locationX>50</locationX>
+        <locationY>431</locationY>
+        <inputAssignments>
+            <field>Date_Closed__c</field>
+            <value>
+                <elementReference>$Flow.CurrentDateTime</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>188</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Status_Closed</targetReference>
+        </connector>
+        <object>Case</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>
