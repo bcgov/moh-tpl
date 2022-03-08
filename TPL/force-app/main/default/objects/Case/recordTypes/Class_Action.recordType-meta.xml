@@ -2,7 +2,7 @@
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Class_Action</fullName>
     <active>true</active>
-    <businessProcess>Class Action Case Support</businessProcess>
+    <businessProcess>Class Action</businessProcess>
     <description>This is for Class Action Case</description>
     <label>Class Action</label>
     <picklistValues>
@@ -238,16 +238,8 @@
     <picklistValues>
         <picklist>Type</picklist>
         <values>
-            <fullName>Feature Request</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Problem</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Question</fullName>
-            <default>false</default>
+            <fullName>Class Action</fullName>
+            <default>true</default>
         </values>
     </picklistValues>
 </RecordType>

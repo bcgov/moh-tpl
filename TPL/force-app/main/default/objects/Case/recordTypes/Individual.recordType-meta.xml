@@ -2,7 +2,7 @@
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Individual</fullName>
     <active>true</active>
-    <businessProcess>Individual Case Support</businessProcess>
+    <businessProcess>Individual</businessProcess>
     <description>This is for Private or Motor Vehicle case</description>
     <label>Individual</label>
     <picklistValues>
@@ -242,15 +242,15 @@
     <picklistValues>
         <picklist>Type</picklist>
         <values>
-            <fullName>Feature Request</fullName>
+            <fullName>Class Action Member</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Problem</fullName>
+            <fullName>Motor Vehicle</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Question</fullName>
+            <fullName>Private</fullName>
             <default>false</default>
         </values>
     </picklistValues>
