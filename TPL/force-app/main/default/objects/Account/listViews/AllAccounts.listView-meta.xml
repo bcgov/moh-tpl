@@ -4,9 +4,7 @@
     <columns>ACCOUNT.NAME</columns>
     <columns>PHN__c</columns>
     <columns>DoB__c</columns>
-    <columns>ACCOUNT.TYPE</columns>
-    <columns>CORE.USERS.FIRST_NAME</columns>
-    <columns>CORE.USERS.LAST_NAME</columns>
+    <columns>ACCOUNT.RECORDTYPE</columns>
     <filterScope>Everything</filterScope>
     <label>All Clients</label>
 </ListView>

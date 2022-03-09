@@ -2,12 +2,9 @@
 <ListView xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>MyAccounts</fullName>
     <columns>ACCOUNT.NAME</columns>
-    <columns>ACCOUNT.ADDRESS2_STREET</columns>
-    <columns>ACCOUNT.ADDRESS2_CITY</columns>
-    <columns>ACCOUNT.ADDRESS2_STATE</columns>
-    <columns>ACCOUNT.ADDRESS2_COUNTRY</columns>
-    <columns>ACCOUNT.ADDRESS2_ZIP</columns>
-    <columns>ACCOUNT.PHONE1</columns>
+    <columns>PHN__c</columns>
+    <columns>DoB__c</columns>
+    <columns>ACCOUNT.RECORDTYPE</columns>
     <filterScope>Mine</filterScope>
-    <label>My Accounts</label>
+    <label>My Clients</label>
 </ListView>
