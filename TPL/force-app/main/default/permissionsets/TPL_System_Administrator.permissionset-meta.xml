@@ -825,6 +825,10 @@
         <visible>true</visible>
     </recordTypeVisibilities>
     <tabSettings>
+        <tab>standard-Account</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+    <tabSettings>
         <tab>standard-ContentNote</tab>
         <visibility>Visible</visibility>
     </tabSettings>
