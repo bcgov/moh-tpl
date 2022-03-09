@@ -2,7 +2,7 @@
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>First_Name_Mandatory_Check</fullName>
     <active>true</active>
-    <errorConditionFormula>ISBLANK( FirstName )</errorConditionFormula>
+    <errorConditionFormula>IF(  RecordType.Name = &quot;Individual&quot; &amp;&amp; ISBLANK( FirstName ), true, false)</errorConditionFormula>
     <errorDisplayField>Name</errorDisplayField>
     <errorMessage>First Name should be filled.</errorMessage>
 </ValidationRule>
