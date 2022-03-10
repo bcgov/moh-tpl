@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Open</fullName>
+        <default>false</default>
+        <label>Open</label>
+    </customValue>
+    <customValue>
+        <fullName>Review</fullName>
+        <default>false</default>
+        <label>Review</label>
+    </customValue>
+    <customValue>
+        <fullName>Wait To Post</fullName>
+        <default>false</default>
+        <label>Wait To Post</label>
+    </customValue>
+    <customValue>
+        <fullName>Closed</fullName>
+        <default>false</default>
+        <label>Closed</label>
+    </customValue>
+    <masterLabel>Batch Status</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>
