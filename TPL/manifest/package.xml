@@ -107,6 +107,19 @@
     <types>
         <members>*</members>
         <name>MilestoneType</name>
-    </types>                  
+    </types>    
+    <types>
+        <members>*</members>
+        <name>GlobalValueSet</name>
+    </types>  
+    <types>
+        <members>*</members>
+        <name>StandardValueSet</name>
+    </types>  
+    <types>
+        <members>*</members>
+        <name>businessProcess</name>
+    </types> 
+              
     <version>52.0</version>
 </Package>
