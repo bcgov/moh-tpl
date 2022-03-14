@@ -4,7 +4,7 @@
     <complianceGroup>PII</complianceGroup>
     <externalId>false</externalId>
     <label>Date of Birth</label>
-    <required>true</required>
+    <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <type>Date</type>
 </CustomField>
