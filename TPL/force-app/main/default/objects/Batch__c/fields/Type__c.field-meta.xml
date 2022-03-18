@@ -12,7 +12,7 @@
             <sorted>false</sorted>
             <value>
                 <fullName>Receivable</fullName>
-                <default>false</default>
+                <default>true</default>
                 <label>Receivable</label>
             </value>
         </valueSetDefinition>
