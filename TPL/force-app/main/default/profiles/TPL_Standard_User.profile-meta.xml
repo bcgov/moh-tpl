@@ -245,13 +245,18 @@
     </layoutAssignments>
 
     <layoutAssignments>
-        <layout>PersonAccount-Individual Client</layout>
+        <layout>PersonAccount-Individual Account</layout>
         <recordType>PersonAccount.PersonAccount</recordType>
     </layoutAssignments>
 
     <layoutAssignments>
-        <layout>Account-Business Client</layout>
+        <layout>Account-Business Account</layout>
         <recordType>Account.Business</recordType>
+    </layoutAssignments>
+
+    <layoutAssignments>
+        <layout>Account-Facility Account</layout>
+        <recordType>Account.Facility</recordType>
     </layoutAssignments>
 
     <recordTypeVisibilities>
@@ -275,6 +280,12 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Account.Business</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>Account.Facility</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
 </Profile>

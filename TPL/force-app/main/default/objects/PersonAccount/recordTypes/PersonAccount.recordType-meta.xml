@@ -52,6 +52,21 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Gender__c</picklist>
+        <values>
+            <fullName>Female</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Male</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Industry</picklist>
         <values>
             <fullName>Agriculture</fullName>
@@ -219,11 +234,11 @@
     <picklistValues>
         <picklist>Type</picklist>
         <values>
-            <fullName>Client</fullName>
+            <fullName>Class Action Member</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Class Action Member</fullName>
+            <fullName>Client</fullName>
             <default>false</default>
         </values>
     </picklistValues>

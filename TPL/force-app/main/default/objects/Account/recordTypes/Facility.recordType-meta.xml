@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Business</fullName>
+    <fullName>Facility</fullName>
     <active>true</active>
-    <description>To be used with Business Account for Class Action Case</description>
-    <label>Business</label>
+    <description>To be used with Hospital, Urgent Care Facility, Health Unit, Health Image Facility.</description>
+    <label>Facility</label>
     <picklistValues>
         <picklist>AccountSource</picklist>
         <values>
@@ -234,8 +234,20 @@
     <picklistValues>
         <picklist>Type</picklist>
         <values>
-            <fullName>Business for Class Action</fullName>
-            <default>true</default>
+            <fullName>Health Image Facility</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Health Unit</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hospital</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Urgent Care Facility</fullName>
+            <default>false</default>
         </values>
     </picklistValues>
 </RecordType>
