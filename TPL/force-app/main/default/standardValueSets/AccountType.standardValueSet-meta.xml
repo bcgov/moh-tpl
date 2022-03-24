@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StandardValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sorted>false</sorted>
+    <standardValue>
+        <fullName>Client</fullName>
+        <default>false</default>
+        <label>Client</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Class Action Member</fullName>
+        <default>false</default>
+        <label>Class Action Member</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Business for Class Action</fullName>
+        <default>false</default>
+        <label>Business for Class Action</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Hospital</fullName>
+        <default>false</default>
+        <label>Hospital</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Urgent Care Facility</fullName>
+        <default>false</default>
+        <label>Urgent Care Facility</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Health Unit</fullName>
+        <default>false</default>
+        <label>Health Unit</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Health Image Facility</fullName>
+        <default>false</default>
+        <label>Health Image Facility</label>
+    </standardValue>
+</StandardValueSet>
