@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StandardValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sorted>false</sorted>
+    <standardValue>
+        <fullName>Private</fullName>
+        <default>false</default>
+        <label>Private</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Motor Vehicle</fullName>
+        <default>false</default>
+        <label>Motor Vehicle</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Class Action Member</fullName>
+        <default>false</default>
+        <label>Class Action Member</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Class Action</fullName>
+        <default>false</default>
+        <label>Class Action</label>
+    </standardValue>
+</StandardValueSet>
