@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>PersonAccount</fullName>
+    <fullName>Facility</fullName>
     <active>true</active>
-    <description>To be used with Client and Class Member</description>
-    <label>Individual</label>
+    <description>To be used with Hospital, Urgent Care Facility, Health Unit, Health Image Facility.</description>
+    <label>Facility</label>
     <picklistValues>
         <picklist>AccountSource</picklist>
         <values>
@@ -48,6 +48,21 @@
         </values>
         <values>
             <fullName>Website</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Gender__c</picklist>
+        <values>
+            <fullName>Female</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Male</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -219,43 +234,19 @@
     <picklistValues>
         <picklist>Type</picklist>
         <values>
-            <fullName>Analyst</fullName>
+            <fullName>Health Image Facility</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Competitor</fullName>
+            <fullName>Health Unit</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Customer</fullName>
+            <fullName>Hospital</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Integrator</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Investor</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Other</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Partner</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Press</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Prospect</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Reseller</fullName>
+            <fullName>Urgent Care Facility</fullName>
             <default>false</default>
         </values>
     </picklistValues>
