@@ -107,6 +107,36 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Batch__c.Batch_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Batch__c.Batch_Status__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Batch__c.Batch_Type__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+     <fieldPermissions>
+        <editable>false</editable>
+        <field>Batch__c.Name</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Batch__c.Notes__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Batch__c.Siebel_Batch_Number__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Case.AccountId</field>
         <readable>true</readable>
@@ -379,7 +409,7 @@
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
-        <allowCreate>true</allowCreate>
+     <allowCreate>true</allowCreate>
         <allowDelete>false</allowDelete>
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
@@ -413,7 +443,7 @@
         <recordType>PersonAccount.PersonAccount</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
-    <tabSettings>
+    <tabSettings>        
         <tab>standard-Account</tab>
         <visibility>Visible</visibility>
     </tabSettings>
@@ -437,7 +467,7 @@
         <tab>standard-Task</tab>
         <visibility>Visible</visibility>
     </tabSettings>
-    <tabSettings>
+        <tabSettings>
         <tab>Batch__c</tab>
         <visibility>Visible</visibility>
     </tabSettings>
