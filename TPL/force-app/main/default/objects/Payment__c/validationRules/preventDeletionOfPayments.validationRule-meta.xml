@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>preventDeletionOfPayments</fullName>
-    <active>true</active>
-    <errorConditionFormula>$ObjectType.Batch__c.Fields.checkForDeletion__c = true</errorConditionFormula>
-    <errorMessage>You cant delete</errorMessage>
-</ValidationRule>
