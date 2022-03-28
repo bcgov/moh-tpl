@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Payment_Method__c</fullName>
+    <description>This field is used for tracking the payment method.</description>
+    <externalId>false</externalId>
+    <label>Payment Method</label>
+    <required>true</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Automatic Debit</fullName>
+                <default>false</default>
+                <label>Automatic Debit</label>
+            </value>
+            <value>
+                <fullName>Bill Me</fullName>
+                <default>false</default>
+                <label>Bill Me</label>
+            </value>
+            <value>
+                <fullName>Cash</fullName>
+                <default>false</default>
+                <label>Cash</label>
+            </value>
+            <value>
+                <fullName>Cashier Check</fullName>
+                <default>false</default>
+                <label>Cashier Check</label>
+            </value>
+            <value>
+                <fullName>Cashout Claim</fullName>
+                <default>false</default>
+                <label>Cashout Claim</label>
+            </value>
+            <value>
+                <fullName>Check</fullName>
+                <default>false</default>
+                <label>Check</label>
+            </value>
+            <value>
+                <fullName>Claim</fullName>
+                <default>false</default>
+                <label>Claim</label>
+            </value>
+            <value>
+                <fullName>Credit Card</fullName>
+                <default>false</default>
+                <label>Credit Card</label>
+            </value>
+            <value>
+                <fullName>Credit Memo</fullName>
+                <default>false</default>
+                <label>Credit Memo</label>
+            </value>
+            <value>
+                <fullName>Deduction</fullName>
+                <default>false</default>
+                <label>Deduction</label>
+            </value>
+            <value>
+                <fullName>Direct Debit</fullName>
+                <default>false</default>
+                <label>Direct Debit</label>
+            </value>
+            <value>
+                <fullName>Direct Deposit</fullName>
+                <default>false</default>
+                <label>Direct Deposit</label>
+            </value>
+            <value>
+                <fullName>Original Claim</fullName>
+                <default>false</default>
+                <label>Original Claim</label>
+            </value>
+            <value>
+                <fullName>Payroll Deposit</fullName>
+                <default>false</default>
+                <label>Payroll Deposit</label>
+            </value>
+            <value>
+                <fullName>Purchase Order</fullName>
+                <default>false</default>
+                <label>Purchase Order</label>
+            </value>
+            <value>
+                <fullName>Reference</fullName>
+                <default>false</default>
+                <label>Reference</label>
+            </value>
+            <value>
+                <fullName>Related Claim</fullName>
+                <default>false</default>
+                <label>Related Claim</label>
+            </value>
+            <value>
+                <fullName>Stored Value</fullName>
+                <default>false</default>
+                <label>Stored Value</label>
+            </value>
+            <value>
+                <fullName>Third-Party</fullName>
+                <default>false</default>
+                <label>Third-Party</label>
+            </value>
+            <value>
+                <fullName>Vendor Statement</fullName>
+                <default>false</default>
+                <label>Vendor Statement</label>
+            </value>
+            <value>
+                <fullName>Wire Transfer</fullName>
+                <default>false</default>
+                <label>Wire Transfer</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>
