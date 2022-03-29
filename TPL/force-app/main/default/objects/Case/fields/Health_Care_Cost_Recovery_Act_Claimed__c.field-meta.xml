@@ -5,7 +5,7 @@
     <label>Health Care Cost Recovery Act Claimed</label>
     <required>false</required>
     <trackFeedHistory>true</trackFeedHistory>
-    <trackHistory>true</trackHistory>
+    <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
