@@ -3,7 +3,7 @@
     <fullName>Case_Category__c</fullName>
     <externalId>false</externalId>
     <label>Case Category</label>
-    <required>true</required>
+    <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
