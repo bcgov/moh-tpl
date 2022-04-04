@@ -352,6 +352,10 @@
         <visibility>Visible</visibility>
     </tabSettings>
     <tabSettings>
+        <tab>Payment__c</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+    <tabSettings>
         <tab>standard-ContentNote</tab>
         <visibility>Visible</visibility>
     </tabSettings>
