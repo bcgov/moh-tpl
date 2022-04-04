@@ -16,6 +16,16 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Batch__c.Total_Number_Of_Payments_rollup__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Batch__c.Total_sum_of_payments_rollup__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Case.AccountId</field>
         <readable>true</readable>
@@ -339,10 +349,6 @@
     </recordTypeVisibilities>
     <tabSettings>
         <tab>Batch__c</tab>
-        <visibility>Visible</visibility>
-    </tabSettings>
-    <tabSettings>
-        <tab>Payment__c</tab>
         <visibility>Visible</visibility>
     </tabSettings>
     <tabSettings>
