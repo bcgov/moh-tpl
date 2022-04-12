@@ -112,6 +112,10 @@
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>
+        <name>OverrideForecasts</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>true</enabled>
         <name>RemoveDirectMessageMembers</name>
     </userPermissions>
     <userPermissions>
@@ -166,4 +170,47 @@
         <enabled>true</enabled>
         <name>ViewTrustMeasures</name>
     </userPermissions>
+    <layoutAssignments>
+        <layout>Case-Class Action</layout>
+        <recordType>Case.Class_Action</recordType>
+    </layoutAssignments>
+
+     <layoutAssignments>
+        <layout>Case-Individual</layout>
+        <recordType>Case.Individual</recordType>
+    </layoutAssignments>
+
+    <layoutAssignments>
+        <layout>PersonAccount-Individual Account</layout>
+        <recordType>PersonAccount.PersonAccount</recordType>
+    </layoutAssignments>
+
+    <layoutAssignments>
+        <layout>Account-Business Account</layout>
+        <recordType>Account.Business</recordType>
+    </layoutAssignments>
+
+    <recordTypeVisibilities>
+        <default>true</default>
+        <recordType>Case.Individual</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>Case.Class_Action</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities> 
+
+    <recordTypeVisibilities>
+        <default>true</default>
+        <recordType>PersonAccount.PersonAccount</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>Account.Business</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
 </Profile>

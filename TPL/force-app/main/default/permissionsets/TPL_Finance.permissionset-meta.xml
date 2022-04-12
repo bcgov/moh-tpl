@@ -343,10 +343,7 @@
         <object>Payment__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
-    <recordTypeVisibilities>
-        <recordType>PersonAccount.PersonAccount</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
+    
     <tabSettings>
         <tab>Batch__c</tab>
         <visibility>Visible</visibility>
