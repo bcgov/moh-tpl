@@ -22,5 +22,6 @@
     <tabs>standard-report</tabs>
     <tabs>standard-Dashboard</tabs>
     <tabs>standard-Event</tabs>
+    <tabs>Healthcare_Cost__c</tabs>
     <uiType>Lightning</uiType>
 </CustomApplication>

@@ -166,4 +166,28 @@
         <enabled>true</enabled>
         <name>ViewTrustMeasures</name>
     </userPermissions>
+    <layoutAssignments>
+        <layout>Healthcare_Cost__c-Ambulance</layout>
+        <recordType>Healthcare_Cost__c.Ambulance</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Healthcare_Cost__c-Continuing_Care</layout>
+        <recordType>Healthcare_Cost__c.Continuing_Care</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Healthcare_Cost__c-Future_Care</layout>
+        <recordType>Healthcare_Cost__c.Future_Care</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Healthcare_Cost__c-Hospitalization</layout>
+        <recordType>Healthcare_Cost__c.Hospitalization</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Healthcare_Cost__c-MSP</layout>
+        <recordType>Healthcare_Cost__c.MSP</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Healthcare_Cost__c-Pharmacare</layout>
+        <recordType>Healthcare_Cost__c.Pharmacare</recordType>
+    </layoutAssignments>
 </Profile>
