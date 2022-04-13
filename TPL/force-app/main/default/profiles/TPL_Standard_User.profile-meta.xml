@@ -3,7 +3,7 @@
     <custom>true</custom>
     <applicationVisibilities>
         <application>Third_Party_Liability_TPL</application>
-        <default>false</default>
+        <default>true</default>
         <visible>true</visible>
     </applicationVisibilities>
     <applicationVisibilities>
