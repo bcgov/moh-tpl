@@ -460,31 +460,7 @@
         <object>Case</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
-    <recordTypeVisibilities>
-        <default>true</default>
-        <recordType>Account.Business</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <default>false</default>
-        <recordType>Account.Facility</recordType>
-        <visible>false</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <default>false</default>
-        <recordType>Case.Class_Action</recordType>
-        <visible>false</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <default>false</default>
-        <recordType>Case.Individual</recordType>
-        <visible>false</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <default>false</default>
-        <recordType>PersonAccount.PersonAccount</recordType>
-        <visible>false</visible>
-    </recordTypeVisibilities>
+ 
     <tabVisibilities>
         <tab>Batch__c</tab>
         <visibility>Hidden</visibility>
@@ -678,4 +654,36 @@
         <enabled>true</enabled>
         <name>ViewTrustMeasures</name>
     </userPermissions>
+
+
+    <recordTypeVisibilities>
+        <default>true</default>
+        <recordType>Case.Individual</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>Case.Class_Action</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities> 
+
+    <recordTypeVisibilities>
+        <default>true</default>
+        <recordType>PersonAccount.PersonAccount</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>Account.Business</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>Account.Facility</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+
 </Profile>
