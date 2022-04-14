@@ -27,13 +27,8 @@
         <label>Urgent Care Facility</label>
     </standardValue>
     <standardValue>
-        <fullName>Health Unit</fullName>
+        <fullName>Medical Image Facility</fullName>
         <default>false</default>
-        <label>Health Unit</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Health Image Facility</fullName>
-        <default>false</default>
-        <label>Health Image Facility</label>
+        <label>Medical Image Facility</label>
     </standardValue>
 </StandardValueSet>
