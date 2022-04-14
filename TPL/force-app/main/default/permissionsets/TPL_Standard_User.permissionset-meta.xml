@@ -27,6 +27,16 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.Site_Code__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.Status__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Account.Type</field>
         <readable>true</readable>
@@ -324,7 +334,6 @@
         <object>Payment__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
-    
     <tabSettings>
         <tab>Batch__c</tab>
         <visibility>Visible</visibility>

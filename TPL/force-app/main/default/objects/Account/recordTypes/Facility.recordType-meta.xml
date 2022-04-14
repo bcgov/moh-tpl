@@ -2,7 +2,7 @@
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Facility</fullName>
     <active>true</active>
-    <description>To be used with Hospital, Urgent Care Facility, Health Unit, Health Image Facility.</description>
+    <description>To be used with Hospital, Urgent Care Facility, Medical Image Facility.</description>
     <label>Facility</label>
     <picklistValues>
         <picklist>AccountSource</picklist>
@@ -234,15 +234,11 @@
     <picklistValues>
         <picklist>Type</picklist>
         <values>
-            <fullName>Health Image Facility</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Health Unit</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Hospital</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Medical Image Facility</fullName>
             <default>false</default>
         </values>
         <values>
