@@ -689,6 +689,6 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Account.Facility</recordType>
-        <visible>true</visible>
+        <visible>false</visible>
     </recordTypeVisibilities>
 </Profile>
