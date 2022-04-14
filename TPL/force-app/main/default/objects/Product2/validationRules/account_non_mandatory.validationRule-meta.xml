@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>account_non_mandatory</fullName>
+    <active>true</active>
+    <errorConditionFormula>IF(ISPICKVAL(Family, &quot;Generic&quot;),
+ ISBLANK(Account__c) = False, false)</errorConditionFormula>
+    <errorDisplayField>Account__c</errorDisplayField>
+    <errorMessage>Account cant be specified in case Product Family is &quot;Generic&quot;</errorMessage>
+</ValidationRule>
