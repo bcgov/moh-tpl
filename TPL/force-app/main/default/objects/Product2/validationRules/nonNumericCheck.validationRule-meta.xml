@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>nonNumericCheck</fullName>
+    <active>true</active>
+    <errorConditionFormula>NOT(ISNUMBER( Effective_year__c ))</errorConditionFormula>
+    <errorDisplayField>Effective_year__c</errorDisplayField>
+    <errorMessage>Only Numeric Fields are permitted here</errorMessage>
+</ValidationRule>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Acute (Daily)</fullName>
+        <default>false</default>
+        <label>Acute (Daily)</label>
+    </customValue>
+    <customValue>
+        <fullName>Extended Care (Daily)</fullName>
+        <default>false</default>
+        <label>Extended Care (Daily)</label>
+    </customValue>
+    <customValue>
+        <fullName>Out Patient (Daily)</fullName>
+        <default>false</default>
+        <label>Out Patient (Daily)</label>
+    </customValue>
+    <customValue>
+        <fullName>Surgical Day Care (Daily)</fullName>
+        <default>false</default>
+        <label>Surgical Day Care (Daily)</label>
+    </customValue>
+    <masterLabel>Service Type</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>
