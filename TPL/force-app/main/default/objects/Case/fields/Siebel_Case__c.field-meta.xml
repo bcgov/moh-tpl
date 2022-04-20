@@ -3,6 +3,7 @@
     <fullName>Siebel_Case__c</fullName>
     <description>to identify the Case number on Siebel so I can track imported data.</description>
     <externalId>false</externalId>
+    <inlineHelpText>It is only for Data Migration</inlineHelpText>
     <label>Siebel Case #</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
