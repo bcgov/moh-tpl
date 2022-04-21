@@ -30,7 +30,7 @@
                 <leftValueReference>$Record.Status</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Open</stringValue>
+                    <stringValue>Reopened</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -40,7 +40,7 @@
             <label>Date Reopened</label>
         </rules>
     </decisions>
-    <description>Version 3</description>
+    <description>Reopened Status Version1(Reason for closing)</description>
     <interviewLabel>Case Field Updates {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Case Field Updates</label>
     <processMetadataValues>
@@ -71,12 +71,6 @@
             <field>Case_Reopened_Date__c</field>
             <value>
                 <elementReference>$Flow.CurrentDateTime</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Reason_for_Closing__c</field>
-            <value>
-                <stringValue></stringValue>
             </value>
         </inputAssignments>
         <inputReference>$Record</inputReference>
