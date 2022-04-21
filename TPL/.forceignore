@@ -3,6 +3,20 @@
 #
 
 package.xml
+appMenus
+#**appSwitcher
+#**objectTranslations
+#**profilePasswordPolicies
+#**profileSessionSettings
+settings
+#**standardValueSets
+#**matchingRules
+duplicateRules
+entitlementProcesses
+#**permissionsets
+#**recordTypes
+
+#MoH Standard User.profile
 
 # LWC configuration files
 **/jsconfig.json

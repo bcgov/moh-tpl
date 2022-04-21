@@ -235,16 +235,8 @@
         <field>Case.SlaStartDate</field>
         <readable>true</readable>
     </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Case.SourceId</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Case.StopStartDate</field>
-        <readable>true</readable>
-    </fieldPermissions>
+ 
+  
     <fieldPermissions>
         <editable>true</editable>
         <field>Contact.AccountId</field>
@@ -384,15 +376,7 @@
         <object>Contact</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
-    <objectPermissions>
-        <allowCreate>true</allowCreate>
-        <allowDelete>true</allowDelete>
-        <allowEdit>true</allowEdit>
-        <allowRead>true</allowRead>
-        <modifyAllRecords>false</modifyAllRecords>
-        <object>Healthcare_Cost__c</object>
-        <viewAllRecords>false</viewAllRecords>
-    </objectPermissions>
+
     <objectPermissions>
         <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
@@ -402,38 +386,12 @@
         <object>Payment__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
-    <recordTypeVisibilities>
-        <recordType>Healthcare_Cost__c.Ambulance</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <recordType>Healthcare_Cost__c.Continuing_Care</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <recordType>Healthcare_Cost__c.Future_Care</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <recordType>Healthcare_Cost__c.Hospitalization</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <recordType>Healthcare_Cost__c.MSP</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <recordType>Healthcare_Cost__c.Pharmacare</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
+ 
     <tabSettings>
         <tab>Batch__c</tab>
         <visibility>Visible</visibility>
     </tabSettings>
-    <tabSettings>
-        <tab>Healthcare_Cost__c</tab>
-        <visibility>Visible</visibility>
-    </tabSettings>
+    
     <tabSettings>
         <tab>Payment__c</tab>
         <visibility>Visible</visibility>

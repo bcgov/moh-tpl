@@ -437,30 +437,7 @@
         <layout>PersonAccount-Individual Account</layout>
         <recordType>PersonAccount.PersonAccount</recordType>
     </layoutAssignments>
-    <layoutAssignments>
-        <layout>Healthcare_Cost__c-Ambulance</layout>
-         <recordType>Healthcare_Cost__c.Ambulance</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Healthcare_Cost__c-Continuing Care</layout>
-         <recordType>Healthcare_Cost__c.Continuing_Care</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Healthcare_Cost__c-Future Care</layout>
-         <recordType>Healthcare_Cost__c.Future_Care</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Healthcare_Cost__c-Hospitalization</layout>
-         <recordType>Healthcare_Cost__c.Hospitalization</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Healthcare_Cost__c-MSP</layout>
-         <recordType>Healthcare_Cost__c.MSP</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Healthcare_Cost__c-Pharmacare</layout>
-         <recordType>Healthcare_Cost__c.Pharmacare</recordType>
-    </layoutAssignments>
+ 
     <layoutAssignments>
         <layout>Product2-Product Layout</layout>
     </layoutAssignments>
@@ -491,15 +468,7 @@
         <object>Contact</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
-    <objectPermissions>
-        <allowCreate>false</allowCreate>
-        <allowDelete>false</allowDelete>
-        <allowEdit>false</allowEdit>
-        <allowRead>false</allowRead>
-        <modifyAllRecords>false</modifyAllRecords>
-        <object>Healthcare_Cost__c</object>
-        <viewAllRecords>false</viewAllRecords>
-    </objectPermissions>
+
     <objectPermissions>
         <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
@@ -731,34 +700,5 @@
         <recordType>Account.Facility</recordType>
         <visible>false</visible>
     </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <default>true</default>
-        <recordType>Healthcare_Cost__c.Ambulance</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <default>false</default>
-        <recordType>Healthcare_Cost__c.Continuing_Care</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <default>false</default>
-        <recordType>Healthcare_Cost__c.Future_Care</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <default>false</default>
-        <recordType>Healthcare_Cost__c.Hospitalization</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <default>false</default>
-        <recordType>Healthcare_Cost__c.MSP</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <default>false</default>
-        <recordType>Healthcare_Cost__c.Pharmacare</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
+
 </Profile>

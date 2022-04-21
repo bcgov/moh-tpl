@@ -1,12 +1,19 @@
 {
   "packageDirectories": [
-    {
-      "path": "force-app",
-      "default": true
-    }
+      {
+          "path": "force-app",
+          "default": true,
+          "package": "TPL",
+          "versionName": "version 1.0.2",
+          "versionNumber": "1.0.2.NEXT"
+      }
   ],
   "name": "TPL",
   "namespace": "",
   "sfdcLoginUrl": "https://login.salesforce.com",
-  "sourceApiVersion": "53.0"
+  "sourceApiVersion": "53.0",
+  "packageAliases": {
+      "TPL": "0Ho8c000000fyBOCAY",
+      "TPL@1.0.2-1": ""
+  }
 }

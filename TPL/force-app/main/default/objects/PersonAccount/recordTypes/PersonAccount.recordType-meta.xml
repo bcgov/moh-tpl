@@ -2,6 +2,7 @@
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>PersonAccount</fullName>
     <active>true</active>
+    <compactLayoutAssignment>Person_Account_Compact_Layout</compactLayoutAssignment>
     <description>To be used with Client and Class Action Member</description>
     <label>Individual</label>
     <picklistValues>
