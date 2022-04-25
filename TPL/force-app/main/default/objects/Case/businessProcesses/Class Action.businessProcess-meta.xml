@@ -4,15 +4,27 @@
     <description>This is for Cases with Class Action Case Category</description>
     <isActive>true</isActive>
     <values>
-        <fullName>Closed</fullName>
+        <fullName>Adjudicating</fullName>
         <default>false</default>
     </values>
     <values>
-        <fullName>New</fullName>
+        <fullName>Closed</fullName>
         <default>false</default>
     </values>
     <values>
         <fullName>Open</fullName>
         <default>true</default>
+    </values>
+    <values>
+        <fullName>Payment Received</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Reopened</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Waiting Payment</fullName>
+        <default>false</default>
     </values>
 </BusinessProcess>
