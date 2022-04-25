@@ -3,4 +3,30 @@
     <fullName>Hospitalization</fullName>
     <active>true</active>
     <label>Hospitalization</label>
+    <picklistValues>
+        <picklist>Cost_Status__c</picklist>
+        <values>
+            <fullName>New</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Reviewed &amp; Included</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Reviewed &amp; Not Included</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Line_Type__c</picklist>
+        <values>
+            <fullName>Estimate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Usage</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
 </RecordType>
