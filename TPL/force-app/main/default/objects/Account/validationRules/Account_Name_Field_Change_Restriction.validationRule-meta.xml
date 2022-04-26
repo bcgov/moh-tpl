@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Account_Name_Field_Change_Restriction</fullName>
+    <active>true</active>
+    <description>Name field cannot be editable by Analyst/Clerk when the record type is &quot;Facility&quot;</description>
+    <errorConditionFormula>IF(RecordType.Name = &quot;Facility&quot; &amp;&amp; ( $Permission.TPL_Standard_User   ||  $Permission.TPL_Finance) &amp;&amp; NOT( $Permission.TPL_System_Administrator ) &amp;&amp;  ((PRIORVALUE(Name)) != &quot;&quot; &amp;&amp; ISCHANGED(Name)),true, false)</errorConditionFormula>
+    <errorMessage>Account Name cannot be changed.</errorMessage>
+</ValidationRule>
