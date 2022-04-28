@@ -25,9 +25,6 @@
         <field>Batch__c.Total_sum_of_payments_rollup__c</field>
         <readable>true</readable>
     </fieldPermissions>
-
-
-
     <fieldPermissions>
         <editable>true</editable>
         <field>Contact.AccountId</field>
@@ -176,7 +173,6 @@
         <object>Payment__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
-    
     <tabSettings>
         <tab>Batch__c</tab>
         <visibility>Visible</visibility>
