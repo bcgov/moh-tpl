@@ -156,11 +156,11 @@
     <label>Healthcare Cost</label>
     <nameField>
         <displayFormat>{0}</displayFormat>
-        <label>Healthcare Cost #</label>
+        <label>Healthcare Cost Number</label>
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Healthcare Costs</pluralLabel>
-    <searchLayouts></searchLayouts>
+    <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>
