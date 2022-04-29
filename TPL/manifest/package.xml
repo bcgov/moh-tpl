@@ -123,6 +123,10 @@
     <types>
         <members>*</members>
         <name>businessProcess</name>
+    </types>
+    <types>
+        <members>*</members>
+        <name>pathAssistant</name>
     </types> 
               
     <version>53.0</version>
