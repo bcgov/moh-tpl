@@ -3,4 +3,15 @@
     <fullName>Continuing_Care</fullName>
     <active>true</active>
     <label>Continuing Care</label>
+    <picklistValues>
+        <picklist>Line_Type__c</picklist>
+        <values>
+            <fullName>Estimate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Usage</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
 </RecordType>
