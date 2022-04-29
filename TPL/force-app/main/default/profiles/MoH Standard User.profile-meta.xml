@@ -966,7 +966,7 @@
         <visible>false</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
-        <default>true</default>
+        <default>false</default>
         <recordType>Healthcare_Cost__c.Ambulance</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -986,7 +986,7 @@
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
-        <default>false</default>
+        <default>true</default>
         <recordType>Healthcare_Cost__c.MSP</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
