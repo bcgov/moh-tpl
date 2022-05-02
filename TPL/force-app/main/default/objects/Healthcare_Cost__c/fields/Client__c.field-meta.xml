@@ -4,9 +4,18 @@
     <deleteConstraint>SetNull</deleteConstraint>
     <externalId>false</externalId>
     <label>Client</label>
+    <lookupFilter>
+        <active>true</active>
+        <filterItems>
+            <field>Account.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Individual</value>
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
     <referenceTo>Account</referenceTo>
-    <relationshipLabel>Healthcare Costs</relationshipLabel>
-    <relationshipName>Healthcare_Costs</relationshipName>
+    <relationshipLabel>Healthcare Costs(Client)</relationshipLabel>
+    <relationshipName>Client</relationshipName>
     <required>false</required>
     <trackTrending>false</trackTrending>
     <type>Lookup</type>
