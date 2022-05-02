@@ -127,7 +127,11 @@
     <types>
         <members>*</members>
         <name>pathAssistant</name>
-    </types> 
+    </types>
+    <types>
+        <members>*</members>
+        <name>sharingRules</name>
+    </types>  
               
     <version>53.0</version>
 </Package>
