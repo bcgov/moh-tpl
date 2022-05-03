@@ -155,7 +155,7 @@
     <externalSharingModel>Private</externalSharingModel>
     <label>Healthcare Cost</label>
     <nameField>
-        <displayFormat>{0}</displayFormat>
+        <displayFormat>HC-{00000000}</displayFormat>
         <label>Healthcare Cost Number</label>
         <type>AutoNumber</type>
     </nameField>
