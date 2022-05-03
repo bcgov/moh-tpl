@@ -88,10 +88,11 @@
             <label>ProductFamilyCheck</label>
         </rules>
     </decisions>
+    <description>Updated the ProductFamilyUpdateFormula</description>
     <formulas>
         <name>ProductFamilyUpdateFormula</name>
         <dataType>String</dataType>
-        <expression>{!ProductFamilyRecord} + &apos;:&apos;+ {!ServiceTypeRecord} + &apos;-&apos;+ {!EffectiveYear}</expression>
+        <expression>{!ServiceTypeRecord} + &apos;-&apos;+ {!EffectiveYear}</expression>
     </formulas>
     <formulas>
         <name>ProductUpdateFormulaSpecific</name>
