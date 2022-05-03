@@ -6,12 +6,8 @@
     <picklistValues>
         <picklist>Line_Type__c</picklist>
         <values>
-            <fullName>Estimate</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Usage</fullName>
-            <default>false</default>
+            <default>true</default>
         </values>
     </picklistValues>
 </RecordType>
