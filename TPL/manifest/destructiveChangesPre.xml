@@ -6,8 +6,8 @@
     </types>
 
     -->
-<!-- <types>
-        <members>case.Incident_Details__c</members>
+ <types>
+        <members>Healthcare_Cost__c.PHN__c</members>
         <name>CustomField</name>
-    </types> -->
+    </types> 
 </Package>
