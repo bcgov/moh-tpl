@@ -23,7 +23,7 @@
                 <field>Client__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>PHN__c</field>
             </layoutItems>
             <layoutItems>

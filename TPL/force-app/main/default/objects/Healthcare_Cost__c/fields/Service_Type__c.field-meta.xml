@@ -3,7 +3,7 @@
     <fullName>Service_Type__c</fullName>
     <externalId>false</externalId>
     <label>Service Type</label>
-    <length>10</length>
+    <length>40</length>
     <required>false</required>
     <trackTrending>false</trackTrending>
     <type>Text</type>
