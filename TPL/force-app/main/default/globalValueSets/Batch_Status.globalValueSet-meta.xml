@@ -6,16 +6,6 @@
         <label>Open</label>
     </customValue>
     <customValue>
-        <fullName>Review</fullName>
-        <default>false</default>
-        <label>Review</label>
-    </customValue>
-    <customValue>
-        <fullName>Wait To Post</fullName>
-        <default>false</default>
-        <label>Wait To Post</label>
-    </customValue>
-    <customValue>
         <fullName>Closed</fullName>
         <default>false</default>
         <label>Closed</label>
