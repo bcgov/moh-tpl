@@ -4,5 +4,9 @@
     <entityName>Case</entityName>
     <fieldName>Status</fieldName>
     <masterLabel>Case: Class Action</masterLabel>
+    <pathAssistantSteps>
+        <fieldNames>Reason_for_Closing__c</fieldNames>
+        <picklistValueName>Open</picklistValueName>
+    </pathAssistantSteps>
     <recordTypeName>Class_Action</recordTypeName>
 </PathAssistant>
