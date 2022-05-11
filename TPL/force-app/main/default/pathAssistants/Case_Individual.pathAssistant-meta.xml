@@ -4,5 +4,29 @@
     <entityName>Case</entityName>
     <fieldName>Status</fieldName>
     <masterLabel>Case: Individual</masterLabel>
+    <pathAssistantSteps>
+        <fieldNames>Reason_for_Closing__c</fieldNames>
+        <picklistValueName>Adjudicating</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <fieldNames>Reason_for_Closing__c</fieldNames>
+        <picklistValueName>Closed</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <fieldNames>Reason_for_Closing__c</fieldNames>
+        <picklistValueName>Open</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <fieldNames>Reason_for_Closing__c</fieldNames>
+        <picklistValueName>Payment Received</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <fieldNames>Reason_for_Closing__c</fieldNames>
+        <picklistValueName>Reopened</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <fieldNames>Reason_for_Closing__c</fieldNames>
+        <picklistValueName>Waiting Payment</picklistValueName>
+    </pathAssistantSteps>
     <recordTypeName>Individual</recordTypeName>
 </PathAssistant>
