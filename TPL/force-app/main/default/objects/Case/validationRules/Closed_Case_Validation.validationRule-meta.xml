@@ -5,7 +5,6 @@
     <description>Changing Status from Closed to Reopened</description>
     <errorConditionFormula>OR(AND(
 ISPICKVAL(PRIORVALUE( Status ),&quot;Closed&quot;), NOT (ISPICKVAL( Status ,&quot;Reopened&quot;))),
-AND(
-ISPICKVAL(PRIORVALUE( Status ),&quot;Reopened&quot;), NOT (ISPICKVAL( Status ,&quot;Closed&quot;))))</errorConditionFormula>
+AND(ISCHANGED(Status),ISPICKVAL(PRIORVALUE( Status ),&quot;Reopened&quot;), NOT (ISPICKVAL( Status ,&quot;Closed&quot;))))</errorConditionFormula>
     <errorMessage>We can only change the status from Closed to Reopen and Reopen to Closed</errorMessage>
 </ValidationRule>
