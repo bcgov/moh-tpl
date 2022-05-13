@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Product_cannot_be_editable_When_Specific</fullName>
+    <active>true</active>
+    <description>When the Facility Account is Inactive, Product fields cannot be edited.</description>
+    <errorConditionFormula>(IsActive = False) &amp;&amp;
+(
+(
+ISPICKVAL( Family , &quot;Specific&quot;) &amp;&amp;
+ISPICKVAL( Service_Type__c , &quot;Acute (Daily)&quot;)
+)&amp;&amp;
+(
+ISCHANGED( Name ) ||
+ISCHANGED( Family ) ||
+ISCHANGED( Service_Type__c ) ||
+ISCHANGED( Description ) ||
+ISCHANGED( Effective_year__c ) ||
+ISCHANGED( Effective_Start_Date__c ) ||
+ISCHANGED( Effective_End_Date__c )
+)
+)</errorConditionFormula>
+    <errorMessage>Product is Deactivated and fields cannot be editable. Please Activate facility to edit these fields.</errorMessage>
+</ValidationRule>
