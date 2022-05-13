@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Facility_fields_cannot_be_editable</fullName>
+    <active>true</active>
+    <description>Facility Account cannot be editable if the status is INACTIVE</description>
+    <errorConditionFormula>(RecordType.DeveloperName = &apos;Facility&apos;) &amp;&amp; (Status__c  =  False)&amp;&amp; (ISCHANGED( Site_Code__c )|| ISCHANGED( Name ) || ISCHANGED( Type ) || ISCHANGED( BillingAddress ) || ISCHANGED(Product__c))</errorConditionFormula>
+    <errorMessage>Facility Account has been Deactivated and can no longer be editable.</errorMessage>
+</ValidationRule>
