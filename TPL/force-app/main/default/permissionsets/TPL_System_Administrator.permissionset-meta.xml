@@ -406,12 +406,17 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Healthcare_Cost__c.Case_Type__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Healthcare_Cost__c.Case__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Healthcare_Cost__c.Client__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -481,7 +486,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Healthcare_Cost__c.Facility_Code__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -591,7 +596,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Healthcare_Cost__c.Service_Type__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -616,8 +621,13 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Healthcare_Cost__c.Total_Costs_Standard__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Healthcare_Cost__c.Total_Original_Cost__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
