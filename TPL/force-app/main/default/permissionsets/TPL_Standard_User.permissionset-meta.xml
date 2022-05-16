@@ -192,7 +192,6 @@
         <field>Case.ClosedDate</field>
         <readable>true</readable>
     </fieldPermissions>
-
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.EntitlementId</field>
@@ -209,7 +208,6 @@
         <field>Case.IsStopped</field>
         <readable>true</readable>
     </fieldPermissions>
- 
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.MilestoneStatus</field>
@@ -256,12 +254,17 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Healthcare_Cost__c.Case_Type__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Healthcare_Cost__c.Case__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Healthcare_Cost__c.Client__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -331,7 +334,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Healthcare_Cost__c.Facility_Code__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -391,7 +394,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Healthcare_Cost__c.PHN__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -415,8 +418,8 @@
         <field>Healthcare_Cost__c.Practitioner_Number__c</field>
         <readable>true</readable>
     </fieldPermissions>
-	 <fieldPermissions>
-        <editable>true</editable>
+     <fieldPermissions>
+        <editable>false</editable>
         <field>Healthcare_Cost__c.Pricebook__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -436,7 +439,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Healthcare_Cost__c.Service_Type__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -451,7 +454,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Healthcare_Cost__c.Standard_Daily_Rate__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -461,13 +464,18 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Healthcare_Cost__c.Total_Costs_Standard__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>Healthcare_Cost__c.Total_Override__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Healthcare_Cost__c.Total_Original_Cost__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -655,6 +663,15 @@
         <modifyAllRecords>false</modifyAllRecords>
         <object>Product2</object>
         <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>false</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>false</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>Pricebook2</object>
+        <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <recordTypeVisibilities>
         <recordType>Healthcare_Cost__c.Ambulance</recordType>

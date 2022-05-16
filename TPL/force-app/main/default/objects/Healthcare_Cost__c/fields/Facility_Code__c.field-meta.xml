@@ -2,8 +2,9 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Facility_Code__c</fullName>
     <externalId>false</externalId>
+    <formula>Facility__r.Site_Code__c</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Facility Code</label>
-    <length>10</length>
     <required>false</required>
     <trackTrending>false</trackTrending>
     <type>Text</type>
