@@ -1,5 +1,15 @@
 {
-  "orgName": "Demo company",
+  "orgName": "TPL Scratch Org",
   "edition": "Developer",
-  "features": []
+  "hasSampleData": false,
+  "features": [
+    "PersonAccounts",
+    "ServiceCloud",
+    "LightningServiceConsole"
+  ],
+  "settings": {
+    "lightningExperienceSettings": {
+      "enableS1DesktopEnabled": true
+    }
+  }
 }

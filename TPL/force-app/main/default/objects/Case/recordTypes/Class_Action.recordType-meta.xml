@@ -104,11 +104,11 @@
             <default>false</default>
         </values>
     </picklistValues>
-    <picklistValues>
+   <picklistValues>
         <picklist>Origin</picklist>
         <values>
             <fullName>Email</fullName>
-            <default>false</default>
+            <default>true</default>
         </values>
         <values>
             <fullName>Phone</fullName>
@@ -145,7 +145,7 @@
             <default>true</default>
         </values>
     </picklistValues>
-    <picklistValues>
+    <!--<picklistValues>
         <picklist>Reason</picklist>
         <values>
             <fullName>Complex functionality</fullName>
@@ -167,7 +167,7 @@
             <fullName>User didn%27t attend training</fullName>
             <default>false</default>
         </values>
-    </picklistValues>
+    </picklistValues>-->
     <picklistValues>
         <picklist>Reason_for_Closing__c</picklist>
         <values>
