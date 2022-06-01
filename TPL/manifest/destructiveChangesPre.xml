@@ -7,25 +7,11 @@
 
     -->
  <types>
-        <members>Case.Ambulance_Total__c</members>
-        <name>CustomField</name>
-    </types>
-<types>
         <members>Case.Continuing_Care_Total__c</members>
-        <name>CustomField</name>
-    </types><types>
         <members>Case.Future_Care_Total__c</members>
-        <name>CustomField</name>
-    </types><types>
         <members>Case.Hospitalization_Total__c</members>
-        <name>CustomField</name>
-    </types><types>
         <members>Case.MSP_Total__c</members>
-        <name>CustomField</name>
-    </types><types>
         <members>Case.Pharmacare_Total__c</members>
-        <name>CustomField</name>
-    </types><types>
         <members>Case.Recovery_Amount__c</members>
         <name>CustomField</name>
     </types>
