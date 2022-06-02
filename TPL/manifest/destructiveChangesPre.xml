@@ -7,7 +7,8 @@
 
     -->
  <types>
-        <members>Case.Continuing_Care_Total__c</members>
+     <members>Case.Ambulance_Total__c</members>   
+     <members>Case.Continuing_Care_Total__c</members>
         <members>Case.Future_Care_Total__c</members>
         <members>Case.Hospitalization_Total__c</members>
         <members>Case.MSP_Total__c</members>
