@@ -6,5 +6,5 @@
     <columns>DoB__c</columns>
     <columns>ACCOUNT.RECORDTYPE</columns>
     <filterScope>Mine</filterScope>
-    <label>My Clients</label>
+    <label>My Accounts</label>
 </ListView>
