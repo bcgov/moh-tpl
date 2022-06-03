@@ -14,6 +14,9 @@
         <members>Case.MSP_Total__c</members>
         <members>Case.Pharmacare_Total__c</members>
         <members>Case.Recovery_Amount__c</members>
+        <members>Case.Total_Case_Value__c</members>
+        <members>Case.Balance__c</members>
+        <members>Case.Recovered__c</members>
         <name>CustomField</name>
     </types>
 </Package>
