@@ -4,10 +4,18 @@
          <members>Case_Status_Reopened-1</members>
         <name>Flow</name>
     </types>
-
     -->
  <types>
-        <members>Healthcare_Cost__c.PHN__c</members>
+        <members>Case.Ambulance_Total__c</members>   
+        <members>Case.Continuing_Care_Total__c</members>
+        <members>Case.Future_Care_Total__c</members>
+        <members>Case.Hospitalization_Total__c</members>
+        <members>Case.MSP_Total__c</members>
+        <members>Case.Pharmacare_Total__c</members>
+        <members>Case.Recovery_Amount__c</members>
+        <members>Case.Total_Case_Value__c</members>
+        <members>Case.Balance__c</members>
+        <members>Case.Recovered__c</members>
         <name>CustomField</name>
-    </types> 
+    </types>
 </Package>
