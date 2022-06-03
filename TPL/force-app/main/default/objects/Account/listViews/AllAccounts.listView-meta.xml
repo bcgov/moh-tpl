@@ -6,5 +6,5 @@
     <columns>DoB__c</columns>
     <columns>ACCOUNT.RECORDTYPE</columns>
     <filterScope>Everything</filterScope>
-    <label>All Clients</label>
+    <label>All Accounts</label>
 </ListView>
