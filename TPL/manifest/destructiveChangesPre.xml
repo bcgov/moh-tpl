@@ -18,14 +18,10 @@
         <members>Case.Recovered__c</members>
         <name>CustomField</name>
     </types>
-    
-    <types>
-         <members>Update_Health_Care_Cost_Fields_On_Create</members>
-        <name>Flow</name>
-    </types>
+    -->
     <types>
         <members>Healthcare_Cost__c.Total_Original_Cost__c</members>
         <name>CustomField</name>
     </types>
--->
+
 </Package>
