@@ -60,7 +60,7 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>currentRec.Total_Original_Cost__c</assignToReference>
+            <assignToReference>currentRec.Total_Cost_Override__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>updateTotalCostOverride</elementReference>

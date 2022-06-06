@@ -386,6 +386,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Healthcare_Cost__c.Location_Responded__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Healthcare_Cost__c.Location_Type_Description__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -479,11 +484,7 @@
         <field>Healthcare_Cost__c.Total_Override__c</field>
         <readable>true</readable>
     </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Healthcare_Cost__c.Total_Original_Cost__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
+   
     <fieldPermissions>
         <editable>true</editable>
         <field>Contact.AccountId</field>
