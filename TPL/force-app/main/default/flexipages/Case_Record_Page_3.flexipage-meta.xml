@@ -120,6 +120,16 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
+                    <name>hideMarkCompleteButton</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentName>support:milestones</componentName>
+                <identifier>support_milestones</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
                     <name>tabs</name>
                     <value>Facet-3fbad90a-5c23-4b4b-a384-0c45b463eff4</value>
                 </componentInstanceProperties>
@@ -128,6 +138,10 @@
             </componentInstance>
         </itemInstances>
         <name>main</name>
+        <type>Region</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <name>sidebar</name>
         <type>Region</type>
     </flexiPageRegions>
     <masterLabel>Case_Lightning_Page_App</masterLabel>
