@@ -5,7 +5,7 @@
         <name>Flow</name>
     </types>
     -->
- <types>
+ <!--types>
         <members>Case.Ambulance_Total__c</members>   
         <members>Case.Continuing_Care_Total__c</members>
         <members>Case.Future_Care_Total__c</members>
@@ -18,4 +18,12 @@
         <members>Case.Recovered__c</members>
         <name>CustomField</name>
     </types>
+    -->
+    <types>
+         <members>Update_Health_Care_Cost_Fields_On_Create</members>
+        <name>Flow</name>
+        <members>Healthcare_Cost__c.Total_Original_Cost__c</members>
+        <name>CustomField</name>
+    </types>
+
 </Package>
