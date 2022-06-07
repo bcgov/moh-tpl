@@ -130,6 +130,10 @@
     </types>
     <types>
         <members>*</members>
+        <name>workflow</name>
+    </types>
+    <types>
+        <members>*</members>
         <name>sharingRules</name>
     </types>  
               
