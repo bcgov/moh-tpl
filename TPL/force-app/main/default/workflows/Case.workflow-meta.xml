@@ -21,7 +21,27 @@
         <reevaluateOnChange>false</reevaluateOnChange>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>case_field_update</fullName>
+        <field>Priority</field>
+        <literalValue>High</literalValue>
+        <name>case field update</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>update_case_priority</fullName>
+        <field>Priority</field>
+        <literalValue>High</literalValue>
+        <name>update case priority</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>update_priority</fullName>
         <field>Priority</field>
         <literalValue>High</literalValue>
         <name>update case priority</name>
@@ -53,6 +73,28 @@
     </tasks>
     <tasks>
         <fullName>Ultimate_limitation_for_follow_up_case</fullName>
+        <assignedToType>owner</assignedToType>
+        <dueDateOffset>0</dueDateOffset>
+        <notifyAssignee>false</notifyAssignee>
+        <offsetFromField>Case.Expected_Close_Date__c</offsetFromField>
+        <priority>Normal</priority>
+        <protected>false</protected>
+        <status>Open</status>
+        <subject>Ultimate limitation for follow-up</subject>
+    </tasks>
+    <tasks>
+        <fullName>Ultimate_limitation_for_follow_up_case_task</fullName>
+        <assignedToType>owner</assignedToType>
+        <dueDateOffset>31</dueDateOffset>
+        <notifyAssignee>false</notifyAssignee>
+        <offsetFromField>Case.Expected_Close_Date__c</offsetFromField>
+        <priority>Normal</priority>
+        <protected>false</protected>
+        <status>Open</status>
+        <subject>Ultimate limitation for follow-up</subject>
+    </tasks>
+    <tasks>
+        <fullName>Ultimate_limitation_for_follow_up_for_case</fullName>
         <assignedToType>owner</assignedToType>
         <dueDateOffset>0</dueDateOffset>
         <notifyAssignee>false</notifyAssignee>
