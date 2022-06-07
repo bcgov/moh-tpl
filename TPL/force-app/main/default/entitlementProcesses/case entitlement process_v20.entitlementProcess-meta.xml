@@ -11,19 +11,19 @@
     </exitCriteriaFilterItems>
     <isVersionDefault>false</isVersionDefault>
     <milestones>
-        <milestoneName>Expiry For a Case</milestoneName>
-        <minutesToComplete>118260</minutesToComplete>
+        <milestoneName>Case Expires In</milestoneName>
+        <minutesToComplete>43800</minutesToComplete>
         <timeTriggers>
             <actions>
-                <name>Ultimate_limitation_for_follow_up_case</name>
+                <name>Ultimate_limitation_for_follow_up_case_task</name>
                 <type>Task</type>
             </actions>
-            <timeLength>-31</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
+            <timeLength>-1</timeLength>
+            <workflowTimeTriggerUnit>Minutes</workflowTimeTriggerUnit>
         </timeTriggers>
         <timeTriggers>
             <actions>
-                <name>update_case_priority</name>
+                <name>case_field_update</name>
                 <type>FieldUpdate</type>
             </actions>
             <timeLength>1</timeLength>
@@ -33,5 +33,5 @@
     </milestones>
     <name>Case Entitlement Process</name>
     <versionMaster>552010000008PNa</versionMaster>
-    <versionNumber>6</versionNumber>
+    <versionNumber>20</versionNumber>
 </EntitlementProcess>

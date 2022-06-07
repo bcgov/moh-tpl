@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
-    <apiVersion>54.0</apiVersion>
+    <apiVersion>55.0</apiVersion>
     <assignments>
         <name>AssignEntitlementId</name>
         <label>AssignEntitlementId</label>
@@ -17,7 +17,7 @@
             <assignToReference>caseIdsingle.Expected_Close_Date__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>expectedClosedDate</elementReference>
+                <elementReference>expectedCloseDate</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -32,9 +32,9 @@
         </connector>
     </assignments>
     <formulas>
-        <name>expectedClosedDate</name>
-        <dataType>DateTime</dataType>
-        <expression>{!assignFromTheParentFlow.CreatedDate} +740</expression>
+        <name>expectedCloseDate</name>
+        <dataType>Date</dataType>
+        <expression>{!assignFromTheParentFlow.Incident_Date__c} + 793</expression>
     </formulas>
     <interviewLabel>Relating Case with the Entitlement Process {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Relating Case with the Entitlement Process</label>
