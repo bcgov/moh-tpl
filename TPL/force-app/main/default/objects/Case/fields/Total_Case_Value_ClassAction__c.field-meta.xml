@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Total_Case_Value_ClassAction__c</fullName>
+    <description>Ambulance Total + Hospitalization Total + MSP Total + Pharmacare Total + Continuing Care Total + Future Care Total)</description>
+    <externalId>false</externalId>
+    <formula>Ambulance_Total_ClassAction__c  +  Continuing_Care_Total_ClassAction__c  +  Future_Care_Total_ClassAction__c  +  Hospitalization_Total_ClassAction__c  +  MSP_Total_ClassAction__c  +  Pharmacare_Total_ClassAction__c</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Total Case Value</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Currency</type>
+</CustomField>
