@@ -3,7 +3,7 @@
     <fullName>Future_Care_Total_ClassAction__c</fullName>
     <description>sum of Future Care Healthcare costs associated with the Class Action Members (child cases)</description>
     <externalId>false</externalId>
-    <label>Future Care Total</label>
+    <label>CA Future Care Total</label>
     <precision>18</precision>
     <required>false</required>
     <scale>2</scale>

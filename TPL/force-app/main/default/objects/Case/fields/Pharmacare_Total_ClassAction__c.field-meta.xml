@@ -3,7 +3,7 @@
     <fullName>Pharmacare_Total_ClassAction__c</fullName>
     <description>sum of Pharmacare Healthcare costs associated with the Class Action Members (child cases)</description>
     <externalId>false</externalId>
-    <label>Pharmacare Total</label>
+    <label>CA Pharmacare Total</label>
     <precision>18</precision>
     <required>false</required>
     <scale>2</scale>

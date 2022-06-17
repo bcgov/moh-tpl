@@ -3,7 +3,7 @@
     <fullName>MSP_Total_ClassAction__c</fullName>
     <description>sum of MSP Healthcare costs associated with the Class Action Members (child cases)</description>
     <externalId>false</externalId>
-    <label>MSP Total</label>
+    <label>CA MSP Total</label>
     <precision>18</precision>
     <required>false</required>
     <scale>2</scale>

@@ -3,7 +3,7 @@
     <fullName>Ambulance_Total_ClassAction__c</fullName>
     <description>sum of Ambulance Healthcare costs associated with the Class Action Members (child cases)</description>
     <externalId>false</externalId>
-    <label>Ambulance Total</label>
+    <label>CA Ambulance Total</label>
     <precision>18</precision>
     <required>false</required>
     <scale>2</scale>

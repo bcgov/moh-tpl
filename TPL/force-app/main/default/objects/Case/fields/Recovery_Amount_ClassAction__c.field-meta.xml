@@ -3,7 +3,7 @@
     <fullName>Recovery_Amount_ClassAction__c</fullName>
     <description>Cannot be changed, auto calculated based on payments made to the case + the sum payments made to Class Action Members (child cases)</description>
     <externalId>false</externalId>
-    <label>Recovery Amount</label>
+    <label>CA Recovery Amount</label>
     <precision>18</precision>
     <required>false</required>
     <scale>2</scale>

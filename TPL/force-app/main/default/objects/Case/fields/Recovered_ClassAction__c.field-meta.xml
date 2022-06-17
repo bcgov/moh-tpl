@@ -5,7 +5,7 @@
     <externalId>false</externalId>
     <formula>Recovery_Amount_ClassAction__c  /  Total_Case_Value_ClassAction__c</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-    <label>Recovered %</label>
+    <label>CA Recovered %</label>
     <precision>18</precision>
     <required>false</required>
     <scale>2</scale>
