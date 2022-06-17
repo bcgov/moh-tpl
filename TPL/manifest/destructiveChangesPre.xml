@@ -20,7 +20,9 @@
     </types>
     -->
     <types>
-        <members>Healthcare_Cost__c.Total_Original_Cost__c</members>
+        <!--members>Healthcare_Cost__c.Total_Original_Cost__c</members-->
+        <members>Healthcare_Cost__c.Number_of_Days__c</members>
+        <members>Healthcare_Cost__c.Total_Costs_Standard__c</members>
         <name>CustomField</name>
     </types>
 
