@@ -5,7 +5,7 @@
     <externalId>false</externalId>
     <formula>Ambulance_Total_ClassAction__c  +  Continuing_Care_Total_ClassAction__c  +  Future_Care_Total_ClassAction__c  +  Hospitalization_Total_ClassAction__c  +  MSP_Total_ClassAction__c  +  Pharmacare_Total_ClassAction__c</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-    <label>Total Case Value</label>
+    <label>CA Total Case Value</label>
     <precision>18</precision>
     <required>false</required>
     <scale>2</scale>

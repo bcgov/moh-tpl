@@ -5,7 +5,7 @@
     <externalId>false</externalId>
     <formula>Total_Case_Value_ClassAction__c  -  Recovery_Amount_ClassAction__c</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-    <label>Balance</label>
+    <label>CA Balance</label>
     <precision>18</precision>
     <required>false</required>
     <scale>2</scale>

@@ -3,7 +3,7 @@
     <fullName>Continuing_Care_Total_ClassAction__c</fullName>
     <description>sum of Continuing Care Healthcare costs associated with the Class Action Members (child cases)</description>
     <externalId>false</externalId>
-    <label>Continuing Care Total</label>
+    <label>CA Continuing Care Total</label>
     <precision>18</precision>
     <required>false</required>
     <scale>2</scale>
