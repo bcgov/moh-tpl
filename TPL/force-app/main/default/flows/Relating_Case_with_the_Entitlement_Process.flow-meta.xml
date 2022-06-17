@@ -2,10 +2,33 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>54.0</apiVersion>
     <assignments>
+        <name>agecalculation</name>
+        <label>agecalculation</label>
+        <locationX>698</locationX>
+        <locationY>436</locationY>
+        <assignmentItems>
+            <assignToReference>age</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>dateOfBirthCalculation</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>ageTo19</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>formulaForAgeCalculation</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>checkAge</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>AssignEntitlementId</name>
         <label>AssignEntitlementId</label>
-        <locationX>761</locationX>
-        <locationY>169</locationY>
+        <locationX>1084</locationX>
+        <locationY>194</locationY>
         <assignmentItems>
             <assignToReference>caseIdsingle.Id</assignToReference>
             <operator>Assign</operator>
@@ -31,22 +54,119 @@
             <targetReference>assignFromTheParentFlow</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <name>MilestonesCriteriaForMinors</name>
+        <label>MilestonesCriteriaForMinors</label>
+        <locationX>435</locationX>
+        <locationY>653</locationY>
+        <assignmentItems>
+            <assignToReference>caseIdsingle.Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>assignFromTheParentFlow.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>caseIdsingle.Expected_Close_Date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>expectedMilestonesCriteria</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>caseIdsingle.EntitlementId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getEntitlementRecords.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>assignFromTheParentFlow</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>checkAge</name>
+        <label>checkAge</label>
+        <locationX>809</locationX>
+        <locationY>528</locationY>
+        <defaultConnector>
+            <targetReference>MilestonesCriteriaForMinors</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>checkAgeCalculation</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>age</leftValueReference>
+                <operator>GreaterThanOrEqualTo</operator>
+                <rightValue>
+                    <numberValue>19.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AssignEntitlementId</targetReference>
+            </connector>
+            <label>checkAgeCalculation</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>checkRecordTypeOfCases</name>
+        <label>checkRecordTypeOfCases</label>
+        <locationX>556</locationX>
+        <locationY>357</locationY>
+        <defaultConnector>
+            <targetReference>assignFromTheParentFlow</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>checkRecordTypeCase</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>assignFromTheParentFlow.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Individual</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>agecalculation</targetReference>
+            </connector>
+            <label>checkRecordTypeCase</label>
+        </rules>
+    </decisions>
+    <formulas>
+        <name>dateOfBirthCalculation</name>
+        <dataType>Number</dataType>
+        <expression>YEAR(Today())-YEAR({!assignFromTheParentFlow.Account.DoB__c})</expression>
+        <scale>0</scale>
+    </formulas>
     <formulas>
         <name>expectedCloseDate</name>
         <dataType>Date</dataType>
         <expression>{!assignFromTheParentFlow.Incident_Date__c} + 793</expression>
+    </formulas>
+    <formulas>
+        <name>expectedMilestonesCriteria</name>
+        <dataType>Date</dataType>
+        <expression>{!assignFromTheParentFlow.Account.DoB__c} + 7732</expression>
+    </formulas>
+    <formulas>
+        <name>formulaForAgeCalculation</name>
+        <dataType>Number</dataType>
+        <expression>19-{!age}</expression>
+        <scale>0</scale>
     </formulas>
     <interviewLabel>Relating Case with the Entitlement Process {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Relating Case with the Entitlement Process</label>
     <loops>
         <name>assignFromTheParentFlow</name>
         <label>assignFromTheParentFlow</label>
-        <locationX>574</locationX>
-        <locationY>180</locationY>
+        <locationX>447</locationX>
+        <locationY>250</locationY>
         <collectionReference>collectionCaseIds</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
-            <targetReference>AssignEntitlementId</targetReference>
+            <targetReference>checkRecordTypeOfCases</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
             <targetReference>updateExpectedClosedDate</targetReference>
@@ -74,8 +194,8 @@
     <recordLookups>
         <name>getEntitlementRecords</name>
         <label>getEntitlementRecords</label>
-        <locationX>393</locationX>
-        <locationY>91</locationY>
+        <locationX>210</locationX>
+        <locationY>171</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>assignFromTheParentFlow</targetReference>
@@ -95,8 +215,8 @@
     <recordUpdates>
         <name>updateExpectedClosedDate</name>
         <label>updateExpectedClosedDate</label>
-        <locationX>453</locationX>
-        <locationY>314</locationY>
+        <locationX>317</locationX>
+        <locationY>393</locationY>
         <inputReference>caseIdsingle</inputReference>
     </recordUpdates>
     <start>
@@ -107,6 +227,22 @@
         </connector>
     </start>
     <status>Active</status>
+    <variables>
+        <name>age</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>2</scale>
+    </variables>
+    <variables>
+        <name>ageTo19</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>0</scale>
+    </variables>
     <variables>
         <name>allCaseIDs</name>
         <dataType>SObject</dataType>
