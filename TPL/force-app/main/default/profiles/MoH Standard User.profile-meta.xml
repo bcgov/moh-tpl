@@ -263,11 +263,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Case.Language</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Case.Last_day_of_Service__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -354,11 +349,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Case.SlaStartDate</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Case.SourceId</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
