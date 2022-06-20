@@ -25,30 +25,6 @@
         <members>Healthcare_Cost__c.Total_Costs_Standard__c</members>
         <name>CustomField</name>
     </types-->
-
-    <types>
-        <members>Case.Language</members>
-        <members>Case.SourceId</members>
-        <name>CustomField</name>
-    </types>
-    <types>
-        <members>Case.workflow</members>
-        <name>workflow</name>
-    </types>
-    <types>
-        <members>Case.workflow</members>
-        <name>workflow</name>
-    </types>
-    <types>
-        <members>Expiry For a Case</members>
-        <members>Case Expires In</members>
-        <name>MilestoneType</name>
-    </types>
-    <types>
-        <members>case entitlement process_v20</members>
-        <name>EntitlementProcess</name>
-    </types>
-
     
 
 </Package>
