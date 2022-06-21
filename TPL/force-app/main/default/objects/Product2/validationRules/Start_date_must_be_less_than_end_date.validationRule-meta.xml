@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Start_date_must_be_less_than_end_date</fullName>
+    <active>true</active>
+    <description>Effective start date &lt; Effective end date</description>
+    <errorConditionFormula>Effective_Start_Date__c &lt;  Effective_End_Date__c</errorConditionFormula>
+    <errorMessage>Effective end date must be after effective start date.</errorMessage>
+</ValidationRule>
