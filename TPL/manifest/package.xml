@@ -110,6 +110,14 @@
     </types>
     <types>
         <members>*</members>
+        <name>DashboardFolder</name>
+    </types>
+    <types>
+        <members>*</members>
+        <name>Dashboard</name>
+    </types>
+    <types>
+        <members>*</members>
         <name>EntitlementProcess</name>
     </types> 
     <types>
