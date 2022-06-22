@@ -106,13 +106,6 @@
                 <elementReference>Loop_through_Child_cases.Pharmacare_Total__c</elementReference>
             </value>
         </assignmentItems>
-        <assignmentItems>
-            <assignToReference>PaymentAmountTotal</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <elementReference>Loop_through_Child_cases.Recovery_Amount__c</elementReference>
-            </value>
-        </assignmentItems>
         <connector>
             <targetReference>Loop_through_Child_cases</targetReference>
         </connector>
@@ -205,8 +198,22 @@
             </connector>
             <label>Yes</label>
         </rules>
+        <rules>
+            <name>NO</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Loop_through_Child_cases.ParentId</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>Loop_through_Grandparent_cases.Id</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Loop_through_Child_cases</targetReference>
+            </connector>
+            <label>NO</label>
+        </rules>
     </decisions>
-    <description></description>
     <interviewLabel>Summary Calculation of related HealthCare Cost {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Summary Calculation of related HealthCare Cost</label>
     <loops>
@@ -270,7 +277,7 @@
             <targetReference>Loop_through_Grandparent_cases</targetReference>
         </connector>
     </start>
-    <status>Obsolete</status>
+    <status>Active</status>
     <variables>
         <name>ambulanceTotal</name>
         <dataType>Currency</dataType>
