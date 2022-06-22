@@ -4,8 +4,8 @@
     <assignments>
         <name>assignToCollection</name>
         <label>assignToCollection</label>
-        <locationX>50</locationX>
-        <locationY>575</locationY>
+        <locationX>276</locationX>
+        <locationY>623</locationY>
         <assignmentItems>
             <assignToReference>caseCollection</assignToReference>
             <operator>Assign</operator>
@@ -20,13 +20,27 @@
     <assignments>
         <name>assignToCollection_0</name>
         <label>assignToCollection</label>
-        <locationX>314</locationX>
-        <locationY>575</locationY>
+        <locationX>697</locationX>
+        <locationY>649</locationY>
         <assignmentItems>
             <assignToReference>caseCollection</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>getRecordsOfCase</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>parentCaseCollection</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getParentCase</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>allChildCase</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getAllChildCases</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -36,8 +50,8 @@
     <decisions>
         <name>Check_for_the_create_and_update</name>
         <label>Check for the create and update</label>
-        <locationX>314</locationX>
-        <locationY>335</locationY>
+        <locationX>584</locationX>
+        <locationY>383</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>checkForCreate</name>
@@ -70,6 +84,28 @@
             <label>checkForUpdate</label>
         </rules>
     </decisions>
+    <decisions>
+        <name>Decide_if_Individual_Case</name>
+        <label>Decide if Individual Case</label>
+        <locationX>541</locationX>
+        <locationY>925</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Is_Individual_case</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.ParentId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Summary_Calculation_of_related_HealthCare_Cost</targetReference>
+            </connector>
+            <label>Is Individual case</label>
+        </rules>
+    </decisions>
     <interviewLabel>Parent Flow For Health Care Cost {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Parent Flow For Case Object</label>
     <processMetadataValues>
@@ -81,7 +117,7 @@
     <processMetadataValues>
         <name>CanvasMode</name>
         <value>
-            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
         </value>
     </processMetadataValues>
     <processMetadataValues>
@@ -92,10 +128,52 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <recordLookups>
+        <name>getAllChildCases</name>
+        <label>getAllChildCases</label>
+        <locationX>880</locationX>
+        <locationY>734</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>assignToCollection_0</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>ParentId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.ParentId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>getParentCase</name>
+        <label>getParentCase</label>
+        <locationX>988</locationX>
+        <locationY>650</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>getAllChildCases</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.ParentId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>getRecordsOfCase</name>
         <label>getRecordsOfCase</label>
-        <locationX>50</locationX>
-        <locationY>455</locationY>
+        <locationX>276</locationX>
+        <locationY>503</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>assignToCollection</targetReference>
@@ -115,11 +193,11 @@
     <recordLookups>
         <name>getRecordsOfCase_0</name>
         <label>getRecordsOfCase</label>
-        <locationX>314</locationX>
-        <locationY>455</locationY>
+        <locationX>807</locationX>
+        <locationY>496</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>assignToCollection_0</targetReference>
+            <targetReference>getParentCase</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -134,8 +212,8 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <start>
-        <locationX>188</locationX>
-        <locationY>0</locationY>
+        <locationX>458</locationX>
+        <locationY>48</locationY>
         <connector>
             <targetReference>Check_for_the_create_and_update</targetReference>
         </connector>
@@ -147,8 +225,8 @@
     <subflows>
         <name>case_relation_with_entitlement_process</name>
         <label>case relation with entitlement process</label>
-        <locationX>50</locationX>
-        <locationY>695</locationY>
+        <locationX>276</locationX>
+        <locationY>743</locationY>
         <flowName>Relating_Case_with_the_Entitlement_Process</flowName>
         <inputAssignments>
             <name>collectionCaseIds</name>
@@ -161,8 +239,11 @@
     <subflows>
         <name>case_relation_with_entitlement_process_0</name>
         <label>case relation with entitlement process</label>
-        <locationX>314</locationX>
-        <locationY>695</locationY>
+        <locationX>551</locationX>
+        <locationY>771</locationY>
+        <connector>
+            <targetReference>Decide_if_Individual_Case</targetReference>
+        </connector>
         <flowName>Relating_Case_with_the_Entitlement_Process</flowName>
         <inputAssignments>
             <name>collectionCaseIds</name>
@@ -172,8 +253,44 @@
         </inputAssignments>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </subflows>
+    <subflows>
+        <name>Summary_Calculation_of_related_HealthCare_Cost</name>
+        <label>Summary Calculation of related HealthCare Cost</label>
+        <locationX>786</locationX>
+        <locationY>872</locationY>
+        <flowName>Summary_Calculation_of_related_HealthCare_Cost</flowName>
+        <inputAssignments>
+            <name>childCases</name>
+            <value>
+                <elementReference>allChildCase</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>grandParentCases</name>
+            <value>
+                <elementReference>parentCaseCollection</elementReference>
+            </value>
+        </inputAssignments>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </subflows>
+    <variables>
+        <name>allChildCase</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+        <objectType>Case</objectType>
+    </variables>
     <variables>
         <name>caseCollection</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+        <objectType>Case</objectType>
+    </variables>
+    <variables>
+        <name>parentCaseCollection</name>
         <dataType>SObject</dataType>
         <isCollection>true</isCollection>
         <isInput>true</isInput>
