@@ -10,16 +10,6 @@
         <operation>equals</operation>
         <value>Future Care</value>
     </summaryFilterItems>
-    <summaryFilterItems>
-        <field>Healthcare_Cost__c.Cost_Include__c</field>
-        <operation>equals</operation>
-        <value>True</value>
-    </summaryFilterItems>
-    <summaryFilterItems>
-        <field>Healthcare_Cost__c.Cost_Review__c</field>
-        <operation>equals</operation>
-        <value>True</value>
-    </summaryFilterItems>
     <summaryForeignKey>Healthcare_Cost__c.Case__c</summaryForeignKey>
     <summaryOperation>sum</summaryOperation>
     <trackHistory>false</trackHistory>
