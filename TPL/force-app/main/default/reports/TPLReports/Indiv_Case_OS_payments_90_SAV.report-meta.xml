@@ -3,14 +3,32 @@
     <buckets>
         <bucketType>picklist</bucketType>
         <developerName>BucketField_25776678</developerName>
-        <masterLabel>Closed</masterLabel>
+        <masterLabel>Closed/Open</masterLabel>
         <nullTreatment>n</nullTreatment>
         <sourceColumnName>STATUS</sourceColumnName>
         <useOther>false</useOther>
         <values>
+            <sourceValues>
+                <sourceValue>Closed</sourceValue>
+            </sourceValues>
             <value>Closed</value>
         </values>
         <values>
+            <sourceValues>
+                <sourceValue>Open</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Adjudicating</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Waiting Payment</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Payment Received</sourceValue>
+            </sourceValues>
+            <sourceValues>
+                <sourceValue>Reopened</sourceValue>
+            </sourceValues>
             <value>Open (Not Closed)</value>
         </values>
     </buckets>
