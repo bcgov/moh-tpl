@@ -13,17 +13,12 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Account.DoB__c</field>
+        <field>Contact.Gender__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Account.Gender__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Account.PHN__c</field>
+        <field>Contact.PHN__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
