@@ -317,10 +317,10 @@
         <numberOfColumns>12</numberOfColumns>
         <rowHeight>36</rowHeight>
     </dashboardGridLayout>
-    <dashboardType>SpecifiedUser</dashboardType>
+    <dashboardType>LoggedInUser</dashboardType>
     <description>TPL Outstanding Payment Dashboard</description>
     <isGridLayout>true</isGridLayout>
-    <runningUser>crystal.zhu@omni.com</runningUser>
+    <runningUser>admin.user@gov.bc.ca.bcmohtpl.tplqa</runningUser>
     <textColor>#000000</textColor>
     <title>TPL Outstanding Payment Dashboard</title>
     <titleColor>#000000</titleColor>
