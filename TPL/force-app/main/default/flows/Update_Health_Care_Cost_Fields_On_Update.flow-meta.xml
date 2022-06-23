@@ -72,7 +72,7 @@
             <assignToReference>CurrentHealthCareCost.PHN__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>LoopThroughHealthCareCost.Case__r.Contact.Account.PHN__c</elementReference>
+                <elementReference>loop_updated_HealthCareCosts.Case__r.Contact.PHN__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>

@@ -134,10 +134,11 @@
             <label>checkRecordTypeCase</label>
         </rules>
     </decisions>
+    <description>Date of Birth field updated from Account to Contact level.</description>
     <formulas>
         <name>dateOfBirthCalculation</name>
         <dataType>Number</dataType>
-        <expression>YEAR(Today())-YEAR({!assignFromTheParentFlow.Account.DoB__c})</expression>
+        <expression>YEAR(Today())-YEAR({!assignFromTheParentFlow.Contact.Date_of_Birth__c})</expression>
         <scale>0</scale>
     </formulas>
     <formulas>
@@ -148,7 +149,7 @@
     <formulas>
         <name>expectedMilestonesCriteria</name>
         <dataType>Date</dataType>
-        <expression>{!assignFromTheParentFlow.Account.DoB__c} + 7732</expression>
+        <expression>{!assignFromTheParentFlow.Contact.Date_of_Birth__c} + 7732</expression>
     </formulas>
     <formulas>
         <name>formulaForAgeCalculation</name>

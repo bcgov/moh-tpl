@@ -74,12 +74,12 @@
         <name>AssigningPHN</name>
         <label>AssigningPHN</label>
         <locationX>960</locationX>
-        <locationY>165</locationY>
+        <locationY>164</locationY>
         <assignmentItems>
             <assignToReference>CurrentHealthCareCost.PHN__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>LoopThroughHealthCareCost.Case__r.Contact.Account.PHN__c</elementReference>
+                <elementReference>loop_updated_HealthCareCosts.Case__r.Contact.PHN__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -203,8 +203,8 @@
     <recordLookups>
         <name>Get_Price_Book_Entry</name>
         <label>Get Price Book Entry</label>
-        <locationX>230</locationX>
-        <locationY>415</locationY>
+        <locationX>229</locationX>
+        <locationY>416</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>loop_updated_HealthCareCosts</targetReference>
