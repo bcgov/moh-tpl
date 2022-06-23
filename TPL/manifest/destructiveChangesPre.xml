@@ -26,5 +26,20 @@
         <name>CustomField</name>
     </types-->
     
+    <types>
+        <members>Account.PHN__c</members>
+        <members>Account.Gender__c</members>
+        <members>Account.DoB__c</members>
+        <members>Contact.PHN__c</members>
+        <name>CustomField</name>
+    </types>
+    <types>
+         <members>Parent_Flow_For_Case_Object</members>
+         <members>Parent_Flow_For_Health_Care_Cost</members>
+         <members>Relating_Case_with_the_Entitlement_Process</members>
+         <members>Update_Health_Care_Cost_Fields_On_Create</members>
+         <members>Update_Health_Care_Cost_Fields_On_Update</members>
+        <name>Flow</name>
+    </types>
 
 </Package>
