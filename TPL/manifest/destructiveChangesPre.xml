@@ -34,6 +34,8 @@
         <name>CustomField</name>
     </types>
     <types>
+         <members>Parent_Flow_For_Case_Object</members>
+         <members>Parent_Flow_For_Health_Care_Cost</members>
          <members>Relating_Case_with_the_Entitlement_Process</members>
          <members>Update_Health_Care_Cost_Fields_On_Create</members>
          <members>Update_Health_Care_Cost_Fields_On_Update</members>
