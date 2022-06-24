@@ -2,6 +2,7 @@
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Continuing_Care</fullName>
     <active>true</active>
+    <compactLayoutAssignment>Continuing_Future_Care</compactLayoutAssignment>
     <label>Continuing Care</label>
     <picklistValues>
         <picklist>Line_Type__c</picklist>
