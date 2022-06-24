@@ -2,6 +2,7 @@
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>MSP</fullName>
     <active>true</active>
+    <compactLayoutAssignment>MSP</compactLayoutAssignment>
     <label>MSP</label>
     <picklistValues>
         <picklist>Line_Type__c</picklist>

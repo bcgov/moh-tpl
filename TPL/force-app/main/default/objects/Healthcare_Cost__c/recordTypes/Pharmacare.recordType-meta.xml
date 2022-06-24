@@ -2,6 +2,7 @@
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Pharmacare</fullName>
     <active>true</active>
+    <compactLayoutAssignment>Pharmacare</compactLayoutAssignment>
     <label>Pharmacare</label>
     <picklistValues>
         <picklist>Line_Type__c</picklist>

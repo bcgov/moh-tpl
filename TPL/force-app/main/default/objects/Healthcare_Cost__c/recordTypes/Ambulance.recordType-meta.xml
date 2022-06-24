@@ -2,6 +2,7 @@
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Ambulance</fullName>
     <active>true</active>
+    <compactLayoutAssignment>Ambulance</compactLayoutAssignment>
     <label>Ambulance</label>
     <picklistValues>
         <picklist>Line_Type__c</picklist>
