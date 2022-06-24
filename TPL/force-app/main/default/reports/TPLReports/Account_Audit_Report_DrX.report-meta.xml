@@ -7,7 +7,7 @@
         <field>ACCOUNT.NAME</field>
     </columns>
     <columns>
-        <field>Account.PHN__c</field>
+        <field>Contact.PHN__c</field>
     </columns>
     <columns>
         <field>RECORDTYPE</field>
