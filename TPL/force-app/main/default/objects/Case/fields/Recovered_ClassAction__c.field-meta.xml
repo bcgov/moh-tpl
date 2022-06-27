@@ -3,7 +3,7 @@
     <fullName>Recovered_ClassAction__c</fullName>
     <description>Cannot be changed, auto calculated, Formula: (Recovery Amt/Total Case Value)*100</description>
     <externalId>false</externalId>
-    <formula>Recovery_Amount_ClassAction__c  /  Total_Case_Value_ClassAction__c</formula>
+    <formula>Total_Recovery_Amount__c / Total_Case_Value__c</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>CA Recovered %</label>
     <precision>18</precision>
