@@ -16,6 +16,7 @@
         <members>Case.Total_Case_Value__c</members>
         <members>Case.Balance__c</members>
         <members>Case.Recovered__c</members>
+        <members>Case.Recovery_Amount_ClassAction__c</members>
         <name>CustomField</name>
     </types>
     -->
@@ -26,7 +27,7 @@
         <name>CustomField</name>
     </types-->
     
-    <types>
+    <!--types>
         <members>Account.PHN__c</members>
         <members>Account.Gender__c</members>
         <members>Account.DoB__c</members>
@@ -40,6 +41,11 @@
          <members>Update_Health_Care_Cost_Fields_On_Create</members>
          <members>Update_Health_Care_Cost_Fields_On_Update</members>
         <name>Flow</name>
+    </types>
+    -->
+     <types>
+        <members>Case.Recovery_Amount_ClassAction__c</members>
+        <name>CustomField</name>
     </types>
 
 </Package>
