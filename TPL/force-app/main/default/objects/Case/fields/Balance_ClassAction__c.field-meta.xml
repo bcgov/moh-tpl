@@ -3,7 +3,7 @@
     <fullName>Balance_ClassAction__c</fullName>
     <description>Cannot be changed, auto calculated, Formula: Total Case Value - Recovery Amt</description>
     <externalId>false</externalId>
-    <formula>Total_Case_Value_ClassAction__c  -  Recovery_Amount_ClassAction__c</formula>
+    <formula>Total_Case_Value_ClassAction__c  -   Total_Recovery_Amount__c</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>CA Balance</label>
     <precision>18</precision>
