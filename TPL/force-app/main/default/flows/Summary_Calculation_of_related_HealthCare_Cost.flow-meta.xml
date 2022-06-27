@@ -55,6 +55,13 @@
                 <elementReference>PharmacareTotal</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>parentCase.Related_Cases_Recovery_Amount__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Related_Cases_Recovery_Amount</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>parentCasesToUpdate</targetReference>
         </connector>
@@ -107,7 +114,7 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>PaymentAmountTotal</assignToReference>
+            <assignToReference>Related_Cases_Recovery_Amount</assignToReference>
             <operator>Add</operator>
             <value>
                 <elementReference>Loop_through_Child_cases.Recovery_Amount__c</elementReference>
@@ -180,6 +187,13 @@
                 <numberValue>0.0</numberValue>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Related_Cases_Recovery_Amount</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <numberValue>0.0</numberValue>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Loop_through_Grandparent_cases</targetReference>
         </connector>
@@ -205,8 +219,23 @@
             </connector>
             <label>Yes</label>
         </rules>
+        <rules>
+            <name>NO</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Loop_through_Child_cases.ParentId</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>Loop_through_Grandparent_cases.Id</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Loop_through_Child_cases</targetReference>
+            </connector>
+            <label>NO</label>
+        </rules>
     </decisions>
-    <description></description>
+    <description>This flow will calculate the sum of Healthcare cost and payments made on child cases (Individual Cases) and display on parent case (Class Action)</description>
     <interviewLabel>Summary Calculation of related HealthCare Cost {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Summary Calculation of related HealthCare Cost</label>
     <loops>
@@ -270,7 +299,7 @@
             <targetReference>Loop_through_Grandparent_cases</targetReference>
         </connector>
     </start>
-    <status>Obsolete</status>
+    <status>Active</status>
     <variables>
         <name>ambulanceTotal</name>
         <dataType>Currency</dataType>
@@ -345,6 +374,14 @@
     </variables>
     <variables>
         <name>PharmacareTotal</name>
+        <dataType>Currency</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+        <scale>2</scale>
+    </variables>
+    <variables>
+        <name>Related_Cases_Recovery_Amount</name>
         <dataType>Currency</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
