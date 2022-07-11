@@ -39,10 +39,6 @@
         <field>ACCOUNT.NAME</field>
     </columns>
     <columns>
-        <aggregateTypes>Sum</aggregateTypes>
-        <field>Case.Recovery_Amount_ClassAction__c</field>
-    </columns>
-    <columns>
         <field>Case.Incident_Date__c</field>
     </columns>
     <columns>
@@ -79,6 +75,10 @@
         <aggregateTypes>Sum</aggregateTypes>
         <field>CDF1</field>
     </columns>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>Case.Total_Recovery_Amount__c</field>
+    </columns>
     <customDetailFormulas>
         <calculatedFormula>IF ((TODAY()-Case.Settlement_Date__c &gt;= 90), 1, 0)</calculatedFormula>
         <dataType>Double</dataType>
@@ -104,7 +104,7 @@
             <value>Case.Class_Action</value>
         </criteriaItems>
         <criteriaItems>
-            <column>Case.Recovery_Amount_ClassAction__c</column>
+            <column>Case.Total_Recovery_Amount__c</column>
             <columnToColumn>false</columnToColumn>
             <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
