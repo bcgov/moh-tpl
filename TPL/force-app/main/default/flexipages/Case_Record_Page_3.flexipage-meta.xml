@@ -63,14 +63,14 @@
                     <name>showActionBar</name>
                     <value>true</value>
                 </componentInstanceProperties>
-                <componentName>force:relatedListContainer</componentName>
-                <identifier>force_relatedListContainer</identifier>
+                <componentName>force:relatedListSingleContainer</componentName>
+                <identifier>force_relatedListSingleContainer</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-1202cc6d-c850-4982-8f3f-dc37c70c1a13</name>
         <type>Facet</type>
     </flexiPageRegions>
-    <flexiPageRegions>
+    <!--<flexiPageRegions>
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
@@ -99,7 +99,7 @@
         </itemInstances>
         <name>Facet-69012502-a525-4029-9f49-72384b8db058</name>
         <type>Facet</type>
-    </flexiPageRegions>
+    </flexiPageRegions> -->
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
@@ -129,7 +129,7 @@
                 <identifier>flexipage_tab</identifier>
             </componentInstance>
         </itemInstances>
-        <itemInstances>
+       <!-- <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
                     <name>body</name>
@@ -142,7 +142,7 @@
                 <componentName>flexipage:tab</componentName>
                 <identifier>flexipage_tab3</identifier>
             </componentInstance>
-        </itemInstances>
+        </itemInstances> -->
         <name>Facet-3fbad90a-5c23-4b4b-a384-0c45b463eff4</name>
         <type>Facet</type>
     </flexiPageRegions>
