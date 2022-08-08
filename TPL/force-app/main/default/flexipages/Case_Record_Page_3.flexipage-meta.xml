@@ -70,36 +70,6 @@
         <name>Facet-1202cc6d-c850-4982-8f3f-dc37c70c1a13</name>
         <type>Facet</type>
     </flexiPageRegions>
-    <!--<flexiPageRegions>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>dir</name>
-                    <value>ltr</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>inline</name>
-                    <value>false</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>inlineLabel</name>
-                    <value>Launch docGenerationSample/fndSingleDocxLwc</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>inlineVariant</name>
-                    <value>brand</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>layout</name>
-                    <value>lightning</value>
-                </componentInstanceProperties>
-                <componentName>docGenerationSampleFndSingleDocxLwcEnglish</componentName>
-                <identifier>c_docGenerationSampleFndSingleDocxLwcEnglish</identifier>
-            </componentInstance>
-        </itemInstances>
-        <name>Facet-69012502-a525-4029-9f49-72384b8db058</name>
-        <type>Facet</type>
-    </flexiPageRegions> -->
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
@@ -129,20 +99,6 @@
                 <identifier>flexipage_tab</identifier>
             </componentInstance>
         </itemInstances>
-       <!-- <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>body</name>
-                    <value>Facet-69012502-a525-4029-9f49-72384b8db058</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>title</name>
-                    <value>Document Generation</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:tab</componentName>
-                <identifier>flexipage_tab3</identifier>
-            </componentInstance>
-        </itemInstances> -->
         <name>Facet-3fbad90a-5c23-4b4b-a384-0c45b463eff4</name>
         <type>Facet</type>
     </flexiPageRegions>
