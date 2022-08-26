@@ -86,7 +86,6 @@
     <label>Third Party Liability</label>
     <navType>Standard</navType>
     <tabs>standard-Account</tabs>
-    <tabs>standard-Contact</tabs>
     <tabs>standard-Case</tabs>
     <tabs>Batch__c</tabs>
     <tabs>Payment__c</tabs>
