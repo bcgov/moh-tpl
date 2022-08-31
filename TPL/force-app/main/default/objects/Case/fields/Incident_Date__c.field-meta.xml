@@ -3,6 +3,7 @@
     <fullName>Incident_Date__c</fullName>
     <defaultValue>TODAY()</defaultValue>
     <externalId>false</externalId>
+    <inlineHelpText>Date Format : YYYY-MM-DD</inlineHelpText>
     <label>Incident Date</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
