@@ -3,7 +3,7 @@
     <fullName>Individual</fullName>
     <active>true</active>
     <businessProcess>Individual</businessProcess>
-    <description>This is for Private, Motor Vehicle or Class Action Memeber Case</description>
+    <description>This is for Private, Motor Vehicle or Class Action Member Case</description>
     <label>Individual</label>
     <picklistValues>
         <picklist>Case_Category__c</picklist>
