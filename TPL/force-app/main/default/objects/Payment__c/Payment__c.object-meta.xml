@@ -156,9 +156,10 @@
     <externalSharingModel>ControlledByParent</externalSharingModel>
     <label>Payment</label>
     <nameField>
+        <displayFormat>P-{0000}</displayFormat>
         <label>Payment Name</label>
         <trackHistory>false</trackHistory>
-        <type>Text</type>
+        <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Payments</pluralLabel>
     <searchLayouts></searchLayouts>
