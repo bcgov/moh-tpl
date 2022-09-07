@@ -40,11 +40,11 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Cost_Review__c</field>
+                <field>Cost_Include__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Cost_Include__c</field>
+                <field>Cost_Review__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
