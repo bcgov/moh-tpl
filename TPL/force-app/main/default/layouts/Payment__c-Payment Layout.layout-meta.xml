@@ -8,12 +8,12 @@
         <label>Information</label>
         <layoutColumns>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Batch_Number__c</field>
+                <behavior>Readonly</behavior>
+                <field>Name</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
-                <field>Name</field>
+                <field>Batch_Number__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
@@ -102,7 +102,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h01000000S4ZV</masterLabel>
+        <masterLabel>00h7g000001mEmf</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>
