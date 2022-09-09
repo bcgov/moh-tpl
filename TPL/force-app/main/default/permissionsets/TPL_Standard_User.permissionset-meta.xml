@@ -107,6 +107,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.ContactName__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Case.Continuing_Care_Total_ClassAction__c</field>
         <readable>true</readable>
@@ -199,6 +204,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.ParentId</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.PHN__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
