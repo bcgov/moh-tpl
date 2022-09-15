@@ -2,7 +2,7 @@
 <SharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
     <sharingOwnerRules>
         <fullName>OmniProcessTransientDataSharingwithTPLUsers</fullName>
-        <accessLevel>Read</accessLevel>
+        <accessLevel>Edit</accessLevel>
         <label>OmniProcessTransientDataSharingwithTPLUsers</label>
         <sharedTo>
             <roleAndSubordinates>TPL_Manager</roleAndSubordinates>
