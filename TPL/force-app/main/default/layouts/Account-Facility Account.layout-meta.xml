@@ -20,6 +20,10 @@
                 <field>Status__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Deactivation_Date__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Required</behavior>
                 <field>Type</field>
             </layoutItems>
@@ -56,7 +60,7 @@
         <layoutColumns/>
         <style>CustomLinks</style>
     </layoutSections>
-       <relatedLists>
+    <relatedLists>
         <fields>PRODUCT2.NAME</fields>
         <fields>PRODUCT2.ACTIVE</fields>
         <relatedList>Product2.Account__c</relatedList>
@@ -68,7 +72,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h52000002TyfW</masterLabel>
+        <masterLabel>00h6s000000S2IA</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>
