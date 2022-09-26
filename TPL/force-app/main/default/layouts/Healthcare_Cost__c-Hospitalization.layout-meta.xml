@@ -59,7 +59,7 @@
                 <field>Facility__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Required</behavior>
                 <field>Date_of_Admission__c</field>
             </layoutItems>
             <layoutItems>
@@ -114,7 +114,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h7g000001mFN2</masterLabel>
+        <masterLabel>00h6s000000S2IF</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>1</sizeY>
         <summaryLayoutItems>
