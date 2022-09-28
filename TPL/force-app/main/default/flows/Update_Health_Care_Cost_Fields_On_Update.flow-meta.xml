@@ -72,7 +72,7 @@
             <assignToReference>CurrentHealthCareCost.PHN__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>loop_updated_HealthCareCosts.Case__r.Contact.PHN__c</elementReference>
+                <elementReference>LoopThroughHealthCareCost.Case__r.Account.PersonContact.PHN__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -123,7 +123,8 @@
             <label>No Product Match</label>
         </rules>
     </decisions>
-    <description>This is the subflow which would be called based on the update done on the Health Care Cost Object.</description>
+    <description>This is the subflow which would be called based on the update done on the Health Care Cost Object.
+Update to PHN Value reference</description>
     <interviewLabel>Update Health Care Cost Fields On Update {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Update Health Care Cost Fields On Update</label>
     <loops>
