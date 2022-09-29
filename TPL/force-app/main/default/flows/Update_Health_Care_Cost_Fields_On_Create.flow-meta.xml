@@ -79,7 +79,7 @@
             <assignToReference>CurrentHealthCareCost.PHN__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>LoopThroughHealthCareCost.Case__r.Contact.PHN__c</elementReference>
+                <elementReference>LoopThroughHealthCareCost.Case__r.Account.PersonContact.PHN__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -130,7 +130,8 @@
             <label>No Product Match</label>
         </rules>
     </decisions>
-    <description>This is the subflow which would handle the On Create event on Health Care Cost Object.</description>
+    <description>This is the subflow which would handle the On Create event on Health Care Cost Object.
+Update to PHN Value reference</description>
     <formulas>
         <name>updateTotalCostOverride</name>
         <dataType>Number</dataType>

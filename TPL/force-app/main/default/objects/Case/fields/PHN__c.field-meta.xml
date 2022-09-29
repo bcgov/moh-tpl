@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>PHN__c</fullName>
     <externalId>false</externalId>
-    <formula>IF( Account.IsPersonAccount , Contact.PHN__c , NULL)</formula>
+    <formula>IF( Account.IsPersonAccount , Account.PersonContact.PHN__c , NULL)</formula>
     <label>PHN</label>
     <required>false</required>
     <trackHistory>false</trackHistory>
