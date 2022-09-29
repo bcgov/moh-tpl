@@ -43,9 +43,14 @@
         <name>Flow</name>
     </types>
     -->
-     <types>
+     <!--types>
         <members>Case.Recovery_Amount_ClassAction__c</members>
         <name>CustomField</name>
+    </types>
+    -->
+        <types>
+         <members>Update_Account_Status_to_Active</members>
+        <name>Flow</name>
     </types>
 
 </Package>
