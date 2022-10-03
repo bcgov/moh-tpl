@@ -14,7 +14,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Update_Account_Status_to_Active</targetReference>
+            <targetReference>Update_Account_Status_to_Active1</targetReference>
         </connector>
     </assignments>
     <assignments>
