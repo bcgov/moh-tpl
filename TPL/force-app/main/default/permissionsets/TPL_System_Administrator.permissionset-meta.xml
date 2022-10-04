@@ -188,6 +188,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.ContactId</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.ContactName__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
