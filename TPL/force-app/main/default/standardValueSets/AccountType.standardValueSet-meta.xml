@@ -31,4 +31,19 @@
         <default>false</default>
         <label>Medical Image Facility</label>
     </standardValue>
+    <standardValue>
+        <fullName>Extended care</fullName>
+        <default>false</default>
+        <label>Extended care</label>
+    </standardValue>
+    <standardValue>
+        <fullName>General</fullName>
+        <default>false</default>
+        <label>General</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Rehabilitation</fullName>
+        <default>false</default>
+        <label>Rehabilitation</label>
+    </standardValue>
 </StandardValueSet>
