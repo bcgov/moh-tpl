@@ -717,6 +717,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Healthcare_Cost__c.Sub_Total__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Healthcare_Cost__c.Total_Cost_Override__c</field>
         <readable>true</readable>
     </fieldPermissions>
