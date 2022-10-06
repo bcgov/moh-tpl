@@ -25,6 +25,11 @@
                 <default>false</default>
                 <label>Motor Vehicle</label>
             </value>
+            <value>
+                <fullName>Non Class Action Multiple Type</fullName>
+                <default>false</default>
+                <label>Non Class Action Multiple Type</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
