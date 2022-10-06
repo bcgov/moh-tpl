@@ -552,6 +552,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Healthcare_Cost__c.Description_of_Incident__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Healthcare_Cost__c.Description_of_Service__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -633,6 +638,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Healthcare_Cost__c.Location_Type_Description__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Healthcare_Cost__c.Location_of_Incident__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
