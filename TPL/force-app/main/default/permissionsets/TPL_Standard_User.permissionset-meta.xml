@@ -109,7 +109,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Case.ContactId</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -420,6 +420,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Healthcare_Cost__c.Description_of_Incident__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Healthcare_Cost__c.Description_of_Service__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -490,7 +495,17 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Healthcare_Cost__c.Location_Type_Code__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Healthcare_Cost__c.Location_Type_Description__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Healthcare_Cost__c.Location_of_Incident__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -566,6 +581,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Healthcare_Cost__c.Standard_Daily_Rate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Healthcare_Cost__c.Sub_Total__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
