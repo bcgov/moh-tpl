@@ -121,6 +121,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Contact.Date_of_Birth__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+        <fieldPermissions>
+        <editable>false</editable>
         <field>Contact.PHN__c</field>
         <readable>false</readable>
     </fieldPermissions>
