@@ -47,10 +47,13 @@
         <members>Case.Recovery_Amount_ClassAction__c</members>
         <name>CustomField</name>
     </types>
-    -->
-        <types>
+    <types>
          <members>Update_Account_Status_to_Active</members>
         <name>Flow</name>
     </types>
-
+-->
+<types>
+        <members>Payment.Payment_Date__c</members>
+        <name>CustomField</name>
+    </types>
 </Package>
