@@ -26,11 +26,23 @@
     <picklistValues>
         <picklist>Type</picklist>
         <values>
+            <fullName>Extended care</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>General</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Hospital</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Medical Image Facility</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rehabilitation</fullName>
             <default>false</default>
         </values>
         <values>
