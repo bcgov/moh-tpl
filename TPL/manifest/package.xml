@@ -148,6 +148,11 @@
         <members>*</members>
         <name>sharingRules</name>
     </types>  
+
+    <types>
+        <members>*</members>
+        <name>Settings</name>
+    </types>
               
-    <version>55.0</version>
+    <version>56.0</version>
 </Package>
