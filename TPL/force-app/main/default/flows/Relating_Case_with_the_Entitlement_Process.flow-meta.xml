@@ -4,8 +4,8 @@
     <assignments>
         <name>agecalculation</name>
         <label>agecalculation</label>
-        <locationX>698</locationX>
-        <locationY>436</locationY>
+        <locationX>624</locationX>
+        <locationY>498</locationY>
         <assignmentItems>
             <assignToReference>age</assignToReference>
             <operator>Assign</operator>
@@ -27,8 +27,8 @@
     <assignments>
         <name>AssignEntitlementId</name>
         <label>AssignEntitlementId</label>
-        <locationX>1084</locationX>
-        <locationY>194</locationY>
+        <locationX>938</locationX>
+        <locationY>351</locationY>
         <assignmentItems>
             <assignToReference>caseIdsingle.Id</assignToReference>
             <operator>Assign</operator>
@@ -51,14 +51,14 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>assignFromTheParentFlow</targetReference>
+            <targetReference>Record_Collection_for_update</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>MilestonesCriteriaForMinors</name>
         <label>MilestonesCriteriaForMinors</label>
         <locationX>435</locationX>
-        <locationY>653</locationY>
+        <locationY>713</locationY>
         <assignmentItems>
             <assignToReference>caseIdsingle.Id</assignToReference>
             <operator>Assign</operator>
@@ -81,6 +81,22 @@
             </value>
         </assignmentItems>
         <connector>
+            <targetReference>Record_Collection_for_update</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Record_Collection_for_update</name>
+        <label>Record Collection for update</label>
+        <locationX>401</locationX>
+        <locationY>446</locationY>
+        <assignmentItems>
+            <assignToReference>ExpectedCloseDateUpdate</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>caseIdsingle</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
             <targetReference>assignFromTheParentFlow</targetReference>
         </connector>
     </assignments>
@@ -88,7 +104,7 @@
         <name>checkAge</name>
         <label>checkAge</label>
         <locationX>809</locationX>
-        <locationY>528</locationY>
+        <locationY>592</locationY>
         <defaultConnector>
             <targetReference>MilestonesCriteriaForMinors</targetReference>
         </defaultConnector>
@@ -112,8 +128,8 @@
     <decisions>
         <name>checkRecordTypeOfCases</name>
         <label>checkRecordTypeOfCases</label>
-        <locationX>556</locationX>
-        <locationY>357</locationY>
+        <locationX>571</locationX>
+        <locationY>268</locationY>
         <defaultConnector>
             <targetReference>assignFromTheParentFlow</targetReference>
         </defaultConnector>
@@ -135,10 +151,11 @@
         </rules>
     </decisions>
     <description>Date of Birth field updated from Account to Contact level.</description>
+    <environments>Default</environments>
     <formulas>
         <name>dateOfBirthCalculation</name>
         <dataType>Number</dataType>
-        <expression>YEAR(Today())-YEAR({!assignFromTheParentFlow.Contact.Date_of_Birth__c})</expression>
+        <expression>YEAR(Today())-YEAR({!assignFromTheParentFlow.Account.Date_of_Birth__pc})</expression>
         <scale>0</scale>
     </formulas>
     <formulas>
@@ -149,7 +166,7 @@
     <formulas>
         <name>expectedMilestonesCriteria</name>
         <dataType>Date</dataType>
-        <expression>{!assignFromTheParentFlow.Contact.Date_of_Birth__c} + 7732</expression>
+        <expression>{!assignFromTheParentFlow.Account.Date_of_Birth__pc} + 7732</expression>
     </formulas>
     <formulas>
         <name>formulaForAgeCalculation</name>
@@ -162,8 +179,8 @@
     <loops>
         <name>assignFromTheParentFlow</name>
         <label>assignFromTheParentFlow</label>
-        <locationX>447</locationX>
-        <locationY>250</locationY>
+        <locationX>224</locationX>
+        <locationY>233</locationY>
         <collectionReference>collectionCaseIds</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -195,8 +212,8 @@
     <recordLookups>
         <name>getEntitlementRecords</name>
         <label>getEntitlementRecords</label>
-        <locationX>210</locationX>
-        <locationY>171</locationY>
+        <locationX>303</locationX>
+        <locationY>50</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>assignFromTheParentFlow</targetReference>
@@ -216,13 +233,14 @@
     <recordUpdates>
         <name>updateExpectedClosedDate</name>
         <label>updateExpectedClosedDate</label>
-        <locationX>317</locationX>
-        <locationY>393</locationY>
-        <inputReference>caseIdsingle</inputReference>
+        <locationX>114</locationX>
+        <locationY>601</locationY>
+        <inputReference>ExpectedCloseDateUpdate</inputReference>
     </recordUpdates>
+    <runInMode>DefaultMode</runInMode>
     <start>
         <locationX>615</locationX>
-        <locationY>27</locationY>
+        <locationY>88</locationY>
         <connector>
             <targetReference>getEntitlementRecords</targetReference>
         </connector>
@@ -298,6 +316,14 @@
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>ExpectedCloseDateUpdate</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+        <objectType>Case</objectType>
     </variables>
     <variables>
         <name>test</name>
