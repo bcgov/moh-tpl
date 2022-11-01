@@ -511,6 +511,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>Healthcare_Cost__c.CCI_Level__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Healthcare_Cost__c.Case_Type__c</field>
         <readable>true</readable>
@@ -633,6 +638,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Healthcare_Cost__c.Import_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Healthcare_Cost__c.Intervention_Code_CCI__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -808,6 +818,16 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Product2.Family</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Product2.CCI_Level__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Product2.Intervention_Code_CCI__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
