@@ -26,7 +26,7 @@
             <assignToReference>caseCollection</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>getRecordsOfCase</elementReference>
+                <elementReference>getRecordsOfCase_0</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -155,6 +155,7 @@
             <label>Is Individual case</label>
         </rules>
     </decisions>
+    <environments>Default</environments>
     <interviewLabel>Parent Flow For Health Care Cost {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Parent Flow For Case Object</label>
     <processMetadataValues>
