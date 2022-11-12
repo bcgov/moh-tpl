@@ -4,8 +4,8 @@
     <assignments>
         <name>assignmentofConcatFields_0</name>
         <label>assignmentofConcatFields</label>
-        <locationX>182</locationX>
-        <locationY>455</locationY>
+        <locationX>776</locationX>
+        <locationY>503</locationY>
         <assignmentItems>
             <assignToReference>ProductFamilyRecord</assignToReference>
             <operator>Assign</operator>
@@ -34,8 +34,8 @@
     <assignments>
         <name>updateProductNameFormula</name>
         <label>updateProductNameFormula</label>
-        <locationX>50</locationX>
-        <locationY>695</locationY>
+        <locationX>398</locationX>
+        <locationY>629</locationY>
         <assignmentItems>
             <assignToReference>updatedProductName</assignToReference>
             <operator>Add</operator>
@@ -50,8 +50,8 @@
     <assignments>
         <name>updateProductNameFormula_0</name>
         <label>updateProductNameFormula</label>
-        <locationX>314</locationX>
-        <locationY>695</locationY>
+        <locationX>1105</locationX>
+        <locationY>615</locationY>
         <assignmentItems>
             <assignToReference>updatedProductName</assignToReference>
             <operator>Add</operator>
@@ -63,15 +63,53 @@
             <targetReference>updateProductName_0</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <name>updateProductNameSurgicalDaily</name>
+        <label>updateProductNameSurgicalDaily</label>
+        <locationX>778</locationX>
+        <locationY>765</locationY>
+        <assignmentItems>
+            <assignToReference>updatedProductName</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ProductNameSurgicalDaycareFormula</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>updateProductName3</targetReference>
+        </connector>
+    </assignments>
     <decisions>
         <name>checkProductFamily</name>
         <label>checkProductFamily</label>
-        <locationX>182</locationX>
-        <locationY>575</locationY>
+        <locationX>776</locationX>
+        <locationY>623</locationY>
         <defaultConnector>
             <targetReference>updateProductNameFormula_0</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>ServiceTypeCheck</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Service_Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Surgical Day Care (Daily)</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>ProductFamilyRecord</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Generic</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>updateProductNameSurgicalDaily</targetReference>
+            </connector>
+            <label>ServiceTypeCheck</label>
+        </rules>
         <rules>
             <name>ProductFamilyCheck</name>
             <conditionLogic>and</conditionLogic>
@@ -88,11 +126,17 @@
             <label>ProductFamilyCheck</label>
         </rules>
     </decisions>
-    <description>Updated the ProductFamilyUpdateFormula</description>
+    <description>Updated the Product Family with Surgical Daycare</description>
+    <environments>Default</environments>
     <formulas>
         <name>ProductFamilyUpdateFormula</name>
         <dataType>String</dataType>
         <expression>{!ServiceTypeRecord} + &apos;-&apos;+ {!EffectiveYear}</expression>
+    </formulas>
+    <formulas>
+        <name>ProductNameSurgicalDaycareFormula</name>
+        <dataType>String</dataType>
+        <expression>{!$Record.Intervention_Code_CCI__c}+&apos;-&apos;+{!ServiceTypeRecord}+&apos;-&apos;+{!EffectiveYear}</expression>
     </formulas>
     <formulas>
         <name>ProductUpdateFormulaSpecific</name>
@@ -110,7 +154,7 @@
     <processMetadataValues>
         <name>CanvasMode</name>
         <value>
-            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
         </value>
     </processMetadataValues>
     <processMetadataValues>
@@ -123,8 +167,8 @@
     <recordLookups>
         <name>getSiteCodeAccounts</name>
         <label>getSiteCodeAccounts</label>
-        <locationX>182</locationX>
-        <locationY>335</locationY>
+        <locationX>776</locationX>
+        <locationY>383</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>assignmentofConcatFields_0</targetReference>
@@ -146,8 +190,21 @@
     <recordUpdates>
         <name>updateProductName</name>
         <label>updateProductName</label>
-        <locationX>50</locationX>
-        <locationY>815</locationY>
+        <locationX>398</locationX>
+        <locationY>824</locationY>
+        <inputAssignments>
+            <field>Name</field>
+            <value>
+                <elementReference>updatedProductName</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>updateProductName3</name>
+        <label>updateProductName</label>
+        <locationX>782</locationX>
+        <locationY>915</locationY>
         <inputAssignments>
             <field>Name</field>
             <value>
@@ -159,8 +216,8 @@
     <recordUpdates>
         <name>updateProductName_0</name>
         <label>updateProductName</label>
-        <locationX>314</locationX>
-        <locationY>815</locationY>
+        <locationX>1105</locationX>
+        <locationY>812</locationY>
         <inputAssignments>
             <field>Name</field>
             <value>
@@ -170,8 +227,8 @@
         <inputReference>$Record</inputReference>
     </recordUpdates>
     <start>
-        <locationX>56</locationX>
-        <locationY>0</locationY>
+        <locationX>650</locationX>
+        <locationY>48</locationY>
         <connector>
             <targetReference>getSiteCodeAccounts</targetReference>
         </connector>
