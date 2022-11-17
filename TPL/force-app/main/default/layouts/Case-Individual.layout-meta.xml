@@ -29,11 +29,11 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>Date_of_Birth__c</field>
+                <field>PHN__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>PHN__c</field>
+                <field>Date_of_Birth__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
