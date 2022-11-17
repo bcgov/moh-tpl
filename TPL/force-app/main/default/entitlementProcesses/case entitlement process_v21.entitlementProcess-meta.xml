@@ -13,20 +13,20 @@
         <milestoneName>Case Expires In</milestoneName>
         <minutesToComplete>43800</minutesToComplete>
         <timeTriggers>
-            <timeLength>-1</timeLength>
-            <workflowTimeTriggerUnit>Minutes</workflowTimeTriggerUnit>
-        </timeTriggers>
-        <timeTriggers>
             <actions>
-                <name>Case.case_field_update</name>
+                <name>case_field_update</name>
                 <type>FieldUpdate</type>
             </actions>
             <timeLength>1</timeLength>
             <workflowTimeTriggerUnit>Minutes</workflowTimeTriggerUnit>
         </timeTriggers>
         <timeTriggers>
+            <timeLength>-1</timeLength>
+            <workflowTimeTriggerUnit>Minutes</workflowTimeTriggerUnit>
+        </timeTriggers>
+        <timeTriggers>
             <actions>
-                <name>Case.Ultimate_limitation_for_follow_up_task</name>
+                <name>Ultimate_limitation_for_follow_up_task</name>
                 <type>Task</type>
             </actions>
             <timeLength>-30</timeLength>
