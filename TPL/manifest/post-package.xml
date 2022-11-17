@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+    <types>
+        <members>*</members>
+        <name>EntitlementProcess</name>
+    </types>
+    <types>
+        <members>CaseReason</members>
+        <members>CaseStatus</members>
+        <members>CaseType</members>
+        <members>TaskSubject</members>
+        <members>AccountType</members>
+        <members>Product2Family</members>
+        <name>StandardValueSet</name>        
+    </types> 
+    <types>
+        <members>Entitlement</members>
+        <members>MyDomain</members>
+        <members>UserInterface</members>
+        <name>Settings</name>
+    </types>              
+    <version>56.0</version>
+</Package>
