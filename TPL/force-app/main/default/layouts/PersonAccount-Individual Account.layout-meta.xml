@@ -46,10 +46,7 @@
         <editHeading>true</editHeading>
         <label>Address Information</label>
         <layoutColumns>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>BillingAddress</field>
-            </layoutItems>
+          
         </layoutColumns>
         <layoutColumns/>
         <style>TwoColumnsTopToBottom</style>
