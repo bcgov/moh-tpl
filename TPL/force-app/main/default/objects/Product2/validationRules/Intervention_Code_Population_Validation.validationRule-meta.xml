@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Intervention_Code_Population_Validation</fullName>
+    <active>true</active>
+    <description>Prevent Intervention Code from Populating when Service Type not Surgical Day Care</description>
+    <errorConditionFormula>IF( ISPICKVAL( Service_Type__c , &quot;Surgical Day Care (Daily)&quot;) ,
+	ISBLANK( Intervention_Code_CCI__c ),NOT(ISBLANK( Intervention_Code_CCI__c ))
+ )</errorConditionFormula>
+    <errorDisplayField>Intervention_Code_CCI__c</errorDisplayField>
+    <errorMessage>Fill-up Intervention Code (CCI) when Service Type is Surgical Day Care. Otherwise, keep it blank.</errorMessage>
+</ValidationRule>
