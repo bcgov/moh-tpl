@@ -140,10 +140,5 @@
         <members>*</members>
         <name>sharingRules</name>
     </types>  
-    <types>
-        <members>Activities</members>
-        <members>PlatformEncryption</members>
-        <name>Settings</name>
-    </types>
     <version>56.0</version>
 </Package>

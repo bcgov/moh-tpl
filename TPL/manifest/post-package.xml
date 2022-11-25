@@ -17,6 +17,8 @@
         <members>Entitlement</members>
         <members>MyDomain</members>
         <members>UserInterface</members>
+        <members>Activities</members>
+        <members>PlatformEncryption</members>
         <name>Settings</name>
     </types>              
     <version>56.0</version>
