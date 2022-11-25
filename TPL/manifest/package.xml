@@ -118,19 +118,11 @@
     </types>
     <types>
         <members>*</members>
-        <name>EntitlementProcess</name>
-    </types> 
-    <types>
-        <members>*</members>
         <name>MilestoneType</name>
     </types>    
     <types>
         <members>*</members>
         <name>GlobalValueSet</name>
-    </types>  
-    <types>
-        <members>*</members>
-        <name>StandardValueSet</name>
     </types>  
     <types>
         <members>*</members>
@@ -148,11 +140,5 @@
         <members>*</members>
         <name>sharingRules</name>
     </types>  
-
-    <types>
-        <members>*</members>
-        <name>Settings</name>
-    </types>
-              
     <version>56.0</version>
 </Package>
