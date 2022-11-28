@@ -139,6 +139,6 @@
     <types>
         <members>*</members>
         <name>sharingRules</name>
-    </types>  
+    </types> 
     <version>56.0</version>
 </Package>

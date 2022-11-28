@@ -4,6 +4,10 @@
 
 package.xml
 
+#**sharingRules
+#**standardValueSets
+#**settings
+
 # LWC configuration files
 **/jsconfig.json
 **/.eslintrc.json

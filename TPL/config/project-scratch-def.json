@@ -1,7 +1,7 @@
 {
   "orgName": "TPL Scratch Org",
   "edition": "Developer",
-  "hasSampleData": false,
+  "hasSampleData": true,
   "features": [
     "PersonAccounts",
     "ServiceCloud",
