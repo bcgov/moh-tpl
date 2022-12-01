@@ -140,5 +140,13 @@
         <members>*</members>
         <name>sharingRules</name>
     </types>  
+    <types>
+        <members>*</members>
+        <name>Settings</name>
+    </types>
+    <types>
+        <members>*</members>
+        <name>QuickAction</name>
+    </types>   
     <version>56.0</version>
 </Package>

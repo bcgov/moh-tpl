@@ -34,7 +34,7 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Date_of_Birth__c</field>
-            </layoutItems>
+            </layoutItems>            
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -255,6 +255,14 @@
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
+    <platformActionList>
+        <actionListContext>Record</actionListContext>
+        <platformActionListItems>
+            <actionName>Case.Change_File_Owner</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>0</sortOrder>
+        </platformActionListItems>
+    </platformActionList>    
     <relatedContent>
         <relatedContentItems>
             <layoutItem>
