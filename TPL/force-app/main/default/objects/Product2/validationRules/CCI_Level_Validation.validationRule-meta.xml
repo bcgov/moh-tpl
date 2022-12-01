@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CCI_Level_Validation</fullName>
+    <active>true</active>
+    <description>Prevent Population of CCI level when Service Type not Surgical Day Care</description>
+    <errorConditionFormula>IF( ISPICKVAL( Service_Type__c , &quot;Surgical Day Care (Daily)&quot;) ,
+	NOT( OR( ISPICKVAL( CCI_Level__c, &quot;High&quot;),
+	ISPICKVAL( CCI_Level__c, &quot;Medium&quot;),
+	ISPICKVAL( CCI_Level__c,&quot;Low&quot;))),
+	OR( ISPICKVAL( CCI_Level__c, &quot;High&quot;),
+	ISPICKVAL( CCI_Level__c, &quot;Medium&quot;),
+	ISPICKVAL( CCI_Level__c,&quot;Low&quot;))
+ )</errorConditionFormula>
+    <errorDisplayField>CCI_Level__c</errorDisplayField>
+    <errorMessage>Select CCI Level when Service Type is Surgical Day Care. Otherwise, keep it empty.</errorMessage>
+</ValidationRule>
