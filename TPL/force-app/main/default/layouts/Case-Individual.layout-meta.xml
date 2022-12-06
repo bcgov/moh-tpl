@@ -24,7 +24,7 @@
                 <field>Origin</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Required</behavior>
                 <field>AccountId</field>
             </layoutItems>
             <layoutItems>
@@ -34,7 +34,7 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Date_of_Birth__c</field>
-            </layoutItems>            
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -262,7 +262,7 @@
             <actionType>QuickAction</actionType>
             <sortOrder>0</sortOrder>
         </platformActionListItems>
-    </platformActionList>    
+    </platformActionList>
     <relatedContent>
         <relatedContentItems>
             <layoutItem>
