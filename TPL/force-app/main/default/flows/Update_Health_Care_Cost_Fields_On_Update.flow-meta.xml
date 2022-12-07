@@ -64,6 +64,29 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assign_Total_Override_value</name>
+        <label>Assign Total Override value</label>
+        <locationX>1094</locationX>
+        <locationY>473</locationY>
+        <assignmentItems>
+            <assignToReference>CurrentHealthCareCost.Total_Override__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>LoopThroughHealthCareCost.Basic_Amount__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>CurrentHealthCareCost.Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>LoopThroughHealthCareCost.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>AddToCollectionHCC</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>AssigningPHN</name>
         <label>AssigningPHN</label>
         <locationX>960</locationX>
@@ -83,9 +106,34 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>AddToCollectionHCC</targetReference>
+            <targetReference>Check_for_Total_Override_field_on_Ambulance_record</targetReference>
         </connector>
     </assignments>
+    <decisions>
+        <name>Check_for_Total_Override_field_on_Ambulance_record</name>
+        <label>Check for Total Override field on Ambulance record</label>
+        <locationX>1089</locationX>
+        <locationY>255</locationY>
+        <defaultConnector>
+            <targetReference>AddToCollectionHCC</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Total_Override_is_Blank</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>LoopThroughHealthCareCost.Total_Override__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_Total_Override_value</targetReference>
+            </connector>
+            <label>Total Override is Blank</label>
+        </rules>
+    </decisions>
     <decisions>
         <name>Check_if_PriceBookEntry_product_matches_Health_Care_Cost_Product</name>
         <label>Check if PriceBookEntry product matches Health Care Cost Product</label>
