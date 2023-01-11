@@ -6,14 +6,25 @@
     <masterLabel>Case: Individual</masterLabel>
     <pathAssistantSteps>
         <fieldNames>Reason_for_Closing__c</fieldNames>
+        <fieldNames>Total_Case_Value__c</fieldNames>
+        <fieldNames>Recovery_Amount__c</fieldNames>
+        <fieldNames>Balance__c</fieldNames>
+        <fieldNames>Recovered__c</fieldNames>
         <picklistValueName>Closed</picklistValueName>
     </pathAssistantSteps>
     <pathAssistantSteps>
-        <fieldNames>Reason_for_Closing__c</fieldNames>
+        <fieldNames>Total_Case_Value__c</fieldNames>
+        <fieldNames>Recovery_Amount__c</fieldNames>
+        <fieldNames>Balance__c</fieldNames>
+        <fieldNames>Recovered__c</fieldNames>
         <picklistValueName>Open</picklistValueName>
     </pathAssistantSteps>
     <pathAssistantSteps>
         <fieldNames>Reason_for_Closing__c</fieldNames>
+        <fieldNames>Total_Case_Value__c</fieldNames>
+        <fieldNames>Recovery_Amount__c</fieldNames>
+        <fieldNames>Balance__c</fieldNames>
+        <fieldNames>Recovered__c</fieldNames>
         <picklistValueName>Reopened</picklistValueName>
     </pathAssistantSteps>
     <recordTypeName>Individual</recordTypeName>
