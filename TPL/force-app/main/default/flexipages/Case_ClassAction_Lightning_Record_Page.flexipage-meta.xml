@@ -33,32 +33,6 @@
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>dir</name>
-                    <value>ltr</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>inline</name>
-                    <value>false</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>inlineLabel</name>
-                    <value>Launch docGenerationSample/fndSingleDocxLwc</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>inlineVariant</name>
-                    <value>brand</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>layout</name>
-                    <value>lightning</value>
-                </componentInstanceProperties>
-                <componentName>docGenerationSampleFndSingleDocxLwcEnglish</componentName>
-                <identifier>c_docGenerationSampleFndSingleDocxLwcEnglish</identifier>
-            </componentInstance>
-        </itemInstances>
         <name>Facet-b7e36f43-c28f-433c-93a4-aef3847a36c1</name>
         <type>Facet</type>
     </flexiPageRegions>
