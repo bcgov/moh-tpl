@@ -4,7 +4,7 @@
     <assignments>
         <name>New_Account_Collection</name>
         <label>New Account Collection</label>
-        <locationX>50</locationX>
+        <locationX>314</locationX>
         <locationY>575</locationY>
         <assignmentItems>
             <assignToReference>AccountCollection</assignToReference>
@@ -14,13 +14,13 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Update_Account_Status_to_Active</targetReference>
+            <targetReference>Check_Record_Type_on_Create</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Updated_Account_Collection</name>
         <label>Updated Account Collection</label>
-        <locationX>314</locationX>
+        <locationX>1018</locationX>
         <locationY>575</locationY>
         <assignmentItems>
             <assignToReference>AccountCollection</assignToReference>
@@ -30,13 +30,13 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Set_Facility_Deactivation_Date</targetReference>
+            <targetReference>Check_Record_Type_on_Update</targetReference>
         </connector>
     </assignments>
     <decisions>
         <name>Check_for_Create_and_Update</name>
         <label>Check for Create and Update</label>
-        <locationX>314</locationX>
+        <locationX>886</locationX>
         <locationY>335</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -70,6 +70,81 @@
             <label>Check for Update</label>
         </rules>
     </decisions>
+    <decisions>
+        <name>Check_Record_Type_on_Create</name>
+        <label>Check Record Type on Create</label>
+        <locationX>314</locationX>
+        <locationY>695</locationY>
+        <defaultConnectorLabel>Business Account</defaultConnectorLabel>
+        <rules>
+            <name>Facility_Account</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Facility</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Account_Status_to_Active</targetReference>
+            </connector>
+            <label>Facility Account</label>
+        </rules>
+        <rules>
+            <name>Individual_Account</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>PersonAccount</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Changing_Last_Name_to_Upper_Case_on_Create</targetReference>
+            </connector>
+            <label>Individual Account</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Record_Type_on_Update</name>
+        <label>Check Record Type on Update</label>
+        <locationX>1018</locationX>
+        <locationY>695</locationY>
+        <defaultConnectorLabel>Business Account</defaultConnectorLabel>
+        <rules>
+            <name>Facility_Account_Update</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Facility</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Facility_Deactivation_Date</targetReference>
+            </connector>
+            <label>Facility Account</label>
+        </rules>
+        <rules>
+            <name>Individual_Account_Update</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>PersonAccount</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Changing_Last_Name_to_Upper_Case_On_Update</targetReference>
+            </connector>
+            <label>Individual Account</label>
+        </rules>
+    </decisions>
+    <environments>Default</environments>
     <interviewLabel>Parent Flow For Account {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Parent Flow For Account</label>
     <processMetadataValues>
@@ -94,7 +169,7 @@
     <recordLookups>
         <name>Get_NEW_Account_Record</name>
         <label>Get NEW Account Record</label>
-        <locationX>50</locationX>
+        <locationX>314</locationX>
         <locationY>455</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -115,7 +190,7 @@
     <recordLookups>
         <name>Get_Updated_Account_Record</name>
         <label>Get Updated Account Record</label>
-        <locationX>314</locationX>
+        <locationX>1018</locationX>
         <locationY>455</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -134,7 +209,7 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <start>
-        <locationX>188</locationX>
+        <locationX>760</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Check_for_Create_and_Update</targetReference>
@@ -145,10 +220,38 @@
     </start>
     <status>Active</status>
     <subflows>
+        <name>Changing_Last_Name_to_Upper_Case_on_Create</name>
+        <label>Changing Last Name to Upper Case on Create</label>
+        <locationX>314</locationX>
+        <locationY>815</locationY>
+        <flowName>Changing_Individual_Last_Name_to_Upper_case</flowName>
+        <inputAssignments>
+            <name>AccountCollectionIntake</name>
+            <value>
+                <elementReference>AccountCollection</elementReference>
+            </value>
+        </inputAssignments>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </subflows>
+    <subflows>
+        <name>Changing_Last_Name_to_Upper_Case_On_Update</name>
+        <label>Changing Last Name to Upper Case On Update</label>
+        <locationX>1018</locationX>
+        <locationY>815</locationY>
+        <flowName>Changing_Individual_Last_Name_to_Upper_case</flowName>
+        <inputAssignments>
+            <name>AccountCollectionIntake</name>
+            <value>
+                <elementReference>AccountCollection</elementReference>
+            </value>
+        </inputAssignments>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </subflows>
+    <subflows>
         <name>Set_Facility_Deactivation_Date</name>
         <label>Set Facility Deactivation Date</label>
-        <locationX>314</locationX>
-        <locationY>695</locationY>
+        <locationX>754</locationX>
+        <locationY>815</locationY>
         <flowName>Set_Facility_Deactivation_Date</flowName>
         <inputAssignments>
             <name>AccountCollectionInTake</name>
@@ -162,7 +265,7 @@
         <name>Update_Account_Status_to_Active</name>
         <label>Update Account Status to Active</label>
         <locationX>50</locationX>
-        <locationY>695</locationY>
+        <locationY>815</locationY>
         <flowName>Update_Account_Status_to_Active1</flowName>
         <inputAssignments>
             <name>AccountCollectionIntake</name>
