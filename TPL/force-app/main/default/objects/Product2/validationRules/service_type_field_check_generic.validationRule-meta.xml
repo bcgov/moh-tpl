@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>service_type_field_check_generic</fullName>
-    <active>true</active>
+    <active>false</active>
     <errorConditionFormula>IF((ISPICKVAL(Family,&apos;Specific&apos;)), 
 ISPICKVAL(Service_Type__c, &apos;Acute (Daily)&apos;) = False , 
 ISPICKVAL(Service_Type__c, &apos;Acute (Daily)&apos;) = True )</errorConditionFormula>

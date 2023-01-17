@@ -7,7 +7,28 @@
     <trackHistory>false</trackHistory>
     <type>Picklist</type>
     <valueSet>
+        <controllingField>Family</controllingField>
         <restricted>true</restricted>
         <valueSetName>Service_Type</valueSetName>
+        <valueSettings>
+            <controllingFieldValue>Generic</controllingFieldValue>
+            <valueName>Extended Care (Daily)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Generic</controllingFieldValue>
+            <valueName>Out Patient (Daily)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Generic</controllingFieldValue>
+            <valueName>Surgical Day Care (Daily)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Specific</controllingFieldValue>
+            <valueName>Acute (Daily)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Specific</controllingFieldValue>
+            <valueName>Rehabilitation Care</valueName>
+        </valueSettings>
     </valueSet>
 </CustomField>

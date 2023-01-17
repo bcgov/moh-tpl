@@ -2,7 +2,7 @@
 <GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <customValue>
         <fullName>Acute (Daily)</fullName>
-        <default>false</default>
+        <default>true</default>
         <label>Acute (Daily)</label>
     </customValue>
     <customValue>
@@ -19,6 +19,11 @@
         <fullName>Surgical Day Care (Daily)</fullName>
         <default>false</default>
         <label>Surgical Day Care (Daily)</label>
+    </customValue>
+    <customValue>
+        <fullName>Rehabilitation Care</fullName>
+        <default>false</default>
+        <label>Rehabilitation Care</label>
     </customValue>
     <masterLabel>Service Type</masterLabel>
     <sorted>false</sorted>
