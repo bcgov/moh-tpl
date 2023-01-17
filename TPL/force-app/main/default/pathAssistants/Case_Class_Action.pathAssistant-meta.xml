@@ -6,14 +6,25 @@
     <masterLabel>Case: Class Action</masterLabel>
     <pathAssistantSteps>
         <fieldNames>Reason_for_Closing__c</fieldNames>
+        <fieldNames>Total_Case_Value_ClassAction__c</fieldNames>
+        <fieldNames>Total_Recovery_Amount__c</fieldNames>
+        <fieldNames>Balance_ClassAction__c</fieldNames>
+        <fieldNames>Recovered_ClassAction__c</fieldNames>
         <picklistValueName>Closed</picklistValueName>
     </pathAssistantSteps>
     <pathAssistantSteps>
-        <fieldNames>Reason_for_Closing__c</fieldNames>
+        <fieldNames>Total_Case_Value_ClassAction__c</fieldNames>
+        <fieldNames>Total_Recovery_Amount__c</fieldNames>
+        <fieldNames>Balance_ClassAction__c</fieldNames>
+        <fieldNames>Recovered_ClassAction__c</fieldNames>
         <picklistValueName>Open</picklistValueName>
     </pathAssistantSteps>
     <pathAssistantSteps>
         <fieldNames>Reason_for_Closing__c</fieldNames>
+        <fieldNames>Total_Case_Value_ClassAction__c</fieldNames>
+        <fieldNames>Total_Recovery_Amount__c</fieldNames>
+        <fieldNames>Balance_ClassAction__c</fieldNames>
+        <fieldNames>Recovered_ClassAction__c</fieldNames>
         <picklistValueName>Reopened</picklistValueName>
     </pathAssistantSteps>
     <recordTypeName>Class_Action</recordTypeName>
