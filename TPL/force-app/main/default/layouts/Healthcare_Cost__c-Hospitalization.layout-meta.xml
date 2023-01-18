@@ -95,7 +95,7 @@
                 <field>Service_Type__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>Standard_Daily_Rate__c</field>
             </layoutItems>
             <layoutItems>
