@@ -3,6 +3,15 @@
     <fullName>Case__c</fullName>
     <externalId>false</externalId>
     <label>Case</label>
+    <lookupFilter>
+        <active>true</active>
+        <filterItems>
+            <field>Case.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Individual</value>
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
     <referenceTo>Case</referenceTo>
     <relationshipLabel>Healthcare Costs</relationshipLabel>
     <relationshipName>Healthcare_Costs</relationshipName>
