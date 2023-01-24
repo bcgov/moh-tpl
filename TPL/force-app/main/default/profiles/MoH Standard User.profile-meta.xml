@@ -116,7 +116,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Contact.Gender__c</field>
+        <field>Contact.Gender</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>

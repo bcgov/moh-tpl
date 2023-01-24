@@ -29,7 +29,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Gender__pc</field>
+                <field>PersonGender</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
