@@ -51,9 +51,13 @@
          <members>Update_Account_Status_to_Active</members>
         <name>Flow</name>
     </types>
--->
-<types>
+
+    <types>
         <members>Payment.Payment_Date__c</members>
+        <name>CustomField</name>
+    </types-->
+    <types>
+        <members>Contact.Gender__c</members>
         <name>CustomField</name>
     </types>
 </Package>

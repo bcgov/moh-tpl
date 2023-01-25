@@ -37,7 +37,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Contact.Gender__c</field>
+        <field>Contact.Gender</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
