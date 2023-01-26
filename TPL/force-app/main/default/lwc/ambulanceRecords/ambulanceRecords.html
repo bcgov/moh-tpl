@@ -1,0 +1,20 @@
+<template>
+     <!-- Ambulance Records -->
+     <lightning-card title="HealthCare Cost - Ambulance Records" icon-name="custom:custom63">
+        <div class="slds-scrollable slds-m-around_medium" style="height:auto;width:auto">
+            <template if:true={healthcareCostsAmbulance.data} onload={handlePageLoad}>
+                <lightning-datatable
+                    key-field="Id"
+                    data={healthcareCostsAmbulance.data}
+                    columns={column}
+                    onsave={handleSave}
+                    draft-values={draftValues} style="width: auto;">
+                </lightning-datatable>
+            </template>
+            <template if:true={healthcareCostsAmbulance.error}>
+                <!-- handle Apex error -->
+            </template>
+        </div>
+      
+    </lightning-card>
+</template>
