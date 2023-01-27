@@ -2,19 +2,30 @@
      <!-- Ambulance Records -->
      <lightning-card title="HealthCare Cost - Ambulance Records" icon-name="custom:custom63">
         <div class="slds-scrollable slds-m-around_medium" style="height:auto;width:auto">
-            <template if:true={healthcareCostsAmbulance.data} onload={handlePageLoad}>
+            <template if:true={healthcareCostsAmbulanceForAccount.data} onload={handlePageLoad}>
                 <lightning-datatable
                     key-field="Id"
-                    data={healthcareCostsAmbulance.data}
+                    data={healthcareCostsAmbulanceForAccount.data}
                     columns={column}
                     onsave={handleSave}
                     draft-values={draftValues} style="width: auto;">
                 </lightning-datatable>
             </template>
-            <template if:true={healthcareCostsAmbulance.error}>
+            <template if:true={healthcareCostsAmbulanceForAccount.error}>
                 <!-- handle Apex error -->
             </template>
         </div>
-      
+        
+      <lightning-layout>
+        <lightning-layout-item>
+            <lightning-button label="Previous" icon-name="utility:chevronleft" onclick={previousHandler} disabled={disablePrevious}></lightning-button>
+        </lightning-layout-item>
+        <lightning-layout-item flexibility="grow">
+            <p class="sldx-text-align_center" style="align-content: center;"> Displaying {currentPage} of {totalPage} Page</p>
+        </lightning-layout-item>
+        <lightning-layout-item>
+            <lightning-button label="Next" icon-name="utility:chevronright" icon-position="right" onclick={nextHandler} disable={disableNext}></lightning-button>
+        </lightning-layout-item>
+      </lightning-layout>
     </lightning-card>
 </template>

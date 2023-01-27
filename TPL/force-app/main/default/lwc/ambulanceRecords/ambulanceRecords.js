@@ -1,62 +1,51 @@
 import { LightningElement, wire, api } from 'lwc';
-import getHealthcareCostsAmbulance from '@salesforce/apex/HCCCostController.getHealthcareCostsAmbulance';
+import getHealthcareCostsAmbulanceForAccount from '@salesforce/apex/HCCCostController.getHealthcareCostsAmbulanceForAccount';
 import { updateRecord } from 'lightning/uiRecordApi';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
-import PHN_FIELD from '@salesforce/schema/Healthcare_Cost__c.PHN__c';
-import ACCOUNT_NAME_FIELD from '@salesforce/schema/Healthcare_Cost__c.Account__c';
-import RECORD_TYPE_FIELD from '@salesforce/schema/Healthcare_Cost__c.RecordTypeName__c';
 import CASE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Case__c';
 import COST_INCLUDE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Cost_Include__c';
 import COST_REVIEW_FIELD from '@salesforce/schema/Healthcare_Cost__c.Cost_Review__c';
 import COST_FIELD from '@salesforce/schema/Healthcare_Cost__c.Cost__c';
 import BASIC_AMOUNT_FIELD from '@salesforce/schema/Healthcare_Cost__c.Basic_Amount__c';
-import TOTAL_OVERRIDE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Total_Override__c'
+import TOTAL_OVERRIDE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Total_Override__c';
+import getCountofAmbulanceRecords from '@salesforce/apex/HCCCostController.getCountofAmbulanceRecords';
 
 const COLS = [
     {
-        label: 'PHN',
-        fieldName: PHN_FIELD.fieldApiName,
-        editable: false
-    },
-    {
-        label: 'Record Type',
-        fieldName: RECORD_TYPE_FIELD.fieldApiName,
-        editable: false
-    },
-    {
-        label: 'Account Name',
-        fieldName: ACCOUNT_NAME_FIELD.fieldApiName,
-        editable: true
-    },
-    {
         label: 'Case Name',
         fieldName: CASE_FIELD.fieldApiName,
+        type: 'lookup',
         editable: true
     },
     {
         label: 'Cost Include',
         fieldName: COST_INCLUDE_FIELD.fieldApiName,
-        editable: true
+        type:'boolean',
+        editable: false
     },
     {
         label: 'Cost Review',
         fieldName: COST_REVIEW_FIELD.fieldApiName,
-        editable:true
+        type:'boolean',
+        editable:false
     },
     {
         label: 'Basic Amount',
         fieldName: BASIC_AMOUNT_FIELD.fieldApiName,
-        editable: true
+        type: 'currency',
+        editable: false
     },
     {
         label: 'Cost',
         fieldName: COST_FIELD.fieldApiName,
-        editable: true
+        type: 'currency',
+        editable: false
     },
     {
         label: 'Total Override',
         fieldName: TOTAL_OVERRIDE_FIELD.fieldApiName,
-        editable: true
+        type: 'currency',
+        editable: false
     }
 ];
 
@@ -65,44 +54,56 @@ export default class AmbulanceRecords extends LightningElement {
     column = COLS;
     isFirstPage = true;
     isLastPage = false;
-    totalRecords = 0;
-    pageNumber = 1;
-    totalPages = 0;
+     pageNumber = 1;
+    totalPage = 0;
+    @api recordSize = 5;
+    
+    @wire(getHealthcareCostsAmbulanceForAccount, { accId: '$recordId' })
+    healthcareCostsAmbulanceForAccount;   
 
-    @wire(getHealthcareCostsAmbulance, { accId: '$recordId' })
-    healthcareCostsAmbulance;
-
-     // Count Options
-    get countOptions() {
-    return [
-        { label: '10', value: '10' },
-        { label: '50', value: '50' },
-        { label: '75', value: '75' },
-        { label: '100', value: '100' },
-    ];
-    }
+    @wire(getCountofAmbulanceRecords,{ accId: '$recordId'})
+    countOfAmbulanceRecords;
 
     handlePageLoad(){
+        this.totalRecords = countOfAmbulanceRecords
+        this.recordSize = Number(this.recordSize)
+        this.totalPage = Math.ceil(this.totalRecords/this.recordSize)
 
     }
-    
-    updatePageButtons() {
-        console.log('PageNumber:', this.pageNumber, 'total', this.totalPages);
-        if (this.pageNumber === 1) {
-          this.isFirstPage = true;
-        } else {
-          this.isFirstPage = false;
-        }
-        if (this.pageNumber >= this.totalPages) {
-          this.isLastPage = true;
-        } else {
-          this.isLastPage = false;
-        }
-      }
-    
-    fetchAmbulanceRecords(){
-        
+
+    get disablePrevious(){ 
+        return this.currentPage<=1
     }
+
+    get disableNext(){ 
+        return this.currentPage>=this.totalPage
+    }
+
+    previousHandler(){ 
+        if(this.currentPage>1){
+            this.currentPage = this.currentPage-1
+            this.updateRecords()
+        }
+    }
+
+    nextHandler(){
+        if(this.currentPage < this.totalPage){
+            this.currentPage = this.currentPage+1
+            this.updateRecords()
+        }
+    }
+
+    updateRecords(){ 
+        const start = (this.currentPage-1)*this.recordSize
+        const end = this.recordSize*this.currentPage
+        this.visibleRecords = this.totalRecords.slice(start, end)
+        this.dispatchEvent(new CustomEvent('update',{ 
+            detail:{ 
+                records:this.visibleRecords
+            }
+        }))
+    }
+
     async handleSave(event){
         
         // Convert datatable draft values into record objects
