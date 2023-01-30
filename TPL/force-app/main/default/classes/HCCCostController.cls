@@ -18,21 +18,37 @@ public with sharing class HCCCostController {
         return null;
     }
 
-    @AuraEnabled(cacheable=true)
-    public static Integer getCountofAmbulanceRecords(String accId){
-        Integer countOfRecords = 0;
+    @AuraEnabled (cacheable = true)
+    public static List<Account> listOfIndividualAccounts(){
         try {
-            countOfRecords = [select count() from Healthcare_Cost__c where Account__c = :accId and RecordTypeName__c = 'Ambulance'];
-            System.debug('Count Of Records : ' + countOfRecords);
-            return countOfRecords;
+            List<Account> accList = new List<Account>();
+            Id recordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Individual').getRecordTypeId();
+            accList = [select Name from Account where RecordTypeId =: recordTypeId LIMIT 100];
+            return accList;
         } 
-        catch(NullPointerException nullptr){
-            nullptr.getMessage();
-        } 
-        
-        catch(Exception e) {
+        catch(NullPointerException nullpointer){
+            nullpointer.getMessage();
+        }
+        catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
         }
-        return countOfRecords;
+        return null;
+    }
+
+    @AuraEnabled (cacheable = true)
+    public static List<Case> caseListIndividual(){
+        try {
+            List<Case> caseList = new List<Case>();
+            Id recordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByName().get('Individual').getRecordTypeId();
+            caseList = [select CaseNumber from Case where RecordTypeId =: recordTypeId LIMIT 100];
+            return caseList;
+        }
+        catch(NullPointerException nullpointer){
+            nullpointer.getMessage();
+        }
+        catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
+        }
+        return null;
     }
 }
