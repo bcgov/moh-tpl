@@ -15,6 +15,16 @@ import relatedCaseRecords from '@salesforce/apex/HCCCostController.caseListIndiv
 import relatedAccountRecords from '@salesforce/apex/HCCCostController.listOfIndividualAccounts';
 import CaseNumber from '@salesforce/schema/Case.CaseNumber';
 const COLS = [
+    
+    {
+        label: 'HealthCare Cost Number',
+        fieldName: 'linkName',
+        type: 'url',
+        typeAttributes: {
+            label: { fieldName: 'Name' },
+            target: '_self'
+        }
+    },
     {
         label: 'Case Number',
         fieldName: CASE_FIELD.fieldApiName,
@@ -93,27 +103,23 @@ export default class AmbulanceRecords extends LightningElement {
     pageSize; //No.of records to be displayed per page
     recordsToDisplay = []; //Records to be displayed on the page
 
-    renderedCallback() {
-        if (!this.isComponentLoaded) {
-            /* Add Click event listener to listen to window click to reset the lookup selection 
-            to text view if context is out of sync*/
-            window.addEventListener('click', (evt) => {
-                this.handleWindowOnclick(evt);
-            });
-            this.isComponentLoaded = true;
-        }
-    }
-
     @wire(getHealthcareCostsAmbulanceForAccount, { accId: '$recordId' })
     healthcareCostsAmbulanceForAccount({error,data}){
         if(data != null && data){
             console.log('Data of Ambulance Records --> ' + JSON.stringify(data));
-            this.records = data;
+            this.records = JSON.parse(JSON.stringify(data));
+            this.records.forEach(record => {
+                record.linkName = '/' + record.Id;
+                record.CaseNumberClass = 'slds-cell-edit';
+            })
             this.totalRecords = data.length;
             this.pageSize = this.pageSizeOptions[0]; 
             this.paginationHelper(); // call helper menthod to update pagination logic
+            this.error = undefined;
         }
         else if(error){
+            this.records = undefined;
+            this.error = error;
             console.error(error);
         }
     }
