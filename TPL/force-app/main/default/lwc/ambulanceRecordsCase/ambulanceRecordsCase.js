@@ -13,6 +13,7 @@ import TOTAL_OVERRIDE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Total_Ov
 import DATE_OF_SERVICE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Date_of_Service__c';
 import LOCATION_RESPONDED_FIELD from '@salesforce/schema/Healthcare_Cost__c.Location_Responded__c';
 import getHealthcareCostsAmbulanceForCase from '@salesforce/apex/HCCCostController.getHealthcareCostsAmbulanceForCase';
+import saveDraftValues from '@salesforce/apex/HCCCostController.saveDraftValues';
 
 const COLUMNS = [
     {
@@ -164,6 +165,7 @@ export default class AmbulanceRecordsCase extends LightningElement {
         event.preventDefault();
         this.accountId = event.target.value;
         this.showSpinner = true;
+        console.log('Inside Handle Change ');
     }
 
     handleCancel(event) {
@@ -176,6 +178,7 @@ export default class AmbulanceRecordsCase extends LightningElement {
     handleCellChange(event) {
         event.preventDefault();
         this.updateDraftValues(event.detail.draftValues[0]);
+        console.log(' Handle Cell Change');
     }
 
     //Captures the changed lookup value and updates the records list variable.
@@ -202,6 +205,7 @@ export default class AmbulanceRecordsCase extends LightningElement {
         }
         this.updateDraftValues(updatedItem);
         this.updateDataValues(updatedItem);
+        console.log('Handle Value Change');
     }
 
     updateDataValues(updateItem) {
@@ -214,6 +218,7 @@ export default class AmbulanceRecordsCase extends LightningElement {
             }
         });
         this.records = [...copyData];
+        console.log('Updated data values log');
     }
 
     updateDraftValues(updateItem) {
@@ -232,6 +237,7 @@ export default class AmbulanceRecordsCase extends LightningElement {
         } else {
             this.draftValues = [...copyDraftValues, updateItem];
         }
+        console.log('Update Draft values');
     }
 
     handleEdit(event) {
@@ -250,6 +256,7 @@ export default class AmbulanceRecordsCase extends LightningElement {
                 this.setClassesOnData(dataRecieved.context, '', '');
                 break;
         };
+        console.log('Inside handle edit method');
     }
 
     setClassesOnData(id, fieldName, fieldValue) {
@@ -261,50 +268,32 @@ export default class AmbulanceRecordsCase extends LightningElement {
         });
     }
 
-    async handleSave(event){
-        
-        // Convert datatable draft values into record objects
-        const records = event.detail.draftValues.slice().map((draftValue) => {
-            const fields = Object.assign({}, draftValue);
-            return { fields };
-        });
-
-        // Clear all datatable draft values
-        this.draftValues = [];
-
-        try {
-            // Update all records in parallel thanks to the UI API
-            const recordUpdatePromises = records.map((record) =>
-                updateRecord(record)
-            );
-            await Promise.all(recordUpdatePromises);
-
-            // Report success with a toast
-            this.dispatchEvent(
-                new ShowToastEvent({
-                    title: 'Success',
-                    message: 'Healthcare Costs Ambulance updated',
-                    variant: 'success'
-                })
-            );
-
-            // Display fresh data in the datatable
-            await refreshApex(this.healthcareCostsAmbulance).then(() => {
-                this.records.forEach(record => {
-                    record.accountNameClass = 'slds-cell-edit';
+    handleSave(event) {
+        event.preventDefault();
+        this.showSpinner = true;
+        // Update the draftvalues
+        saveDraftValues({ data: this.draftValues })
+            .then(() => {
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Success',
+                        message: 'HC Cost updated successfully',
+                        variant: 'success'
+                    })
+                );
+                console.log('Save handle while saving the record');
+                //Get the updated list with refreshApex.
+                refreshApex(this.wiredRecords).then(() => {
+                    this.records.forEach(record => {
+                        record.accountNameClass = 'slds-cell-edit';
+                    });
+                    this.draftValues = [];
                 });
-                this.draftValues = [];
+            })
+            .catch(error => {
+                console.log('error : ' + JSON.stringify(error));
+                this.showSpinner = false;
             });
-            
-        } catch (error) {
-            this.dispatchEvent(
-                new ShowToastEvent({
-                    title: 'Error updating or reloading Healthcare Costs',
-                    message: error.body.message,
-                    variant: 'error'
-                })
-            );
-        }
     }
     
 }
