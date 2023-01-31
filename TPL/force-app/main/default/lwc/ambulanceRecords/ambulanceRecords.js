@@ -11,9 +11,7 @@ import BASIC_AMOUNT_FIELD from '@salesforce/schema/Healthcare_Cost__c.Basic_Amou
 import TOTAL_OVERRIDE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Total_Override__c';
 import DATE_OF_SERVICE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Date_of_Service__c';
 import LOCATION_RESPONDED_FIELD from '@salesforce/schema/Healthcare_Cost__c.Location_Responded__c';
-import relatedCaseRecords from '@salesforce/apex/HCCCostController.caseListIndividual';
-import relatedAccountRecords from '@salesforce/apex/HCCCostController.listOfIndividualAccounts';
-import CaseNumber from '@salesforce/schema/Case.CaseNumber';
+
 const COLS = [
     
     {
@@ -43,6 +41,8 @@ const COLS = [
         },
         editable: true,
         cellAttributes:{
+            iconName: { fieldName: 'trendIcon' },
+            iconPosition: 'right',
             class: { fieldName: 'CaseNumberClass'}
         }
     },
