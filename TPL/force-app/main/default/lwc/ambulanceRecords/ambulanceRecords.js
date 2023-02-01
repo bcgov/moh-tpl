@@ -48,13 +48,13 @@ const COLS = [
         label: 'Cost Include',
         fieldName: COST_INCLUDE_FIELD.fieldApiName,
         type:'boolean',
-        editable: true
+        editable: false
     },
     {
         label: 'Cost Review',
         fieldName: COST_REVIEW_FIELD.fieldApiName,
         type:'boolean',
-        editable:true
+        editable:false
     },
     {
         label: 'Date of Service',
@@ -106,7 +106,7 @@ export default class AmbulanceRecords extends LightningElement {
     privateChildren = {}; //used to get the datatable lookup as private childern of customDatatable
     wiredRecords;
     draftValues = [];
-    
+
     renderedCallback() {
         if (!this.isComponentLoaded) {
             /* Add Click event listener to listen to window click to reset the lookup selection 
