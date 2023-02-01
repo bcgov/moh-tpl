@@ -27,21 +27,21 @@ const COLUMNS = [
     },
     {
         label: 'Account Name',
-        fieldName: ACCOUNT_FIELD.fieldApiName,
+        fieldName: 'Account__c',
         type: 'lookup',
         typeAttributes: {
             placeholder: 'Choose Account',
             object: 'Healthcare_Cost__c',
-            fieldName: ACCOUNT_FIELD.fieldApiName,
+            fieldName: 'Account__c',
             label: 'Account',
-            value: { fieldName: ACCOUNT_FIELD.fieldApiName},
+            value: { fieldName: 'Account__c'},
             context: { fieldName: 'Id' },
             variant: 'label-hidden',
             name: 'Account',
             fields: ['Account.Name'],
             target: '_self'
         },
-        editable: true,
+        
         cellAttributes: {
             class: { fieldName: 'accountNameClass' }
         }
@@ -92,10 +92,17 @@ const COLUMNS = [
 export default class AmbulanceRecordsCase extends LightningElement {
     @api recordId;
     column = COLUMNS;
-    records = [];
+    records = []; //All records available in the data table
+    isFirstPage = true;
+    isLastPage = false;
+    totalRecords = 0; //Total no.of records
+    totalPages; //Total no.of pages
+    pageNumber = 1; //Page number
+    pageSizeOptions = [5, 10, 25, 50, 75, 100, 150, 200, 500]; //Page size options
+    pageSize; //No.of records to be displayed per page
+    recordsToDisplay = []; //Records to be displayed on the page
     lastSavedData;
     error;
-    accountId;
     wiredRecords;
     showSpinner = false;
     draftValues = [];
@@ -140,6 +147,9 @@ export default class AmbulanceRecordsCase extends LightningElement {
                 record.linkName = '/' + record.Id;
                 record.accountNameClass = 'slds-cell-edit';
             });
+            this.totalRecords = data.length;
+            this.pageSize = this.pageSizeOptions[0]; 
+            this.paginationHelper(); // call helper menthod to update pagination logic
             this.error = undefined;
         } else if (error) {
             this.records = undefined;
@@ -163,7 +173,7 @@ export default class AmbulanceRecordsCase extends LightningElement {
 
     handleChange(event) {
         event.preventDefault();
-        this.accountId = event.target.value;
+        this.Account__c = event.target.value;
         this.showSpinner = true;
         console.log('Inside Handle Change ');
     }
@@ -190,7 +200,7 @@ export default class AmbulanceRecordsCase extends LightningElement {
             case 'Account':
                 updatedItem = {
                     Id: dataRecieved.context,
-                    AccountId: dataRecieved.value
+                    Account__c: dataRecieved.value
                 };
                 // Set the cell edit class to edited to mark it as value changed.
                 this.setClassesOnData(
@@ -268,9 +278,59 @@ export default class AmbulanceRecordsCase extends LightningElement {
         });
     }
 
+    get bDisableFirst() {
+        return this.pageNumber == 1;
+    }
+    get bDisableLast() {
+        return this.pageNumber == this.totalPages;
+    }
+    
+    handleRecordsPerPage(event) {
+        this.pageSize = event.target.value;
+        this.paginationHelper();
+    }
+    previousPage() {
+        this.pageNumber = this.pageNumber - 1;
+        this.paginationHelper();
+    }
+    nextPage() {
+        this.pageNumber = this.pageNumber + 1;
+        this.paginationHelper();
+    }
+    firstPage() {
+        this.pageNumber = 1;
+        this.paginationHelper();
+    }
+    lastPage() {
+        this.pageNumber = this.totalPages;
+        this.paginationHelper();
+    }
+
+        // JS function to handel pagination logic 
+    paginationHelper() {
+        this.recordsToDisplay = [];
+        // calculate total pages
+        this.totalPages = Math.ceil(this.totalRecords / this.pageSize);
+        // set page number 
+        if (this.pageNumber <= 1) {
+            this.pageNumber = 1;
+        } else if (this.pageNumber >= this.totalPages) {
+            this.pageNumber = this.totalPages;
+        }
+        // set records to display on current page 
+        for (let i = (this.pageNumber - 1) * this.pageSize; i < this.pageNumber * this.pageSize; i++) {
+            if (i === this.totalRecords) {
+                break;
+            }
+            this.recordsToDisplay.push(this.records[i]);
+        }
+    }
+
     handleSave(event) {
         event.preventDefault();
         this.showSpinner = true;
+        console.log('Check values of draft : ');
+        console.log(this.draftValues);
         // Update the draftvalues
         saveDraftValues({ data: this.draftValues })
             .then(() => {
@@ -281,19 +341,21 @@ export default class AmbulanceRecordsCase extends LightningElement {
                         variant: 'success'
                     })
                 );
-                console.log('Save handle while saving the record');
+                console.log('HandleSave method');
                 //Get the updated list with refreshApex.
                 refreshApex(this.wiredRecords).then(() => {
                     this.records.forEach(record => {
                         record.accountNameClass = 'slds-cell-edit';
                     });
                     this.draftValues = [];
+                    console.log('Inline account update');
                 });
+                
             })
             .catch(error => {
                 console.log('error : ' + JSON.stringify(error));
                 this.showSpinner = false;
-            });
+           });
     }
     
 }
