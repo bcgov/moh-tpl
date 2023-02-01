@@ -1,11 +1,12 @@
 <template>
     <template if:true={records}>
         <!--LIGHTNING DATATABLE-->
-        <div style="height:400px">
-            <c-custom-data-table key-field="Id" class="slds-max-medium-table_stacked" onvaluechange={handleValueChange}
-            oncellchange={handleCellChange} data={recordsToDisplay} columns={column} show-row-number-column="false"
-           draft-values={draftValues} onsave={handleSave} data-record="Id" onedit={handleEdit}
-            hide-checkbox-column="true" oncancel={handleCancel} style="width: auto;"></c-custom-data-table>
+        <div style="height:400px" onitemregister={handleItemRegister}>
+            <c-custom-data-table class="slds-max-medium-table_stacked" onvaluechange={handleValueChange}
+                    oncellchange={handleCellChange} data={recordsToDisplay} columns={column} show-row-number-column="false"
+                    key-field="Id" draft-values={draftValues} onsave={handleSave} data-record="Id" onedit={handleEdit}
+                    oncancel={handleCancel} style="width: auto;">
+                </c-custom-data-table>
         </div>
 
         <div class="slds-grid slds-grid_vertical-align-center slds-grid_align-spread" style="padding-top: 0.5em;">

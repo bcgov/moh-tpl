@@ -12,8 +12,7 @@ import BASIC_AMOUNT_FIELD from '@salesforce/schema/Healthcare_Cost__c.Basic_Amou
 import TOTAL_OVERRIDE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Total_Override__c';
 import DATE_OF_SERVICE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Date_of_Service__c';
 import LOCATION_RESPONDED_FIELD from '@salesforce/schema/Healthcare_Cost__c.Location_Responded__c';
-import relatedCaseRecords from '@salesforce/apex/HCCCostController.caseListIndividual';
-import relatedAccountRecords from '@salesforce/apex/HCCCostController.listOfIndividualAccounts';
+import saveDraftValues from '@salesforce/apex/HCCCostController.saveDraftValues';
 
 const COLS = [
     {
@@ -27,21 +26,20 @@ const COLS = [
     },
     {
         label: 'Case Number',
-        fieldName: CASE_FIELD.fieldApiName,
+        fieldName: 'Case__c',
         type: 'lookup',
         typeAttributes: {
             placeholder: 'Choose Case',
             object: 'Healthcare_Cost__c',
-            fieldName: CASE_FIELD.fieldApiName,
+            fieldName: 'Case__c',
             label: 'CaseNumber',
-            value: { fieldName: CASE_FIELD.fieldApiName},
+            value: { fieldName: 'Case__c'},
             context:{fieldName: 'Id'},
             variant: 'label-hidden',
             name: 'Case',
             fields: ['Case.CaseNumber'],
             target: '_self'
         },
-        editable: true,
         cellAttributes:{
             class: { fieldName: 'CaseNumberClass'}
         }
@@ -106,7 +104,9 @@ export default class AmbulanceRecords extends LightningElement {
     showSpinner = false;
     lastSavedData;
     privateChildren = {}; //used to get the datatable lookup as private childern of customDatatable
-
+    wiredRecords;
+    draftValues = [];
+    
     renderedCallback() {
         if (!this.isComponentLoaded) {
             /* Add Click event listener to listen to window click to reset the lookup selection 
@@ -124,6 +124,7 @@ export default class AmbulanceRecords extends LightningElement {
     handleWindowOnclick(context) {
         this.resetPopups('c-datatable-lookup', context);
     }
+
     //create object value of datatable lookup markup to allow to call callback function with window click event listener
     resetPopups(markup, context) {
         let elementMarkup = this.privateChildren[markup];
@@ -135,7 +136,10 @@ export default class AmbulanceRecords extends LightningElement {
     }
 
     @wire(getHealthcareCostsAmbulanceForAccount, { accId: '$recordId' })
-    healthcareCostsAmbulanceForAccount({error,data}){
+    wiredHealthcareCostsAmbulanceForAccount(result){
+        this.wiredRecords = result;
+        const {data, error} = result;
+        
         if(data != null && data){
             console.log('Data of Ambulance Records --> ' + JSON.stringify(data));
             this.records = JSON.parse(JSON.stringify(data));
@@ -148,11 +152,14 @@ export default class AmbulanceRecords extends LightningElement {
             this.paginationHelper(); // call helper menthod to update pagination logic
             this.error = undefined;
         }
-        else if(error){
+        else if (error) {
             this.records = undefined;
             this.error = error;
-            console.error(error);
+        } else {
+            this.error = undefined;
+            this.records = undefined;
         }
+        
         this.lastSavedData = this.records;
         this.showSpinner = false;
     }
@@ -215,9 +222,11 @@ export default class AmbulanceRecords extends LightningElement {
     }
     
     handleChange(event) {
-            event.preventDefault();
-            this.CaseNumber = event.target.value;
-            this.showSpinner = true;
+        event.preventDefault();
+        console.log('Inside Handle Change ');
+        this.Case__c = event.target.value;
+        this.showSpinner = true;
+      
     }
 
     handleCancel(event) {
@@ -230,18 +239,20 @@ export default class AmbulanceRecords extends LightningElement {
     handleCellChange(event) {
         event.preventDefault();
         this.updateDraftValues(event.detail.draftValues[0]);
+        console.log(' Handle Cell Change');
     }
-    
+
     //Captures the changed lookup value and updates the records list variable.
     handleValueChange(event) {
         event.stopPropagation();
+        console.log('Handle Value Change');
         let dataRecieved = event.detail.data;
         let updatedItem;
         switch (dataRecieved.label) {
-            case 'Case':
+            case 'CaseNumber':
                 updatedItem = {
                     Id: dataRecieved.context,
-                    CaseNumber: dataRecieved.value
+                    Case__c: dataRecieved.value
                 };
                 // Set the cell edit class to edited to mark it as value changed.
                 this.setClassesOnData(
@@ -256,6 +267,7 @@ export default class AmbulanceRecords extends LightningElement {
         }
         this.updateDraftValues(updatedItem);
         this.updateDataValues(updatedItem);
+        
     }
 
     updateDataValues(updateItem) {
@@ -268,6 +280,7 @@ export default class AmbulanceRecords extends LightningElement {
             }
         });
         this.records = [...copyData];
+        console.log('Updated data values log');
     }
 
     updateDraftValues(updateItem) {
@@ -286,6 +299,7 @@ export default class AmbulanceRecords extends LightningElement {
         } else {
             this.draftValues = [...copyDraftValues, updateItem];
         }
+        console.log('Update Draft values');
     }
 
     handleEdit(event) {
@@ -293,7 +307,7 @@ export default class AmbulanceRecords extends LightningElement {
         let dataRecieved = event.detail.data;
         this.handleWindowOnclick(dataRecieved.context);
         switch (dataRecieved.label) {
-            case 'Case':
+            case 'CaseNumber':
                 this.setClassesOnData(
                     dataRecieved.context,
                     'CaseNumberClass',
@@ -304,6 +318,7 @@ export default class AmbulanceRecords extends LightningElement {
                 this.setClassesOnData(dataRecieved.context, '', '');
                 break;
         };
+        console.log('Inside handle edit method');
     }
 
     setClassesOnData(id, fieldName, fieldValue) {
@@ -315,37 +330,30 @@ export default class AmbulanceRecords extends LightningElement {
         });
     }
     
-    handleSave(event){
+    handleSave(event) {
         event.preventDefault();
         this.showSpinner = true;
-
-        try {
-          // Update the draftvalues
+        // Update the draftvalues
         saveDraftValues({ data: this.draftValues })
-        .then(() => {
-            this.dispatchEvent(
-                new ShowToastEvent({
-                    title: 'Success',
-                    message: 'HealthCare Cost Ambulance Record updated successfully',
-                    variant: 'success'
-                })
-            );
-            // Display fresh data in the datatable
-            refreshApex(this.healthcareCostsAmbulance).then(() =>{
-                this.records.forEach(record => {
-                    record.CaseNumberClass = 'slds-cell-edit';
+            .then(() => {
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Success',
+                        message: 'HealthCare Cost Ambulance record(s) updated successfully',
+                        variant: 'success'
+                    })
+                );
+                //Get the updated list with refreshApex.
+                refreshApex(this.wiredRecords).then(() => {
+                    this.records.forEach(record => {
+                        record.CaseNumberClass = 'slds-cell-edit';
+                    });
+                    this.draftValues = [];
                 });
-                this.draftValues = [];
+            })
+            .catch(error => {
+                console.log('error : ' + JSON.stringify(error));
+                this.showSpinner = false;
             });
-        })
-        } catch (error) {
-            this.dispatchEvent(
-                new ShowToastEvent({
-                    title: 'Error updating or reloading Healthcare Costs',
-                    message: error.body.message,
-                    variant: 'error'
-                })
-            );
-        }
     }
 }
