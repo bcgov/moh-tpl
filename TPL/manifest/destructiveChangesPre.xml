@@ -5,21 +5,49 @@
         <name>Flow</name>
     </types>
     -->
- <!--types>
+    <types>
+         
+         <members>Parent_Flow_For_Health_Care_Cost</members>
+         <members>Update_Health_Care_Cost_Fields_On_Create</members>
+         <members>Update_Health_Care_Cost_Fields_On_Update</members>
+         <members>Parent_Flow_For_Case_Object</members>
+         <members>Summary_Calculation_of_related_HealthCare_Cost</members>
+        <name>Flow</name>
+    </types>
+    <types>
+        <members>Case.Balance__c</members>
+        <members>Case.Recovered__c</members>
+        <members>Case.Total_Case_Value__c</members>
         <members>Case.Ambulance_Total__c</members>   
         <members>Case.Continuing_Care_Total__c</members>
         <members>Case.Future_Care_Total__c</members>
         <members>Case.Hospitalization_Total__c</members>
         <members>Case.MSP_Total__c</members>
         <members>Case.Pharmacare_Total__c</members>
+        <members>Case.Balance_ClassAction__c</members>
+        <members>Case.Recovered_ClassAction__c</members>
+        <members>Case.Total_Case_Value_ClassAction__c</members>
+        <members>Case.Ambulance_Total_ClassAction__c</members>   
+        <members>Case.Continuing_Care_Total_ClassAction__c</members>
+        <members>Case.Future_Care_Total_ClassAction__c</members>
+        <members>Case.Hospitalization_Total_ClassAction__c</members>
+        <members>Case.MSP_Total_ClassAction__c</members>
+        <members>Case.Pharmacare_Total_ClassAction__</members>      
+        <members>Case.Total_Recovery_Amount__c</members>
+        <members>Case.Related_Cases_Recovery_Amount__c</members>
         <members>Case.Recovery_Amount__c</members>
-        <members>Case.Total_Case_Value__c</members>
-        <members>Case.Balance__c</members>
-        <members>Case.Recovered__c</members>
         <members>Case.Recovery_Amount_ClassAction__c</members>
         <name>CustomField</name>
     </types>
-    -->
+
+    <types>
+        <members>Healthcare_Cost__c.Case_Type__c</members>
+        <members>Healthcare_Cost__c.Client__c</members>
+        <members>Healthcare_Cost__c.Case__c</members>
+        <name>CustomField</name>
+    </types>
+
+    
     <!--types>
         <members>Healthcare_Cost__c.Total_Original_Cost__c</members>
         <members>Healthcare_Cost__c.Number_of_Days__c</members>
@@ -34,14 +62,7 @@
         <members>Contact.PHN__c</members>
         <name>CustomField</name>
     </types>
-    <types>
-         <members>Parent_Flow_For_Case_Object</members>
-         <members>Parent_Flow_For_Health_Care_Cost</members>
-         <members>Relating_Case_with_the_Entitlement_Process</members>
-         <members>Update_Health_Care_Cost_Fields_On_Create</members>
-         <members>Update_Health_Care_Cost_Fields_On_Update</members>
-        <name>Flow</name>
-    </types>
+    
     -->
      <!--types>
         <members>Case.Recovery_Amount_ClassAction__c</members>
