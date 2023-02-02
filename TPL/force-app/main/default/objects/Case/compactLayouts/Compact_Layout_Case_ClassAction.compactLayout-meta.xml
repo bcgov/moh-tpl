@@ -2,11 +2,5 @@
 <CompactLayout xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Compact_Layout_Case_ClassAction</fullName>
     <fields>Case_AccountName__c</fields>
-    <fields>Ambulance_Total_ClassAction__c</fields>
-    <fields>Hospitalization_Total_ClassAction__c</fields>
-    <fields>MSP_Total_ClassAction__c</fields>
-    <fields>Pharmacare_Total_ClassAction__c</fields>
-    <fields>Continuing_Care_Total_ClassAction__c</fields>
-    <fields>Future_Care_Total_ClassAction__c</fields>
     <label>Compact Layout Case ClassAction</label>
 </CompactLayout>
