@@ -24,24 +24,28 @@ const COLUMNS = [
         label: 'Cost Include',
         fieldName: COST_INCLUDE_FIELD.fieldApiName,
         type:'boolean',
+        sortable: true,
         editable: true
     },
     {
         label: 'Cost Review',
         fieldName: COST_REVIEW_FIELD.fieldApiName,
         type:'boolean',
+        sortable: true,
         editable:true
     },
     {
         label: 'Date of Service',
         fieldName: DATE_OF_SERVICE_FIELD.fieldApiName,
         type: 'date',
+        sortable: true,
         editable: false
     },
     {
         label: 'Basic Amount',
         fieldName: BASIC_AMOUNT_FIELD.fieldApiName,
         type: 'currency',
+        sortable: true,
         editable: true
     },
     {
@@ -54,12 +58,14 @@ const COLUMNS = [
         label: 'Cost',
         fieldName: COST_FIELD.fieldApiName,
         type: 'currency',
+        sortable: true,
         editable: false
     },
     {
         label: 'Total Override',
         fieldName: TOTAL_OVERRIDE_FIELD.fieldApiName,
         type: 'currency',
+        sortable: true,
         editable: true
     }
 ];
@@ -75,11 +81,7 @@ export default class AmbulanceRecordsCase extends LightningElement {
     pageSizeOptions = [5, 10, 25, 50, 75, 100, 150, 200, 500]; //Page size options
     pageSize; //No.of records to be displayed per page
     recordsToDisplay = []; //Records to be displayed on the page
-    lastSavedData;
     error;
-
-    showSpinner = false;
-   
 
     @wire(getHealthcareCostsAmbulanceForCase, { caseId: '$recordId' })
     healthcareCostsAmbulanceForCase({error,data}){
@@ -100,8 +102,6 @@ export default class AmbulanceRecordsCase extends LightningElement {
             this.error = undefined;
             this.records = undefined;
         }
-        this.lastSavedData = this.records;
-        this.showSpinner = false;
     }
 
     get bDisableFirst() {
@@ -152,8 +152,32 @@ export default class AmbulanceRecordsCase extends LightningElement {
         }
     }
 
+    doSorting(event) {
+        this.sortBy = event.detail.fieldName;
+        this.sortDirection = event.detail.sortDirection;
+        this.sortData(this.sortBy, this.sortDirection);
+    }
+
+    sortData(fieldname, direction) {
+        let parseData = JSON.parse(JSON.stringify(this.recordsToDisplay));
+        // Return the value stored in the field
+        let keyValue = (a) => {
+            return a[fieldname];
+        };
+        // cheking reverse direction
+        let isReverse = direction === 'asc' ? 1: -1;
+        // sorting data
+        parseData.sort((x, y) => {
+            x = keyValue(x) ? keyValue(x) : ''; // handling null values
+            y = keyValue(y) ? keyValue(y) : '';
+            // sorting values based on direction
+            return isReverse * ((x > y) - (y > x));
+        });
+        this.recordsToDisplay = parseData;
+    }    
+
     async handleSave(event){
-        this.showSpinner = true;
+    
         // Convert datatable draft values into record objects
         const records = event.detail.draftValues.slice().map((draftValue) => {
             const fields = Object.assign({}, draftValue);
@@ -181,7 +205,7 @@ export default class AmbulanceRecordsCase extends LightningElement {
 
             // Display fresh data in the datatable
             await refreshApex(this.healthcareCostsAmbulance);
-            this.showSpinner = false;
+           
         } catch (error) {
             this.dispatchEvent(
                 new ShowToastEvent({
@@ -190,7 +214,7 @@ export default class AmbulanceRecordsCase extends LightningElement {
                     variant: 'error'
                 })
             );
-            this.showSpinner = false;
+       
         }
     }
     
