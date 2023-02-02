@@ -9,7 +9,7 @@
         <picklistValueName>Closed</picklistValueName>
     </pathAssistantSteps>
     <pathAssistantSteps>
-        <fieldNames>Total_Case_Value__c</fieldNames>
+       
         <picklistValueName>Open</picklistValueName>
     </pathAssistantSteps>
     <pathAssistantSteps>
