@@ -204,7 +204,7 @@ export default class AmbulanceRecordsCase extends LightningElement {
             );
 
             // Display fresh data in the datatable
-            await refreshApex(this.healthcareCostsAmbulance);
+            await refreshApex(this.healthcareCostsAmbulanceForCase);
            
         } catch (error) {
             this.dispatchEvent(
