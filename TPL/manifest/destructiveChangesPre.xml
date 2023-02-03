@@ -32,7 +32,7 @@
         <members>Case.Future_Care_Total_ClassAction__c</members>
         <members>Case.Hospitalization_Total_ClassAction__c</members>
         <members>Case.MSP_Total_ClassAction__c</members>
-        <members>Case.Pharmacare_Total_ClassAction__</members>      
+        <members>Case.Pharmacare_Total_ClassAction__c</members>      
         <members>Case.Total_Recovery_Amount__c</members>
         <members>Case.Related_Cases_Recovery_Amount__c</members>
         <members>Case.Recovery_Amount__c</members>

@@ -383,7 +383,7 @@
         <field>Healthcare_Cost__c.CCI_Level__c</field>
         <readable>true</readable>
     </fieldPermissions>
-    <fieldPermissions>
+    <!--fieldPermissions>
         <editable>false</editable>
         <field>Healthcare_Cost__c.Case_Type__c</field>
         <readable>true</readable>
@@ -392,7 +392,7 @@
         <editable>false</editable>
         <field>Healthcare_Cost__c.Client__c</field>
         <readable>true</readable>
-    </fieldPermissions>
+    </fieldPermissions-->
     <fieldPermissions>
         <editable>true</editable>
         <field>Healthcare_Cost__c.Cost_Include__c</field>

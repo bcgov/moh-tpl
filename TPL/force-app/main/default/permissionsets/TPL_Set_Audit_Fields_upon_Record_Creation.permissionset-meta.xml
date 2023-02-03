@@ -3,8 +3,8 @@
     <description>This permission set will give permission to import Audit Fields.</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>TPL Set Audit Fields upon Record Creation</label>
-    <userPermissions>
+    <!--userPermissions>
         <enabled>true</enabled>
         <name>CreateAuditFields</name>
-    </userPermissions>
+    </userPermissions-->
 </PermissionSet>
