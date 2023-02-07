@@ -94,7 +94,7 @@ export default class AmbulanceRecordsAccount extends LightningElement {
     totalRecords = 0; //Total no.of records
     totalPages; //Total no.of pages
     pageNumber = 1; //Page number
-    pageSizeOptions = [5, 10, 25, 50, 75, 100, 150, 200, 500]; //Page size options
+    pageSizeOptions = [5, 10, 25, 50, 75, 100, 150, 200]; //Page size options
     records = []; //All records available in the data table
     pageSize; //No.of records to be displayed per page
     recordsToDisplay = []; //Records to be displayed on the page
