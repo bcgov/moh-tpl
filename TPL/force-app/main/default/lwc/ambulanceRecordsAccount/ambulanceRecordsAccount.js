@@ -14,7 +14,7 @@ import LOCATION_RESPONDED_FIELD from '@salesforce/schema/Healthcare_Cost__c.Loca
 import getHealthcareCostsAmbulanceForAccount from '@salesforce/apex/HCCCostController.getHealthcareCostsAmbulanceForAccount';
 import CASE_NUMBER_FIELD from '@salesforce/schema/Case.CaseNumber';
 import getCaseListIndividual from '@salesforce/apex/HCCCostController.getCaseListIndividual';
-
+import updateHCCCaseInformation from '@salesforce/apex/HCCCostController.updateHCCCaseInformation';
 const COLUMNS = [
     {
         label: 'HealthCare Cost Name',
@@ -89,15 +89,32 @@ export default class AmbulanceRecordsAccount extends LightningElement {
 
     handleCaseSelection(event){
         this.selectedCase = event.target.value;
-        alert('The selected Case id is : ' + this.selectedCase);
+        
      }
-     handleSelect(){
+     
+     async handleSelect(){
      var el = this.template.querySelector('lightning-datatable');
         console.log(el);
         var selected = el.getSelectedRows();
         //console.log(selected);
         console.log('selectedRows : ' + selected);
-    }
+        console.log('Selected Case ID : ' + this.selectedCase);
+        
+        let selectedCostIds = [];
+
+        selected.forEach(function(element){
+        selectedCostIds.push(element.Id);
+           console.log(element.Id);   
+        });
+
+        await updateHCCCaseInformation({ caseId: this.selectedCase, hccIds: selectedCostIds})
+        .then((result) => {
+            console.log('success');
+         })
+            .catch((error) => {
+            console.log('error');
+            });
+        }
 
     @wire(getHealthcareCostsAmbulanceForAccount, { accId: '$recordId' })
     healthcareCostsAmbulanceForAccount({error,data}){

@@ -6,9 +6,10 @@ public with sharing class HCCCostController {
         String caseNum = null;
         try{
             List<Healthcare_Cost__c> hccCostList = new List<Healthcare_Cost__c> ();
-            hccCostList = [select Account__r.Name, Case__r.CaseNumber, Case__c, Account__c, Cost_Include__c, Cost_Review__c, Name, Date_of_Service__c, Location_Responded__c, Facility_Code__c, Basic_Amount__c, Cost__c, Total_Override__c, Fixed_Wing_Helicopter__c from Healthcare_Cost__c where Account__c = :accId WITH SECURITY_ENFORCED LIMIT 2000];
+            hccCostList = [select Account__r.Name, Case__r.CaseNumber, Case__c, Account__c, Cost_Include__c, Cost_Review__c, Name, Date_of_Service__c, Location_Responded__c, Facility_Code__c, Basic_Amount__c, Cost__c, Total_Override__c, Fixed_Wing_Helicopter__c from Healthcare_Cost__c where Account__c = :accId and RecordTypeName__c = 'Ambulance' WITH SECURITY_ENFORCED LIMIT 2000];
             return hccCostList;
      }
+    
         catch(NullPointerException nullpointer){
             nullpointer.getMessage();
         }
@@ -70,6 +71,11 @@ public with sharing class HCCCostController {
         return null;
     }
 
+    @AuraEnabled (cacheable=true)
+    public static void updateHCCCaseInformation (List<String> hccIds, String caseId){
+        
+    }
+
     @AuraEnabled
     public static void saveDraftValues(Object data) {
         List<Healthcare_Cost__c> listOfHealthcareCost = (List<Healthcare_Cost__c>) JSON.deserialize(
@@ -78,4 +84,5 @@ public with sharing class HCCCostController {
         );
         update listOfHealthcareCost;
     }
+
 }
