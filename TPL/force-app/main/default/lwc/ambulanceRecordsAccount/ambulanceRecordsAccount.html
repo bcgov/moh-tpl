@@ -1,11 +1,17 @@
 <template>
     <template if:true={records}>
-          <!-- Ambulance Records -->
+       
      <lightning-card title="HealthCare Cost - Ambulance Records" icon-name="custom:custom63">
-        <lightning-button label="Select Case" onclick={handleSelect}> 
-        </lightning-button>
+        
+            <lightning-record-edit-form object-api-name="Healthcare_Cost__c" id="assignCases" >
+                <lightning-input-field field-name="Case__c" variant="label-hidden" onchange={handleCaseSelection} required> </lightning-input-field>
+                <lightning-button label="Assign case to selected records" onclick={handleSelect}> 
+                </lightning-button>
+            </lightning-record-edit-form>
+        
+      
         <div class="slds-scrollable slds-m-around_medium" style="height:auto;width:auto">
-                
+                   <!-- Ambulance Records -->
             <lightning-datatable
                     key-field="Id"
                     data={recordsToDisplay}
@@ -13,6 +19,7 @@
                     onsave={handleSave}
                     sorted-by={sortBy}
                     sorted-direction={sortDirection}
+                    selected-rows={selectedRows}
                     onsort={doSorting}
                     draft-values={draftValues} style="width: auto;">
                 </lightning-datatable>

@@ -12,6 +12,8 @@ import TOTAL_OVERRIDE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Total_Ov
 import DATE_OF_SERVICE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Date_of_Service__c';
 import LOCATION_RESPONDED_FIELD from '@salesforce/schema/Healthcare_Cost__c.Location_Responded__c';
 import getHealthcareCostsAmbulanceForAccount from '@salesforce/apex/HCCCostController.getHealthcareCostsAmbulanceForAccount';
+import CASE_NUMBER_FIELD from '@salesforce/schema/Case.CaseNumber';
+import getCaseListIndividual from '@salesforce/apex/HCCCostController.getCaseListIndividual';
 
 const COLUMNS = [
     {
@@ -19,12 +21,6 @@ const COLUMNS = [
         fieldName: HCCOST_FIELD.fieldApiName,
         sortable: true
     },
-    {
-        label: 'Case ID',
-        fieldName:CASE_FIELD.fieldApiName,
-        sortable: true,
-        editable: true
-    },  
     {
         label: 'Cost Include',
         fieldName: COST_INCLUDE_FIELD.fieldApiName,
@@ -89,6 +85,19 @@ export default class AmbulanceRecordsAccount extends LightningElement {
     recordsToDisplay = []; //Records to be displayed on the page
     error;
     selectedRows = [];
+    selectedCase;
+
+    handleCaseSelection(event){
+        this.selectedCase = event.target.value;
+        alert('The selected Case id is : ' + this.selectedCase);
+     }
+     handleSelect(){
+     var el = this.template.querySelector('lightning-datatable');
+        console.log(el);
+        var selected = el.getSelectedRows();
+        //console.log(selected);
+        console.log('selectedRows : ' + selected);
+    }
 
     @wire(getHealthcareCostsAmbulanceForAccount, { accId: '$recordId' })
     healthcareCostsAmbulanceForAccount({error,data}){
@@ -182,15 +191,15 @@ export default class AmbulanceRecordsAccount extends LightningElement {
         });
         this.recordsToDisplay = parseData;
     }
-
-     async handleSave(event){
+   
+    async handleSave(event){
     
         // Convert datatable draft values into record objects
         const records = event.detail.draftValues.slice().map((draftValue) => {
             const fields = Object.assign({}, draftValue);
             return { fields };
         });
-        this.sele
+//        this.sele
 
         // Clear all datatable draft values
         this.draftValues = [];
