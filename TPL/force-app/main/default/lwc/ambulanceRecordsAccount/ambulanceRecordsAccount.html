@@ -1,13 +1,28 @@
 <template>
     <template if:true={records}>
-        <!--CUSTOM DATATABLE-->
-        <div style="height:400px" onitemregister={handleItemRegister}>
-            <c-custom-data-table class="slds-max-medium-table_stacked" onvaluechange={handleValueChange}
-                    oncellchange={handleCellChange} data={recordsToDisplay} columns={column} show-row-number-column="false"
-                    key-field="Id" draft-values={draftValues} onsave={handleSave} data-record="Id" onedit={handleEdit}
-                    oncancel={handleCancel} style="width: auto;">
-                </c-custom-data-table>
+          <!-- Ambulance Records -->
+     <lightning-card title="HealthCare Cost - Ambulance Records" icon-name="custom:custom63">
+        <lightning-button label="Select Case" onclick={handleSelect}> 
+        </lightning-button>
+        <div class="slds-scrollable slds-m-around_medium" style="height:auto;width:auto">
+                
+            <lightning-datatable
+                    key-field="Id"
+                    data={recordsToDisplay}
+                    columns={column}
+                    onsave={handleSave}
+                    sorted-by={sortBy}
+                    sorted-direction={sortDirection}
+                    onsort={doSorting}
+                    draft-values={draftValues} style="width: auto;">
+                </lightning-datatable>
+            
+            <template if:true={healthcareCostsAmbulanceForAccount.error}>
+                <!-- handle Apex error -->
+            </template>
         </div>
+
+    </lightning-card>
 
         <div class="slds-grid slds-grid_vertical-align-center slds-grid_align-spread" style="padding-top: 0.5em;">
             <!--RECORDS PER PAGE-->
