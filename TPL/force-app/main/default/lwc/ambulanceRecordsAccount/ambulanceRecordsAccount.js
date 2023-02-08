@@ -10,7 +10,7 @@ import TOTAL_OVERRIDE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Total_Ov
 import DATE_OF_SERVICE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Date_of_Service__c';
 import LOCATION_RESPONDED_FIELD from '@salesforce/schema/Healthcare_Cost__c.Location_Responded__c';
 import saveDraftValues from '@salesforce/apex/HCCCostController.saveDraftValues';
-
+import updateHCCCaseInformation from '@salesforce/apex/HCCCostController.updateHCCCaseInformation';
 const COLS = [
     {
         label: 'HealthCare Cost Number',
@@ -35,6 +35,7 @@ const COLS = [
             variant: 'label-hidden',
             name: 'Case',
             fields: ['Case.CaseNumber'],
+            editable: false,
             target: '_self'
         },
         cellAttributes:{
@@ -103,6 +104,7 @@ export default class AmbulanceRecordsAccount extends LightningElement {
     privateChildren = {}; //used to get the datatable lookup as private childern of customDatatable
     wiredRecords;
     draftValues = [];
+    selectedCase;
 
     renderedCallback() {
         if (!this.isComponentLoaded) {
@@ -131,6 +133,43 @@ export default class AmbulanceRecordsAccount extends LightningElement {
             });
         }
     }
+
+    handleCaseSelection(event){
+        this.selectedCase = event.target.value;  
+     }
+     
+     async handleSelect(){
+     var el = this.template.querySelector('c-custom-data-table');
+        console.log(el);
+        var selected = el.getSelectedRows();
+        //console.log(selected);
+        console.log('selectedRows : ' + selected);
+        console.log('Selected Case ID : ' + this.selectedCase);
+        
+        let selectedCostIds = [];
+
+        selected.forEach(function(element){
+        selectedCostIds.push(element.Id);
+           console.log(element.Id);   
+        });
+
+        await updateHCCCaseInformation({ caseId: this.selectedCase, hccIds: selectedCostIds})
+        .then((result) => {
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Success',
+                    message: 'HealthCare Cost Ambulance record(s) updated successfully',
+                    variant: 'success'
+                })
+            );
+            //Get the updated list with refreshApex.
+      //  refreshApex(this.wiredHealthcareCostsAmbulanceForAccount);
+        })
+        .catch(error => {
+            console.log('error : ' + JSON.stringify(error));
+            this.showSpinner = false;
+        });
+}
 
     @wire(getHealthcareCostsAmbulanceForAccount, { accId: '$recordId' })
     wiredHealthcareCostsAmbulanceForAccount(result){
