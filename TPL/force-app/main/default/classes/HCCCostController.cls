@@ -20,11 +20,11 @@ public with sharing class HCCCostController {
     }
 
     @AuraEnabled (cacheable = true)
-    public static List<Case> getCaseListIndividual(){
+    public static List<Case> getCaseListIndividual(String accId){
         try {
             List<Case> caseList = new List<Case>();
             Id recordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByName().get('Individual').getRecordTypeId();
-            caseList = [select CaseNumber from Case where RecordTypeId =: recordTypeId LIMIT 100];
+            caseList = [select CaseNumber from Case where RecordTypeId =: recordTypeId and AccountId = :accId LIMIT 100];
             return caseList;
         }
         catch(NullPointerException nullpointer){
