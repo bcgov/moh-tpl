@@ -16,6 +16,7 @@ const COLS = [
         label: 'HealthCare Cost Number',
         fieldName: 'linkName',
         type: 'url',
+        sortable: true,
         typeAttributes: {
             label: { fieldName: 'Name' },
             target: '_self'
@@ -25,6 +26,8 @@ const COLS = [
         label: 'Case Number',
         fieldName: 'Case__c',
         type: 'lookup',
+        sortable: true,
+        editable: false,
         typeAttributes: {
             placeholder: 'Choose Case',
             object: 'Healthcare_Cost__c',
@@ -58,7 +61,8 @@ const COLS = [
         label: 'Date of Service',
         fieldName: DATE_OF_SERVICE_FIELD.fieldApiName,
         type: 'date',
-        editable: false
+        editable: false,
+        sortable: true
     },
     {
         label: 'Basic Amount',
@@ -134,6 +138,30 @@ export default class AmbulanceRecordsAccount extends LightningElement {
         }
     }
 
+    doSorting(event) {
+        this.sortBy = event.detail.fieldName;
+        this.sortDirection = event.detail.sortDirection;
+        this.sortData(this.sortBy, this.sortDirection);
+    }
+
+    sortData(fieldname, direction) {
+        let parseData = JSON.parse(JSON.stringify(this.recordsToDisplay));
+        // Return the value stored in the field
+        let keyValue = (a) => {
+            return a[fieldname];
+        };
+        // cheking reverse direction
+        let isReverse = direction === 'asc' ? 1: -1;
+        // sorting data
+        parseData.sort((x, y) => {
+            x = keyValue(x) ? keyValue(x) : ''; // handling null values
+            y = keyValue(y) ? keyValue(y) : '';
+            // sorting values based on direction
+            return isReverse * ((x > y) - (y > x));
+        });
+        this.recordsToDisplay = parseData;
+    }    
+
     handleCaseSelection(event){
         this.selectedCase = event.target.value;  
      }
@@ -163,7 +191,7 @@ export default class AmbulanceRecordsAccount extends LightningElement {
                 })
             );
             //Get the updated list with refreshApex.
-      //  refreshApex(this.wiredHealthcareCostsAmbulanceForAccount);
+            refreshApex(this.wiredRecords);
         })
         .catch(error => {
             console.log('error : ' + JSON.stringify(error));

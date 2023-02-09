@@ -1,14 +1,15 @@
 <template>
     <template if:true={records}>
         <lightning-record-edit-form object-api-name="Healthcare_Cost__c" id="assignCases" >
-            <lightning-input-field field-name="Case__c" variant="label-hidden" onchange={handleCaseSelection} required> </lightning-input-field>
+            <label for="selectCase">Please search and select a Case </label>
+            <lightning-input-field id="selectCase" field-name="Case__c" variant="label-hidden" onchange={handleCaseSelection} required> </lightning-input-field>
             <lightning-button label="Assign case to selected records" onclick={handleSelect}> 
             </lightning-button>
         </lightning-record-edit-form>
         <!--CUSTOM DATATABLE-->
         <div style="height:400px" onitemregister={handleItemRegister}>
-            <c-custom-data-table class="slds-max-medium-table_stacked" onvaluechange={handleValueChange}
-                    oncellchange={handleCellChange} data={recordsToDisplay} columns={column} show-row-number-column="false"
+            <c-custom-data-table class="slds-max-medium-table_stacked" onvaluechange={handleValueChange} sorted-by={sortBy}
+            sorted-direction={sortDirection} onsort={doSorting} oncellchange={handleCellChange} data={recordsToDisplay} columns={column} show-row-number-column="false"
                     key-field="Id" draft-values={draftValues} onsave={handleSave} data-record="Id" onedit={handleEdit} selected-rows={selectedRows}
                     oncancel={handleCancel} style="width: auto;">
                 </c-custom-data-table>
