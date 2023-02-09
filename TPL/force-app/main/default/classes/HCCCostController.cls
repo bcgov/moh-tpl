@@ -6,7 +6,7 @@ public with sharing class HCCCostController {
         String caseNum = null;
         try{
             List<Healthcare_Cost__c> hccCostList = new List<Healthcare_Cost__c> ();
-            hccCostList = [select Account__r.Name, Case__r.CaseNumber, Case__c, Account__c, Cost_Include__c, Cost_Review__c, Name, Date_of_Service__c, Location_Responded__c, Facility_Code__c, Basic_Amount__c, Cost__c, Total_Override__c, Fixed_Wing_Helicopter__c from Healthcare_Cost__c where Account__c = :accId and RecordTypeName__c = 'Ambulance' WITH SECURITY_ENFORCED LIMIT 2000];
+            hccCostList = [select Case2__c, Case_Number__c, Cost_Include__c, Cost_Review__c, Name, Date_of_Service__c, Location_Responded__c, Facility_Code__c, Basic_Amount__c, Cost__c, Total_Override__c, Fixed_Wing_Helicopter__c from Healthcare_Cost__c where Account__c = :accId and RecordTypeName__c = 'Ambulance' WITH SECURITY_ENFORCED LIMIT 2000];
             return hccCostList;
      }
     
@@ -14,23 +14,6 @@ public with sharing class HCCCostController {
             nullpointer.getMessage();
         }
         catch(Exception e) {
-            throw new AuraHandledException(e.getMessage());
-        }
-        return null;
-    }
-
-    @AuraEnabled (cacheable = true)
-    public static List<Account> getListOfIndividualAccounts(){
-        try {
-            List<Account> accList = new List<Account>();
-            Id recordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Individual').getRecordTypeId();
-            accList = [select Name from Account where RecordTypeId =: recordTypeId LIMIT 100];
-            return accList;
-        } 
-        catch(NullPointerException nullpointer){
-            nullpointer.getMessage();
-        }
-        catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
         }
         return null;
@@ -59,7 +42,7 @@ public with sharing class HCCCostController {
         String caseNum = null;
         try{
             List<Healthcare_Cost__c> hccCostList = new List<Healthcare_Cost__c> ();
-            hccCostList = [select  Account__r.Name, Case__r.CaseNumber, Account__c, Cost_Include__c, Cost_Review__c, Name, Date_of_Service__c, Location_Responded__c, Facility_Code__c, Basic_Amount__c, Cost__c, Total_Override__c, Fixed_Wing_Helicopter__c from Healthcare_Cost__c where Case__c = :caseId and RecordTypeName__c = 'Ambulance' WITH SECURITY_ENFORCED LIMIT 2000];
+            hccCostList = [select Cost_Include__c, Cost_Review__c, Name, Date_of_Service__c, Location_Responded__c, Facility_Code__c, Basic_Amount__c, Cost__c, Total_Override__c, Fixed_Wing_Helicopter__c from Healthcare_Cost__c where Case2__c = :caseId and RecordTypeName__c = 'Ambulance' WITH SECURITY_ENFORCED LIMIT 2000];
             return hccCostList;
      }
         catch(NullPointerException nullpointer){
@@ -77,7 +60,7 @@ public with sharing class HCCCostController {
         try{
             for(String hccId: hccIds){
                 System.debug('hccId : '+hccId);
-                updatedHealthcareCosts.add(new Healthcare_Cost__c(Id= hccId, Case__c = caseId));
+                updatedHealthcareCosts.add(new Healthcare_Cost__c(Id= hccId, Case2__c = caseId));
             }
             update updatedHealthcareCosts;
     

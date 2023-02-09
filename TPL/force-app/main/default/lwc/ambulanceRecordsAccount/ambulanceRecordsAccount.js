@@ -11,6 +11,8 @@ import DATE_OF_SERVICE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Date_of
 import LOCATION_RESPONDED_FIELD from '@salesforce/schema/Healthcare_Cost__c.Location_Responded__c';
 import saveDraftValues from '@salesforce/apex/HCCCostController.saveDraftValues';
 import updateHCCCaseInformation from '@salesforce/apex/HCCCostController.updateHCCCaseInformation';
+import { refreshApex } from '@salesforce/apex';
+
 const COLS = [
     {
         label: 'HealthCare Cost Number',
@@ -24,16 +26,16 @@ const COLS = [
     },
     {
         label: 'Case Number',
-        fieldName: 'Case__c',
+        fieldName: 'Case2__c',
         type: 'lookup',
         sortable: true,
         editable: false,
         typeAttributes: {
             placeholder: 'Choose Case',
             object: 'Healthcare_Cost__c',
-            fieldName: 'Case__c',
+            fieldName: 'Case2__c',
             label: 'CaseNumber',
-            value: { fieldName: 'Case__c'},
+            value: { fieldName: 'Case2__c'},
             context:{fieldName: 'Id'},
             variant: 'label-hidden',
             name: 'Case',
@@ -175,29 +177,45 @@ export default class AmbulanceRecordsAccount extends LightningElement {
         console.log('Selected Case ID : ' + this.selectedCase);
         
         let selectedCostIds = [];
-
+        
         selected.forEach(function(element){
         selectedCostIds.push(element.Id);
            console.log(element.Id);   
         });
 
         await updateHCCCaseInformation({ caseId: this.selectedCase, hccIds: selectedCostIds})
-        .then((result) => {
-            this.dispatchEvent(
-                new ShowToastEvent({
-                    title: 'Success',
-                    message: 'HealthCare Cost Ambulance record(s) updated successfully',
-                    variant: 'success'
-                })
-            );
+        .then(() => {
+            if(this.selectedCase == null){
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Error',
+                        message: 'Please select Case and HCC Records to map',
+                        variant: 'error'
+                    })
+                );
+            }
+            else{
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Success',
+                        message: 'HealthCare Cost Ambulance record(s) updated successfully',
+                        variant: 'success'
+                    })
+                );    
+            }
             //Get the updated list with refreshApex.
-            refreshApex(this.wiredRecords);
+            return this.refresh();
+           
+            
         })
         .catch(error => {
             console.log('error : ' + JSON.stringify(error));
             this.showSpinner = false;
         });
 }
+    async refresh(){
+        await refreshApex(this.wiredRecords);
+    }
 
     @wire(getHealthcareCostsAmbulanceForAccount, { accId: '$recordId' })
     wiredHealthcareCostsAmbulanceForAccount(result){
@@ -288,7 +306,7 @@ export default class AmbulanceRecordsAccount extends LightningElement {
     handleChange(event) {
         event.preventDefault();
         console.log('Inside Handle Change ');
-        this.Case__c = event.target.value;
+        this.Case2__c = event.target.value;
         this.showSpinner = true;
       
     }
@@ -316,7 +334,7 @@ export default class AmbulanceRecordsAccount extends LightningElement {
             case 'CaseNumber':
                 updatedItem = {
                     Id: dataRecieved.context,
-                    Case__c: dataRecieved.value
+                    Case2__c: dataRecieved.value
                 };
                 // Set the cell edit class to edited to mark it as value changed.
                 this.setClassesOnData(
