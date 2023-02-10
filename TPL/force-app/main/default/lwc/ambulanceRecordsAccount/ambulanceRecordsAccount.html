@@ -8,10 +8,9 @@
         </lightning-record-edit-form>
         <!--CUSTOM DATATABLE-->
         <div style="height:400px" onitemregister={handleItemRegister}>
-            <c-custom-data-table class="slds-max-medium-table_stacked" onvaluechange={handleValueChange} sorted-by={sortBy}
-            sorted-direction={sortDirection} onsort={doSorting} oncellchange={handleCellChange} data={recordsToDisplay} columns={column} show-row-number-column="false"
-                    key-field="Id" draft-values={draftValues} onsave={handleSave} data-record="Id" onedit={handleEdit} selected-rows={selectedRows}
-                    oncancel={handleCancel} style="width: auto;">
+            <c-custom-data-table class="slds-max-medium-table_stacked" sorted-by={sortBy}
+            sorted-direction={sortDirection} onsort={doSorting} data={recordsToDisplay} columns={column} show-row-number-column="false"
+                    key-field="Id" data-record="Id" selected-rows={selectedRows} style="width: auto;">
                 </c-custom-data-table>
         </div>
 

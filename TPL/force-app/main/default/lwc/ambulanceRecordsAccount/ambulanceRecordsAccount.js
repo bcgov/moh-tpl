@@ -5,11 +5,12 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import COST_INCLUDE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Cost_Include__c';
 import COST_REVIEW_FIELD from '@salesforce/schema/Healthcare_Cost__c.Cost_Review__c';
 import COST_FIELD from '@salesforce/schema/Healthcare_Cost__c.Cost__c';
+import CASE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Case2__c';
+import CASE_NUMBER_FIELD from '@salesforce/schema/Healthcare_Cost__c.Case_Number__c';
 import BASIC_AMOUNT_FIELD from '@salesforce/schema/Healthcare_Cost__c.Basic_Amount__c';
 import TOTAL_OVERRIDE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Total_Override__c';
 import DATE_OF_SERVICE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Date_of_Service__c';
 import LOCATION_RESPONDED_FIELD from '@salesforce/schema/Healthcare_Cost__c.Location_Responded__c';
-import saveDraftValues from '@salesforce/apex/HCCCostController.saveDraftValues';
 import updateHCCCaseInformation from '@salesforce/apex/HCCCostController.updateHCCCaseInformation';
 import { refreshApex } from '@salesforce/apex';
 
@@ -26,26 +27,10 @@ const COLS = [
     },
     {
         label: 'Case Number',
-        fieldName: 'Case2__c',
-        type: 'lookup',
+        fieldName: CASE_NUMBER_FIELD.fieldApiName,
+        type: 'text',
         sortable: true,
         editable: false,
-        typeAttributes: {
-            placeholder: 'Choose Case',
-            object: 'Healthcare_Cost__c',
-            fieldName: 'Case2__c',
-            label: 'CaseNumber',
-            value: { fieldName: 'Case2__c'},
-            context:{fieldName: 'Id'},
-            variant: 'label-hidden',
-            name: 'Case',
-            fields: ['Case.CaseNumber'],
-            editable: false,
-            target: '_self'
-        },
-        cellAttributes:{
-            class: { fieldName: 'CaseNumberClass'}
-        }
     },
     {
         label: 'Cost Include',
@@ -97,7 +82,6 @@ export default class AmbulanceRecordsAccount extends LightningElement {
     column = COLS;
     isFirstPage = true;
     isLastPage = false;
-    CaseNumber;
     totalRecords = 0; //Total no.of records
     totalPages; //Total no.of pages
     pageNumber = 1; //Page number
@@ -105,11 +89,7 @@ export default class AmbulanceRecordsAccount extends LightningElement {
     records = []; //All records available in the data table
     pageSize; //No.of records to be displayed per page
     recordsToDisplay = []; //Records to be displayed on the page
-    showSpinner = false;
-    lastSavedData;
-    privateChildren = {}; //used to get the datatable lookup as private childern of customDatatable
     wiredRecords;
-    draftValues = [];
     selectedCase;
 
     renderedCallback() {
@@ -210,7 +190,6 @@ export default class AmbulanceRecordsAccount extends LightningElement {
         })
         .catch(error => {
             console.log('error : ' + JSON.stringify(error));
-            this.showSpinner = false;
         });
 }
     async refresh(){
@@ -227,7 +206,6 @@ export default class AmbulanceRecordsAccount extends LightningElement {
             this.records = JSON.parse(JSON.stringify(data));
             this.records.forEach(record => {
                 record.linkName = '/' + record.Id;
-                record.CaseNumberClass = 'slds-cell-edit';
             })
             this.totalRecords = data.length;
             this.pageSize = this.pageSizeOptions[0]; 
@@ -241,9 +219,6 @@ export default class AmbulanceRecordsAccount extends LightningElement {
             this.error = undefined;
             this.records = undefined;
         }
-        
-        this.lastSavedData = this.records;
-        this.showSpinner = false;
     }
 
     get bDisableFirst() {
@@ -253,15 +228,6 @@ export default class AmbulanceRecordsAccount extends LightningElement {
         return this.pageNumber == this.totalPages;
     }
     
-      // Event to register the datatable lookup mark up.
-      handleItemRegister(event) {
-        event.stopPropagation(); //stops the window click to propagate to allow to register of markup.
-        const item = event.detail;
-        if (!this.privateChildren.hasOwnProperty(item.name))
-            this.privateChildren[item.name] = {};
-        this.privateChildren[item.name][item.guid] = item;
-    }
-
     handleRecordsPerPage(event) {
         this.pageSize = event.target.value;
         this.paginationHelper();
@@ -301,142 +267,6 @@ export default class AmbulanceRecordsAccount extends LightningElement {
             }
             this.recordsToDisplay.push(this.records[i]);
         }
-    }
-    
-    handleChange(event) {
-        event.preventDefault();
-        console.log('Inside Handle Change ');
-        this.Case2__c = event.target.value;
-        this.showSpinner = true;
-      
-    }
-
-    handleCancel(event) {
-        event.preventDefault();
-        this.records = JSON.parse(JSON.stringify(this.lastSavedData));
-        this.handleWindowOnclick('reset');
-        this.draftValues = [];
-    }
-
-    handleCellChange(event) {
-        event.preventDefault();
-        this.updateDraftValues(event.detail.draftValues[0]);
-        console.log(' Handle Cell Change');
-    }
-
-    //Captures the changed lookup value and updates the records list variable.
-    handleValueChange(event) {
-        event.stopPropagation();
-        console.log('Handle Value Change');
-        let dataRecieved = event.detail.data;
-        let updatedItem;
-        switch (dataRecieved.label) {
-            case 'CaseNumber':
-                updatedItem = {
-                    Id: dataRecieved.context,
-                    Case2__c: dataRecieved.value
-                };
-                // Set the cell edit class to edited to mark it as value changed.
-                this.setClassesOnData(
-                    dataRecieved.context,
-                    'CaseNumberClass',
-                    'slds-cell-edit slds-is-edited'
-                );
-                break;
-            default:
-                this.setClassesOnData(dataRecieved.context, '', '');
-                break;
-        }
-        this.updateDraftValues(updatedItem);
-        this.updateDataValues(updatedItem);
-        
-    }
-
-    updateDataValues(updateItem) {
-        let copyData = JSON.parse(JSON.stringify(this.records));
-        copyData.forEach((item) => {
-            if (item.Id === updateItem.Id) {
-                for (let field in updateItem) {
-                    item[field] = updateItem[field];
-                }
-            }
-        });
-        this.records = [...copyData];
-        console.log('Updated data values log');
-    }
-
-    updateDraftValues(updateItem) {
-        let draftValueChanged = false;
-        let copyDraftValues = JSON.parse(JSON.stringify(this.draftValues));
-        copyDraftValues.forEach((item) => {
-            if (item.Id === updateItem.Id) {
-                for (let field in updateItem) {
-                    item[field] = updateItem[field];
-                }
-                draftValueChanged = true;
-            }
-        });
-        if (draftValueChanged) {
-            this.draftValues = [...copyDraftValues];
-        } else {
-            this.draftValues = [...copyDraftValues, updateItem];
-        }
-        console.log('Update Draft values');
-    }
-
-    handleEdit(event) {
-        event.preventDefault();
-        let dataRecieved = event.detail.data;
-        this.handleWindowOnclick(dataRecieved.context);
-        switch (dataRecieved.label) {
-            case 'CaseNumber':
-                this.setClassesOnData(
-                    dataRecieved.context,
-                    'CaseNumberClass',
-                    'slds-cell-edit'
-                );
-                break;
-            default:
-                this.setClassesOnData(dataRecieved.context, '', '');
-                break;
-        };
-        console.log('Inside handle edit method');
-    }
-
-    setClassesOnData(id, fieldName, fieldValue) {
-        this.records = JSON.parse(JSON.stringify(this.records));
-        this.records.forEach((detail) => {
-            if (detail.Id === id) {
-                detail[fieldName] = fieldValue;
-            }
-        });
-    }
-    
-    handleSave(event) {
-        event.preventDefault();
-        this.showSpinner = true;
-        // Update the draftvalues
-        saveDraftValues({ data: this.draftValues })
-            .then(() => {
-                this.dispatchEvent(
-                    new ShowToastEvent({
-                        title: 'Success',
-                        message: 'HealthCare Cost Ambulance record(s) updated successfully',
-                        variant: 'success'
-                    })
-                );
-                //Get the updated list with refreshApex.
-                refreshApex(this.wiredRecords).then(() => {
-                    this.records.forEach(record => {
-                        record.CaseNumberClass = 'slds-cell-edit';
-                    });
-                    this.draftValues = [];
-                });
-            })
-            .catch(error => {
-                console.log('error : ' + JSON.stringify(error));
-                this.showSpinner = false;
-            });
     }
 
 }
