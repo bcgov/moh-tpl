@@ -5,7 +5,6 @@ import { updateRecord } from 'lightning/uiRecordApi';
 import { refreshApex } from '@salesforce/apex';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import HCCOST_FIELD from '@salesforce/schema/Healthcare_Cost__c.Name';
-import ACCOUNT_FIELD from '@salesforce/schema/Healthcare_Cost__c.Account__c';
 import COST_INCLUDE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Cost_Include__c';
 import COST_REVIEW_FIELD from '@salesforce/schema/Healthcare_Cost__c.Cost_Review__c';
 import COST_FIELD from '@salesforce/schema/Healthcare_Cost__c.Cost__c';
@@ -54,7 +53,6 @@ const COLUMNS = [
         label: 'Location Responded',
         fieldName: LOCATION_RESPONDED_FIELD.fieldApiName,
         type: 'text',
-        sortable: true,
         editable: false
     },
     {
@@ -84,44 +82,31 @@ export default class AmbulanceRecordsCase extends LightningElement {
     pageSizeOptions = [5, 10, 25, 50, 75, 100, 150, 200]; //Page size options
     pageSize; //No.of records to be displayed per page
     recordsToDisplay = []; //Records to be displayed on the page
-    error;
-    rowLimit = 5;
-    rowOffSet = 0;
+    wiredRecords;
 
-    connectedCallback(){
-        this.loadData();
-    }
-    loadData(){
-        return getHealthcareCostsAmbulanceForCase({caseId: this.recordId})
-        .then(result =>{
-            console.log('Record ID : ' + this.recordId);
-            console.log('RowOffSet : ' + this.rowOffSet);
-            console.log('RowLimit : ' + this.rowLimit);
-         //   console.log('Data of Ambulance Records --> ' + JSON.stringify(result));
-            if(result != null && result){
-                console.log('Data of Ambulance Records --> ' + JSON.stringify(result));
-                this.records = result;
-                this.totalRecords = result.length;
-                this.pageSize = this.pageSizeOptions[0];
-                this.paginationHelper(); // call helper menthod to update pagination logic
-            }
-            else if(error){
-                console.error(error);
-            }
-            else if (error) {
-                this.records = undefixned;
-                this.error = error;
-            } else {
-                this.error = undefined;
-                this.records = undefined;
-            }
-        })
-        .catch(error => {
+    @wire(getHealthcareCostsAmbulanceForCase, { caseId: '$recordId' })
+    healthcareCostsAmbulanceForCase(result){
+        this.wiredRecords = result;
+        const {data, error} = result;
+
+        if(data != null && data){
+            console.log('Data of Ambulance Records --> ' + JSON.stringify(data));
+            this.records = data;
+            this.totalRecords = data.length;
+            this.pageSize = this.pageSizeOptions[0]; 
+            this.paginationHelper(); // call helper menthod to update pagination logic
+        }
+        else if(error){
+            console.error(error);
+        }
+        else if (error) {
+            this.records = undefined;
             this.error = error;
-            this.result = undefined;
-        });
+        } else {
+            this.error = undefined;
+            this.records = undefined;
+        }
     }
-    
 
     get bDisableFirst() {
         return this.pageNumber == 1;
@@ -156,10 +141,6 @@ export default class AmbulanceRecordsCase extends LightningElement {
         this.recordsToDisplay = [];
         // calculate total pages
         this.totalPages = Math.ceil(this.totalRecords / this.pageSize);
-       // this.rowLimit = this.pageSize;
-       // this.rowOffSet = this.rowOffSet + this.rowLimit;
-        
-
         // set page number 
         if (this.pageNumber <= 1) {
             this.pageNumber = 1;
@@ -199,6 +180,9 @@ export default class AmbulanceRecordsCase extends LightningElement {
         this.recordsToDisplay = parseData;
     }    
 
+    async refresh(){
+        await refreshApex(this.wiredRecords);
+    }
     async handleSave(event){
     
         // Convert datatable draft values into record objects
@@ -226,8 +210,8 @@ export default class AmbulanceRecordsCase extends LightningElement {
                 })
             );
 
-            // Display fresh data in the datatable
-            await refreshApex(this.loadData);
+            //Get the updated list with refreshApex.
+            return this.refresh();
            
         } catch (error) {
             this.dispatchEvent(
