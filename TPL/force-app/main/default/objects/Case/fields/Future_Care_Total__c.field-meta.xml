@@ -3,7 +3,7 @@
     <fullName>Future_Care_Total__c</fullName>
     <description>Sum of Future Care Healthcare Costs related to the Case.</description>
     <externalId>false</externalId>
-    <label>Future Care Total</label>
+    <label>Future Care Total_X</label>
     <summarizedField>Healthcare_Cost__c.Cost__c</summarizedField>
     <summaryFilterItems>
         <field>Healthcare_Cost__c.RecordTypeId</field>

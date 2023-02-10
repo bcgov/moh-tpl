@@ -3,7 +3,7 @@
     <fullName>Ambulance_Total__c</fullName>
     <description>Sum of Ambulance Healthcare Cost related to the Case.</description>
     <externalId>false</externalId>
-    <label>Ambulance Total</label>
+    <label>Ambulance Total_X</label>
     <summarizedField>Healthcare_Cost__c.Total_Override__c</summarizedField>
     <summaryFilterItems>
         <field>Healthcare_Cost__c.Cost_Include__c</field>
