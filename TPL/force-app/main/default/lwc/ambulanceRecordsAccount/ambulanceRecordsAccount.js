@@ -12,6 +12,7 @@ import TOTAL_OVERRIDE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Total_Ov
 import DATE_OF_SERVICE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Date_of_Service__c';
 import LOCATION_RESPONDED_FIELD from '@salesforce/schema/Healthcare_Cost__c.Location_Responded__c';
 import updateHCCCaseInformation from '@salesforce/apex/HCCCostController.updateHCCCaseInformation';
+import getCaseListIndividual from '@salesforce/apex/HCCCostController.getCaseListIndividual';
 import { refreshApex } from '@salesforce/apex';
 
 const COLS = [
@@ -219,6 +220,11 @@ export default class AmbulanceRecordsAccount extends LightningElement {
             this.error = undefined;
             this.records = undefined;
         }
+    }
+
+    @wire (getCaseListIndividual,{accId: '$recordId'})
+    wiredCaseListIndividual(result){
+        const {data, error} = result; 
     }
 
     get bDisableFirst() {
