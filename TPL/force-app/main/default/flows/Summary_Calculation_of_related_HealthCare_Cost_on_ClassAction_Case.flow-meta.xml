@@ -75,42 +75,42 @@
             <assignToReference>ambulanceTotal</assignToReference>
             <operator>Add</operator>
             <value>
-                <elementReference>Loop_through_Child_cases.Ambulance_Total__c</elementReference>
+                <elementReference>Loop_through_Child_cases.Ambulance_Total2__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>mspTotal</assignToReference>
             <operator>Add</operator>
             <value>
-                <elementReference>Loop_through_Child_cases.MSP_Total__c</elementReference>
+                <elementReference>Loop_through_Child_cases.MSP_Total2__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>ContinuingcareTotal</assignToReference>
             <operator>Add</operator>
             <value>
-                <elementReference>Loop_through_Child_cases.Continuing_Care_Total__c</elementReference>
+                <elementReference>Loop_through_Child_cases.Continuing_Care_Total2__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>FuturecareTotal</assignToReference>
             <operator>Add</operator>
             <value>
-                <elementReference>Loop_through_Child_cases.Future_Care_Total__c</elementReference>
+                <elementReference>Loop_through_Child_cases.Future_Care_Total2__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>HospitalizationTotal</assignToReference>
             <operator>Add</operator>
             <value>
-                <elementReference>Loop_through_Child_cases.Hospitalization_Total__c</elementReference>
+                <elementReference>Loop_through_Child_cases.Hospitalization_Total2__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>PharmacareTotal</assignToReference>
             <operator>Add</operator>
             <value>
-                <elementReference>Loop_through_Child_cases.Pharmacare_Total__c</elementReference>
+                <elementReference>Loop_through_Child_cases.Pharmacare_Total2__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -236,8 +236,9 @@
         </rules>
     </decisions>
     <description>This flow will calculate the sum of Healthcare cost and payments made on child cases (Individual Cases) and display on parent case (Class Action)</description>
-    <interviewLabel>Summary Calculation of related HealthCare Cost {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Summary Calculation of related HealthCare Cost</label>
+    <environments>Default</environments>
+    <interviewLabel>Summary Calculation of related HealthCare Cost on ClassAction Case {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Summary Calculation of related HealthCare Cost on ClassAction Case</label>
     <loops>
         <name>Loop_through_Child_cases</name>
         <label>Loop through Child cases</label>
@@ -299,7 +300,7 @@
             <targetReference>Loop_through_Grandparent_cases</targetReference>
         </connector>
     </start>
-    <status>Obsolete</status>
+    <status>Active</status>
     <variables>
         <name>ambulanceTotal</name>
         <dataType>Currency</dataType>

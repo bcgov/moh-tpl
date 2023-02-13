@@ -4,8 +4,8 @@
     <assignments>
         <name>assignToCollection</name>
         <label>assignToCollection</label>
-        <locationX>276</locationX>
-        <locationY>623</locationY>
+        <locationX>50</locationX>
+        <locationY>575</locationY>
         <assignmentItems>
             <assignToReference>caseCollection</assignToReference>
             <operator>Assign</operator>
@@ -20,8 +20,8 @@
     <assignments>
         <name>assignToCollection_0</name>
         <label>assignToCollection</label>
-        <locationX>697</locationX>
-        <locationY>649</locationY>
+        <locationX>446</locationX>
+        <locationY>815</locationY>
         <assignmentItems>
             <assignToReference>caseCollection</assignToReference>
             <operator>Assign</operator>
@@ -50,8 +50,8 @@
     <decisions>
         <name>Check_for_the_create_and_update</name>
         <label>Check for the create and update</label>
-        <locationX>584</locationX>
-        <locationY>383</locationY>
+        <locationX>446</locationX>
+        <locationY>335</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>checkForCreate</name>
@@ -87,8 +87,8 @@
     <decisions>
         <name>Decide_if_Individual_Case</name>
         <label>Decide if Individual Case</label>
-        <locationX>541</locationX>
-        <locationY>925</locationY>
+        <locationX>446</locationX>
+        <locationY>1055</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Is_Individual_case</name>
@@ -167,7 +167,7 @@
     <processMetadataValues>
         <name>CanvasMode</name>
         <value>
-            <stringValue>FREE_FORM_CANVAS</stringValue>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
         </value>
     </processMetadataValues>
     <processMetadataValues>
@@ -180,8 +180,8 @@
     <recordLookups>
         <name>getAllChildCases</name>
         <label>getAllChildCases</label>
-        <locationX>880</locationX>
-        <locationY>734</locationY>
+        <locationX>446</locationX>
+        <locationY>695</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>assignToCollection_0</targetReference>
@@ -194,6 +194,13 @@
                 <elementReference>$Record.ParentId</elementReference>
             </value>
         </filters>
+        <filters>
+            <field>ParentId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record__Prior.ParentId</elementReference>
+            </value>
+        </filters>
         <getFirstRecordOnly>false</getFirstRecordOnly>
         <object>Case</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -201,8 +208,8 @@
     <recordLookups>
         <name>getParentCase</name>
         <label>getParentCase</label>
-        <locationX>988</locationX>
-        <locationY>650</locationY>
+        <locationX>446</locationX>
+        <locationY>575</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>getAllChildCases</targetReference>
@@ -215,6 +222,13 @@
                 <elementReference>$Record.ParentId</elementReference>
             </value>
         </filters>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record__Prior.ParentId</elementReference>
+            </value>
+        </filters>
         <getFirstRecordOnly>false</getFirstRecordOnly>
         <object>Case</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -222,8 +236,8 @@
     <recordLookups>
         <name>getRecordsOfCase</name>
         <label>getRecordsOfCase</label>
-        <locationX>276</locationX>
-        <locationY>503</locationY>
+        <locationX>50</locationX>
+        <locationY>455</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>assignToCollection</targetReference>
@@ -243,8 +257,8 @@
     <recordLookups>
         <name>getRecordsOfCase_0</name>
         <label>getRecordsOfCase</label>
-        <locationX>807</locationX>
-        <locationY>496</locationY>
+        <locationX>446</locationX>
+        <locationY>455</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>getParentCase</targetReference>
@@ -262,8 +276,8 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <start>
-        <locationX>458</locationX>
-        <locationY>48</locationY>
+        <locationX>320</locationX>
+        <locationY>0</locationY>
         <connector>
             <targetReference>Check_for_the_create_and_update</targetReference>
         </connector>
@@ -275,8 +289,8 @@
     <subflows>
         <name>case_relation_with_entitlement_process</name>
         <label>case relation with entitlement process</label>
-        <locationX>276</locationX>
-        <locationY>743</locationY>
+        <locationX>50</locationX>
+        <locationY>695</locationY>
         <flowName>Relating_Case_with_the_Entitlement_Process</flowName>
         <inputAssignments>
             <name>collectionCaseIds</name>
@@ -289,8 +303,8 @@
     <subflows>
         <name>case_relation_with_entitlement_process_0</name>
         <label>case relation with entitlement process</label>
-        <locationX>551</locationX>
-        <locationY>771</locationY>
+        <locationX>446</locationX>
+        <locationY>935</locationY>
         <connector>
             <targetReference>Decide_if_Individual_Case</targetReference>
         </connector>
@@ -306,9 +320,9 @@
     <subflows>
         <name>Summary_Calculation_of_related_HealthCare_Cost</name>
         <label>Summary Calculation of related HealthCare Cost</label>
-        <locationX>786</locationX>
-        <locationY>872</locationY>
-        <flowName>Summary_Calculation_of_related_HealthCare_Cost</flowName>
+        <locationX>314</locationX>
+        <locationY>1175</locationY>
+        <flowName>Summary_Calculation_of_related_HealthCare_Cost_on_ClassAction_Case</flowName>
         <inputAssignments>
             <name>childCases</name>
             <value>
