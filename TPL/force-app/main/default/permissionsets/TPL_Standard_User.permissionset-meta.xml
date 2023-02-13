@@ -78,11 +78,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Case.Ambulance_Total__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Case.Balance_ClassAction__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -132,11 +127,6 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
-        <field>Case.Continuing_Care_Total__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
         <editable>true</editable>
         <field>Case.Court_Registry_Number__c</field>
         <readable>true</readable>
@@ -167,11 +157,6 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
-        <field>Case.Future_Care_Total__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
         <editable>true</editable>
         <field>Case.Health_Care_Cost_Recovery_Act_Claimed__c</field>
         <readable>true</readable>
@@ -179,11 +164,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.Hospitalization_Total_ClassAction__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Case.Hospitalization_Total__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -212,11 +192,6 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
-        <field>Case.MSP_Total__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
         <editable>true</editable>
         <field>Case.Maxpath_for_Emergency_Visit__c</field>
         <readable>true</readable>
@@ -234,11 +209,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.Pharmacare_Total_ClassAction__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Case.Pharmacare_Total__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -464,11 +434,6 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
-        <field>Healthcare_Cost__c.Facility_Code__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
         <editable>true</editable>
         <field>Healthcare_Cost__c.Facility_Type__c</field>
         <readable>true</readable>
@@ -586,11 +551,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Healthcare_Cost__c.Service_Start_Date__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Healthcare_Cost__c.Service_Type__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
