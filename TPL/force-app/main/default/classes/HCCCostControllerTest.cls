@@ -30,7 +30,7 @@ public class HCCCostControllerTest {
         insert  new Case[] {c1, c2, c3, c4};
         
         Test.startTest();
-        List<Case> caseList = HCCCostController.getCaseListIndividual();
+        List<Case> caseList = HCCCostController.getCaseListIndividual(acc.Id);
 		Test.stopTest();
         System.assertEquals(4, caseList.size());
         
@@ -56,7 +56,7 @@ public class HCCCostControllerTest {
     
     @isTest
     static void testUpdatetoCaseValues(){
-         Account acc = TestDataFactory.individualAccount();
+        Account acc = TestDataFactory.individualAccount();
         insert acc;
         Case c1 = TestDataFactory.newCase(acc.Id);
         Case c2 = TestDataFactory.newCase(acc.Id);
@@ -76,6 +76,28 @@ public class HCCCostControllerTest {
         List<Healthcare_Cost__c> hccListonCaseAfter = HCCCostController.getHealthcareCostsAmbulanceForCase(c1.Id);
         Test.stopTest(); 
         System.assertNotEquals(hccListonCasePrevious, hccListonCaseAfter);
+        
+    }
+    
+    @isTest
+    static void testsaveDraftValues(){
+        Account acc = TestDataFactory.individualAccount();
+        insert acc;
+        Case c = TestDataFactory.newCase(acc.Id);
+        insert c;
+		Healthcare_Cost__c hcc1 = TestDataFactory.ambulanceCostRecord(acc.Id, c.Id);
+        Healthcare_Cost__c hcc2 = TestDataFactory.ambulanceCostRecord(acc.Id, null);
+        Healthcare_Cost__c hcc3 = TestDataFactory.ambulanceCostRecord(acc.Id, null);
+        
+       List<Healthcare_Cost__c> hccList = new List <Healthcare_Cost__c>();
+        hccList.add(hcc1);
+        hccList.add(hcc2);
+        hccList.add(hcc3);
+		insert hccList;
+        
+        Test.startTest();
+        HCCCostController.saveDraftValues(hccList);
+        Test.stopTest();
         
     }
     
