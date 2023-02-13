@@ -53,7 +53,8 @@ const COLUMNS = [
         label: 'Location Responded',
         fieldName: LOCATION_RESPONDED_FIELD.fieldApiName,
         type: 'text',
-        editable: false
+        editable: false,
+        sortable:true
     },
     {
         label: 'Cost',
