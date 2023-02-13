@@ -3,7 +3,7 @@
     <fullName>Pharmacare_Total__c</fullName>
     <description>Sum of Pharmacare Healthcare Costs related to the Case.</description>
     <externalId>false</externalId>
-    <label>Pharmacare Total</label>
+    <label>Pharmacare Total_X</label>
     <summarizedField>Healthcare_Cost__c.Cost_of_Drug__c</summarizedField>
     <summaryFilterItems>
         <field>Healthcare_Cost__c.Cost_Include__c</field>

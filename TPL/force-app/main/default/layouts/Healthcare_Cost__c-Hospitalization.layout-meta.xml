@@ -19,7 +19,15 @@
                 <field>Line_Type__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Required</behavior>
+                <field>Account__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Case2__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Required</behavior>
                 <field>Case__c</field>
             </layoutItems>
             <layoutItems>
@@ -68,7 +76,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>Facility_Code__c</field>
+                <field>Facility_Code2__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -92,10 +100,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>Service_Type__c</field>
+                <field>Service_Type2__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>Standard_Daily_Rate__c</field>
             </layoutItems>
             <layoutItems>
@@ -110,7 +118,7 @@
                 <behavior>Edit</behavior>
                 <field>Diagnostic_Treatment_Service__c</field>
             </layoutItems>
-        </layoutColumns>
+             </layoutColumns>
         <layoutColumns/>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>

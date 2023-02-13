@@ -3,7 +3,7 @@
     <fullName>Continuing_Care_Total__c</fullName>
     <description>Sum of Continuing Care Healthcare Costs related to the Case.</description>
     <externalId>false</externalId>
-    <label>Continuing Care Total</label>
+    <label>Continuing Care Total_X</label>
     <summarizedField>Healthcare_Cost__c.Cost__c</summarizedField>
     <summaryFilterItems>
         <field>Healthcare_Cost__c.RecordTypeId</field>

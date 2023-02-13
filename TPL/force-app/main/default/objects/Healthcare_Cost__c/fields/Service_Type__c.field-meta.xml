@@ -4,7 +4,7 @@
     <externalId>false</externalId>
     <formula>TEXT(Service_Provided_by_Facility__r.Service_Type__c)</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-    <label>Service Type</label>
+    <label>Service Type_X</label>
     <required>false</required>
     <trackTrending>false</trackTrending>
     <type>Text</type>

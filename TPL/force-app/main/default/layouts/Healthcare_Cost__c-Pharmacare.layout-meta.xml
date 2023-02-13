@@ -19,7 +19,15 @@
                 <field>Line_Type__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Required</behavior>
+                <field>Account__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Case2__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Required</behavior>
                 <field>Case__c</field>
             </layoutItems>
             <layoutItems>
@@ -66,6 +74,10 @@
                 <behavior>Edit</behavior>
                 <field>Cost_of_Drug__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Total_Cost_Override__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns/>
         <style>TwoColumnsTopToBottom</style>
@@ -86,7 +98,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h7g000001mFNC</masterLabel>
+        <masterLabel>00h6s000000S2IH</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>1</sizeY>
         <summaryLayoutItems>

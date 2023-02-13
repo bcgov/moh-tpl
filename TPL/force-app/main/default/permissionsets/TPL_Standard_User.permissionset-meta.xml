@@ -773,6 +773,56 @@
         <field>Product2.Family</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.Ambulance_Total2__c</field>
+        <readable>true</readable>
+ </fieldPermissions>
+ <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.Continuing_Care_Total2__c</field>
+        <readable>true</readable>
+ </fieldPermissions>
+ <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.Future_Care_Total2__c</field>
+        <readable>true</readable>
+ </fieldPermissions>
+  <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.Hospitalization_Total2__c</field>
+        <readable>true</readable>
+ </fieldPermissions>
+  <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.MSP_Total2__c</field>
+        <readable>true</readable>
+ </fieldPermissions>
+  <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.Pharmacare_Total2__c</field>
+        <readable>true</readable>
+ </fieldPermissions>
+ <fieldPermissions>
+        <editable>true</editable>
+        <field>Healthcare_Cost__c.Case2__c</field>
+        <readable>true</readable>
+ </fieldPermissions>
+  <fieldPermissions>
+        <editable>true</editable>
+        <field>Healthcare_Cost__c.Account__c</field>
+        <readable>true</readable>
+ </fieldPermissions>
+<fieldPermissions>
+        <editable>true</editable>
+        <field>Healthcare_Cost__c.Facility_Code2__c</field>
+        <readable>true</readable>
+ </fieldPermissions>
+<fieldPermissions>
+        <editable>true</editable>
+        <field>Healthcare_Cost__c.Service_Type2__c</field>
+        <readable>true</readable>
+ </fieldPermissions>	
     <hasActivationRequired>false</hasActivationRequired>
     <label>TPL Standard User</label>
     <license>Salesforce</license>
@@ -908,4 +958,5 @@
         <tab>standard-Task</tab>
         <visibility>Visible</visibility>
     </tabSettings>
+    
 </PermissionSet>

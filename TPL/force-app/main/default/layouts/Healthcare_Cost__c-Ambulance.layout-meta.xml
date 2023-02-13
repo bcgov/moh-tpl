@@ -19,7 +19,15 @@
                 <field>Line_Type__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Required</behavior>
+                <field>Account__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Case2__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Required</behavior>
                 <field>Case__c</field>
             </layoutItems>
             <layoutItems>
@@ -60,7 +68,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>Facility_Code__c</field>
+                <field>Facility_Code2__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -76,7 +84,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Total_Override__c</field>
+                <field>Total_Cost_Override__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -112,11 +120,6 @@
         <summaryLayoutItems>
             <field>RecordTypeId</field>
             <posX>0</posX>
-            <posY>0</posY>
-        </summaryLayoutItems>
-        <summaryLayoutItems>
-            <field>Total_Override__c</field>
-            <posX>1</posX>
             <posY>0</posY>
         </summaryLayoutItems>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

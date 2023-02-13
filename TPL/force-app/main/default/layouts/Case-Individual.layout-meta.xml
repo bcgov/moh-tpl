@@ -194,27 +194,27 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>Ambulance_Total__c</field>
+                <field>Ambulance_Total2__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>Continuing_Care_Total__c</field>
+                <field>Continuing_Care_Total2__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>Future_Care_Total__c</field>
+                <field>Future_Care_Total2__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>Hospitalization_Total__c</field>
+                <field>Hospitalization_Total2__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>MSP_Total__c</field>
+                <field>MSP_Total2__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>Pharmacare_Total__c</field>
+                <field>Pharmacare_Total2__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -312,6 +312,6 @@
         <masterLabel>00h6s000000S2IC</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
-        <summaryLayoutStyle>Default</summaryLayoutStyle>
+                <summaryLayoutStyle>Default</summaryLayoutStyle>
     </summaryLayout>
 </Layout>
