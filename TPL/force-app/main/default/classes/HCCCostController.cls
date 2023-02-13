@@ -61,8 +61,8 @@ public with sharing class HCCCostController {
             update updatedHealthcareCosts;
     
         }
-        catch(LimitException limits){
-            limits.getMessage();
+        catch(DmlException dmlexception){
+            dmlexception.getMessage();
         }
         
     }
