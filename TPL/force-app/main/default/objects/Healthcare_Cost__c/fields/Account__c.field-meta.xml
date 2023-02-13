@@ -7,7 +7,7 @@
     <referenceTo>Account</referenceTo>
     <relationshipLabel>Healthcare Costs (Account)</relationshipLabel>
     <relationshipName>Healthcare_Costs</relationshipName>
-    <required>true</required>
+    <required>false</required>
     <trackTrending>false</trackTrending>
     <type>Lookup</type>
 </CustomField>
