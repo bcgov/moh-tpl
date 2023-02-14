@@ -93,34 +93,6 @@ export default class AmbulanceRecordsAccount extends LightningElement {
     wiredRecords;
     selectedCase;
 
-    renderedCallback() {
-        if (!this.isComponentLoaded) {
-            /* Add Click event listener to listen to window click to reset the lookup selection 
-            to text view if context is out of sync*/
-            window.addEventListener('click', (evt) => {
-                this.handleWindowOnclick(evt);
-            });
-            this.isComponentLoaded = true;
-        }
-    }
-    disconnectedCallback() {
-        window.removeEventListener('click', () => { });
-    }
-
-    handleWindowOnclick(context) {
-        this.resetPopups('c-datatable-lookup', context);
-    }
-
-    //create object value of datatable lookup markup to allow to call callback function with window click event listener
-    resetPopups(markup, context) {
-        let elementMarkup = this.privateChildren[markup];
-        if (elementMarkup) {
-            Object.values(elementMarkup).forEach((element) => {
-                element.callbacks.reset(context);
-            });
-        }
-    }
-
     doSorting(event) {
         this.sortBy = event.detail.fieldName;
         this.sortDirection = event.detail.sortDirection;
@@ -150,7 +122,7 @@ export default class AmbulanceRecordsAccount extends LightningElement {
      }
      
      async handleSelect(){
-     var el = this.template.querySelector('c-custom-data-table');
+     var el = this.template.querySelector('lightning-datatable');
         console.log(el);
         var selected = el.getSelectedRows();
         //console.log(selected);

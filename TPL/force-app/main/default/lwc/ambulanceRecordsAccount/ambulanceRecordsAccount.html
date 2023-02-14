@@ -8,10 +8,10 @@
         </lightning-record-edit-form>
         <!--CUSTOM DATATABLE-->
         <div style="height:400px" onitemregister={handleItemRegister}>
-            <c-custom-data-table class="slds-max-medium-table_stacked" sorted-by={sortBy}
+            <lightning-datatable class="slds-max-medium-table_stacked" sorted-by={sortBy}
             sorted-direction={sortDirection} onsort={doSorting} data={recordsToDisplay} columns={column} show-row-number-column="false"
                     key-field="Id" data-record="Id" selected-rows={selectedRows} style="width: auto;">
-                </c-custom-data-table>
+                </lightning-datatable>
         </div>
 
         <div class="slds-grid slds-grid_vertical-align-center slds-grid_align-spread" style="padding-top: 0.5em;">
