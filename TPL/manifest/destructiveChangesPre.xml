@@ -5,18 +5,13 @@
         <name>Flow</name>
     </types>
     -->
- <!--types>
+ <types>
         <members>Case.Ambulance_Total__c</members>   
         <members>Case.Continuing_Care_Total__c</members>
         <members>Case.Future_Care_Total__c</members>
         <members>Case.Hospitalization_Total__c</members>
         <members>Case.MSP_Total__c</members>
         <members>Case.Pharmacare_Total__c</members>
-        <members>Case.Recovery_Amount__c</members>
-        <members>Case.Total_Case_Value__c</members>
-        <members>Case.Balance__c</members>
-        <members>Case.Recovered__c</members>
-        <members>Case.Recovery_Amount_ClassAction__c</members>
         <name>CustomField</name>
     </types>
     -->
@@ -34,12 +29,9 @@
         <members>Contact.PHN__c</members>
         <name>CustomField</name>
     </types>
+    -->
     <types>
-         <members>Parent_Flow_For_Case_Object</members>
-         <members>Parent_Flow_For_Health_Care_Cost</members>
-         <members>Relating_Case_with_the_Entitlement_Process</members>
-         <members>Update_Health_Care_Cost_Fields_On_Create</members>
-         <members>Update_Health_Care_Cost_Fields_On_Update</members>
+        <members>Summary_Calculation_of_related_HealthCare_Cost</members>
         <name>Flow</name>
     </types>
     -->
