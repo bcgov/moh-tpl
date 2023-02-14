@@ -12,9 +12,12 @@
         <members>Case.Hospitalization_Total__c</members>
         <members>Case.MSP_Total__c</members>
         <members>Case.Pharmacare_Total__c</members>
+        <members>Healthcare_Cost__c.Facility_Code__c</members>
+        <members>Healthcare_Cost__c.Service_Type__c</members>
+        <members>Healthcare_Cost__c.Total_Override__c</members>
         <name>CustomField</name>
     </types>
-    -->
+    
     <!--types>
         <members>Healthcare_Cost__c.Total_Original_Cost__c</members>
         <members>Healthcare_Cost__c.Number_of_Days__c</members>
