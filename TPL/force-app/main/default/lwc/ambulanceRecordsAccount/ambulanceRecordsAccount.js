@@ -8,7 +8,7 @@ import COST_FIELD from '@salesforce/schema/Healthcare_Cost__c.Cost__c';
 import CASE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Case2__c';
 import CASE_NUMBER_FIELD from '@salesforce/schema/Healthcare_Cost__c.Case_Number__c';
 import BASIC_AMOUNT_FIELD from '@salesforce/schema/Healthcare_Cost__c.Basic_Amount__c';
-import TOTAL_OVERRIDE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Total_Override__c';
+import TOTAL_COST_OVERRIDE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Total_Cost_Override__c';
 import DATE_OF_SERVICE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Date_of_Service__c';
 import LOCATION_RESPONDED_FIELD from '@salesforce/schema/Healthcare_Cost__c.Location_Responded__c';
 import updateHCCCaseInformation from '@salesforce/apex/HCCCostController.updateHCCCaseInformation';
@@ -71,8 +71,8 @@ const COLS = [
         editable: false
     },
     {
-        label: 'Total Override',
-        fieldName: TOTAL_OVERRIDE_FIELD.fieldApiName,
+        label: 'Total Cost Override',
+        fieldName: TOTAL_COST_OVERRIDE_FIELD.fieldApiName,
         type: 'currency',
         editable: false
     }
