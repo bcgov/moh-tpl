@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Client__c</fullName>
     <externalId>false</externalId>
-    <formula>Case__r.Contact.FirstName +&apos; &apos; +Case__r.Contact.MiddleName +&apos; &apos;+ Case__r.Contact.LastName</formula>
+    <formula>Case2__r.Contact.FirstName  +  Case2__r.Contact.MiddleName  +  Case2__r.Contact.LastName</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Client</label>
     <required>false</required>

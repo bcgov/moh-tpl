@@ -279,10 +279,6 @@
     </relatedContent>
     <relatedLists>
         <fields>NAME</fields>
-        <relatedList>Healthcare_Cost__c.Case__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
         <relatedList>Payment__c.Case_Number__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -312,6 +308,6 @@
         <masterLabel>00h6s000000S2IC</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
-                <summaryLayoutStyle>Default</summaryLayoutStyle>
+        <summaryLayoutStyle>Default</summaryLayoutStyle>
     </summaryLayout>
 </Layout>
