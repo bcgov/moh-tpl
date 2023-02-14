@@ -27,10 +27,6 @@
                 <field>Case2__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Required</behavior>
-                <field>Case__c</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Case_Type__c</field>
             </layoutItems>
@@ -118,7 +114,7 @@
                 <behavior>Edit</behavior>
                 <field>Diagnostic_Treatment_Service__c</field>
             </layoutItems>
-             </layoutColumns>
+        </layoutColumns>
         <layoutColumns/>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
