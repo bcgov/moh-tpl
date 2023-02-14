@@ -108,6 +108,16 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
+                <componentName>ambulanceRecordsCase</componentName>
+                <identifier>c_ambulanceRecordsCase</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-e134a506-38f9-4275-84a9-c2976386981e</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
                 <componentInstanceProperties>
                     <name>body</name>
                     <value>Facet-08cb3625-646c-44c6-b780-886dd1b260f2</value>
@@ -146,6 +156,20 @@
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
                 <identifier>flexipage_tab</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-e134a506-38f9-4275-84a9-c2976386981e</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>Ambulance Records</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tab</componentName>
+                <identifier>flexipage_tab4</identifier>
             </componentInstance>
         </itemInstances>
         <name>tabs</name>

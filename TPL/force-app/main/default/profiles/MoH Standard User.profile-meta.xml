@@ -471,11 +471,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Healthcare_Cost__c.Facility_Code__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Healthcare_Cost__c.Facility_Type__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -581,11 +576,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Healthcare_Cost__c.Service_Type__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Healthcare_Cost__c.Specialty_Code__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -607,11 +597,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Healthcare_Cost__c.Total_Costs_Standard__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Healthcare_Cost__c.Total_Override__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>

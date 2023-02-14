@@ -4,7 +4,7 @@ public with sharing class HCCCostController {
     public static List <Healthcare_Cost__c> getHealthcareCostsAmbulanceForAccount(String accId){
     try{
             List<Healthcare_Cost__c> hccCostList = new List<Healthcare_Cost__c> ();
-            hccCostList = [select Case2__c, Case_Number__c, Cost_Include__c, Cost_Review__c, Name, Date_of_Service__c, Location_Responded__c, Facility_Code__c, Basic_Amount__c, Cost__c, Total_Override__c, Fixed_Wing_Helicopter__c from Healthcare_Cost__c where Account__c = :accId and RecordTypeName__c = 'Ambulance' WITH SECURITY_ENFORCED LIMIT 2000];
+            hccCostList = [select Case2__c, Case_Number__c, Cost_Include__c, Cost_Review__c, Name, Date_of_Service__c, Location_Responded__c, Basic_Amount__c, Cost__c, Total_Cost_Override__c, Fixed_Wing_Helicopter__c from Healthcare_Cost__c where Account__c = :accId and RecordTypeName__c = 'Ambulance' LIMIT 2000];
             return hccCostList;
      }
     
@@ -38,7 +38,7 @@ public with sharing class HCCCostController {
     public static List <Healthcare_Cost__c> getHealthcareCostsAmbulanceForCase(String caseId){
     try{
             List<Healthcare_Cost__c> hccCostList = new List<Healthcare_Cost__c> ();
-            hccCostList = [select Cost_Include__c, Cost_Review__c, Name, Date_of_Service__c, Location_Responded__c, Facility_Code__c, Basic_Amount__c, Cost__c, Total_Override__c, Fixed_Wing_Helicopter__c from Healthcare_Cost__c where Case2__c = :caseId and RecordTypeName__c = 'Ambulance' WITH SECURITY_ENFORCED LIMIT 2000];
+            hccCostList = [select Cost_Include__c, Cost_Review__c, Name, Date_of_Service__c, Location_Responded__c, Basic_Amount__c, Cost__c, Total_Cost_Override__c, Fixed_Wing_Helicopter__c from Healthcare_Cost__c where Case2__c = :caseId and RecordTypeName__c = 'Ambulance' LIMIT 2000];
             return hccCostList;
      }
         catch(NullPointerException nullpointer){
