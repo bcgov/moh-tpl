@@ -276,10 +276,6 @@
     </relatedContent>
     <relatedLists>
         <fields>NAME</fields>
-        <relatedList>Healthcare_Cost__c.Case__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
         <relatedList>Payment__c.Case_Number__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -300,11 +296,9 @@
     </relatedLists>
     <relatedLists>
         <fields>CASES.CASE_NUMBER</fields>
-        <fields>CASES.SUBJECT</fields>
-        <fields>CASES.PRIORITY</fields>
-        <fields>CASES.CREATED_DATE</fields>
+        <fields>CONTACT.LAST_NAME</fields>
+        <fields>CONTACT.FIRST_NAME</fields>
         <fields>CASES.STATUS</fields>
-        <fields>OWNER_NAME</fields>
         <relatedList>RelatedChildCaseList</relatedList>
     </relatedLists>
     <relatedObjects>ContactId</relatedObjects>
