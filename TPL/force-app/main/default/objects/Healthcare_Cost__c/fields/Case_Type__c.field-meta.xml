@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Case_Type__c</fullName>
     <externalId>false</externalId>
-    <formula>TEXT(Case__r.Type)</formula>
+    <formula>TEXT(Case2__r.Type)</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Case Type</label>
     <required>false</required>
