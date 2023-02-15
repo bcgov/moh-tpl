@@ -39,19 +39,18 @@ public with sharing class HCCCostController {
         Id caseId = null;
         String giveStatus = null;
         Boolean checkFail = false;
-       // List <Healthcare_Cost__c> updatedHealthcareCosts = new List<Healthcare_Cost__c>();
+      
         try {
             for(Healthcare_Cost__c hcc: hccIds){
-                System.debug('hccId : ' + hcc.Id);
+                
                 if(hcc.Cost_Include__c == true || hcc.Cost_Review__c == true){
                     checkFail = true;
-                   System.debug('Please uncheck Cost Include and Cost Review for HCC Cost : ' + hcc.Id);
+                  
                 }
                 else{
                     hcc.Case2__c = caseId;
                     checkFail = false;
-                }
-          //      updatedHealthcareCosts.add(new Healthcare_Cost__c(Id=hccId, Case2__c = caseId));
+                }      
             }
             if(checkFail == true){
                 giveStatus = 'Failed';
@@ -61,7 +60,7 @@ public with sharing class HCCCostController {
                 update hccIds;
                 giveStatus = 'Passed';
             }
-          //  update updatedHealthcareCosts;
+        
         } catch (DmlException dmlexception) {
             dmlexception.getMessage();
         }
@@ -88,7 +87,7 @@ public with sharing class HCCCostController {
     public static String updateHCCCaseInformation (List<String> hccIds, String caseId){
         List <Healthcare_Cost__c> updatedHealthcareCosts = new List<Healthcare_Cost__c>();
         String giveStatus = null;
-        System.debug('Case ID : ' + caseId);
+        
         try{
             if(caseId == null || caseId.length() == 0 || hccIds.size() == 0){
                 giveStatus = 'Failed';
@@ -96,11 +95,11 @@ public with sharing class HCCCostController {
             }
             else{
                 for(String hccId: hccIds){
-                    System.debug('hccId : '+hccId);
-                    updatedHealthcareCosts.add(new Healthcare_Cost__c(Id= hccId, Case2__c = caseId));
+                   updatedHealthcareCosts.add(new Healthcare_Cost__c(Id= hccId, Case2__c = caseId));
                 }
+                giveStatus = 'Passed';    
                 update updatedHealthcareCosts;
-                giveStatus = 'Passed';                    
+                              
             }
             
         }
