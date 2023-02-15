@@ -1,6 +1,9 @@
 <template>
     <template if:true={records}>
-          <!-- Ambulance Records -->
+        <lightning-record-edit-form object-api-name="Healthcare_Cost__c" id="assignCases" >
+            <lightning-button label="Please select the Healthcare Cost records for de-linking" onclick={handleSelect}></lightning-button>
+        </lightning-record-edit-form>
+           <!-- Ambulance Records -->
      <lightning-card title="HealthCare Cost - Ambulance Records" icon-name="custom:custom63">
         <div class="slds-scrollable slds-m-around_medium" style="height:auto;width:auto">
                 <lightning-datatable
