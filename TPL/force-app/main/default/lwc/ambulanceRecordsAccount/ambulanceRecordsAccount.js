@@ -119,7 +119,7 @@ export default class AmbulanceRecordsAccount extends LightningElement {
 
     handleCaseSelection(event){
         this.selectedCase = event.target.value;  
-     }
+    }
      
      async handleSelect(){
      var el = this.template.querySelector('lightning-datatable');
@@ -137,8 +137,9 @@ export default class AmbulanceRecordsAccount extends LightningElement {
         });
 
         await updateHCCCaseInformation({ caseId: this.selectedCase, hccIds: selectedCostIds})
-        .then(() => {
-            if(this.selectedCase == null){
+        .then((result) => {
+            console.log("Result : " + result);
+            if(this.selectedCase == null || result == 'Failed'){
                 this.dispatchEvent(
                     new ShowToastEvent({
                         title: 'Error',
@@ -163,8 +164,8 @@ export default class AmbulanceRecordsAccount extends LightningElement {
         })
         .catch(error => {
             console.log('error : ' + JSON.stringify(error));
-        });
-}
+        }); 
+    }
     async refresh(){
         await refreshApex(this.wiredRecords);
     }

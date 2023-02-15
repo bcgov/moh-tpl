@@ -34,6 +34,39 @@ public with sharing class HCCCostController {
         return null;
     }
 
+    @AuraEnabled
+    public static String updateHCCRecordInformation(List<Healthcare_Cost__c> hccIds){
+        Id caseId = null;
+        String giveStatus = null;
+        Boolean checkFail = false;
+      
+        try {
+            for(Healthcare_Cost__c hcc: hccIds){
+                
+                if(hcc.Cost_Include__c == true || hcc.Cost_Review__c == true){
+                    checkFail = true;
+                  
+                }
+                else{
+                    hcc.Case2__c = caseId;
+                    checkFail = false;
+                }      
+            }
+            if(checkFail == true){
+                giveStatus = 'Failed';
+                return giveStatus;
+            }
+            else{
+                update hccIds;
+                giveStatus = 'Passed';
+            }
+        
+        } catch (DmlException dmlexception) {
+            dmlexception.getMessage();
+        }
+        return giveStatus;
+    }
+
     @AuraEnabled(cacheable=true)
     public static List <Healthcare_Cost__c> getHealthcareCostsAmbulanceForCase(String caseId){
     try{
@@ -51,20 +84,29 @@ public with sharing class HCCCostController {
     }
 
     @AuraEnabled
-    public static void updateHCCCaseInformation (List<String> hccIds, String caseId){
+    public static String updateHCCCaseInformation (List<String> hccIds, String caseId){
         List <Healthcare_Cost__c> updatedHealthcareCosts = new List<Healthcare_Cost__c>();
+        String giveStatus = null;
+        
         try{
-            for(String hccId: hccIds){
-                System.debug('hccId : '+hccId);
-                updatedHealthcareCosts.add(new Healthcare_Cost__c(Id= hccId, Case2__c = caseId));
+            if(caseId == null || caseId.length() == 0 || hccIds.size() == 0){
+                giveStatus = 'Failed';
+                return giveStatus;
             }
-            update updatedHealthcareCosts;
-    
+            else{
+                for(String hccId: hccIds){
+                   updatedHealthcareCosts.add(new Healthcare_Cost__c(Id= hccId, Case2__c = caseId));
+                }
+                giveStatus = 'Passed';    
+                update updatedHealthcareCosts;
+                              
+            }
+            
         }
         catch(DmlException dmlexception){
             dmlexception.getMessage();
         }
-        
+        return giveStatus;
     }
 
     @AuraEnabled
