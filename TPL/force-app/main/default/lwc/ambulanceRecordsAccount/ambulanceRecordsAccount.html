@@ -2,10 +2,10 @@
     <template if:true={records}>
         <lightning-record-edit-form object-api-name="Account" id="assignCases" record-id={recordId}>
             <label for="selectCase">Please search and select a Case </label>
-            <lightning-input-field id="selectCase" field-name="Case2__c" variant="label-hidden" onchange={handleCaseSelection}> </lightning-input-field>
-            <lightning-button label="Assign case to selected records" onclick={handleSelect}> 
+            <br> <lightning-input-field id="selectCase" field-name="Case__c" title="Search Case Record" variant="label-hidden" onchange={handleCaseSelection}> </lightning-input-field>
+          <br><lightning-button label="Assign case to selected records" onclick={handleSelect}> 
             </lightning-button>
-        </lightning-record-edit-form>
+        </lightning-record-edit-form><br>
         <!--CUSTOM DATATABLE-->
         <div style="height:400px" onitemregister={handleItemRegister}>
             <lightning-datatable class="slds-max-medium-table_stacked" sorted-by={sortBy}
