@@ -17,23 +17,6 @@ public with sharing class HCCCostController {
         return null;
     }
 
-    @AuraEnabled (cacheable = true)
-    public static List<Case> getCaseListIndividual(String accId){
-        try {
-            List<Case> caseList = new List<Case>();
-            Id recordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByName().get('Individual').getRecordTypeId();
-            caseList = [select CaseNumber from Case where RecordTypeId = :recordTypeId and AccountId = :accId LIMIT 100];
-            return caseList;
-        }
-        catch(NullPointerException nullpointer){
-            nullpointer.getMessage();
-        }
-        catch (Exception e) {
-            throw new AuraHandledException(e.getMessage());
-        }
-        return null;
-    }
-
     @AuraEnabled
     public static String updateHCCRecordInformation(List<Healthcare_Cost__c> hccIds){
         Id caseId = null;
