@@ -7,14 +7,17 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import HCCOST_FIELD from '@salesforce/schema/Healthcare_Cost__c.Name';
 import COST_INCLUDE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Cost_Include__c';
 import COST_REVIEW_FIELD from '@salesforce/schema/Healthcare_Cost__c.Cost_Review__c';
-import COST_FIELD from '@salesforce/schema/Healthcare_Cost__c.Cost__c';
 import BASIC_AMOUNT_FIELD from '@salesforce/schema/Healthcare_Cost__c.Basic_Amount__c';
 import TOTAL_COST_OVERRIDE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Total_Cost_Override__c';
 import DATE_OF_SERVICE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Date_of_Service__c';
 import LOCATION_RESPONDED_FIELD from '@salesforce/schema/Healthcare_Cost__c.Location_Responded__c';
+import SITE_CODE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Site_Code__c';
+import FACILITY_FIELD from '@salesforce/schema/Healthcare_Cost__c.Facility__c';
+import FIXED_WING_HELICOPTER_FIELD from '@salesforce/schema/Healthcare_Cost__c.Fixed_Wing_Helicopter__c';
+import COST_FIELD from '@salesforce/schema/Healthcare_Cost__c.Cost__c';
+import SUB_TOTAL_FIELD from '@salesforce/schema/Healthcare_Cost__c.Sub_Total__c';
 import getHealthcareCostsAmbulanceForCase from '@salesforce/apex/HCCCostController.getHealthcareCostsAmbulanceForCase';
 import updateHCCRecordInformation from '@salesforce/apex/HCCCostController.updateHCCRecordInformation';
-
 
 const COLUMNS = [
     {
@@ -42,6 +45,20 @@ const COLUMNS = [
         type: 'date',
         sortable: true,
         editable: false
+    }, 
+    {
+        label: 'Location Responded',
+        fieldName: LOCATION_RESPONDED_FIELD.fieldApiName,
+        type: 'text',
+        editable: true,
+        sortable:true
+    },
+    {
+        label: 'Site Code',
+        fieldName: SITE_CODE_FIELD.fieldApiName,
+        type: 'text',
+        editable: false,
+        sortable: true
     },
     {
         label: 'Basic Amount',
@@ -51,26 +68,20 @@ const COLUMNS = [
         editable: true
     },
     {
-        label: 'Location Responded',
-        fieldName: LOCATION_RESPONDED_FIELD.fieldApiName,
-        type: 'text',
-        editable: false,
-        sortable:true
-    },
-    {
-        label: 'Cost',
-        fieldName: COST_FIELD.fieldApiName,
-        type: 'currency',
-        sortable: true,
-        editable: false
-    },
-    {
         label: 'Total Cost Override',
         fieldName: TOTAL_COST_OVERRIDE_FIELD.fieldApiName,
         type: 'currency',
         sortable: true,
         editable: true
+    },
+    {
+        label: 'Fixed Wing/Helicopter',
+        fieldName: FIXED_WING_HELICOPTER_FIELD.fieldApiName,
+        type: 'currency',
+        editable: true,
+        sortable: false
     }
+    
 ];
 export default class AmbulanceRecordsCase extends LightningElement {
     @api recordId;
@@ -81,10 +92,11 @@ export default class AmbulanceRecordsCase extends LightningElement {
     totalRecords = 0; //Total no.of records
     totalPages; //Total no.of pages
     pageNumber = 1; //Page number
-    pageSizeOptions = [5, 10, 25, 50, 75, 100, 150, 200]; //Page size options
+    pageSizeOptions = [5, 10, 25, 50, 75, 100]; //Page size options
     pageSize; //No.of records to be displayed per page
     recordsToDisplay = []; //Records to be displayed on the page
     wiredRecords;
+    selectedRows = [];
 
     @wire(getHealthcareCostsAmbulanceForCase, { caseId: '$recordId' })
     healthcareCostsAmbulanceForCase(result){
@@ -219,7 +231,6 @@ export default class AmbulanceRecordsCase extends LightningElement {
             }    
             //Get the updated list with refreshApex.
             return this.refresh();
-           
             
         })
         .catch(error => {

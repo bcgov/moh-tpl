@@ -17,25 +17,7 @@ public class HCCCostControllerTest {
         Test.stopTest();
         System.assertEquals(3, hccListforAccounts.size());
     }
-    
-	@isTest
-    static void testCaseIndividualRecord(){
-        Account acc = TestDataFactory.individualAccount();
-        insert acc;
-        Case c1 = TestDataFactory.newCase(acc.Id);
-        Case c2 = TestDataFactory.newCase(acc.Id);
-        Case c3 = TestDataFactory.newCase(acc.Id);
-        Case c4 = TestDataFactory.newCase(acc.Id);
-    	
-        insert  new Case[] {c1, c2, c3, c4};
-        
-        Test.startTest();
-        List<Case> caseList = HCCCostController.getCaseListIndividual(acc.Id);
-		Test.stopTest();
-        System.assertEquals(4, caseList.size());
-        
-    }     
-    
+       
     @isTest
     static void testAmbulanceRecordsCase(){
         Account acc = TestDataFactory.individualAccount();

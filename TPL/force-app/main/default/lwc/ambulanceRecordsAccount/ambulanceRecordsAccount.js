@@ -4,15 +4,18 @@ import { updateRecord } from 'lightning/uiRecordApi';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import COST_INCLUDE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Cost_Include__c';
 import COST_REVIEW_FIELD from '@salesforce/schema/Healthcare_Cost__c.Cost_Review__c';
-import COST_FIELD from '@salesforce/schema/Healthcare_Cost__c.Cost__c';
-import CASE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Case2__c';
 import CASE_NUMBER_FIELD from '@salesforce/schema/Healthcare_Cost__c.Case_Number__c';
 import BASIC_AMOUNT_FIELD from '@salesforce/schema/Healthcare_Cost__c.Basic_Amount__c';
 import TOTAL_COST_OVERRIDE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Total_Cost_Override__c';
 import DATE_OF_SERVICE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Date_of_Service__c';
 import LOCATION_RESPONDED_FIELD from '@salesforce/schema/Healthcare_Cost__c.Location_Responded__c';
+import SITE_CODE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Site_Code__c';
+import FACILITY_FIELD from '@salesforce/schema/Healthcare_Cost__c.Facility__c';
+import FIXED_WING_HELICOPTER_FIELD from '@salesforce/schema/Healthcare_Cost__c.Fixed_Wing_Helicopter__c';
+import COST_FIELD from '@salesforce/schema/Healthcare_Cost__c.Cost__c';
+import SUB_TOTAL_FIELD from '@salesforce/schema/Healthcare_Cost__c.Sub_Total__c';
+
 import updateHCCCaseInformation from '@salesforce/apex/HCCCostController.updateHCCCaseInformation';
-import getCaseListIndividual from '@salesforce/apex/HCCCostController.getCaseListIndividual';
 import { refreshApex } from '@salesforce/apex';
 
 const COLS = [
@@ -37,44 +40,50 @@ const COLS = [
         label: 'Cost Include',
         fieldName: COST_INCLUDE_FIELD.fieldApiName,
         type:'boolean',
-        editable: false
+        editable: false,
+        sortable: false
     },
     {
         label: 'Cost Review',
         fieldName: COST_REVIEW_FIELD.fieldApiName,
         type:'boolean',
-        editable:false
+        editable:false,
+        sortable: false
     },
     {
         label: 'Date of Service',
         fieldName: DATE_OF_SERVICE_FIELD.fieldApiName,
         type: 'date',
         editable: false,
-        sortable: true
-    },
-    {
-        label: 'Basic Amount',
-        fieldName: BASIC_AMOUNT_FIELD.fieldApiName,
-        type: 'currency',
-        editable: false
+        sortable: false
     },
     {
         label: 'Location Responded',
         fieldName: LOCATION_RESPONDED_FIELD.fieldApiName,
         type: 'text',
-        editable: false
+        editable: false,
+        sortable: false
     },
     {
-        label: 'Cost',
-        fieldName: COST_FIELD.fieldApiName,
+        label: 'Site Code',
+        fieldName: SITE_CODE_FIELD.fieldApiName,
+        type: 'text',
+        editable: false,
+        sortable: false
+    },
+    {
+        label: 'Basic Amount',
+        fieldName: BASIC_AMOUNT_FIELD.fieldApiName,
         type: 'currency',
-        editable: false
+        editable: false,
+        sortable: false
     },
     {
         label: 'Total Cost Override',
         fieldName: TOTAL_COST_OVERRIDE_FIELD.fieldApiName,
         type: 'currency',
-        editable: false
+        editable: false,
+        sortable: false
     }
 ];
 
@@ -86,12 +95,13 @@ export default class AmbulanceRecordsAccount extends LightningElement {
     totalRecords = 0; //Total no.of records
     totalPages; //Total no.of pages
     pageNumber = 1; //Page number
-    pageSizeOptions = [5, 10, 25, 50, 75, 100, 150, 200]; //Page size options
+    pageSizeOptions = [5, 10, 25, 50, 75, 100]; //Page size options
     records = []; //All records available in the data table
     pageSize; //No.of records to be displayed per page
     recordsToDisplay = []; //Records to be displayed on the page
     wiredRecords;
     selectedCase;
+    selectedRows = [];
 
     doSorting(event) {
         this.sortBy = event.detail.fieldName;
@@ -193,11 +203,6 @@ export default class AmbulanceRecordsAccount extends LightningElement {
             this.error = undefined;
             this.records = undefined;
         }
-    }
-
-    @wire (getCaseListIndividual,{accId: '$recordId'})
-    wiredCaseListIndividual(result){
-        const {data, error} = result; 
     }
 
     get bDisableFirst() {
