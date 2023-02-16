@@ -35,6 +35,7 @@
     -->
     <types>
         <members>Summary_Calculation_of_related_HealthCare_Cost</members>
+        <members>Attached_Facility_to_Ambulance_record</members>
         <name>Flow</name>
     </types>
     -->

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>UI_Restriction_on_integration_records</fullName>
+    <active>true</active>
+    <description>This validation rule will restrict changes from UI in fields coming from integration.</description>
+    <errorConditionFormula>NOT( ISBLANK(Source_System_ID__c) )
+&amp;&amp; (
+ ISCHANGED( Line_Type__c )
+|| ISCHANGED( Account__c ) 
+|| ISCHANGED( PHN__c )
+|| ISCHANGED( Date_of_Service__c )
+|| ISCHANGED( Import_Date__c )
+|| ISCHANGED( Location_Responded__c )
+|| ISCHANGED( Site_Code__c )
+|| ISCHANGED( Facility__c )
+|| ISCHANGED( Fixed_Wing_Helicopter__c )
+|| ISCHANGED( Cost__c )
+|| ISCHANGED( Sub_Total__c )
+|| ISCHANGED( Basic_Amount__c )           
+)</errorConditionFormula>
+    <errorMessage>Record Created from External system can not be updated.</errorMessage>
+</ValidationRule>

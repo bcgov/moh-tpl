@@ -63,10 +63,6 @@
                 <field>Site_Code__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Facility_Code2__c</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Facility__c</field>
             </layoutItems>
@@ -89,6 +85,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Sub_Total__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Source_System_ID__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns/>
