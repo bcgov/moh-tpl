@@ -50,19 +50,12 @@ const COLUMNS = [
         label: 'Location Responded',
         fieldName: LOCATION_RESPONDED_FIELD.fieldApiName,
         type: 'text',
-        editable: false,
+        editable: true,
         sortable:true
     },
     {
         label: 'Site Code',
         fieldName: SITE_CODE_FIELD.fieldApiName,
-        type: 'text',
-        editable: false,
-        sortable: true
-    },
-    {
-        label: 'Facility',
-        fieldName: FACILITY_FIELD.fieldApiName,
         type: 'text',
         editable: false,
         sortable: true
@@ -84,22 +77,9 @@ const COLUMNS = [
     {
         label: 'Fixed Wing/Helicopter',
         fieldName: FIXED_WING_HELICOPTER_FIELD.fieldApiName,
-        type: 'text',
-        editable: false,
-        sortable: false
-    },
-    {
-        label: 'Cost',
-        fieldName: COST_FIELD.fieldApiName,
         type: 'currency',
-        sortable: false,
-        editable: false
-    },
-    {
-        label: 'Sub-Total',
-        fieldName: SUB_TOTAL_FIELD.fieldApiName,
-        sortable: false,
-        editable: false
+        editable: true,
+        sortable: false
     }
     
 ];

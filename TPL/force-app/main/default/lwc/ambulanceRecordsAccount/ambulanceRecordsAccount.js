@@ -72,13 +72,6 @@ const COLS = [
         sortable: false
     },
     {
-        label: 'Facility',
-        fieldName: FACILITY_FIELD.fieldApiName,
-        type: 'text',
-        editable: false,
-        sortable: false
-    },
-    {
         label: 'Basic Amount',
         fieldName: BASIC_AMOUNT_FIELD.fieldApiName,
         type: 'currency',
@@ -91,26 +84,6 @@ const COLS = [
         type: 'currency',
         editable: false,
         sortable: false
-    },
-    {
-        label: 'Fixed Wing/Helicopter',
-        fieldName: FIXED_WING_HELICOPTER_FIELD.fieldApiName,
-        type: 'text',
-        editable: false,
-        sortable: false
-    },
-    {
-        label: 'Cost',
-        fieldName: COST_FIELD.fieldApiName,
-        type: 'currency',
-        sortable: false,
-        editable: false
-    },
-    {
-        label: 'Sub-Total',
-        fieldName: SUB_TOTAL_FIELD.fieldApiName,
-        sortable: false,
-        editable: false
     }
 ];
 
