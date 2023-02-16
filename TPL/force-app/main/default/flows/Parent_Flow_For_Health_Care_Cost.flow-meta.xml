@@ -41,7 +41,7 @@
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Ambulance</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.RecordType.DeveloperName</leftValueReference>
                 <operator>EqualTo</operator>
@@ -49,15 +49,8 @@
                     <stringValue>Ambulance</stringValue>
                 </rightValue>
             </conditions>
-            <conditions>
-                <leftValueReference>$Record.Site_Code__c</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
             <connector>
-                <targetReference>Facility_Name</targetReference>
+                <targetReference>Site_and_Facility</targetReference>
             </connector>
             <label>Ambulance</label>
         </rules>
@@ -70,7 +63,7 @@
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Ambulance_1</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.RecordType.DeveloperName</leftValueReference>
                 <operator>EqualTo</operator>
@@ -78,15 +71,8 @@
                     <stringValue>Ambulance</stringValue>
                 </rightValue>
             </conditions>
-            <conditions>
-                <leftValueReference>$Record.Site_Code__c</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
             <connector>
-                <targetReference>Facility_Name_1</targetReference>
+                <targetReference>Site_and_Facility2</targetReference>
             </connector>
             <label>Ambulance 1</label>
         </rules>
@@ -94,7 +80,7 @@
     <decisions>
         <name>checkDecisions</name>
         <label>checkDecisions</label>
-        <locationX>600</locationX>
+        <locationX>644</locationX>
         <locationY>335</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -195,7 +181,7 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <start>
-        <locationX>474</locationX>
+        <locationX>518</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>checkDecisions</targetReference>
@@ -206,13 +192,14 @@
     </start>
     <status>Active</status>
     <subflows>
-        <name>Facility_Name</name>
-        <label>Facility Name</label>
+        <description>This flow will populate Site code and Facility Name</description>
+        <name>Site_and_Facility</name>
+        <label>Site and Facility</label>
         <locationX>50</locationX>
         <locationY>935</locationY>
-        <flowName>Attached_Facility_to_Ambulance_record</flowName>
+        <flowName>Populate_site_code_and_Facility_on_Ambulance_Record</flowName>
         <inputAssignments>
-            <name>updatedHealthcareCost</name>
+            <name>InputCorrectionVariable</name>
             <value>
                 <elementReference>updatedHealthCareCost_col</elementReference>
             </value>
@@ -220,13 +207,14 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </subflows>
     <subflows>
-        <name>Facility_Name_1</name>
-        <label>Facility Name_1</label>
+        <description>This flow will populate Site code and Facility Name</description>
+        <name>Site_and_Facility2</name>
+        <label>Site and Facility2</label>
         <locationX>578</locationX>
         <locationY>935</locationY>
-        <flowName>Attached_Facility_to_Ambulance_record</flowName>
+        <flowName>Populate_site_code_and_Facility_on_Ambulance_Record</flowName>
         <inputAssignments>
-            <name>updatedHealthcareCost</name>
+            <name>InputCorrectionVariable</name>
             <value>
                 <elementReference>updatedHealthCareCost_col</elementReference>
             </value>

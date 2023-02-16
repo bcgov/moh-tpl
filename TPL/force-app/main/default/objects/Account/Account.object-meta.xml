@@ -235,6 +235,20 @@
     <enableFeeds>true</enableFeeds>
     <enableHistory>false</enableHistory>
     <externalSharingModel>Private</externalSharingModel>
+    <profileSearchLayouts>
+        <fields>ACCOUNT.NAME</fields>
+        <fields>PHN__pc</fields>
+        <fields>Date_of_Birth__pc</fields>
+        <fields>Site_Code__c</fields>
+        <profileName>MoH Standard User</profileName>
+    </profileSearchLayouts>
+    <profileSearchLayouts>
+        <fields>ACCOUNT.NAME</fields>
+        <fields>PHN__pc</fields>
+        <fields>Date_of_Birth__pc</fields>
+        <fields>Site_Code__c</fields>
+        <profileName>System Administrator</profileName>
+    </profileSearchLayouts>
     <recordTypeTrackFeedHistory>false</recordTypeTrackFeedHistory>
     <recordTypeTrackHistory>false</recordTypeTrackHistory>
     <searchLayouts>
