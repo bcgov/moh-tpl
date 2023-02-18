@@ -16,8 +16,8 @@ import FACILITY_FIELD from '@salesforce/schema/Healthcare_Cost__c.Facility__c';
 import FIXED_WING_HELICOPTER_FIELD from '@salesforce/schema/Healthcare_Cost__c.Fixed_Wing_Helicopter__c';
 import COST_FIELD from '@salesforce/schema/Healthcare_Cost__c.Cost__c';
 import SUB_TOTAL_FIELD from '@salesforce/schema/Healthcare_Cost__c.Sub_Total__c';
-import getHealthcareCostsAmbulanceForCase from '@salesforce/apex/HCCCostController.getHealthcareCostsAmbulanceForCase';
-import updateHCCRecordInformation from '@salesforce/apex/HCCCostController.updateHCCRecordInformation';
+import getHealthcareCostsAmbulanceForCase from '@salesforce/apex/HCCCostAmbulanceRecord.getHealthcareCostsAmbulanceForCase';
+import updateHCCRecordInformation from '@salesforce/apex/HCCCostAmbulanceRecord.updateHCCRecordInformation';
 
 const COLUMNS = [
     {
@@ -97,6 +97,17 @@ export default class AmbulanceRecordsCase extends LightningElement {
     recordsToDisplay = []; //Records to be displayed on the page
     wiredRecords;
     selectedRows = [];
+    event2;
+
+    connectedCallback() {
+        this.event2 = setInterval(() => {
+            this.refresh();
+        }, 100);
+      }
+    
+      disconnectedCallback() {
+        clearInterval(this.event2);
+      }
 
     @wire(getHealthcareCostsAmbulanceForCase, { caseId: '$recordId' })
     healthcareCostsAmbulanceForCase(result){

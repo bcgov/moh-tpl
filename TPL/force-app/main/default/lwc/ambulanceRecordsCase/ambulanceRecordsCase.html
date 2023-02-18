@@ -1,10 +1,11 @@
 <template>
     <template if:true={records}>
-        <lightning-record-edit-form object-api-name="Healthcare_Cost__c" id="assignCases" >
-            <lightning-button label="Please select the Healthcare Cost records for de-linking" onclick={handleSelect}></lightning-button>
+        
+        <lightning-record-edit-form object-api-name="Healthcare_Cost__c"  class="slds-text-align_left" id="assignCases" >
+            <lightning-button label="Unassign Case" onclick={handleSelect}></lightning-button>
         </lightning-record-edit-form>
            <!-- Ambulance Records -->
-     <lightning-card title="HealthCare Cost - Ambulance Records" icon-name="custom:custom63">
+     <lightning-card title="HealthCare Cost - Ambulance Records">
         <div class="slds-scrollable slds-m-around_medium" style="height:auto;width:auto">
                 <lightning-datatable
                     key-field="Id"
@@ -14,7 +15,7 @@
                     sorted-by={sortBy}
                     sorted-direction={sortDirection}
                     onsort={doSorting}
-                    draft-values={draftValues} style="width: auto;">
+                    draft-values={draftValues} show-row-number-column="false" style="width: auto;">
                 </lightning-datatable>
             
             <template if:true={healthcareCostsAmbulance.error}>
@@ -30,7 +31,7 @@
                 <div class="slds-list_inline slds-p-bottom_xx-small">
                     <label class="slds-text-color_weak slds-p-horizontal_x-small" for="recordsPerPage">Page Size:</label>
                     <div class="slds-select_container">
-                        <select class="slds-select" id="recordsPerPage" onchange={handleRecordsPerPage}>
+                        <select class="slds-select" id="recordsPerPage" onclick={handleRecordsPerPage} onchange={handleRecordsPerPage}>
                             <template for:each={pageSizeOptions} for:item="option">
                                 <option key={option} value={option}>{option}</option>
                             </template>
