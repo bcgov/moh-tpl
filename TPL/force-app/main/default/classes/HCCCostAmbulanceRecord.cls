@@ -5,13 +5,13 @@ public with sharing class HCCCostAmbulanceRecord {
     }
 
     @AuraEnabled(cacheable=true)
-    public static List <Healthcare_Cost__c> getHealthcareCostsAmbulanceForAccount(String accId) /*, Integer limitSize, Integer offset */
+    public static List <Healthcare_Cost__c> getHealthcareCostsAmbulanceForAccount(String accId, Integer limitValue, Integer offset) /*, Integer limitSize, Integer offset */
     {
         try{
         	
             List<Healthcare_Cost__c> hccCostList = new List<Healthcare_Cost__c> ();
         	Id recordTypeId = getAmbulanceRecordId();
-            hccCostList = [select Case2__c, Case_Number__c, Cost_Include__c, Cost_Review__c, Name, Date_of_Service__c, Location_Responded__c, Basic_Amount__c, Cost__c, Total_Cost_Override__c, Site_Code__c, Facility__c, Sub_Total__c, Fixed_Wing_Helicopter__c from Healthcare_Cost__c where Account__c = :accId and RecordTypeId = :recordTypeId ORDER BY Name LIMIT 2000 /* :limitSize OFFSET :offset */];
+            hccCostList = [select Case2__c, Case_Number__c, Cost_Include__c, Cost_Review__c, Name, Date_of_Service__c, Location_Responded__c, Basic_Amount__c, Cost__c, Total_Cost_Override__c, Site_Code__c, Facility__c, Sub_Total__c, Fixed_Wing_Helicopter__c from Healthcare_Cost__c where Account__c = :accId and RecordTypeId = :recordTypeId ORDER BY Name LIMIT :limitValue OFFSET :offset];
             System.debug('HCC Cost List (Account Records) : ' + hccCostList.size());
             return hccCostList;
         }
