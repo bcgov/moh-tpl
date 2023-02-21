@@ -18,6 +18,7 @@ import COST_FIELD from '@salesforce/schema/Healthcare_Cost__c.Cost__c';
 import SUB_TOTAL_FIELD from '@salesforce/schema/Healthcare_Cost__c.Sub_Total__c';
 import getHealthcareCostsAmbulanceForCase from '@salesforce/apex/HCCCostAmbulanceRecord.getHealthcareCostsAmbulanceForCase';
 import updateHCCRecordInformation from '@salesforce/apex/HCCCostAmbulanceRecord.updateHCCRecordInformation';
+import saveDraftValues from '@salesforce/apex/HCCCostController.saveDraftValues'; 
 
 const COLUMNS = [
     {
@@ -252,7 +253,41 @@ export default class AmbulanceRecordsCase extends LightningElement {
     async refresh(){
         await refreshApex(this.wiredRecords);
     }
+
     async handleSave(event){
+       await saveDraftValues({data: event.detail.draftValues})
+            .then((result) => {
+                console.log('Result : ' + result);
+               if(result == 'Passed'){
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Success',
+                        message: 'HealthCare Cost Ambulance record(s) updated successfully',
+                        variant: 'success'
+                    })
+                );    
+            
+               }
+                else if(result == 'Failed'){
+                    this.dispatchEvent(
+                        new ShowToastEvent({
+                            title: 'Error',
+                            message: 'Record not saved successfully! Please check Healthcare Cost Ambulance record(s) while updating',
+                            variant: 'error'
+                        })
+                    );     
+                }    
+                //Get the updated list with refreshApex.
+                return this.refresh();
+                
+            })
+            .catch(error => {
+                console.log('error : ' + JSON.stringify(error));
+            });
+        
+    }
+    
+   /* async handleSave(event){
     
         // Convert datatable draft values into record objects
         const records = event.detail.draftValues.slice().map((draftValue) => {
@@ -292,6 +327,6 @@ export default class AmbulanceRecordsCase extends LightningElement {
             );
        
         }
-    }
+    } */
     
 }

@@ -1,11 +1,10 @@
 <template>
     <template if:true={records}>
-        
         <lightning-record-edit-form object-api-name="Healthcare_Cost__c"  class="slds-text-align_left" id="assignCases" >
-            <lightning-button label="Unassign Case" onclick={handleSelect}></lightning-button>
+            <lightning-button label="Delete selected Records" onclick={handleSelect}></lightning-button>
         </lightning-record-edit-form>
-           <!-- Ambulance Records -->
-     <lightning-card title="HealthCare Cost - Ambulance Records">
+        <!-- Continuing Care Records -->
+     <lightning-card title="HealthCare Cost - Continuing Care Records">
         <div class="slds-scrollable slds-m-around_medium" style="height:auto;width:auto">
                 <lightning-datatable
                     key-field="Id"
