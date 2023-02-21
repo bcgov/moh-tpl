@@ -106,12 +106,12 @@ export default class AmbulanceRecordsAccount extends LightningElement {
     limitSize = 0;
     rowSize = 0;
 
-    connectedCallback(){
+   /* connectedCallback(){
         this.pageSize = this.pageSizeOptions[0];
         this.limitSize = this.pageSizeOptions[0];
         this.loadCount();
         this.loadData();
-    }
+    } */
 
     doSorting(event) {
         this.sortBy = event.detail.fieldName;
@@ -189,7 +189,7 @@ export default class AmbulanceRecordsAccount extends LightningElement {
     async refresh(){
         await refreshApex(this.wiredRecords);
     }
-
+ /*
     loadData(){
         return getHealthcareCostsAmbulanceForAccount({accId: this.recordId, limitValue: this.limitSize, offset: this.rowSize})
         .then(result=>{
@@ -226,9 +226,9 @@ export default class AmbulanceRecordsAccount extends LightningElement {
             this.error = error;
             this.totalRecords = 0;
         });
-    }
+    } */
 
-  /*  @wire(getHealthcareCostsAmbulanceForAccount, { accId: '$recordId' })
+    @wire(getHealthcareCostsAmbulanceForAccount, { accId: '$recordId' })
     wiredHealthcareCostsAmbulanceForAccount(result){
         this.wiredRecords = result;
         const {data, error} = result;
@@ -251,7 +251,7 @@ export default class AmbulanceRecordsAccount extends LightningElement {
             this.error = undefined;
             this.records = undefined;
         }
-    } */
+    } 
 
     get bDisableFirst() {
         return this.pageNumber == 1;
@@ -263,33 +263,33 @@ export default class AmbulanceRecordsAccount extends LightningElement {
     handleRecordsPerPage(event) {
         this.pageSize = event.target.value;
         this.paginationHelper();
-        this.calculateLimitAndOffset();
-        this.loadData();
-       // this.paginationHelper();
+      //  this.calculateLimitAndOffset();
+     //   this.loadData();
+     
     }
     previousPage() {
         this.pageNumber = this.pageNumber - 1;
         this.paginationHelper();
-        this.calculateLimitAndOffset();
-        this.loadData();
+    //    this.calculateLimitAndOffset();
+    //    this.loadData();
     }
     nextPage() {
         this.pageNumber = this.pageNumber + 1;
         this.paginationHelper();
-        this.calculateLimitAndOffset();
-        this.loadData();
+     //   this.calculateLimitAndOffset();
+     //   this.loadData();
     }
     firstPage() {
         this.pageNumber = 1;
         this.paginationHelper();
-        this.calculateLimitAndOffset();
-        this.loadData();
+    //    this.calculateLimitAndOffset();
+    //    this.loadData();
     }
     lastPage() {
         this.pageNumber = this.totalPages;
         this.paginationHelper();
-        this.calculateLimitAndOffset();
-        this.loadData();
+    //    this.calculateLimitAndOffset();
+    //    this.loadData();
     }
 
     calculateLimitAndOffset(){
