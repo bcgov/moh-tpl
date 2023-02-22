@@ -37,13 +37,14 @@ public with sharing class HCCCostAmbulanceRecord {
         return countAmbulanceAccount;
     }
     
-    @AuraEnabled
+  /*  @AuraEnabled
     public static String updateHCCRecordInformation(List<Healthcare_Cost__c> hccIds){
         Id caseId = null;
         String giveStatus = null;
         Boolean checkFail = false;
       
         try {
+            
             for(Healthcare_Cost__c hcc: hccIds){
                 
                 if(hcc.Cost_Include__c == true || hcc.Cost_Review__c == true){
@@ -69,7 +70,7 @@ public with sharing class HCCCostAmbulanceRecord {
         }
         return giveStatus;
     }
-    
+     */
      @AuraEnabled(cacheable=true)
     public static List <Healthcare_Cost__c> getHealthcareCostsAmbulanceForCase(String caseId){
      	List<Healthcare_Cost__c> hccCostList = new List<Healthcare_Cost__c> ();
@@ -89,21 +90,47 @@ public with sharing class HCCCostAmbulanceRecord {
     }
 
     @AuraEnabled
-    public static String updateHCCCaseInformation (List<String> hccIds, String caseId){
+    public static String updateHCCCaseInformation (List<Healthcare_Cost__c> hccList, String caseId){
         List <Healthcare_Cost__c> updatedHealthcareCosts = new List<Healthcare_Cost__c>();
         String giveStatus = null;
-        
+        Boolean checkFail = false;
+        Integer totalResultsCount = hccList.size();
+        Integer verifyFalseResultCount = 0;
         try{
-            if(caseId == null || caseId.length() == 0 || hccIds.size() == 0){
+            if(caseId == null || caseId.length() == 0 || hccList.size() == 0){
                 giveStatus = Label.Failed;
                 return giveStatus;
             }
             else{
-                for(String hccId: hccIds){
+            
+                for(Healthcare_Cost__c hcc: hccList){
+                
+                    if(hcc.Cost_Include__c == true || hcc.Cost_Review__c == true){
+                        checkFail = true;
+                        verifyFalseResultCount ++;
+                      
+                    }
+                    else{
+                        updatedHealthcareCosts.add(new Healthcare_Cost__c(Id= hcc.Id, Case2__c = caseId));
+                        checkFail = false;
+                    }      
+                }
+                System.debug('Verify False count : ' + verifyFalseResultCount);
+                System.debug('Verify Actual count : ' + totalResultsCount);
+                
+                if(verifyFalseResultCount == totalResultsCount){
+                    giveStatus = Label.Failed;
+                    return giveStatus;
+                }
+                else{
+                    update updatedHealthcareCosts;
+                    giveStatus = Label.Passed;
+                }
+              /*  for(String hccId: hccIds){
                    updatedHealthcareCosts.add(new Healthcare_Cost__c(Id= hccId, Case2__c = caseId));
                 }
                 giveStatus = Label.Passed;    
-                update updatedHealthcareCosts;
+                update updatedHealthcareCosts; */
             }
         }
         catch(DmlException dmlexception){

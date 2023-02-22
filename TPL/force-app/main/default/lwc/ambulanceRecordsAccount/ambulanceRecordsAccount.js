@@ -149,21 +149,21 @@ export default class AmbulanceRecordsAccount extends LightningElement {
         console.log('selectedRows : ' + selected);
         console.log('Selected Case ID : ' + this.selectedCase);
         
-        let selectedCostIds = [];
+        let selectedCostRecords = [];
         
         selected.forEach(function(element){
-        selectedCostIds.push(element.Id);
-           console.log(element.Id);   
+        selectedCostRecords.push(element);
+           console.log(element);   
         });
 
-        await updateHCCCaseInformation({ caseId: this.selectedCase, hccIds: selectedCostIds})
+        await updateHCCCaseInformation({ caseId: this.selectedCase, hccList: selectedCostRecords})
         .then((result) => {
             console.log("Result : " + result);
             if(this.selectedCase == null || result == 'Failed'){
                 this.dispatchEvent(
                     new ShowToastEvent({
                         title: 'Error',
-                        message: 'Please select Case and HCC Records to map',
+                        message: 'Please select Case and HCC Records to map. Also, ensure cost review and cost include are unchecked for that case.',
                         variant: 'error'
                     })
                 );
@@ -172,7 +172,7 @@ export default class AmbulanceRecordsAccount extends LightningElement {
                 this.dispatchEvent(
                     new ShowToastEvent({
                         title: 'Success',
-                        message: 'HealthCare Cost Ambulance record(s) updated successfully',
+                        message: 'HealthCare Cost Ambulance record(s) having unchecked cost review and cost include updated successfully.',
                         variant: 'success'
                     })
                 );    

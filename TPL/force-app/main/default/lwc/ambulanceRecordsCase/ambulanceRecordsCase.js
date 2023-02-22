@@ -17,7 +17,6 @@ import FIXED_WING_HELICOPTER_FIELD from '@salesforce/schema/Healthcare_Cost__c.F
 import COST_FIELD from '@salesforce/schema/Healthcare_Cost__c.Cost__c';
 import SUB_TOTAL_FIELD from '@salesforce/schema/Healthcare_Cost__c.Sub_Total__c';
 import getHealthcareCostsAmbulanceForCase from '@salesforce/apex/HCCCostAmbulanceRecord.getHealthcareCostsAmbulanceForCase';
-import updateHCCRecordInformation from '@salesforce/apex/HCCCostAmbulanceRecord.updateHCCRecordInformation';
 import saveDraftValues from '@salesforce/apex/HCCCostController.saveDraftValues'; 
 
 const COLUMNS = [
@@ -206,7 +205,7 @@ export default class AmbulanceRecordsCase extends LightningElement {
         this.recordsToDisplay = parseData;
     }    
 
-    async handleSelect(){
+    /*async handleSelect(){
         var el = this.template.querySelector('lightning-datatable');
         console.log(el);
         var selected = el.getSelectedRows();
@@ -248,15 +247,17 @@ export default class AmbulanceRecordsCase extends LightningElement {
         .catch(error => {
             console.log('error : ' + JSON.stringify(error));
         });
-    }
+    } */
 
     async refresh(){
         await refreshApex(this.wiredRecords);
     }
 
     async handleSave(event){
-       await saveDraftValues({data: event.detail.draftValues})
-            .then((result) => {
+        await saveDraftValues({data: event.detail.draftValues})
+        .then((result) => {
+        // Clear all datatable draft values
+            this.draftValues = [];
                 console.log('Result : ' + result);
                if(result == 'Passed'){
                 this.dispatchEvent(
@@ -275,58 +276,17 @@ export default class AmbulanceRecordsCase extends LightningElement {
                             message: 'Record not saved successfully! Please check Healthcare Cost Ambulance record(s) while updating',
                             variant: 'error'
                         })
-                    );     
+                    );   
+                 
                 }    
+               
                 //Get the updated list with refreshApex.
-                return this.refresh();
-                
+                return this.refresh();    
             })
             .catch(error => {
                 console.log('error : ' + JSON.stringify(error));
             });
         
     }
-    
-   /* async handleSave(event){
-    
-        // Convert datatable draft values into record objects
-        const records = event.detail.draftValues.slice().map((draftValue) => {
-            const fields = Object.assign({}, draftValue);
-            return { fields };
-        });
-
-        // Clear all datatable draft values
-        this.draftValues = [];
-
-        try {
-            // Update all records in parallel thanks to the UI API
-            const recordUpdatePromises = records.map((record) =>
-                updateRecord(record)
-            );
-            await Promise.all(recordUpdatePromises);
-
-            // Report success with a toast
-            this.dispatchEvent(
-                new ShowToastEvent({
-                    title: 'Success',
-                    message: 'Healthcare Costs Ambulance updated',
-                    variant: 'success'
-                })
-            );
-
-            //Get the updated list with refreshApex.
-            return this.refresh();
-           
-        } catch (error) {
-            this.dispatchEvent(
-                new ShowToastEvent({
-                    title: 'Error updating or reloading Healthcare Costs',
-                    message: error.body.message,
-                    variant: 'error'
-                })
-            );
-       
-        }
-    } */
     
 }
