@@ -78,7 +78,7 @@ public with sharing class HCCCostAmbulanceRecord {
             Id recordTypeId = getAmbulanceRecordId();
            
             hccCostList = [select Cost_Include__c, Cost_Review__c, Name, Date_of_Service__c, Location_Responded__c, Basic_Amount__c, Cost__c, Total_Cost_Override__c, Fixed_Wing_Helicopter__c, Site_Code__c, Facility__c, Sub_Total__c from Healthcare_Cost__c where Case2__c = :caseId and RecordTypeId = :recordTypeId ORDER BY Name DESC LIMIT 2000];
-            return hccCostList;
+            
      }
         catch(NullPointerException nullpointer){
             nullpointer.getMessage();
@@ -115,8 +115,6 @@ public with sharing class HCCCostAmbulanceRecord {
                         checkFail = false;
                     }      
                 }
-                System.debug('Verify False count : ' + verifyFalseResultCount);
-                System.debug('Verify Actual count : ' + totalResultsCount);
                 
                 if(verifyFalseResultCount == totalResultsCount){
                     giveStatus = Label.Failed;

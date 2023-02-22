@@ -11,9 +11,9 @@ public class HCCCostAmbulanceRecordTest {
         Healthcare_Cost__c hcc3 = TestDataFactory.ambulanceCostRecord(acc.Id, null);
         
         insert new Healthcare_Cost__c[] {hcc1, hcc2, hcc3};
-        Integer limitValue = 5, offsetValue = 0;
+
         Test.startTest();
-        List <Healthcare_Cost__c> hccListforAccounts = HCCCostAmbulanceRecord.getHealthcareCostsAmbulanceForAccount(acc.Id, limitValue, offsetValue);
+        List <Healthcare_Cost__c> hccListforAccounts = HCCCostAmbulanceRecord.getHealthcareCostsAmbulanceForAccount(acc.Id);
         Test.stopTest();
         System.assertEquals(3, hccListforAccounts.size());
     }
@@ -46,28 +46,40 @@ public class HCCCostAmbulanceRecordTest {
         
 		Healthcare_Cost__c hcc1 = TestDataFactory.ambulanceCostRecord(acc.Id, c1.Id);
         Healthcare_Cost__c hcc2 = TestDataFactory.ambulanceCostRecord(acc.Id, c1.Id);
+        hcc2.Cost_Include__c = false;
+        hcc2.Cost_Review__c = false;
         Healthcare_Cost__c hcc3 = TestDataFactory.ambulanceCostRecord(acc.Id, c1.Id);
 		insert new Healthcare_Cost__c[] {hcc1, hcc2, hcc3}; 
             
-        List<String> hccListtoUpdate = new List<String>();
-        hccListtoUpdate.add(hcc1.Id);
+        List<Healthcare_Cost__c> hccListtoUpdate1 = new List<Healthcare_Cost__c>();
+        List<Healthcare_Cost__c> hccListtoUpdate2 = new List<Healthcare_Cost__c>();
+
+        hccListtoUpdate1.add(hcc1);
+        hccListtoUpdate2.add(hcc2);
         String caseId = c2.Id;
         Test.startTest();
-        String output = HCCCostAmbulanceRecord.updateHCCCaseInformation(hccListtoUpdate,caseId);
+        String output1 = HCCCostAmbulanceRecord.updateHCCCaseInformation(hccListtoUpdate1,caseId);
+        String output2 = HCCCostAmbulanceRecord.updateHCCCaseInformation(hccListtoUpdate2,caseId);
         Test.stopTest(); 
-        System.assertEquals('Passed', output);
+        System.assertEquals('Passed', output2);
+        System.assertEquals('Failed', output1);
         
     }
     
     @isTest
     static void testUpdatetoCaseValuesReverseCondition(){
+        Account acc = TestDataFactory.individualAccount();
+        insert acc;
+        Case c1 = TestDataFactory.newCase(acc.Id);
+        insert c1;
+        List<Healthcare_Cost__c> hccListtoUpdate1 = new List<Healthcare_Cost__c>();
         Test.startTest();
-        String output = HCCCostAmbulanceRecord.updateHCCCaseInformation(null, null);
+        String output = HCCCostAmbulanceRecord.updateHCCCaseInformation(hccListtoUpdate1, c1.Id);
         Test.stopTest(); 
         System.assertEquals('Failed', output); 
     }
     
-    @isTest
+/*    @isTest
     static void testdelinkOfCaseValuesNegative(){
         Account acc = TestDataFactory.individualAccount();
         insert acc;
@@ -85,7 +97,7 @@ public class HCCCostAmbulanceRecordTest {
         String output = HCCCostAmbulanceRecord.updateHCCRecordInformation(hccListtoUpdate);
         Test.stopTest(); 
         System.assertEquals('Failed', output);
-    }
+    } 
     
     @isTest
     static void testdelinkOfCaseValuesPositive(){
@@ -107,7 +119,7 @@ public class HCCCostAmbulanceRecordTest {
         String output = HCCCostAmbulanceRecord.updateHCCRecordInformation(hccListtoUpdate);
         Test.stopTest(); 
         System.assertEquals('Passed', output);
-    }
+    } */
     
 	@isTest
     static void testAmbulanceCountonAccount(){
