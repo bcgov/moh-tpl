@@ -5,20 +5,21 @@ public with sharing class HCCCostFCRecord {
     
     @AuraEnabled(cacheable=true)
     public static List <Healthcare_Cost__c> getHealthcareCostsFCForCase(String caseId){
-    try{
+        List<Healthcare_Cost__c> hccCostList = new List<Healthcare_Cost__c> ();
+        try{
             Id recordTypeId = getFutureCareRecordId();
-            List<Healthcare_Cost__c> hccCostList = new List<Healthcare_Cost__c> ();
+           
             hccCostList = [select Name, Case2__c, Case_Number__c, Cost__c, Description__c, Account__c from Healthcare_Cost__c where Case2__c = :caseId and RecordTypeId = :recordTypeId ORDER BY Name DESC LIMIT 2000];
             System.debug('HCC Cost List Size (FC) : ' + hccCostList.size());
-            return hccCostList;
-     }
-      catch(NullPointerException nullpointer){
+            
+        }
+         catch(NullPointerException nullpointer){
             nullpointer.getMessage();
-      }
-      catch(Exception e) {
+        }
+        catch(Exception e) {
             throw new AuraHandledException(e.getMessage());
         }
-        return null;
+        return hccCostList;
     }
     
     @AuraEnabled(cacheable=true)
