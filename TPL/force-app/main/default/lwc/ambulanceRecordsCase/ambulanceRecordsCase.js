@@ -16,8 +16,8 @@ import FACILITY_FIELD from '@salesforce/schema/Healthcare_Cost__c.Facility__c';
 import FIXED_WING_HELICOPTER_FIELD from '@salesforce/schema/Healthcare_Cost__c.Fixed_Wing_Helicopter__c';
 import COST_FIELD from '@salesforce/schema/Healthcare_Cost__c.Cost__c';
 import SUB_TOTAL_FIELD from '@salesforce/schema/Healthcare_Cost__c.Sub_Total__c';
-import getHealthcareCostsAmbulanceForCase from '@salesforce/apex/HCCCostController.getHealthcareCostsAmbulanceForCase';
-import updateHCCRecordInformation from '@salesforce/apex/HCCCostController.updateHCCRecordInformation';
+import getHealthcareCostsAmbulanceForCase from '@salesforce/apex/HCCCostAmbulanceRecord.getHealthcareCostsAmbulanceForCase';
+import saveDraftValues from '@salesforce/apex/HCCCostController.saveDraftValues'; 
 
 const COLUMNS = [
     {
@@ -97,6 +97,17 @@ export default class AmbulanceRecordsCase extends LightningElement {
     recordsToDisplay = []; //Records to be displayed on the page
     wiredRecords;
     selectedRows = [];
+    event2;
+
+    connectedCallback() {
+        this.event2 = setInterval(() => {
+            this.refresh();
+        }, 100);
+      }
+    
+      disconnectedCallback() {
+        clearInterval(this.event2);
+      }
 
     @wire(getHealthcareCostsAmbulanceForCase, { caseId: '$recordId' })
     healthcareCostsAmbulanceForCase(result){
@@ -194,7 +205,7 @@ export default class AmbulanceRecordsCase extends LightningElement {
         this.recordsToDisplay = parseData;
     }    
 
-    async handleSelect(){
+    /*async handleSelect(){
         var el = this.template.querySelector('lightning-datatable');
         console.log(el);
         var selected = el.getSelectedRows();
@@ -236,51 +247,46 @@ export default class AmbulanceRecordsCase extends LightningElement {
         .catch(error => {
             console.log('error : ' + JSON.stringify(error));
         });
-    }
+    } */
 
     async refresh(){
         await refreshApex(this.wiredRecords);
     }
+
     async handleSave(event){
-    
-        // Convert datatable draft values into record objects
-        const records = event.detail.draftValues.slice().map((draftValue) => {
-            const fields = Object.assign({}, draftValue);
-            return { fields };
-        });
-
+        await saveDraftValues({data: event.detail.draftValues})
+        .then((result) => {
         // Clear all datatable draft values
-        this.draftValues = [];
-
-        try {
-            // Update all records in parallel thanks to the UI API
-            const recordUpdatePromises = records.map((record) =>
-                updateRecord(record)
-            );
-            await Promise.all(recordUpdatePromises);
-
-            // Report success with a toast
-            this.dispatchEvent(
-                new ShowToastEvent({
-                    title: 'Success',
-                    message: 'Healthcare Costs Ambulance updated',
-                    variant: 'success'
-                })
-            );
-
-            //Get the updated list with refreshApex.
-            return this.refresh();
-           
-        } catch (error) {
-            this.dispatchEvent(
-                new ShowToastEvent({
-                    title: 'Error updating or reloading Healthcare Costs',
-                    message: error.body.message,
-                    variant: 'error'
-                })
-            );
-       
-        }
+            this.draftValues = [];
+                console.log('Result : ' + result);
+               if(result == 'Passed'){
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Success',
+                        message: 'HealthCare Cost Ambulance record(s) updated successfully',
+                        variant: 'success'
+                    })
+                );    
+            
+               }
+                else if(result == 'Failed'){
+                    this.dispatchEvent(
+                        new ShowToastEvent({
+                            title: 'Error',
+                            message: 'Record not saved successfully! Please check Healthcare Cost Ambulance record(s) while updating',
+                            variant: 'error'
+                        })
+                    );   
+                 
+                }    
+               
+                //Get the updated list with refreshApex.
+                return this.refresh();    
+            })
+            .catch(error => {
+                console.log('error : ' + JSON.stringify(error));
+            });
+        
     }
     
 }

@@ -1,6 +1,8 @@
 import { LightningElement, wire, api } from 'lwc';
-import getHealthcareCostsAmbulanceForAccount from '@salesforce/apex/HCCCostController.getHealthcareCostsAmbulanceForAccount';
-import { updateRecord } from 'lightning/uiRecordApi';
+import { refreshApex } from '@salesforce/apex';
+import updateHCCCaseInformation from '@salesforce/apex/HCCCostAmbulanceRecord.updateHCCCaseInformation';
+import getHealthcareCostsAmbulanceForAccount from '@salesforce/apex/HCCCostAmbulanceRecord.getHealthcareCostsAmbulanceForAccount';
+import getAmbulanceCountonAccount from '@salesforce/apex/HCCCostAmbulanceRecord.getAmbulanceCountonAccount';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import COST_INCLUDE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Cost_Include__c';
 import COST_REVIEW_FIELD from '@salesforce/schema/Healthcare_Cost__c.Cost_Review__c';
@@ -15,8 +17,7 @@ import FIXED_WING_HELICOPTER_FIELD from '@salesforce/schema/Healthcare_Cost__c.F
 import COST_FIELD from '@salesforce/schema/Healthcare_Cost__c.Cost__c';
 import SUB_TOTAL_FIELD from '@salesforce/schema/Healthcare_Cost__c.Sub_Total__c';
 
-import updateHCCCaseInformation from '@salesforce/apex/HCCCostController.updateHCCCaseInformation';
-import { refreshApex } from '@salesforce/apex';
+
 
 const COLS = [
     {
@@ -102,6 +103,15 @@ export default class AmbulanceRecordsAccount extends LightningElement {
     wiredRecords;
     selectedCase;
     selectedRows = [];
+    limitSize = 0;
+    rowSize = 0;
+
+   /* connectedCallback(){
+        this.pageSize = this.pageSizeOptions[0];
+        this.limitSize = this.pageSizeOptions[0];
+        this.loadCount();
+        this.loadData();
+    } */
 
     doSorting(event) {
         this.sortBy = event.detail.fieldName;
@@ -139,21 +149,21 @@ export default class AmbulanceRecordsAccount extends LightningElement {
         console.log('selectedRows : ' + selected);
         console.log('Selected Case ID : ' + this.selectedCase);
         
-        let selectedCostIds = [];
+        let selectedCostRecords = [];
         
         selected.forEach(function(element){
-        selectedCostIds.push(element.Id);
-           console.log(element.Id);   
+        selectedCostRecords.push(element);
+           console.log(element);   
         });
 
-        await updateHCCCaseInformation({ caseId: this.selectedCase, hccIds: selectedCostIds})
+        await updateHCCCaseInformation({ caseId: this.selectedCase, hccList: selectedCostRecords})
         .then((result) => {
             console.log("Result : " + result);
             if(this.selectedCase == null || result == 'Failed'){
                 this.dispatchEvent(
                     new ShowToastEvent({
                         title: 'Error',
-                        message: 'Please select Case and HCC Records to map',
+                        message: 'Please select Case and HCC Records to map. Also, ensure cost review and cost include are unchecked for that case.',
                         variant: 'error'
                     })
                 );
@@ -162,7 +172,7 @@ export default class AmbulanceRecordsAccount extends LightningElement {
                 this.dispatchEvent(
                     new ShowToastEvent({
                         title: 'Success',
-                        message: 'HealthCare Cost Ambulance record(s) updated successfully',
+                        message: 'HealthCare Cost Ambulance record(s) having unchecked cost review and cost include updated successfully.',
                         variant: 'success'
                     })
                 );    
@@ -179,6 +189,44 @@ export default class AmbulanceRecordsAccount extends LightningElement {
     async refresh(){
         await refreshApex(this.wiredRecords);
     }
+ /*
+    loadData(){
+        return getHealthcareCostsAmbulanceForAccount({accId: this.recordId, limitValue: this.limitSize, offset: this.rowSize})
+        .then(result=>{
+            console.log('Inside Load Data return Part');
+            console.log('Length of records : ' + result.length);
+            this.wiredRecords = result;
+            if(result != null && result){
+                console.log('Data of Ambulance Records --> ' + JSON.stringify(result));
+                this.records = JSON.parse(JSON.stringify(result));
+                this.records.forEach(record => {
+                    record.linkName = '/' + record.Id;
+                })
+                this.paginationHelper(); // call helper menthod to update pagination logic
+                this.error = undefined;
+            }
+        })
+        .catch(error =>{
+            this.error = error;
+            this.records = [];
+        })
+    }
+
+    loadCount()
+    {
+        return getAmbulanceCountonAccount({accId: this.recordId})
+        .then(result =>{
+            if(result != null && result){
+                console.log('Result (Count of Records) : ' + result);
+                this.totalRecords = result;
+            }
+
+        })
+        .catch(error =>{
+            this.error = error;
+            this.totalRecords = 0;
+        });
+    } */
 
     @wire(getHealthcareCostsAmbulanceForAccount, { accId: '$recordId' })
     wiredHealthcareCostsAmbulanceForAccount(result){
@@ -203,7 +251,7 @@ export default class AmbulanceRecordsAccount extends LightningElement {
             this.error = undefined;
             this.records = undefined;
         }
-    }
+    } 
 
     get bDisableFirst() {
         return this.pageNumber == 1;
@@ -215,22 +263,38 @@ export default class AmbulanceRecordsAccount extends LightningElement {
     handleRecordsPerPage(event) {
         this.pageSize = event.target.value;
         this.paginationHelper();
+      //  this.calculateLimitAndOffset();
+     //   this.loadData();
+     
     }
     previousPage() {
         this.pageNumber = this.pageNumber - 1;
         this.paginationHelper();
+    //    this.calculateLimitAndOffset();
+    //    this.loadData();
     }
     nextPage() {
         this.pageNumber = this.pageNumber + 1;
         this.paginationHelper();
+     //   this.calculateLimitAndOffset();
+     //   this.loadData();
     }
     firstPage() {
         this.pageNumber = 1;
         this.paginationHelper();
+    //    this.calculateLimitAndOffset();
+    //    this.loadData();
     }
     lastPage() {
         this.pageNumber = this.totalPages;
         this.paginationHelper();
+    //    this.calculateLimitAndOffset();
+    //    this.loadData();
+    }
+
+    calculateLimitAndOffset(){
+        this.limitValue = this.pageSize;
+        this.rowSize = (this.pageNumber - 1) * this.pageSize
     }
 
     // JS function to handel pagination logic 

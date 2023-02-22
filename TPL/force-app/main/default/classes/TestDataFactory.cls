@@ -31,8 +31,7 @@ public with sharing class TestDataFactory {
         c.Claim_Number__c = '456784';
         return c;     
     }
-    
-    
+
     /*
 		Method Name:ambulanceCostRecord
 		Parameters: Account ID, Case ID
@@ -48,6 +47,38 @@ public with sharing class TestDataFactory {
        	hcc.Cost_Include__c = true;
         hcc.Cost_Review__c = true;
         hcc.Total_Cost_Override__c = 1000;
+        return hcc;
+    }
+
+ /*
+		Method Name:continuingcareCostRecord
+		Parameters: Account ID, Case ID
+		Description: Test method used to return a list having Continuing Care Healthcare cost records having an account and case associated with it
+	*/
+    public static Healthcare_Cost__c continuingcareCostRecord(String accountId, String caseId){
+        Healthcare_Cost__c hcc = new Healthcare_Cost__c();
+        Id recordTypeId = [SELECT Id FROM RecordType WHERE DeveloperName = 'Continuing_Care' AND sObjectType = 'Healthcare_Cost__c'].Id;
+        hcc.RecordTypeId = recordTypeId;
+        hcc.Account__c = accountId;
+        hcc.Case2__c = caseId;
+        hcc.Description__c = 'Test Continuing Care';
+        hcc.Cost__c = 500;
+        return hcc;
+    }
+
+    /*
+		Method Name:futurecareCostRecord
+		Parameters: Account ID, Case ID
+		Description: Test method used to return a list having Future Care Healthcare cost records having an account and case associated with it
+	*/
+    public static Healthcare_Cost__c futurecareCostRecord(String accountId, String caseId){
+        Healthcare_Cost__c hcc = new Healthcare_Cost__c();
+        Id recordTypeId = [SELECT Id FROM RecordType WHERE DeveloperName = 'Future_Care' AND sObjectType = 'Healthcare_Cost__c'].Id;
+        hcc.RecordTypeId = recordTypeId;
+        hcc.Account__c = accountId;
+        hcc.Case2__c = caseId;
+        hcc.Description__c = 'Test Future Care';
+        hcc.Cost__c = 200;
         return hcc;
     }
 }
