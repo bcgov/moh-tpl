@@ -1,15 +1,13 @@
-public with sharing class HCCCostAmbulanceRecord {
-    
-    private static Id getAmbulanceRecordId(){
-        return Schema.SObjectType.Healthcare_Cost__c.getRecordTypeInfosByName().get('Ambulance').getRecordTypeId();
+public with sharing class HCCCostMSPRecord {
+ private static Id getMSPRecordId(){
+        return Schema.SObjectType.Healthcare_Cost__c.getRecordTypeInfosByName().get('MSP').getRecordTypeId();
     }
-
-    @AuraEnabled(cacheable=true)
-    public static List <Healthcare_Cost__c> getHealthcareCostsAmbulanceForAccount(String accId)
+        @AuraEnabled(cacheable=true)
+    public static List <Healthcare_Cost__c> getHealthcareCostsMSPForAccount(String accId)
     {
         List<Healthcare_Cost__c> hccCostList = new List<Healthcare_Cost__c> ();
         try{
-        	Id recordTypeId = getAmbulanceRecordId();
+        	Id recordTypeId = getMSPRecordId();
             hccCostList = [select Case2__c, Case_Number__c, Cost_Include__c, Cost_Review__c, Name, Date_of_Service__c, Location_Responded__c, Basic_Amount__c, Cost__c, Total_Cost_Override__c, Site_Code__c, Facility__c, Sub_Total__c, Fixed_Wing_Helicopter__c from Healthcare_Cost__c where Account__c = :accId and RecordTypeId = :recordTypeId ORDER BY Name LIMIT 2000];
             System.debug('HCC Cost List (Account Records) : ' + hccCostList.size());      
         }
@@ -24,24 +22,23 @@ public with sharing class HCCCostAmbulanceRecord {
     }
     
     @AuraEnabled(cacheable=true)
-    public static Integer getAmbulanceCountonAccount(String accId){
-        Integer countAmbulanceAccount = 0;
+    public static Integer getMSPCountonAccount(String accId){
+        Integer countMSPAccount = 0;
         try {
-            Id recordTypeId = getAmbulanceRecordId();
-            countAmbulanceAccount = [SELECT count() from Healthcare_Cost__c where Account__c = :accId and RecordTypeId = :recordTypeId];
+            Id recordTypeId = getMSPRecordId();
+            countMSPAccount = [SELECT count() from Healthcare_Cost__c where Account__c = :accId and RecordTypeId = :recordTypeId];
 
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
         }
-        System.debug('Count of Ambulance records on Account  : ' + countAmbulanceAccount);
-        return countAmbulanceAccount;
+        System.debug('Count of MSP records on Account  : ' + countMSPAccount);
+        return countMSPAccount;
     }
-    
      @AuraEnabled(cacheable=true)
-    public static List <Healthcare_Cost__c> getHealthcareCostsAmbulanceForCase(String caseId){
+    public static List <Healthcare_Cost__c> getHealthcareCostsMSPForCase(String caseId){
      	List<Healthcare_Cost__c> hccCostList = new List<Healthcare_Cost__c> ();
         try{
-            Id recordTypeId = getAmbulanceRecordId();
+            Id recordTypeId = getMSPRecordId();
            
             hccCostList = [select Cost_Include__c, Cost_Review__c, Name, Date_of_Service__c, Location_Responded__c, Basic_Amount__c, Cost__c, Total_Cost_Override__c, Fixed_Wing_Helicopter__c, Site_Code__c, Facility__c, Sub_Total__c from Healthcare_Cost__c where Case2__c = :caseId and RecordTypeId = :recordTypeId ORDER BY Name DESC LIMIT 2000];
             
@@ -97,4 +94,5 @@ public with sharing class HCCCostAmbulanceRecord {
         }
         return giveStatus;
     }
+
 }

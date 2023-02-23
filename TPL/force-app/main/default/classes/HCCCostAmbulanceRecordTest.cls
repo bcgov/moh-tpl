@@ -79,48 +79,6 @@ public class HCCCostAmbulanceRecordTest {
         System.assertEquals('Failed', output); 
     }
     
-/*    @isTest
-    static void testdelinkOfCaseValuesNegative(){
-        Account acc = TestDataFactory.individualAccount();
-        insert acc;
-        Case c1 = TestDataFactory.newCase(acc.Id);
-        Case c2 = TestDataFactory.newCase(acc.Id);
-        insert  new Case[] {c1, c2};
-        
-		Healthcare_Cost__c hcc1 = TestDataFactory.ambulanceCostRecord(acc.Id, c1.Id);
-        insert new Healthcare_Cost__c[] {hcc1}; 
-        
-        List<Healthcare_Cost__c> hccListtoUpdate = new List<Healthcare_Cost__c>();
-        hccListtoUpdate.add(hcc1);
-        
-        Test.startTest();
-        String output = HCCCostAmbulanceRecord.updateHCCRecordInformation(hccListtoUpdate);
-        Test.stopTest(); 
-        System.assertEquals('Failed', output);
-    } 
-    
-    @isTest
-    static void testdelinkOfCaseValuesPositive(){
-        Account acc = TestDataFactory.individualAccount();
-        insert acc;
-        Case c1 = TestDataFactory.newCase(acc.Id);
-        Case c2 = TestDataFactory.newCase(acc.Id);
-        insert  new Case[] {c1, c2};
-        
-		Healthcare_Cost__c hcc1 = TestDataFactory.ambulanceCostRecord(acc.Id, c1.Id);
-        hcc1.Cost_Include__c = false;
-        hcc1.Cost_Review__c = false;
-		insert new Healthcare_Cost__c[] {hcc1}; 
-        
-        List<Healthcare_Cost__c> hccListtoUpdate = new List<Healthcare_Cost__c>();
-        hccListtoUpdate.add(hcc1);
-     
-        Test.startTest();
-        String output = HCCCostAmbulanceRecord.updateHCCRecordInformation(hccListtoUpdate);
-        Test.stopTest(); 
-        System.assertEquals('Passed', output);
-    } */
-    
 	@isTest
     static void testAmbulanceCountonAccount(){
         Account acc1 = TestDataFactory.individualAccount();
