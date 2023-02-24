@@ -1,10 +1,8 @@
 /* eslint-disable guard-for-in */
 /* eslint-disable no-prototype-builtins */
 import { LightningElement, wire, api } from 'lwc';
-import { updateRecord } from 'lightning/uiRecordApi';
 import { refreshApex } from '@salesforce/apex';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
-import HCCOST_FIELD from '@salesforce/schema/Healthcare_Cost__c.Name';
 import COST_INCLUDE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Cost_Include__c';
 import COST_REVIEW_FIELD from '@salesforce/schema/Healthcare_Cost__c.Cost_Review__c';
 import BASIC_AMOUNT_FIELD from '@salesforce/schema/Healthcare_Cost__c.Basic_Amount__c';
@@ -12,7 +10,7 @@ import TOTAL_COST_OVERRIDE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Tot
 import DATE_OF_SERVICE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Date_of_Service__c';
 import LOCATION_RESPONDED_FIELD from '@salesforce/schema/Healthcare_Cost__c.Location_Responded__c';
 import SITE_CODE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Site_Code__c';
-import FACILITY_FIELD from '@salesforce/schema/Healthcare_Cost__c.Facility__c';
+import FACILITY_NAME_FIELD from '@salesforce/schema/Healthcare_Cost__c.FacilityName__c';
 import FIXED_WING_HELICOPTER_FIELD from '@salesforce/schema/Healthcare_Cost__c.Fixed_Wing_Helicopter__c';
 import COST_FIELD from '@salesforce/schema/Healthcare_Cost__c.Cost__c';
 import SUB_TOTAL_FIELD from '@salesforce/schema/Healthcare_Cost__c.Sub_Total__c';
@@ -20,11 +18,6 @@ import getHealthcareCostsAmbulanceForCase from '@salesforce/apex/HCCCostAmbulanc
 import saveDraftValues from '@salesforce/apex/HCCCostController.saveDraftValues'; 
 
 const COLUMNS = [
-    {
-        label: 'HealthCare Cost Name',
-        fieldName: HCCOST_FIELD.fieldApiName,
-        sortable: true
-    },
     {
         label: 'Cost Include',
         fieldName: COST_INCLUDE_FIELD.fieldApiName,
@@ -57,6 +50,12 @@ const COLUMNS = [
         label: 'Site Code',
         fieldName: SITE_CODE_FIELD.fieldApiName,
         type: 'text',
+        editable: false,
+        sortable: true
+    },
+    {
+        label: 'Facility',
+        fieldName: FACILITY_NAME_FIELD.fieldApiName,
         editable: false,
         sortable: true
     },

@@ -12,23 +12,18 @@ import TOTAL_COST_OVERRIDE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Tot
 import DATE_OF_SERVICE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Date_of_Service__c';
 import LOCATION_RESPONDED_FIELD from '@salesforce/schema/Healthcare_Cost__c.Location_Responded__c';
 import SITE_CODE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Site_Code__c';
-import FACILITY_FIELD from '@salesforce/schema/Healthcare_Cost__c.Facility__c';
+import NAME_FIELD from '@salesforce/schema/Healthcare_Cost__c.Name';
+import FACILITY_NAME_FIELD from '@salesforce/schema/Healthcare_Cost__c.FacilityName__c';
 import FIXED_WING_HELICOPTER_FIELD from '@salesforce/schema/Healthcare_Cost__c.Fixed_Wing_Helicopter__c';
 import COST_FIELD from '@salesforce/schema/Healthcare_Cost__c.Cost__c';
 import SUB_TOTAL_FIELD from '@salesforce/schema/Healthcare_Cost__c.Sub_Total__c';
 
-
-
-const COLS = [
+const COLUMNS = [
     {
         label: 'HealthCare Cost Number',
-        fieldName: 'linkName',
-        type: 'url',
+        fieldName: NAME_FIELD.fieldApiName,
+        type: 'text',
         sortable: true,
-        typeAttributes: {
-            label: { fieldName: 'Name' },
-            target: '_self'
-        }
     },
     {
         label: 'Case Number',
@@ -42,55 +37,62 @@ const COLS = [
         fieldName: COST_INCLUDE_FIELD.fieldApiName,
         type:'boolean',
         editable: false,
-        sortable: false
+        sortable: true
     },
     {
         label: 'Cost Review',
         fieldName: COST_REVIEW_FIELD.fieldApiName,
         type:'boolean',
         editable:false,
-        sortable: false
+        sortable: true
     },
     {
         label: 'Date of Service',
         fieldName: DATE_OF_SERVICE_FIELD.fieldApiName,
         type: 'date',
         editable: false,
-        sortable: false
+        sortable: true
     },
     {
         label: 'Location Responded',
         fieldName: LOCATION_RESPONDED_FIELD.fieldApiName,
         type: 'text',
         editable: false,
-        sortable: false
+        sortable: true
     },
     {
         label: 'Site Code',
         fieldName: SITE_CODE_FIELD.fieldApiName,
         type: 'text',
         editable: false,
-        sortable: false
+        sortable: true
+    },
+    {
+        label: 'Facility',
+        fieldName: FACILITY_NAME_FIELD.fieldApiName,
+        type: 'text',
+        editable: false,
+        sortable: true
     },
     {
         label: 'Basic Amount',
         fieldName: BASIC_AMOUNT_FIELD.fieldApiName,
         type: 'currency',
         editable: false,
-        sortable: false
+        sortable: true
     },
     {
         label: 'Total Cost Override',
         fieldName: TOTAL_COST_OVERRIDE_FIELD.fieldApiName,
         type: 'currency',
         editable: false,
-        sortable: false
+        sortable: true
     }
 ];
 
 export default class AmbulanceRecordsAccount extends LightningElement {
     @api recordId;
-    column = COLS;
+    column = COLUMNS;
     isFirstPage = true;
     isLastPage = false;
     totalRecords = 0; //Total no.of records
@@ -236,9 +238,6 @@ export default class AmbulanceRecordsAccount extends LightningElement {
         if(data != null && data){
             console.log('Data of Ambulance Records --> ' + JSON.stringify(data));
             this.records = JSON.parse(JSON.stringify(data));
-            this.records.forEach(record => {
-                record.linkName = '/' + record.Id;
-            })
             this.totalRecords = data.length;
             this.pageSize = this.pageSizeOptions[0]; 
             this.paginationHelper(); // call helper menthod to update pagination logic
