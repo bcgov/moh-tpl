@@ -4,8 +4,8 @@
     <assignments>
         <name>assignmentofConcatFields_0</name>
         <label>assignmentofConcatFields</label>
-        <locationX>182</locationX>
-        <locationY>455</locationY>
+        <locationX>314</locationX>
+        <locationY>335</locationY>
         <assignmentItems>
             <assignToReference>ProductFamilyRecord</assignToReference>
             <operator>Assign</operator>
@@ -27,6 +27,20 @@
                 <elementReference>$Record.Effective_year__c</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>CCI</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Intervention_Code_CCI__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>siteCode</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Account__r.Site_Code__c</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>checkProductFamily</targetReference>
         </connector>
@@ -35,12 +49,12 @@
         <name>updateProductNameFormula</name>
         <label>updateProductNameFormula</label>
         <locationX>50</locationX>
-        <locationY>695</locationY>
+        <locationY>575</locationY>
         <assignmentItems>
             <assignToReference>updatedProductName</assignToReference>
             <operator>Add</operator>
             <value>
-                <elementReference>ProductFamilyUpdateFormula</elementReference>
+                <elementReference>Generic_Product_Name</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -48,15 +62,31 @@
         </connector>
     </assignments>
     <assignments>
-        <name>updateProductNameFormula_0</name>
-        <label>updateProductNameFormula</label>
+        <name>updateProductNameFormula1</name>
+        <label>updateProductNameFormula1</label>
         <locationX>314</locationX>
-        <locationY>695</locationY>
+        <locationY>575</locationY>
         <assignmentItems>
             <assignToReference>updatedProductName</assignToReference>
             <operator>Add</operator>
             <value>
-                <elementReference>ProductUpdateFormulaSpecific</elementReference>
+                <elementReference>SurgicalDay_Product_Name</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>updateProductName1</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>updateProductNameFormula_0</name>
+        <label>updateProductNameFormula</label>
+        <locationX>578</locationX>
+        <locationY>575</locationY>
+        <assignmentItems>
+            <assignToReference>updatedProductName</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>Specific_Product_name</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -66,14 +96,14 @@
     <decisions>
         <name>checkProductFamily</name>
         <label>checkProductFamily</label>
-        <locationX>182</locationX>
-        <locationY>575</locationY>
+        <locationX>314</locationX>
+        <locationY>455</locationY>
         <defaultConnector>
             <targetReference>updateProductNameFormula_0</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <defaultConnectorLabel>Specific Product</defaultConnectorLabel>
         <rules>
-            <name>ProductFamilyCheck</name>
+            <name>Generic_Product</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>ProductFamilyRecord</leftValueReference>
@@ -82,23 +112,57 @@
                     <stringValue>Generic</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>ServiceTypeRecord</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Surgical Day Care (Daily)</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>updateProductNameFormula</targetReference>
             </connector>
-            <label>ProductFamilyCheck</label>
+            <label>Generic Product</label>
+        </rules>
+        <rules>
+            <name>SurgicalDay_Product</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ProductFamilyRecord</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Generic</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>ServiceTypeRecord</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Surgical Day Care (Daily)</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>updateProductNameFormula1</targetReference>
+            </connector>
+            <label>SurgicalDay Product</label>
         </rules>
     </decisions>
     <description>This flow will create a Product Name on New Product Creation and existing Product Update</description>
     <environments>Default</environments>
     <formulas>
-        <name>ProductFamilyUpdateFormula</name>
+        <name>Generic_Product_Name</name>
         <dataType>String</dataType>
         <expression>{!ServiceTypeRecord} + &apos;-&apos;+ {!EffectiveYear}</expression>
     </formulas>
     <formulas>
-        <name>ProductUpdateFormulaSpecific</name>
+        <name>Specific_Product_name</name>
         <dataType>String</dataType>
         <expression>{!siteCode}+&apos;-&apos;+{!ServiceTypeRecord}+&apos;-&apos;+{!EffectiveYear}</expression>
+    </formulas>
+    <formulas>
+        <name>SurgicalDay_Product_Name</name>
+        <dataType>String</dataType>
+        <expression>{!CCI}+&apos;-&apos;+ {!ServiceTypeRecord} + &apos;-&apos;+ {!EffectiveYear}</expression>
     </formulas>
     <interviewLabel>Product Name Creation and Update {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Product Name Creation and Update</label>
@@ -121,34 +185,24 @@
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
-    <recordLookups>
-        <name>getSiteCodeAccounts</name>
-        <label>getSiteCodeAccounts</label>
-        <locationX>182</locationX>
-        <locationY>335</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>assignmentofConcatFields_0</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>$Record.Account__c</elementReference>
-            </value>
-        </filters>
-        <object>Account</object>
-        <outputAssignments>
-            <assignToReference>siteCode</assignToReference>
-            <field>Site_Code__c</field>
-        </outputAssignments>
-    </recordLookups>
     <recordUpdates>
         <name>updateProductName</name>
         <label>updateProductName</label>
         <locationX>50</locationX>
-        <locationY>815</locationY>
+        <locationY>695</locationY>
+        <inputAssignments>
+            <field>Name</field>
+            <value>
+                <elementReference>updatedProductName</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>updateProductName1</name>
+        <label>updateProductName1</label>
+        <locationX>314</locationX>
+        <locationY>695</locationY>
         <inputAssignments>
             <field>Name</field>
             <value>
@@ -160,8 +214,8 @@
     <recordUpdates>
         <name>updateProductName_0</name>
         <label>updateProductName</label>
-        <locationX>314</locationX>
-        <locationY>815</locationY>
+        <locationX>578</locationX>
+        <locationY>695</locationY>
         <inputAssignments>
             <field>Name</field>
             <value>
@@ -171,16 +225,23 @@
         <inputReference>$Record</inputReference>
     </recordUpdates>
     <start>
-        <locationX>56</locationX>
+        <locationX>188</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>getSiteCodeAccounts</targetReference>
+            <targetReference>assignmentofConcatFields_0</targetReference>
         </connector>
         <object>Product2</object>
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
     <status>Active</status>
+    <variables>
+        <name>CCI</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+    </variables>
     <variables>
         <name>EffectiveYear</name>
         <dataType>String</dataType>
