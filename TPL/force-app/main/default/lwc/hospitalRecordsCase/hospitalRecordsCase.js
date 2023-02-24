@@ -79,14 +79,14 @@ const COLUMNS = [
         label: 'Site Code',
         fieldName: SITE_CODE_FIELD.fieldApiName,
         type: 'text',
-        editable: true,
+        editable: false,
         sortable: false
     },
     {
         label: 'Facility',
         fieldName: FACILITY_NAME_FIELD.fieldApiName,
         type: 'text',
-        editable: true,
+        editable: false,
         sortable: false
     },
     {
