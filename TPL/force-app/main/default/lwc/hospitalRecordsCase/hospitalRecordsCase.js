@@ -42,8 +42,6 @@ const COLUMNS = [
     {
         label: 'Date of Service',
         fieldName: DATE_OF_SERVICE_FIELD.fieldApiName,
-        type: 'date',
-        typeAttributes:{year: "numeric",month: "2-digit",day: "2-digit"},
         editable: true,
         sortable: true
     },
@@ -92,16 +90,12 @@ const COLUMNS = [
     {
         label: 'Date of Admission',
         fieldName:DATE_OF_ADMISSION_FIELD.fieldApiName,
-        type: 'date',
-        typeAttributes:{year: "numeric",month: "2-digit",day: "2-digit"},
         editable: true,
         sortable: true
     },
     {
         label: 'Date of Discharge',
         fieldName:DATE_OF_DISCHARGE_FIELD.fieldApiName,
-        type: 'date',
-        typeAttributes:{year: "numeric",month: "2-digit",day: "2-digit"},
         editable: true,
         sortable: true
     },

@@ -35,7 +35,6 @@ const COLUMNS = [
     {
         label: 'Date of Service',
         fieldName: DATE_OF_SERVICE_FIELD.fieldApiName,
-        type: 'date',
         sortable: true,
         editable: true
     }, 

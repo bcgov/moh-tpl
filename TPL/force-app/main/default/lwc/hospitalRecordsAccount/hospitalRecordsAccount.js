@@ -55,7 +55,6 @@ const COLUMNS = [
     {
         label: 'Date of Service',
         fieldName: DATE_OF_SERVICE_FIELD.fieldApiName,
-        type: 'date',
         editable: false,
         sortable: true
     },
@@ -104,14 +103,12 @@ const COLUMNS = [
     {
         label: 'Date of Admission',
         fieldName:DATE_OF_ADMISSION_FIELD.fieldApiName,
-        type: 'date',
         editable: false,
         sortable: true
     },
     {
         label: 'Date of Discharge',
         fieldName:DATE_OF_DISCHARGE_FIELD.fieldApiName,
-        type: 'date',
         editable: false,
         sortable: true
     },

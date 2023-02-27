@@ -46,8 +46,6 @@ const COLUMNS =
     {
         label: 'Date of Service',
         fieldName: DATE_OF_SERVICE_FIELD.fieldApiName,
-        type: 'date',
-        typeAttributes:{year: "numeric",month: "2-digit",day: "2-digit"},
         editable: true,
         sortable: true
     },
@@ -166,16 +164,12 @@ const COLUMNS =
     {
         label: 'Service Start Date',
         fieldName: SERVICE_START_DATE_FIELD.fieldApiName,
-        type: 'date',
-        typeAttributes:{year: "numeric",month: "2-digit",day: "2-digit"},
         editable: true,
         sortable: true
     },
     {
         label: 'Service Finish Date',
         fieldName: SERVICE_FINISH_DATE_FIELD.fieldApiName,
-        type: 'date',
-        typeAttributes:{year: "numeric",month: "2-digit",day: "2-digit"},
         editable: true,
         sortable: true
     },
