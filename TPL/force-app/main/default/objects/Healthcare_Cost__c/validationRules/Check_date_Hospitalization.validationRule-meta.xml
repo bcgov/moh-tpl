@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Check_date_Hospitalization</fullName>
+    <active>true</active>
+    <description>Date of discharge must be greater than date of admission</description>
+    <errorConditionFormula>Date_of_Discharge__c   &lt;=   Date_of_Admission__c</errorConditionFormula>
+    <errorDisplayField>Date_of_Discharge__c</errorDisplayField>
+    <errorMessage>Date of discharge should always be greater than Date of Admission</errorMessage>
+</ValidationRule>
