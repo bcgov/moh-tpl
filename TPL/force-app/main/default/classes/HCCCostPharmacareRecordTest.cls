@@ -1,36 +1,36 @@
 @isTest
-public class HCCCostAmbulanceRecordTest {
-@isTest
-    static void testAmbulanceRecordsonAccount(){
+public class HCCCostPharmacareRecordTest {
+    @isTest
+    static void testMSPRecordsonAccount(){
         Account acc = TestDataFactory.individualAccount();
         insert acc;
         Case c = TestDataFactory.newCase(acc.Id);
         insert c;
-		Healthcare_Cost__c hcc1 = TestDataFactory.ambulanceCostRecord(acc.Id, c.Id);
-        Healthcare_Cost__c hcc2 = TestDataFactory.ambulanceCostRecord(acc.Id, null);
-        Healthcare_Cost__c hcc3 = TestDataFactory.ambulanceCostRecord(acc.Id, null);
+		Healthcare_Cost__c hcc1 = TestDataFactory.PharmacareCostRecord(acc.Id, c.Id);
+        Healthcare_Cost__c hcc2 = TestDataFactory.PharmacareCostRecord(acc.Id, null);
+        Healthcare_Cost__c hcc3 = TestDataFactory.PharmacareCostRecord(acc.Id, null);
         
         insert new Healthcare_Cost__c[] {hcc1, hcc2, hcc3};
 
         Test.startTest();
-        List <Healthcare_Cost__c> hccListforAccounts = HCCCostAmbulanceRecord.getHealthcareCostsAmbulanceForAccount(acc.Id);
+        List <Healthcare_Cost__c> hccListforAccounts = HCCCostPharmacareRecord.getHealthcareCostsPharmacareForAccount(acc.Id);
         Test.stopTest();
         System.assertEquals(3, hccListforAccounts.size());
     }
        
     @isTest
-    static void testAmbulanceRecordsCase(){
+    static void testMSPRecordsCase(){
         Account acc = TestDataFactory.individualAccount();
         insert acc;
         Case c = TestDataFactory.newCase(acc.Id);
         insert c;
-		Healthcare_Cost__c hcc1 = TestDataFactory.ambulanceCostRecord(acc.Id, c.Id);
-        Healthcare_Cost__c hcc2 = TestDataFactory.ambulanceCostRecord(acc.Id, c.Id);
-        Healthcare_Cost__c hcc3 = TestDataFactory.ambulanceCostRecord(acc.Id, c.Id);
+		Healthcare_Cost__c hcc1 = TestDataFactory.PharmacareCostRecord(acc.Id, c.Id);
+        Healthcare_Cost__c hcc2 = TestDataFactory.PharmacareCostRecord(acc.Id, c.Id);
+        Healthcare_Cost__c hcc3 = TestDataFactory.PharmacareCostRecord(acc.Id, c.Id);
         insert new Healthcare_Cost__c[] {hcc1, hcc2, hcc3};
             
         Test.startTest();
-        List <Healthcare_Cost__c> hccListforCases = HCCCostAmbulanceRecord.getHealthcareCostsAmbulanceForCase(c.Id);
+        List <Healthcare_Cost__c> hccListforCases = HCCCostPharmacareRecord.getHealthcareCostsPharmacareForCase(c.Id);
         Test.stopTest();
         System.assertEquals(3, hccListforCases.size());
     
@@ -44,11 +44,11 @@ public class HCCCostAmbulanceRecordTest {
         Case c2 = TestDataFactory.newCase(acc.Id);
         insert  new Case[] {c1, c2};
         
-		Healthcare_Cost__c hcc1 = TestDataFactory.ambulanceCostRecord(acc.Id, c1.Id);
-        Healthcare_Cost__c hcc2 = TestDataFactory.ambulanceCostRecord(acc.Id, c1.Id);
+		Healthcare_Cost__c hcc1 = TestDataFactory.PharmacareCostRecord(acc.Id, c1.Id);
+        Healthcare_Cost__c hcc2 = TestDataFactory.PharmacareCostRecord(acc.Id, c1.Id);
         hcc2.Cost_Include__c = false;
         hcc2.Cost_Review__c = false;
-        Healthcare_Cost__c hcc3 = TestDataFactory.ambulanceCostRecord(acc.Id, c1.Id);
+        Healthcare_Cost__c hcc3 = TestDataFactory.PharmacareCostRecord(acc.Id, c1.Id);
 		insert new Healthcare_Cost__c[] {hcc1, hcc2, hcc3}; 
             
         List<Healthcare_Cost__c> hccListtoUpdate1 = new List<Healthcare_Cost__c>();
@@ -58,8 +58,8 @@ public class HCCCostAmbulanceRecordTest {
         hccListtoUpdate2.add(hcc2);
         String caseId = c2.Id;
         Test.startTest();
-        String output1 = HCCCostAmbulanceRecord.updateHCCCaseInformation(hccListtoUpdate1,caseId);
-        String output2 = HCCCostAmbulanceRecord.updateHCCCaseInformation(hccListtoUpdate2,caseId);
+        String output1 = HCCCostPharmacareRecord.updateHCCCaseInformation(hccListtoUpdate1,caseId);
+        String output2 = HCCCostPharmacareRecord.updateHCCCaseInformation(hccListtoUpdate2,caseId);
         Test.stopTest(); 
         System.assertEquals('Passed', output2);
         System.assertEquals('Failed', output1);
@@ -74,13 +74,13 @@ public class HCCCostAmbulanceRecordTest {
         insert c1;
         List<Healthcare_Cost__c> hccListtoUpdate1 = new List<Healthcare_Cost__c>();
         Test.startTest();
-        String output = HCCCostAmbulanceRecord.updateHCCCaseInformation(hccListtoUpdate1, c1.Id);
+        String output = HCCCostPharmacareRecord.updateHCCCaseInformation(hccListtoUpdate1, c1.Id);
         Test.stopTest(); 
         System.assertEquals('Failed', output); 
     }
     
 	@isTest
-    static void testAmbulanceCountonAccount(){
+    static void testMSPCountOnAccount(){
         Account acc1 = TestDataFactory.individualAccount();
         Account acc2 = TestDataFactory.individualAccount();
         acc2.FirstName = 'Testing';
@@ -92,15 +92,14 @@ public class HCCCostAmbulanceRecordTest {
         Case c2 = TestDataFactory.newCase(acc2.Id);
         insert new Case[] {c1,c2};
 		
-        Healthcare_Cost__c hcc1 = TestDataFactory.ambulanceCostRecord(acc1.Id, c1.Id);
-        Healthcare_Cost__c hcc2 = TestDataFactory.ambulanceCostRecord(acc1.Id, c1.Id);
-        Healthcare_Cost__c hcc3 = TestDataFactory.ambulanceCostRecord(acc2.Id, c2.Id);
+        Healthcare_Cost__c hcc1 = TestDataFactory.PharmacareCostRecord(acc1.Id, c1.Id);
+        Healthcare_Cost__c hcc2 = TestDataFactory.PharmacareCostRecord(acc1.Id, c1.Id);
+        Healthcare_Cost__c hcc3 = TestDataFactory.PharmacareCostRecord(acc2.Id, c2.Id);
         insert new Healthcare_Cost__c[] {hcc1, hcc2, hcc3}; 
         
         Test.startTest();
-        Integer countRecords = HCCCostAmbulanceRecord.getAmbulanceCountonAccount(acc1.Id);
+        Integer countRecords = HCCCostPharmacareRecord.getPharmacareCountonAccount(acc1.Id);
         Test.stopTest();
         System.assertEquals(2, countRecords);
     }
-    
 }
