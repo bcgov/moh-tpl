@@ -11,11 +11,7 @@ import COST_FIELD from '@salesforce/schema/Healthcare_Cost__c.Cost__c';
 import DESCRIPTION_FIELD from '@salesforce/schema/Healthcare_Cost__c.Description__c';
 
 const COLUMNS = [
-    {
-        label: 'HealthCare Cost Name',
-        fieldName: HCCOST_FIELD.fieldApiName,
-        sortable: true
-    },
+    
     {
         label: 'Description',
         fieldName: DESCRIPTION_FIELD.fieldApiName,

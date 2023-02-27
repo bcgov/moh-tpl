@@ -20,12 +20,6 @@ import SUB_TOTAL_FIELD from '@salesforce/schema/Healthcare_Cost__c.Sub_Total__c'
 
 const COLUMNS = [
     {
-        label: 'HealthCare Cost Number',
-        fieldName: NAME_FIELD.fieldApiName,
-        type: 'text',
-        sortable: true,
-    },
-    {
         label: 'Case Number',
         fieldName: CASE_NUMBER_FIELD.fieldApiName,
         type: 'text',

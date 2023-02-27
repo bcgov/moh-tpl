@@ -26,12 +26,6 @@ import updateHCCCaseInformation from '@salesforce/apex/HCCCostHospitalizationRec
 
 const COLUMNS = [
     {
-        label: 'HealthCare Cost Number',
-        fieldName: NAME_FIELD.fieldApiName,
-        type: 'text',
-        sortable: true,
-    },
-    {
         label: 'Case Number',
         fieldName: CASE_NUMBER_FIELD.fieldApiName,
         type: 'text',

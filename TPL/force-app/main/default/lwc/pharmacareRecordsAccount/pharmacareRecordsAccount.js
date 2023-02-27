@@ -16,13 +16,6 @@ import updateHCCCaseInformation from '@salesforce/apex/HCCCostPharmacareRecord.u
 
 const COLUMNS = [
     {
-        label: 'Healthcare Cost Number',
-        fieldName: NAME_FIELD.fieldApiName,
-        type:'text',
-        editable: false,
-        sortable: true
-    },
-    {
         label: 'Case Number',
         fieldName: CASE_NUMBER_FIELD.fieldApiName,
         type:'text',
