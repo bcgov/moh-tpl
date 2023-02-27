@@ -40,7 +40,7 @@ public with sharing class HCCCostHospitalizationRecord {
         try{
             Id recordTypeId = getHospitalRecordId();
            
-            hccCostList = [select Case2__c, Case_Number__c, Cost_Include__c, Cost_Review__c, Name, Date_of_Service__c, FacilityName__c, Service_Provider_Facility__c, Location_of_Incident__c, Description_of_Incident__c, Intervention_Code_CCI__c, CCI_Level__c, Site_Code__c, Facility__c, Date_of_Admission__c, Date_of_Discharge__c, Number_of_Days__c, Service_Provided_by_Facility__c, Service_Type2__c, Standard_Daily_Rate__c, Total_Costs_Standard__c, Total_Cost_Override__c, Diagnostic_Treatment_Service__c  from Healthcare_Cost__c where Case2__c = :caseId and RecordTypeId = :recordTypeId ORDER BY Name DESC LIMIT 2000];
+            hccCostList = [select Case2__c, Case_Number__c, Cost_Include__c, Cost_Review__c, Name, Date_of_Service__c, FacilityName__c, Service_Provider_Facility__c, Location_of_Incident__c, Description_of_Incident__c, Intervention_Code_CCI__c, CCI_Level__c, Site_Code__c, Facility__c, Date_of_Admission__c, Date_of_Discharge__c, Number_of_Days__c, Service_Provided_by_Facility__c, Service_Type2__c, Standard_Daily_Rate__c, Total_Costs_Standard__c, Total_Cost_Override__c, Diagnostic_Treatment_Service__c, Source_System_ID__c  from Healthcare_Cost__c where Case2__c = :caseId and RecordTypeId = :recordTypeId ORDER BY Name DESC LIMIT 2000];
             
      }
         catch(NullPointerException nullpointer){
