@@ -1,5 +1,4 @@
 import { LightningElement, wire, api } from 'lwc';
-import { updateRecord } from 'lightning/uiRecordApi';
 import { refreshApex } from '@salesforce/apex';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import COST_INCLUDE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Cost_Include__c';
@@ -44,6 +43,7 @@ const COLUMNS = [
         label: 'Date of Service',
         fieldName: DATE_OF_SERVICE_FIELD.fieldApiName,
         type: 'date',
+        typeAttributes:{year: "numeric",month: "2-digit",day: "2-digit"},
         editable: true,
         sortable: true
     },
@@ -93,6 +93,7 @@ const COLUMNS = [
         label: 'Date of Admission',
         fieldName:DATE_OF_ADMISSION_FIELD.fieldApiName,
         type: 'date',
+        typeAttributes:{year: "numeric",month: "2-digit",day: "2-digit"},
         editable: true,
         sortable: true
     },
@@ -100,6 +101,7 @@ const COLUMNS = [
         label: 'Date of Discharge',
         fieldName:DATE_OF_DISCHARGE_FIELD.fieldApiName,
         type: 'date',
+        typeAttributes:{year: "numeric",month: "2-digit",day: "2-digit"},
         editable: true,
         sortable: true
     },
@@ -119,7 +121,7 @@ const COLUMNS = [
     
         label: 'Service Type',
         fieldName: SERVICE_TYPE_FIELD.fieldApiName,
-        editable: true,
+        editable: false,
         sortable: true
     },
     {
@@ -184,7 +186,7 @@ export default class HospitalRecordsCase extends LightningElement {
         const {data, error} = result;
 
         if(data != null && data){
-            console.log('Data of Ambulance Records --> ' + JSON.stringify(data));
+            console.log('Data of Hospitalization Records --> ' + JSON.stringify(data));
             this.records = data;
             this.totalRecords = data.length;
             this.pageSize = this.pageSizeOptions[0]; 

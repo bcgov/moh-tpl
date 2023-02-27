@@ -37,7 +37,7 @@ const COLUMNS = [
         fieldName: DATE_OF_SERVICE_FIELD.fieldApiName,
         type: 'date',
         sortable: true,
-        editable: false
+        editable: true
     }, 
     {
         label: 'Location Responded',
