@@ -92,8 +92,5 @@
     <tabs>standard-Product2</tabs>
     <tabs>standard-File</tabs>
     <tabs>standard-report</tabs>
-    <tabs>standard-Dashboard</tabs>
-    <tabs>standard-Event</tabs>
-    <tabs>Healthcare_Cost__c</tabs>
     <uiType>Lightning</uiType>
 </CustomApplication>
