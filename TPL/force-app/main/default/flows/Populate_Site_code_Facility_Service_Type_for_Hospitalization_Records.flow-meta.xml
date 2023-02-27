@@ -5,7 +5,7 @@
         <name>AddingCurrentHCCtoCollectionVariable</name>
         <label>AddingCurrentHCCtoCollectionVariable</label>
         <locationX>528</locationX>
-        <locationY>1070</locationY>
+        <locationY>1190</locationY>
         <assignmentItems>
             <assignToReference>CollectionVariable</assignToReference>
             <operator>Add</operator>
@@ -44,7 +44,7 @@
         <name>Populate_Site_Code</name>
         <label>Populate Site Code</label>
         <locationX>440</locationX>
-        <locationY>758</locationY>
+        <locationY>878</locationY>
         <assignmentItems>
             <assignToReference>CurrentHCCRecord.Id</assignToReference>
             <operator>Assign</operator>
@@ -60,10 +60,10 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>CurrentHCCRecord.Facility_Type__c</assignToReference>
+            <assignToReference>CurrentHCCRecord.Service_Type2__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Loop_through_Facility_for_manual_record.Type</elementReference>
+                <elementReference>Get_Products.Service_Type__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -137,10 +137,10 @@
             <label>Manual Record Creation</label>
         </rules>
     </decisions>
-    <description>This flow will populate Site code based on selected Facility for manual created records and also populate Facility based on selected site code coming from integration - Final Version</description>
+    <description>This flow will populate site code from Facility or vise versa and Service Type from Selected Product.</description>
     <environments>Default</environments>
-    <interviewLabel>Populate site code and Facility on Ambulance Record {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Populate site code and Facility on Ambulance Record</label>
+    <interviewLabel>Populate Site {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Populate Site code, Facility &amp; Service Type for Hospitalization Records</label>
     <loops>
         <name>Loop_through_collection</name>
         <label>Loop through collection</label>
@@ -177,7 +177,7 @@
         <collectionReference>Facility_for_Manual_Record</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
-            <targetReference>Populate_Site_Code</targetReference>
+            <targetReference>Get_Products</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
             <targetReference>AddingCurrentHCCtoCollectionVariable</targetReference>
@@ -223,11 +223,34 @@
         <object>Account</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordLookups>
+        <name>Get_Products</name>
+        <label>Get Products</label>
+        <locationX>440</locationX>
+        <locationY>758</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Populate_Site_Code</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Loop_through_collection.Service_Provided_by_Facility__r.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Product2</object>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Service_Type__c</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <recordUpdates>
         <name>Update_Record_Site_Code</name>
         <label>Update Record - Site Code</label>
         <locationX>176</locationX>
-        <locationY>1286</locationY>
+        <locationY>1406</locationY>
         <inputReference>CollectionVariable</inputReference>
     </recordUpdates>
     <start>

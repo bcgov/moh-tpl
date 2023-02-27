@@ -4,7 +4,7 @@
     <assignments>
         <name>healthCareCostToCollection</name>
         <label>healthCareCostToCollection</label>
-        <locationX>182</locationX>
+        <locationX>314</locationX>
         <locationY>575</locationY>
         <assignmentItems>
             <assignToReference>updatedHealthCareCost_col</assignToReference>
@@ -20,7 +20,7 @@
     <assignments>
         <name>updatedRecordAssignment</name>
         <label>updatedRecordAssignment</label>
-        <locationX>710</locationX>
+        <locationX>1106</locationX>
         <locationY>575</locationY>
         <assignmentItems>
             <assignToReference>updatedHealthCareCost_col</assignToReference>
@@ -36,11 +36,11 @@
     <decisions>
         <name>Check_Record_Type</name>
         <label>Check Record Type</label>
-        <locationX>182</locationX>
+        <locationX>314</locationX>
         <locationY>815</locationY>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <defaultConnectorLabel>All other record types</defaultConnectorLabel>
         <rules>
-            <name>Ambulance</name>
+            <name>Ambulance_MSP</name>
             <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.RecordType.DeveloperName</leftValueReference>
@@ -49,20 +49,42 @@
                     <stringValue>Ambulance</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>MSP</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
-                <targetReference>Site_and_Facility</targetReference>
+                <targetReference>Populate_Site_Code_and_Facility1</targetReference>
             </connector>
-            <label>Ambulance</label>
+            <label>Ambulance &amp; MSP</label>
+        </rules>
+        <rules>
+            <name>Hospitalization</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Hospitalization</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Populate_Site_Code_Facility_Service_Type</targetReference>
+            </connector>
+            <label>Hospitalization</label>
         </rules>
     </decisions>
     <decisions>
         <name>Check_Record_Type_1</name>
         <label>Check Record Type_1</label>
-        <locationX>710</locationX>
+        <locationX>1106</locationX>
         <locationY>815</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>Ambulance_1</name>
+            <name>Ambulance_MSP_1</name>
             <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.RecordType.DeveloperName</leftValueReference>
@@ -71,16 +93,38 @@
                     <stringValue>Ambulance</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>MSP</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
-                <targetReference>Site_and_Facility2</targetReference>
+                <targetReference>Populate_Site_Code_and_Facility</targetReference>
             </connector>
-            <label>Ambulance 1</label>
+            <label>Ambulance &amp; MSP 1</label>
+        </rules>
+        <rules>
+            <name>Hospitalization1</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Hospitalization</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Populate_Site_Code_Facility_Service_Type1</targetReference>
+            </connector>
+            <label>Hospitalization1</label>
         </rules>
     </decisions>
     <decisions>
         <name>checkDecisions</name>
         <label>checkDecisions</label>
-        <locationX>644</locationX>
+        <locationX>974</locationX>
         <locationY>335</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -141,7 +185,7 @@
         <description>Get the Health Care Cost Record</description>
         <name>getCreatedHealthCareCost</name>
         <label>getCreatedHealthCareCost</label>
-        <locationX>182</locationX>
+        <locationX>314</locationX>
         <locationY>455</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -162,7 +206,7 @@
     <recordLookups>
         <name>getUpdatedHealthCareCost</name>
         <label>getUpdatedHealthCareCost</label>
-        <locationX>710</locationX>
+        <locationX>1106</locationX>
         <locationY>455</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -181,7 +225,7 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <start>
-        <locationX>518</locationX>
+        <locationX>848</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>checkDecisions</targetReference>
@@ -193,8 +237,23 @@
     <status>Active</status>
     <subflows>
         <description>This flow will populate Site code and Facility Name</description>
-        <name>Site_and_Facility</name>
-        <label>Site and Facility</label>
+        <name>Populate_Site_Code_and_Facility</name>
+        <label>Populate Site Code and Facility</label>
+        <locationX>842</locationX>
+        <locationY>935</locationY>
+        <flowName>Populate_site_code_and_Facility_on_Ambulance_Record</flowName>
+        <inputAssignments>
+            <name>InputCorrectionVariable</name>
+            <value>
+                <elementReference>updatedHealthCareCost_col</elementReference>
+            </value>
+        </inputAssignments>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </subflows>
+    <subflows>
+        <description>This flow will populate Site code and Facility Name</description>
+        <name>Populate_Site_Code_and_Facility1</name>
+        <label>Populate Site Code and Facility1</label>
         <locationX>50</locationX>
         <locationY>935</locationY>
         <flowName>Populate_site_code_and_Facility_on_Ambulance_Record</flowName>
@@ -207,12 +266,27 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </subflows>
     <subflows>
-        <description>This flow will populate Site code and Facility Name</description>
-        <name>Site_and_Facility2</name>
-        <label>Site and Facility2</label>
-        <locationX>578</locationX>
+        <description>This flow will populate site code Facility and Service Type deepening on the conditions.</description>
+        <name>Populate_Site_Code_Facility_Service_Type</name>
+        <label>Populate Site Code Facility &amp; Service Type</label>
+        <locationX>314</locationX>
         <locationY>935</locationY>
-        <flowName>Populate_site_code_and_Facility_on_Ambulance_Record</flowName>
+        <flowName>Populate_Site_code_Facility_Service_Type_for_Hospitalization_Records</flowName>
+        <inputAssignments>
+            <name>InputCorrectionVariable</name>
+            <value>
+                <elementReference>updatedHealthCareCost_col</elementReference>
+            </value>
+        </inputAssignments>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </subflows>
+    <subflows>
+        <description>This flow will populate site code Facility and Service Type deepening on the conditions.</description>
+        <name>Populate_Site_Code_Facility_Service_Type1</name>
+        <label>Populate Site Code Facility &amp; Service Type</label>
+        <locationX>1106</locationX>
+        <locationY>935</locationY>
+        <flowName>Populate_Site_code_Facility_Service_Type_for_Hospitalization_Records</flowName>
         <inputAssignments>
             <name>InputCorrectionVariable</name>
             <value>
@@ -225,7 +299,7 @@
         <description>This flow would be calling the On Create event made on the Health Care Cost Object.</description>
         <name>Update_Health_Care_Cost_Fields_On_Create</name>
         <label>Update Health Care Cost Fields On Create</label>
-        <locationX>182</locationX>
+        <locationX>314</locationX>
         <locationY>695</locationY>
         <connector>
             <targetReference>Check_Record_Type</targetReference>
@@ -243,7 +317,7 @@
         <description>This flow would be called based on the update made on Health Care Cost Object.</description>
         <name>Update_Health_Care_Cost_Fields_On_Update</name>
         <label>Update Health Care Cost Fields On Update</label>
-        <locationX>710</locationX>
+        <locationX>1106</locationX>
         <locationY>695</locationY>
         <connector>
             <targetReference>Check_Record_Type_1</targetReference>
