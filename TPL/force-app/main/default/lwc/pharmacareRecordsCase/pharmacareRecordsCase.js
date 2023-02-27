@@ -9,6 +9,7 @@ import DIN_FIELD from '@salesforce/schema/Healthcare_Cost__c.DIN__c';
 import NAME_OF_DRUG_FIELD from '@salesforce/schema/Healthcare_Cost__c.Name_of_Drug__c';
 import COST_OF_DRUG_FIELD from '@salesforce/schema/Healthcare_Cost__c.Cost_of_Drug__c';
 import TOTAL_COST_OVERRIDE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Total_Cost_Override__c';
+import SOURCE_SYSTEM_ID_FIELD from '@salesforce/schema/Healthcare_Cost__c.Source_System_ID__c';
 import getHealthcareCostsPharmacareForCase from '@salesforce/apex/HCCCostPharmacareRecord.getHealthcareCostsPharmacareForCase';
 import saveDraftValues from '@salesforce/apex/HCCCostController.saveDraftValues';
 
@@ -67,6 +68,13 @@ const COLUMNS = [
         label: 'Total Cost Override',
         fieldName: TOTAL_COST_OVERRIDE_FIELD.fieldApiName,
         type: 'currency',
+        editable: true,
+        sortable: true
+    },
+    {
+        label: 'Source System ID',
+        fieldName: SOURCE_SYSTEM_ID_FIELD.fieldApiName,
+        type: 'text',
         editable: true,
         sortable: true
     }

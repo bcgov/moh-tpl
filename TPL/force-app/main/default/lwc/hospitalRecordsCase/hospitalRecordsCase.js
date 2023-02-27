@@ -20,6 +20,7 @@ import SERVICE_TYPE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Service_Ty
 import STANDARD_DAILY_RATE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Standard_Daily_Rate__c';
 import TOTAL_COST_STADARD_FIELD from '@salesforce/schema/Healthcare_Cost__c.Total_Costs_Standard__c';
 import TOTAL_COST_OVERRIDE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Total_Cost_Override__c';
+import SOURCE_SYSTEM_ID_FIELD from '@salesforce/schema/Healthcare_Cost__c.Source_System_ID__c';
 import DIAGNOSTIC_TREATMENT_SERVICE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Diagnostic_Treatment_Service__c'
 import getHealthcareCostsHospitalForCase from '@salesforce/apex/HCCCostHospitalizationRecord.getHealthcareCostsHospitalForCase';
 import saveDraftValues from '@salesforce/apex/HCCCostController.saveDraftValues'; 
@@ -142,6 +143,13 @@ const COLUMNS = [
     {
         label: 'Diagnostic Treatment Service',
         fieldName : DIAGNOSTIC_TREATMENT_SERVICE_FIELD.fieldApiName,
+        type: 'text',
+        editable: true,
+        sortable: true
+    },
+    {
+        label: 'Source System ID',
+        fieldName: SOURCE_SYSTEM_ID_FIELD.fieldApiName,
         type: 'text',
         editable: true,
         sortable: true

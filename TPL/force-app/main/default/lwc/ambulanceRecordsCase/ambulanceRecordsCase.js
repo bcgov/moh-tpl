@@ -12,6 +12,7 @@ import LOCATION_RESPONDED_FIELD from '@salesforce/schema/Healthcare_Cost__c.Loca
 import SITE_CODE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Site_Code__c';
 import FACILITY_NAME_FIELD from '@salesforce/schema/Healthcare_Cost__c.FacilityName__c';
 import FIXED_WING_HELICOPTER_FIELD from '@salesforce/schema/Healthcare_Cost__c.Fixed_Wing_Helicopter__c';
+import SOURCE_SYSTEM_ID_FIELD from '@salesforce/schema/Healthcare_Cost__c.Source_System_ID__c';
 import COST_FIELD from '@salesforce/schema/Healthcare_Cost__c.Cost__c';
 import SUB_TOTAL_FIELD from '@salesforce/schema/Healthcare_Cost__c.Sub_Total__c';
 import getHealthcareCostsAmbulanceForCase from '@salesforce/apex/HCCCostAmbulanceRecord.getHealthcareCostsAmbulanceForCase';
@@ -78,6 +79,13 @@ const COLUMNS = [
         type: 'currency',
         editable: true,
         sortable: false
+    },
+    {
+        label: 'Source System ID',
+        fieldName: SOURCE_SYSTEM_ID_FIELD.fieldApiName,
+        type: 'text',
+        editable: true,
+        sortable: true
     }
     
 ];

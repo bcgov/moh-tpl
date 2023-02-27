@@ -24,6 +24,7 @@ import SERVICE_START_DATE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Serv
 import SERVICE_FINISH_DATE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Service_Finish_Date__c'
 import LOCATION_TYPE_CODE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Location_Type_Code__c';
 import LOCATION_TYPE_DESCRIPTION_FIELD from '@salesforce/schema/Healthcare_Cost__c.Location_Type_Description__c';
+import SOURCE_SYSTEM_ID_FIELD from '@salesforce/schema/Healthcare_Cost__c.Source_System_ID__c';
 import getHealthcareCostsMSPForCase from '@salesforce/apex/HCCCostMSPRecord.getHealthcareCostsMSPForCase';
 import saveDraftValues from '@salesforce/apex/HCCCostController.saveDraftValues';
 
@@ -186,6 +187,13 @@ const COLUMNS =
         type: 'text',
         editable: true,
         sortable: false
+    },
+    {
+        label: 'Source System ID',
+        fieldName: SOURCE_SYSTEM_ID_FIELD.fieldApiName,
+        type: 'text',
+        editable: true,
+        sortable: true
     }
 ];
 
