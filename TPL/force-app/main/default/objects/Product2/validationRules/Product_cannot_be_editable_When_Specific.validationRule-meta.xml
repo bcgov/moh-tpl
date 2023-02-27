@@ -7,7 +7,8 @@
 (
 (
 ISPICKVAL( Family , &quot;Specific&quot;) &amp;&amp;
-ISPICKVAL( Service_Type__c , &quot;Acute (Daily)&quot;)
+ISPICKVAL( Service_Type__c , &quot;Acute (Daily)&quot;) ||
+ISPICKVAL( Service_Type__c , &quot;Rehabilitation Care&quot;) 
 )&amp;&amp;
 (
 ISCHANGED( Name ) ||

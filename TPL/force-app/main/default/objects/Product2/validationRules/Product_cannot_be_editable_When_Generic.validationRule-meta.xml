@@ -19,7 +19,9 @@ ISCHANGED(  Service_Type__c  ) ||
 ISCHANGED(  Description ) || 
 ISCHANGED(  Effective_year__c ) || 
 ISCHANGED(  Effective_Start_Date__c ) || 
-ISCHANGED(  Effective_End_Date__c )
+ISCHANGED(  Effective_End_Date__c ) ||
+ISCHANGED( Intervention_Code_CCI__c ) ||
+ISCHANGED( CCI_Level__c )  
 ) 
 )</errorConditionFormula>
     <errorMessage>Product has been Deactivated and these fields are not editable. Please Activate Product to edit the fields.</errorMessage>
