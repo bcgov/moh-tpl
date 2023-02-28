@@ -81,4 +81,74 @@ public with sharing class TestDataFactory {
         hcc.Cost__c = 200;
         return hcc;
     }
+
+    /*
+		Method Name:hospitalizationCostRecord
+		Parameters: Account ID, Case ID
+		Description: Test method used to return a list having Hospitalization Healthcare cost records having an account and case associated with it
+	*/
+    public static Healthcare_Cost__c hospitalizationCostRecord(String accountId, String caseId){
+        Healthcare_Cost__c hcc = new Healthcare_Cost__c();
+        Id recordTypeId = [SELECT Id FROM RecordType WHERE DeveloperName = 'Hospitalization' AND sObjectType = 'Healthcare_Cost__c'].Id;
+        hcc.RecordTypeId = recordTypeId;
+        hcc.Account__c = accountId;
+        hcc.Case2__c = caseId;
+        hcc.Cost_Include__c = true;
+        hcc.Cost_Review__c = true;
+        hcc.Date_of_Service__c = Date.newInstance(2023, 2, 17);
+        hcc.Date_of_Admission__c = Date.newInstance(2023, 2, 18);
+        hcc.Date_of_Discharge__c = Date.newInstance(2023, 2, 25);
+        hcc.Location_of_Incident__c = 'Vancouver General Hospital';
+        hcc.Intervention_Code_CCI__c = '1AE54LAJA';
+        hcc.CCI_Level__c = 'High';
+        hcc.Standard_Daily_Rate__c = 4500;
+        hcc.Total_Cost_Override__c = 6000;
+        hcc.Diagnostic_Treatment_Service__c = 'Testing Hospital Services';
+        return hcc;
+    }
+
+     /*
+		Method Name:MSPCostRecord
+		Parameters: Account ID, Case ID
+		Description: Test method used to return a list having MSP Healthcare cost records having an account and case associated with it
+	*/
+    public static Healthcare_Cost__c MSPCostRecord(String accountId, String caseId){
+        Healthcare_Cost__c hcc = new Healthcare_Cost__c();
+        Id recordTypeId = [SELECT Id FROM RecordType WHERE DeveloperName = 'MSP' AND sObjectType = 'Healthcare_Cost__c'].Id;
+        hcc.RecordTypeId = recordTypeId;
+        hcc.Account__c = accountId;
+        hcc.Case2__c = caseId;
+        hcc.Cost_Include__c = true;
+        hcc.Cost_Review__c = true;
+        hcc.Date_of_Service__c = Date.newInstance(2023, 2, 17);
+        hcc.Description_of_Service__c = 'Test MSP Service';
+        hcc.Practitioner_Number__c = '234A';
+        hcc.Practitioner_Name__c = 'Test Practitioner';
+        hcc.Amount_Paid__c = 500;
+        hcc.Total_Cost_Override__c = 6000;
+        hcc.Diagnostic_Treatment_Service__c = 'Testing Hospital Services';
+        return hcc;
+    }
+
+     /*
+		Method Name:PharmacareCostRecord
+		Parameters: Account ID, Case ID
+		Description: Test method used to return a list having Pharmacare Healthcare cost records having an account and case associated with it
+	*/
+    public static Healthcare_Cost__c PharmacareCostRecord(String accountId, String caseId){
+        Healthcare_Cost__c hcc = new Healthcare_Cost__c();
+        Id recordTypeId = [SELECT Id FROM RecordType WHERE DeveloperName = 'Pharmacare' AND sObjectType = 'Healthcare_Cost__c'].Id;
+        hcc.RecordTypeId = recordTypeId;
+        hcc.Account__c = accountId;
+        hcc.Case2__c = caseId;
+        hcc.Cost_Include__c = true;
+        hcc.Cost_Review__c = true;
+        hcc.Date_of_Service__c = Date.newInstance(2023, 2, 17);
+        hcc.Practitioner_Name__c = 'Test Practitioner';
+        hcc.DIN__c = '23478921';
+        hcc.Name_of_Drug__c = 'Tylenol';
+        hcc.Cost_of_Drug__c = 500;
+        hcc.Total_Cost_Override__c = 6000;
+        return hcc;
+    }
 }
