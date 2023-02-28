@@ -6,16 +6,11 @@ import getHealthcareCostsFCForCase from '@salesforce/apex/HCCCostFCRecord.getHea
 import getFutureCareCountonCase from '@salesforce/apex/HCCCostFCRecord.getFutureCareCountonCase';
 import deleteFutureCareRecords from '@salesforce/apex/HCCCostFCRecord.deleteFutureCareRecords';
 import saveDraftValues from '@salesforce/apex/HCCCostController.saveDraftValues'; 
-import HCCOST_FIELD from '@salesforce/schema/Healthcare_Cost__c.Name';
 import COST_FIELD from '@salesforce/schema/Healthcare_Cost__c.Cost__c';
 import DESCRIPTION_FIELD from '@salesforce/schema/Healthcare_Cost__c.Description__c';
 
 const COLUMNS = [
-    {
-        label: 'HealthCare Cost Name',
-        fieldName: HCCOST_FIELD.fieldApiName,
-        sortable: true
-    },
+
     {
         label: 'Description',
         fieldName: DESCRIPTION_FIELD.fieldApiName,

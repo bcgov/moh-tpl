@@ -7,10 +7,10 @@
             </lightning-button>
         </lightning-record-edit-form><br>
         <!--CUSTOM DATATABLE-->
-        <div style="height:400px">
+        <div style="height:400px" >
             <lightning-datatable class="slds-max-medium-table_stacked" sorted-by={sortBy}
             sorted-direction={sortDirection} onsort={doSorting} data={recordsToDisplay} columns={column} show-row-number-column="false"
-                    key-field="Id" data-record="Id" selected-rows={selectedRows} min-column-width="200" style="width: auto;">
+                    key-field="Id" data-record="Id" selected-rows={selectedRows} min-column-width="200" style="min-width:fit-content">
                 </lightning-datatable>  
         </div>
 
