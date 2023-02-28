@@ -1,18 +1,25 @@
 <template>
     <template if:true={records}>
-        <lightning-record-edit-form object-api-name="Account" id="assignCases" record-id={recordId}>
-            <label for="selectCase">Please search and select a Case </label>
-            <br> <lightning-input-field id="selectCase" field-name="Case__c" title="Search Case Record" variant="label-hidden" onchange={handleCaseSelection}> </lightning-input-field>
-          <br><lightning-button label="Assign Case" onclick={handleSelect}> 
-            </lightning-button>
-        </lightning-record-edit-form><br>
-        <!--CUSTOM DATATABLE-->
-        <div style="height:400px">
-            <lightning-datatable class="slds-max-medium-table_stacked" sorted-by={sortBy}
-            sorted-direction={sortDirection} onsort={doSorting} data={recordsToDisplay} columns={column} show-row-number-column="false"
-                    key-field="Id" data-record="Id" selected-rows={selectedRows} min-column-width="200" style="width: auto;">
-                </lightning-datatable>  
+           <!-- Hospitalization Records -->
+     <lightning-card title="Hospital Records">
+        <div class="slds-scrollable slds-m-around_medium" style="height:auto;width:auto">
+                <lightning-datatable
+                    key-field="Id"
+                    data={recordsToDisplay}
+                    columns={column}
+                    onsave={handleSave}
+                    sorted-by={sortBy}
+                    sorted-direction={sortDirection}
+                    onsort={doSorting}
+                    draft-values={draftValues} show-row-number-column="false" min-column-width="200" style="width: auto;">
+                </lightning-datatable>
+            
+            <template if:true={recordsToDisplay.error}>
+                <!-- handle Apex error -->
+            </template>
         </div>
+
+    </lightning-card>
 
         <div class="slds-grid slds-grid_vertical-align-center slds-grid_align-spread" style="padding-top: 0.5em;">
             <!--RECORDS PER PAGE-->
@@ -20,7 +27,7 @@
                 <div class="slds-list_inline slds-p-bottom_xx-small">
                     <label class="slds-text-color_weak slds-p-horizontal_x-small" for="recordsPerPage">Page Size:</label>
                     <div class="slds-select_container">
-                        <select class="slds-select" id="recordsPerPage" onchange={handleRecordsPerPage}>
+                        <select class="slds-select" id="recordsPerPage" onclick={handleRecordsPerPage} onchange={handleRecordsPerPage}>
                             <template for:each={pageSizeOptions} for:item="option">
                                 <option key={option} value={option}>{option}</option>
                             </template>

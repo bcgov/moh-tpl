@@ -1,21 +1,28 @@
 import { LightningElement, wire, api } from 'lwc';
 import { refreshApex } from '@salesforce/apex';
-import updateHCCCaseInformation from '@salesforce/apex/HCCCostAmbulanceRecord.updateHCCCaseInformation';
-import getHealthcareCostsAmbulanceForAccount from '@salesforce/apex/HCCCostAmbulanceRecord.getHealthcareCostsAmbulanceForAccount';
-import getAmbulanceCountonAccount from '@salesforce/apex/HCCCostAmbulanceRecord.getAmbulanceCountonAccount';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import COST_INCLUDE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Cost_Include__c';
 import COST_REVIEW_FIELD from '@salesforce/schema/Healthcare_Cost__c.Cost_Review__c';
-import CASE_NUMBER_FIELD from '@salesforce/schema/Healthcare_Cost__c.Case_Number__c';
-import BASIC_AMOUNT_FIELD from '@salesforce/schema/Healthcare_Cost__c.Basic_Amount__c';
-import TOTAL_COST_OVERRIDE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Total_Cost_Override__c';
 import DATE_OF_SERVICE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Date_of_Service__c';
-import LOCATION_RESPONDED_FIELD from '@salesforce/schema/Healthcare_Cost__c.Location_Responded__c';
+import LOCATION_OF_INCIDENT_FIELD from '@salesforce/schema/Healthcare_Cost__c.Location_of_Incident__c';
+import DESCRIPTION_OF_INCIDENT_FIELD from '@salesforce/schema/Healthcare_Cost__c.Description_of_Incident__c';
+import INTERVENTION_CODE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Intervention_Code_CCI__c';
+import CCI_LEVEL_FIELD from '@salesforce/schema/Healthcare_Cost__c.CCI_Level__c';
+import NAME_FIELD from '@salesforce/schema/Healthcare_Cost__c.Name';
+import CASE_NUMBER_FIELD from '@salesforce/schema/Healthcare_Cost__c.Case_Number__c';
 import SITE_CODE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Site_Code__c';
 import FACILITY_NAME_FIELD from '@salesforce/schema/Healthcare_Cost__c.FacilityName__c';
-import FIXED_WING_HELICOPTER_FIELD from '@salesforce/schema/Healthcare_Cost__c.Fixed_Wing_Helicopter__c';
-import COST_FIELD from '@salesforce/schema/Healthcare_Cost__c.Cost__c';
-import SUB_TOTAL_FIELD from '@salesforce/schema/Healthcare_Cost__c.Sub_Total__c';
+import DATE_OF_ADMISSION_FIELD from '@salesforce/schema/Healthcare_Cost__c.Date_of_Admission__c';
+import DATE_OF_DISCHARGE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Date_of_Discharge__c';
+import NUMBER_OF_DAYS_FIELD from '@salesforce/schema/Healthcare_Cost__c.Number_of_Days__c';
+import SERVICE_PROVIDER_FIELD from '@salesforce/schema/Healthcare_Cost__c.Service_Provider_Facility__c';
+import SERVICE_TYPE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Service_Type2__c';
+import STANDARD_DAILY_RATE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Standard_Daily_Rate__c';
+import TOTAL_COST_STADARD_FIELD from '@salesforce/schema/Healthcare_Cost__c.Total_Costs_Standard__c';
+import TOTAL_COST_OVERRIDE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Total_Cost_Override__c';
+import DIAGNOSTIC_TREATMENT_SERVICE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Diagnostic_Treatment_Service__c'
+import getHealthcareCostsHospitalForAccount from '@salesforce/apex/HCCCostHospitalizationRecord.getHealthcareCostsHospitalForAccount';
+import updateHCCCaseInformation from '@salesforce/apex/HCCCostHospitalizationRecord.updateHCCCaseInformation';
 
 const COLUMNS = [
     {
@@ -46,29 +53,88 @@ const COLUMNS = [
         sortable: true
     },
     {
-        label: 'Location Responded',
-        fieldName: LOCATION_RESPONDED_FIELD.fieldApiName,
+        label: 'Location of Incident',
+        fieldName: LOCATION_OF_INCIDENT_FIELD.fieldApiName,
         type: 'text',
         editable: false,
         sortable: true
+    },
+    {
+        label: 'Description of Incident',
+        fieldName: DESCRIPTION_OF_INCIDENT_FIELD.fieldApiName,
+        type: 'text',
+        editable: false,
+        sortable: true,
+    },
+    {
+        label: 'Intervention Code (CCI)',
+        fieldName: INTERVENTION_CODE_FIELD.fieldApiName,
+        type: 'text',
+        editable: false,
+        sortable: true,
+    },
+    {
+        label: 'CCI Level',
+        fieldName: CCI_LEVEL_FIELD.fieldApiName,
+        type: 'text',
+        editable: false,
+        sortable: true,
     },
     {
         label: 'Site Code',
         fieldName: SITE_CODE_FIELD.fieldApiName,
         type: 'text',
         editable: false,
-        sortable: true
+        sortable: false
     },
     {
         label: 'Facility',
         fieldName: FACILITY_NAME_FIELD.fieldApiName,
         type: 'text',
         editable: false,
+        sortable: false
+    },
+    {
+        label: 'Date of Admission',
+        fieldName:DATE_OF_ADMISSION_FIELD.fieldApiName,
+        editable: false,
         sortable: true
     },
     {
-        label: 'Basic Amount',
-        fieldName: BASIC_AMOUNT_FIELD.fieldApiName,
+        label: 'Date of Discharge',
+        fieldName:DATE_OF_DISCHARGE_FIELD.fieldApiName,
+        editable: false,
+        sortable: true
+    },
+    {
+        label: 'Number of Days',
+        fieldName: NUMBER_OF_DAYS_FIELD.fieldApiName,
+        editable: false,
+        sortable: true
+    },
+    {
+        label: ' Service Provided by Facility',
+        fieldName: SERVICE_PROVIDER_FIELD.fieldApiName,
+        editable: false,
+        sortable: true
+    },
+    {
+    
+        label: 'Service Type',
+        fieldName: SERVICE_TYPE_FIELD.fieldApiName,
+        editable: false,
+        sortable: true
+    },
+    {
+        label: 'Standard Daily Rate',
+        type: 'currency',
+        fieldName: STANDARD_DAILY_RATE_FIELD.fieldApiName,
+        editable: false,
+        sortable: true
+    },
+    {
+        label: 'Total Cost Standard',
+        fieldName: TOTAL_COST_STADARD_FIELD.fieldApiName,
         type: 'currency',
         editable: false,
         sortable: true
@@ -79,10 +145,17 @@ const COLUMNS = [
         type: 'currency',
         editable: false,
         sortable: true
+    },
+    {
+        label: 'Diagnostic Treatment Service',
+        fieldName : DIAGNOSTIC_TREATMENT_SERVICE_FIELD.fieldApiName,
+        type: 'text',
+        editable: false,
+        sortable: true
     }
 ];
 
-export default class AmbulanceRecordsAccount extends LightningElement {
+export default class HospitalRecordsAccount extends LightningElement {
     @api recordId;
     column = COLUMNS;
     isFirstPage = true;
@@ -99,13 +172,6 @@ export default class AmbulanceRecordsAccount extends LightningElement {
     selectedRows = [];
     limitSize = 0;
     rowSize = 0;
-
-   /* connectedCallback(){
-        this.pageSize = this.pageSizeOptions[0];
-        this.limitSize = this.pageSizeOptions[0];
-        this.loadCount();
-        this.loadData();
-    } */
 
     doSorting(event) {
         this.sortBy = event.detail.fieldName;
@@ -166,7 +232,7 @@ export default class AmbulanceRecordsAccount extends LightningElement {
                 this.dispatchEvent(
                     new ShowToastEvent({
                         title: 'Success',
-                        message: 'HealthCare Cost Ambulance record(s) having unchecked cost review and cost include updated successfully.',
+                        message: 'HealthCare Cost Hospitalization record(s) having unchecked cost review and cost include updated successfully.',
                         variant: 'success'
                     })
                 );    
@@ -183,52 +249,14 @@ export default class AmbulanceRecordsAccount extends LightningElement {
     async refresh(){
         await refreshApex(this.wiredRecords);
     }
- /*
-    loadData(){
-        return getHealthcareCostsAmbulanceForAccount({accId: this.recordId, limitValue: this.limitSize, offset: this.rowSize})
-        .then(result=>{
-            console.log('Inside Load Data return Part');
-            console.log('Length of records : ' + result.length);
-            this.wiredRecords = result;
-            if(result != null && result){
-                console.log('Data of Ambulance Records --> ' + JSON.stringify(result));
-                this.records = JSON.parse(JSON.stringify(result));
-                this.records.forEach(record => {
-                    record.linkName = '/' + record.Id;
-                })
-                this.paginationHelper(); // call helper menthod to update pagination logic
-                this.error = undefined;
-            }
-        })
-        .catch(error =>{
-            this.error = error;
-            this.records = [];
-        })
-    }
 
-    loadCount()
-    {
-        return getAmbulanceCountonAccount({accId: this.recordId})
-        .then(result =>{
-            if(result != null && result){
-                console.log('Result (Count of Records) : ' + result);
-                this.totalRecords = result;
-            }
-
-        })
-        .catch(error =>{
-            this.error = error;
-            this.totalRecords = 0;
-        });
-    } */
-
-    @wire(getHealthcareCostsAmbulanceForAccount, { accId: '$recordId' })
-    wiredHealthcareCostsAmbulanceForAccount(result){
+    @wire(getHealthcareCostsHospitalForAccount, { accId: '$recordId' })
+    wiredHealthcareCostsHospitalForAccount(result){
         this.wiredRecords = result;
         const {data, error} = result;
         
         if(data != null && data){
-            console.log('Data of Ambulance Records --> ' + JSON.stringify(data));
+            console.log('Data of Hospitalization Records --> ' + JSON.stringify(data));
             this.records = JSON.parse(JSON.stringify(data));
             this.totalRecords = data.length;
             this.pageSize = this.pageSizeOptions[0]; 

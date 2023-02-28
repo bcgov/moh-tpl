@@ -95,12 +95,6 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Facility_Type__c</field>
-            <value>
-                <elementReference>Facility_Type</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
             <field>Facility__c</field>
             <value>
                 <elementReference>FacilityLookup.recordId</elementReference>
@@ -250,25 +244,6 @@
                 <name>New_MSP_Record_Screen_Section1_Column1</name>
                 <fieldType>Region</fieldType>
                 <fields>
-                    <name>Date_of_Service</name>
-                    <dataType>Date</dataType>
-                    <fieldText>Date of Service</fieldText>
-                    <fieldType>InputField</fieldType>
-                    <helpText>&lt;p&gt;Date Format: YYYY-MM-DD&lt;/p&gt;</helpText>
-                    <isRequired>false</isRequired>
-                </fields>
-                <inputParameters>
-                    <name>width</name>
-                    <value>
-                        <stringValue>3</stringValue>
-                    </value>
-                </inputParameters>
-                <isRequired>false</isRequired>
-            </fields>
-            <fields>
-                <name>New_MSP_Record_Screen_Section1_Column2</name>
-                <fieldType>Region</fieldType>
-                <fields>
                     <name>Cost_Include</name>
                     <dataType>Boolean</dataType>
                     <fieldText>Cost Include</fieldText>
@@ -284,7 +259,7 @@
                 <isRequired>false</isRequired>
             </fields>
             <fields>
-                <name>New_MSP_Record_Screen_Section1_Column3</name>
+                <name>New_MSP_Record_Screen_Section1_Column2</name>
                 <fieldType>Region</fieldType>
                 <fields>
                     <name>Cost_Review</name>
@@ -292,6 +267,25 @@
                     <fieldText>Cost Review</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>true</isRequired>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>3</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <fields>
+                <name>New_MSP_Record_Screen_Section1_Column3</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>Date_of_Service</name>
+                    <dataType>Date</dataType>
+                    <fieldText>Date of Service</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <helpText>&lt;p&gt;Date Format: YYYY-MM-DD&lt;/p&gt;</helpText>
+                    <isRequired>false</isRequired>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -348,24 +342,6 @@
                 <name>New_MSP_Record_Screen_Section2_Column1</name>
                 <fieldType>Region</fieldType>
                 <fields>
-                    <name>Facility_Type</name>
-                    <dataType>String</dataType>
-                    <fieldText>Facility Type</fieldText>
-                    <fieldType>InputField</fieldType>
-                    <isRequired>false</isRequired>
-                </fields>
-                <inputParameters>
-                    <name>width</name>
-                    <value>
-                        <stringValue>3</stringValue>
-                    </value>
-                </inputParameters>
-                <isRequired>false</isRequired>
-            </fields>
-            <fields>
-                <name>New_MSP_Record_Screen_Section2_Column2</name>
-                <fieldType>Region</fieldType>
-                <fields>
                     <name>Description_of_Service</name>
                     <fieldText>Description of Service</fieldText>
                     <fieldType>LargeTextArea</fieldType>
@@ -380,7 +356,7 @@
                 <isRequired>false</isRequired>
             </fields>
             <fields>
-                <name>New_MSP_Record_Screen_Section2_Column3</name>
+                <name>New_MSP_Record_Screen_Section2_Column2</name>
                 <fieldType>Region</fieldType>
                 <fields>
                     <name>Fee_Item_Code</name>
@@ -398,12 +374,30 @@
                 <isRequired>false</isRequired>
             </fields>
             <fields>
-                <name>New_MSP_Record_Screen_Section2_Column4</name>
+                <name>New_MSP_Record_Screen_Section2_Column3</name>
                 <fieldType>Region</fieldType>
                 <fields>
                     <name>Fee_Item_Title</name>
                     <dataType>String</dataType>
                     <fieldText>Fee Item Title</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>false</isRequired>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>3</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <fields>
+                <name>New_MSP_Record_Screen_Section2_Column4</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>Fee_Item_Description</name>
+                    <dataType>String</dataType>
+                    <fieldText>Fee Item Description</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
                 </fields>
@@ -425,24 +419,6 @@
                 <name>New_MSP_Record_Screen_Section3_Column1</name>
                 <fieldType>Region</fieldType>
                 <fields>
-                    <name>Fee_Item_Description</name>
-                    <dataType>String</dataType>
-                    <fieldText>Fee Item Description</fieldText>
-                    <fieldType>InputField</fieldType>
-                    <isRequired>false</isRequired>
-                </fields>
-                <inputParameters>
-                    <name>width</name>
-                    <value>
-                        <stringValue>3</stringValue>
-                    </value>
-                </inputParameters>
-                <isRequired>false</isRequired>
-            </fields>
-            <fields>
-                <name>New_MSP_Record_Screen_Section3_Column2</name>
-                <fieldType>Region</fieldType>
-                <fields>
                     <name>Practitioner_Number</name>
                     <dataType>String</dataType>
                     <fieldText>Practitioner Number</fieldText>
@@ -458,7 +434,7 @@
                 <isRequired>false</isRequired>
             </fields>
             <fields>
-                <name>New_MSP_Record_Screen_Section3_Column3</name>
+                <name>New_MSP_Record_Screen_Section3_Column2</name>
                 <fieldType>Region</fieldType>
                 <fields>
                     <name>Practitioner_Name</name>
@@ -476,12 +452,30 @@
                 <isRequired>false</isRequired>
             </fields>
             <fields>
-                <name>New_MSP_Record_Screen_Section3_Column4</name>
+                <name>New_MSP_Record_Screen_Section3_Column3</name>
                 <fieldType>Region</fieldType>
                 <fields>
                     <name>Diagnostic_Code</name>
                     <dataType>String</dataType>
                     <fieldText>Diagnostic Code</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>false</isRequired>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>3</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <fields>
+                <name>New_MSP_Record_Screen_Section3_Column4</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>Diagnostic_Description</name>
+                    <dataType>String</dataType>
+                    <fieldText>Diagnostic Description</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
                 </fields>
@@ -503,24 +497,6 @@
                 <name>New_MSP_Record_Screen_Section4_Column1</name>
                 <fieldType>Region</fieldType>
                 <fields>
-                    <name>Diagnostic_Description</name>
-                    <dataType>String</dataType>
-                    <fieldText>Diagnostic Description</fieldText>
-                    <fieldType>InputField</fieldType>
-                    <isRequired>false</isRequired>
-                </fields>
-                <inputParameters>
-                    <name>width</name>
-                    <value>
-                        <stringValue>3</stringValue>
-                    </value>
-                </inputParameters>
-                <isRequired>false</isRequired>
-            </fields>
-            <fields>
-                <name>New_MSP_Record_Screen_Section4_Column2</name>
-                <fieldType>Region</fieldType>
-                <fields>
                     <name>Amount_Paid</name>
                     <dataType>Currency</dataType>
                     <fieldText>Amount Paid</fieldText>
@@ -537,7 +513,7 @@
                 <isRequired>false</isRequired>
             </fields>
             <fields>
-                <name>New_MSP_Record_Screen_Section4_Column3</name>
+                <name>New_MSP_Record_Screen_Section4_Column2</name>
                 <fieldType>Region</fieldType>
                 <fields>
                     <name>Total_Cost_Override</name>
@@ -556,12 +532,30 @@
                 <isRequired>false</isRequired>
             </fields>
             <fields>
-                <name>New_MSP_Record_Screen_Section4_Column4</name>
+                <name>New_MSP_Record_Screen_Section4_Column3</name>
                 <fieldType>Region</fieldType>
                 <fields>
                     <name>Speciality_Code</name>
                     <dataType>String</dataType>
                     <fieldText>Specialty Code</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>false</isRequired>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>3</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <fields>
+                <name>New_MSP_Record_Screen_Section4_Column4</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>Specialty_Description</name>
+                    <dataType>String</dataType>
+                    <fieldText>Specialty Description</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
                 </fields>
@@ -583,24 +577,6 @@
                 <name>New_MSP_Record_Screen_Section5_Column1</name>
                 <fieldType>Region</fieldType>
                 <fields>
-                    <name>Specialty_Description</name>
-                    <dataType>String</dataType>
-                    <fieldText>Specialty Description</fieldText>
-                    <fieldType>InputField</fieldType>
-                    <isRequired>false</isRequired>
-                </fields>
-                <inputParameters>
-                    <name>width</name>
-                    <value>
-                        <stringValue>3</stringValue>
-                    </value>
-                </inputParameters>
-                <isRequired>false</isRequired>
-            </fields>
-            <fields>
-                <name>New_MSP_Record_Screen_Section5_Column2</name>
-                <fieldType>Region</fieldType>
-                <fields>
                     <name>Payee_Number</name>
                     <dataType>String</dataType>
                     <fieldText>Payee Number</fieldText>
@@ -616,7 +592,7 @@
                 <isRequired>false</isRequired>
             </fields>
             <fields>
-                <name>New_MSP_Record_Screen_Section5_Column3</name>
+                <name>New_MSP_Record_Screen_Section5_Column2</name>
                 <fieldType>Region</fieldType>
                 <fields>
                     <name>Payee_Description</name>
@@ -634,12 +610,30 @@
                 <isRequired>false</isRequired>
             </fields>
             <fields>
-                <name>New_MSP_Record_Screen_Section5_Column4</name>
+                <name>New_MSP_Record_Screen_Section5_Column3</name>
                 <fieldType>Region</fieldType>
                 <fields>
                     <name>Service_Start_Date</name>
                     <dataType>Date</dataType>
                     <fieldText>Service Start Date</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>false</isRequired>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>3</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <fields>
+                <name>New_MSP_Record_Screen_Section5_Column4</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>Service_Finish_Date</name>
+                    <dataType>Date</dataType>
+                    <fieldText>Service Finish Date</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
                 </fields>
@@ -661,24 +655,6 @@
                 <name>New_MSP_Record_Screen_Section6_Column1</name>
                 <fieldType>Region</fieldType>
                 <fields>
-                    <name>Service_Finish_Date</name>
-                    <dataType>Date</dataType>
-                    <fieldText>Service Finish Date</fieldText>
-                    <fieldType>InputField</fieldType>
-                    <isRequired>false</isRequired>
-                </fields>
-                <inputParameters>
-                    <name>width</name>
-                    <value>
-                        <stringValue>3</stringValue>
-                    </value>
-                </inputParameters>
-                <isRequired>false</isRequired>
-            </fields>
-            <fields>
-                <name>New_MSP_Record_Screen_Section6_Column2</name>
-                <fieldType>Region</fieldType>
-                <fields>
                     <name>Location_Type_Code</name>
                     <dataType>String</dataType>
                     <fieldText>Location Type Code</fieldText>
@@ -694,7 +670,7 @@
                 <isRequired>false</isRequired>
             </fields>
             <fields>
-                <name>New_MSP_Record_Screen_Section6_Column3</name>
+                <name>New_MSP_Record_Screen_Section6_Column2</name>
                 <fieldType>Region</fieldType>
                 <fields>
                     <name>Location_Type_Description</name>
@@ -702,6 +678,17 @@
                     <fieldType>LargeTextArea</fieldType>
                     <isRequired>false</isRequired>
                 </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>3</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <fields>
+                <name>New_MSP_Record_Screen_Section6_Column3</name>
+                <fieldType>Region</fieldType>
                 <inputParameters>
                     <name>width</name>
                     <value>

@@ -1,82 +1,190 @@
-/* eslint-disable guard-for-in */
-/* eslint-disable no-prototype-builtins */
 import { LightningElement, wire, api } from 'lwc';
 import { refreshApex } from '@salesforce/apex';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import COST_INCLUDE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Cost_Include__c';
 import COST_REVIEW_FIELD from '@salesforce/schema/Healthcare_Cost__c.Cost_Review__c';
-import BASIC_AMOUNT_FIELD from '@salesforce/schema/Healthcare_Cost__c.Basic_Amount__c';
-import TOTAL_COST_OVERRIDE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Total_Cost_Override__c';
 import DATE_OF_SERVICE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Date_of_Service__c';
-import LOCATION_RESPONDED_FIELD from '@salesforce/schema/Healthcare_Cost__c.Location_Responded__c';
-import SITE_CODE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Site_Code__c';
+import TOTAL_COST_OVERRIDE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Total_Cost_Override__c';
 import FACILITY_NAME_FIELD from '@salesforce/schema/Healthcare_Cost__c.FacilityName__c';
-import FIXED_WING_HELICOPTER_FIELD from '@salesforce/schema/Healthcare_Cost__c.Fixed_Wing_Helicopter__c';
+import FACILITY_TYPE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Facility_Type__c';
+import DESCRIPTION_OF_SERVICE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Description_of_Service__c'
+import FEE_ITEM_CODE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Fee_Item_Code__c';
+import FEE_ITEM_TITLE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Fee_Item_Title__c';
+import FEE_ITEM_DESCRIPTION_FIELD from '@salesforce/schema/Healthcare_Cost__c.Fee_Item_Description__c';
+import PRACTITIONER_NUMBER_FIELD from '@salesforce/schema/Healthcare_Cost__c.Practitioner_Number__c';
+import PRACTITIONER_NAME_FIELD from '@salesforce/schema/Healthcare_Cost__c.Practitioner_Name__c';
+import DIAGNOSTIC_CODE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Diagnostic_Code__c';
+import DIAGNOSTIC_DESCRIPTION_FIELD from '@salesforce/schema/Healthcare_Cost__c.Diagnostic_Description__c';
+import AMOUNT_PAID_FIELD from '@salesforce/schema/Healthcare_Cost__c.Amount_Paid__c';
+import SPECIALITY_CODE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Specialty_Code__c';
+import SPECIALITY_DESCRIPTION_FIELD from '@salesforce/schema/Healthcare_Cost__c.Specialty_Description__c';
+import PAYEE_NUMBER_FIELD from '@salesforce/schema/Healthcare_Cost__c.Payee_Number__c';
+import PAYEE_DESCRIPTION_FIELD from '@salesforce/schema/Healthcare_Cost__c.Payee_Description__c';
+import SERVICE_START_DATE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Service_Start_Date__c';
+import SERVICE_FINISH_DATE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Service_Finish_Date__c'
+import LOCATION_TYPE_CODE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Location_Type_Code__c';
+import LOCATION_TYPE_DESCRIPTION_FIELD from '@salesforce/schema/Healthcare_Cost__c.Location_Type_Description__c';
 import SOURCE_SYSTEM_ID_FIELD from '@salesforce/schema/Healthcare_Cost__c.Source_System_ID__c';
-import COST_FIELD from '@salesforce/schema/Healthcare_Cost__c.Cost__c';
-import SUB_TOTAL_FIELD from '@salesforce/schema/Healthcare_Cost__c.Sub_Total__c';
-import getHealthcareCostsAmbulanceForCase from '@salesforce/apex/HCCCostAmbulanceRecord.getHealthcareCostsAmbulanceForCase';
-import saveDraftValues from '@salesforce/apex/HCCCostController.saveDraftValues'; 
+import getHealthcareCostsMSPForCase from '@salesforce/apex/HCCCostMSPRecord.getHealthcareCostsMSPForCase';
+import saveDraftValues from '@salesforce/apex/HCCCostController.saveDraftValues';
 
-const COLUMNS = [
+const COLUMNS = 
+[
     {
         label: 'Cost Include',
         fieldName: COST_INCLUDE_FIELD.fieldApiName,
         type:'boolean',
-        sortable: true,
-        editable: true
+        editable: true,
+        sortable: true
     },
     {
         label: 'Cost Review',
         fieldName: COST_REVIEW_FIELD.fieldApiName,
         type:'boolean',
-        sortable: true,
-        editable:true
+        editable:true,
+        sortable: true
     },
     {
         label: 'Date of Service',
         fieldName: DATE_OF_SERVICE_FIELD.fieldApiName,
-        sortable: true,
-        editable: true
-    }, 
-    {
-        label: 'Location Responded',
-        fieldName: LOCATION_RESPONDED_FIELD.fieldApiName,
-        type: 'text',
         editable: true,
-        sortable:true
-    },
-    {
-        label: 'Site Code',
-        fieldName: SITE_CODE_FIELD.fieldApiName,
-        type: 'text',
-        editable: false,
         sortable: true
     },
     {
         label: 'Facility',
         fieldName: FACILITY_NAME_FIELD.fieldApiName,
+        type: 'text',
         editable: false,
+        sortable: false
+    },
+    {
+        label: 'Facility Type',
+        fieldName: FACILITY_TYPE_FIELD.fieldApiName,
+        type: 'text',
+        editable: true,
+        sortable: false
+    },
+    {
+        label: 'Descripiton of Service',
+        fieldName: DESCRIPTION_OF_SERVICE_FIELD.fieldApiName,
+        type: 'text',
+        editable: true,
+        sortable: false
+    },
+    {
+        label: 'Fee Item Code',
+        fieldName: FEE_ITEM_CODE_FIELD.fieldApiName,
+        type: 'text',
+        editable: true,
         sortable: true
     },
     {
-        label: 'Basic Amount',
-        fieldName: BASIC_AMOUNT_FIELD.fieldApiName,
-        type: 'currency',
-        sortable: true,
-        editable: true
+        label: 'Fee Item Title',
+        fieldName: FEE_ITEM_TITLE_FIELD.fieldApiName,
+        type: 'text',
+        editable: true,
+        sortable: true
+    },
+    {
+        label: 'Fee Item Description',
+        fieldName: FEE_ITEM_DESCRIPTION_FIELD.fieldApiName,
+        type: 'text',
+        editable: true,
+        sortable: true
+    },
+    {
+        label: 'Practitioner Number',
+        fieldName: PRACTITIONER_NUMBER_FIELD.fieldApiName,
+        type: 'false',
+        editable: true,
+        sortable: true
+    },
+    {
+        label: 'Practitioner Name',
+        fieldName: PRACTITIONER_NAME_FIELD.fieldApiName,
+        type: 'text',
+        editable: true,
+        sortable: true
+    },
+    {
+        label: 'Diagnostic Code',
+        fieldName: DIAGNOSTIC_CODE_FIELD.fieldApiName,
+        type: 'text',
+        editable: true,
+        sortable: true
+    },
+    {
+        label: 'Diagnostic Description',
+        fieldName: DIAGNOSTIC_DESCRIPTION_FIELD.fieldApiName,
+        type: 'text',
+        editable: true,
+        sortable: false
+    },
+    {
+        label: 'Amount Paid',
+        fieldName: AMOUNT_PAID_FIELD.fieldApiName,
+        type: 'text',
+        editable: true,
+        sortable: true
     },
     {
         label: 'Total Cost Override',
         fieldName: TOTAL_COST_OVERRIDE_FIELD.fieldApiName,
         type: 'currency',
-        sortable: true,
-        editable: true
+        editable: true,
+        sortable: true
     },
     {
-        label: 'Fixed Wing/Helicopter',
-        fieldName: FIXED_WING_HELICOPTER_FIELD.fieldApiName,
-        type: 'currency',
+        label: 'Speciality Code',
+        fieldName: SPECIALITY_CODE_FIELD.fieldApiName,
+        type: 'text',
+        editable: true,
+        sortable: true
+    },
+    {
+        label: 'Speciality Description',
+        fieldName: SPECIALITY_DESCRIPTION_FIELD.fieldApiName,
+        type: 'text',
+        editable: true,
+        sortable: false
+    },
+    {
+        label: 'Payee Number',
+        fieldName: PAYEE_NUMBER_FIELD.fieldApiName,
+        type: 'text',
+        editable: true,
+        sortable: true
+    },
+    {
+        label: 'Payee Descripiton',
+        fieldName: PAYEE_DESCRIPTION_FIELD.fieldApiName,
+        type: 'text',
+        editable: true,
+        sortable: true
+    },
+    {
+        label: 'Service Start Date',
+        fieldName: SERVICE_START_DATE_FIELD.fieldApiName,
+        editable: true,
+        sortable: true
+    },
+    {
+        label: 'Service Finish Date',
+        fieldName: SERVICE_FINISH_DATE_FIELD.fieldApiName,
+        editable: true,
+        sortable: true
+    },
+    {
+        label: 'Location Type Code',
+        fieldName: LOCATION_TYPE_CODE_FIELD.fieldApiName,
+        type: 'text',
+        editable: true,
+        sortable: true
+    },
+    {
+        label: 'Location Type Description',
+        fieldName: LOCATION_TYPE_DESCRIPTION_FIELD.fieldApiName,
+        type: 'text',
         editable: true,
         sortable: false
     },
@@ -87,9 +195,9 @@ const COLUMNS = [
         editable: true,
         sortable: true
     }
-    
 ];
-export default class AmbulanceRecordsCase extends LightningElement {
+
+export default class MspRecordsCase extends LightningElement {
     @api recordId;
     column = COLUMNS;
     records = []; //All records available in the data table
@@ -115,13 +223,13 @@ export default class AmbulanceRecordsCase extends LightningElement {
         clearInterval(this.event2);
       }
 
-    @wire(getHealthcareCostsAmbulanceForCase, { caseId: '$recordId' })
-    healthcareCostsAmbulanceForCase(result){
+      @wire (getHealthcareCostsMSPForCase, { caseId: '$recordId' })
+      healthcareCostsMSPForCase(result){
         this.wiredRecords = result;
         const {data, error} = result;
 
         if(data != null && data){
-            console.log('Data of Ambulance Records --> ' + JSON.stringify(data));
+            console.log('Data of MSP Records --> ' + JSON.stringify(data));
             this.records = data;
             this.totalRecords = data.length;
             this.pageSize = this.pageSizeOptions[0]; 
@@ -137,9 +245,9 @@ export default class AmbulanceRecordsCase extends LightningElement {
             this.error = undefined;
             this.records = undefined;
         }
-    }
+      }
 
-    get bDisableFirst() {
+      get bDisableFirst() {
         return this.pageNumber == 1;
     }
     get bDisableLast() {
@@ -211,50 +319,7 @@ export default class AmbulanceRecordsCase extends LightningElement {
         this.recordsToDisplay = parseData;
     }    
 
-    /*async handleSelect(){
-        var el = this.template.querySelector('lightning-datatable');
-        console.log(el);
-        var selected = el.getSelectedRows();
-        //console.log(selected);
-        console.log('selectedRows : ' + selected);
-        let selectedCostIds = [];
-        
-        selected.forEach(function(element){
-        selectedCostIds.push(element);
-           console.log(element);   
-        });
-
-        await updateHCCRecordInformation({ hccIds: selectedCostIds})
-        .then((result) => {
-            console.log('Result : ' + result);
-           if(result == 'Passed'){
-            this.dispatchEvent(
-                new ShowToastEvent({
-                    title: 'Success',
-                    message: 'Cases having Cost Review and Cost Include unchecked are delinked from HealthCare Cost Ambulance record(s) successfully',
-                    variant: 'success'
-                })
-            );    
-        
-           }
-            else if(result == 'Failed'){
-                this.dispatchEvent(
-                    new ShowToastEvent({
-                        title: 'Error',
-                        message: 'Please uncheck Cost Review and Cost Include of Healthcare Cost Ambulance record(s) whose Cases are to be delinked',
-                        variant: 'error'
-                    })
-                );     
-            }    
-            //Get the updated list with refreshApex.
-            return this.refresh();
-            
-        })
-        .catch(error => {
-            console.log('error : ' + JSON.stringify(error));
-        });
-    } */
-
+    
     async refresh(){
         await refreshApex(this.wiredRecords);
     }
@@ -269,7 +334,7 @@ export default class AmbulanceRecordsCase extends LightningElement {
                 this.dispatchEvent(
                     new ShowToastEvent({
                         title: 'Success',
-                        message: 'HealthCare Cost Ambulance record(s) updated successfully',
+                        message: 'HealthCare Cost MSP record(s) updated successfully',
                         variant: 'success'
                     })
                 );    
@@ -279,7 +344,7 @@ export default class AmbulanceRecordsCase extends LightningElement {
                     this.dispatchEvent(
                         new ShowToastEvent({
                             title: 'Error',
-                            message: 'Record not saved successfully! Please check Healthcare Cost Ambulance record(s) while updating',
+                            message: 'Record not saved successfully! Please check Healthcare Cost MSP record(s) while updating',
                             variant: 'error'
                         })
                     );   
@@ -294,5 +359,4 @@ export default class AmbulanceRecordsCase extends LightningElement {
             });
         
     }
-    
 }

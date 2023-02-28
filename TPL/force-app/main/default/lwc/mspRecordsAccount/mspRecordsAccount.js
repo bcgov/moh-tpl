@@ -1,29 +1,41 @@
 import { LightningElement, wire, api } from 'lwc';
 import { refreshApex } from '@salesforce/apex';
-import updateHCCCaseInformation from '@salesforce/apex/HCCCostAmbulanceRecord.updateHCCCaseInformation';
-import getHealthcareCostsAmbulanceForAccount from '@salesforce/apex/HCCCostAmbulanceRecord.getHealthcareCostsAmbulanceForAccount';
-import getAmbulanceCountonAccount from '@salesforce/apex/HCCCostAmbulanceRecord.getAmbulanceCountonAccount';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import NAME_FIELD from '@salesforce/schema/Healthcare_Cost__c.Name';
+import CASE_NUMBER_FIELD from '@salesforce/schema/Healthcare_Cost__c.Case_Number__c';
 import COST_INCLUDE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Cost_Include__c';
 import COST_REVIEW_FIELD from '@salesforce/schema/Healthcare_Cost__c.Cost_Review__c';
-import CASE_NUMBER_FIELD from '@salesforce/schema/Healthcare_Cost__c.Case_Number__c';
-import BASIC_AMOUNT_FIELD from '@salesforce/schema/Healthcare_Cost__c.Basic_Amount__c';
-import TOTAL_COST_OVERRIDE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Total_Cost_Override__c';
 import DATE_OF_SERVICE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Date_of_Service__c';
-import LOCATION_RESPONDED_FIELD from '@salesforce/schema/Healthcare_Cost__c.Location_Responded__c';
-import SITE_CODE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Site_Code__c';
+import TOTAL_COST_OVERRIDE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Total_Cost_Override__c';
 import FACILITY_NAME_FIELD from '@salesforce/schema/Healthcare_Cost__c.FacilityName__c';
-import FIXED_WING_HELICOPTER_FIELD from '@salesforce/schema/Healthcare_Cost__c.Fixed_Wing_Helicopter__c';
-import COST_FIELD from '@salesforce/schema/Healthcare_Cost__c.Cost__c';
-import SUB_TOTAL_FIELD from '@salesforce/schema/Healthcare_Cost__c.Sub_Total__c';
+import FACILITY_TYPE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Facility_Type__c';
+import DESCRIPTION_OF_SERVICE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Description_of_Service__c'
+import FEE_ITEM_CODE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Fee_Item_Code__c';
+import FEE_ITEM_TITLE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Fee_Item_Title__c';
+import FEE_ITEM_DESCRIPTION_FIELD from '@salesforce/schema/Healthcare_Cost__c.Fee_Item_Description__c';
+import PRACTITIONER_NUMBER_FIELD from '@salesforce/schema/Healthcare_Cost__c.Practitioner_Number__c';
+import PRACTITIONER_NAME_FIELD from '@salesforce/schema/Healthcare_Cost__c.Practitioner_Name__c';
+import DIAGNOSTIC_CODE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Diagnostic_Code__c';
+import DIAGNOSTIC_DESCRIPTION_FIELD from '@salesforce/schema/Healthcare_Cost__c.Diagnostic_Description__c';
+import AMOUNT_PAID_FIELD from '@salesforce/schema/Healthcare_Cost__c.Amount_Paid__c';
+import SPECIALITY_CODE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Specialty_Code__c';
+import SPECIALITY_DESCRIPTION_FIELD from '@salesforce/schema/Healthcare_Cost__c.Specialty_Description__c';
+import PAYEE_NUMBER_FIELD from '@salesforce/schema/Healthcare_Cost__c.Payee_Number__c';
+import PAYEE_DESCRIPTION_FIELD from '@salesforce/schema/Healthcare_Cost__c.Payee_Description__c';
+import SERVICE_START_DATE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Service_Start_Date__c';
+import SERVICE_FINISH_DATE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Service_Finish_Date__c'
+import LOCATION_TYPE_CODE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Location_Type_Code__c';
+import LOCATION_TYPE_DESCRIPTION_FIELD from '@salesforce/schema/Healthcare_Cost__c.Location_Type_Description__c';
+import getHealthcareCostsMSPForAccount from '@salesforce/apex/HCCCostMSPRecord.getHealthcareCostsMSPForAccount';
+import updateHCCCaseInformation from '@salesforce/apex/HCCCostMSPRecord.updateHCCCaseInformation';
 
 const COLUMNS = [
     {
         label: 'Case Number',
         fieldName: CASE_NUMBER_FIELD.fieldApiName,
-        type: 'text',
-        sortable: true,
+        type:'text',
         editable: false,
+        sortable: true
     },
     {
         label: 'Cost Include',
@@ -46,30 +58,79 @@ const COLUMNS = [
         sortable: true
     },
     {
-        label: 'Location Responded',
-        fieldName: LOCATION_RESPONDED_FIELD.fieldApiName,
-        type: 'text',
-        editable: false,
-        sortable: true
-    },
-    {
-        label: 'Site Code',
-        fieldName: SITE_CODE_FIELD.fieldApiName,
-        type: 'text',
-        editable: false,
-        sortable: true
-    },
-    {
         label: 'Facility',
         fieldName: FACILITY_NAME_FIELD.fieldApiName,
         type: 'text',
         editable: false,
+        sortable: false
+    },
+    {
+        label: 'Facility Type',
+        fieldName: FACILITY_TYPE_FIELD.fieldApiName,
+        type: 'text',
+        editable: false,
+        sortable: false
+    },
+    {
+        label: 'Descripiton of Service',
+        fieldName: DESCRIPTION_OF_SERVICE_FIELD.fieldApiName,
+        type: 'text',
+        editable: false,
+        sortable: false
+    },
+    {
+        label: 'Fee Item Code',
+        fieldName: FEE_ITEM_CODE_FIELD.fieldApiName,
+        type: 'text',
+        editable: false,
         sortable: true
     },
     {
-        label: 'Basic Amount',
-        fieldName: BASIC_AMOUNT_FIELD.fieldApiName,
-        type: 'currency',
+        label: 'Fee Item Title',
+        fieldName: FEE_ITEM_TITLE_FIELD.fieldApiName,
+        type: 'text',
+        editable: false,
+        sortable: true
+    },
+    {
+        label: 'Fee Item Description',
+        fieldName: FEE_ITEM_DESCRIPTION_FIELD.fieldApiName,
+        type: 'text',
+        editable: false,
+        sortable: true
+    },
+    {
+        label: 'Practitioner Number',
+        fieldName: PRACTITIONER_NUMBER_FIELD.fieldApiName,
+        type: 'false',
+        editable: true,
+        sortable: true
+    },
+    {
+        label: 'Practitioner Name',
+        fieldName: PRACTITIONER_NAME_FIELD.fieldApiName,
+        type: 'text',
+        editable: false,
+        sortable: true
+    },
+    {
+        label: 'Diagnostic Code',
+        fieldName: DIAGNOSTIC_CODE_FIELD.fieldApiName,
+        type: 'text',
+        editable: false,
+        sortable: true
+    },
+    {
+        label: 'Diagnostic Description',
+        fieldName: DIAGNOSTIC_DESCRIPTION_FIELD.fieldApiName,
+        type: 'text',
+        editable: false,
+        sortable: false
+    },
+    {
+        label: 'Amount Paid',
+        fieldName: AMOUNT_PAID_FIELD.fieldApiName,
+        type: 'text',
         editable: false,
         sortable: true
     },
@@ -79,10 +140,68 @@ const COLUMNS = [
         type: 'currency',
         editable: false,
         sortable: true
+    },
+    {
+        label: 'Speciality Code',
+        fieldName: SPECIALITY_CODE_FIELD.fieldApiName,
+        type: 'text',
+        editable: false,
+        sortable: true
+    },
+    {
+        label: 'Speciality Description',
+        fieldName: SPECIALITY_DESCRIPTION_FIELD.fieldApiName,
+        type: 'text',
+        editable: false,
+        sortable: false
+    },
+    {
+        label: 'Payee Number',
+        fieldName: PAYEE_NUMBER_FIELD.fieldApiName,
+        type: 'text',
+        editable: false,
+        sortable: true
+    },
+    {
+        label: 'Payee Descripiton',
+        fieldName: PAYEE_DESCRIPTION_FIELD.fieldApiName,
+        type: 'text',
+        editable: false,
+        sortable: true
+    },
+    {
+        label: 'Service Start Date',
+        fieldName: SERVICE_START_DATE_FIELD.fieldApiName,
+        type: 'date',
+        typeAttributes:{year: "numeric",month: "2-digit",day: "2-digit"},
+        editable: false,
+        sortable: true
+    },
+    {
+        label: 'Service Finish Date',
+        fieldName: SERVICE_FINISH_DATE_FIELD.fieldApiName,
+        type: 'date',
+        typeAttributes:{year: "numeric",month: "2-digit",day: "2-digit"},
+        editable: false,
+        sortable: true
+    },
+    {
+        label: 'Location Type Code',
+        fieldName: LOCATION_TYPE_CODE_FIELD.fieldApiName,
+        type: 'text',
+        editable: false,
+        sortable: true
+    },
+    {
+        label: 'Location Type Description',
+        fieldName: LOCATION_TYPE_DESCRIPTION_FIELD.fieldApiName,
+        type: 'text',
+        editable: false,
+        sortable: false
     }
 ];
 
-export default class AmbulanceRecordsAccount extends LightningElement {
+export default class MspRecordsAccount extends LightningElement {
     @api recordId;
     column = COLUMNS;
     isFirstPage = true;
@@ -99,13 +218,6 @@ export default class AmbulanceRecordsAccount extends LightningElement {
     selectedRows = [];
     limitSize = 0;
     rowSize = 0;
-
-   /* connectedCallback(){
-        this.pageSize = this.pageSizeOptions[0];
-        this.limitSize = this.pageSizeOptions[0];
-        this.loadCount();
-        this.loadData();
-    } */
 
     doSorting(event) {
         this.sortBy = event.detail.fieldName;
@@ -166,7 +278,7 @@ export default class AmbulanceRecordsAccount extends LightningElement {
                 this.dispatchEvent(
                     new ShowToastEvent({
                         title: 'Success',
-                        message: 'HealthCare Cost Ambulance record(s) having unchecked cost review and cost include updated successfully.',
+                        message: 'HealthCare Cost MSP record(s) having unchecked cost review and cost include updated successfully.',
                         variant: 'success'
                     })
                 );    
@@ -183,52 +295,14 @@ export default class AmbulanceRecordsAccount extends LightningElement {
     async refresh(){
         await refreshApex(this.wiredRecords);
     }
- /*
-    loadData(){
-        return getHealthcareCostsAmbulanceForAccount({accId: this.recordId, limitValue: this.limitSize, offset: this.rowSize})
-        .then(result=>{
-            console.log('Inside Load Data return Part');
-            console.log('Length of records : ' + result.length);
-            this.wiredRecords = result;
-            if(result != null && result){
-                console.log('Data of Ambulance Records --> ' + JSON.stringify(result));
-                this.records = JSON.parse(JSON.stringify(result));
-                this.records.forEach(record => {
-                    record.linkName = '/' + record.Id;
-                })
-                this.paginationHelper(); // call helper menthod to update pagination logic
-                this.error = undefined;
-            }
-        })
-        .catch(error =>{
-            this.error = error;
-            this.records = [];
-        })
-    }
 
-    loadCount()
-    {
-        return getAmbulanceCountonAccount({accId: this.recordId})
-        .then(result =>{
-            if(result != null && result){
-                console.log('Result (Count of Records) : ' + result);
-                this.totalRecords = result;
-            }
-
-        })
-        .catch(error =>{
-            this.error = error;
-            this.totalRecords = 0;
-        });
-    } */
-
-    @wire(getHealthcareCostsAmbulanceForAccount, { accId: '$recordId' })
-    wiredHealthcareCostsAmbulanceForAccount(result){
+    @wire(getHealthcareCostsMSPForAccount, { accId: '$recordId' })
+    wiredHealthcareCostsMSPForAccount(result){
         this.wiredRecords = result;
         const {data, error} = result;
         
         if(data != null && data){
-            console.log('Data of Ambulance Records --> ' + JSON.stringify(data));
+            console.log('Data of MSP Records --> ' + JSON.stringify(data));
             this.records = JSON.parse(JSON.stringify(data));
             this.totalRecords = data.length;
             this.pageSize = this.pageSizeOptions[0]; 
