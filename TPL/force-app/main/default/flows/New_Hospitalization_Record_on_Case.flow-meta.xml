@@ -131,9 +131,9 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Service_Type2__c</field>
+            <field>Service_Provided_by_Facility__c</field>
             <value>
-                <elementReference>Service_Type</elementReference>
+                <elementReference>ServiceProvidedbyFacility.recordId</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -403,11 +403,30 @@
                 <name>New_Hospitalization_Record_Screen_Section3_Column3</name>
                 <fieldType>Region</fieldType>
                 <fields>
-                    <name>Service_Type</name>
-                    <dataType>String</dataType>
-                    <fieldText>Service Type</fieldText>
-                    <fieldType>InputField</fieldType>
-                    <isRequired>false</isRequired>
+                    <name>ServiceProvidedbyFacility</name>
+                    <extensionName>flowruntime:lookup</extensionName>
+                    <fieldType>ComponentInstance</fieldType>
+                    <inputParameters>
+                        <name>fieldApiName</name>
+                        <value>
+                            <stringValue>Service_Provided_by_Facility__c</stringValue>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>label</name>
+                        <value>
+                            <stringValue>Service Provided by Facility</stringValue>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>objectApiName</name>
+                        <value>
+                            <stringValue>Healthcare_Cost__c</stringValue>
+                        </value>
+                    </inputParameters>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>true</isRequired>
+                    <storeOutputAutomatically>true</storeOutputAutomatically>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -446,25 +465,6 @@
                 <name>New_Hospitalization_Record_Screen_Section4_Column1</name>
                 <fieldType>Region</fieldType>
                 <fields>
-                    <name>Total_Costs_Standard</name>
-                    <dataType>Currency</dataType>
-                    <fieldText>Total Costs Standard</fieldText>
-                    <fieldType>InputField</fieldType>
-                    <isRequired>false</isRequired>
-                    <scale>0</scale>
-                </fields>
-                <inputParameters>
-                    <name>width</name>
-                    <value>
-                        <stringValue>3</stringValue>
-                    </value>
-                </inputParameters>
-                <isRequired>false</isRequired>
-            </fields>
-            <fields>
-                <name>New_Hospitalization_Record_Screen_Section4_Column2</name>
-                <fieldType>Region</fieldType>
-                <fields>
                     <name>Total_Cost_Override</name>
                     <dataType>Currency</dataType>
                     <fieldText>Total Cost Override</fieldText>
@@ -481,7 +481,7 @@
                 <isRequired>false</isRequired>
             </fields>
             <fields>
-                <name>New_Hospitalization_Record_Screen_Section4_Column3</name>
+                <name>New_Hospitalization_Record_Screen_Section4_Column2</name>
                 <fieldType>Region</fieldType>
                 <fields>
                     <name>Diagnostic_Treatment_Service</name>
@@ -489,6 +489,17 @@
                     <fieldType>LargeTextArea</fieldType>
                     <isRequired>false</isRequired>
                 </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>3</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <fields>
+                <name>New_Hospitalization_Record_Screen_Section4_Column3</name>
+                <fieldType>Region</fieldType>
                 <inputParameters>
                     <name>width</name>
                     <value>
