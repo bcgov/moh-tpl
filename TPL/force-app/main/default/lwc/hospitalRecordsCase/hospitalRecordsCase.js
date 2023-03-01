@@ -64,14 +64,14 @@ const COLUMNS = [
         label: 'Intervention Code (CCI)',
         fieldName: INTERVENTION_CODE_FIELD.fieldApiName,
         type: 'text',
-        editable: true,
+        editable: false,
         sortable: true,
     },
     {
         label: 'CCI Level',
         fieldName: CCI_LEVEL_FIELD.fieldApiName,
         type: 'text',
-        editable: true,
+        editable: false,
         sortable: true,
     },
     {

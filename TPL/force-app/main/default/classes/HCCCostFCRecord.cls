@@ -9,7 +9,7 @@ public with sharing class HCCCostFCRecord {
         try{
             Id recordTypeId = getFutureCareRecordId();
            
-            hccCostList = [select Name, Case2__c, Case_Number__c, Cost__c, Description__c, Account__c from Healthcare_Cost__c where Case2__c = :caseId and RecordTypeId = :recordTypeId ORDER BY Name DESC LIMIT 2000];
+            hccCostList = [select Name, Case2__c, Case_Number__c, Cost__c, Description__c, Account__c from Healthcare_Cost__c where Case2__c = :caseId and RecordTypeId = :recordTypeId ORDER BY Name DESC LIMIT 50000];
             System.debug('HCC Cost List Size (FC) : ' + hccCostList.size());
             
         }

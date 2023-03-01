@@ -210,51 +210,7 @@ export default class AmbulanceRecordsCase extends LightningElement {
         });
         this.recordsToDisplay = parseData;
     }    
-
-    /*async handleSelect(){
-        var el = this.template.querySelector('lightning-datatable');
-        console.log(el);
-        var selected = el.getSelectedRows();
-        //console.log(selected);
-        console.log('selectedRows : ' + selected);
-        let selectedCostIds = [];
-        
-        selected.forEach(function(element){
-        selectedCostIds.push(element);
-           console.log(element);   
-        });
-
-        await updateHCCRecordInformation({ hccIds: selectedCostIds})
-        .then((result) => {
-            console.log('Result : ' + result);
-           if(result == 'Passed'){
-            this.dispatchEvent(
-                new ShowToastEvent({
-                    title: 'Success',
-                    message: 'Cases having Cost Review and Cost Include unchecked are delinked from HealthCare Cost Ambulance record(s) successfully',
-                    variant: 'success'
-                })
-            );    
-        
-           }
-            else if(result == 'Failed'){
-                this.dispatchEvent(
-                    new ShowToastEvent({
-                        title: 'Error',
-                        message: 'Please uncheck Cost Review and Cost Include of Healthcare Cost Ambulance record(s) whose Cases are to be delinked',
-                        variant: 'error'
-                    })
-                );     
-            }    
-            //Get the updated list with refreshApex.
-            return this.refresh();
-            
-        })
-        .catch(error => {
-            console.log('error : ' + JSON.stringify(error));
-        });
-    } */
-
+    
     async refresh(){
         await refreshApex(this.wiredRecords);
     }
