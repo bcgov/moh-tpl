@@ -8,7 +8,7 @@ public with sharing class HCCCostMSPRecord {
         List<Healthcare_Cost__c> hccCostList = new List<Healthcare_Cost__c> ();
         try{
         	Id recordTypeId = getMSPRecordId();
-            hccCostList = [select Case2__c, Case_Number__c, Account__c, Cost_Include__c, Cost_Review__c, Name, Date_of_Service__c, Facility_Type__c, FacilityName__c, Facility__c, Description_of_Service__c, Fee_Item_Code__c, Fee_Item_Title__c, Fee_Item_Description__c, Practitioner_Number__c, Practitioner_Name__c, Diagnostic_Code__c, Diagnostic_Description__c, Amount_Paid__c, Total_Cost_Override__c, Specialty_Code__c, Specialty_Description__c, Payee_Number__c, Payee_Description__c, Service_Start_Date__c, Service_Finish_Date__c, Location_Type_Code__c, Location_Type_Description__c from Healthcare_Cost__c where Account__c = :accId and RecordTypeId = :recordTypeId ORDER BY Name LIMIT 2000];
+            hccCostList = [select Case2__c, Case_Number__c, Account__c, Cost_Include__c, Cost_Review__c, Name, Date_of_Service__c, Facility_Type__c, FacilityName__c, Facility__c, Description_of_Service__c, Fee_Item_Code__c, Fee_Item_Title__c, Fee_Item_Description__c, Practitioner_Number__c, Practitioner_Name__c, Diagnostic_Code__c, Diagnostic_Description__c, Amount_Paid__c, Total_Cost_Override__c, Specialty_Code__c, Specialty_Description__c, Payee_Number__c, Payee_Description__c, Service_Start_Date__c, Service_Finish_Date__c, Location_Type_Code__c, Location_Type_Description__c from Healthcare_Cost__c where Account__c = :accId and RecordTypeId = :recordTypeId ORDER BY Name LIMIT 50000];
             System.debug('HCC Cost List (Account Records) : ' + hccCostList.size());      
         }
     
@@ -40,7 +40,7 @@ public with sharing class HCCCostMSPRecord {
         try{
             Id recordTypeId = getMSPRecordId();
            
-            hccCostList = [select Case2__c, Case_Number__c, Account__c, Cost_Include__c, Cost_Review__c, Name, Date_of_Service__c, Facility_Type__c, Facility__c, FacilityName__c, Description_of_Service__c, Fee_Item_Code__c, Fee_Item_Title__c, Fee_Item_Description__c, Practitioner_Number__c, Practitioner_Name__c, Diagnostic_Code__c, Diagnostic_Description__c, Amount_Paid__c, Total_Cost_Override__c, Specialty_Code__c, Specialty_Description__c, Payee_Number__c, Payee_Description__c, Service_Start_Date__c, Service_Finish_Date__c, Location_Type_Code__c, Location_Type_Description__c, Source_System_ID__c from Healthcare_Cost__c where Case2__c = :caseId and RecordTypeId = :recordTypeId ORDER BY Name DESC LIMIT 2000];
+            hccCostList = [select Case2__c, Case_Number__c, Account__c, Cost_Include__c, Cost_Review__c, Name, Date_of_Service__c, Facility_Type__c, Facility__c, FacilityName__c, Description_of_Service__c, Fee_Item_Code__c, Fee_Item_Title__c, Fee_Item_Description__c, Practitioner_Number__c, Practitioner_Name__c, Diagnostic_Code__c, Diagnostic_Description__c, Amount_Paid__c, Total_Cost_Override__c, Specialty_Code__c, Specialty_Description__c, Payee_Number__c, Payee_Description__c, Service_Start_Date__c, Service_Finish_Date__c, Location_Type_Code__c, Location_Type_Description__c, Source_System_ID__c from Healthcare_Cost__c where Case2__c = :caseId and RecordTypeId = :recordTypeId ORDER BY Name DESC LIMIT 50000];
             
      }
         catch(NullPointerException nullpointer){

@@ -10,7 +10,7 @@ public with sharing class HCCCostCCRecord {
         try{
             Id recordTypeId = getContinuingCareRecordId();
             
-            hccCostList = [SELECT Cost__c, Description__c, Case2__c, Case_Number__c, Name FROM Healthcare_Cost__c WHERE Case2__c = :caseId AND RecordTypeId = :recordTypeId ORDER BY Name DESC LIMIT 2000]; 
+            hccCostList = [SELECT Cost__c, Description__c, Case2__c, Case_Number__c, Name FROM Healthcare_Cost__c WHERE Case2__c = :caseId AND RecordTypeId = :recordTypeId ORDER BY Name DESC LIMIT 50000]; 
             System.debug('HCC Cost List Size (CC) : ' + hccCostList.size());
             
         }
