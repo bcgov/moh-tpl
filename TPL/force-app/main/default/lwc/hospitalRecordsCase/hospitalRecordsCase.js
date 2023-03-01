@@ -103,7 +103,7 @@ const COLUMNS = [
     {
         label: 'Number of Days',
         fieldName: NUMBER_OF_DAYS_FIELD.fieldApiName,
-        editable: true,
+        editable: false,
         sortable: true
     },
     {
