@@ -279,6 +279,10 @@
     </relatedContent>
     <relatedLists>
         <fields>NAME</fields>
+        <relatedList>Case_Relation__c.Case__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
         <relatedList>Payment__c.Case_Number__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -305,7 +309,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>true</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h6s000000S2IC</masterLabel>
+        <masterLabel>00h5C000000kmMF</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>
