@@ -237,6 +237,14 @@ export default class HospitalRecordsAccount extends LightningElement {
                     })
                 );    
             }
+            else if(result == null){
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Error',
+                        message: 'Case assignment did not succeed. Please try again!',
+                        variant: 'error'
+                    })
+                ); 
             //Get the updated list with refreshApex.
             return this.refresh();
            
