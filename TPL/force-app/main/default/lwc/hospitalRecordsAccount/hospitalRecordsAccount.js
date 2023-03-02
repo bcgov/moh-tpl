@@ -228,7 +228,7 @@ export default class HospitalRecordsAccount extends LightningElement {
                     })
                 );
             }
-            else{
+            else if(result == 'Passed'){
                 this.dispatchEvent(
                     new ShowToastEvent({
                         title: 'Success',

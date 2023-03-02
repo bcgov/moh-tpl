@@ -274,7 +274,7 @@ export default class MspRecordsAccount extends LightningElement {
                     })
                 );
             }
-            else{
+            else if(result == 'Passed'){
                 this.dispatchEvent(
                     new ShowToastEvent({
                         title: 'Success',

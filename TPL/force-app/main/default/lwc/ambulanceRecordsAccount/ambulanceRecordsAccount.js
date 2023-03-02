@@ -162,7 +162,7 @@ export default class AmbulanceRecordsAccount extends LightningElement {
                     })
                 );
             }
-            else{
+            else if(result == 'Passed'){
                 this.dispatchEvent(
                     new ShowToastEvent({
                         title: 'Success',
