@@ -245,6 +245,7 @@ export default class HospitalRecordsAccount extends LightningElement {
                         variant: 'error'
                     })
                 ); 
+            }
             //Get the updated list with refreshApex.
             return this.refresh();
            

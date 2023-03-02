@@ -169,6 +169,7 @@ export default class PharmacareRecordsAccount extends LightningElement {
                         variant: 'error'
                     })
                 ); 
+            }
             //Get the updated list with refreshApex.
             return this.refresh();
            

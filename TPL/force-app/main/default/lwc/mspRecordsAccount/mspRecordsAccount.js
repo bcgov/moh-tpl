@@ -291,6 +291,8 @@ export default class MspRecordsAccount extends LightningElement {
                         variant: 'error'
                     })
                 ); 
+            }
+            
             //Get the updated list with refreshApex.
             return this.refresh();
            
