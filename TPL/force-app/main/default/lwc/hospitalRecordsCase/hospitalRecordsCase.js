@@ -123,7 +123,7 @@ const COLUMNS = [
         label: 'Standard Daily Rate',
         type: 'currency',
         fieldName: STANDARD_DAILY_RATE_FIELD.fieldApiName,
-        editable: true,
+        editable: false,
         sortable: true
     },
     {
