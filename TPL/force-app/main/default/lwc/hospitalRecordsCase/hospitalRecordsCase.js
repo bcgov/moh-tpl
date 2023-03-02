@@ -103,7 +103,7 @@ const COLUMNS = [
     {
         label: 'Number of Days',
         fieldName: NUMBER_OF_DAYS_FIELD.fieldApiName,
-        editable: true,
+        editable: false,
         sortable: true
     },
     {
@@ -123,14 +123,14 @@ const COLUMNS = [
         label: 'Standard Daily Rate',
         type: 'currency',
         fieldName: STANDARD_DAILY_RATE_FIELD.fieldApiName,
-        editable: true,
+        editable: false,
         sortable: true
     },
     {
         label: 'Total Cost Standard',
         fieldName: TOTAL_COST_STADARD_FIELD.fieldApiName,
         type: 'currency',
-        editable: true,
+        editable: false,
         sortable: true
     },
     {
