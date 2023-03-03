@@ -1,7 +1,7 @@
 /**
-  Test Class for ApigeeAuthProvider
+  Test Class for JWTGenerateAuthTest
   
-  Custom Auth Provider for AIMS
+  Custom Auth Provider for HealthIdeas
 
   Implements the Client Credentials flow which is intended for server-to-server integrations.
   
@@ -12,7 +12,7 @@ public class JWTGenerateAuthTest {
         public static final String CONTENT_TYPE_HEADER = 'Content-Type';
         public static final String CONTENT_TYPE_JSON = 'application/json';
         private static final String ACCESS_TOKEN = 'gv6iCx48OaH76ufiGXBUlRTRTXxx';
-        private static final String EXPIRES_IN = '123';
+        private static final String EXPIRES_IN = '300';
         private static final String STATE = 'mocktestState'; 
         private static final String TOKEN_TYPE = 'Bearer'; 
         
@@ -60,7 +60,6 @@ public class JWTGenerateAuthTest {
         authProviderConfiguration.put(JWTGenerateAuth.CMT_FIELD_AUTHTOKEN_URL, ACCESS_TOKEN_URL); 
         authProviderConfiguration.put(JWTGenerateAuth.CMT_FIELD_CALLBACK_URL, EMPTY_VALUE); 
         authProviderConfiguration.put(JWTGenerateAuth.CMT_FIELD_CLIENT_ID, KEY); 
-        //authProviderConfiguration.put(JWTGenerateAuth.CMT_FIELD_CLIENT_SECRET,SECRET); 
         authProviderConfiguration.put(JWTGenerateAuth.CMT_FIELD_SCOPE,SCOPE);
         authProviderConfiguration.put(JWTGenerateAuth.CMT_FIELD_USE_JSON,'False');        
        
@@ -109,7 +108,6 @@ public class JWTGenerateAuthTest {
     
         System.assertEquals(expectedAuthProvResponse.provider, actualAuthProvResponse.provider); 
         System.assertEquals(expectedAuthProvResponse.oauthToken, actualAuthProvResponse.oauthToken); 
-        //System.assertEquals(expectedAuthProvResponse.oauthSecretOrRefreshToken, actualAuthProvResponse.oauthSecretOrRefreshToken); 
         System.assertEquals(expectedAuthProvResponse.state, actualAuthProvResponse.state); 
 
     }
@@ -136,7 +134,6 @@ public class JWTGenerateAuthTest {
     
         System.assertEquals(expectedAuthProvResponse.provider, actualAuthProvResponse.provider); 
         System.assertEquals(expectedAuthProvResponse.oauthToken, actualAuthProvResponse.oauthToken); 
-        //System.assertEquals(expectedAuthProvResponse.oauthSecretOrRefreshToken, actualAuthProvResponse.oauthSecretOrRefreshToken); 
         System.assertEquals(expectedAuthProvResponse.state, actualAuthProvResponse.state); 
 
     }
@@ -156,7 +153,6 @@ public class JWTGenerateAuthTest {
         
         try {
             final Auth.AuthProviderTokenResponse actualAuthProvResponse = provider.handleCallback(authProviderConfiguration, cbState); 
-            //System.Assert(false,'Should throw an Exception on bad http return code!');
         } catch (JWTGenerateAuth.TokenException ex) {
             System.AssertEquals('Invalid client identifier oauth.v2.InvalidClientIdentifier',ex.getMessage());
         }
@@ -177,7 +173,6 @@ public class JWTGenerateAuthTest {
         
         try {
             final Auth.AuthProviderTokenResponse actualAuthProvResponse = provider.handleCallback(authProviderConfiguration, cbState); 
-            //System.Assert(false,'Should throw an Exception on bad http return code!');
         } catch (JWTGenerateAuth.TokenException ex) {
             System.AssertEquals('invalid_client',ex.getMessage());
         }
@@ -232,8 +227,6 @@ public class JWTGenerateAuthTest {
         System.assertEquals(expectedUserData.firstName, actualUserData.firstName); 
         System.assertEquals(expectedUserData.lastName, actualUserData.lastName); 
         System.assertEquals(expectedUserData.fullName, actualUserData.fullName); 
-        //System.assertEquals(expectedUserData.email, actualUserData.email); 
-        //System.assertEquals(expectedUserData.username, actualUserData.username); 
         System.assertEquals(expectedUserData.locale, actualUserData.locale); 
         System.assertEquals(expectedUserData.provider, actualUserData.provider); 
         System.assertEquals(expectedUserData.siteLoginUrl, actualUserData.siteLoginUrl); 
@@ -250,7 +243,6 @@ public class JWTGenerateAuthTest {
  
         System.AssertEquals('client_credentials',(String)result.get(JWTGenerateAuth.GRANT_TYPE_PARAM),'Grant type did not match');
         System.AssertEquals(KEY,(String)result.get(JWTGenerateAuth.CLIENT_ID_PARAM),'Client key did not match');
-        //System.AssertEquals(SECRET,(String)result.get(JWTGenerateAuth.CLIENT_SECRET_PARAM),'Client secret did not match');
         System.AssertEquals(SCOPE,(String)result.get(JWTGenerateAuth.SCOPE_PARAM),'Scope did not match');
     }
 
@@ -262,7 +254,6 @@ public class JWTGenerateAuthTest {
         System.AssertEquals('[helloworld, HelloWorld_OAuth2-Product]',resp.api_product_list);
         System.AssertEquals(2,resp.api_product_list_json.size());
         System.AssertEquals('bobbywhite-eval',resp.organization_name);
-        //System.AssertEquals('developer@example.com',resp.developer_email);
         System.AssertEquals('Bearer',resp.token_type);
         System.AssertEquals('1521077832490',resp.issued_at);
         System.AssertEquals('gv6iCx48OaH76ufiGXBUlRTRTXxx',resp.access_token);
