@@ -3,7 +3,7 @@
     <fullName>Diagnostic_Code__c</fullName>
     <externalId>false</externalId>
     <label>Diagnostic Code</label>
-    <length>10</length>
+    <length>50</length>
     <required>false</required>
     <trackTrending>false</trackTrending>
     <type>Text</type>
