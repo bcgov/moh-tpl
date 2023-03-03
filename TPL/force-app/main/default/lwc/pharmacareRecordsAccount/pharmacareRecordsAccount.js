@@ -152,7 +152,7 @@ export default class PharmacareRecordsAccount extends LightningElement {
                     })
                 );
             }
-            else{
+            else if(result == 'Passed'){
                 this.dispatchEvent(
                     new ShowToastEvent({
                         title: 'Success',
@@ -160,6 +160,15 @@ export default class PharmacareRecordsAccount extends LightningElement {
                         variant: 'success'
                     })
                 );    
+            }
+            else if(result == null){
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Error',
+                        message: 'Case assignment did not succeed. Please try again!',
+                        variant: 'error'
+                    })
+                ); 
             }
             //Get the updated list with refreshApex.
             return this.refresh();
