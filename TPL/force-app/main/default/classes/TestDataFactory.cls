@@ -126,7 +126,6 @@ public with sharing class TestDataFactory {
         hcc.Practitioner_Name__c = 'Test Practitioner';
         hcc.Amount_Paid__c = 500;
         hcc.Total_Cost_Override__c = 6000;
-        hcc.Diagnostic_Treatment_Service__c = 'Testing Hospital Services';
         return hcc;
     }
 
