@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>HealthIdeas</label>
+    <protected>false</protected>
+    <values>
+        <field>Algorithm__c</field>
+        <value xsi:type="xsd:string">RS256</value>
+    </values>
+    <values>
+        <field>Aud__c</field>
+        <value xsi:type="xsd:string">https://login.microsoftonline.com/31f660a5-192a-4db3-92ba-ca424f1b259e/oauth2/v2.0/token</value>
+    </values>
+    <values>
+        <field>Auth_Provider_Name__c</field>
+        <value xsi:type="xsd:string">JwtToken</value>
+    </values>
+    <values>
+        <field>Callback_URL__c</field>
+        <value xsi:type="xsd:string">https://bcmohtpl--tpliam.sandbox.my.salesforce.com/services/authcallback/HealthIdeas</value>
+    </values>
+    <values>
+        <field>Iss__c</field>
+        <value xsi:type="xsd:string">04de01d2-8281-4673-a4a1-c7e98d1c4ab9</value>
+    </values>
+    <values>
+        <field>Jti__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>PEM__c</field>
+        <value xsi:type="xsd:string">MIIEpAIBAAKCAQEAmh78NaJk69IXxEtZbZx8sUTli3n9dR1Eh8fbhCn1FsCngWiJ qcsx11uG/poV/Yzt0gBAc2rEfOf2nw14lzjkSZ+HZWfquux2sFdXV6fVfxFRZFSK cBliiNp68FYMLCsNxRcuQomhXc4luH6EJ46+x5TG3bMCKmPD8Qdw4W8v7KsP6nMJ uORnVufWicE1nmaqNFJE7fZivvO/lvIRSThXfHJDNsx8ijs8ZtGzpTILAB7wI+v0 ZoDSgVViO9iqCviGG/GUcDCIRGqtNX/9yjHwpocl75Rmto4Rrz2FBPodSx1/Emnt by4MUnaTgAXF9RlJPIUQWlVcS5csAlbnWI8usQIDAQABAoIBADBD++AgF1Ly3JaQ slTtaO9rECf58DI5FDkhkdF2Alc5xjt0rYgLJnS3KTOatcBN3jyh7401posnacit w1I4cuXLm+9Z99zKKPFYqPW+jdHZbo/pGeG5UW5iXZXenLlIUmuiss4LpAlogc+h b2mj/oMqSI0tfkQgMkDNf8BZvbxz6XovzOPp3aPMYS2LXGbTqC+MZIhd7KQdt2pQ NiNZf6wzYQG6NESVFJ9iSXL6IhgWJ6bauFazovvtmhVDhcwkyNCqPP50dCtHlI+A nSFj6ohGuC3mt3SJr7y0AHe6GmE4PlCHjz/tZ2wHl6M67aqNF4X96/BhFZVFPFcw ns6Jo/ECgYEAyz2hZN/bXgrepPUm6x2Ifp11vtfmQ/+xWHZCzjxtwg0f9Ucm1OS+ 5o/cFgSLIydIXfKoXudzB1tVP3NMTQOxhudxvrrhRkG/jAX2q0evVDJnFiIoR+j2 bpf2esrjg10Rxjd1P28m5S4cllhcsYVQceiiZCJAXnhiLU/5hgKPXQMCgYEAwiEa Zi+dZe1dM3PQ/8lcgtyattJtdPx/k8gHnc96RLyqzJmkSGqLoyrxUIcDJONcyTYs fmDRs5q+DX5Jqx1lxM/6Jrm7ZIohbW7vfrCZHR/wwfY/mVlgs6AjALNlQYc739yg 9lngcba/0wKbpcGGQhwWVmy0xhC9VPTClnt2lTsCgYEAlHVwbz8V/pvyBo0M4LGy AssCN2V9zi34XaYFJqD9i8IKliBjPR/aUpDDM1IeUI9hTT7zvl9Spw0QOEkAc0E/ bEujyq6335onUSEKDhNO/zHSG1jYE68YU7CtWwTZLBvP3/qiqrOGteH4/9mL3CCF oq9L79kVK+zDylWg70LvdgECgYA2KN4gnDAhe7OA41LvydHRgJJ5ZwO6m6dMJ4ZY dMX731cXddXrji4e+6APg1tRM01zpXWMXJ6kqQtU4GLVJoJ6AjwcCb1KM29YBJc0 lThic8LLmlPsCI9+DbM2QtaBDaWaswcFM9X2Y7HowNWDzRYT45onynQ0vf7UcOTI 7vEKeQKBgQCYGPlsn/nmmhZJSo7VbL4DviZYZC6jHedFIe07Z0omoT5ergeZ92z5 B3Qr8FX3Q4ECN+h30tl/6w4tEtPKowmv7f5XgVzSStTkB3vHS+2LOIPBoWeOCVJs 0NGV6C+bRMfxTGO+wWC+97TE6q6k/2aUmDPHljlWWsZ7+18CVijewQ==</value>
+    </values>
+    <values>
+        <field>Scope__c</field>
+        <value xsi:type="xsd:string">api://17bb1195-c15e-4661-8f66-a461e23650d8</value>
+    </values>
+    <values>
+        <field>Sub__c</field>
+        <value xsi:type="xsd:string">04de01d2-8281-4673-a4a1-c7e98d1c4ab9</value>
+    </values>
+    <values>
+        <field>Token_End_Point__c</field>
+        <value xsi:type="xsd:string">https://login.microsoftonline.com/31f660a5-192a-4db3-92ba-ca424f1b259e/oauth2/v2.0/token</value>
+    </values>
+    <values>
+        <field>Typ__c</field>
+        <value xsi:type="xsd:string">JWT</value>
+    </values>
+    <values>
+        <field>X5t__c</field>
+        <value xsi:type="xsd:string">i0asznVpWXdnFZcpcFAHU/5dd4Q=</value>
+    </values>
+</CustomMetadata>
