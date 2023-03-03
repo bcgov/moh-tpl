@@ -94,7 +94,7 @@ public class JWTGenerateAuthTest {
         final Map<String,String> authProviderConfiguration = setupAuthProviderConfig(); 
         final JWTGenerateAuth provider = new JWTGenerateAuth(); 
         
-        Test.setMock(HttpCalloutMock.class, new ApigeeMockService(jsonGoodToken,200)); 
+        Test.setMock(HttpCalloutMock.class, new JWTMockService(jsonGoodToken,200)); 
     
         final Map<String,String> queryParams = new Map<String,String>(); 
         queryParams.put('code','code'); 
@@ -120,7 +120,7 @@ public class JWTGenerateAuthTest {
 
         final JWTGenerateAuth provider = new JWTGenerateAuth(); 
         
-        Test.setMock(HttpCalloutMock.class, new ApigeeMockService(jsonGoodToken,200)); 
+        Test.setMock(HttpCalloutMock.class, new JWTMockService(jsonGoodToken,200)); 
     
         final Map<String,String> queryParams = new Map<String,String>(); 
         queryParams.put('code','code'); 
@@ -143,7 +143,7 @@ public class JWTGenerateAuthTest {
         final Map<String,String> authProviderConfiguration = setupAuthProviderConfig(); 
         final JWTGenerateAuth provider = new JWTGenerateAuth(); 
         
-        Test.setMock(HttpCalloutMock.class, new ApigeeMockService(jsonError1,401)); 
+        Test.setMock(HttpCalloutMock.class, new JWTMockService(jsonError1,401)); 
     
         final Map<String,String> queryParams = new Map<String,String>(); 
         queryParams.put('code','code'); 
@@ -163,7 +163,7 @@ public class JWTGenerateAuthTest {
         final Map<String,String> authProviderConfiguration = setupAuthProviderConfig(); 
         final JWTGenerateAuth provider = new JWTGenerateAuth(); 
         
-        Test.setMock(HttpCalloutMock.class, new ApigeeMockService(jsonError2,401)); 
+        Test.setMock(HttpCalloutMock.class, new JWTMockService(jsonError2,401)); 
     
         final Map<String,String> queryParams = new Map<String,String>(); 
         queryParams.put('code','code'); 
@@ -183,7 +183,7 @@ public class JWTGenerateAuthTest {
         final Map<String,String> config = setupAuthProviderConfig(); 
         final JWTGenerateAuth provider = new JWTGenerateAuth(); 
         
-        Test.setMock(HttpCalloutMock.class, new ApigeeMockService(jsonGoodToken,200)); 
+        Test.setMock(HttpCalloutMock.class, new JWTMockService(jsonGoodToken,200)); 
 
         final Auth.OAuthRefreshResult actual = provider.refresh(config,'myUnusedRefreshToken');        
     
@@ -201,7 +201,7 @@ public class JWTGenerateAuthTest {
         Map<String,String> authProviderConfiguration = setupAuthProviderConfig(); 
         JWTGenerateAuth provider = new JWTGenerateAuth(); 
     
-        Test.setMock(HttpCalloutMock.class, new ApigeeMockService(jsonGoodToken,200)); 
+        Test.setMock(HttpCalloutMock.class, new JWTMockService(jsonGoodToken,200)); 
     
         Auth.AuthProviderTokenResponse response = new Auth.AuthProviderTokenResponse(PROVIDER_NAME, ACCESS_TOKEN ,'sampleOauthSecret', STATE); 
         Auth.UserData actualUserData = provider.getUserInfo(authProviderConfiguration, response) ; 
@@ -271,12 +271,12 @@ public class JWTGenerateAuthTest {
     
      
     // Implement a mock http response generator for Apigee. 
-    public class ApigeeMockService implements HttpCalloutMock 
+    public class JWTMockService implements HttpCalloutMock 
     {
         String jsonResponse;
         Integer httpCode;
 
-        public ApigeeMockService(String json, Integer code) {
+        public JWTMockService(String json, Integer code) {
             this.jsonResponse=json;
             this.httpCode=code;
         }
