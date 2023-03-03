@@ -3,8 +3,9 @@
     <fullName>Diagnostic_Treatment_Service__c</fullName>
     <externalId>false</externalId>
     <label>Diagnostic Treatment Service</label>
-    <length>32768</length>
+    <length>100</length>
+    <required>false</required>
     <trackTrending>false</trackTrending>
-    <type>LongTextArea</type>
-    <visibleLines>3</visibleLines>
+    <type>Text</type>
+    <unique>false</unique>
 </CustomField>

@@ -3,7 +3,9 @@
     <fullName>Location_Type_Description__c</fullName>
     <externalId>false</externalId>
     <label>Location Type Description</label>
+    <length>100</length>
     <required>false</required>
     <trackTrending>false</trackTrending>
-    <type>TextArea</type>
+    <type>Text</type>
+    <unique>false</unique>
 </CustomField>
