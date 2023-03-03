@@ -1,5 +1,5 @@
 /**
-  Custom Auth Provider for AIMS API Gateway
+  Custom Auth Provider 
 
   Implements the Client Credentials flow which is intended for server-to-server integrations.
 
