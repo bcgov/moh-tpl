@@ -580,7 +580,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Healthcare_Cost__c.Description_of_Service__c</field>
+        <field>Healthcare_Cost__c.Description_of_Service2__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -595,7 +595,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Healthcare_Cost__c.Diagnostic_Treatment_Service__c</field>
+        <field>Healthcare_Cost__c.Diagnostic_Treatment_Service2__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -660,7 +660,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Healthcare_Cost__c.Location_Type_Description__c</field>
+        <field>Healthcare_Cost__c.Location_Type_Description2__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -750,7 +750,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Healthcare_Cost__c.Specialty_Description__c</field>
+        <field>Healthcare_Cost__c.Specialty_Description2__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
