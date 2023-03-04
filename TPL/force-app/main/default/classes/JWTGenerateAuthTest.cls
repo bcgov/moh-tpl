@@ -174,7 +174,7 @@ public class JWTGenerateAuthTest {
         try {
             final Auth.AuthProviderTokenResponse actualAuthProvResponse = provider.handleCallback(authProviderConfiguration, cbState); 
         } catch (JWTGenerateAuth.TokenException ex) {
-            System.AssertEquals('invalid_client',ex.getMessage());
+            System.AssertEquals('invalid_client', ex.getMessage());
         }
     } 
 
