@@ -9,7 +9,7 @@ import DATE_OF_SERVICE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Date_of
 import TOTAL_COST_OVERRIDE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Total_Cost_Override__c';
 import FACILITY_NAME_FIELD from '@salesforce/schema/Healthcare_Cost__c.FacilityName__c';
 import FACILITY_TYPE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Facility_Type__c';
-import DESCRIPTION_OF_SERVICE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Description_of_Service__c'
+// import DESCRIPTION_OF_SERVICE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Description_of_Service__c'
 import FEE_ITEM_CODE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Fee_Item_Code__c';
 import FEE_ITEM_TITLE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Fee_Item_Title__c';
 import FEE_ITEM_DESCRIPTION_FIELD from '@salesforce/schema/Healthcare_Cost__c.Fee_Item_Description__c';
@@ -19,13 +19,13 @@ import DIAGNOSTIC_CODE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Diagnos
 import DIAGNOSTIC_DESCRIPTION_FIELD from '@salesforce/schema/Healthcare_Cost__c.Diagnostic_Description__c';
 import AMOUNT_PAID_FIELD from '@salesforce/schema/Healthcare_Cost__c.Amount_Paid__c';
 import SPECIALITY_CODE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Specialty_Code__c';
-import SPECIALITY_DESCRIPTION_FIELD from '@salesforce/schema/Healthcare_Cost__c.Specialty_Description__c';
+// import SPECIALITY_DESCRIPTION_FIELD from '@salesforce/schema/Healthcare_Cost__c.Specialty_Description__c';
 import PAYEE_NUMBER_FIELD from '@salesforce/schema/Healthcare_Cost__c.Payee_Number__c';
 import PAYEE_DESCRIPTION_FIELD from '@salesforce/schema/Healthcare_Cost__c.Payee_Description__c';
 import SERVICE_START_DATE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Service_Start_Date__c';
 import SERVICE_FINISH_DATE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Service_Finish_Date__c'
 import LOCATION_TYPE_CODE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Location_Type_Code__c';
-import LOCATION_TYPE_DESCRIPTION_FIELD from '@salesforce/schema/Healthcare_Cost__c.Location_Type_Description__c';
+// import LOCATION_TYPE_DESCRIPTION_FIELD from '@salesforce/schema/Healthcare_Cost__c.Location_Type_Description__c';
 import getHealthcareCostsMSPForAccount from '@salesforce/apex/HCCCostMSPRecord.getHealthcareCostsMSPForAccount';
 import updateHCCCaseInformation from '@salesforce/apex/HCCCostMSPRecord.updateHCCCaseInformation';
 
@@ -71,13 +71,13 @@ const COLUMNS = [
         editable: false,
         sortable: false
     },
-    {
+/* {
         label: 'Descripiton of Service',
         fieldName: DESCRIPTION_OF_SERVICE_FIELD.fieldApiName,
         type: 'text',
         editable: false,
         sortable: false
-    },
+    }, */
     {
         label: 'Fee Item Code',
         fieldName: FEE_ITEM_CODE_FIELD.fieldApiName,
@@ -148,13 +148,13 @@ const COLUMNS = [
         editable: false,
         sortable: true
     },
-    {
+  /*  {
         label: 'Speciality Description',
         fieldName: SPECIALITY_DESCRIPTION_FIELD.fieldApiName,
         type: 'text',
         editable: false,
         sortable: false
-    },
+    }, */
     {
         label: 'Payee Number',
         fieldName: PAYEE_NUMBER_FIELD.fieldApiName,
@@ -192,13 +192,13 @@ const COLUMNS = [
         editable: false,
         sortable: true
     },
-    {
+/*    {
         label: 'Location Type Description',
         fieldName: LOCATION_TYPE_DESCRIPTION_FIELD.fieldApiName,
         type: 'text',
         editable: false,
         sortable: false
-    }
+    } */
 ];
 
 export default class MspRecordsAccount extends LightningElement {

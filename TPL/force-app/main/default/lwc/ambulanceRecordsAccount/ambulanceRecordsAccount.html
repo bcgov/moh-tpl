@@ -6,6 +6,19 @@
           <br><lightning-button label="Assign Case" onclick={handleSelect}> 
             </lightning-button>
         </lightning-record-edit-form><br>
+
+        <lightning-layout>
+            <lightning-layout-item>
+                <lightning-input type="checkbox" label="Cost Include" checked={costInclude} onchange={handleCostIncludeChange}></lightning-input>
+            </lightning-layout-item>
+            <lightning-layout-item>
+                <lightning-input type="checkbox" label="Cost Review" checked={costReview} onchange={handleCostReviewChange}></lightning-input>
+            </lightning-layout-item>
+            <lightning-layout-item>
+                <lightning-input type="checkbox" label="All" checked={selectAll} onchange={handleSelectAllChange}></lightning-input>
+            </lightning-layout-item>
+        </lightning-layout>
+        <br>
         <!--CUSTOM DATATABLE-->
         <div style="height:400px">
             <lightning-datatable class="slds-max-medium-table_stacked" sorted-by={sortBy}

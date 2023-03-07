@@ -20,7 +20,7 @@ import SERVICE_TYPE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Service_Ty
 import STANDARD_DAILY_RATE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Standard_Daily_Rate__c';
 import TOTAL_COST_STADARD_FIELD from '@salesforce/schema/Healthcare_Cost__c.Total_Costs_Standard__c';
 import TOTAL_COST_OVERRIDE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Total_Cost_Override__c';
-import DIAGNOSTIC_TREATMENT_SERVICE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Diagnostic_Treatment_Service__c'
+// import DIAGNOSTIC_TREATMENT_SERVICE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Diagnostic_Treatment_Service__c'
 import getHealthcareCostsHospitalForAccount from '@salesforce/apex/HCCCostHospitalizationRecord.getHealthcareCostsHospitalForAccount';
 import updateHCCCaseInformation from '@salesforce/apex/HCCCostHospitalizationRecord.updateHCCCaseInformation';
 
@@ -146,13 +146,13 @@ const COLUMNS = [
         editable: false,
         sortable: true
     },
-    {
+ /*   {
         label: 'Diagnostic Treatment Service',
         fieldName : DIAGNOSTIC_TREATMENT_SERVICE_FIELD.fieldApiName,
         type: 'text',
         editable: false,
         sortable: true
-    }
+    } */
 ];
 
 export default class HospitalRecordsAccount extends LightningElement {
