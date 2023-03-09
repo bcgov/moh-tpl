@@ -1,9 +1,31 @@
 <template>
     <template if:true={records}>
            <!-- Ambulance Records -->
+           
      <lightning-card title="Ambulance Records">
-        <div class="slds-scrollable slds-m-around_medium" style="height:auto;width:auto">
-                <lightning-datatable
+        <lightning-layout>
+            <lightning-record-edit-form object-api-name="Healthcare_Cost__c" id="assignCostFields">
+                <lightning-layout-item>
+                    <lightning-input type="checkbox" label="Cost Include" checked={costInclude} onchange={handleCostInclude}></lightning-input>
+                </lightning-layout-item>
+                <lightning-layout-item>
+                    <lightning-input type="checkbox" label="Cost Review" checked={costReview} onchange={handleCostReview}></lightning-input>
+                </lightning-layout-item>
+                <br><lightning-button label="Cost Indicators" onclick={handleSelect}> 
+                </lightning-button>
+            </lightning-record-edit-form><br>
+            <lightning-layout-item>
+                <lightning-combobox
+                name="group-number-filter"
+                label="Select records to see" 
+                options={groupNumbers}
+                placeholder="Select an option"></lightning-combobox>
+        
+            </lightning-layout-item>   
+        </lightning-layout>
+
+        <div class="slds-scrollable slds-m-around_medium" onitemregister={handleItemRegister} style="height:auto;width:auto">
+           <!--     <lightning-datatable
                     key-field="Id"
                     data={recordsToDisplay}
                     columns={column}
@@ -12,7 +34,13 @@
                     sorted-direction={sortDirection}
                     onsort={doSorting}
                     draft-values={draftValues} show-row-number-column="false" style="width: auto;">
-                </lightning-datatable>
+                </lightning-datatable> -->
+
+            <c-custom-data-table class="slds-max-medium-table_stacked" onvaluechange={handleValueChange}
+                oncellchange={handleCellChange} data={recordsToDisplay} columns={column} show-row-number-column="false"
+                key-field="Id" draft-values={draftValues} onsave={handleSave} onrowselection={handleRowSelection} min-column-width="200" data-record="Id" onedit={handleEdit}
+                oncancel={handleCancel} style="width: auto;">
+            </c-custom-data-table>
             
             <template if:true={recordsToDisplay.error}>
                 <!-- handle Apex error -->

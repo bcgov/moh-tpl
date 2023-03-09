@@ -135,7 +135,7 @@ export default class AmbulanceRecordsAccount extends LightningElement {
         this.selectedCase = event.target.value;  
     }
      
-     async handleSelect(){
+    async handleSelect(){
      var el = this.template.querySelector('lightning-datatable');
         console.log(el);
         var selected = el.getSelectedRows();

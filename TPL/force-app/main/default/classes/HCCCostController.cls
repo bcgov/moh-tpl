@@ -10,8 +10,19 @@ public with sharing class HCCCostController {
         System.debug('List size to update cases : ' + listOfHealthcareCost);
         if(listOfHealthcareCost.size() > 0)
         {
-            update listOfHealthcareCost;
-            result = Label.Passed;
+            try{
+                update listOfHealthcareCost;
+                result = Label.Passed;
+            } 
+            catch (DmlException dmlexception){
+                result = Label.Failed;
+                System.debug(dmlexception.getMessage());
+            }
+            catch (Exception e){
+                result = Label.Failed;
+                System.debug(e.getMessage());
+            }
+            
         }
         else{
             result = Label.Failed;

@@ -70,6 +70,32 @@ public with sharing class HCCCostAmbulanceRecord {
     }
 
     @AuraEnabled
+    public static String updateCostInformation(List<Healthcare_Cost__c> hccList, Boolean costReviewValue, Boolean costIncludeValue){
+        String giveStatus = null;
+        Boolean checkFail = false;
+        
+        try {
+            if(hccList.size() == 0 || (!costReviewValue && !costIncludeValue)){
+                giveStatus = Label.Empty_Selection;
+                return giveStatus;
+            }
+            else {
+                for(Healthcare_Cost__c hcc: hccList){
+                    hcc.Cost_Include__c = costIncludeValue;
+                    hcc.Cost_Review__c = costIncludeValue;
+                }
+                giveStatus = Label.Passed;
+            }
+            update hccList;
+        }  
+        catch(DmlException dmlexception){
+            System.debug(dmlexception.getMessage());
+            giveStatus = Label.Failed;
+        }
+        return giveStatus;
+    }
+
+    @AuraEnabled
     public static String updateHCCCaseInformation (List<Healthcare_Cost__c> hccList, String caseId){
         List <Healthcare_Cost__c> updatedHealthcareCosts = new List<Healthcare_Cost__c>();
         String giveStatus = null;
@@ -77,7 +103,7 @@ public with sharing class HCCCostAmbulanceRecord {
        
         try{
             if(caseId == null || caseId.length() == 0 || hccList.size() == 0){
-                giveStatus = 'Empty Selection';
+                giveStatus = Label.Empty_Selection;
                 return giveStatus;
             }
             else{
@@ -106,7 +132,8 @@ public with sharing class HCCCostAmbulanceRecord {
             
         }
         catch(DmlException dmlexception){
-            dmlexception.getMessage();
+            System.debug(dmlexception.getMessage());
+            giveStatus = Label.Failed;
         }
         return giveStatus;
     }
