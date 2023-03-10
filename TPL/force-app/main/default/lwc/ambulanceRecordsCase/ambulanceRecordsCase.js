@@ -128,14 +128,22 @@ export default class AmbulanceRecordsCase extends LightningElement {
     event2;
     costInclude = false;
     costReview = false;
-    @api groupNumbers = ["All", "Manual Records"];
     showSpinner = false;
     lastSavedData;
     privateChildren = {}; //used to get the datatable lookup as private childern of customDatatable
     wiredRecords;
     draftValues = [];
+    selectedFilter= 'All Records';
 
+    filterOptions = [
+        { label: 'All Records', value: 'All Records' },
+        { label: 'Manual Records', value: 'Manual Records' },
+    ];
+    
+    
     connectedCallback() {
+        this.selectedFilter = 'All Records';
+        this.onLoad();
         this.event2 = setInterval(() => {
             this.refresh();
         }, 100);
@@ -171,31 +179,25 @@ export default class AmbulanceRecordsCase extends LightningElement {
         }
     }
 
-    @wire(getHealthcareCostsAmbulanceForCase, { caseId: '$recordId' })
-    healthcareCostsAmbulanceForCase(result){
-        this.wiredRecords = result;
-        const {data, error} = result;
+    onLoad(){
+        return getHealthcareCostsAmbulanceForCase({caseId: this.recordId, filterValue: this.selectedFilter})
+        .then(result=>{
+            this.wiredRecords = result;
+            if(result != null && result){
+                console.log('Data of Ambulance Records --> ' + JSON.stringify(result));
+                this.records = JSON.parse(JSON.stringify(result));
+                this.records.forEach(record =>{
+                    record.accountNameClass = 'slds-cell-edit';
+                })
+                this.totalRecords = result.length;
+                this.pageSize = this.pageSizeOptions[0]; 
+                this.paginationHelper(); // call helper menthod to update pagination logic
+            }
+        })
+        .catch(error =>{
+            console.log(error); 
+        })
 
-        if(data != null && data){
-            console.log('Data of Ambulance Records --> ' + JSON.stringify(data));
-            this.records = JSON.parse(JSON.stringify(data));
-            this.records.forEach(record =>{
-                record.accountNameClass = 'slds-cell-edit';
-            })
-            this.totalRecords = data.length;
-            this.pageSize = this.pageSizeOptions[0]; 
-            this.paginationHelper(); // call helper menthod to update pagination logic
-        }
-        else if(error){
-            console.error(error);
-        }
-        else if (error) {
-            this.records = undefined;
-            this.error = error;
-        } else {
-            this.error = undefined;
-            this.records = undefined;
-        }
         this.lastSavedData = this.records;
         this.showSpinner = false;
     }
@@ -461,6 +463,18 @@ export default class AmbulanceRecordsCase extends LightningElement {
       .catch(error =>{
         console.log(JSON.stringify(error));
       })
+    }
+
+    handleFilterChange(event) {
+        this.selectedFilter = event.target.value;
+        console.log('Selected Filter Value : ' + this.selectedFilter);
+        getHealthcareCostsAmbulanceForCase({caseId: this.recordId, filterValue: this.selectedFilter})
+        .then(result => {
+            this.recordsToDisplay = result;
+            this.wiredRecords;
+            return this.refresh();
+        });
+       
     }
 
      async handleSave(event){

@@ -13,14 +13,17 @@
                 </lightning-layout-item>
                 <br><lightning-button label="Cost Indicators" onclick={handleSelect}> 
                 </lightning-button>
-            </lightning-record-edit-form><br>
+            </lightning-record-edit-form>
+        </lightning-layout>
+        <lightning-layout>
             <lightning-layout-item>
                 <lightning-combobox
-                name="group-number-filter"
+                name="group-filter"
                 label="Select records to see" 
-                options={groupNumbers}
+                value={selectedFilter}
+                options={filterOptions}
+                onchange={handleFilterChange}
                 placeholder="Select an option"></lightning-combobox>
-        
             </lightning-layout-item>   
         </lightning-layout>
 
