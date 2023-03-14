@@ -5,13 +5,38 @@ public with sharing class HCCCostAmbulanceRecord {
     }
 
     @AuraEnabled(cacheable=true)
-    public static List <Healthcare_Cost__c> getHealthcareCostsAmbulanceForAccount(String accId)
+    public static List <Healthcare_Cost__c> getHealthcareCostsAmbulanceForAccount(String accId, String selectedFilterValue)
     {
         List<Healthcare_Cost__c> hccCostList = new List<Healthcare_Cost__c> ();
+        Boolean costInclude, costReview;
         try{
         	Id recordTypeId = getAmbulanceRecordId();
-            hccCostList = [select Case2__c, Case_Number__c, Cost_Include__c, Cost_Review__c, Name, Date_of_Service__c, Location_Responded__c, Basic_Amount__c, Cost__c, Total_Cost_Override__c, Site_Code__c, Facility__c, FacilityName__c, Sub_Total__c, Fixed_Wing_Helicopter__c from Healthcare_Cost__c where Account__c = :accId and RecordTypeId = :recordTypeId ORDER BY Name  LIMIT 50000];
-            System.debug('HCC Cost List (Account Records) : ' + hccCostList.size());      
+            if(selectedFilterValue == 'All Records'){
+                hccCostList = [select Case2__c, Case_Number__c, Cost_Include__c, Cost_Review__c, Name, Date_of_Service__c, Location_Responded__c, Basic_Amount__c, Cost__c, Total_Cost_Override__c, Site_Code__c, Facility__c, FacilityName__c, Sub_Total__c, Fixed_Wing_Helicopter__c from Healthcare_Cost__c where Account__c = :accId and RecordTypeId = :recordTypeId ORDER BY Name  LIMIT 50000];
+                System.debug('HCC Cost List (Account Records) : ' + hccCostList.size());      
+            }
+            else{
+                if(selectedFilterValue == 'Both Checked')
+                {
+                    costInclude = true;
+                    costReview =true;
+                }
+                else if(selectedFilterValue == 'Cost Review Checked'){
+                    costInclude = false;
+                    costReview = true;
+                }
+                else if(selectedFilterValue == 'Cost Include Checked'){
+                    costInclude = true;
+                    costReview = false;
+                }
+                else if(selectedFilterValue == 'Both Unchecked'){
+                    costInclude = false;
+                    costReview = false;
+                }
+                hccCostList = [select Case2__c, Case_Number__c, Cost_Include__c, Cost_Review__c, Name, Date_of_Service__c, Location_Responded__c, Basic_Amount__c, Cost__c, Total_Cost_Override__c, Site_Code__c, Facility__c, FacilityName__c, Sub_Total__c, Fixed_Wing_Helicopter__c from Healthcare_Cost__c where Account__c = :accId and RecordTypeId = :recordTypeId and Cost_Review__c = :costReview and Cost_Include__c = :costInclude ORDER BY Name  LIMIT 50000];
+                System.debug('HCC Cost List (Account Records) : ' + hccCostList.size());      
+    
+            }
         }
     
         catch(NullPointerException nullpointer){
@@ -38,12 +63,19 @@ public with sharing class HCCCostAmbulanceRecord {
     }
     
      @AuraEnabled(cacheable=true)
-    public static List <Healthcare_Cost__c> getHealthcareCostsAmbulanceForCase(String caseId){
+    public static List <Healthcare_Cost__c> getHealthcareCostsAmbulanceForCase(String caseId, String filterValue){
      	List<Healthcare_Cost__c> hccCostList = new List<Healthcare_Cost__c> ();
         try{
             Id recordTypeId = getAmbulanceRecordId();
-           
-            hccCostList = [select Cost_Include__c, Cost_Review__c, Name, Date_of_Service__c, Location_Responded__c, Basic_Amount__c, Cost__c, Total_Cost_Override__c, Fixed_Wing_Helicopter__c, Site_Code__c, Facility__c, FacilityName__c, Sub_Total__c, Source_System_ID__c from Healthcare_Cost__c where Case2__c = :caseId and RecordTypeId = :recordTypeId ORDER BY Name DESC  LIMIT 50000];
+            String sourceSystemId = null;
+            if(filterValue == Label.Manual_Records)
+            {
+                hccCostList = [select Cost_Include__c, Cost_Review__c, Name, Date_of_Service__c, Location_Responded__c, Basic_Amount__c, Cost__c, Total_Cost_Override__c, Fixed_Wing_Helicopter__c, Site_Code__c, Facility__c, FacilityName__c, Sub_Total__c, Source_System_ID__c from Healthcare_Cost__c where Case2__c = :caseId and RecordTypeId = :recordTypeId and Source_System_ID__c = :sourceSystemId ORDER BY Name DESC  LIMIT 50000];
+
+            }
+            else{
+                hccCostList = [select Cost_Include__c, Cost_Review__c, Name, Date_of_Service__c, Location_Responded__c, Basic_Amount__c, Cost__c, Total_Cost_Override__c, Fixed_Wing_Helicopter__c, Site_Code__c, Facility__c, FacilityName__c, Sub_Total__c, Source_System_ID__c from Healthcare_Cost__c where Case2__c = :caseId and RecordTypeId = :recordTypeId ORDER BY Name DESC  LIMIT 50000];
+            } 
             
      }
         catch(NullPointerException nullpointer){
@@ -60,11 +92,10 @@ public with sharing class HCCCostAmbulanceRecord {
         List <Healthcare_Cost__c> updatedHealthcareCosts = new List<Healthcare_Cost__c>();
         String giveStatus = null;
         Boolean checkFail = false;
-        Integer totalResultsCount = hccList.size();
-        Integer verifyFalseResultCount = 0;
+       
         try{
             if(caseId == null || caseId.length() == 0 || hccList.size() == 0){
-                giveStatus = Label.Failed;
+                giveStatus = Label.Empty_Selection;
                 return giveStatus;
             }
             else{
@@ -73,7 +104,7 @@ public with sharing class HCCCostAmbulanceRecord {
                 
                     if(hcc.Cost_Include__c == true || hcc.Cost_Review__c == true){
                         checkFail = true;
-                        verifyFalseResultCount ++;
+                        break;
                       
                     }
                     else{
@@ -81,19 +112,20 @@ public with sharing class HCCCostAmbulanceRecord {
                         checkFail = false;
                     }      
                 }
-                
-                if(verifyFalseResultCount == totalResultsCount){
+                if(checkFail){
                     giveStatus = Label.Failed;
-                    return giveStatus;
                 }
                 else{
                     update updatedHealthcareCosts;
                     giveStatus = Label.Passed;
+    
                 }
             }
+            
         }
         catch(DmlException dmlexception){
-            dmlexception.getMessage();
+            System.debug(dmlexception.getMessage());
+            giveStatus = Label.Failed;
         }
         return giveStatus;
     }

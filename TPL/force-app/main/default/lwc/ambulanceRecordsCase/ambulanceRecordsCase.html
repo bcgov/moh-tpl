@@ -2,17 +2,23 @@
     <template if:true={records}>
            <!-- Ambulance Records -->
      <lightning-card title="Ambulance Records">
+        <lightning-layout>
+            <lightning-layout-item>
+                <lightning-combobox
+                name="group-filter"
+                label="Select records to see" 
+                value={selectedFilter}
+                options={filterOptions}
+                onchange={handleFilterChange}
+                placeholder="Select an option"></lightning-combobox>
+            </lightning-layout-item>   
+        </lightning-layout>
         <div class="slds-scrollable slds-m-around_medium" style="height:auto;width:auto">
-                <lightning-datatable
-                    key-field="Id"
-                    data={recordsToDisplay}
-                    columns={column}
-                    onsave={handleSave}
-                    sorted-by={sortBy}
-                    sorted-direction={sortDirection}
-                    onsort={doSorting}
-                    draft-values={draftValues} show-row-number-column="false" style="width: auto;">
-                </lightning-datatable>
+            <c-custom-data-table class="slds-max-medium-table_stacked" onvaluechange={handleValueChange}
+            data={recordsToDisplay} columns={column} show-row-number-column="false"
+            key-field="Id" draft-values={draftValues} onsave={handleSave} min-column-width="200" data-record="Id" onedit={handleEdit}
+           style="width: auto;">
+        </c-custom-data-table>
             
             <template if:true={recordsToDisplay.error}>
                 <!-- handle Apex error -->

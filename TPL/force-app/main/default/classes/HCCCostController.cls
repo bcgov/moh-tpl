@@ -7,7 +7,7 @@ public with sharing class HCCCostController {
             JSON.serialize(data),
             List<Healthcare_Cost__c>.class
         );
-        System.debug('List size to update cases : ' + listOfHealthcareCost);
+        System.debug('List size to update cases : ' + listOfHealthcareCost.size());
         if(listOfHealthcareCost.size() > 0)
         {
             update listOfHealthcareCost;
