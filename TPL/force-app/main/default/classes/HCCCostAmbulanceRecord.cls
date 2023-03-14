@@ -11,25 +11,25 @@ public with sharing class HCCCostAmbulanceRecord {
         Boolean costInclude, costReview;
         try{
         	Id recordTypeId = getAmbulanceRecordId();
-            if(selectedFilterValue == 'All Records'){
+            if(selectedFilterValue == Label.TPL_All_Records){
                 hccCostList = [select Case2__c, Case_Number__c, Cost_Include__c, Cost_Review__c, Name, Date_of_Service__c, Location_Responded__c, Basic_Amount__c, Cost__c, Total_Cost_Override__c, Site_Code__c, Facility__c, FacilityName__c, Sub_Total__c, Fixed_Wing_Helicopter__c from Healthcare_Cost__c where Account__c = :accId and RecordTypeId = :recordTypeId ORDER BY Name  LIMIT 50000];
                 System.debug('HCC Cost List (Account Records) : ' + hccCostList.size());      
             }
             else{
-                if(selectedFilterValue == 'Both Checked')
+                if(selectedFilterValue == Label.TPL_Both_Checked)
                 {
                     costInclude = true;
                     costReview =true;
                 }
-                else if(selectedFilterValue == 'Cost Review Checked'){
+                else if(selectedFilterValue == Label.TPL_Cost_Review_Checked){
                     costInclude = false;
                     costReview = true;
                 }
-                else if(selectedFilterValue == 'Cost Include Checked'){
+                else if(selectedFilterValue == Label.TPL_Cost_Include_Checked){
                     costInclude = true;
                     costReview = false;
                 }
-                else if(selectedFilterValue == 'Both Unchecked'){
+                else if(selectedFilterValue == Label.TPL_Both_Unchecked){
                     costInclude = false;
                     costReview = false;
                 }
@@ -95,7 +95,7 @@ public with sharing class HCCCostAmbulanceRecord {
        
         try{
             if(caseId == null || caseId.length() == 0 || hccList.size() == 0){
-                giveStatus = Label.Empty_Selection;
+                giveStatus = Label.TPL_Empty_Selection;
                 return giveStatus;
             }
             else{
@@ -113,11 +113,11 @@ public with sharing class HCCCostAmbulanceRecord {
                     }      
                 }
                 if(checkFail){
-                    giveStatus = Label.Failed;
+                    giveStatus = Label.TPL_Failed;
                 }
                 else{
                     update updatedHealthcareCosts;
-                    giveStatus = Label.Passed;
+                    giveStatus = Label.TPL_Passed;
     
                 }
             }

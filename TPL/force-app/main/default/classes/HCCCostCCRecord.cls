@@ -44,11 +44,11 @@ public with sharing class HCCCostCCRecord {
         try {
             if(deletionRecords.size() == 0 || deletionRecords == null)
             {
-                result = Label.Failed;
+                result = Label.TPL_Failed;
             }
             else{
                 delete deletionRecords;
-                result = Label.Passed;
+                result = Label.TPL_Passed;
             }
         } catch (DMLException dml) {
             dml.getMessage();

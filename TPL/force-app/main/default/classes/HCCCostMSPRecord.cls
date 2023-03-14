@@ -61,7 +61,7 @@ public with sharing class HCCCostMSPRecord {
         Integer verifyFalseResultCount = 0;
         try{
             if(caseId == null || caseId.length() == 0 || hccList.size() == 0){
-                giveStatus = Label.Failed;
+                giveStatus = Label.TPL_Failed;
                 return giveStatus;
             }
             else{
@@ -80,12 +80,12 @@ public with sharing class HCCCostMSPRecord {
                 }
                 
                 if(verifyFalseResultCount == totalResultsCount){
-                    giveStatus = Label.Failed;
+                    giveStatus = Label.TPL_Failed;
                     return giveStatus;
                 }
                 else{
                     update updatedHealthcareCosts;
-                    giveStatus = Label.Passed;
+                    giveStatus = Label.TPL_Passed;
                 }
             }
         }

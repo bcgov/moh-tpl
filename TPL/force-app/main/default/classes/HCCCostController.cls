@@ -11,10 +11,10 @@ public with sharing class HCCCostController {
         if(listOfHealthcareCost.size() > 0)
         {
             update listOfHealthcareCost;
-            result = Label.Passed;
+            result = Label.TPL_Passed;
         }
         else{
-            result = Label.Failed;
+            result = Label.TPL_Failed;
         }
         return result;
     }
