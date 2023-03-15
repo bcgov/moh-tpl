@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
+    <labels>
+        <fullName>Failed</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Failed</shortDescription>
+        <value>Failed</value>
+    </labels>
+    <labels>
+        <fullName>Passed</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Passed</shortDescription>
+        <value>Passed</value>
+    </labels>
+    <labels>
+        <fullName>TPL_All_Records</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>All Records</shortDescription>
+        <value>All Records</value>
+    </labels>
+    <labels>
+        <fullName>TPL_Both_Checked</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Both Checked</shortDescription>
+        <value>Both Checked</value>
+    </labels>
+    <labels>
+        <fullName>TPL_Both_Unchecked</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Both Unchecked</shortDescription>
+        <value>Both Unchecked</value>
+    </labels>
+    <labels>
+        <fullName>TPL_Cost_Include_Checked</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Cost Include Checked</shortDescription>
+        <value>Cost Include Checked</value>
+    </labels>
+    <labels>
+        <fullName>TPL_Cost_Review_Checked</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Cost Review Checked</shortDescription>
+        <value>Cost Review Checked</value>
+    </labels>
+    <labels>
+        <fullName>TPL_Empty_Selection</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Empty Selection</shortDescription>
+        <value>Empty Selection</value>
+    </labels>
+    <labels>
+        <fullName>TPL_Failed</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Failed</shortDescription>
+        <value>Failed</value>
+    </labels>
+    <labels>
+        <fullName>TPL_Manual_Records</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Manual Records</shortDescription>
+        <value>Manual Records</value>
+    </labels>
+    <labels>
+        <fullName>TPL_Passed</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Passed</shortDescription>
+        <value>Passed</value>
+    </labels>
+</CustomLabels>
