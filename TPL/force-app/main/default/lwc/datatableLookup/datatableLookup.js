@@ -1,3 +1,4 @@
+/* eslint-disable @lwc/lwc/no-api-reassignments */
 import { LightningElement, api, wire } from 'lwc';
 import { loadStyle } from "lightning/platformResourceLoader";
 import CustomDataTableResource from "@salesforce/resourceUrl/CustomDataTable";
