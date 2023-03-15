@@ -103,7 +103,7 @@ public with sharing class TestDataFactory {
         hcc.CCI_Level__c = 'High';
         hcc.Standard_Daily_Rate__c = 4500;
         hcc.Total_Cost_Override__c = 6000;
-        hcc.Diagnostic_Treatment_Service__c = 'Testing Hospital Services';
+        hcc.Diagnostic_Treatment_Service2__c = 'Testing Hospital Services';
         return hcc;
     }
 
@@ -121,12 +121,11 @@ public with sharing class TestDataFactory {
         hcc.Cost_Include__c = true;
         hcc.Cost_Review__c = true;
         hcc.Date_of_Service__c = Date.newInstance(2023, 2, 17);
-        hcc.Description_of_Service__c = 'Test MSP Service';
+        hcc.Description_of_Service2__c = 'Test MSP Service';
         hcc.Practitioner_Number__c = '234A';
         hcc.Practitioner_Name__c = 'Test Practitioner';
         hcc.Amount_Paid__c = 500;
         hcc.Total_Cost_Override__c = 6000;
-        hcc.Diagnostic_Treatment_Service__c = 'Testing Hospital Services';
         return hcc;
     }
 
