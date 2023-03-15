@@ -4,7 +4,7 @@
          <members>Case_Status_Reopened-1</members>
         <name>Flow</name>
     </types>
-    -->
+    
  <types>
         <members>Case.Ambulance_Total__c</members>   
         <members>Case.Continuing_Care_Total__c</members>
@@ -16,7 +16,7 @@
         <members>Healthcare_Cost__c.Service_Type__c</members>
         <members>Healthcare_Cost__c.Total_Override__c</members>
         <name>CustomField</name>
-    </types>
+    </types> -->
     
     <!--types>
         <members>Healthcare_Cost__c.Total_Original_Cost__c</members>
@@ -33,7 +33,7 @@
         <name>CustomField</name>
     </types>
     -->
-    <types>
+   <!-- <types>
         <members>Summary_Calculation_of_related_HealthCare_Cost</members>
         <members>Attached_Facility_to_Ambulance_record</members>
         <name>Flow</name>
@@ -51,9 +51,9 @@
     <types>
         <members>Payment.Payment_Date__c</members>
         <name>CustomField</name>
-    </types-->
+    </types>
     <types>
         <members>Contact.Gender__c</members>
         <name>CustomField</name>
-    </types>
+    </types> -->
 </Package>
