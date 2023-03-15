@@ -200,8 +200,6 @@ export default class AmbulanceRecordsAccount extends LightningElement {
             }
             //Get the updated list with refreshApex.
             return this.refresh();
-           
-            
         })
         .catch(error => {
             console.log('error : ' + JSON.stringify(error));
@@ -215,7 +213,6 @@ export default class AmbulanceRecordsAccount extends LightningElement {
         return getHealthcareCostsAmbulanceForAccount({accId: this.recordId, selectedFilterValue: this.selectedFilter})
         .then(result=>{
             console.log('Length of records : ' + result.length);
-            console.log('Cost Review : ' + this.costReview + ", Cost Include : " + this.costInclude);
             this.wiredRecords = result;
             if(result != null && result){
                 this.records = JSON.parse(JSON.stringify(result));
@@ -312,38 +309,5 @@ export default class AmbulanceRecordsAccount extends LightningElement {
         this.selectedFilter = event.target.value;
         console.log('Selected Filter Value : ' + this.selectedFilter);
         this.onLoad();       
-    }
-
-    handleSelectAllChange(event){
-        this.selectAll = event.target.checked;
-        console.log('Select All Value : ' + this.selectAll);
-        if(this.selectAll){
-            getHealthcareCostsAmbulanceForAccount({accId: this.recordId, costIncludeValue: null, costReviewValue: null})
-            .then(result=>{
-                this.recordsToDisplay = result;
-             //   this.paginationHelper();
-                this.wiredRecords;
-                console.log(JSON.stringify(this.recordsToDisplay));
-                return this.refresh();
-            })
-        }
-        else{
-            if(!this.selectAll){
-                if((this.costInclude || !this.costInclude) && (this.costReview || !this.costReview)){
-                    this.costInclude = false;
-                    this.costReview = false;
-                   
-                }
-            }
-            getHealthcareCostsAmbulanceForAccount({accId: this.recordId, costIncludeValue: this.costInclude, costReviewValue: this.costReview})
-            .then(result=>{
-                this.recordsToDisplay = result;
-               // this.paginationHelper();
-                this.wiredRecords;
-                console.log(JSON.stringify(this.recordsToDisplay));
-                return this.refresh();
-            });
-            
-        }
     }
 }

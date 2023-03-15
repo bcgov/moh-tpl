@@ -2,6 +2,11 @@
     <template if:true={records}>
            <!-- Ambulance Records -->
      <lightning-card title="Ambulance Records">
+       
+        <lightning-record-edit-form object-api-name="Healthcare_Cost__c"  class="slds-text-align_left" id="assignCases" >
+            <lightning-button label="Delete selected Records" onclick={handleSelect}></lightning-button>
+        </lightning-record-edit-form>
+       
         <lightning-layout>
             <lightning-layout-item>
                 <lightning-combobox
@@ -13,10 +18,10 @@
                 placeholder="Select an option"></lightning-combobox>
             </lightning-layout-item>   
         </lightning-layout>
-        <div class="slds-scrollable slds-m-around_medium" style="height:auto;width:auto">
+        <div class="slds-scrollable slds-m-around_medium" style="height:auto;width:auto" onitemregister={handleItemRegister}>
             <c-custom-data-table class="slds-max-medium-table_stacked" onvaluechange={handleValueChange}
             data={recordsToDisplay} columns={column} show-row-number-column="false"
-            key-field="Id" draft-values={draftValues} onsave={handleSave} min-column-width="200" data-record="Id" onedit={handleEdit}
+            key-field="Id" draft-values={draftValues} onsave={handleSave} oncancel={handleCancel} min-column-width="200" data-record="Id" onedit={handleEdit}
            style="width: auto;">
         </c-custom-data-table>
             

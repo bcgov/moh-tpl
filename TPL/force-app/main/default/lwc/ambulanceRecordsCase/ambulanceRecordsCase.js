@@ -18,6 +18,7 @@ import COST_FIELD from '@salesforce/schema/Healthcare_Cost__c.Cost__c';
 import SUB_TOTAL_FIELD from '@salesforce/schema/Healthcare_Cost__c.Sub_Total__c';
 import getHealthcareCostsAmbulanceForCase from '@salesforce/apex/HCCCostAmbulanceRecord.getHealthcareCostsAmbulanceForCase';
 import saveDraftValues from '@salesforce/apex/HCCCostController.saveDraftValues'; 
+import deleteAmbulanceRecords from '@salesforce/apex/HCCCostAmbulanceRecord.deleteAmbulanceRecords';
 
 const MANNUAL_COLUMNS = [
     {
@@ -43,7 +44,6 @@ const MANNUAL_COLUMNS = [
     {
         label: 'Location Responded',
         fieldName: LOCATION_RESPONDED_FIELD.fieldApiName,
-        type: 'text',
         editable: true,
         sortable:true
     },
@@ -283,6 +283,7 @@ export default class AmbulanceRecordsCase extends LightningElement {
             this.column = INTEGRATION_COLUMNS;
         }
         this.onLoad();
+        return this.refresh();
     }
 
     handleRecordsPerPage(event) {
@@ -394,6 +395,14 @@ export default class AmbulanceRecordsCase extends LightningElement {
       
     }
 
+    handleCancel(event) {
+        event.preventDefault();
+        this.records = JSON.parse(JSON.stringify(this.lastSavedData));
+        this.handleWindowOnclick('reset');
+        this.draftValues = [];
+        return this.refresh();
+    }
+
     handleEdit(event) {
         event.preventDefault();
         let dataRecieved = event.detail.data;
@@ -453,18 +462,63 @@ export default class AmbulanceRecordsCase extends LightningElement {
         });
     }
 
+    async handleSelect()
+    {
+        var el = this.template.querySelector('c-custom-data-table');
+        console.log(el);
+        var selected = el.getSelectedRows();
+        //console.log(selected);
+        console.log('selectedRows : ' + selected);
+        let selectedCostRecords = [];
+        console.log('Selected Filter : ' + this.selectedFilter);
+        selected.forEach(function(element){
+        selectedCostRecords.push(element);
+           console.log(element);   
+        });
+        await deleteAmbulanceRecords({deletionRecords: selectedCostRecords, filterOption: this.selectedFilter})
+        .then((result) => {
+            console.log('Result : ' + result);
+           if(result == 'Passed'){
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Success',
+                    message: 'Selected Ambulance record(s) deleted successfully',
+                    variant: 'success'
+                })
+            );    
+            this.onLoad();
+           }
+            else if(result == 'Failed' || result == null){
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Error',
+                        message: 'Only Manual Records can be deleted. Please select Manual records for deletion.',
+                        variant: 'error'
+                    })
+                );     
+            }    
+            //Get the updated list with refreshApex.
+            return this.refresh();
+            
+        })
+        .catch(error => {
+            console.log('error : ' + JSON.stringify(error));
+        });
+    }
+
     async refresh(){
         await refreshApex(this.wiredRecords);
     }
 
     async handleSave(event){
+        event.preventDefault();
         this.showSpinner = true;
         console.log(JSON.stringify(event.detail.draftValues));
         await saveDraftValues({data: event.detail.draftValues})
         .then((result) => {
-            this.draftValues = [];
             console.log("result : " + result);
             if(result == 'Passed'){
+                this.draftValues = [];   
                 this.dispatchEvent(
                     new ShowToastEvent({
                         title: 'Success',
@@ -477,10 +531,12 @@ export default class AmbulanceRecordsCase extends LightningElement {
                 refreshApex(this.wiredRecords).then(() => {
                 this.records.forEach(record => {
                     record.accountNameClass = 'slds-cell-edit';
-                });          
+                });  
+                    
                 });    
                 }
                 else if(result == 'Failed' || result == null){
+                    this.draftValues = [];   
                     this.dispatchEvent(
                         new ShowToastEvent({
                             title: 'Error',
@@ -489,12 +545,13 @@ export default class AmbulanceRecordsCase extends LightningElement {
                         })
                     );   
             }    
-             
+            return this.refresh();
             })
             .catch(error => {
                 console.log('error : ' + JSON.stringify(error));
+                this.showSpinner = false;
             });
-            this.refresh();
+            
     }
     
 }
