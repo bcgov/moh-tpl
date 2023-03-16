@@ -392,11 +392,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>test__c</field>
-            <table>Case</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>Total_Case_Value__c</field>
             <table>Case</table>
         </columns>
