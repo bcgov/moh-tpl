@@ -132,6 +132,7 @@
             <table>Case</table>
         </columns>
         <columns>
+            
             <checkedByDefault>false</checkedByDefault>
             <field>Owner</field>
             <table>Case</table>
