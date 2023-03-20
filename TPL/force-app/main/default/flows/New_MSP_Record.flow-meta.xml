@@ -77,7 +77,7 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Description_of_Service__c</field>
+            <field>Description_of_Service2__c</field>
             <value>
                 <elementReference>Description_of_Service</elementReference>
             </value>
@@ -131,7 +131,7 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Location_Type_Description__c</field>
+            <field>Location_Type_Description2__c</field>
             <value>
                 <elementReference>Location_Type_Description</elementReference>
             </value>
@@ -191,7 +191,7 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Specialty_Description__c</field>
+            <field>Specialty_Description2__c</field>
             <value>
                 <elementReference>Specialty_Description</elementReference>
             </value>

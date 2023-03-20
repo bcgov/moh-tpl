@@ -229,7 +229,7 @@
             <label>When specific is chosen</label>
         </rules>
     </decisions>
-    <description>Updated Lookup field</description>
+    <description>Updated Diagnostic_Treatment_Service2 field</description>
     <dynamicChoiceSets>
         <name>CCILevel</name>
         <dataType>Picklist</dataType>
@@ -323,7 +323,7 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Diagnostic_Treatment_Service__c</field>
+            <field>Diagnostic_Treatment_Service2__c</field>
             <value>
                 <elementReference>Diagnostic_Treatment_Service</elementReference>
             </value>
@@ -425,9 +425,9 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Diagnostic_Treatment_Service__c</field>
+            <field>Diagnostic_Treatment_Service2__c</field>
             <value>
-                <elementReference>Diagnostic_Treatment_Service</elementReference>
+                <elementReference>Diagnostic_Treatment_Service_B</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -527,7 +527,7 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Diagnostic_Treatment_Service__c</field>
+            <field>Diagnostic_Treatment_Service2__c</field>
             <value>
                 <elementReference>Diagnostic_Treatment_Service_DOA</elementReference>
             </value>
@@ -629,7 +629,7 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Diagnostic_Treatment_Service__c</field>
+            <field>Diagnostic_Treatment_Service2__c</field>
             <value>
                 <elementReference>Diagnostic_Treatment_Service_DOAF</elementReference>
             </value>
@@ -731,7 +731,7 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Diagnostic_Treatment_Service__c</field>
+            <field>Diagnostic_Treatment_Service2__c</field>
             <value>
                 <elementReference>Diagnostic_Treatment_Service_F</elementReference>
             </value>
@@ -833,7 +833,7 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Diagnostic_Treatment_Service__c</field>
+            <field>Diagnostic_Treatment_Service2__c</field>
             <value>
                 <elementReference>Diagnostic_Treatment_Service_FDOA</elementReference>
             </value>
@@ -2708,7 +2708,7 @@
                 <fields>
                     <name>Diagnostic_Treatment_Service_FDOA</name>
                     <defaultValue>
-                        <stringValue>{!Diagnostic_Treatment_Service}</stringValue>
+                        <stringValue>{!Diagnostic_Treatment_Service_F}</stringValue>
                     </defaultValue>
                     <fieldText>Diagnostic Treatment Service</fieldText>
                     <fieldType>LargeTextArea</fieldType>

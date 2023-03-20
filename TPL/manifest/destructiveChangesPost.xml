@@ -15,4 +15,11 @@
          <members>Mandatory_Account_Update</members>
         <name>Flow</name>
     </types> -->
+    <types>
+        <members>Healthcare_Cost__c.Description_of_Service__c</members>
+        <members>Healthcare_Cost__c.Diagnostic_Treatment_Service__c</members>
+        <members>Healthcare_Cost__c.Location_Type_Description__c</members>
+        <members>Healthcare_Cost__c.Specialty_Description__c</members>
+        <name>CustomField</name>
+    </types>
 </Package>
