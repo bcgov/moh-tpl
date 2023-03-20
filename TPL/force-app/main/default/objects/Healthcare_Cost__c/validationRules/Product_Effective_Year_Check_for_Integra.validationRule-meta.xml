@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Product_Effective_Year_Check_for_Integra</fullName>
+    <active>true</active>
+    <description>This rule will validate the product effective year and the year of adimition.</description>
+    <errorConditionFormula>NOT(Text(year (  Date_of_Admission__c ))  =   Service_Provided_by_Facility__r.Effective_year__c)</errorConditionFormula>
+    <errorMessage>Product effective year does not match with Year of Admission.</errorMessage>
+</ValidationRule>
