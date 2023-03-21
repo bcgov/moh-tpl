@@ -229,7 +229,7 @@
             <label>When specific is chosen</label>
         </rules>
     </decisions>
-    <description>Updated Diagnostic_Treatment_Service2 field</description>
+    <description>Added Populate Intervention Code and CCI Level Subflow</description>
     <dynamicChoiceSets>
         <name>CCILevel</name>
         <dataType>Picklist</dataType>
@@ -271,8 +271,7 @@
         <locationX>1634</locationX>
         <locationY>758</locationY>
         <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Get_Case_Record</targetReference>
+            <targetReference>Populate_Intervention_Code_and_CCI_Level</targetReference>
         </connector>
         <inputAssignments>
             <field>Account__c</field>
@@ -373,8 +372,7 @@
         <locationX>1370</locationX>
         <locationY>878</locationY>
         <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Get_Case_Record</targetReference>
+            <targetReference>Populate_Intervention_Code_and_CCI_Level_Both</targetReference>
         </connector>
         <inputAssignments>
             <field>Account__c</field>
@@ -475,8 +473,7 @@
         <locationX>314</locationX>
         <locationY>1238</locationY>
         <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Get_Case_Record</targetReference>
+            <targetReference>Populate_Intervention_Code_and_CCI_Level_DOA</targetReference>
         </connector>
         <inputAssignments>
             <field>Account__c</field>
@@ -577,8 +574,7 @@
         <locationX>50</locationX>
         <locationY>1358</locationY>
         <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Get_Case_Record</targetReference>
+            <targetReference>Populate_Intervention_Code_and_CCI_Level_DOAF</targetReference>
         </connector>
         <inputAssignments>
             <field>Account__c</field>
@@ -679,8 +675,7 @@
         <locationX>1106</locationX>
         <locationY>1238</locationY>
         <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Get_Case_Record</targetReference>
+            <targetReference>Populate_Intervention_Code_and_CCI_Level_F</targetReference>
         </connector>
         <inputAssignments>
             <field>Account__c</field>
@@ -781,8 +776,7 @@
         <locationX>578</locationX>
         <locationY>1358</locationY>
         <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Get_Case_Record</targetReference>
+            <targetReference>Populate_Intervention_Code_and_CCI_Level_FDOA</targetReference>
         </connector>
         <inputAssignments>
             <field>Account__c</field>
@@ -3039,6 +3033,150 @@
         </connector>
     </start>
     <status>Active</status>
+    <subflows>
+        <name>Populate_Intervention_Code_and_CCI_Level</name>
+        <label>Populate Intervention Code and CCI Level</label>
+        <locationX>1634</locationX>
+        <locationY>878</locationY>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Get_Case_Record</targetReference>
+        </connector>
+        <flowName>Populate_Intervention_code_CCI_Level_for_Hospitalization_Records</flowName>
+        <inputAssignments>
+            <name>HCCrecordId</name>
+            <value>
+                <elementReference>New_Hospitalization</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>productrecordId</name>
+            <value>
+                <elementReference>StoreServiceProvidedbyFacility</elementReference>
+            </value>
+        </inputAssignments>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </subflows>
+    <subflows>
+        <name>Populate_Intervention_Code_and_CCI_Level_Both</name>
+        <label>Populate Intervention Code and CCI Level Both</label>
+        <locationX>1370</locationX>
+        <locationY>998</locationY>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Get_Case_Record</targetReference>
+        </connector>
+        <flowName>Populate_Intervention_code_CCI_Level_for_Hospitalization_Records</flowName>
+        <inputAssignments>
+            <name>HCCrecordId</name>
+            <value>
+                <elementReference>New_Hospitalization_from_Both</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>productrecordId</name>
+            <value>
+                <elementReference>StoreServiceProvidedbyFacility_B</elementReference>
+            </value>
+        </inputAssignments>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </subflows>
+    <subflows>
+        <name>Populate_Intervention_Code_and_CCI_Level_DOA</name>
+        <label>Populate Intervention Code and CCI Level DOA</label>
+        <locationX>314</locationX>
+        <locationY>1358</locationY>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Get_Case_Record</targetReference>
+        </connector>
+        <flowName>Populate_Intervention_code_CCI_Level_for_Hospitalization_Records</flowName>
+        <inputAssignments>
+            <name>HCCrecordId</name>
+            <value>
+                <elementReference>New_Hospitalization_from_DOA</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>productrecordId</name>
+            <value>
+                <elementReference>StoreServiceProvidedbyFacility_DOA</elementReference>
+            </value>
+        </inputAssignments>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </subflows>
+    <subflows>
+        <name>Populate_Intervention_Code_and_CCI_Level_DOAF</name>
+        <label>Populate Intervention Code and CCI Level DOAF</label>
+        <locationX>50</locationX>
+        <locationY>1478</locationY>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Get_Case_Record</targetReference>
+        </connector>
+        <flowName>Populate_Intervention_code_CCI_Level_for_Hospitalization_Records</flowName>
+        <inputAssignments>
+            <name>HCCrecordId</name>
+            <value>
+                <elementReference>New_Hospitalization_from_DOAF</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>productrecordId</name>
+            <value>
+                <elementReference>StoreServiceProvidedbyFacility_DOAF</elementReference>
+            </value>
+        </inputAssignments>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </subflows>
+    <subflows>
+        <name>Populate_Intervention_Code_and_CCI_Level_F</name>
+        <label>Populate Intervention Code and CCI Level F</label>
+        <locationX>1106</locationX>
+        <locationY>1358</locationY>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Get_Case_Record</targetReference>
+        </connector>
+        <flowName>Populate_Intervention_code_CCI_Level_for_Hospitalization_Records</flowName>
+        <inputAssignments>
+            <name>HCCrecordId</name>
+            <value>
+                <elementReference>New_Hospitalization_from_Facility_Error_Screen</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>productrecordId</name>
+            <value>
+                <elementReference>StoreServiceProvidedbyFacility_F</elementReference>
+            </value>
+        </inputAssignments>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </subflows>
+    <subflows>
+        <name>Populate_Intervention_Code_and_CCI_Level_FDOA</name>
+        <label>Populate Intervention Code and CCI Level FDOA</label>
+        <locationX>578</locationX>
+        <locationY>1478</locationY>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Get_Case_Record</targetReference>
+        </connector>
+        <flowName>Populate_Intervention_code_CCI_Level_for_Hospitalization_Records</flowName>
+        <inputAssignments>
+            <name>HCCrecordId</name>
+            <value>
+                <elementReference>New_Hospitalization_from_FDOA_Error_Screen</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>productrecordId</name>
+            <value>
+                <elementReference>StoreServiceProvidedbyFacility_FDOA</elementReference>
+            </value>
+        </inputAssignments>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </subflows>
     <variables>
         <name>AccountrecordId</name>
         <dataType>String</dataType>
