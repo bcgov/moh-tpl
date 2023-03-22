@@ -1,6 +1,96 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>57.0</apiVersion>
+    <decisions>
+        <name>Empty_Record_Check</name>
+        <label>Empty Record Check</label>
+        <locationX>176</locationX>
+        <locationY>398</locationY>
+        <defaultConnector>
+            <targetReference>New_Ambulance</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Non Empty Record</defaultConnectorLabel>
+        <rules>
+            <name>Empty_Record</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Cost_Include</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Cost_Review</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Date_of_Service</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Location_Responded</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>FacilityLookup.recordId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Basic_Amount</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Total_Cost_Override</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Fixed_Wing_Helicopter</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Cost</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Sub_Total</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <isGoTo>true</isGoTo>
+                <targetReference>Get_Case_Record</targetReference>
+            </connector>
+            <label>Empty Record</label>
+        </rules>
+    </decisions>
+    <description>This flow is used to create Manual HCC - Ambulance Record</description>
     <environments>Default</environments>
     <interviewLabel>New Ambulance Record on Case {!$Flow.CurrentDateTime}</interviewLabel>
     <label>New Ambulance Record</label>
@@ -26,8 +116,8 @@
     <recordCreates>
         <name>New_Ambulance</name>
         <label>New Ambulance</label>
-        <locationX>176</locationX>
-        <locationY>398</locationY>
+        <locationX>308</locationX>
+        <locationY>518</locationY>
         <connector>
             <isGoTo>true</isGoTo>
             <targetReference>Get_Case_Record</targetReference>
@@ -155,7 +245,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>New_Ambulance</targetReference>
+            <targetReference>Empty_Record_Check</targetReference>
         </connector>
         <fields>
             <name>New_Ambulance_Record_Screen_Section1</name>
@@ -224,6 +314,10 @@
                     <fieldText>Location Responded</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
+                    <validationRule>
+                        <errorMessage>&lt;p&gt;&lt;span style=&quot;color: rgb(255, 0, 0); font-family: Arial, Helvetica, sans-serif; font-size: 11.36px;&quot;&gt;Not more than 30 Characters are allowed.&lt;/span&gt;&lt;/p&gt;</errorMessage>
+                        <formulaExpression>LEN({!Location_Responded}) &lt; 30</formulaExpression>
+                    </validationRule>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -285,7 +379,7 @@
                     <fieldText>Basic Amount</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
-                    <scale>0</scale>
+                    <scale>2</scale>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -304,7 +398,7 @@
                     <fieldText>Total Cost Override</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
-                    <scale>0</scale>
+                    <scale>2</scale>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -323,7 +417,7 @@
                     <fieldText>Fixed Wing/Helicopter</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
-                    <scale>0</scale>
+                    <scale>2</scale>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -348,7 +442,7 @@
                     <fieldText>Cost</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
-                    <scale>0</scale>
+                    <scale>2</scale>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -367,7 +461,7 @@
                     <fieldText>Sub Total</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
-                    <scale>0</scale>
+                    <scale>2</scale>
                 </fields>
                 <inputParameters>
                     <name>width</name>

@@ -229,7 +229,7 @@
             <label>When specific is chosen</label>
         </rules>
     </decisions>
-    <description>Added Populate Intervention Code and CCI Level Subflow</description>
+    <description>This flow is used to create Manual HCC - Hospitalization Record</description>
     <dynamicChoiceSets>
         <name>CCILevel</name>
         <dataType>Picklist</dataType>
@@ -1122,6 +1122,10 @@
                     <fieldText>Location of Incident</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
+                    <validationRule>
+                        <errorMessage>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 11.36px; font-family: Arial, Helvetica, sans-serif; color: rgb(255, 0, 0);&quot;&gt;Not more than 50 Characters are allowed.&lt;/span&gt;&lt;/p&gt;</errorMessage>
+                        <formulaExpression>LEN ( {!Location_of_Incident_B} ) &lt; 50</formulaExpression>
+                    </validationRule>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -1149,6 +1153,10 @@
                     <fieldText>Description of Incident</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
+                    <validationRule>
+                        <errorMessage>&lt;p&gt;&lt;span style=&quot;color: rgb(255, 0, 0); font-family: Arial, Helvetica, sans-serif; font-size: 11.36px; background-color: rgb(255, 255, 255);&quot;&gt;Not more than 100 Characters are allowed.&lt;/span&gt;&lt;/p&gt;</errorMessage>
+                        <formulaExpression>LEN ( {!Description_of_Incident_B} ) &lt; 100</formulaExpression>
+                    </validationRule>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -1169,7 +1177,7 @@
                     </defaultValue>
                     <fieldText>Date of Admission</fieldText>
                     <fieldType>InputField</fieldType>
-                    <isRequired>false</isRequired>
+                    <isRequired>true</isRequired>
                     <validationRule>
                         <errorMessage>&lt;p&gt;Date of Admission must be before the Deactivation Date.&lt;/p&gt;</errorMessage>
                         <formulaExpression>{!Date_of_Admission} &gt; {!RetrieveDeactivationDate}</formulaExpression>
@@ -1328,7 +1336,7 @@
                     <fieldText>Total Cost Override</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
-                    <scale>0</scale>
+                    <scale>2</scale>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -1349,6 +1357,10 @@
                     <fieldText>Diagnostic Treatment Service</fieldText>
                     <fieldType>LargeTextArea</fieldType>
                     <isRequired>false</isRequired>
+                    <validationRule>
+                        <errorMessage>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 11.36px; font-family: Arial, Helvetica, sans-serif; color: rgb(255, 0, 0);&quot;&gt;Not more than 100 Characters are allowed.&lt;/span&gt;&lt;/p&gt;</errorMessage>
+                        <formulaExpression>LEN ( {!Diagnostic_Treatment_Service_B} ) &lt; 100</formulaExpression>
+                    </validationRule>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -1466,6 +1478,10 @@
                     <fieldText>Location of Incident</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
+                    <validationRule>
+                        <errorMessage>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 11.36px; font-family: Arial, Helvetica, sans-serif; color: rgb(255, 0, 0);&quot;&gt;Not more than 50 Characters are allowed.&lt;/span&gt;&lt;/p&gt;</errorMessage>
+                        <formulaExpression>LEN ( {!Location_of_Incident_DOA} ) &lt; 50</formulaExpression>
+                    </validationRule>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -1493,6 +1509,10 @@
                     <fieldText>Description of Incident</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
+                    <validationRule>
+                        <errorMessage>&lt;p&gt;&lt;span style=&quot;color: rgb(255, 0, 0); font-family: Arial, Helvetica, sans-serif; font-size: 11.36px; background-color: rgb(255, 255, 255);&quot;&gt;Not more than 100 Characters are allowed.&lt;/span&gt;&lt;/p&gt;</errorMessage>
+                        <formulaExpression>LEN ( {!Description_of_Incident_DOA} ) &lt; 100</formulaExpression>
+                    </validationRule>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -1513,7 +1533,7 @@
                     </defaultValue>
                     <fieldText>Date of Admission</fieldText>
                     <fieldType>InputField</fieldType>
-                    <isRequired>false</isRequired>
+                    <isRequired>true</isRequired>
                     <validationRule>
                         <errorMessage>&lt;p&gt;Date of Admission must be before the Deactivation Date.&lt;/p&gt;</errorMessage>
                         <formulaExpression>{!Date_of_Admission} &gt; {!RetrieveDeactivationDate}</formulaExpression>
@@ -1672,7 +1692,7 @@
                     <fieldText>Total Cost Override</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
-                    <scale>0</scale>
+                    <scale>2</scale>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -1693,6 +1713,10 @@
                     <fieldText>Diagnostic Treatment Service</fieldText>
                     <fieldType>LargeTextArea</fieldType>
                     <isRequired>false</isRequired>
+                    <validationRule>
+                        <errorMessage>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 11.36px; font-family: Arial, Helvetica, sans-serif; color: rgb(255, 0, 0);&quot;&gt;Not more than 100 Characters are allowed.&lt;/span&gt;&lt;/p&gt;</errorMessage>
+                        <formulaExpression>LEN ( {!Diagnostic_Treatment_Service_DOA} ) &lt; 100</formulaExpression>
+                    </validationRule>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -1810,6 +1834,10 @@
                     <fieldText>Location of Incident</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
+                    <validationRule>
+                        <errorMessage>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 11.36px; font-family: Arial, Helvetica, sans-serif; color: rgb(255, 0, 0);&quot;&gt;Not more than 50 Characters are allowed.&lt;/span&gt;&lt;/p&gt;</errorMessage>
+                        <formulaExpression>LEN ( {!Location_of_Incident_DOAF} ) &lt; 50</formulaExpression>
+                    </validationRule>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -1837,6 +1865,10 @@
                     <fieldText>Description of Incident</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
+                    <validationRule>
+                        <errorMessage>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 11.36px; font-family: Arial, Helvetica, sans-serif; color: rgb(255, 0, 0);&quot;&gt;Not more than 100 Characters are allowed.&lt;/span&gt;&lt;/p&gt;</errorMessage>
+                        <formulaExpression>LEN ( {!Description_of_Incident_DOAF} ) &lt; 100</formulaExpression>
+                    </validationRule>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -1857,7 +1889,7 @@
                     </defaultValue>
                     <fieldText>Date of Admission</fieldText>
                     <fieldType>InputField</fieldType>
-                    <isRequired>false</isRequired>
+                    <isRequired>true</isRequired>
                     <validationRule>
                         <errorMessage>&lt;p&gt;Date of Admission must be before the Deactivation Date.&lt;/p&gt;</errorMessage>
                         <formulaExpression>{!Date_of_Admission} &gt; {!RetrieveDeactivationDate}</formulaExpression>
@@ -2011,7 +2043,7 @@
                     <fieldText>Total Cost Override</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
-                    <scale>0</scale>
+                    <scale>2</scale>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -2032,6 +2064,10 @@
                     <fieldText>Diagnostic Treatment Service</fieldText>
                     <fieldType>LargeTextArea</fieldType>
                     <isRequired>false</isRequired>
+                    <validationRule>
+                        <errorMessage>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 11.36px; font-family: Arial, Helvetica, sans-serif; color: rgb(255, 0, 0);&quot;&gt;Not more than 100 Characters are allowed.&lt;/span&gt;&lt;/p&gt;</errorMessage>
+                        <formulaExpression>LEN ( {!Diagnostic_Treatment_Service_DOAF} ) &lt; 100</formulaExpression>
+                    </validationRule>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -2149,6 +2185,10 @@
                     <fieldText>Location of Incident</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
+                    <validationRule>
+                        <errorMessage>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 11.36px; font-family: Arial, Helvetica, sans-serif; color: rgb(255, 0, 0);&quot;&gt;Not more than 50 Characters are allowed.&lt;/span&gt;&lt;/p&gt;</errorMessage>
+                        <formulaExpression>LEN ( {!Location_of_Incident_F} ) &lt; 50</formulaExpression>
+                    </validationRule>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -2176,6 +2216,10 @@
                     <fieldText>Description of Incident</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
+                    <validationRule>
+                        <errorMessage>&lt;p&gt;&lt;span style=&quot;color: rgb(255, 0, 0); font-family: Arial, Helvetica, sans-serif; font-size: 11.36px; background-color: rgb(255, 255, 255);&quot;&gt;Not more than 100 Characters are allowed.&lt;/span&gt;&lt;/p&gt;</errorMessage>
+                        <formulaExpression>LEN ( {!Description_of_Incident_F} ) &lt; 100</formulaExpression>
+                    </validationRule>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -2196,7 +2240,7 @@
                     </defaultValue>
                     <fieldText>Date of Admission</fieldText>
                     <fieldType>InputField</fieldType>
-                    <isRequired>false</isRequired>
+                    <isRequired>true</isRequired>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -2342,7 +2386,7 @@
                     <fieldText>Total Cost Override</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
-                    <scale>0</scale>
+                    <scale>2</scale>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -2363,6 +2407,10 @@
                     <fieldText>Diagnostic Treatment Service</fieldText>
                     <fieldType>LargeTextArea</fieldType>
                     <isRequired>false</isRequired>
+                    <validationRule>
+                        <errorMessage>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 11.36px; font-family: Arial, Helvetica, sans-serif; color: rgb(255, 0, 0);&quot;&gt;Not more than 100 Characters are allowed.&lt;/span&gt;&lt;/p&gt;</errorMessage>
+                        <formulaExpression>LEN ( {!Diagnostic_Treatment_Service_F} ) &lt; 100</formulaExpression>
+                    </validationRule>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -2480,6 +2528,10 @@
                     <fieldText>Location of Incident</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
+                    <validationRule>
+                        <errorMessage>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 11.36px; font-family: Arial, Helvetica, sans-serif; color: rgb(255, 0, 0);&quot;&gt;Not more than 50 Characters are allowed.&lt;/span&gt;&lt;/p&gt;</errorMessage>
+                        <formulaExpression>LEN ( {!Location_of_Incident_FDOA} ) &lt; 50</formulaExpression>
+                    </validationRule>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -2507,6 +2559,10 @@
                     <fieldText>Description of Incident</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
+                    <validationRule>
+                        <errorMessage>&lt;p&gt;&lt;span style=&quot;color: rgb(255, 0, 0); font-family: Arial, Helvetica, sans-serif; font-size: 11.36px; background-color: rgb(255, 255, 255);&quot;&gt;Not more than 100 Characters are allowed.&lt;/span&gt;&lt;/p&gt;</errorMessage>
+                        <formulaExpression>LEN ( {!Description_of_Incident_FDOA} ) &lt; 100</formulaExpression>
+                    </validationRule>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -2527,7 +2583,7 @@
                     </defaultValue>
                     <fieldText>Date of Admission</fieldText>
                     <fieldType>InputField</fieldType>
-                    <isRequired>false</isRequired>
+                    <isRequired>true</isRequired>
                     <validationRule>
                         <errorMessage>&lt;p&gt;Date of Admission must be before the Deactivation Date.&lt;/p&gt;</errorMessage>
                         <formulaExpression>{!Date_of_Admission} &gt; {!RetrieveDeactivationDate}</formulaExpression>
@@ -2686,7 +2742,7 @@
                     <fieldText>Total Cost Override</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
-                    <scale>0</scale>
+                    <scale>2</scale>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -2707,6 +2763,10 @@
                     <fieldText>Diagnostic Treatment Service</fieldText>
                     <fieldType>LargeTextArea</fieldType>
                     <isRequired>false</isRequired>
+                    <validationRule>
+                        <errorMessage>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 11.36px; font-family: Arial, Helvetica, sans-serif; color: rgb(255, 0, 0);&quot;&gt;Not more than 100 Characters are allowed.&lt;/span&gt;&lt;/p&gt;</errorMessage>
+                        <formulaExpression>LEN ( {!Diagnostic_Treatment_Service_FDOA} ) &lt; 100</formulaExpression>
+                    </validationRule>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -2812,6 +2872,10 @@
                     <fieldText>Location of Incident</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
+                    <validationRule>
+                        <errorMessage>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 11.36px; font-family: Arial, Helvetica, sans-serif; color: rgb(255, 0, 0);&quot;&gt;Not more than 50 Characters are allowed.&lt;/span&gt;&lt;/p&gt;</errorMessage>
+                        <formulaExpression>LEN ( {!Location_of_Incident} ) &lt; 50</formulaExpression>
+                    </validationRule>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -2836,6 +2900,10 @@
                     <fieldText>Description of Incident</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
+                    <validationRule>
+                        <errorMessage>&lt;p&gt;&lt;span style=&quot;color: rgb(255, 0, 0); font-family: Arial, Helvetica, sans-serif; font-size: 11.36px; background-color: rgb(255, 255, 255);&quot;&gt;Not more than 100 Characters are allowed.&lt;/span&gt;&lt;/p&gt;</errorMessage>
+                        <formulaExpression>LEN ( {!Description_of_Incident} ) &lt; 100</formulaExpression>
+                    </validationRule>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -2853,7 +2921,7 @@
                     <dataType>Date</dataType>
                     <fieldText>Date of Admission</fieldText>
                     <fieldType>InputField</fieldType>
-                    <isRequired>false</isRequired>
+                    <isRequired>true</isRequired>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -2980,7 +3048,7 @@
                     <fieldText>Total Cost Override</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
-                    <scale>0</scale>
+                    <scale>2</scale>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -2998,6 +3066,10 @@
                     <fieldText>Diagnostic Treatment Service</fieldText>
                     <fieldType>LargeTextArea</fieldType>
                     <isRequired>false</isRequired>
+                    <validationRule>
+                        <errorMessage>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 11.36px; font-family: Arial, Helvetica, sans-serif; color: rgb(255, 0, 0);&quot;&gt;Not more than 100 Characters are allowed.&lt;/span&gt;&lt;/p&gt;</errorMessage>
+                        <formulaExpression>LEN ( {!Diagnostic_Treatment_Service} ) &lt; 100</formulaExpression>
+                    </validationRule>
                 </fields>
                 <inputParameters>
                     <name>width</name>

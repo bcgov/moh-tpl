@@ -1,6 +1,82 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <apiVersion>57.0</apiVersion>
+    <decisions>
+        <name>Empty_Record_Check</name>
+        <label>Empty Record Check</label>
+        <locationX>176</locationX>
+        <locationY>398</locationY>
+        <defaultConnector>
+            <targetReference>New_Pharmacare</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Non Empty Record</defaultConnectorLabel>
+        <rules>
+            <name>Empty_Record</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Cost_Include</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Cost_Review</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Date_of_Service</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Practitioner_Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>DIN</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Name_of_Drug</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Cost_of_Drug</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Total_Cost_Override</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <isGoTo>true</isGoTo>
+                <targetReference>Get_Case_Record</targetReference>
+            </connector>
+            <label>Empty Record</label>
+        </rules>
+    </decisions>
+    <description>This flow is used to create Manual HCC - Pharmacare Record</description>
     <dynamicChoiceSets>
         <name>CCILevel</name>
         <dataType>Picklist</dataType>
@@ -34,8 +110,8 @@
     <recordCreates>
         <name>New_Pharmacare</name>
         <label>New Pharmacare</label>
-        <locationX>176</locationX>
-        <locationY>398</locationY>
+        <locationX>308</locationX>
+        <locationY>518</locationY>
         <connector>
             <isGoTo>true</isGoTo>
             <targetReference>Get_Case_Record</targetReference>
@@ -151,7 +227,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>New_Pharmacare</targetReference>
+            <targetReference>Empty_Record_Check</targetReference>
         </connector>
         <fields>
             <name>New_Pharmacare_Record_Screen_Section1</name>
@@ -220,6 +296,10 @@
                     <fieldText>Practitioner Name</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
+                    <validationRule>
+                        <errorMessage>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 11.36px; font-family: Arial, Helvetica, sans-serif; color: rgb(255, 0, 0);&quot;&gt;Not more than 40 Characters are allowed.&lt;/span&gt;&lt;/p&gt;</errorMessage>
+                        <formulaExpression>LEN ( {!Practitioner_Name} ) &lt; 40</formulaExpression>
+                    </validationRule>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -244,6 +324,10 @@
                     <fieldText>DIN</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
+                    <validationRule>
+                        <errorMessage>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 11.36px; font-family: Arial, Helvetica, sans-serif; color: rgb(255, 0, 0);&quot;&gt;Not more than 80 Characters are allowed.&lt;/span&gt;&lt;/p&gt;</errorMessage>
+                        <formulaExpression>LEN ( {!DIN} ) &lt; 80</formulaExpression>
+                    </validationRule>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -262,6 +346,10 @@
                     <fieldText>Name of Drug</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
+                    <validationRule>
+                        <errorMessage>&lt;p&gt;&lt;span style=&quot;color: rgb(255, 0, 0); font-family: Arial, Helvetica, sans-serif; font-size: 11.36px; background-color: rgb(255, 255, 255);&quot;&gt;Not more than 80 Characters are allowed.&lt;/span&gt;&lt;/p&gt;</errorMessage>
+                        <formulaExpression>LEN ( {!Name_of_Drug} ) &lt; 80</formulaExpression>
+                    </validationRule>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -280,7 +368,7 @@
                     <fieldText>Cost of Drug</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
-                    <scale>0</scale>
+                    <scale>2</scale>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -299,7 +387,7 @@
                     <fieldText>Total Cost Override</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
-                    <scale>0</scale>
+                    <scale>2</scale>
                 </fields>
                 <inputParameters>
                     <name>width</name>
