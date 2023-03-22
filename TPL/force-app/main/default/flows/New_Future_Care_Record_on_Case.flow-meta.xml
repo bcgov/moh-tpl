@@ -1,6 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>57.0</apiVersion>
+    <decisions>
+        <name>Empty_Record_Check</name>
+        <label>Empty Record Check</label>
+        <locationX>176</locationX>
+        <locationY>398</locationY>
+        <defaultConnector>
+            <targetReference>New_Future_Care</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Non Empty Record</defaultConnectorLabel>
+        <rules>
+            <name>Empty_Record</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Description</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Cost</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <isGoTo>true</isGoTo>
+                <targetReference>Get_Case_Record</targetReference>
+            </connector>
+            <label>Empty Record</label>
+        </rules>
+    </decisions>
+    <description>This flow is used to create Manual HCC - Future Care Record</description>
     <environments>Default</environments>
     <interviewLabel>New Future Care Record {!$Flow.CurrentDateTime}</interviewLabel>
     <label>New Future Care Record</label>
@@ -26,8 +60,8 @@
     <recordCreates>
         <name>New_Future_Care</name>
         <label>New Future Care</label>
-        <locationX>176</locationX>
-        <locationY>398</locationY>
+        <locationX>308</locationX>
+        <locationY>518</locationY>
         <connector>
             <isGoTo>true</isGoTo>
             <targetReference>Get_Case_Record</targetReference>
@@ -95,7 +129,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>New_Future_Care</targetReference>
+            <targetReference>Empty_Record_Check</targetReference>
         </connector>
         <fields>
             <name>New_Future_Care_Record_Screen_Section1</name>
@@ -109,6 +143,10 @@
                     <fieldText>Description</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
+                    <validationRule>
+                        <errorMessage>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 11.36px; font-family: Arial, Helvetica, sans-serif; color: rgb(255, 0, 0);&quot;&gt;Not more than 255 Characters are allowed.&lt;/span&gt;&lt;/p&gt;</errorMessage>
+                        <formulaExpression>LEN( {!Description} ) &lt; 255</formulaExpression>
+                    </validationRule>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -126,8 +164,9 @@
                     <dataType>Currency</dataType>
                     <fieldText>Cost</fieldText>
                     <fieldType>InputField</fieldType>
+                    <helpText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Maximum field limit is Integers 14, Decimals 2 &lt;/span&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;[Ex: 12345678901234.12]&lt;/strong&gt;&lt;/p&gt;</helpText>
                     <isRequired>false</isRequired>
-                    <scale>0</scale>
+                    <scale>2</scale>
                 </fields>
                 <inputParameters>
                     <name>width</name>
