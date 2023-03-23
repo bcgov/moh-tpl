@@ -5,12 +5,6 @@
     <description>This validation rule will validate</description>
     <errorConditionFormula>AND (
 Source_System_ID__c &lt;&gt; &quot;&quot;,        
-OR(
-( ISPICKVAL (Service_Provided_by_Facility__r.Service_Type__c , &quot;Acute (Daily)&quot;)  &amp;&amp; Service_Type2__c  &lt;&gt;  &quot;Acute (Daily)&quot;) , 
-( ISPICKVAL (Service_Provided_by_Facility__r.Service_Type__c , &quot;Extended Care (Daily)&quot;)  &amp;&amp; Service_Type2__c  &lt;&gt;  &quot;Extended Care (Daily)&quot; ), 
-( ISPICKVAL (Service_Provided_by_Facility__r.Service_Type__c , &quot;Out Patient (Daily)&quot;)  &amp;&amp; Service_Type2__c  &lt;&gt;  &quot;Out Patient (Daily)&quot; ), 
-( ISPICKVAL (Service_Provided_by_Facility__r.Service_Type__c , &quot;Surgical Day Care (Daily)&quot;)  &amp;&amp; Service_Type2__c  &lt;&gt;  &quot;Surgical Day Care (Daily)&quot; ), 
-( ISPICKVAL (Service_Provided_by_Facility__r.Service_Type__c , &quot;Rehabilitation Care&quot;)  &amp;&amp; Service_Type2__c  &lt;&gt;  &quot;Rehabilitation Care&quot; ) 
-))</errorConditionFormula>
+TEXT(Service_Provided_by_Facility__r.Service_Type__c)  = Service_Type2__c )</errorConditionFormula>
     <errorMessage>Service Type does not match with selected Service Provided by Facility.</errorMessage>
 </ValidationRule>
