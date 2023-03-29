@@ -199,6 +199,7 @@ export default class AmbulanceRecordsCase extends LightningElement {
     filterOptions = [
         { label: 'All Records', value: 'All Records' },
         { label: 'Manual Records', value: 'Manual Records' },
+        { label: 'Records Created Today', value: 'Records Created Today' }
     ];
 
     connectedCallback() {
@@ -293,6 +294,11 @@ export default class AmbulanceRecordsCase extends LightningElement {
         {
             this.hideDeleteButton = false;
             this.column = MANNUAL_COLUMNS;
+            
+        }
+        else if(this.selectedFilter == 'Records Created Today'){
+            this.hideDeleteButton = false;
+            this.column = MANNUAL_COLUMNS;  
         }
         else{
             this.hideDeleteButton = true;
