@@ -2,11 +2,11 @@
     <template if:true={records}>
            <!-- Ambulance Records -->
      <lightning-card title="Ambulance Records">
-       
+       <template if:false={hideDeleteButton}>
         <lightning-record-edit-form object-api-name="Healthcare_Cost__c"  class="slds-text-align_left" id="assignCases" >
             <lightning-button label="Delete selected Records" onclick={handleSelect}></lightning-button>
         </lightning-record-edit-form>
-       
+    </template>
         <lightning-layout>
             <lightning-layout-item>
                 <lightning-combobox
@@ -18,11 +18,19 @@
                 placeholder="Select an option"></lightning-combobox>
             </lightning-layout-item>   
         </lightning-layout>
+        
         <div class="slds-scrollable slds-m-around_medium" style="height:auto;width:auto" onitemregister={handleItemRegister}>
+            <template if:true={showErrorMessage}>
+                <div class="validation">
+                    <p>
+                      <lightning-formatted-text value={updateMessage} linkify ></lightning-formatted-text>
+                    </p>
+                </div> <br>
+            </template>
             <c-custom-data-table class="slds-max-medium-table_stacked" onvaluechange={handleValueChange}
             data={recordsToDisplay} columns={column} show-row-number-column="false"
-            key-field="Id" draft-values={draftValues} onsave={handleSave} oncancel={handleCancel} min-column-width="200" data-record="Id" onedit={handleEdit}
-           style="width: auto;">
+            key-field="Id" draft-values={draftValues} onsave={handleSave} oncancel={handleCancel} data-record="Id" onedit={handleEdit}
+           style="width: auto; height: 500px;">
         </c-custom-data-table>
             
             <template if:true={recordsToDisplay.error}>
@@ -63,7 +71,7 @@
             <!--TOTAL RECORDS-->
             <div class="slds-clearfix">
                 <div class="slds-float_right">
-                    <span class="slds-badge"> Total Records: {totalRecords}</span>
+                    <span class="slds-badge"> Total Records: {recordsCount}</span>
                 </div>
             </div>
         </div>
