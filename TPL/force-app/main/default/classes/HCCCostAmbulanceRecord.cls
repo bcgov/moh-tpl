@@ -4,7 +4,7 @@ public with sharing class HCCCostAmbulanceRecord {
         return Schema.SObjectType.Healthcare_Cost__c.getRecordTypeInfosByName().get('Ambulance').getRecordTypeId();
     }
 
-    @AuraEnabled(cacheable=true)
+    @AuraEnabled
     public static Integer getAmbulanceCountonCase(String caseId, String filterValue){
         Integer countAmbulanceCase = 0;
         try {
