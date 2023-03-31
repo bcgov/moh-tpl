@@ -26,7 +26,6 @@ public with sharing class HCCCostController {
             List<Integer> capturedIndex = new List<Integer>();
             for (Database.SaveResult sr : srList){
                 if (sr.isSuccess()) {
-                 //   caseListWrapper.hccList = listOfHealthcareCost;
                     capturedIndex.add(rowCountMap.get(sr.getId()));
                 }
                 else{
@@ -72,7 +71,6 @@ public with sharing class HCCCostController {
     public class CaseListWrapper{
        @AuraEnabled public String actionMessage {get;set;}
        @AuraEnabled public String passedResult {get;set;}
-    //   @AuraEnabled public List<Healthcare_Cost__c> hccList {get;set;}
        @AuraEnabled public List<Integer> indexNumbers {get;set;}
     }
     
