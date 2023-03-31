@@ -15,9 +15,14 @@ public with sharing class HCCCostAmbulanceRecord {
             }
             else if(filterValue == Label.TPL_Records_Created_Today) {
                 countAmbulanceCase = [SELECT count() from Healthcare_Cost__c where Case2__c = :caseId and RecordTypeId = :recordTypeId and Source_System_ID__c = :sourceSystemId and CreatedDate = TODAY];                
+               
             }
             else {
                 countAmbulanceCase = [SELECT count() from Healthcare_Cost__c where Case2__c = :caseId and RecordTypeId = :recordTypeId];
+            }
+
+            if(countAmbulanceCase == null){
+                countAmbulanceCase = 0;
             }
 
         } catch (Exception e) {
@@ -39,7 +44,7 @@ public with sharing class HCCCostAmbulanceRecord {
             }
             else if(filterValue == Label.TPL_Records_Created_Today){
                 hccCostList = [select Id,Cost_Include__c, Cost_Review__c, Name, Date_of_Service__c, Location_Responded__c, Basic_Amount__c, Cost__c, 
-                Total_Cost_Override__c, Fixed_Wing_Helicopter__c, Site_Code__c, Facility__c, FacilityName__c, Sub_Total__c, Source_System_ID__c, CreatedDate from Healthcare_Cost__c where Case2__c = :caseId and RecordTypeId = :recordTypeId and Source_System_ID__c = :sourceSystemId and CreatedDate = TODAY ORDER BY CreatedDate DESC LIMIT :limitSize OFFSET :offsetSize];
+                Total_Cost_Override__c, Fixed_Wing_Helicopter__c, Site_Code__c, Facility__c, FacilityName__c, Sub_Total__c, Source_System_ID__c, CreatedDate from Healthcare_Cost__c where Case2__c = :caseId and RecordTypeId = :recordTypeId and Source_System_ID__c = :sourceSystemId and CreatedDate = TODAY ORDER BY CreatedDate ASC LIMIT :limitSize OFFSET :offsetSize];
             }
             else{
                 hccCostList = [select Id,Cost_Include__c, Cost_Review__c, Name, Date_of_Service__c, Location_Responded__c, Basic_Amount__c, Cost__c, 
