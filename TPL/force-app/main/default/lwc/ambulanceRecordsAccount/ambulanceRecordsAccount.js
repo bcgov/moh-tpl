@@ -1,82 +1,85 @@
 import { LightningElement, wire, api } from 'lwc';
 import { refreshApex } from '@salesforce/apex';
-import updateHCCCaseInformation from '@salesforce/apex/HCCCostAmbulanceRecord.updateHCCCaseInformation';
-import getHealthcareCostsAmbulanceForAccount from '@salesforce/apex/HCCCostAmbulanceRecord.getHealthcareCostsAmbulanceForAccount';
-import getAmbulanceCountonAccount from '@salesforce/apex/HCCCostAmbulanceRecord.getAmbulanceCountonAccount';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
-import COST_INCLUDE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Cost_Include__c';
-import COST_REVIEW_FIELD from '@salesforce/schema/Healthcare_Cost__c.Cost_Review__c';
-import CASE_NUMBER_FIELD from '@salesforce/schema/Healthcare_Cost__c.Case_Number__c';
-import BASIC_AMOUNT_FIELD from '@salesforce/schema/Healthcare_Cost__c.Basic_Amount__c';
-import TOTAL_COST_OVERRIDE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Total_Cost_Override__c';
-import DATE_OF_SERVICE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Date_of_Service__c';
-import LOCATION_RESPONDED_FIELD from '@salesforce/schema/Healthcare_Cost__c.Location_Responded__c';
-import SITE_CODE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Site_Code__c';
-import FACILITY_NAME_FIELD from '@salesforce/schema/Healthcare_Cost__c.FacilityName__c';
-import FIXED_WING_HELICOPTER_FIELD from '@salesforce/schema/Healthcare_Cost__c.Fixed_Wing_Helicopter__c';
-import COST_FIELD from '@salesforce/schema/Healthcare_Cost__c.Cost__c';
-import SUB_TOTAL_FIELD from '@salesforce/schema/Healthcare_Cost__c.Sub_Total__c';
+import updateHCCCaseInformation from '@salesforce/apex/HCCCostAmbulanceAccountHelper.updateHCCCaseInformation';
+import getHealthcareCostsAmbulanceForAccount from '@salesforce/apex/HCCCostAmbulanceAccountHelper.getHealthcareCostsAmbulanceForAccount';
+import getAmbulanceCountonAccount from '@salesforce/apex/HCCCostAmbulanceAccountHelper.getAmbulanceCountonAccount';
 
 const COLUMNS = [
     {
         label: 'Case Number',
-        fieldName: CASE_NUMBER_FIELD.fieldApiName,
+        fieldName: 'caseNumber',
         type: 'text',
         sortable: true,
         editable: false,
     },
     {
         label: 'Cost Include',
-        fieldName: COST_INCLUDE_FIELD.fieldApiName,
+        fieldName: 'costIncluded',
         type:'boolean',
         editable: false,
         sortable: true
     },
     {
         label: 'Cost Review',
-        fieldName: COST_REVIEW_FIELD.fieldApiName,
+        fieldName: 'costReview',
         type:'boolean',
         editable:false,
         sortable: true
     },
     {
         label: 'Date of Service',
-        fieldName: DATE_OF_SERVICE_FIELD.fieldApiName,
+        fieldName: 'dateOfService',
+        type: 'date',
         editable: false,
         sortable: true
     },
     {
         label: 'Location Responded',
-        fieldName: LOCATION_RESPONDED_FIELD.fieldApiName,
+        fieldName: 'locationResponded',
         type: 'text',
         editable: false,
         sortable: true
     },
     {
         label: 'Site Code',
-        fieldName: SITE_CODE_FIELD.fieldApiName,
+        fieldName: 'siteCode',
         type: 'text',
         editable: false,
         sortable: true
     },
     {
         label: 'Facility',
-        fieldName: FACILITY_NAME_FIELD.fieldApiName,
+        fieldName:'facilityName',
         type: 'text',
         editable: false,
         sortable: true
     },
     {
         label: 'Basic Amount',
-        fieldName: BASIC_AMOUNT_FIELD.fieldApiName,
+        fieldName: 'basicAmount',
         type: 'currency',
         editable: false,
         sortable: true
     },
     {
         label: 'Total Cost Override',
-        fieldName: TOTAL_COST_OVERRIDE_FIELD.fieldApiName,
+        fieldName: 'totalCostOverride',
         type: 'currency',
+        editable: false,
+        sortable: true
+    },
+    {
+        label: 'Fixed Wing Helicopter',
+        fieldName: 'fixedWingHelicopter',
+        type: 'currency',
+        editable: false,
+        sortable: true
+    },
+    {
+        label: 'Source System ID',
+        fieldName: 'sourceSystemId',
+        type: 'text',
         editable: false,
         sortable: true
     }
@@ -87,32 +90,37 @@ export default class AmbulanceRecordsAccount extends LightningElement {
     column = COLUMNS;
     isFirstPage = true;
     isLastPage = false;
-    totalRecords = 0; //Total no.of records
+    totalRecords = 0; //Total no.of records for pagination
+    recordsCount = 0; //Total count of records
     totalPages; //Total no.of pages
     pageNumber = 1; //Page number
     pageSizeOptions = [5, 10, 25, 50, 75, 100]; //Page size options
     records = []; //All records available in the data table
     pageSize; //No.of records to be displayed per page
     recordsToDisplay = []; //Records to be displayed on the page
-    wiredRecords;
     selectedCase;
+    caseNumber;
     selectedRows = [];
-    limitSize = 0;
-    rowSize = 0;
+    limitValue = 0;
+    offsetValue = 0;
     costInclude;
     costReview;
+    showErrorMessage = false;
+    displayMessage='';
     selectedFilter= 'All Records';
     filterOptions = [
         { label: 'All Records', value: 'All Records' },
-        { label: 'Both Checked', value: 'Both Checked'},
-        { label: 'Cost Review Checked', value: 'Cost Review Checked'},
-        { label: 'Cost Include Checked', value: 'Cost Include Checked'},
         { label: 'Both Unchecked', value: 'Both Unchecked'}
     ];
 
     connectedCallback(){
         this.selectedFilter = 'All Records';
+        this.recordId;
+        this.limitValue = 5;
+        this.offsetValue = 0;
+        this.pageNumber = 1;
         this.pageSize = this.pageSizeOptions[0]; 
+        this.loadCount();
         this.onLoad();
     } 
 
@@ -144,77 +152,104 @@ export default class AmbulanceRecordsAccount extends LightningElement {
         this.selectedCase = event.target.value;  
     }
      
-     async handleSelect(){
-     var el = this.template.querySelector('lightning-datatable');
+     handleSelect(){
+        var el = this.template.querySelector('lightning-datatable');
         console.log(el);
         var selected = el.getSelectedRows();
-        //console.log(selected);
-        console.log('selectedRows : ' + selected);
         console.log('Selected Case ID : ' + this.selectedCase);
+        console.log('selectedRows : ' + JSON.stringify(selected));
         
         let selectedCostRecords = [];
+        if(this.selectedCase == null || !this.selectedCase){
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Error',
+                    message: 'Please select Case and HCC Records to map.',
+                    variant: 'error'
+                })
+            );
+        }
+        else{             
+            selected.forEach(function(element){
+                selectedCostRecords.push(element);
+                   console.log(element);   
+                });           
+                
+                return updateHCCCaseInformation({ caseId: this.selectedCase, hccList: selectedCostRecords, recordDisplay: this.recordsToDisplay})
+                .then((data,error) => {
+                    this.displayMessage = data.updateMessage;
+                    console.log("Display Message : " + this.displayMessage);;
+                    console.log("Partial Success : " + data.passMessage);
+                    if(this.displayMessage){
+                        this.displayMessage = this.displayMessage.replace(/\r\n/g, "<br />");
+                        this.showErrorMessage = true;
+                    }
+                    
+                    if(this.displayMessage || data.passMessage){
+                        if(data.passMessage == 'Passed'){
+                            this.onLoad();
+                            this.dispatchEvent(
+                                new ShowToastEvent({
+                                    title: 'Success',
+                                    message: 'Case assigned to Ambulance HealthCare Cost record(s) updated successfully.',
+                                    variant: 'success'
+                                })
+                            );    
+                        }
+                        else if(data.passMessage == 'Failed')
+                        {
+                            this.dispatchEvent(
+                                new ShowToastEvent({
+                                    title: 'Error',
+                                    message: 'Please ensure cost review and cost include are unchecked for the Ambulance Healthcare Cost record(s) you want to assign a case.',
+                                    variant: 'error'
+                                })
+                            );
+                        }
+                        else if(data.passMessage == 'Empty Selection')
+                        {
+                            this.dispatchEvent(
+                                new ShowToastEvent({
+                                    title: 'Error',
+                                    message: 'Please select Case and HCC Records to map.',
+                                    variant: 'error'
+                                })
+                            );
+                        }
+                        else if(data.passMessage == 'Partial Success'){
+                            this.onLoad();
+                            this.dispatchEvent(
+                                new ShowToastEvent({
+                                    title: 'Warning',
+                                    message: 'Case update on few records successful with validation issue on others as displayed below.',
+                                    variant: 'warning'
+                                })
+                            ); 
+                        }
+                    }
+                    else{
+                        console.log(error);
+                        this.dispatchEvent(
+                            new ShowToastEvent({
+                                title: 'Error',
+                                message: data.updateMessage,
+                                variant: 'error'
+                            })
+                        ); 
+                    }
+                });
         
-        selected.forEach(function(element){
-        selectedCostRecords.push(element);
-           console.log(element);   
-        });
+            }
 
-        await updateHCCCaseInformation({ caseId: this.selectedCase, hccList: selectedCostRecords})
-        .then((result) => {
-            console.log("Result : " + result);
-            if(result == 'Failed'){
-                this.dispatchEvent(
-                    new ShowToastEvent({
-                        title: 'Error',
-                        message: 'Please ensure cost review and cost include are unchecked for the Ambulance Healthcare Cost record(s) you want to assign a case.',
-                        variant: 'error'
-                    })
-                );
-            }
-            else if(result == 'Passed'){
-                this.dispatchEvent(
-                    new ShowToastEvent({
-                        title: 'Success',
-                        message: 'Case assigned to Ambulance HealthCare Cost record(s) updated successfully.',
-                        variant: 'success'
-                    })
-                );    
-            }
-            else if(result == 'Empty Selection'){
-                this.dispatchEvent(
-                    new ShowToastEvent({
-                        title: 'Error',
-                        message: 'Please select Case and HCC Records to map.',
-                        variant: 'error'
-                    })
-                );
-            }
-            else if(result == null){
-                this.dispatchEvent(
-                    new ShowToastEvent({
-                        title: 'Error',
-                        message: 'Case assignment did not succeed. Please try again!',
-                        variant: 'error'
-                    })
-                ); 
-            }
-            //Get the updated list with refreshApex.
-            return this.refresh();
-        })
-        .catch(error => {
-            console.log('error : ' + JSON.stringify(error));
-        }); 
     }
     async refresh(){
-        await refreshApex(this.wiredRecords);
+        await refreshApex(this.records);
     }
  
     onLoad(){
-        return getHealthcareCostsAmbulanceForAccount({accId: this.recordId, selectedFilterValue: this.selectedFilter})
+        return getHealthcareCostsAmbulanceForAccount({accId: this.recordId, selectedFilterValue: this.selectedFilter, offsetSize: this.offsetValue, limitSize: this.limitValue})
         .then(result=>{
-            console.log('Length of records : ' + result.length);
-            this.wiredRecords = result;
-            if(result != null && result){
+           if(result != null && result){
                 this.records = JSON.parse(JSON.stringify(result));
                 this.totalRecords = result.length;
                 this.paginationHelper(); // call helper menthod to update pagination logic
@@ -222,24 +257,23 @@ export default class AmbulanceRecordsAccount extends LightningElement {
             }
         })
         .catch(error =>{
-            this.error = error;
+            console.log(error);
             this.records = [];
         })
     }
 
     loadCount()
     {
-        return getAmbulanceCountonAccount({accId: this.recordId})
+        return getAmbulanceCountonAccount({accId: this.recordId, selectedFilterValue: this.selectedFilter})
         .then(result =>{
             if(result != null && result){
-                console.log('Result (Count of Records) : ' + result);
-                this.totalRecords = result;
+                this.recordsCount = result;
             }
 
         })
         .catch(error =>{
-            this.error = error;
-            this.totalRecords = 0;
+            console.log(error);
+            this.recordsCount = 0;
         });
     } 
     
@@ -252,33 +286,46 @@ export default class AmbulanceRecordsAccount extends LightningElement {
     
     handleRecordsPerPage(event) {
         this.pageSize = event.target.value;
-        this.paginationHelper();
-   
-     
+       // this.paginationHelper();
+        this.calculateLimitAndOffset();
+        this.onLoad();
     }
     previousPage() {
         this.pageNumber = this.pageNumber - 1;
-        this.paginationHelper();
+        // this.paginationHelper();
+        this.calculateLimitAndOffset();
+        this.onLoad();
    
     }
     nextPage() {
         this.pageNumber = this.pageNumber + 1;
-        this.paginationHelper();
+        // this.paginationHelper();
+        this.calculateLimitAndOffset();
+        this.onLoad();
     }
 
     firstPage() {
         this.pageNumber = 1;
-        this.paginationHelper();
+        // this.paginationHelper();
+        this.calculateLimitAndOffset();
+        this.onLoad();
     }
 
     lastPage() {
         this.pageNumber = this.totalPages;
-        this.paginationHelper();
+        // this.paginationHelper();
+        this.calculateLimitAndOffset();
+        this.onLoad();
     }
 
     calculateLimitAndOffset(){
         this.limitValue = this.pageSize;
-        this.rowSize = (this.pageNumber - 1) * this.pageSize
+        if(this.pageSize > this.totalRecords){
+            this.offsetValue = 0;
+        }
+        else{
+            this.offsetValue = (this.pageNumber - 1) * this.pageSize
+        }
     }
 
     // JS function to handel pagination logic 
@@ -286,7 +333,7 @@ export default class AmbulanceRecordsAccount extends LightningElement {
         console.log('records : ' + JSON.stringify(this.records));
         this.recordsToDisplay = [];
         // calculate total pages
-        this.totalPages = Math.ceil(this.totalRecords / this.pageSize);
+        this.totalPages = Math.ceil(this.recordsCount / this.pageSize);
         // set page number 
         if (this.pageNumber <= 1) {
             this.pageNumber = 1;
@@ -294,13 +341,12 @@ export default class AmbulanceRecordsAccount extends LightningElement {
             this.pageNumber = this.totalPages;
         }
         // set records to display on current page 
-        for (let i = (this.pageNumber - 1) * this.pageSize; i < this.pageNumber * this.pageSize; i++) {
-            if (i === this.totalRecords) {
+        for(let i=0;i<this.records.length;i++){
+            console.log('Inside for loop to assign records to display');
+            if(i=== this.recordsCount){
                 break;
             }
             this.recordsToDisplay.push(this.records[i]);
-            
-            
         }
         console.log("Records to display : " + JSON.stringify(this.recordsToDisplay));
     }
@@ -308,6 +354,7 @@ export default class AmbulanceRecordsAccount extends LightningElement {
     handleFilterChange(event) {
         this.selectedFilter = event.target.value;
         console.log('Selected Filter Value : ' + this.selectedFilter);
+        this.loadCount();
         this.onLoad();       
     }
 }

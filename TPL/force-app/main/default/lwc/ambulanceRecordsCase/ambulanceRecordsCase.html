@@ -2,11 +2,21 @@
     <template if:true={records}>
            <!-- Ambulance Records -->
      <lightning-card title="Ambulance Records">
-       
-        <lightning-record-edit-form object-api-name="Healthcare_Cost__c"  class="slds-text-align_left" id="assignCases" >
-            <lightning-button label="Delete selected Records" onclick={handleSelect}></lightning-button>
-        </lightning-record-edit-form>
-       
+       <template if:false={hideDeleteButton}>
+        
+        <lightning-layout>
+            <lightning-layout-item class="slds-text-align_left">
+                <lightning-record-edit-form object-api-name="Healthcare_Cost__c"  class="slds-text-align_left" id="assignCases" >
+                    <lightning-button label="Delete selected Records" onclick={handleSelect}></lightning-button>
+                </lightning-record-edit-form>
+            </lightning-layout-item>
+            
+            <lightning-layout-item class="slds-text-align_right">
+                <lightning-button label="Refresh" onclick={handleRefresh}></lightning-button>
+            </lightning-layout-item>    
+        </lightning-layout>
+        
+    </template>
         <lightning-layout>
             <lightning-layout-item>
                 <lightning-combobox
@@ -18,11 +28,19 @@
                 placeholder="Select an option"></lightning-combobox>
             </lightning-layout-item>   
         </lightning-layout>
+        
         <div class="slds-scrollable slds-m-around_medium" style="height:auto;width:auto" onitemregister={handleItemRegister}>
+            <template if:true={showErrorMessage}>
+                <div class="validation">
+                    <p>
+                      <lightning-formatted-text value={updateMessage} linkify ></lightning-formatted-text>
+                    </p>
+                </div> <br>
+            </template>
             <c-custom-data-table class="slds-max-medium-table_stacked" onvaluechange={handleValueChange}
             data={recordsToDisplay} columns={column} show-row-number-column="false"
-            key-field="Id" draft-values={draftValues} onsave={handleSave} oncancel={handleCancel} min-column-width="200" data-record="Id" onedit={handleEdit}
-           style="width: auto;">
+            key-field="Id" draft-values={draftValues} onsave={handleSave} oncancel={handleCancel} data-record="Id" onedit={handleEdit}
+           style="width: auto; height: 500px;">
         </c-custom-data-table>
             
             <template if:true={recordsToDisplay.error}>
@@ -38,7 +56,7 @@
                 <div class="slds-list_inline slds-p-bottom_xx-small">
                     <label class="slds-text-color_weak slds-p-horizontal_x-small" for="recordsPerPage">Page Size:</label>
                     <div class="slds-select_container">
-                        <select class="slds-select" id="recordsPerPage" onclick={handleRecordsPerPage} onchange={handleRecordsPerPage}>
+                        <select class="slds-select" id="recordsPerPage" onchange={handleRecordsPerPage}>
                             <template for:each={pageSizeOptions} for:item="option">
                                 <option key={option} value={option}>{option}</option>
                             </template>
@@ -63,9 +81,66 @@
             <!--TOTAL RECORDS-->
             <div class="slds-clearfix">
                 <div class="slds-float_right">
-                    <span class="slds-badge"> Total Records: {totalRecords}</span>
+                    <span class="slds-badge"> Total Records: {recordsCount}</span>
                 </div>
             </div>
         </div>
+        <!--
+        <div>
+            
+                <lightning-record-edit-form object-api-name="Healthcare_Cost__c"
+                
+                onsuccess={handleSuccess}>
+                    <lightning-messages></lightning-messages>
+                    <lightning-layout>
+                        <lightning-layout-item size="4"> 
+                            <lightning-input-field field-name="Cost_Include__c"> </lightning-input-field> 
+                        </lightning-layout-item>
+                        <lightning-layout-item size="4"> 
+                            <lightning-input-field field-name="Cost_Review__c"> </lightning-input-field> 
+                        </lightning-layout-item>
+                        <lightning-layout-item size="4"> 
+                            <lightning-input-field field-name="Date_of_Service__c"></lightning-input-field> 
+                        </lightning-layout-item> 
+                    </lightning-layout>
+                    <lightning-layout>
+                        <lightning-layout-item size="4"> 
+                            <lightning-input-field field-name="Location_Responded__c"></lightning-input-field> 
+                        </lightning-layout-item> 
+                        <lightning-layout-item size="4"> 
+                            <lightning-input-field field-name="Facility__c"></lightning-input-field> 
+                        </lightning-layout-item>
+                        <lightning-layout-item size="4"> 
+                            <lightning-input-field field-name="Total_Cost_Override__c"></lightning-input-field> 
+                        </lightning-layout-item>
+                    </lightning-layout>
+                    <lightning-layout>
+                        <lightning-layout-item size="4"> 
+                            <lightning-input-field field-name="Fixed_Wing_Helicopter__c"></lightning-input-field> 
+                        </lightning-layout-item>
+                        <lightning-layout-item size="4"> 
+                            <lightning-input-field field-name="Cost__c"></lightning-input-field> 
+                        </lightning-layout-item> 
+                            <lightning-layout-item size="4"> 
+                                <lightning-input-field field-name="Sub_Total__c"></lightning-input-field> 
+                            </lightning-layout-item>
+                    </lightning-layout>
+                        
+                    <lightning-layout>
+                        <lightning-layout-item size="4"> 
+                            <lightning-input-field field-name="Case2__c"  ></lightning-input-field> 
+                        </lightning-layout-item>
+                    </lightning-layout>       
+                    
+                        <lightning-button 
+                            type="submit"
+                            name="submit"
+                            label="Save"
+                        >
+                        </lightning-button>
+                    
+                </lightning-record-edit-form>
+        </div>
+        -->
     </template>
 </template>
