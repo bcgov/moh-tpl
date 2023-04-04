@@ -1,49 +1,82 @@
 public with sharing class HCCCostAmbulanceAccountHelper {
-   
+   Integer countOfRecords = 0;
     private static Id getAmbulanceRecordId(){
         return Schema.SObjectType.Healthcare_Cost__c.getRecordTypeInfosByName().get('Ambulance').getRecordTypeId();
     }
-    
-    @AuraEnabled
-    public static Integer getAmbulanceCountonAccount(String accId, String selectedFilterValue){
-        Integer countAmbulanceAccount = 0;
-        try {
-            Id recordTypeId = getAmbulanceRecordId();
-            if(selectedFilterValue == Label.TPL_All_Records){
-                countAmbulanceAccount = [SELECT count() from Healthcare_Cost__c where Account__c = :accId and RecordTypeId = :recordTypeId];
-            }
-            else {
-                countAmbulanceAccount = [SELECT count() from Healthcare_Cost__c where Account__c = :accId and RecordTypeId = :recordTypeId and Cost_Include__c = false and Cost_Review__c = false ];
-            }
 
-        } catch (Exception e) {
+    @AuraEnabled
+    public static Integer getTotalAmbulanceCountonAccount(String accId){
+        countofRecords = 0;
+
+        try{
+            Id recordTypeId = getAmbulanceRecordId();
+            countofRecords = [SELECT count() from Healthcare_Cost__c where Account__c = :accId and RecordTypeId = :recordTypeId];            
+        }
+        catch (Exception e)
+        {
             throw new AuraHandledException(e.getMessage());
         }
-        System.debug('Count of Ambulance records on Account  : ' + countAmbulanceAccount);
-        return countAmbulanceAccount;
+        return countofRecords;
     }
 
     @AuraEnabled
-    public static List <HCCCaseAssociationWrapper> getHealthcareCostsAmbulanceForAccount(String accId, String selectedFilterValue, Integer limitSize, Integer offsetSize)
+    public static Integer getfilteredAmbulanceCountonAccount(String accId){
+        countofRecords = 0;
+        
+        try {
+            Id recordTypeId = getAmbulanceRecordId();
+            countofRecords = [SELECT count() from Healthcare_Cost__c where Account__c = :accId and RecordTypeId = :recordTypeId and Cost_Include__c = false and Cost_Review__c = false];
+            
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
+        }
+        return countofRecords;
+    }
+
+    @AuraEnabled
+    public static HCCostAccountDetailWrapper getHealthcareCostsAmbulanceForAccount(String accId, String selectedFilterValue, Integer pageNumber, Integer pageSize)
     {
         List<Healthcare_Cost__c> hccCostList = new List<Healthcare_Cost__c> ();
         List<HCCCaseAssociationWrapper> hccCaseAssociation = new List<HCCCaseAssociationWrapper>();
+        HCCostAccountDetailWrapper accountDetailWrapper = new HCCostAccountDetailWrapper();
         Set<Id> hccCaseId = new Set<Id>();
-        Boolean costInclude, costReview;
         try{
         	Id recordTypeId = getAmbulanceRecordId();
-            if(selectedFilterValue == Label.TPL_All_Records){
-                hccCostList = [Select Id, Name, Case2__c, Case2__r.CaseNumber, Cost_Include__c, Cost_Review__c, Date_of_Service__c, Location_Responded__c, Basic_Amount__c, Cost__c, Total_Cost_Override__c, Site_Code__c, Facility__c, FacilityName__c, Fixed_Wing_Helicopter__c, Source_System_ID__c from Healthcare_Cost__c where Account__c = :accId and RecordTypeId = :recordTypeId ORDER BY Name LIMIT :limitSize OFFSET :offsetSize];
-                System.debug('HCC Cost List Size : ' + hccCostList.size());
-            }
+            Integer offsetSize = 0;
+            Integer totalCount = 0;
+            Integer totalPages = 0;
+            System.debug('Initial Page Number : ' + pageNumber);
+            if(selectedFilterValue == Label.TPL_All_Records)
+            {   
+                totalCount = HCCCostAmbulanceAccountHelper.getTotalAmbulanceCountonAccount(accId, recordTypeId);
+                if(pageSize > = totalCount){
+                    offsetSize = 0;
+                }
+                else{
+                    offsetSize = (pageNumber -1) * pageSize;
+                }
+                System.debug('Page Size : ' + pageSize + ', Page Number : ' + pageNumber + ', offset Value : ' + offsetSize);
+                hccCostList = [Select Id, Name, Case2__c, Case2__r.CaseNumber, Cost_Include__c, Cost_Review__c, Date_of_Service__c, Location_Responded__c, Basic_Amount__c, Cost__c, Total_Cost_Override__c, Site_Code__c, Facility__c, FacilityName__c, Fixed_Wing_Helicopter__c, Source_System_ID__c from Healthcare_Cost__c where Account__c = :accId and RecordTypeId = :recordTypeId ORDER BY Name LIMIT :pageSize OFFSET :offsetSize];
+             }
             else{
-                hccCostList = [Select Id, Name, Case2__c, Case2__r.CaseNumber, Cost_Include__c, Cost_Review__c,  Date_of_Service__c, Location_Responded__c, Basic_Amount__c, Cost__c, Total_Cost_Override__c, Site_Code__c, Facility__c, FacilityName__c, Fixed_Wing_Helicopter__c, Source_System_ID__c from Healthcare_Cost__c where Account__c = :accId and RecordTypeId = :recordTypeId and Cost_Include__c = false and Cost_Review__c = false ORDER BY Name LIMIT :limitSize OFFSET :offsetSize];        
-                System.debug('HCC Cost List Size : ' + hccCostList.size());
+                totalCount = HCCCostAmbulanceAccountHelper. (accId, recordTypeId);
+                if(pageSize > = totalCount){
+                    offsetSize = 0;
+                }
+                else{
+                    offsetSize = (pageNumber -1) * pageSize;
+                }
+
+                System.debug('Page Size : ' + pageSize + ', Page Number : ' + pageNumber + ', offset Value : ' + offsetSize);
+                hccCostList = [Select Id, Name, Case2__c, Case2__r.CaseNumber, Cost_Include__c, Cost_Review__c,  Date_of_Service__c, Location_Responded__c, Basic_Amount__c, Cost__c, Total_Cost_Override__c, Site_Code__c, Facility__c, FacilityName__c, Fixed_Wing_Helicopter__c, Source_System_ID__c from Healthcare_Cost__c where Account__c = :accId and RecordTypeId = :recordTypeId and Cost_Include__c = false and Cost_Review__c = false ORDER BY Name LIMIT :pageSize OFFSET :offsetSize];        
+                
             }
-            
+            System.debug('HCC Cost List Size : ' + hccCostList.size());
+           
             for(Healthcare_Cost__c hcc: hccCostList){
                 hccCaseId.add(hcc.Case2__c);
             }
+           
             Map<Id,String> caseNumberMap = new Map<Id,String>();
             List<Case> caseList= HCCCostController.getCaseNumber(hccCaseId);
         
@@ -51,6 +84,7 @@ public with sharing class HCCCostAmbulanceAccountHelper {
                     caseNumberMap.put(c.Id, c.CaseNumber);
                 
             }
+           
             for(Healthcare_Cost__c hcc: hccCostList){
                 HCCCaseAssociationWrapper caseAssociation = new HCCCaseAssociationWrapper(); 
                 caseAssociation.recordId = hcc.Id;
@@ -70,15 +104,19 @@ public with sharing class HCCCostAmbulanceAccountHelper {
                 hccCaseAssociation.add(caseAssociation);
             
             }
+            accountDetailWrapper.hccList = hccCaseAssociation;
+            accountDetailWrapper.totalCount = totalCount; 
         }
-    
-        catch(NullPointerException nullpointer){
-            nullpointer.getMessage();
+    	catch(NullPointerException nullpointer){
+            System.debug(nullpointer.getMessage());
+        }
+        catch(DmlException dml){
+            System.debug(dml.getMessage());
         }
         catch(Exception e) {
             throw new AuraHandledException(e.getMessage());
         }
-        return hccCaseAssociation;
+        return accountDetailWrapper;
     }
 
     @AuraEnabled
@@ -142,8 +180,7 @@ public with sharing class HCCCostAmbulanceAccountHelper {
                     else{
                         giveStatus = result;
                     }  
-                    
-                    
+                                        
                 } 
                 catch(DmlException dml){
                     System.debug(dml.getMessage());
@@ -164,7 +201,8 @@ public with sharing class HCCCostAmbulanceAccountHelper {
         return hac;
     }
          
-       public class HCCCaseAssociationWrapper{
+    public class HCCCaseAssociationWrapper
+    {
         @AuraEnabled public Id recordId {get;set;}
         @AuraEnabled public String Name {get;set;}
         @AuraEnabled public String CaseId {get;set;}
@@ -181,6 +219,11 @@ public with sharing class HCCCostAmbulanceAccountHelper {
         @AuraEnabled public String sourceSystemId {get;set;}       
     }
 
+    public class HCCostAccountDetailWrapper{
+        @AuraEnabled public List<HCCCaseAssociationWrapper> hccList {get;set;}
+        @AuraEnabled public Integer totalCount {get;set;}
+    }
+    
     public class HCCostAccountCaseWrapper{
         @AuraEnabled public String updateMessage {get;set;}
         @AuraEnabled public String passMessage {get;set;}

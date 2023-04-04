@@ -449,6 +449,77 @@ export default class AmbulanceRecordsCase extends LightningElement {
         this.updateDraftValues(updatedItem);
         this.updateDataValues(updatedItem);
     }
+    handleCellChange(event){
+        console.log(JSON.stringify(event)+'---- '+JSON.stringify(this.draftValues));
+        console.log( this.draftValues.findIndex(e=>e.Id === event.detail.draftValues[0].Id));
+        for(let i = 0 ; i < event.detail.draftValues.length;i++){
+            let index = this.draftValues.findIndex(e=>e.Id === event.detail.draftValues[i].Id);
+            if(index > -1 ){
+                if(event.detail.draftValues[i].Cost_Include__c != null){
+                    this.draftValues[index].Cost_Include__c = event.detail.draftValues[i].Cost_Include__c;
+                }
+                if(event.detail.draftValues[i].Cost_Review__c != null){
+                    this.draftValues[index].Cost_Review__c = event.detail.draftValues[i].Cost_Review__c;
+                }
+                
+                if(event.detail.draftValues[i].Date_of_Service__c){
+                    this.draftValues[index].Date_of_Service__c = event.detail.draftValues[i].Date_of_Service__c;
+                }
+                if(event.detail.draftValues[i].Location_Responded__c){
+                    this.draftValues[index].Location_Responded__c = event.detail.draftValues[i].Location_Responded__c;
+                }
+                if(event.detail.draftValues[i].Site_Code__c){
+                    this.draftValues[index].Site_Code__c = event.detail.draftValues[i].Site_Code__c;
+                }
+                if(event.detail.draftValues[i].Basic_Amount__c){
+                    this.draftValues[index].Basic_Amount__c = event.detail.draftValues[i].Basic_Amount__c;
+                }
+                if(event.detail.draftValues[i].Total_Cost_Override__c){
+                    this.draftValues[index].Total_Cost_Override__c = event.detail.draftValues[i].Total_Cost_Override__c;
+                }
+                if(event.detail.draftValues[i].Fixed_Wing_Helicopter__c){
+                    this.draftValues[index].Fixed_Wing_Helicopter__c = event.detail.draftValues[i].Fixed_Wing_Helicopter__c;
+                }
+                if(event.detail.draftValues[i].Source_System_ID__c){
+                    this.draftValues[index].Source_System_ID__c = event.detail.draftValues[i].Source_System_ID__c;
+                }
+                if(event.detail.draftValues[i].Location_Responded__c){
+                    this.draftValues[index].Location_Responded__c = event.detail.draftValues[i].Location_Responded__c;
+                }
+                console.log(JSON.stringify(this.draftValues[i]));
+            }else{
+                var obj ={
+                    Id : event.detail.draftValues[i].Id,
+                    Cost_Review__c:event.detail.draftValues[i].Cost_Review__c,
+                    Cost_Include__c:event.detail.draftValues[i].Cost_Include__c,
+                    Date_of_Service__c:event.detail.draftValues[i].Date_of_Service__c,
+                    Location_Responded__c:event.detail.draftValues[i].Location_Responded__c,
+                    Site_Code__c:event.detail.draftValues[i].Site_Code__c,
+                    Basic_Amount__c:event.detail.draftValues[i].Basic_Amount__c,
+                    Total_Cost_Override__c:event.detail.draftValues[i].Total_Cost_Override__c,
+                    Fixed_Wing_Helicopter__c:event.detail.draftValues[i].Fixed_Wing_Helicopter__c,
+                    Source_System_ID__c:event.detail.draftValues[i].Source_System_ID__c,
+                    Location_Responded__c:event.detail.draftValues[i].Location_Responded__c
+                };
+                console.log('before in');
+              
+                console.log(JSON.stringify(obj));
+                this.draftValues.push(obj);
+            }
+            
+        }
+       /* updateItem ={
+            
+        }
+        copyDraftValues.forEach((item) => {
+            if (item.Id === updateItem.Id) {
+                for (let field in updateItem) {
+                    item[field] = updateItem[field];
+                }
+                draftValueChanged = true;
+            }
+        });*/
+    }
 
     handleChange(event) {
         event.preventDefault();
@@ -515,7 +586,7 @@ export default class AmbulanceRecordsCase extends LightningElement {
     }
 
     updateDraftValues(updateItem) {
-      
+        console.log('draft'+JSON.stringify(this.draftValues));
         let draftValueChanged = false;
         let copyDraftValues = JSON.parse(JSON.stringify(this.draftValues));
         console.log('At 442 ' + JSON.stringify(updateItem));

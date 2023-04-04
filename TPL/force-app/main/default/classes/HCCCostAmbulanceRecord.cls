@@ -65,7 +65,7 @@ public with sharing class HCCCostAmbulanceRecord {
         String result = null;
         System.debug('Deletion Records Size : ' + deletionRecords.size());
         try {
-            if(deletionRecords.size() == 0 || deletionRecords == null || filterOption != Label.TPL_Manual_Records)
+            if(deletionRecords.size() == 0 || deletionRecords == null || (filterOption != Label.TPL_Manual_Records && filterOption != Label.TPL_Records_Created_Today))
             {
                 result = Label.TPL_Failed;
             }

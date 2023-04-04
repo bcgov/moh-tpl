@@ -37,9 +37,9 @@
                     </p>
                 </div> <br>
             </template>
-            <c-custom-data-table class="slds-max-medium-table_stacked" onvaluechange={handleValueChange}
+            <c-custom-data-table class="slds-max-medium-table_stacked" onvaluechange={handleValueChange} oncellchange={handleCellChange}
             data={recordsToDisplay} columns={column} show-row-number-column="false"
-            key-field="Id" draft-values={draftValues} onsave={handleSave} oncancel={handleCancel} data-record="Id" onedit={handleEdit}
+            key-field="Id" draft-values={draftValues} onsave={handleSave} oncancel={handleCancel} data-record="Id" 
            style="width: auto; height: 500px;">
         </c-custom-data-table>
             
