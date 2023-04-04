@@ -90,7 +90,6 @@ export default class AmbulanceRecordsAccount extends LightningElement {
     isFirstPage = true;
     isLastPage = false;
     totalRecords = 0; //Total no.of records
-    countOfRecords = 0; // Total number of records
     totalPages; //Total no.of pages
     pageNumber = 1; //Page number
     pageSizeOptions = [5, 10, 25, 50, 75, 100]; //Page size options
@@ -111,8 +110,6 @@ export default class AmbulanceRecordsAccount extends LightningElement {
     connectedCallback(){
         this.selectedFilter = 'All Records';
         this.recordId;
-        this.loadAllCount();
-        this.loadfilteredCount();
         this.pageNumber = 1;
         this.pageSize = this.pageSizeOptions[0]; 
         this.onLoad();
@@ -343,7 +340,6 @@ export default class AmbulanceRecordsAccount extends LightningElement {
 
     handleFilterChange(event) {
         this.selectedFilter = event.target.value;
-        this.filterOptions();
         this.pageNumber = 1;
         this.onLoad();  
         console.log('Selected Filter Value : ' + this.selectedFilter);
