@@ -3,8 +3,6 @@ import { refreshApex } from '@salesforce/apex';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import updateHCCCaseInformation from '@salesforce/apex/HCCCostAmbulanceAccountHelper.updateHCCCaseInformation';
 import getHealthcareCostsAmbulanceForAccount from '@salesforce/apex/HCCCostAmbulanceAccountHelper.getHealthcareCostsAmbulanceForAccount';
-import getTotalAmbulanceCountonAccount from '@salesforce/apex/HCCCostAmbulanceAccountHelper.getTotalAmbulanceCountonAccount';
-import getfilteredAmbulanceCountonAccount from '@salesforce/apex/HCCCostAmbulanceAccountHelper.getfilteredAmbulanceCountonAccount';
 
 const COLUMNS = [
     {

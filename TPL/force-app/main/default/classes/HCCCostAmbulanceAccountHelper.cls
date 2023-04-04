@@ -6,7 +6,7 @@ public with sharing class HCCCostAmbulanceAccountHelper {
 
     @AuraEnabled
     public static Integer getTotalAmbulanceCountonAccount(String accId){
-        countofRecords = 0;
+        Integer countofRecords = 0;
 
         try{
             Id recordTypeId = getAmbulanceRecordId();
@@ -21,7 +21,7 @@ public with sharing class HCCCostAmbulanceAccountHelper {
 
     @AuraEnabled
     public static Integer getfilteredAmbulanceCountonAccount(String accId){
-        countofRecords = 0;
+        Integer countofRecords = 0;
         
         try {
             Id recordTypeId = getAmbulanceRecordId();
@@ -48,7 +48,7 @@ public with sharing class HCCCostAmbulanceAccountHelper {
             System.debug('Initial Page Number : ' + pageNumber);
             if(selectedFilterValue == Label.TPL_All_Records)
             {   
-                totalCount = HCCCostAmbulanceAccountHelper.getTotalAmbulanceCountonAccount(accId, recordTypeId);
+                totalCount = HCCCostAmbulanceAccountHelper.getTotalAmbulanceCountonAccount(accId);
                 if(pageSize > = totalCount){
                     offsetSize = 0;
                 }
@@ -59,7 +59,7 @@ public with sharing class HCCCostAmbulanceAccountHelper {
                 hccCostList = [Select Id, Name, Case2__c, Case2__r.CaseNumber, Cost_Include__c, Cost_Review__c, Date_of_Service__c, Location_Responded__c, Basic_Amount__c, Cost__c, Total_Cost_Override__c, Site_Code__c, Facility__c, FacilityName__c, Fixed_Wing_Helicopter__c, Source_System_ID__c from Healthcare_Cost__c where Account__c = :accId and RecordTypeId = :recordTypeId ORDER BY Name LIMIT :pageSize OFFSET :offsetSize];
              }
             else{
-                totalCount = HCCCostAmbulanceAccountHelper. (accId, recordTypeId);
+                totalCount = HCCCostAmbulanceAccountHelper.getfilteredAmbulanceCountonAccount(accId);
                 if(pageSize > = totalCount){
                     offsetSize = 0;
                 }
