@@ -1,5 +1,4 @@
 public with sharing class HCCCostAmbulanceAccountHelper {
-   Integer countOfRecords = 0;
     private static Id getAmbulanceRecordId(){
         return Schema.SObjectType.Healthcare_Cost__c.getRecordTypeInfosByName().get('Ambulance').getRecordTypeId();
     }
@@ -7,7 +6,6 @@ public with sharing class HCCCostAmbulanceAccountHelper {
     @AuraEnabled
     public static Integer getTotalAmbulanceCountonAccount(String accId){
         Integer countofRecords = 0;
-
         try{
             Id recordTypeId = getAmbulanceRecordId();
             countofRecords = [SELECT count() from Healthcare_Cost__c where Account__c = :accId and RecordTypeId = :recordTypeId];            

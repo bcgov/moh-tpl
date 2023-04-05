@@ -20,11 +20,6 @@ public with sharing class HCCCostAmbulanceRecord {
             else {
                 countAmbulanceCase = [SELECT count() from Healthcare_Cost__c where Case2__c = :caseId and RecordTypeId = :recordTypeId];
             }
-
-            if(countAmbulanceCase == null){
-                countAmbulanceCase = 0;
-            }
-
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
         }
@@ -80,7 +75,7 @@ public with sharing class HCCCostAmbulanceRecord {
                 result = Label.TPL_Passed;
             }
         } catch (DMLException dml) {
-            dml.getMessage();
+            System.debug(dml.getMessage());
         }catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
         }

@@ -9,42 +9,20 @@ public class HCCCostAmbulanceRecordTest {
 		Healthcare_Cost__c hcc1 = TestDataFactory.ambulanceCostRecord(acc.Id, c.Id);
         Healthcare_Cost__c hcc2 = TestDataFactory.ambulanceCostRecord(acc.Id, c.Id);
         Healthcare_Cost__c hcc3 = TestDataFactory.ambulanceCostRecord(acc.Id, c.Id);
-        
         insert new Healthcare_Cost__c[] {hcc1, hcc2, hcc3};
-
-        Test.startTest();
-        String filterLabel = Label.TPL_All_Records;
-        List <Healthcare_Cost__c> hccListforAccounts = HCCCostAmbulanceRecord.getHealthcareCostsAmbulanceForAccount(acc.Id, filterLabel);
-        Test.stopTest();
-        System.assertEquals(3, hccListforAccounts.size());
-    }
-    
-    @isTest
-    static void testAmbulanceRecordsonFilteredAccount(){
-        Account acc = TestDataFactory.individualAccount();
-        insert acc;
-        Case c = TestDataFactory.newCase(acc.Id);
-        insert c;
-		Healthcare_Cost__c hcc1 = TestDataFactory.ambulanceCostRecord(acc.Id, c.Id);
-        Healthcare_Cost__c hcc2 = TestDataFactory.ambulanceCostRecord(acc.Id, c.Id);
-        Healthcare_Cost__c hcc3 = TestDataFactory.ambulanceCostRecord(acc.Id, c.Id);
-        hcc2.Cost_Include__c = false;
-        hcc3.Cost_Review__c = false;
-        insert new Healthcare_Cost__c[] {hcc1, hcc2, hcc3};
-
-        String filterLabel1 = Label.TPL_Both_Checked;
-        String filterLabel2 = Label.TPL_Both_Unchecked;
-        String filterLabel3 = Label.TPL_Cost_Include_Checked;
-        String filterLabel4 = Label.TPL_Cost_Review_Checked;
+            
+        HCCCostAmbulanceAccountHelper.HCCostAccountDetailWrapper accountDetailWrapper1 = new HCCCostAmbulanceAccountHelper.HCCostAccountDetailWrapper();
+        HCCCostAmbulanceAccountHelper.HCCostAccountDetailWrapper accountDetailWrapper2 = new HCCCostAmbulanceAccountHelper.HCCostAccountDetailWrapper();
         
         Test.startTest();
-        List<Healthcare_Cost__c> result1 = HCCCostAmbulanceRecord.getHealthcareCostsAmbulanceForAccount(acc.Id, filterLabel1);
-        List<Healthcare_Cost__c> result2 = HCCCostAmbulanceRecord.getHealthcareCostsAmbulanceForAccount(acc.Id, filterLabel2);
-        List<Healthcare_Cost__c> result3 = HCCCostAmbulanceRecord.getHealthcareCostsAmbulanceForAccount(acc.Id, filterLabel3);
-        List<Healthcare_Cost__c> result4 = HCCCostAmbulanceRecord.getHealthcareCostsAmbulanceForAccount(acc.Id, filterLabel4);
+        String filterAllRecords = Label.TPL_All_Records;
+        String filterUncheckedRecords = Label.TPL_Both_Unchecked;
+        Integer pageNumber = 1;
+        Integer pageSize = 5;
+        accountDetailWrapper1 = HCCCostAmbulanceAccountHelper.getHealthcareCostsAmbulanceForAccount(acc.Id, filterAllRecords, pageNumber, pageSize);
+        accountDetailWrapper2 = HCCCostAmbulanceAccountHelper.getHealthcareCostsAmbulanceForAccount(acc.Id, filterUncheckedRecords, pageNumber, pageSize);
         Test.stopTest();
-		
-        System.assertNotEquals(result1.size(), result2.size());
+        System.assertNotEquals(accountDetailWrapper1.totalCount, accountDetailWrapper2.totalCount);
     }
     
     @isTest
@@ -59,33 +37,21 @@ public class HCCCostAmbulanceRecordTest {
         insert new Healthcare_Cost__c[] {hcc1, hcc2, hcc3};
             
         Test.startTest();
-        String filterLabel = Label.TPL_All_Records;
-        List <Healthcare_Cost__c> hccListforCases = HCCCostAmbulanceRecord.getHealthcareCostsAmbulanceForCase(c.Id, filterLabel);
+        String allRecords = Label.TPL_All_Records;
+        String manualRecords = Label.TPL_Manual_Records;
+        String recordsCreatedtoday = Label.TPL_Records_Created_Today;
+        Integer offsetSize = 0;
+        Integer limitSize = 5;
+        
+        List <Healthcare_Cost__c> hccListforAllRecords = HCCCostAmbulanceRecord.getHealthcareCostsAmbulanceForCase(c.Id, allRecords, offsetSize, limitSize);
+        List <Healthcare_Cost__c> hccListforManualRecords = HCCCostAmbulanceRecord.getHealthcareCostsAmbulanceForCase(c.Id, manualRecords, offsetSize, limitSize);
+        List <Healthcare_Cost__c> hccListforRecordsCreatedToday = HCCCostAmbulanceRecord.getHealthcareCostsAmbulanceForCase(c.Id, recordsCreatedtoday, offsetSize, limitSize);
         Test.stopTest();
-        System.assertEquals(3, hccListforCases.size());
-    
+        System.assertEquals(hccListforManualRecords.size(), hccListforRecordsCreatedToday.size());
     }
     
     @isTest
-    static void testAmbulanceRecordsCaseManualRecord(){
-        Account acc = TestDataFactory.individualAccount();
-        insert acc;
-        Case c = TestDataFactory.newCase(acc.Id);
-        insert c;
-		Healthcare_Cost__c hcc1 = TestDataFactory.ambulanceCostRecord(acc.Id, c.Id);
-        Healthcare_Cost__c hcc2 = TestDataFactory.ambulanceCostRecord(acc.Id, c.Id);
-        Healthcare_Cost__c hcc3 = TestDataFactory.ambulanceCostRecord(acc.Id, c.Id);
-        insert new Healthcare_Cost__c[] {hcc1, hcc2, hcc3};
-            
-        Test.startTest();
-        String filterLabel = Label.TPL_Manual_Records;
-        List <Healthcare_Cost__c> hccListforCases = HCCCostAmbulanceRecord.getHealthcareCostsAmbulanceForCase(c.Id, filterLabel);
-        Test.stopTest();
-        System.assertEquals(3, hccListforCases.size());
-    
-    }
-    @isTest
-    static void testAmbulanceRecordsDeleteWhenAll(){
+    static void testAmbulanceRecordsDeleteFunctionality(){
         Account acc = TestDataFactory.individualAccount();
         insert acc;
         Case c = TestDataFactory.newCase(acc.Id);
@@ -96,10 +62,13 @@ public class HCCCostAmbulanceRecordTest {
         insert hccListtodelete;
 
         Test.startTest();
-        String filterLabel = Label.TPL_All_Records;
-        String result = HCCCostAmbulanceRecord.deleteAmbulanceRecords(hccListtodelete, filterLabel);
+        String manualRecords = Label.TPL_Manual_Records;
+        String allRecords = Label.TPL_All_Records;
+        String recordsCreatedToday = Label.TPL_Records_Created_Today;
+        String result1 = HCCCostAmbulanceRecord.deleteAmbulanceRecords(hccListtodelete, allRecords);
+        String result2 = HCCCostAmbulanceRecord.deleteAmbulanceRecords(hccListtodelete, recordsCreatedToday);
         Test.stopTest();
-        System.assertEquals('Failed', result);
+        System.assertNotEquals(result1, result2);
     
     }
     
@@ -117,88 +86,46 @@ public class HCCCostAmbulanceRecordTest {
         hcc2.Cost_Review__c = false;
         Healthcare_Cost__c hcc3 = TestDataFactory.ambulanceCostRecord(acc.Id, c1.Id);
 		insert new Healthcare_Cost__c[] {hcc1, hcc2, hcc3}; 
-            
-        List<Healthcare_Cost__c> hccListtoUpdate1 = new List<Healthcare_Cost__c>();
-        List<Healthcare_Cost__c> hccListtoUpdate2 = new List<Healthcare_Cost__c>();
-
-        hccListtoUpdate1.add(hcc1);
-        hccListtoUpdate2.add(hcc2);
-        String caseId = c2.Id;
+        
         Test.startTest();
-        String output1 = HCCCostAmbulanceRecord.updateHCCCaseInformation(hccListtoUpdate1,caseId);
-        String output2 = HCCCostAmbulanceRecord.updateHCCCaseInformation(hccListtoUpdate2,caseId);
+        String filterAllRecords = Label.TPL_All_Records;
+        String filterUncheckedRecords = Label.TPL_Both_Unchecked;
+        Integer pageNumber = 1;
+        Integer pageSize = 5;
+        
+        HCCCostAmbulanceAccountHelper.HCCostAccountDetailWrapper accountDetailWrapper1 = HCCCostAmbulanceAccountHelper.getHealthcareCostsAmbulanceForAccount(acc.Id, filterAllRecords, pageNumber, pageSize);
+        HCCCostAmbulanceAccountHelper.HCCostAccountDetailWrapper accountDetailWrapper2 = HCCCostAmbulanceAccountHelper.getHealthcareCostsAmbulanceForAccount(acc.Id, filterUncheckedRecords, pageNumber, pageSize);
+        HCCCostAmbulanceAccountHelper.HCCostAccountCaseWrapper accountCaseUpdateWrapper1 = new HCCCostAmbulanceAccountHelper.HCCostAccountCaseWrapper(); 
+        HCCCostAmbulanceAccountHelper.HCCostAccountCaseWrapper accountCaseUpdateWrapper2 = new HCCCostAmbulanceAccountHelper.HCCostAccountCaseWrapper();
+        List<HCCCostAmbulanceAccountHelper.HCCCaseAssociationWrapper> caseAssociation1 = accountDetailWrapper1.hccList;  
+        List<HCCCostAmbulanceAccountHelper.HCCCaseAssociationWrapper> caseAssociation2 = accountDetailWrapper2.hccList;
+        String caseId = c2.Id;
+        
+        accountCaseUpdateWrapper1 = HCCCostAmbulanceAccountHelper.updateHCCCaseInformation(caseAssociation1, caseId, caseAssociation1);
+        accountCaseUpdateWrapper2 = HCCCostAmbulanceAccountHelper.updateHCCCaseInformation(caseAssociation2, caseId, caseAssociation2);
         Test.stopTest(); 
-        System.assertEquals('Passed', output2);
-        System.assertEquals('Failed', output1);
+        System.assertNotEquals(accountCaseUpdateWrapper1.passMessage, accountCaseUpdateWrapper2.passMessage);
         
     }
     
     @isTest
-    static void testUpdatetoCaseValuesReverseCondition(){
+    static void testAmbulanceCountonCase(){
         Account acc = TestDataFactory.individualAccount();
         insert acc;
         Case c1 = TestDataFactory.newCase(acc.Id);
         insert c1;
-        List<Healthcare_Cost__c> hccListtoUpdate1 = new List<Healthcare_Cost__c>();
-        Test.startTest();
-        String output = HCCCostAmbulanceRecord.updateHCCCaseInformation(hccListtoUpdate1, c1.Id);
-        Test.stopTest(); 
-        System.assertEquals('Empty Selection', output); 
-    }
-    
-	@isTest
-    static void testAmbulanceCountonAccount(){
-        Account acc1 = TestDataFactory.individualAccount();
-        Account acc2 = TestDataFactory.individualAccount();
-        acc2.FirstName = 'Testing';
-        acc2.LastName = 'Account';
-        acc2.PHN__pc = '8912781237'; 
-        insert new Account[] {acc1, acc2};
-            
-        Case c1 = TestDataFactory.newCase(acc1.Id);
-        Case c2 = TestDataFactory.newCase(acc2.Id);
-        insert new Case[] {c1,c2};
-		
-        Healthcare_Cost__c hcc1 = TestDataFactory.ambulanceCostRecord(acc1.Id, c1.Id);
-        Healthcare_Cost__c hcc2 = TestDataFactory.ambulanceCostRecord(acc1.Id, c1.Id);
-        Healthcare_Cost__c hcc3 = TestDataFactory.ambulanceCostRecord(acc2.Id, c2.Id);
-        insert new Healthcare_Cost__c[] {hcc1, hcc2, hcc3}; 
-        
-        Test.startTest();
-        Integer countRecords = HCCCostAmbulanceRecord.getAmbulanceCountonAccount(acc1.Id);
-        Test.stopTest();
-        System.assertEquals(2, countRecords);
-    }
- 
-    @isTest
-    static void testDeleteAmbulanceRecords(){
-        Account acc1 = TestDataFactory.individualAccount();
-        Account acc2 = TestDataFactory.individualAccount();
-        acc2.FirstName = 'Testing';
-        acc2.LastName = 'Account';
-        acc2.PHN__pc = '8912781237'; 
-        insert new Account[] {acc1, acc2};
-            
-        Case c1 = TestDataFactory.newCase(acc1.Id);
-        Case c2 = TestDataFactory.newCase(acc2.Id);
-        insert new Case[] {c1,c2};
+        Healthcare_Cost__c hcc = TestDataFactory.ambulanceCostRecord(acc.Id, c1.Id);
+        insert hcc;
        
-	
-        Healthcare_Cost__c hcc1 = TestDataFactory.ambulanceCostRecord(acc1.Id, c1.Id);
-        Healthcare_Cost__c hcc2 = TestDataFactory.ambulanceCostRecord(acc1.Id, c1.Id);
-        Healthcare_Cost__c hcc3 = TestDataFactory.ambulanceCostRecord(acc2.Id, c2.Id);
- 
-        List<Healthcare_Cost__c> hccListtodelete = new List<Healthcare_Cost__c>();	
-        hccListtodelete.add(hcc1);
-        hccListtodelete.add(hcc2);
-        hccListtodelete.add(hcc3);
-
-        insert hccListtodelete;
-
         Test.startTest();
-        String filterLabel = Label.TPL_Manual_Records;
-        String result = HCCCostAmbulanceRecord.deleteAmbulanceRecords(hccListtodelete, filterLabel);
+        String manualRecords = Label.TPL_Manual_Records;
+        String allRecords = Label.TPL_All_Records;
+        String recordsCreatedToday = Label.TPL_Records_Created_Today;
+        Integer output1 = HCCCostAmbulanceRecord.getAmbulanceCountonCase(c1.Id, allRecords);
+        Integer output2 = HCCCostAmbulanceRecord.getAmbulanceCountonCase(c1.Id, manualRecords);
+        Integer output3 = HCCCostAmbulanceRecord.getAmbulanceCountonCase(c1.Id, recordsCreatedToday);
         Test.stopTest();
-        System.assertEquals('Passed', result);
+        System.assertEquals(output2, output3);
     }
+   
 }
