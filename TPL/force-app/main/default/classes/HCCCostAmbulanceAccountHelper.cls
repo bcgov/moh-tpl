@@ -1,64 +1,50 @@
-public with sharing class HCCCostPharmacareRecord {
-    private static Id getPharmacareRecordId(){
-        return Schema.SObjectType.Healthcare_Cost__c.getRecordTypeInfosByName().get('Pharmacare').getRecordTypeId();
+public with sharing class HCCCostAmbulanceAccountHelper {
+    private static Id getAmbulanceRecordId(){
+        return Schema.SObjectType.Healthcare_Cost__c.getRecordTypeInfosByName().get('Ambulance').getRecordTypeId();
     }
 
-    private static Integer getPharmacareCountonCase(String caseId, String filterValue, Id recordTypeId){
-        String sourceSystemId = null;
-        if(filterValue == Label.TPL_Manual_Records){
-            return [SELECT count() from Healthcare_Cost__c where Case2__c = :caseId and RecordTypeId = :recordTypeId and Source_System_ID__c = :sourceSystemId];
-        }
-        else if(filterValue == Label.TPL_Records_Created_Today)
-        {
-            return [SELECT count() from Healthcare_Cost__c where Case2__c = :caseId and RecordTypeId = :recordTypeId and Source_System_ID__c = :sourceSystemId and CreatedDate = TODAY];
-        }
-        else
-        {
-            return [SELECT count() from Healthcare_Cost__c where Case2__c = :caseId and RecordTypeId = :recordTypeId];
-        }
+    private static Integer getTotalAmbulanceCountonAccount(String accId, String selectedFilterValue, Id recordTypeId){
+      if(selectedFilterValue == Label.TPL_All_Records)
+      {
+        return [SELECT count() from Healthcare_Cost__c where Account__c = :accId and RecordTypeId = :recordTypeId];            
+      }
+      else{
+        return [SELECT count() from Healthcare_Cost__c where Account__c = :accId and RecordTypeId = :recordTypeId and Cost_Include__c = false and Cost_Review__c = false];
+      }
     }
-
-    private static Integer getPharmacareCountonAccount(String accId, String selectedFilterValue, Id recordTypeId){
-        if(selectedFilterValue == Label.TPL_All_Records)
-        {
-            return [SELECT count() from Healthcare_Cost__c where Account__c = :accId and RecordTypeId = :recordTypeId];            
-        }
-        else{
-            return [SELECT count() from Healthcare_Cost__c where Account__c = :accId and RecordTypeId = :recordTypeId and Cost_Include__c = false and Cost_Review__c = false];
-        }
-    }
-
 
     @AuraEnabled
-    public static HCCostAccountDetailWrapper getHealthcareCostsPharmacareForAccount(String accId, String selectedFilterValue, Integer pageNumber, Integer pageSize)
+    public static HCCostAccountDetailWrapper getHealthcareCostsAmbulanceForAccount(String accId, String selectedFilterValue, Integer pageNumber, Integer pageSize)
     {
         List<Healthcare_Cost__c> hccCostList = new List<Healthcare_Cost__c> ();
         List<HCCCaseAssociationWrapper> hccCaseAssociation = new List<HCCCaseAssociationWrapper>();
         HCCostAccountDetailWrapper accountDetailWrapper = new HCCostAccountDetailWrapper();
-        Integer offsetSize = 0;
-        Integer totalCount = 0;
         Set<Id> hccCaseId = new Set<Id>();
-        System.debug('Initial Page Number : ' + pageNumber);            
-        
         try{
-            Id recordTypeId = getPharmacareRecordId();
-            totalCount = getPharmacareCountonAccount(accId, selectedFilterValue, recordTypeId);
-         
+        	Id recordTypeId = getAmbulanceRecordId();
+            Integer offsetSize = 0;
+            Integer totalCount = 0;
+            System.debug('Initial Page Number : ' + pageNumber);
+            totalCount = HCCCostAmbulanceAccountHelper.getTotalAmbulanceCountonAccount(accId, selectedFilterValue, recordTypeId);
+            
             if(pageSize > = totalCount){
                 offsetSize = 0;
             }
             else{
                 offsetSize = (pageNumber -1) * pageSize;
             }
-         
             System.debug('Page Size : ' + pageSize + ', Page Number : ' + pageNumber + ', offset Value : ' + offsetSize);
-            if(selectedFilterValue == Label.TPL_All_Records){
-                hccCostList = [select Case2__c, Cost_Include__c, Cost_Review__c, Name, Date_of_Service__c, Practitioner_Name__c, DIN__c, Name_of_Drug__c, Cost_of_Drug__c, Total_Cost_Override__c, Source_System_ID__c from Healthcare_Cost__c where Account__c = :accId and RecordTypeId = :recordTypeId ORDER BY Name LIMIT :pageSize OFFSET :offsetSize];
-            }
+            
+            if(selectedFilterValue == Label.TPL_All_Records)
+            {   
+                hccCostList = [Select Id, Name, Case2__c, Case2__r.CaseNumber, Cost_Include__c, Cost_Review__c, Date_of_Service__c, Location_Responded__c, Basic_Amount__c, Cost__c, Total_Cost_Override__c, Site_Code__c, Facility__c, FacilityName__c, Fixed_Wing_Helicopter__c, Source_System_ID__c from Healthcare_Cost__c where Account__c = :accId and RecordTypeId = :recordTypeId ORDER BY Name LIMIT :pageSize OFFSET :offsetSize];
+             }
             else{
-                hccCostList = [select Case2__c, Cost_Include__c, Cost_Review__c, Name, Date_of_Service__c, Practitioner_Name__c, DIN__c, Name_of_Drug__c, Cost_of_Drug__c, Total_Cost_Override__c, Source_System_ID__c from Healthcare_Cost__c where Account__c = :accId and RecordTypeId = :recordTypeId and Cost_Include__c = false and Cost_Review__c = false ORDER BY Name LIMIT :pageSize OFFSET :offsetSize];
+                hccCostList = [Select Id, Name, Case2__c, Case2__r.CaseNumber, Cost_Include__c, Cost_Review__c,  Date_of_Service__c, Location_Responded__c, Basic_Amount__c, Cost__c, Total_Cost_Override__c, Site_Code__c, Facility__c, FacilityName__c, Fixed_Wing_Helicopter__c, Source_System_ID__c from Healthcare_Cost__c where Account__c = :accId and RecordTypeId = :recordTypeId and Cost_Include__c = false and Cost_Review__c = false ORDER BY Name LIMIT :pageSize OFFSET :offsetSize];            
             }
-            System.debug('HCC Cost List (Account Records) : ' + hccCostList.size());      
+
+            System.debug('HCC Cost List Size : ' + hccCostList.size());
+           
             for(Healthcare_Cost__c hcc: hccCostList){
                 hccCaseId.add(hcc.Case2__c);
             }
@@ -80,11 +66,12 @@ public with sharing class HCCCostPharmacareRecord {
                 caseAssociation.costIncluded = hcc.Cost_Include__c;
                 caseAssociation.costReview = hcc.Cost_Review__c;
                 caseAssociation.dateOfService = hcc.Date_of_Service__c;
-                caseAssociation.practitionerName = hcc.Practitioner_Name__c;
-                caseAssociation.din = hcc.DIN__c;
-                caseAssociation.nameOfDrug = hcc.Name_of_Drug__c;
+                caseAssociation.facilityName = hcc.FacilityName__c;
+                caseAssociation.fixedWingHelicopter = hcc.Fixed_Wing_Helicopter__c;
+                caseAssociation.locationResponded = hcc.Location_Responded__c;
+                caseAssociation.siteCode = hcc.Site_Code__c;
                 caseAssociation.totalCostOverride = hcc.Total_Cost_Override__c;
-                caseAssociation.costOfDrug = hcc.Cost_of_Drug__c;
+                caseAssociation.basicAmount = hcc.Basic_Amount__c;
                 caseAssociation.sourceSystemId = hcc.Source_System_ID__c;
                 hccCaseAssociation.add(caseAssociation);
             
@@ -102,45 +89,6 @@ public with sharing class HCCCostPharmacareRecord {
             throw new AuraHandledException(e.getMessage());
         }
         return accountDetailWrapper;
-    }
-         
-    @AuraEnabled
-    public static PharmacareCaseDetailWrapper getHealthcareCostsPharmacareForCase(String caseId, String filterValue, Integer pageSize, Integer pageNumber){
-     	List<Healthcare_Cost__c> hccCostList = new List<Healthcare_Cost__c> ();
-         PharmacareCaseDetailWrapper pharmaCaseDetailsWrapper = new PharmacareCaseDetailWrapper();
-         String sourceSystemId = null;
-         Integer totalCount = 0;
-         Integer offsetSize = 0;
-
-         try{
-            Id recordTypeId = getPharmacareRecordId();
-            totalCount = getPharmacareCountonCase(caseId, filterValue, recordTypeId);
-            if(pageSize > = totalCount){
-                offsetSize = 0;
-            }
-            else{
-                offsetSize = (pageNumber -1) * pageSize;
-            }
-            if(filterValue == Label.TPL_Manual_Records)
-            { 
-                hccCostList = [select Case2__c,  Cost_Include__c, Cost_Review__c, Name, Date_of_Service__c, Practitioner_Name__c, DIN__c, Name_of_Drug__c, Cost_of_Drug__c, Total_Cost_Override__c, Source_System_ID__c from Healthcare_Cost__c where Case2__c = :caseId and RecordTypeId = :recordTypeId and Source_System_ID__c = :sourceSystemId ORDER BY Name LIMIT :pageSize OFFSET :offsetSize];   
-            }
-            else if(filterValue == Label.TPL_Records_Created_Today){
-                hccCostList = [select Case2__c, Cost_Include__c, Cost_Review__c, Name, Date_of_Service__c, Practitioner_Name__c, DIN__c, Name_of_Drug__c, Cost_of_Drug__c, Total_Cost_Override__c, Source_System_ID__c from Healthcare_Cost__c where Case2__c = :caseId and RecordTypeId = :recordTypeId and Source_System_ID__c = :sourceSystemId and CreatedDate = TODAY ORDER BY CreatedDate ASC LIMIT :pageSize OFFSET :offsetSize];       
-            }
-            else{
-                hccCostList = [select Case2__c, Cost_Include__c, Cost_Review__c, Name, Date_of_Service__c, Practitioner_Name__c, DIN__c, Name_of_Drug__c, Cost_of_Drug__c, Total_Cost_Override__c, Source_System_ID__c from Healthcare_Cost__c where Case2__c = :caseId and RecordTypeId = :recordTypeId ORDER BY Name LIMIT :pageSize OFFSET :offsetSize];   
-            }
-            pharmaCaseDetailsWrapper.hccList = hccCostList;
-            pharmaCaseDetailsWrapper.totalCount = totalCount;
-        }
-        catch(NullPointerException nullpointer){
-            nullpointer.getMessage();
-        }
-        catch(Exception e) {
-            throw new AuraHandledException(e.getMessage());
-        }
-        return pharmaCaseDetailsWrapper;
     }
 
     @AuraEnabled
@@ -224,6 +172,7 @@ public with sharing class HCCCostPharmacareRecord {
         }
         return hac;
     }
+         
     public class HCCCaseAssociationWrapper
     {
         @AuraEnabled public Id recordId {get;set;}
@@ -233,11 +182,12 @@ public with sharing class HCCCostPharmacareRecord {
         @AuraEnabled public boolean costIncluded{get;set;}
         @AuraEnabled public boolean costReview{get;set;}
         @AuraEnabled public Date dateOfService{get;set;}
-        @AuraEnabled public String practitionerName{get;set;}
-        @AuraEnabled public String din{get;set;}
-        @AuraEnabled public String nameOfDrug{get;set;}
-        @AuraEnabled public Decimal costOfDrug{get;set;}
+        @AuraEnabled public String locationResponded{get;set;}
+        @AuraEnabled public Decimal basicAmount{get;set;}
         @AuraEnabled public Decimal totalCostOverride{get;set;}
+        @AuraEnabled public Decimal fixedWingHelicopter{get;set;}
+        @AuraEnabled public String siteCode{get;set;}
+        @AuraEnabled public string facilityName{get;set;}
         @AuraEnabled public String sourceSystemId {get;set;}       
     }
 
@@ -250,9 +200,4 @@ public with sharing class HCCCostPharmacareRecord {
         @AuraEnabled public String updateMessage {get;set;}
         @AuraEnabled public String passMessage {get;set;}
     }
-
-    public class PharmacareCaseDetailWrapper{
-        @AuraEnabled public List<Healthcare_Cost__c> hccList {get;set;}
-        @AuraEnabled public Integer totalCount {get;set;}
-     } 
 }

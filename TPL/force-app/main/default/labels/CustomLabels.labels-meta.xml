@@ -77,4 +77,11 @@
         <shortDescription>Passed</shortDescription>
         <value>Passed</value>
     </labels>
+    <labels>
+        <fullName>TPL_Records_Created_Today</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Records Created Today</shortDescription>
+        <value>Records Created Today</value>
+    </labels>
 </CustomLabels>
