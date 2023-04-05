@@ -424,12 +424,16 @@ export default class AmbulanceRecordsCase extends LightningElement {
         let dataRecieved = event.detail.data;
         let updatedItem;
        
-        console.log('Line 368 handle value change' + JSON.stringify(dataRecieved));
+        console.log('Line 368 handle value change' + JSON.stringify(dataRecieved.value));
+        if(!dataRecieved.value){
+            dataRecieved.value ='';
+        }
         switch (dataRecieved.label) {
             case 'Account':
                 updatedItem = {
                     Id: dataRecieved.context,
-                    Facility__c: dataRecieved.value
+                    Facility__c: dataRecieved.value,
+                    
                 };
                 // Set the cell edit class to edited to mark it as value changed.
                 console.log('At 376');
@@ -445,7 +449,7 @@ export default class AmbulanceRecordsCase extends LightningElement {
                 break;
         }
         this.updateDraftValues(updatedItem);
-        this.updateDataValues(updatedItem);
+       // this.updateDataValues(updatedItem);
     }
     handleCellChange(event){
         console.log(JSON.stringify(event)+'---- '+JSON.stringify(this.draftValues));
@@ -581,6 +585,7 @@ export default class AmbulanceRecordsCase extends LightningElement {
         });
         this.records = [...copyData];
        
+       
     }
 
     updateDraftValues(updateItem) {
@@ -592,6 +597,7 @@ export default class AmbulanceRecordsCase extends LightningElement {
             if (item.Id === updateItem.Id) {
                 for (let field in updateItem) {
                     item[field] = updateItem[field];
+                    
                 }
                 draftValueChanged = true;
             }
@@ -602,6 +608,7 @@ export default class AmbulanceRecordsCase extends LightningElement {
             this.draftValues = [...copyDraftValues, updateItem];
         }
         console.log('Update Draft values' + JSON.stringify(this.draftValues));
+        console.log('Update Draft values' + JSON.stringify(this.recordsToDisplay));
     }
 
     setClassesOnData(id, fieldName, fieldValue) {
@@ -752,7 +759,7 @@ export default class AmbulanceRecordsCase extends LightningElement {
                       
                     }
                     
-                    console.log('Selected Value : ' + JSON.stringify(selected[i]));
+                    console.log('Selected Value : ' + JSON.stringify(selected));
     
                 }
            }
