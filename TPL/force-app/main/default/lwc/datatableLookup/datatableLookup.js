@@ -24,7 +24,10 @@ export default class DatatableLookup extends LightningElement {
     //capture the lookup change and fire a valuechange event with details payload.
     handleChange(event) {
         event.preventDefault();
+        console.log('lookup '+event.detail.value[0]);
+       
         this.value = event.detail.value[0];
+        console.log(this.value);
         this.showLookup = this.value != null ? false : true;
         this.dispatchCustomEvent('valuechange', this.context, this.value, this.label, this.name);
     }
@@ -93,6 +96,11 @@ export default class DatatableLookup extends LightningElement {
 
     //label of formatted url
     get lookupName() {
+        console.log('a'+JSON.stringify(this.record.data));
+        console.log(this.value);
+        if(!this.value){
+            return ' ';
+        }
         return (this.record.data != null) ?  this.record.data.fields[this.getFieldName()].value : '';
     }
 
