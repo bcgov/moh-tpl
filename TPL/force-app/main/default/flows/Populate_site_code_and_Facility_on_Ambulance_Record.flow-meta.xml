@@ -216,7 +216,7 @@
             <field>RecordTypeId</field>
             <operator>EqualTo</operator>
             <value>
-                <stringValue>0126s000000CtUzAAK</stringValue>
+                <stringValue>012Au000000Bi0vIAC</stringValue>
             </value>
         </filters>
         <getFirstRecordOnly>false</getFirstRecordOnly>
