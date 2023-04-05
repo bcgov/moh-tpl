@@ -97,7 +97,6 @@ export default class AmbulanceRecordsAccount extends LightningElement {
     pageSize; //No.of records to be displayed per page
     recordsToDisplay = []; //Records to be displayed on the page
     selectedCase;
-    caseNumber;
     selectedRows = [];
     showErrorMessage = false;
     displayMessage='';

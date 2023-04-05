@@ -33,6 +33,28 @@ public class HCCCostControllerTest {
         System.assertEquals('Failed', caseWrapper2.passedResult);
     }
     
+     @isTest
+    static void testRecordsDeleteFunctionality(){
+        Account acc = TestDataFactory.individualAccount();
+        insert acc;
+        Case c = TestDataFactory.newCase(acc.Id);
+        insert c;
+		List<Healthcare_Cost__c> hccListtodelete = new List<Healthcare_Cost__c>();	
+        Healthcare_Cost__c hcc1 = TestDataFactory.ambulanceCostRecord(acc.Id, c.Id);
+        hccListtodelete.add(hcc1);
+        insert hccListtodelete;
+
+        Test.startTest();
+        String manualRecords = Label.TPL_Manual_Records;
+        String allRecords = Label.TPL_All_Records;
+        String recordsCreatedToday = Label.TPL_Records_Created_Today;
+        String result1 = HCCCostController.deleteHCCRecord(hccListtodelete, allRecords);
+        String result2 = HCCCostController.deleteHCCRecord(hccListtodelete, recordsCreatedToday);
+        Test.stopTest();
+        System.assertNotEquals(result1, result2);
+    
+    }
+    
     @isTest
     static void testCaseNumber(){
         Account acc = TestDataFactory.individualAccount();

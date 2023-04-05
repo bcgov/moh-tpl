@@ -68,6 +68,33 @@ public with sharing class HCCCostController {
         return caseList;
     }
 
+    @AuraEnabled
+    public static String deleteHCCRecord(List<Healthcare_Cost__c> deletionRecords, String filterOption){
+        String result = null;
+        System.debug('Deletion Records Size : ' + deletionRecords.size());
+        try {
+            if(deletionRecords.size() == 0 || deletionRecords == null || (filterOption != Label.TPL_Manual_Records && filterOption != Label.TPL_Records_Created_Today))
+            {
+                result = Label.TPL_Failed;
+            }
+            else{
+                for(Healthcare_Cost__c hcc: deletionRecords){
+                    if(hcc.Source_System_ID__c != null){
+                        result = Label.TPL_Failed;
+                        return result;
+                    }
+                }
+                delete deletionRecords;
+                result = Label.TPL_Passed;
+            }
+        } catch (DMLException dml) {
+            System.debug(dml.getMessage());
+        }catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
+        }
+        return result; 
+    }
+
     public class CaseListWrapper{
        @AuraEnabled public String actionMessage {get;set;}
        @AuraEnabled public String passedResult {get;set;}

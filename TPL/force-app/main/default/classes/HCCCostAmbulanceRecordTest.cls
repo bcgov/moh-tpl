@@ -9,7 +9,16 @@ public class HCCCostAmbulanceRecordTest {
 		Healthcare_Cost__c hcc1 = TestDataFactory.ambulanceCostRecord(acc.Id, c.Id);
         Healthcare_Cost__c hcc2 = TestDataFactory.ambulanceCostRecord(acc.Id, c.Id);
         Healthcare_Cost__c hcc3 = TestDataFactory.ambulanceCostRecord(acc.Id, c.Id);
-        insert new Healthcare_Cost__c[] {hcc1, hcc2, hcc3};
+        Healthcare_Cost__c hcc4 = TestDataFactory.ambulanceCostRecord(acc.Id, c.Id);
+        Healthcare_Cost__c hcc5 = TestDataFactory.ambulanceCostRecord(acc.Id, c.Id);
+        Healthcare_Cost__c hcc6 = TestDataFactory.ambulanceCostRecord(acc.Id, c.Id);
+        Healthcare_Cost__c hcc7 = TestDataFactory.ambulanceCostRecord(acc.Id, c.Id);
+        Healthcare_Cost__c hcc8 = TestDataFactory.ambulanceCostRecord(acc.Id, c.Id);
+        Healthcare_Cost__c hcc9 = TestDataFactory.ambulanceCostRecord(acc.Id, c.Id);
+        Healthcare_Cost__c hcc10 = TestDataFactory.ambulanceCostRecord(acc.Id, c.Id);
+        Healthcare_Cost__c hcc11 = TestDataFactory.ambulanceCostRecord(acc.Id, c.Id);
+        Healthcare_Cost__c hcc12 = TestDataFactory.ambulanceCostRecord(acc.Id, c.Id);
+        insert new Healthcare_Cost__c[] {hcc1, hcc2, hcc3, hcc4, hcc5, hcc6, hcc7, hcc8, hcc9, hcc10, hcc11, hcc12};
             
         HCCCostAmbulanceAccountHelper.HCCostAccountDetailWrapper accountDetailWrapper1 = new HCCCostAmbulanceAccountHelper.HCCostAccountDetailWrapper();
         HCCCostAmbulanceAccountHelper.HCCostAccountDetailWrapper accountDetailWrapper2 = new HCCCostAmbulanceAccountHelper.HCCostAccountDetailWrapper();
@@ -17,7 +26,7 @@ public class HCCCostAmbulanceRecordTest {
         Test.startTest();
         String filterAllRecords = Label.TPL_All_Records;
         String filterUncheckedRecords = Label.TPL_Both_Unchecked;
-        Integer pageNumber = 1;
+        Integer pageNumber = 2;
         Integer pageSize = 5;
         accountDetailWrapper1 = HCCCostAmbulanceAccountHelper.getHealthcareCostsAmbulanceForAccount(acc.Id, filterAllRecords, pageNumber, pageSize);
         accountDetailWrapper2 = HCCCostAmbulanceAccountHelper.getHealthcareCostsAmbulanceForAccount(acc.Id, filterUncheckedRecords, pageNumber, pageSize);
@@ -50,28 +59,7 @@ public class HCCCostAmbulanceRecordTest {
         System.assertEquals(hccListforManualRecords.size(), hccListforRecordsCreatedToday.size());
     }
     
-    @isTest
-    static void testAmbulanceRecordsDeleteFunctionality(){
-        Account acc = TestDataFactory.individualAccount();
-        insert acc;
-        Case c = TestDataFactory.newCase(acc.Id);
-        insert c;
-		List<Healthcare_Cost__c> hccListtodelete = new List<Healthcare_Cost__c>();	
-        Healthcare_Cost__c hcc1 = TestDataFactory.ambulanceCostRecord(acc.Id, c.Id);
-        hccListtodelete.add(hcc1);
-        insert hccListtodelete;
 
-        Test.startTest();
-        String manualRecords = Label.TPL_Manual_Records;
-        String allRecords = Label.TPL_All_Records;
-        String recordsCreatedToday = Label.TPL_Records_Created_Today;
-        String result1 = HCCCostAmbulanceRecord.deleteAmbulanceRecords(hccListtodelete, allRecords);
-        String result2 = HCCCostAmbulanceRecord.deleteAmbulanceRecords(hccListtodelete, recordsCreatedToday);
-        Test.stopTest();
-        System.assertNotEquals(result1, result2);
-    
-    }
-    
     @isTest
     static void testUpdatetoCaseValues(){
         Account acc = TestDataFactory.individualAccount();

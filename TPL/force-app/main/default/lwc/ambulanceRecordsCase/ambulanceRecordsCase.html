@@ -3,20 +3,22 @@
            <!-- Ambulance Records -->
      <lightning-card title="Ambulance Records">
        <template if:false={hideDeleteButton}>
-        
-        <lightning-layout>
-            <lightning-layout-item class="slds-text-align_left">
-                <lightning-record-edit-form object-api-name="Healthcare_Cost__c"  class="slds-text-align_left" id="assignCases" >
-                    <lightning-button label="Delete selected Records" onclick={handleSelect}></lightning-button>
-                </lightning-record-edit-form>
-            </lightning-layout-item>
+            <!-- Delete button code -->
+            <lightning-layout>
+                <lightning-layout-item class="slds-text-align_left">
+                    <lightning-record-edit-form object-api-name="Healthcare_Cost__c"  class="slds-text-align_left" id="assignCases" >
+                        <lightning-button label="Delete selected Records" onclick={handleSelect}></lightning-button>
+                    </lightning-record-edit-form>
+                </lightning-layout-item>
             
-            <lightning-layout-item class="slds-text-align_right">
-                <lightning-button label="Refresh" onclick={handleRefresh}></lightning-button>
-            </lightning-layout-item>    
-        </lightning-layout>
+                <lightning-layout-item class="slds-text-align_right">
+                    <lightning-button label="Refresh" onclick={handleRefresh}></lightning-button>
+                </lightning-layout-item>    
+            </lightning-layout>
         
-    </template>
+        </template>
+
+        <!-- Handle filter code -->
         <lightning-layout>
             <lightning-layout-item>
                 <lightning-combobox
@@ -29,6 +31,7 @@
             </lightning-layout-item>   
         </lightning-layout>
         
+        <!-- Grid Representation -->
         <div class="slds-scrollable slds-m-around_medium" style="height:auto;width:auto" onitemregister={handleItemRegister}>
             <template if:true={showErrorMessage}>
                 <div class="validation">
@@ -50,6 +53,7 @@
 
     </lightning-card>
 
+        <!-- Pagination Logic -->
         <div class="slds-grid slds-grid_vertical-align-center slds-grid_align-spread" style="padding-top: 0.5em;">
             <!--RECORDS PER PAGE-->
             <div class="slds-col">

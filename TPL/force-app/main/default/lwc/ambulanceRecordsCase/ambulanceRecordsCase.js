@@ -3,7 +3,7 @@ import { refreshApex } from '@salesforce/apex';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import getHealthcareCostsAmbulanceForCase from '@salesforce/apex/HCCCostAmbulanceRecord.getHealthcareCostsAmbulanceForCase';
 import saveDraftValues from '@salesforce/apex/HCCCostController.saveDraftValues'; 
-import deleteAmbulanceRecords from '@salesforce/apex/HCCCostAmbulanceRecord.deleteAmbulanceRecords';
+import deleteHCCRecord from '@salesforce/apex/HCCCostController.deleteHCCRecord';
 import getAmbulanceCountonCase from '@salesforce/apex/HCCCostAmbulanceRecord.getAmbulanceCountonCase';
 
 const MANNUAL_COLUMNS = [
@@ -185,9 +185,7 @@ export default class AmbulanceRecordsCase extends LightningElement {
     hideDeleteButton = true;
     limitValue = 0;
     offsetValue = 0;
-     recordsCount = 0; //Total count of records
-    costInclude = false;
-    costReview = false;
+    recordsCount = 0; //Total count of records
     showSpinner = false;
     lastSavedData;
     privateChildren = {}; //used to get the datatable lookup as private childern of customDatatable
@@ -639,7 +637,7 @@ export default class AmbulanceRecordsCase extends LightningElement {
             );    
         }
         else{
-            await deleteAmbulanceRecords({deletionRecords: selectedCostRecords, filterOption: this.selectedFilter})
+            await deleteHCCRecord({deletionRecords: selectedCostRecords, filterOption: this.selectedFilter})
             .then((result) => {
                 console.log('Result : ' + result);
                if(result == 'Passed'){

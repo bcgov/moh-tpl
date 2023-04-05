@@ -3,32 +3,14 @@ public with sharing class HCCCostAmbulanceAccountHelper {
         return Schema.SObjectType.Healthcare_Cost__c.getRecordTypeInfosByName().get('Ambulance').getRecordTypeId();
     }
 
-    @AuraEnabled
-    public static Integer getTotalAmbulanceCountonAccount(String accId){
-        Integer countofRecords = 0;
-        try{
-            Id recordTypeId = getAmbulanceRecordId();
-            countofRecords = [SELECT count() from Healthcare_Cost__c where Account__c = :accId and RecordTypeId = :recordTypeId];            
-        }
-        catch (Exception e)
-        {
-            throw new AuraHandledException(e.getMessage());
-        }
-        return countofRecords;
-    }
-
-    @AuraEnabled
-    public static Integer getfilteredAmbulanceCountonAccount(String accId){
-        Integer countofRecords = 0;
-        
-        try {
-            Id recordTypeId = getAmbulanceRecordId();
-            countofRecords = [SELECT count() from Healthcare_Cost__c where Account__c = :accId and RecordTypeId = :recordTypeId and Cost_Include__c = false and Cost_Review__c = false];
-            
-        } catch (Exception e) {
-            throw new AuraHandledException(e.getMessage());
-        }
-        return countofRecords;
+    private static Integer getTotalAmbulanceCountonAccount(String accId, String selectedFilterValue, Id recordTypeId){
+      if(selectedFilterValue == Label.TPL_All_Records)
+      {
+        return [SELECT count() from Healthcare_Cost__c where Account__c = :accId and RecordTypeId = :recordTypeId];            
+      }
+      else{
+        return [SELECT count() from Healthcare_Cost__c where Account__c = :accId and RecordTypeId = :recordTypeId and Cost_Include__c = false and Cost_Review__c = false];
+      }
     }
 
     @AuraEnabled
@@ -42,33 +24,25 @@ public with sharing class HCCCostAmbulanceAccountHelper {
         	Id recordTypeId = getAmbulanceRecordId();
             Integer offsetSize = 0;
             Integer totalCount = 0;
-            Integer totalPages = 0;
             System.debug('Initial Page Number : ' + pageNumber);
+            totalCount = HCCCostAmbulanceAccountHelper.getTotalAmbulanceCountonAccount(accId, selectedFilterValue, recordTypeId);
+            
+            if(pageSize > = totalCount){
+                offsetSize = 0;
+            }
+            else{
+                offsetSize = (pageNumber -1) * pageSize;
+            }
+            System.debug('Page Size : ' + pageSize + ', Page Number : ' + pageNumber + ', offset Value : ' + offsetSize);
+            
             if(selectedFilterValue == Label.TPL_All_Records)
             {   
-                totalCount = HCCCostAmbulanceAccountHelper.getTotalAmbulanceCountonAccount(accId);
-                if(pageSize > = totalCount){
-                    offsetSize = 0;
-                }
-                else{
-                    offsetSize = (pageNumber -1) * pageSize;
-                }
-                System.debug('Page Size : ' + pageSize + ', Page Number : ' + pageNumber + ', offset Value : ' + offsetSize);
                 hccCostList = [Select Id, Name, Case2__c, Case2__r.CaseNumber, Cost_Include__c, Cost_Review__c, Date_of_Service__c, Location_Responded__c, Basic_Amount__c, Cost__c, Total_Cost_Override__c, Site_Code__c, Facility__c, FacilityName__c, Fixed_Wing_Helicopter__c, Source_System_ID__c from Healthcare_Cost__c where Account__c = :accId and RecordTypeId = :recordTypeId ORDER BY Name LIMIT :pageSize OFFSET :offsetSize];
              }
             else{
-                totalCount = HCCCostAmbulanceAccountHelper.getfilteredAmbulanceCountonAccount(accId);
-                if(pageSize > = totalCount){
-                    offsetSize = 0;
-                }
-                else{
-                    offsetSize = (pageNumber -1) * pageSize;
-                }
-
-                System.debug('Page Size : ' + pageSize + ', Page Number : ' + pageNumber + ', offset Value : ' + offsetSize);
-                hccCostList = [Select Id, Name, Case2__c, Case2__r.CaseNumber, Cost_Include__c, Cost_Review__c,  Date_of_Service__c, Location_Responded__c, Basic_Amount__c, Cost__c, Total_Cost_Override__c, Site_Code__c, Facility__c, FacilityName__c, Fixed_Wing_Helicopter__c, Source_System_ID__c from Healthcare_Cost__c where Account__c = :accId and RecordTypeId = :recordTypeId and Cost_Include__c = false and Cost_Review__c = false ORDER BY Name LIMIT :pageSize OFFSET :offsetSize];        
-                
+                hccCostList = [Select Id, Name, Case2__c, Case2__r.CaseNumber, Cost_Include__c, Cost_Review__c,  Date_of_Service__c, Location_Responded__c, Basic_Amount__c, Cost__c, Total_Cost_Override__c, Site_Code__c, Facility__c, FacilityName__c, Fixed_Wing_Helicopter__c, Source_System_ID__c from Healthcare_Cost__c where Account__c = :accId and RecordTypeId = :recordTypeId and Cost_Include__c = false and Cost_Review__c = false ORDER BY Name LIMIT :pageSize OFFSET :offsetSize];            
             }
+
             System.debug('HCC Cost List Size : ' + hccCostList.size());
            
             for(Healthcare_Cost__c hcc: hccCostList){
