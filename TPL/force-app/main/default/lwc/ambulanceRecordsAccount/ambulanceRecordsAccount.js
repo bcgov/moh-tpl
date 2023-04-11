@@ -1,83 +1,83 @@
 import { LightningElement, wire, api } from 'lwc';
 import { refreshApex } from '@salesforce/apex';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
-import updateHCCCaseInformation from '@salesforce/apex/HCCCostAmbulanceAccountHelper.updateHCCCaseInformation';
-import getHealthcareCostsAmbulanceForAccount from '@salesforce/apex/HCCCostAmbulanceAccountHelper.getHealthcareCostsAmbulanceForAccount';
+import updateHCCCaseInformation from '@salesforce/apex/HCCCostAmbulanceRecord.updateHCCCaseInformation';
+import getHealthcareCostsAmbulanceForAccount from '@salesforce/apex/HCCCostAmbulanceRecord.getHealthcareCostsAmbulanceForAccount';
 
 const COLUMNS = [
     {
         label: 'Case Number',
-        fieldName: 'caseNumber',
+        fieldName: 'Case_Number__c',
         type: 'text',
         sortable: true,
         editable: false,
     },
     {
         label: 'Cost Include',
-        fieldName: 'costIncluded',
+        fieldName: 'Cost_Include__c',
         type:'boolean',
         editable: false,
         sortable: true
     },
     {
         label: 'Cost Review',
-        fieldName: 'costReview',
+        fieldName: 'Cost_Review__c',
         type:'boolean',
         editable:false,
         sortable: true
     },
     {
         label: 'Date of Service',
-        fieldName: 'dateOfService',
+        fieldName: 'Date_of_Service__c',
         type: 'date',
         editable: false,
         sortable: true
     },
     {
         label: 'Location Responded',
-        fieldName: 'locationResponded',
+        fieldName: 'Location_Responded__c',
         type: 'text',
         editable: false,
         sortable: true
     },
     {
         label: 'Site Code',
-        fieldName: 'siteCode',
+        fieldName: 'Site_Code__c',
         type: 'text',
         editable: false,
         sortable: true
     },
     {
         label: 'Facility',
-        fieldName:'facilityName',
+        fieldName:'FacilityName__c',
         type: 'text',
         editable: false,
         sortable: true
     },
     {
         label: 'Basic Amount',
-        fieldName: 'basicAmount',
+        fieldName: 'Basic_Amount__c',
         type: 'currency',
         editable: false,
         sortable: true
     },
     {
         label: 'Total Cost Override',
-        fieldName: 'totalCostOverride',
+        fieldName: 'Total_Cost_Override__c',
         type: 'currency',
         editable: false,
         sortable: true
     },
     {
         label: 'Fixed Wing Helicopter',
-        fieldName: 'fixedWingHelicopter',
+        fieldName: 'Fixed_Wing_Helicopter__c',
         type: 'currency',
         editable: false,
         sortable: true
     },
     {
         label: 'Source System ID',
-        fieldName: 'sourceSystemId',
+        fieldName: 'Source_System_ID__c',
         type: 'text',
         editable: false,
         sortable: true
@@ -168,7 +168,7 @@ export default class AmbulanceRecordsAccount extends LightningElement {
                 return updateHCCCaseInformation({ caseId: this.selectedCase, hccList: selectedCostRecords, recordDisplay: this.recordsToDisplay})
                 .then((data,error) => {
                     this.displayMessage = data.updateMessage;
-                    console.log("Display Message : " + this.displayMessage);;
+                    console.log("Display Message : " + this.displayMessage);
                     console.log("Partial Success : " + data.passMessage);
                     if(this.displayMessage){
                         this.displayMessage = this.displayMessage.replace(/\r\n/g, "<br />");
