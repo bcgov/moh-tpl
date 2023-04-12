@@ -671,6 +671,9 @@ export default class AmbulanceRecordsCase extends LightningElement {
                 if(event.detail.draftValues[i].Fee_Item_Code__c){
                     this.draftValues[index].Fee_Item_Code__c = event.detail.draftValues[i].Fee_Item_Code__c;
                 }
+                if(event.detail.draftValues[i].Fee_Item_Title__c){
+                    this.draftValues[index].Fee_Item_Title__c = event.detail.draftValues[i].Fee_Item_Title__c;
+                }
                 if(event.detail.draftValues[i].Fee_Item_Description__c){
                     this.draftValues[index].Fee_Item_Description__c = event.detail.draftValues[i].Fee_Item_Description__c;
                 }
@@ -728,6 +731,7 @@ export default class AmbulanceRecordsCase extends LightningElement {
                     Date_of_Service__c:event.detail.draftValues[i].Date_of_Service__c,
                     Description_of_Service2__c:event.detail.draftValues[i].Description_of_Service2__c,
                     Fee_Item_Code__c:event.detail.draftValues[i].Fee_Item_Code__c,
+                    Fee_Item_Title__c: event.detail.draftValues[i].Fee_Item_Title__c,
                     Fee_Item_Description__c:event.detail.draftValues[i].Fee_Item_Description__c,
                     Practitioner_Number__c:event.detail.draftValues[i].Practitioner_Number__c,
                     Practitioner_Name__c: event.detail.draftValues[i].Practitioner_Name__c,
