@@ -41,9 +41,8 @@
                     </div> <br>
                 </template>
                 <c-custom-data-table class="slds-max-medium-table_stacked" onvaluechange={handleValueChange} oncellchange={handleCellChange}
-                data={recordsToDisplay} columns={column} show-row-number-column="false"
-                sorted-by={sortBy} 
-                sorted-direction={sortDirection} onsort={doSorting} key-field="Id" draft-values={draftValues}  data-record="Id" min-column-width="150" 
+                data={recordsToDisplay} columns={column} show-row-number-column="false" onedit={handleEdit}
+                key-field="Id" draft-values={draftValues}  data-record="Id" min-column-width="150" 
                 style="width: auto; height: 500px;" suppress-bottom-bar	>
                 </c-custom-data-table>
                 <template if:true={showSection}>
