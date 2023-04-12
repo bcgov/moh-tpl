@@ -91,7 +91,7 @@ const MANUAL_COLUMNS = [
         label: 'Source System ID',
         fieldName: 'Source_System_ID__c',
         type: 'text',
-        editable: true,
+        editable: false,
         sortable: true
     }
 ];
@@ -428,24 +428,13 @@ export default class AmbulanceRecordsCase extends LightningElement {
                 if(event.detail.draftValues[i].Location_Responded__c){
                     this.draftValues[index].Location_Responded__c = event.detail.draftValues[i].Location_Responded__c;
                 }
-                if(event.detail.draftValues[i].Site_Code__c){
-                    this.draftValues[index].Site_Code__c = event.detail.draftValues[i].Site_Code__c;
-                }
-                if(event.detail.draftValues[i].Basic_Amount__c){
-                    this.draftValues[index].Basic_Amount__c = event.detail.draftValues[i].Basic_Amount__c;
-                }
                 if(event.detail.draftValues[i].Total_Cost_Override__c){
                     this.draftValues[index].Total_Cost_Override__c = event.detail.draftValues[i].Total_Cost_Override__c;
                 }
                 if(event.detail.draftValues[i].Fixed_Wing_Helicopter__c){
                     this.draftValues[index].Fixed_Wing_Helicopter__c = event.detail.draftValues[i].Fixed_Wing_Helicopter__c;
                 }
-                if(event.detail.draftValues[i].Source_System_ID__c){
-                    this.draftValues[index].Source_System_ID__c = event.detail.draftValues[i].Source_System_ID__c;
-                }
-                if(event.detail.draftValues[i].Location_Responded__c){
-                    this.draftValues[index].Location_Responded__c = event.detail.draftValues[i].Location_Responded__c;
-                }
+        
                 console.log(JSON.stringify(this.draftValues[i]));
             }else{
                 var obj ={
@@ -454,12 +443,8 @@ export default class AmbulanceRecordsCase extends LightningElement {
                     Cost_Include__c:event.detail.draftValues[i].Cost_Include__c,
                     Date_of_Service__c:event.detail.draftValues[i].Date_of_Service__c,
                     Location_Responded__c:event.detail.draftValues[i].Location_Responded__c,
-                    Site_Code__c:event.detail.draftValues[i].Site_Code__c,
-                    Basic_Amount__c:event.detail.draftValues[i].Basic_Amount__c,
                     Total_Cost_Override__c:event.detail.draftValues[i].Total_Cost_Override__c,
                     Fixed_Wing_Helicopter__c:event.detail.draftValues[i].Fixed_Wing_Helicopter__c,
-                    Source_System_ID__c:event.detail.draftValues[i].Source_System_ID__c,
-                    Location_Responded__c:event.detail.draftValues[i].Location_Responded__c
                 };
                 console.log('before in');
               

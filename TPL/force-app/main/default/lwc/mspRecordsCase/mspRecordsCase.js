@@ -3,7 +3,7 @@ import { refreshApex } from '@salesforce/apex';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import getHealthcareCostsMSPForCase from '@salesforce/apex/HCCCostMSPRecord.getHealthcareCostsMSPForCase';import saveDraftValues from '@salesforce/apex/HCCCostController.saveDraftValues'; 
 import deleteHCCRecord from '@salesforce/apex/HCCCostController.deleteHCCRecord';
-import getAmbulanceCountonCase from '@salesforce/apex/HCCCostAmbulanceRecord.getAmbulanceCountonCase';
+
 const INTEGRATION_COLUMNS = [
     {
         label: 'Cost Include',
@@ -665,26 +665,59 @@ export default class AmbulanceRecordsCase extends LightningElement {
                 if(event.detail.draftValues[i].Date_of_Service__c){
                     this.draftValues[index].Date_of_Service__c = event.detail.draftValues[i].Date_of_Service__c;
                 }
-                if(event.detail.draftValues[i].Location_Responded__c){
-                    this.draftValues[index].Location_Responded__c = event.detail.draftValues[i].Location_Responded__c;
+                if(event.detail.draftValues[i].Description_of_Service2__c){
+                    this.draftValues[index].Description_of_Service2__c = event.detail.draftValues[i].Description_of_Service2__c;
                 }
-                if(event.detail.draftValues[i].Site_Code__c){
-                    this.draftValues[index].Site_Code__c = event.detail.draftValues[i].Site_Code__c;
+                if(event.detail.draftValues[i].Fee_Item_Code__c){
+                    this.draftValues[index].Fee_Item_Code__c = event.detail.draftValues[i].Fee_Item_Code__c;
                 }
-                if(event.detail.draftValues[i].Basic_Amount__c){
-                    this.draftValues[index].Basic_Amount__c = event.detail.draftValues[i].Basic_Amount__c;
+                if(event.detail.draftValues[i].Fee_Item_Description__c){
+                    this.draftValues[index].Fee_Item_Description__c = event.detail.draftValues[i].Fee_Item_Description__c;
+                }
+                if(event.detail.draftValues[i].Practitioner_Number__c){
+                    this.draftValues[index].Practitioner_Number__c = event.detail.draftValues[i].Practitioner_Number__c;
+                }
+                if(event.detail.draftValues[i].Practitioner_Name__c){
+                    this.draftValues[index].Practitioner_Name__c = event.detail.draftValues[i].Practitioner_Name__c;
+                }
+                if(event.detail.draftValues[i].Diagnostic_Code__c){
+                    this.draftValues[index].Diagnostic_Code__c = event.detail.draftValues[i].Diagnostic_Code__c;
+                }
+                if(event.detail.draftValues[i].Diagnostic_Description__c){
+                    this.draftValues[index].Diagnostic_Description__c = event.detail.draftValues[i].Diagnostic_Description__c;
+                }
+                if(event.detail.draftValues[i].Diagnostic_Code__c){
+                    this.draftValues[index].Diagnostic_Code__c = event.detail.draftValues[i].Diagnostic_Code__c;
+                }
+                if(event.detail.draftValues[i].Amount_Paid__c){
+                    this.draftValues[index].Amount_Paid__c = event.detail.draftValues[i].Amount_Paid__c;
                 }
                 if(event.detail.draftValues[i].Total_Cost_Override__c){
                     this.draftValues[index].Total_Cost_Override__c = event.detail.draftValues[i].Total_Cost_Override__c;
                 }
-                if(event.detail.draftValues[i].Fixed_Wing_Helicopter__c){
-                    this.draftValues[index].Fixed_Wing_Helicopter__c = event.detail.draftValues[i].Fixed_Wing_Helicopter__c;
+                if(event.detail.draftValues[i].Specialty_Code__c){
+                    this.draftValues[index].Specialty_Code__c = event.detail.draftValues[i].Specialty_Code__c;
                 }
-                if(event.detail.draftValues[i].Source_System_ID__c){
-                    this.draftValues[index].Source_System_ID__c = event.detail.draftValues[i].Source_System_ID__c;
+                if(event.detail.draftValues[i].Specialty_Description2__c){
+                    this.draftValues[index].Specialty_Description2__c = event.detail.draftValues[i].Specialty_Description2__c;
                 }
-                if(event.detail.draftValues[i].Location_Responded__c){
-                    this.draftValues[index].Location_Responded__c = event.detail.draftValues[i].Location_Responded__c;
+                if(event.detail.draftValues[i].Payee_Number__c){
+                    this.draftValues[index].Payee_Number__c = event.detail.draftValues[i].Payee_Number__c;
+                }
+                if(event.detail.draftValues[i].Payee_Description__c){
+                    this.draftValues[index].Payee_Description__c = event.detail.draftValues[i].Payee_Description__c;
+                }
+                if(event.detail.draftValues[i].Service_Start_Date__c){
+                    this.draftValues[index].Service_Start_Date__c = event.detail.draftValues[i].Service_Start_Date__c;
+                }
+                if(event.detail.draftValues[i].Service_Finish_Date__c){
+                    this.draftValues[index].Service_Finish_Date__c = event.detail.draftValues[i].Service_Finish_Date__c;
+                }
+                if(event.detail.draftValues[i].Location_Type_Code__c){
+                    this.draftValues[index].Location_Type_Code__c = event.detail.draftValues[i].Location_Type_Code__c;
+                }
+                if(event.detail.draftValues[i].Location_Type_Description2__c){
+                    this.draftValues[index].Location_Type_Description2__c = event.detail.draftValues[i].Location_Type_Description2__c;
                 }
                 console.log(JSON.stringify(this.draftValues[i]));
             }else{
@@ -693,13 +726,23 @@ export default class AmbulanceRecordsCase extends LightningElement {
                     Cost_Review__c:event.detail.draftValues[i].Cost_Review__c,
                     Cost_Include__c:event.detail.draftValues[i].Cost_Include__c,
                     Date_of_Service__c:event.detail.draftValues[i].Date_of_Service__c,
-                    Location_Responded__c:event.detail.draftValues[i].Location_Responded__c,
-                    Site_Code__c:event.detail.draftValues[i].Site_Code__c,
-                    Basic_Amount__c:event.detail.draftValues[i].Basic_Amount__c,
-                    Total_Cost_Override__c:event.detail.draftValues[i].Total_Cost_Override__c,
-                    Fixed_Wing_Helicopter__c:event.detail.draftValues[i].Fixed_Wing_Helicopter__c,
-                    Source_System_ID__c:event.detail.draftValues[i].Source_System_ID__c,
-                    Location_Responded__c:event.detail.draftValues[i].Location_Responded__c
+                    Description_of_Service2__c:event.detail.draftValues[i].Description_of_Service2__c,
+                    Fee_Item_Code__c:event.detail.draftValues[i].Fee_Item_Code__c,
+                    Fee_Item_Description__c:event.detail.draftValues[i].Fee_Item_Description__c,
+                    Practitioner_Number__c:event.detail.draftValues[i].Practitioner_Number__c,
+                    Practitioner_Name__c: event.detail.draftValues[i].Practitioner_Name__c,
+                    Diagnostic_Code__c: event.detail.draftValues[i].Diagnostic_Code__c,
+                    Diagnostic_Description__c: event.detail.draftValues[i].Diagnostic_Description__c,
+                    Amount_Paid__c: event.detail.draftValues[i].Amount_Paid__c,
+                    Total_Cost_Override__c: event.detail.draftValues[i].Total_Cost_Override__c,
+                    Specialty_Code__c: event.detail.draftValues[i].Specialty_Code__c,
+                    Specialty_Description2__c: event.detail.draftValues[i].Specialty_Description2__c,
+                    Payee_Number__c: event.detail.draftValues[i].Payee_Number__c,
+                    Payee_Description__c: event.detail.draftValues[i].Payee_Description__c,
+                    Service_Start_Date__c: event.detail.draftValues[i].Service_Start_Date__c,
+                    Service_Finish_Date__c: event.detail.draftValues[i].Service_Finish_Date__c,
+                    Location_Type_Code__c: event.detail.draftValues[i].Location_Type_Code__c,
+                    Location_Type_Description2__c: event.detail.draftValues[i].Location_Type_Description2__c,
                 };
                 console.log('before in');
               

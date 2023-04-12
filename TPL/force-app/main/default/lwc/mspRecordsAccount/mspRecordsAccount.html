@@ -28,7 +28,7 @@
         </template>
         
         <!--CUSTOM DATATABLE-->
-        <div style="height:400px">
+        <div style="height:auto;width: auto;">
             <lightning-datatable class="slds-max-medium-table_stacked" sorted-by={sortBy}
             sorted-direction={sortDirection} onsort={doSorting} data={recordsToDisplay} columns={column} show-row-number-column="false"
             min-column-width="150" key-field="Id" data-record="Id" selected-rows={selectedRows} style="min-width:fit-content">
