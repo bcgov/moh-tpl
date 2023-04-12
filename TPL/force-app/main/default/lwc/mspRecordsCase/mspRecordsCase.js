@@ -3,7 +3,7 @@ import { refreshApex } from '@salesforce/apex';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import getHealthcareCostsMSPForCase from '@salesforce/apex/HCCCostMSPRecord.getHealthcareCostsMSPForCase';import saveDraftValues from '@salesforce/apex/HCCCostController.saveDraftValues'; 
 import deleteHCCRecord from '@salesforce/apex/HCCCostController.deleteHCCRecord';
-
+import getAmbulanceCountonCase from '@salesforce/apex/HCCCostAmbulanceRecord.getAmbulanceCountonCase';
 const INTEGRATION_COLUMNS = [
     {
         label: 'Cost Include',
@@ -397,6 +397,9 @@ export default class AmbulanceRecordsCase extends LightningElement {
     pageSize; //No.of records to be displayed per page
     recordsToDisplay = []; //Records to be displayed on the page
     hideDeleteButton = true;
+    limitValue = 0;
+    offsetValue = 0;
+    recordsCount = 0; //Total count of records
     showSpinner = false;
     lastSavedData;
     privateChildren = {}; //used to get the datatable lookup as private childern of customDatatable
@@ -405,7 +408,7 @@ export default class AmbulanceRecordsCase extends LightningElement {
     showErrorMessage = false;
     updateMessage='';
     selectedFilter= 'All Records';
-    showSection = true;
+    showSection = false;
     filterOptions = [
         { label: 'All Records', value: 'All Records' },
         { label: 'Manual Records', value: 'Manual Records' },
@@ -414,6 +417,8 @@ export default class AmbulanceRecordsCase extends LightningElement {
 
     connectedCallback() {
         this.selectedFilter = 'All Records';
+    //    this.limitValue = 5;
+  //      this.offsetValue = 0;
         this.hideDeleteButton = true;
         this.pageSize = this.pageSizeOptions[0]; 
         this.pageNumber = 1;
@@ -449,6 +454,24 @@ export default class AmbulanceRecordsCase extends LightningElement {
             });
         }
     }
+
+    loadCount()
+    {
+        return getAmbulanceCountonCase({caseId: this.recordId, filterValue: this.selectedFilter})
+        .then(result =>{
+            console.log('Result : ' + result);
+            if(result == 0 || (result != null && result)){
+                this.recordsCount = result;
+                console.log('Records Count :' + this.recordsCount);
+            }
+            this.onLoad();
+        })
+        .catch(error =>{
+            console.log(error);
+            this.recordsCount = 0;
+        });
+       
+    } 
 
     onLoad(){
         return getHealthcareCostsMSPForCase({caseId: this.recordId, filterValue: this.selectedFilter, pageSize: this.pageSize, pageNumber: this.pageNumber})
@@ -628,6 +651,7 @@ export default class AmbulanceRecordsCase extends LightningElement {
     handleCellChange(event){
         console.log(JSON.stringify(event)+'---- '+JSON.stringify(this.draftValues));
         console.log( this.draftValues.findIndex(e=>e.Id === event.detail.draftValues[0].Id));
+        this.showSection = true;
         for(let i = 0 ; i < event.detail.draftValues.length;i++){
             let index = this.draftValues.findIndex(e=>e.Id === event.detail.draftValues[i].Id);
             if(index > -1 ){
@@ -730,6 +754,7 @@ export default class AmbulanceRecordsCase extends LightningElement {
  */
     handleEdit(event) {
         event.preventDefault();
+        this.showSection = true;
         let dataRecieved = event.detail.data;
         console.log('Handle edit draft values : ' + JSON.stringify(this.draftValues));
         this.handleWindowOnclick(dataRecieved.context);
@@ -830,7 +855,7 @@ export default class AmbulanceRecordsCase extends LightningElement {
                         variant: 'success'
                     })
                 );    
-                this.onLoad();
+                this.loadCount();
                }
                 else if(result == 'Failed' || result == null){
                     this.dispatchEvent(
@@ -1014,11 +1039,11 @@ export default class AmbulanceRecordsCase extends LightningElement {
            );    
          }
        //  this.onLoad();
-         this.onLoad();
+         this.loadCount();
     }
    
     handleRefresh(){
-        this.onLoad();
+        this.loadCount();
     }
    /* handleSubmit(event){
         event.preventDefault();
