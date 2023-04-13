@@ -45,6 +45,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>Account.Source_System_ID__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Account.Status__c</field>
         <readable>true</readable>
@@ -593,6 +598,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Healthcare_Cost__c.Source_System_ID2__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Healthcare_Cost__c.Source_System_ID__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -780,6 +790,11 @@
         <field>Case.Hospitalization_Total2__c</field>
         <readable>true</readable>
  </fieldPermissions>
+ <fieldPermissions>
+    <editable>true</editable>
+    <field>Product2.Source_System_ID__c</field>
+    <readable>true</readable>
+</fieldPermissions>
   <fieldPermissions>
         <editable>true</editable>
         <field>Case.MSP_Total2__c</field>

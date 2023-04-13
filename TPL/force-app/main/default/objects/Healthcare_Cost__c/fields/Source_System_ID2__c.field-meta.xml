@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Source_System_ID__c</fullName>
+    <fullName>Source_System_ID2__c</fullName>
     <caseSensitive>true</caseSensitive>
-    <description>This backend field is used to record the integration id.</description>
+    <description>This backend field is used to record the Seibel record id of migrated data.</description>
     <encryptionScheme>None</encryptionScheme>
     <externalId>true</externalId>
-    <label>Source System ID</label>
+    <label>Source System ID2</label>
     <length>80</length>
     <required>false</required>
     <trackTrending>false</trackTrending>
