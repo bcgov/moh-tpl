@@ -6,11 +6,32 @@
           <br><lightning-button label="Assign Case" onclick={handleSelect}> 
             </lightning-button>
         </lightning-record-edit-form><br>
+        <lightning-layout>
+            <lightning-layout-item>
+                <lightning-combobox
+                name="group-filter"
+                label="Cost Record selection : " 
+                value={selectedFilter}
+                options={filterOptions}
+                onchange={handleFilterChange}
+                placeholder="Cost Record selection : "></lightning-combobox>
+            </lightning-layout-item>   
+        </lightning-layout>
+        <br>
+        
+        <template if:true={showErrorMessage}>
+            <div class="validation">
+                <p>
+                  <lightning-formatted-text value={displayMessage} linkify ></lightning-formatted-text>
+                </p>
+            </div> <br>
+        </template>
+        
         <!--CUSTOM DATATABLE-->
-        <div style="height:400px">
+        <div style="height:auto;width: auto;">
             <lightning-datatable class="slds-max-medium-table_stacked" sorted-by={sortBy}
             sorted-direction={sortDirection} onsort={doSorting} data={recordsToDisplay} columns={column} show-row-number-column="false"
-                    key-field="Id" data-record="Id" selected-rows={selectedRows} min-column-width="200" style="min-width:fit-content">
+            min-column-width="150" key-field="Id" data-record="Id" selected-rows={selectedRows} style="min-width:fit-content">
                 </lightning-datatable>  
         </div>
 
