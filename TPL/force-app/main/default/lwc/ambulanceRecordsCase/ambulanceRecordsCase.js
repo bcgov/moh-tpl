@@ -4,9 +4,8 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import getHealthcareCostsAmbulanceForCase from '@salesforce/apex/HCCCostAmbulanceRecord.getHealthcareCostsAmbulanceForCase';
 import saveDraftValues from '@salesforce/apex/HCCCostController.saveDraftValues'; 
 import deleteHCCRecord from '@salesforce/apex/HCCCostController.deleteHCCRecord';
-import getAmbulanceCountonCase from '@salesforce/apex/HCCCostAmbulanceRecord.getAmbulanceCountonCase';
 
-const MANNUAL_COLUMNS = [
+const MANUAL_COLUMNS = [
     {
         label: 'Cost Include',
         fieldName: 'Cost_Include__c',
@@ -92,7 +91,7 @@ const MANNUAL_COLUMNS = [
         label: 'Source System ID',
         fieldName: 'Source_System_ID__c',
         type: 'text',
-        editable: true,
+        editable: false,
         sortable: true
     }
 ];
@@ -176,16 +175,12 @@ export default class AmbulanceRecordsCase extends LightningElement {
     isFirstPage = true;
     isLastPage = false;
     totalRecords = 0; //Total no.of records
-    recordsCount = 0; //Total count of records
     totalPages; //Total no.of pages
     pageNumber = 1; //Page number
     pageSizeOptions = [5, 10, 25, 50, 75, 100]; //Page size options
     pageSize; //No.of records to be displayed per page
     recordsToDisplay = []; //Records to be displayed on the page
     hideDeleteButton = true;
-    limitValue = 0;
-    offsetValue = 0;
-    recordsCount = 0; //Total count of records
     showSpinner = false;
     lastSavedData;
     privateChildren = {}; //used to get the datatable lookup as private childern of customDatatable
@@ -202,12 +197,10 @@ export default class AmbulanceRecordsCase extends LightningElement {
 
     connectedCallback() {
         this.selectedFilter = 'All Records';
-        this.limitValue = 5;
-        this.offsetValue = 0;
         this.hideDeleteButton = true;
         this.pageSize = this.pageSizeOptions[0]; 
         this.pageNumber = 1;
-        this.loadCount();
+        this.onLoad();
       }
     
       renderedCallback() {
@@ -240,43 +233,48 @@ export default class AmbulanceRecordsCase extends LightningElement {
         }
     }
 
-    loadCount()
-    {
-        return getAmbulanceCountonCase({caseId: this.recordId, filterValue: this.selectedFilter})
-        .then(result =>{
-            console.log('Result : ' + result);
-            if(result == 0 || (result != null && result)){
-                this.recordsCount = result;
-                console.log('Records Count :' + this.recordsCount);
-            }
-            this.onLoad();
-        })
-        .catch(error =>{
-            console.log(error);
-            this.recordsCount = 0;
-        });
-       
-    } 
     onLoad(){
-        return getHealthcareCostsAmbulanceForCase({caseId: this.recordId, filterValue: this.selectedFilter, limitSize: this.limitValue, offsetSize: this.offsetValue})
+        return getHealthcareCostsAmbulanceForCase({caseId: this.recordId, filterValue: this.selectedFilter, pageSize: this.pageSize, pageNumber: this.pageNumber})
         .then(result=>{
-            this.wiredRecords = result;
-            if(result != null && result){
-                console.log(result.length);
-                console.log('Data of Ambulance Records --> ' + JSON.stringify(result));
-                this.records = JSON.parse(JSON.stringify(result));
+            this.wiredRecords = result.hccList;
+            this.recordsToDisplay = [];
+            if(result.hccList != null && result.hccList){
+                console.log('Ambulance List :' + JSON.stringify(result.hccList));
+                this.records = JSON.parse(JSON.stringify(result.hccList));
                 this.records.forEach(record =>{
                     record.accountNameClass = 'slds-cell-edit';
                 })
-                this.totalRecords = result.length;
-                this.paginationHelper(); // call helper menthod to update pagination logic
+                this.totalRecords = result.totalCount;
+                this.totalPages = Math.ceil(this.totalRecords / this.pageSize);
+                // set page number 
+                if (this.pageNumber <= 1) {
+                    this.pageNumber = 1;
+                } else if (this.pageNumber >= this.totalPages) {
+                    this.pageNumber = this.totalPages;
+                }
+                 // set records to display on current page 
+                for(let i=0;i<this.records.length;i++){
+                    if(i=== this.totalRecords){
+                        break;
+                    }
+                    this.recordsToDisplay.push(this.records[i]);
+                }
+        
+                console.log("Records to display : " + JSON.stringify(this.recordsToDisplay));
+                console.log('Total Count : ' + result.totalCount);
+                this.error = undefined;
             }
-
+            else{
+                this.records = [];
+                this.totalRecords = result.totalCount;
+            }
             this.lastSavedData = this.records;
             this.showSpinner = false;
         })
         .catch(error =>{
-            console.log(error); 
+            console.log(error);
+            this.records = []
+            this.totalRecords = 0;
         });
     }
 
@@ -287,6 +285,38 @@ export default class AmbulanceRecordsCase extends LightningElement {
         return this.pageNumber == this.totalPages;
     }
     
+    handleRecordsPerPage(event) {
+        this.pageSize = event.target.value;
+        this.totalPages = Math.ceil(this.totalRecords / this.pageSize);
+        // set page number 
+        if (this.pageNumber <= 1) {
+            this.pageNumber = 1;
+        } else if (this.pageNumber >= this.totalPages) {
+            this.pageNumber = this.totalPages;
+        }
+       this.onLoad();
+    }
+    previousPage() {
+        this.pageNumber = this.pageNumber - 1;
+        this.onLoad();
+   
+    }
+    nextPage() {
+        this.pageNumber = this.pageNumber + 1;
+       this.onLoad();
+    }
+
+    firstPage() {
+        this.pageNumber = 1;
+        this.onLoad();
+    }
+
+    lastPage() {
+        this.pageNumber = this.totalPages;
+        console.log('Page Number : ' + this.pageNumber); 
+        this.onLoad();
+    }
+
     handleFilterChange(event) {
         this.selectedFilter = event.target.value;
         console.log('Selected Filter Value : ' + this.selectedFilter);
@@ -294,12 +324,11 @@ export default class AmbulanceRecordsCase extends LightningElement {
         if(this.selectedFilter == 'Manual Records')
         {
             this.hideDeleteButton = false;
-            this.column = MANNUAL_COLUMNS;    
+            this.column = MANUAL_COLUMNS;    
         }
         else if(this.selectedFilter == 'Records Created Today'){
             this.hideDeleteButton = false;
-            this.column = MANNUAL_COLUMNS;  
-            console.log('Inside records created today');
+            this.column = MANUAL_COLUMNS;  
         }
         else{
             this.hideDeleteButton = true;
@@ -307,82 +336,11 @@ export default class AmbulanceRecordsCase extends LightningElement {
         }
         
         this.pageNumber = 1;
-        this.calculateLimitAndOffset();
-        this.loadCount();
-        console.log(this.selectedFilter + ' ' + this.recordsCount);
-       // this.onLoad();
+        this.onLoad();  
+        console.log('Selected Filter Value : ' + this.selectedFilter);
+               
     }
 
-    handleRecordsPerPage(event) {
-        this.pageSize = event.target.value;
-       // this.paginationHelper();
-        this.pageNumber = 1;
-        this.calculateLimitAndOffset();
-        this.onLoad();
-    }
-    previousPage() {
-        this.pageNumber = this.pageNumber - 1;
-        this.calculateLimitAndOffset();
-        this.onLoad();
-        //  this.paginationHelper();
-    }
-    nextPage() {
-        this.pageNumber = this.pageNumber + 1;
-        this.calculateLimitAndOffset();
-        this.onLoad();
-        //  this.paginationHelper();
-    }
-    firstPage() {
-        this.pageNumber = 1;
-        this.calculateLimitAndOffset();
-        this.onLoad();
-      //  this.paginationHelper();
-    }
-    lastPage() {
-        this.pageNumber = this.totalPages;
-        this.calculateLimitAndOffset();
-        this.onLoad();
-        //  this.paginationHelper();
-    }
-
-    calculateLimitAndOffset(){
-        this.limitValue = this.pageSize;
-        if(this.pageSize > this.recordsCount){
-            this.offsetValue = 0;
-        }
-        else{
-            this.offsetValue = (this.pageNumber - 1) * this.pageSize
-        }
-    }
-        // JS function to handel pagination logic 
-    paginationHelper() {
-        this.recordsToDisplay = [];
-        // calculate total pages
-        console.log('Inside Pagination Helper');
-        this.totalPages = Math.ceil(this.recordsCount / this.pageSize);
-        // set page number 
-        if (this.pageNumber <= 1) {
-            this.pageNumber = 1;
-        } else if (this.pageNumber >= this.totalPages) {
-            this.pageNumber = this.totalPages;
-        }
-        console.log('Page Number : ' + this.pageNumber + ', Page Size : ' + this.pageSize + ', Records Count :' + this.recordsCount);
-        // set records to display on current page 
-       /* for (let i = (this.pageNumber - 1) * this.pageSize; i < this.pageNumber * this.pageSize; i++) {
-            if (i === this.totalRecords) {
-                break;
-            }
-            this.recordsToDisplay.push(this.records[i]);
-        } */
-        for(let i=0;i<this.records.length;i++){
-            if(i=== this.recordsCount){
-                break;
-            }
-            console.log('inside for');
-            this.recordsToDisplay.push(this.records[i]);
-        }
-        console.log('Records Display : ' + JSON.stringify(this.recordsToDisplay));
-    }
 
     doSorting(event) {
         this.sortBy = event.detail.fieldName;
@@ -470,24 +428,13 @@ export default class AmbulanceRecordsCase extends LightningElement {
                 if(event.detail.draftValues[i].Location_Responded__c){
                     this.draftValues[index].Location_Responded__c = event.detail.draftValues[i].Location_Responded__c;
                 }
-                if(event.detail.draftValues[i].Site_Code__c){
-                    this.draftValues[index].Site_Code__c = event.detail.draftValues[i].Site_Code__c;
-                }
-                if(event.detail.draftValues[i].Basic_Amount__c){
-                    this.draftValues[index].Basic_Amount__c = event.detail.draftValues[i].Basic_Amount__c;
-                }
                 if(event.detail.draftValues[i].Total_Cost_Override__c){
                     this.draftValues[index].Total_Cost_Override__c = event.detail.draftValues[i].Total_Cost_Override__c;
                 }
                 if(event.detail.draftValues[i].Fixed_Wing_Helicopter__c){
                     this.draftValues[index].Fixed_Wing_Helicopter__c = event.detail.draftValues[i].Fixed_Wing_Helicopter__c;
                 }
-                if(event.detail.draftValues[i].Source_System_ID__c){
-                    this.draftValues[index].Source_System_ID__c = event.detail.draftValues[i].Source_System_ID__c;
-                }
-                if(event.detail.draftValues[i].Location_Responded__c){
-                    this.draftValues[index].Location_Responded__c = event.detail.draftValues[i].Location_Responded__c;
-                }
+        
                 console.log(JSON.stringify(this.draftValues[i]));
             }else{
                 var obj ={
@@ -496,12 +443,8 @@ export default class AmbulanceRecordsCase extends LightningElement {
                     Cost_Include__c:event.detail.draftValues[i].Cost_Include__c,
                     Date_of_Service__c:event.detail.draftValues[i].Date_of_Service__c,
                     Location_Responded__c:event.detail.draftValues[i].Location_Responded__c,
-                    Site_Code__c:event.detail.draftValues[i].Site_Code__c,
-                    Basic_Amount__c:event.detail.draftValues[i].Basic_Amount__c,
                     Total_Cost_Override__c:event.detail.draftValues[i].Total_Cost_Override__c,
                     Fixed_Wing_Helicopter__c:event.detail.draftValues[i].Fixed_Wing_Helicopter__c,
-                    Source_System_ID__c:event.detail.draftValues[i].Source_System_ID__c,
-                    Location_Responded__c:event.detail.draftValues[i].Location_Responded__c
                 };
                 console.log('before in');
               
@@ -655,7 +598,7 @@ export default class AmbulanceRecordsCase extends LightningElement {
                         variant: 'success'
                     })
                 );    
-                this.loadCount();
+                this.onLoad();
                }
                 else if(result == 'Failed' || result == null){
                     this.dispatchEvent(
@@ -839,11 +782,11 @@ export default class AmbulanceRecordsCase extends LightningElement {
            );    
          }
        //  this.onLoad();
-         this.loadCount();
+         this.onLoad();
     }
    
     handleRefresh(){
-        this.loadCount();
+        this.onLoad();
     }
    /* handleSubmit(event){
         event.preventDefault();

@@ -14,55 +14,59 @@ public with sharing class HCCCostAmbulanceRecord {
         }
     }
     
-    @AuraEnabled
-    public static Integer getAmbulanceCountonCase(String caseId, String filterValue){
+    private static Integer getAmbulanceCountonCase(String caseId, String filterValue, Id recordTypeId){
         String sourceSystemId = null;
-        Integer countOfAmbulanceRecords = 0;
-        try{
-            Id recordTypeId = getAmbulanceRecordId();
-            if(filterValue == Label.TPL_Manual_Records){
-                countOfAmbulanceRecords = [SELECT count() from Healthcare_Cost__c where Case2__c = :caseId and RecordTypeId = :recordTypeId and Source_System_ID__c = :sourceSystemId];
-            }
-            else if(filterValue == Label.TPL_Records_Created_Today) {
-                countOfAmbulanceRecords = [SELECT count() from Healthcare_Cost__c where Case2__c = :caseId and RecordTypeId = :recordTypeId and Source_System_ID__c = :sourceSystemId and CreatedDate = TODAY];                
-            }
-            else 
-            {
-                countOfAmbulanceRecords = [SELECT count() from Healthcare_Cost__c where Case2__c = :caseId and RecordTypeId = :recordTypeId];
-            }
-        } catch (Exception e) {
-            throw new AuraHandledException(e.getMessage());
+        if(filterValue == Label.TPL_Manual_Records){
+            return [SELECT count() from Healthcare_Cost__c where Case2__c = :caseId and RecordTypeId = :recordTypeId and Source_System_ID__c = :sourceSystemId];
         }
-      
-        return countOfAmbulanceRecords;
+        else if(filterValue == Label.TPL_Records_Created_Today) {
+            return [SELECT count() from Healthcare_Cost__c where Case2__c = :caseId and RecordTypeId = :recordTypeId and Source_System_ID__c = :sourceSystemId and CreatedDate = TODAY];                
+        }
+        else 
+        {
+            return [SELECT count() from Healthcare_Cost__c where Case2__c = :caseId and RecordTypeId = :recordTypeId];
+        }
     }
 
     @AuraEnabled
-    public static List<Healthcare_Cost__c> getHealthcareCostsAmbulanceForCase(String caseId, String filterValue, Integer limitSize, Integer offsetSize){
+    public static HCCostAmbulanceDetailWrapper getHealthcareCostsAmbulanceForCase(String caseId, String filterValue, Integer pageSize, Integer pageNumber){
         List<Healthcare_Cost__c> hccCostList = new List<Healthcare_Cost__c> ();
-        try {
+        HCCostAmbulanceDetailWrapper ambulanceDetailWrapper = new HCCostAmbulanceDetailWrapper();
+        String sourceSystemId = null;
+        Integer totalCount = 0;
+        Integer offsetSize = 0;
+        try{
             Id recordTypeId = getAmbulanceRecordId();
-            String sourceSystemId = null;
+            totalCount = getAmbulanceCountonCase(caseId, filterValue, recordTypeId);
+            if(pageSize > = totalCount){
+                offsetSize = 0;
+            }
+            else{
+                offsetSize = (pageNumber -1) * pageSize;
+            }
+         
+            System.debug('Page Size : ' + pageSize + ', Page Number : ' + pageNumber + ', offset Value : ' + offsetSize);
             if(filterValue == Label.TPL_Manual_Records)
             {
-                hccCostList = [select Id,Cost_Include__c, Cost_Review__c, Name, Date_of_Service__c, Location_Responded__c, Basic_Amount__c, Cost__c, Total_Cost_Override__c, Fixed_Wing_Helicopter__c, Site_Code__c, Facility__c, FacilityName__c, Sub_Total__c, Source_System_ID__c from Healthcare_Cost__c where Case2__c = :caseId and RecordTypeId = :recordTypeId and Source_System_ID__c = :sourceSystemId ORDER BY Name LIMIT :limitSize OFFSET :offsetSize ];
+                hccCostList = [select Id,Cost_Include__c, Cost_Review__c, Name, Date_of_Service__c, Location_Responded__c, Basic_Amount__c, Cost__c, Total_Cost_Override__c, Fixed_Wing_Helicopter__c, Site_Code__c, Facility__c, FacilityName__c, Sub_Total__c, Source_System_ID__c from Healthcare_Cost__c where Case2__c = :caseId and RecordTypeId = :recordTypeId and Source_System_ID__c = :sourceSystemId ORDER BY Name LIMIT :pageSize OFFSET :offsetSize ];
             }
             else if(filterValue == Label.TPL_Records_Created_Today){
                 hccCostList = [select Id,Cost_Include__c, Cost_Review__c, Name, Date_of_Service__c, Location_Responded__c, Basic_Amount__c, Cost__c, 
-                Total_Cost_Override__c, Fixed_Wing_Helicopter__c, Site_Code__c, Facility__c, FacilityName__c, Sub_Total__c, Source_System_ID__c, CreatedDate from Healthcare_Cost__c where Case2__c = :caseId and RecordTypeId = :recordTypeId and Source_System_ID__c = :sourceSystemId and CreatedDate = TODAY ORDER BY CreatedDate ASC LIMIT :limitSize OFFSET :offsetSize];
+                Total_Cost_Override__c, Fixed_Wing_Helicopter__c, Site_Code__c, Facility__c, FacilityName__c, Sub_Total__c, Source_System_ID__c, CreatedDate from Healthcare_Cost__c where Case2__c = :caseId and RecordTypeId = :recordTypeId and Source_System_ID__c = :sourceSystemId and CreatedDate = TODAY ORDER BY CreatedDate ASC LIMIT :pageSize OFFSET :offsetSize];
             }
             else{
                 hccCostList = [select Id,Cost_Include__c, Cost_Review__c, Name, Date_of_Service__c, Location_Responded__c, Basic_Amount__c, Cost__c, 
-                Total_Cost_Override__c, Fixed_Wing_Helicopter__c, Site_Code__c, Facility__c, FacilityName__c, Sub_Total__c, Source_System_ID__c from Healthcare_Cost__c where Case2__c = :caseId and RecordTypeId = :recordTypeId ORDER BY Name LIMIT :limitSize OFFSET :offsetSize];
+                Total_Cost_Override__c, Fixed_Wing_Helicopter__c, Site_Code__c, Facility__c, FacilityName__c, Sub_Total__c, Source_System_ID__c from Healthcare_Cost__c where Case2__c = :caseId and RecordTypeId = :recordTypeId ORDER BY Name LIMIT :pageSize OFFSET :offsetSize];
             }
-            
+            ambulanceDetailWrapper.hccList = hccCostList;
+            ambulanceDetailWrapper.totalCount = totalCount;
         } catch(NullPointerException nullpointer){
             nullpointer.getMessage();
         }
         catch(Exception e) {
             throw new AuraHandledException(e.getMessage());
         }
-        return hccCostList;
+        return ambulanceDetailWrapper;
     }
    
     @AuraEnabled

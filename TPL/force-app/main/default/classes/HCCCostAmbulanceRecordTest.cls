@@ -49,14 +49,14 @@ public class HCCCostAmbulanceRecordTest {
         String allRecords = Label.TPL_All_Records;
         String manualRecords = Label.TPL_Manual_Records;
         String recordsCreatedtoday = Label.TPL_Records_Created_Today;
-        Integer offsetSize = 0;
-        Integer limitSize = 5;
+        Integer pageNumber = 1;
+        Integer pageSize = 5;
         
-        List <Healthcare_Cost__c> hccListforAllRecords = HCCCostAmbulanceRecord.getHealthcareCostsAmbulanceForCase(c.Id, allRecords, offsetSize, limitSize);
-        List <Healthcare_Cost__c> hccListforManualRecords = HCCCostAmbulanceRecord.getHealthcareCostsAmbulanceForCase(c.Id, manualRecords, offsetSize, limitSize);
-        List <Healthcare_Cost__c> hccListforRecordsCreatedToday = HCCCostAmbulanceRecord.getHealthcareCostsAmbulanceForCase(c.Id, recordsCreatedtoday, offsetSize, limitSize);
+        HCCCostAmbulanceRecord.HCCostAmbulanceDetailWrapper ambulanceDetailWrapper1 = HCCCostAmbulanceRecord.getHealthcareCostsAmbulanceForCase(c.Id, allRecords, pageSize, pageNumber);
+        HCCCostAmbulanceRecord.HCCostAmbulanceDetailWrapper ambulanceDetailWrapper2 = HCCCostAmbulanceRecord.getHealthcareCostsAmbulanceForCase(c.Id, manualRecords, pageSize, pageNumber);
+        HCCCostAmbulanceRecord.HCCostAmbulanceDetailWrapper ambulanceDetailWrapper3 = HCCCostAmbulanceRecord.getHealthcareCostsAmbulanceForCase(c.Id, recordsCreatedtoday, pageSize, pageNumber);
         Test.stopTest();
-        System.assertEquals(hccListforManualRecords.size(), hccListforRecordsCreatedToday.size());
+        System.assertEquals(ambulanceDetailWrapper2.hcclist.size(), ambulanceDetailWrapper3.hccList.size());
     }
     
 
@@ -98,25 +98,5 @@ public class HCCCostAmbulanceRecordTest {
         System.assertNotEquals(accountCaseUpdateWrapper1.passMessage, accountCaseUpdateWrapper2.passMessage);
         
     }
-    
-    @isTest
-    static void testAmbulanceCountonCase(){
-        Account acc = TestDataFactory.individualAccount();
-        insert acc;
-        Case c1 = TestDataFactory.newCase(acc.Id);
-        insert c1;
-        Healthcare_Cost__c hcc = TestDataFactory.ambulanceCostRecord(acc.Id, c1.Id);
-        insert hcc;
-       
-        Test.startTest();
-        String manualRecords = Label.TPL_Manual_Records;
-        String allRecords = Label.TPL_All_Records;
-        String recordsCreatedToday = Label.TPL_Records_Created_Today;
-        Integer output1 = HCCCostAmbulanceRecord.getAmbulanceCountonCase(c1.Id, allRecords);
-        Integer output2 = HCCCostAmbulanceRecord.getAmbulanceCountonCase(c1.Id, manualRecords);
-        Integer output3 = HCCCostAmbulanceRecord.getAmbulanceCountonCase(c1.Id, recordsCreatedToday);
-        Test.stopTest();
-        System.assertEquals(output2, output3);
-    }
-   
+      
 }
