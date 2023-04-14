@@ -1,7 +1,8 @@
 import { LightningElement, wire, api, track } from 'lwc';
 import { refreshApex } from '@salesforce/apex';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
-import getHealthcareCostsMSPForCase from '@salesforce/apex/HCCCostMSPRecord.getHealthcareCostsMSPForCase';import saveDraftValues from '@salesforce/apex/HCCCostController.saveDraftValues'; 
+import getHealthcareCostsMSPForCase from '@salesforce/apex/HCCCostMSPRecord.getHealthcareCostsMSPForCase';
+import saveDraftValues from '@salesforce/apex/HCCCostController.saveDraftValues'; 
 import deleteHCCRecord from '@salesforce/apex/HCCCostController.deleteHCCRecord';
 
 const INTEGRATION_COLUMNS = [
@@ -238,7 +239,7 @@ const MANUAL_COLUMNS =
         label: 'Facility Type',
         fieldName: 'Facility_Type__c',
         type: 'text',
-        editable: true,
+        editable: false,
         sortable: false
     },
     {
@@ -379,7 +380,7 @@ const MANUAL_COLUMNS =
         label: 'Source System ID',
         fieldName: 'Source_System_ID__c',
         type: 'text',
-        editable: true,
+        editable: false,
         sortable: true
     }
 ];
@@ -390,16 +391,12 @@ export default class AmbulanceRecordsCase extends LightningElement {
     isFirstPage = true;
     isLastPage = false;
     totalRecords = 0; //Total no.of records
-    recordsCount = 0; //Total count of records
     totalPages; //Total no.of pages
     pageNumber = 1; //Page number
     pageSizeOptions = [5, 10, 25, 50, 75, 100]; //Page size options
     pageSize; //No.of records to be displayed per page
     recordsToDisplay = []; //Records to be displayed on the page
     hideDeleteButton = true;
-    limitValue = 0;
-    offsetValue = 0;
-    recordsCount = 0; //Total count of records
     showSpinner = false;
     lastSavedData;
     privateChildren = {}; //used to get the datatable lookup as private childern of customDatatable
@@ -417,8 +414,6 @@ export default class AmbulanceRecordsCase extends LightningElement {
 
     connectedCallback() {
         this.selectedFilter = 'All Records';
-    //    this.limitValue = 5;
-  //      this.offsetValue = 0;
         this.hideDeleteButton = true;
         this.pageSize = this.pageSizeOptions[0]; 
         this.pageNumber = 1;
@@ -437,8 +432,7 @@ export default class AmbulanceRecordsCase extends LightningElement {
     }
 
     disconnectedCallback() {
-        clearInterval(this.event2);
-        window.removeEventListener('click', () => { });
+       window.removeEventListener('click', () => { });
     }
     
     handleWindowOnclick(context) {
@@ -454,24 +448,6 @@ export default class AmbulanceRecordsCase extends LightningElement {
             });
         }
     }
-
-    loadCount()
-    {
-        return getAmbulanceCountonCase({caseId: this.recordId, filterValue: this.selectedFilter})
-        .then(result =>{
-            console.log('Result : ' + result);
-            if(result == 0 || (result != null && result)){
-                this.recordsCount = result;
-                console.log('Records Count :' + this.recordsCount);
-            }
-            this.onLoad();
-        })
-        .catch(error =>{
-            console.log(error);
-            this.recordsCount = 0;
-        });
-       
-    } 
 
     onLoad(){
         return getHealthcareCostsMSPForCase({caseId: this.recordId, filterValue: this.selectedFilter, pageSize: this.pageSize, pageNumber: this.pageNumber})
@@ -753,7 +729,7 @@ export default class AmbulanceRecordsCase extends LightningElement {
                 console.log(JSON.stringify(obj));
                 this.draftValues.push(obj);
             }
-            
+            console.log('aaaaaa '+JSON.stringify(this.draftValues));
         }
        /* updateItem ={
             
@@ -932,7 +908,7 @@ export default class AmbulanceRecordsCase extends LightningElement {
         console.log(''+ el);
         var selected = el.getSelectedRows();
         console.log(JSON.stringify(selected));
-        console.log(JSON.stringify(event.detail.draftValues));
+        
 
         if(selected.length <= 0){
             this.dispatchEvent(
@@ -947,71 +923,81 @@ export default class AmbulanceRecordsCase extends LightningElement {
 
         
         for(var i =0; i < selected.length;i++){ 
-           for(var j=0;j<event.detail.draftValues.length;j++){
-                if(selected[i].Id == event.detail.draftValues[j].Id){
-                    
-                    if(event.detail.draftValues[j].Cost_Include__c != undefined || event.detail.draftValues[j].Cost_Include__c ){
-                        if( selected[i].Cost_Include__c != event.detail.draftValues[j].Cost_Include__c){
-                            selected[i].Cost_Include__c = event.detail.draftValues[j].Cost_Include__c;
-                        }
-
-                    }
-                   
-                    if(event.detail.draftValues[j].Cost_Review__c != undefined || event.detail.draftValues[j].Cost_Review__c ){
-                        if(selected[i].Cost_Review__c != event.detail.draftValues[j].Cost_Review__c){
-                            selected[i].Cost_Review__c = event.detail.draftValues[j].Cost_Review__c;
-                        }
-                      
-                    }
-                   
-                    if(event.detail.draftValues[j].Date_of_Service__c != undefined || event.detail.draftValues[j].Date_of_Service__c == null ){
-                        if(selected[i].Date_of_Service__c != event.detail.draftValues[j].Date_of_Service__c){
-                            selected[i].Date_of_Service__c = event.detail.draftValues[j].Date_of_Service__c;
-                        }
-                    
-                    }
-                 
-                    if(event.detail.draftValues[j].Location_Responded__c != undefined || event.detail.draftValues[j].Location_Responded__c == ''){
-                       
-                        if(selected[i].Location_Responded__c != event.detail.draftValues[j].Location_Responded__c){
-                           selected[i].Location_Responded__c = event.detail.draftValues[j].Location_Responded__c;
-                        }
-                       
-                    }
-                   
-                    if(event.detail.draftValues[j].Facility__c != undefined || event.detail.draftValues[j].Facility__c == null){
-                        if(selected[i].Facility__c != event.detail.draftValues[j].Facility__c){
-                            selected[i].Facility__c = event.detail.draftValues[j].Facility__c;
-                        }
-                       
-                    }
-                  
-                    if(event.detail.draftValues[j].Total_Cost_Override__c != undefined || event.detail.draftValues[j].Total_Cost_Override__c == null){
-                        if(selected[i].Total_Cost_Override__c != event.detail.draftValues[j].Total_Cost_Override__c){
-                           selected[i].Total_Cost_Override__c = event.detail.draftValues[j].Total_Cost_Override__c;    
-                        }
-                    }
-                
-                    if(event.detail.draftValues[j].Fixed_Wing_Helicopter__c != undefined || event.detail.draftValues[j].Fixed_Wing_Helicopter__c == null){
-                        if( selected[i].Fixed_Wing_Helicopter__c != event.detail.draftValues[j].Fixed_Wing_Helicopter__c){
-                           selected[i].Fixed_Wing_Helicopter__c = event.detail.draftValues[j].Fixed_Wing_Helicopter__c;
-                        }
-                      
-                    }
-                 
-                    if(event.detail.draftValues[j].Source_System_ID__c != undefined || event.detail.draftValues[j].Source_System_ID__c == ''){
-                        if(selected[i].Source_System_ID__c != event.detail.draftValues[j].Source_System_ID__c){
-                            selected[i].Source_System_ID__c = event.detail.draftValues[j].Source_System_ID__c;
-                        }       
-                      
-                    }
-                    
-                    console.log('Selected Value : ' + JSON.stringify(selected));
-    
+            
+            let index = this.draftValues.findIndex(e=>e.Id === selected[i].Id);
+            if(index > -1 ){
+                if( selected[i].Cost_Include__c != this.draftValues[index].Cost_Include__c){
+                    selected[i].Cost_Include__c = this.draftValues[index].Cost_Include__c;
                 }
-           }
+                if(selected[i].Cost_Review__c != this.draftValues[index].Cost_Review__c){
+                    selected[i].Cost_Review__c = this.draftValues[index].Cost_Review__c;
+                }
+                
+                if(selected[i].Date_of_Service__c != this.draftValues[index].Date_of_Service__c){
+                   selected[i].Date_of_Service__c = this.draftValues[index].Date_of_Service__c;
+                }
+                if(selected[i].Location_Responded__c != this.draftValues[index].Location_Responded__c){
+                    selected[i].Location_Responded__c = this.draftValues[index].Location_Responded__c;
+                }
+                if(selected[i].Facility__c != this.draftValues[index].Facility__c){
+                    selected[i].Facility__c = this.draftValues[index].Facility__c;
+                }
+                if(selected[i].Description_of_Service2__c != this.draftValues[index].Description_of_Service2__c){
+                    selected[i].Description_of_Service2__c = this.draftValues[index].Description_of_Service2__c;    
+                }
+                if(selected[i].Fee_Item_Code__c != this.draftValues[index].Fee_Item_Code__c){
+                    selected[i].Fee_Item_Code__c = this.draftValues[index].Fee_Item_Code__c;
+                }
+                if(selected[i].Fee_Item_Description__c != this.draftValues[index].Fee_Item_Description__c){
+                    selected[i].Fee_Item_Description__c = this.draftValues[index].Fee_Item_Description__c;
+                }
+                if(selected[i].Practitioner_Name__c != this.draftValues[index].Practitioner_Number__c){
+                    selected[i].Practitioner_Name__c = this.draftValues[index].Practitioner_Number__c;
+                }
+                if(this.draftValues[i].Practitioner_Name__c != this.draftValues[index].Practitioner_Name__c){
+                    selected[i].Practitioner_Name__c = this.draftValues[index].Practitioner_Name__c;
+                }
+                if(selected[i].Diagnostic_Code__c != this.draftValues[index].Diagnostic_Code__c){
+                    selected[i].Diagnostic_Code__c = this.draftValues[index].Diagnostic_Code__c;
+                }
+                if(selected[i].Diagnostic_Description__c != this.draftValues[index].Diagnostic_Description__c){
+                    selected[i].Diagnostic_Description__c = this.draftValues[index].Diagnostic_Description__c;
+                }
+                if(selected[i].Amount_Paid__c != this.draftValues[index].Amount_Paid__c){
+                    selected[i].Amount_Paid__c = this.draftValues[index].Amount_Paid__c;
+                }
+                if(selected[i].Total_Cost_Override__c != this.draftValues[index].Total_Cost_Override__c){
+                    selected[i].Total_Cost_Override__c = this.draftValues[index].Total_Cost_Override__c;
+                }
+                if(selected[i].Specialty_Code__c != this.draftValues[index].Specialty_Code__c){
+                    selected[i].Specialty_Code__c = this.draftValues[index].Specialty_Code__c;
+                }
+                if(selected[i].Specialty_Description2__c != this.draftValues[index].Specialty_Description2__c) {
+                    selected[i].Specialty_Description2__c = this.draftValues[index].Specialty_Description2__c;
+                }
+                if(selected[i].Payee_Number__c != this.draftValues[index].Payee_Number__c){
+                    selected[i].Payee_Number__c = this.draftValues[index].Payee_Number__c;
+                }
+                if(selected[i].Payee_Description__c != this.draftValues[index].Payee_Description__c){
+                    selected[i].Payee_Description__c = this.draftValues[index].Payee_Description__c;
+                }
+                if(selected[i].Service_Start_Date__c != this.draftValues[index].Service_Start_Date__c){
+                    selected[i].Service_Start_Date__c = this.draftValues[index].Service_Start_Date__c;
+                }
+                if(selected[i].Service_Finish_Date__c != this.draftValues[index].Service_Finish_Date__c){
+                    selected[i].Service_Finish_Date__c = this.draftValues[index].Service_Finish_Date__c;
+                }
+                if(selected[i].Location_Type_Code__c != this.draftValues[index].Location_Type_Code__c){
+                    selected[i].Location_Type_Code__c = this.draftValues[index].Location_Type_Code__c;
+                }
+                if(selected[i].Location_Type_Description2__c != this.draftValues[index].Location_Type_Description2__c){
+                    selected[i].Location_Type_Description2__c = this.draftValues[index].Location_Type_Description2__c;
+                }
+            }else{
+               
+            }
         } 
-    
+        console.log('updated selected '+JSON.stringify(selected));
 
         saveDraftValues({data: selected, recordDisplay: this.recordsToDisplay})
         .then((data,error) => {
@@ -1029,6 +1015,7 @@ export default class AmbulanceRecordsCase extends LightningElement {
             }
             
             if(data.passedResult == 'Passed'){
+                this.showSection = false;
                 this.draftValues = [];  
                 this.onLoad();   
                 this.dispatchEvent(
@@ -1041,6 +1028,7 @@ export default class AmbulanceRecordsCase extends LightningElement {
                              
             }
             else if(data.passedResult == 'Failed' || data.passedResult == null){
+                this.showSection = false;
                 this.draftValues = [];   
                 this.dispatchEvent(
                     new ShowToastEvent({
@@ -1051,6 +1039,7 @@ export default class AmbulanceRecordsCase extends LightningElement {
                 );   
             } 
             else if(data.passedResult == 'Partial Success'){
+                this.showSection = false;
                 this.draftValues = [];
                 this.onLoad();  
                 this.dispatchEvent(

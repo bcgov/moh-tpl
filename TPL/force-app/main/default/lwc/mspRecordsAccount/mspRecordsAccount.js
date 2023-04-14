@@ -285,7 +285,7 @@ export default class MspRecordsAccount extends LightningElement {
                     this.dispatchEvent(
                         new ShowToastEvent({
                             title: 'Success',
-                            message: 'Case assigned to Pharmacare HealthCare Cost record(s) updated successfully.',
+                            message: 'Case assigned to MSP HealthCare Cost record(s) updated successfully.',
                             variant: 'success'
                         })
                     );    
@@ -326,7 +326,7 @@ export default class MspRecordsAccount extends LightningElement {
                 this.dispatchEvent(
                     new ShowToastEvent({
                         title: 'Error',
-                        message: 'Please select Case and Pharmacare Records together to assign.',
+                        message: 'Please select Case and MSP Records together to assign.',
                         variant: 'error'
                     })
                 ); 

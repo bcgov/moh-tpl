@@ -80,7 +80,6 @@ public with sharing class HCCCostMSPRecord {
         Integer offsetSize = 0;
         try{
             Id recordTypeId = getMSPRecordId();
-            recordTypeId = getMSPRecordId();
             totalCount = getMSPCountOnCase(caseId, filterValue, recordTypeId);
             if(pageSize > = totalCount){
                 offsetSize = 0;
