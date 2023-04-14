@@ -22,6 +22,13 @@
         <value>All Records</value>
     </labels>
     <labels>
+        <fullName>TPL_Ambulance_Fields</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>TPL_Ambulance_Fields</shortDescription>
+        <value>Id, Name, Case2__c, Case_Number__c, Cost_Include__c, Cost_Review__c, Date_of_Service__c, Location_Responded__c, Basic_Amount__c, Cost__c, Total_Cost_Override__c, Site_Code__c, Facility__c, FacilityName__c, Fixed_Wing_Helicopter__c, Source_System_ID__c</value>
+    </labels>
+    <labels>
         <fullName>TPL_Both_Checked</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -34,6 +41,13 @@
         <protected>false</protected>
         <shortDescription>Both Unchecked</shortDescription>
         <value>Both Unchecked</value>
+    </labels>
+    <labels>
+        <fullName>TPL_Continuing_Care_Fields</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>TPL_Continuing_Care_Fields</shortDescription>
+        <value>Id, Name, Case2__c, Case_Number__c, Cost__c, Description__c, Account__c</value>
     </labels>
     <labels>
         <fullName>TPL_Cost_Include_Checked</fullName>
@@ -64,6 +78,27 @@
         <value>Failed</value>
     </labels>
     <labels>
+        <fullName>TPL_Future_Care_Fields</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>TPL_Future_Care_Fields</shortDescription>
+        <value>Id, Name, Case2__c, Case_Number__c, Cost__c, Description__c, Account__c</value>
+    </labels>
+    <labels>
+        <fullName>TPL_Hospitalization_Fields</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>TPL_Hospitalization_Fields</shortDescription>
+        <value>Id, Name, Case2__c, Case_Number__c, Cost_Include__c, Cost_Review__c, Date_of_Service__c, Location_of_Incident__c, FacilityName__c, Service_Provider_Facility__c, Description_of_Incident__c, Intervention_Code_CCI__c, CCI_Level__c, Site_Code__c, Facility__c, Date_of_Admission__c, Date_of_Discharge__c, Number_of_Days__c, Service_Provided_by_Facility__c, Service_Type2__c, Standard_Daily_Rate__c, Total_Costs_Standard__c, Total_Cost_Override__c, Diagnostic_Treatment_Service2__c, Source_System_ID__c</value>
+    </labels>
+    <labels>
+        <fullName>TPL_MSP_Fields</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>TPL_MSP_Fields</shortDescription>
+        <value>Id, Name, Case2__c, Case_Number__c, Account__c, Cost_Include__c, Cost_Review__c, Date_of_Service__c, Facility_Type__c, FacilityName__c, Facility__c, Description_of_Service2__c, Fee_Item_Code__c, Fee_Item_Title__c, Fee_Item_Description__c, Practitioner_Number__c, Practitioner_Name__c, Diagnostic_Code__c, Diagnostic_Description__c, Amount_Paid__c, Total_Cost_Override__c, Specialty_Code__c, Specialty_Description2__c, Payee_Number__c, Payee_Description__c, Service_Start_Date__c, Service_Finish_Date__c, Location_Type_Code__c, Location_Type_Description2__c,Source_System_ID__c</value>
+    </labels>
+    <labels>
         <fullName>TPL_Manual_Records</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -76,6 +111,13 @@
         <protected>false</protected>
         <shortDescription>Passed</shortDescription>
         <value>Passed</value>
+    </labels>
+    <labels>
+        <fullName>TPL_Pharmacare_Fields</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>TPL_Pharmacare_Fields</shortDescription>
+        <value>Id, Name, Case2__c, Case_Number__c, Cost_Include__c, Cost_Review__c, Date_of_Service__c, Practitioner_Name__c, DIN__c, Name_of_Drug__c, Cost_of_Drug__c, Total_Cost_Override__c, Source_System_ID__c</value>
     </labels>
     <labels>
         <fullName>TPL_Records_Created_Today</fullName>
