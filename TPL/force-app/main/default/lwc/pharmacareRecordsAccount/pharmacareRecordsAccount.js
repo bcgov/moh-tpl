@@ -1,8 +1,8 @@
 import { LightningElement, wire, api } from 'lwc';
 import { refreshApex } from '@salesforce/apex';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
-import getHealthcareCostsPharmacareForAccount from '@salesforce/apex/HCCCostPharmacareRecord.getHealthcareCostsPharmacareForAccount';
-import updateHCCCaseInformation from '@salesforce/apex/HCCCostPharmacareRecord.updateHCCCaseInformation';
+import getHealthcareCostsPharmacareForAccount from '@salesforce/apex/HCCostAccountController.getHealthcareCostsPharmacareForAccount';
+import updateHCCCaseInformation from '@salesforce/apex/HCCCostController.updateHCCCaseInformation';
 
 const COLUMNS = [
     {

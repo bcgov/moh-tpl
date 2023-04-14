@@ -2,25 +2,23 @@ import { LightningElement, wire, api } from 'lwc';
 import { updateRecord } from 'lightning/uiRecordApi';
 import { refreshApex } from '@salesforce/apex';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
-import getHealthcareCostsFCForCase from '@salesforce/apex/HCCCostFCRecord.getHealthcareCostsFCForCase';
-import getFutureCareCountonCase from '@salesforce/apex/HCCCostFCRecord.getFutureCareCountonCase';
-import deleteFutureCareRecords from '@salesforce/apex/HCCCostFCRecord.deleteFutureCareRecords';
+import getHealthcareCostsFCForCase from '@salesforce/apex/HCCostCaseController.getHealthcareCostsFCForAccount';
+import deleteHCCRecord from '@salesforce/apex/HCCCostController.deleteHCCRecord';
 import saveDraftValues from '@salesforce/apex/HCCCostController.saveDraftValues'; 
-import COST_FIELD from '@salesforce/schema/Healthcare_Cost__c.Cost__c';
-import DESCRIPTION_FIELD from '@salesforce/schema/Healthcare_Cost__c.Description__c';
+
 
 const COLUMNS = [
 
     {
         label: 'Description',
-        fieldName: DESCRIPTION_FIELD.fieldApiName,
+        fieldName: 'Description__c',
         type:'text',
         sortable: true,
         editable:true
     },
     {
         label: 'Cost',
-        fieldName: COST_FIELD.fieldApiName,
+        fieldName: 'Cost__c',
         type: 'currency',
         sortable: true,
         editable: true
@@ -30,9 +28,9 @@ const COLUMNS = [
 export default class FuturecareRecordsCase extends LightningElement {
     @api recordId;
     column = COLUMNS;
-    records = []; //All records available in the data table
     isFirstPage = true;
     isLastPage = false;
+    hideDeleteButton = true;
     totalRecords = 0; //Total no.of records
     totalPages; //Total no.of pages
     pageNumber = 1; //Page number
@@ -40,117 +38,124 @@ export default class FuturecareRecordsCase extends LightningElement {
     pageSize; //No.of records to be displayed per page
     recordsToDisplay = []; //Records to be displayed on the page
     wiredRecords;
-    selectedRows = [];
-    event2;
+    updateMessage='';
+    selectedFilter= 'All Records';
 
-    connectedCallback() {
-        this.event2 = setInterval(() => {
-            this.refresh();
-        }, 100);
-      }
+    connectedCallback(){
+        this.recordId;
+        this.pageNumber = 1;
+        this.pageSize = this.pageSizeOptions[0]; 
+        this.onLoad();
+    } 
+
+    doSorting(event) {
+        this.sortBy = event.detail.fieldName;
+        this.sortDirection = event.detail.sortDirection;
+        this.sortData(this.sortBy, this.sortDirection);
+    }
+
+    sortData(fieldname, direction) {
+        let parseData = JSON.parse(JSON.stringify(this.recordsToDisplay));
+        // Return the value stored in the field
+        let keyValue = (a) => {
+            return a[fieldname];
+        };
+        // cheking reverse direction
+        let isReverse = direction === 'asc' ? 1: -1;
+        // sorting data
+        parseData.sort((x, y) => {
+            x = keyValue(x) ? keyValue(x) : ''; // handling null values
+            y = keyValue(y) ? keyValue(y) : '';
+            // sorting values based on direction
+            return isReverse * ((x > y) - (y > x));
+        });
+        this.recordsToDisplay = parseData;
+    }    
     
-      disconnectedCallback() {
-        clearInterval(this.event2);
-      }
+    async refresh(){
+        await refreshApex(this.records);
+    }
 
-      @wire(getHealthcareCostsFCForCase, { caseId: '$recordId' })
-      healthcareCostsFCForCase(result){
-          this.wiredRecords = result;
-          const {data, error} = result;
-  
-          if(data != null && data){
-              console.log('Data of Future Care Records --> ' + JSON.stringify(data));
-              this.records = data;
-              this.totalRecords = data.length;
-              this.pageSize = this.pageSizeOptions[0]; 
-              this.paginationHelper(); // call helper menthod to update pagination logic
-          }
-          else if(error){
-              console.error(error);
-          }
-          else if (error) {
-              this.records = undefined;
-              this.error = error;
-          } else {
-              this.error = undefined;
-              this.records = undefined;
-          }
-      }
-  
-      get bDisableFirst() {
-          return this.pageNumber == 1;
-      }
-      get bDisableLast() {
-          return this.pageNumber == this.totalPages;
-      }
-      
-      handleRecordsPerPage(event) {
-          this.pageSize = event.target.value;
-          this.paginationHelper();
-      }
-      previousPage() {
-          this.pageNumber = this.pageNumber - 1;
-          this.paginationHelper();
-      }
-      nextPage() {
-          this.pageNumber = this.pageNumber + 1;
-          this.paginationHelper();
-      }
-      firstPage() {
-          this.pageNumber = 1;
-          this.paginationHelper();
-      }
-      lastPage() {
-          this.pageNumber = this.totalPages;
-          this.paginationHelper();
-      }
-  
-          // JS function to handel pagination logic 
-      paginationHelper() {
-          this.recordsToDisplay = [];
-          // calculate total pages
-          this.totalPages = Math.ceil(this.totalRecords / this.pageSize);
-          // set page number 
-          if (this.pageNumber <= 1) {
-              this.pageNumber = 1;
-          } else if (this.pageNumber >= this.totalPages) {
-              this.pageNumber = this.totalPages;
-          }
-          // set records to display on current page 
-          for (let i = (this.pageNumber - 1) * this.pageSize; i < this.pageNumber * this.pageSize; i++) {
-              if (i === this.totalRecords) {
-                  break;
-              }
-              this.recordsToDisplay.push(this.records[i]);
-          }
-      }
-  
-      doSorting(event) {
-          this.sortBy = event.detail.fieldName;
-          this.sortDirection = event.detail.sortDirection;
-          this.sortData(this.sortBy, this.sortDirection);
-      }
-  
-      sortData(fieldname, direction) {
-          let parseData = JSON.parse(JSON.stringify(this.recordsToDisplay));
-          // Return the value stored in the field
-          let keyValue = (a) => {
-              return a[fieldname];
-          };
-          // cheking reverse direction
-          let isReverse = direction === 'asc' ? 1: -1;
-          // sorting data
-          parseData.sort((x, y) => {
-              x = keyValue(x) ? keyValue(x) : ''; // handling null values
-              y = keyValue(y) ? keyValue(y) : '';
-              // sorting values based on direction
-              return isReverse * ((x > y) - (y > x));
-          });
-          this.recordsToDisplay = parseData;
-      }    
+    onLoad(){
+        return getHealthcareCostsFCForCase({caseId: this.recordId, pageNumber: this.pageNumber, pageSize: this.pageSize})
+        .then(result =>{
+            this.recordsToDisplay = [];
 
-      async refresh(){
-        await refreshApex(this.wiredRecords);
+            if(result.hccList != null && result.hccList){
+                 this.records = JSON.parse(JSON.stringify(result.hccList));
+                 this.totalRecords = result.totalCount;
+                 this.totalPages = Math.ceil(this.totalRecords / this.pageSize);
+                 // set page number 
+                 if (this.pageNumber <= 1) {
+                     this.pageNumber = 1;
+                 } else if (this.pageNumber >= this.totalPages) {
+                     this.pageNumber = this.totalPages;
+                 }
+                  // set records to display on current page 
+                 for(let i=0;i<this.records.length;i++){
+                     if(i=== this.totalRecords){
+                         break;
+                     }
+                     this.recordsToDisplay.push(this.records[i]);
+                 }
+         
+                 console.log("Records to display : " + JSON.stringify(this.recordsToDisplay));
+                 console.log('Total Count : ' + result.totalCount);
+                 this.error = undefined;
+                 
+             }
+             else{
+                 this.records = [];
+                 this.totalRecords = result.totalCount;
+             }
+         })
+         .catch(error =>{
+             console.log(error);
+             this.records = [];
+         })
+    }
+ 
+    get bDisableFirst() {
+        return this.pageNumber == 1;
+    }
+    get bDisableLast() {
+        return this.pageNumber == this.totalPages;
+    }
+    
+    handleRecordsPerPage(event) {
+        this.pageSize = event.target.value;
+        this.totalPages = Math.ceil(this.totalRecords / this.pageSize);
+        // set page number 
+        if (this.pageNumber <= 1) {
+            this.pageNumber = 1;
+        } else if (this.pageNumber >= this.totalPages) {
+            this.pageNumber = this.totalPages;
+        }
+       this.onLoad();
+    }
+    previousPage() {
+        this.pageNumber = this.pageNumber - 1;
+        this.onLoad();
+   
+    }
+    nextPage() {
+        this.pageNumber = this.pageNumber + 1;
+       this.onLoad();
+    }
+
+    firstPage() {
+        this.pageNumber = 1;
+        this.onLoad();
+    }
+
+    lastPage() {
+        this.pageNumber = this.totalPages;
+        console.log('Page Number : ' + this.pageNumber); 
+        this.onLoad();
+    }
+
+    handleRefresh(){
+        this.onLoad();
     }
 
     async handleSelect(){
@@ -165,67 +170,151 @@ export default class FuturecareRecordsCase extends LightningElement {
         selectedCostRecords.push(element);
            console.log(element);   
         });
-        await deleteFutureCareRecords({deletionRecords: selectedCostRecords})
-        .then((result) => {
-            console.log('Result : ' + result);
-           if(result == 'Passed'){
+        if(!selected || !selectedCostRecords){
             this.dispatchEvent(
                 new ShowToastEvent({
-                    title: 'Success',
-                    message: 'Selected  Future Care record(s) deleted successfully',
-                    variant: 'success'
+                    title: 'Error',
+                    message: 'Please select records for deletion!',
+                    variant: 'error'
                 })
             );    
-        
-           }
-            else if(result == 'Failed'){
-                this.dispatchEvent(
-                    new ShowToastEvent({
-                        title: 'Error',
-                        message: 'Please select record(s) for deletion',
-                        variant: 'error'
-                    })
-                );     
-            }    
-            //Get the updated list with refreshApex.
-            return this.refresh();
-            
-        })
-        .catch(error => {
-            console.log('error : ' + JSON.stringify(error));
-        });
-    }
-
-    async handleSave(event){
-       await saveDraftValues({data: event.detail.draftValues})
+        }
+        else{
+            await deleteHCCRecord({deletionRecords: selectedCostRecords, filterOption: this.selectedFilter})
             .then((result) => {
                 console.log('Result : ' + result);
                if(result == 'Passed'){
                 this.dispatchEvent(
                     new ShowToastEvent({
                         title: 'Success',
-                        message: 'HealthCare Cost Future Care record(s) updated successfully',
+                        message: 'Selected Continuing Care record(s) deleted successfully',
                         variant: 'success'
                     })
                 );    
-            
+                this.onLoad();
                }
-                else if(result == 'Failed'){
+                else if(result == 'Failed' || result == null){
                     this.dispatchEvent(
                         new ShowToastEvent({
                             title: 'Error',
-                            message: 'Record not saved successfully! Please check Healthcare Cost Future Care record(s) while updating',
+                            message: 'Please select records for deletion.',
                             variant: 'error'
                         })
                     );     
                 }    
-                //Get the updated list with refreshApex.
-                return this.refresh();
-                
             })
             .catch(error => {
                 console.log('error : ' + JSON.stringify(error));
             });
+        }
+    }
+    
+    handleSave(event){
+        var el = this.template.querySelector('lightning-datatable');
+        console.log(''+ el);
+        var selected = el.getSelectedRows();
+        console.log(JSON.stringify(selected));
+        console.log(JSON.stringify(event.detail.draftValues));
+
+        if(selected.length <= 0){
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Review',
+                    message: 'Please select the record being edited before continuing to save',
+                    variant: 'warning'
+                })
+            );    
+        }
+        else{
+            for(var i =0; i < selected.length;i++){ 
+                for(var j=0;j<event.detail.draftValues.length;j++){
+                     if(selected[i].Id == event.detail.draftValues[j].Id){
+                         
+                         if(event.detail.draftValues[j].Cost__c != undefined || event.detail.draftValues[j].Cost__c ){
+                             if( selected[i].Cost__c != event.detail.draftValues[j].Cost__c){
+                                 selected[i].Cost__c = event.detail.draftValues[j].Cost__c;
+                             }
+     
+                         }
+                        
+                         if(event.detail.draftValues[j].Description__c != undefined || event.detail.draftValues[j].Description__c == null ){
+                             if(selected[i].Description__c != event.detail.draftValues[j].Description__c){
+                                 selected[i].Description__c = event.detail.draftValues[j].Description__c;
+                             }
+                           
+                         }
+                        
+                         console.log('Selected Value : ' + JSON.stringify(selected[i]));
+         
+                     }
+                }
+             } 
+             saveDraftValues({data: selected, recordDisplay: this.recordsToDisplay })
+            .then((data,error) => {
+                this.updateMessage = data.actionMessage;
+      
+                var indexes = data.indexNumbers;
+          
+                console.log('passedResult : ' + data.passedResult);
+                console.log( 'Toast Message : ' + this.updateMessage);
+                console.log('Size of Index List : ' + indexes);
+                       
+                if(this.updateMessage){
+                    this.updateMessage = this.updateMessage.replace(/\r\n/g, "<br />");
+                    this.showErrorMessage = true;
+                }
+                
+                if(data.passedResult == 'Passed'){
+                    this.draftValues = [];  
+                    this.onLoad();   
+                    this.dispatchEvent(
+                        new ShowToastEvent({
+                            title: 'Success',
+                            message: 'HealthCare Cost Pharmacare record(s) updated successfully',
+                            variant: 'success'
+                        })
+                    );    
+                                 
+                }
+                else if(data.passedResult == 'Failed' || data.passedResult == null){
+                    this.draftValues = [];   
+                    this.dispatchEvent(
+                        new ShowToastEvent({
+                            title: 'Error',
+                            message: 'Please review the error message shown below and try again!',
+                            variant: 'error'
+                        })
+                    );   
+                } 
+                else if(data.passedResult == 'Partial Success'){
+                    this.draftValues = [];
+                    this.onLoad();  
+                    this.dispatchEvent(
+                        new ShowToastEvent({
+                            title: 'Warning',
+                            message: 'Few Healthcare Cost record(s) updated successfully. Errors on remaining shown below!',
+                            variant: 'Warning'
+                        })
+                    );
+                }   
+                if(error){
+                    this.draftValues = [];
+                    this.dispatchEvent(
+                        new ShowToastEvent({
+                            title: 'Error',
+                            message: error,
+                            variant: 'error'
+                        })
+                    ); 
+                }
+                //Get the updated list with refreshApex.
+                return this.refresh();    
+            })
+            .catch(error => {
+                console.log('error : ' + JSON.stringify(error));
+            });
+        }
+        
         
     }
 }

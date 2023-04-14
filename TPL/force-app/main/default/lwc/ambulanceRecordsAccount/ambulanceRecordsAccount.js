@@ -1,8 +1,8 @@
 import { LightningElement, wire, api } from 'lwc';
 import { refreshApex } from '@salesforce/apex';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
-import updateHCCCaseInformation from '@salesforce/apex/HCCCostAmbulanceRecord.updateHCCCaseInformation';
-import getHealthcareCostsAmbulanceForAccount from '@salesforce/apex/HCCCostAmbulanceRecord.getHealthcareCostsAmbulanceForAccount';
+import updateHCCCaseInformation from '@salesforce/apex/HCCCostController.updateHCCCaseInformation';
+import getHealthcareCostsAmbulanceForAccount from '@salesforce/apex/HCCostAccountController.getHealthcareCostsAmbulanceForAccount';
 
 const COLUMNS = [
     {
@@ -240,6 +240,7 @@ export default class AmbulanceRecordsAccount extends LightningElement {
         return getHealthcareCostsAmbulanceForAccount({accId: this.recordId, selectedFilterValue: this.selectedFilter, pageNumber: this.pageNumber, pageSize: this.pageSize})
         .then(result=>{
            this.recordsToDisplay = [];
+
            if(result.hccList != null && result.hccList){
                 this.records = JSON.parse(JSON.stringify(result.hccList));
                 this.totalRecords = result.totalCount;

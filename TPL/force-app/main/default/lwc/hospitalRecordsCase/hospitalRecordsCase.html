@@ -2,6 +2,34 @@
     <template if:true={records}>
            <!-- Hospitalization Records -->
      <lightning-card title="Hospital Records">
+        <template if:false={hideDeleteButton}>
+            <!-- Delete button code -->
+            <lightning-layout>
+                <lightning-layout-item class="slds-text-align_left">
+                    <lightning-record-edit-form object-api-name="Healthcare_Cost__c"  class="slds-text-align_left" id="assignCases" >
+                        <lightning-button label="Delete selected Records" onclick={handleSelect}></lightning-button>
+                    </lightning-record-edit-form>
+                </lightning-layout-item>
+            
+                <lightning-layout-item class="slds-text-align_right">
+                    <lightning-button label="Refresh" onclick={handleRefresh}></lightning-button>
+                </lightning-layout-item>    
+            </lightning-layout>
+        
+        </template>
+
+        <!-- Handle filter code -->
+        <lightning-layout>
+            <lightning-layout-item>
+                <lightning-combobox
+                name="group-filter"
+                label="Select records to see" 
+                value={selectedFilter}
+                options={filterOptions}
+                onchange={handleFilterChange}
+                placeholder="Select an option"></lightning-combobox>
+            </lightning-layout-item>   
+        </lightning-layout>
         <div class="slds-scrollable slds-m-around_medium" style="height:auto;width:auto">
                 <lightning-datatable
                     key-field="Id"

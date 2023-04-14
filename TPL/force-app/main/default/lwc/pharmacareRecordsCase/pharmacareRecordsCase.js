@@ -1,7 +1,7 @@
 import { LightningElement, wire, api } from 'lwc';
 import { refreshApex } from '@salesforce/apex';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
-import getHealthcareCostsPharmacareForCase from '@salesforce/apex/HCCCostPharmacareRecord.getHealthcareCostsPharmacareForCase';
+import getHealthcareCostsPharmacareForCase from '@salesforce/apex/HCCostCaseController.getHealthcareCostsPharmacareForCase';
 import saveDraftValues from '@salesforce/apex/HCCCostController.saveDraftValues';
 import deleteHCCRecord from '@salesforce/apex/HCCCostController.deleteHCCRecord';
 

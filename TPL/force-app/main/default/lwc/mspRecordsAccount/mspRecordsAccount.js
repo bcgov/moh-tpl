@@ -1,200 +1,193 @@
 import { LightningElement, wire, api } from 'lwc';
 import { refreshApex } from '@salesforce/apex';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
-import NAME_FIELD from '@salesforce/schema/Healthcare_Cost__c.Name';
-import CASE_NUMBER_FIELD from '@salesforce/schema/Healthcare_Cost__c.Case_Number__c';
-import COST_INCLUDE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Cost_Include__c';
-import COST_REVIEW_FIELD from '@salesforce/schema/Healthcare_Cost__c.Cost_Review__c';
-import DATE_OF_SERVICE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Date_of_Service__c';
-import TOTAL_COST_OVERRIDE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Total_Cost_Override__c';
-import FACILITY_NAME_FIELD from '@salesforce/schema/Healthcare_Cost__c.FacilityName__c';
-import FACILITY_TYPE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Facility_Type__c';
-import DESCRIPTION_OF_SERVICE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Description_of_Service2__c'
-import FEE_ITEM_CODE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Fee_Item_Code__c';
-import FEE_ITEM_TITLE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Fee_Item_Title__c';
-import FEE_ITEM_DESCRIPTION_FIELD from '@salesforce/schema/Healthcare_Cost__c.Fee_Item_Description__c';
-import PRACTITIONER_NUMBER_FIELD from '@salesforce/schema/Healthcare_Cost__c.Practitioner_Number__c';
-import PRACTITIONER_NAME_FIELD from '@salesforce/schema/Healthcare_Cost__c.Practitioner_Name__c';
-import DIAGNOSTIC_CODE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Diagnostic_Code__c';
-import DIAGNOSTIC_DESCRIPTION_FIELD from '@salesforce/schema/Healthcare_Cost__c.Diagnostic_Description__c';
-import AMOUNT_PAID_FIELD from '@salesforce/schema/Healthcare_Cost__c.Amount_Paid__c';
-import SPECIALITY_CODE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Specialty_Code__c';
-import SPECIALITY_DESCRIPTION_FIELD from '@salesforce/schema/Healthcare_Cost__c.Specialty_Description2__c';
-import PAYEE_NUMBER_FIELD from '@salesforce/schema/Healthcare_Cost__c.Payee_Number__c';
-import PAYEE_DESCRIPTION_FIELD from '@salesforce/schema/Healthcare_Cost__c.Payee_Description__c';
-import SERVICE_START_DATE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Service_Start_Date__c';
-import SERVICE_FINISH_DATE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Service_Finish_Date__c'
-import LOCATION_TYPE_CODE_FIELD from '@salesforce/schema/Healthcare_Cost__c.Location_Type_Code__c';
-import LOCATION_TYPE_DESCRIPTION_FIELD from '@salesforce/schema/Healthcare_Cost__c.Location_Type_Description2__c';
-import getHealthcareCostsMSPForAccount from '@salesforce/apex/HCCCostMSPRecord.getHealthcareCostsMSPForAccount';
-import updateHCCCaseInformation from '@salesforce/apex/HCCCostMSPRecord.updateHCCCaseInformation';
+import getHealthcareCostsMSPForAccount from '@salesforce/apex/HCCostAccountController.getHealthcareCostsMSPForAccount';
+import updateHCCCaseInformation from '@salesforce/apex/HCCCostController.updateHCCCaseInformation';
 
 const COLUMNS = [
     {
         label: 'Case Number',
-        fieldName: CASE_NUMBER_FIELD.fieldApiName,
+        fieldName: 'Case_Number__c',
         type:'text',
         editable: false,
         sortable: true
     },
     {
         label: 'Cost Include',
-        fieldName: COST_INCLUDE_FIELD.fieldApiName,
+        fieldName: 'Cost_Include__c',
         type:'boolean',
         editable: false,
         sortable: true
     },
     {
         label: 'Cost Review',
-        fieldName: COST_REVIEW_FIELD.fieldApiName,
+        fieldName: 'Cost_Review__c',
         type:'boolean',
         editable:false,
         sortable: true
     },
     {
         label: 'Date of Service',
-        fieldName: DATE_OF_SERVICE_FIELD.fieldApiName,
+        fieldName: 'Date_of_Service__c',
+        type:'date-local',
+        typeAttributes:{ 
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric"},
         editable: false,
         sortable: true
     },
     {
         label: 'Facility',
-        fieldName: FACILITY_NAME_FIELD.fieldApiName,
+        fieldName: 'FacilityName__c',
         type: 'text',
         editable: false,
         sortable: false
     },
     {
         label: 'Facility Type',
-        fieldName: FACILITY_TYPE_FIELD.fieldApiName,
+        fieldName: 'Facility_Type__c',
         type: 'text',
         editable: false,
         sortable: false
     },
     {
         label: 'Descripiton of Service',
-        fieldName: DESCRIPTION_OF_SERVICE_FIELD.fieldApiName,
+        fieldName: 'Description_of_Service2__c',
         type: 'text',
         editable: false,
         sortable: false
     },
     {
         label: 'Fee Item Code',
-        fieldName: FEE_ITEM_CODE_FIELD.fieldApiName,
+        fieldName: 'Fee_Item_Code__c',
         type: 'text',
         editable: false,
         sortable: true
     },
     {
         label: 'Fee Item Title',
-        fieldName: FEE_ITEM_TITLE_FIELD.fieldApiName,
+        fieldName: 'Fee_Item_Title__c',
         type: 'text',
         editable: false,
         sortable: true
     },
     {
         label: 'Fee Item Description',
-        fieldName: FEE_ITEM_DESCRIPTION_FIELD.fieldApiName,
+        fieldName: 'Fee_Item_Description__c',
         type: 'text',
         editable: false,
         sortable: true
     },
     {
         label: 'Practitioner Number',
-        fieldName: PRACTITIONER_NUMBER_FIELD.fieldApiName,
+        fieldName: 'Practitioner_Number__c',
         type: 'false',
         editable: true,
         sortable: true
     },
     {
         label: 'Practitioner Name',
-        fieldName: PRACTITIONER_NAME_FIELD.fieldApiName,
+        fieldName: 'Practitioner_Name__c',
         type: 'text',
         editable: false,
         sortable: true
     },
     {
         label: 'Diagnostic Code',
-        fieldName: DIAGNOSTIC_CODE_FIELD.fieldApiName,
+        fieldName: 'Diagnostic_Code__c',
         type: 'text',
         editable: false,
         sortable: true
     },
     {
         label: 'Diagnostic Description',
-        fieldName: DIAGNOSTIC_DESCRIPTION_FIELD.fieldApiName,
+        fieldName: 'Diagnostic_Description__c',
         type: 'text',
         editable: false,
         sortable: false
     },
     {
         label: 'Amount Paid',
-        fieldName: AMOUNT_PAID_FIELD.fieldApiName,
-        type: 'text',
+        fieldName: 'Amount_Paid__c',
+        type: 'currency',
         editable: false,
         sortable: true
     },
     {
         label: 'Total Cost Override',
-        fieldName: TOTAL_COST_OVERRIDE_FIELD.fieldApiName,
+        fieldName: 'Total_Cost_Override__c',
         type: 'currency',
         editable: false,
         sortable: true
     },
     {
         label: 'Speciality Code',
-        fieldName: SPECIALITY_CODE_FIELD.fieldApiName,
+        fieldName: 'Specialty_Code__c',
         type: 'text',
         editable: false,
         sortable: true
     },
     {
         label: 'Speciality Description',
-        fieldName: SPECIALITY_DESCRIPTION_FIELD.fieldApiName,
+        fieldName: 'Specialty_Description2__c',
         type: 'text',
         editable: false,
         sortable: false
     },
     {
         label: 'Payee Number',
-        fieldName: PAYEE_NUMBER_FIELD.fieldApiName,
+        fieldName: 'Payee_Number__c',
         type: 'text',
         editable: false,
         sortable: true
     },
     {
         label: 'Payee Descripiton',
-        fieldName: PAYEE_DESCRIPTION_FIELD.fieldApiName,
+        fieldName: 'Payee_Description__c',
         type: 'text',
         editable: false,
         sortable: true
     },
     {
         label: 'Service Start Date',
-        fieldName: SERVICE_START_DATE_FIELD.fieldApiName,
-        type: 'date',
-        typeAttributes:{year: "numeric",month: "2-digit",day: "2-digit"},
+        fieldName: 'Service_Start_Date__c',
+        type:'date-local',
+        typeAttributes:{ 
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric"},
         editable: false,
         sortable: true
     },
     {
         label: 'Service Finish Date',
-        fieldName: SERVICE_FINISH_DATE_FIELD.fieldApiName,
-        type: 'date',
-        typeAttributes:{year: "numeric",month: "2-digit",day: "2-digit"},
+        fieldName: 'Service_Finish_Date__c',
+        type:'date-local',
+        typeAttributes:{ 
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric"},
         editable: false,
         sortable: true
     },
     {
         label: 'Location Type Code',
-        fieldName: LOCATION_TYPE_CODE_FIELD.fieldApiName,
+        fieldName: 'Location_Type_Code__c',
         type: 'text',
         editable: false,
         sortable: true
     },
     {
         label: 'Location Type Description',
-        fieldName: LOCATION_TYPE_DESCRIPTION_FIELD.fieldApiName,
+        fieldName: 'Location_Type_Description2__c',
+        type: 'text',
+        editable: false,
+        sortable: false
+    },
+    {
+        label: 'Source System ID',
+        fieldName: 'Source_System_ID__c',
         type: 'text',
         editable: false,
         sortable: false
@@ -216,8 +209,22 @@ export default class MspRecordsAccount extends LightningElement {
     wiredRecords;
     selectedCase;
     selectedRows = [];
-    limitSize = 0;
-    rowSize = 0;
+    showErrorMessage = false;
+    displayMessage='';
+    selectedFilter= 'All Records';
+    filterOptions = [
+        { label: 'All Records', value: 'All Records' },
+        { label: 'Both Unchecked', value: 'Both Unchecked'}
+    ];
+
+
+    connectedCallback(){
+        this.selectedFilter = 'All Records';
+        this.recordId;
+        this.pageNumber = 1;
+        this.pageSize = this.pageSizeOptions[0]; 
+        this.onLoad();
+    }
 
     doSorting(event) {
         this.sortBy = event.detail.fieldName;
@@ -247,7 +254,7 @@ export default class MspRecordsAccount extends LightningElement {
         this.selectedCase = event.target.value;  
     }
      
-     async handleSelect(){
+    handleSelect(){
      var el = this.template.querySelector('lightning-datatable');
         console.log(el);
         var selected = el.getSelectedRows();
@@ -262,71 +269,114 @@ export default class MspRecordsAccount extends LightningElement {
            console.log(element);   
         });
 
-        await updateHCCCaseInformation({ caseId: this.selectedCase, hccList: selectedCostRecords})
-        .then((result) => {
-            console.log("Result : " + result);
-            if(this.selectedCase == null || result == 'Failed'){
+        updateHCCCaseInformation({ caseId: this.selectedCase, hccList: selectedCostRecords, recordDisplay: this.recordsToDisplay})
+        .then((data,error) => {
+            this.displayMessage = data.updateMessage;
+            console.log("Display Message : " + this.displayMessage);
+            console.log("Partial Success : " + data.passMessage);
+            if(this.displayMessage){
+                this.displayMessage = this.displayMessage.replace(/\r\n/g, "<br />");
+                this.showErrorMessage = true;
+            }
+            
+            if(this.displayMessage || data.passMessage){
+                if(data.passMessage == 'Passed'){
+                    this.onLoad();
+                    this.dispatchEvent(
+                        new ShowToastEvent({
+                            title: 'Success',
+                            message: 'Case assigned to MSP HealthCare Cost record(s) updated successfully.',
+                            variant: 'success'
+                        })
+                    );    
+                }
+                else if(data.passMessage == 'Failed')
+                {
+                    this.dispatchEvent(
+                        new ShowToastEvent({
+                            title: 'Error',
+                            message: 'Please ensure cost review and cost include are unchecked for the Ambulance Healthcare Cost record(s) you want to assign a case.',
+                            variant: 'error'
+                        })
+                    );
+                }
+                else if(data.passMessage == 'Empty Selection')
+                {
+                    this.dispatchEvent(
+                        new ShowToastEvent({
+                            title: 'Error',
+                            message: 'Please select Case and HCC Records to map.',
+                            variant: 'error'
+                        })
+                    );
+                }
+                else if(data.passMessage == 'Partial Success'){
+                    this.onLoad();
+                    this.dispatchEvent(
+                        new ShowToastEvent({
+                            title: 'Warning',
+                            message: 'Case update on few records successful with validation issue on others as displayed below.',
+                            variant: 'warning'
+                        })
+                    ); 
+                }
+            }
+            else{
+                console.log(error);
                 this.dispatchEvent(
                     new ShowToastEvent({
                         title: 'Error',
-                        message: 'Please select Case and HCC Records to map. Also, ensure cost review and cost include are unchecked for that case.',
-                        variant: 'error'
-                    })
-                );
-            }
-            else if(result == 'Passed'){
-                this.dispatchEvent(
-                    new ShowToastEvent({
-                        title: 'Success',
-                        message: 'HealthCare Cost MSP record(s) having unchecked cost review and cost include updated successfully.',
-                        variant: 'success'
-                    })
-                );    
-            }
-            else if(result == null){
-                this.dispatchEvent(
-                    new ShowToastEvent({
-                        title: 'Error',
-                        message: 'Case assignment did not succeed. Please try again!',
+                        message: 'Please select Case and MSP Records together to assign.',
                         variant: 'error'
                     })
                 ); 
             }
-            
-            //Get the updated list with refreshApex.
-            return this.refresh();
-           
-            
-        })
-        .catch(error => {
-            console.log('error : ' + JSON.stringify(error));
-        }); 
+        });
+
     }
+
     async refresh(){
         await refreshApex(this.wiredRecords);
     }
 
-    @wire(getHealthcareCostsMSPForAccount, { accId: '$recordId' })
-    wiredHealthcareCostsMSPForAccount(result){
-        this.wiredRecords = result;
-        const {data, error} = result;
-        
-        if(data != null && data){
-            console.log('Data of MSP Records --> ' + JSON.stringify(data));
-            this.records = JSON.parse(JSON.stringify(data));
-            this.totalRecords = data.length;
-            this.pageSize = this.pageSizeOptions[0]; 
-            this.paginationHelper(); // call helper menthod to update pagination logic
-            this.error = undefined;
-        }
-        else if (error) {
-            this.records = undefined;
-            this.error = error;
-        } else {
-            this.error = undefined;
-            this.records = undefined;
-        }
-    } 
+    onLoad(){
+        return getHealthcareCostsMSPForAccount({accId: this.recordId, selectedFilterValue: this.selectedFilter, pageNumber: this.pageNumber, pageSize: this.pageSize})
+        .then(result =>{
+            this.recordsToDisplay = [];
+            if(result.hccList != null && result.hccList){
+                 this.records = JSON.parse(JSON.stringify(result.hccList));
+                 this.totalRecords = result.totalCount;
+                 this.totalPages = Math.ceil(this.totalRecords / this.pageSize);
+                 // set page number 
+                 if (this.pageNumber <= 1) {
+                     this.pageNumber = 1;
+                 } else if (this.pageNumber >= this.totalPages) {
+                     this.pageNumber = this.totalPages;
+                 }
+                  // set records to display on current page 
+                 for(let i=0;i<this.records.length;i++){
+                     if(i=== this.totalRecords){
+                         break;
+                     }
+                     this.recordsToDisplay.push(this.records[i]);
+                 }
+         
+                 console.log("Records to display : " + JSON.stringify(this.recordsToDisplay));
+                 console.log('Total Count : ' + result.totalCount);
+                 this.error = undefined;
+                 
+             }
+             else{
+                 this.records = [];
+                 this.totalRecords = result.totalCount;
+             }
+        })
+        .catch(error =>{
+            console.log(error);
+            this.totalRecords = 0;
+            this.records = []
+        })
+    }
 
     get bDisableFirst() {
         return this.pageNumber == 1;
@@ -337,45 +387,6 @@ export default class MspRecordsAccount extends LightningElement {
     
     handleRecordsPerPage(event) {
         this.pageSize = event.target.value;
-        this.paginationHelper();
-      //  this.calculateLimitAndOffset();
-     //   this.loadData();
-     
-    }
-    previousPage() {
-        this.pageNumber = this.pageNumber - 1;
-        this.paginationHelper();
-    //    this.calculateLimitAndOffset();
-    //    this.loadData();
-    }
-    nextPage() {
-        this.pageNumber = this.pageNumber + 1;
-        this.paginationHelper();
-     //   this.calculateLimitAndOffset();
-     //   this.loadData();
-    }
-    firstPage() {
-        this.pageNumber = 1;
-        this.paginationHelper();
-    //    this.calculateLimitAndOffset();
-    //    this.loadData();
-    }
-    lastPage() {
-        this.pageNumber = this.totalPages;
-        this.paginationHelper();
-    //    this.calculateLimitAndOffset();
-    //    this.loadData();
-    }
-
-    calculateLimitAndOffset(){
-        this.limitValue = this.pageSize;
-        this.rowSize = (this.pageNumber - 1) * this.pageSize
-    }
-
-    // JS function to handel pagination logic 
-    paginationHelper() {
-        this.recordsToDisplay = [];
-        // calculate total pages
         this.totalPages = Math.ceil(this.totalRecords / this.pageSize);
         // set page number 
         if (this.pageNumber <= 1) {
@@ -383,13 +394,34 @@ export default class MspRecordsAccount extends LightningElement {
         } else if (this.pageNumber >= this.totalPages) {
             this.pageNumber = this.totalPages;
         }
-        // set records to display on current page 
-        for (let i = (this.pageNumber - 1) * this.pageSize; i < this.pageNumber * this.pageSize; i++) {
-            if (i === this.totalRecords) {
-                break;
-            }
-            this.recordsToDisplay.push(this.records[i]);
-        }
+       this.onLoad();
+    }
+    previousPage() {
+        this.pageNumber = this.pageNumber - 1;
+        this.onLoad();
+   
+    }
+    nextPage() {
+        this.pageNumber = this.pageNumber + 1;
+       this.onLoad();
     }
 
+    firstPage() {
+        this.pageNumber = 1;
+        this.onLoad();
+    }
+
+    lastPage() {
+        this.pageNumber = this.totalPages;
+        console.log('Page Number : ' + this.pageNumber); 
+        this.onLoad();
+    }
+
+    handleFilterChange(event) {
+        this.selectedFilter = event.target.value;
+        this.pageNumber = 1;
+        this.onLoad();  
+        console.log('Selected Filter Value : ' + this.selectedFilter);
+               
+    }
 }
