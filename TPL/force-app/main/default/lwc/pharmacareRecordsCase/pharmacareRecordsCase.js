@@ -70,7 +70,7 @@ const MANUAL_COLUMNS = [
         label: 'Source System ID',
         fieldName: 'Source_System_ID__c',
         type: 'text',
-        editable: true,
+        editable: false,
         sortable: true
     }
 ];

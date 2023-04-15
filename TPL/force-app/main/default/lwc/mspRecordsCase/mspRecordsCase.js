@@ -897,9 +897,7 @@ export default class AmbulanceRecordsCase extends LightningElement {
             );    
         }
         else{
-
-        
-        for(var i =0; i < selected.length;i++){ 
+            for(var i =0; i < selected.length;i++){ 
             
             let index = this.draftValues.findIndex(e=>e.Id === selected[i].Id);
             if(index > -1 ){
@@ -925,11 +923,14 @@ export default class AmbulanceRecordsCase extends LightningElement {
                 if(selected[i].Fee_Item_Code__c != this.draftValues[index].Fee_Item_Code__c){
                     selected[i].Fee_Item_Code__c = this.draftValues[index].Fee_Item_Code__c;
                 }
+                if(selected[i].Fee_Item_Title__c != this.draftValues[index].Fee_Item_Title__c){
+                    selected[i].Fee_Item_Title__c = this.draftValues[index].Fee_Item_Title__c;
+                }
                 if(selected[i].Fee_Item_Description__c != this.draftValues[index].Fee_Item_Description__c){
                     selected[i].Fee_Item_Description__c = this.draftValues[index].Fee_Item_Description__c;
                 }
-                if(selected[i].Practitioner_Name__c != this.draftValues[index].Practitioner_Number__c){
-                    selected[i].Practitioner_Name__c = this.draftValues[index].Practitioner_Number__c;
+                if(selected[i].Practitioner_Number__c != this.draftValues[index].Practitioner_Number__c){
+                    selected[i].Practitioner_Number__c = this.draftValues[index].Practitioner_Number__c;
                 }
                 if(selected[i].Practitioner_Name__c != this.draftValues[index].Practitioner_Name__c){
                     selected[i].Practitioner_Name__c = this.draftValues[index].Practitioner_Name__c;
@@ -970,8 +971,6 @@ export default class AmbulanceRecordsCase extends LightningElement {
                 if(selected[i].Location_Type_Description2__c != this.draftValues[index].Location_Type_Description2__c){
                     selected[i].Location_Type_Description2__c = this.draftValues[index].Location_Type_Description2__c;
                 }
-            }else{
-               
             }
         } 
         console.log('updated selected '+JSON.stringify(selected));
