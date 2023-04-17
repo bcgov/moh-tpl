@@ -14,6 +14,19 @@
        </lightning-layout>
    
    </template>
+   
+    <!-- Handle Filter code -->
+    <lightning-layout>
+        <lightning-layout-item>
+            <lightning-combobox
+            name="group-filter"
+            label="Select records to see" 
+            value={selectedFilter}
+            options={filterOptions}
+            onchange={handleFilterChange}
+            placeholder="Select an option"></lightning-combobox>
+        </lightning-layout-item>   
+    </lightning-layout>
 
         <!-- Future Care Records -->
      <lightning-card title="Future Care Records">

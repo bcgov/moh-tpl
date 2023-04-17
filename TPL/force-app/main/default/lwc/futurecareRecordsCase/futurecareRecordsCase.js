@@ -2,7 +2,7 @@ import { LightningElement, wire, api } from 'lwc';
 import { updateRecord } from 'lightning/uiRecordApi';
 import { refreshApex } from '@salesforce/apex';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
-import getHealthcareCostsFCForCase from '@salesforce/apex/HCCostAccountController.getHealthcareCostsFCForAccount';
+import getHealthcareCostsFCForCase from '@salesforce/apex/HCCostCaseController.getHealthcareCostsFCForCase';
 import deleteHCCRecord from '@salesforce/apex/HCCCostController.deleteHCCRecord';
 import saveDraftValues from '@salesforce/apex/HCCCostController.saveDraftValues'; 
 
@@ -41,7 +41,6 @@ export default class FuturecareRecordsCase extends LightningElement {
     updateMessage='';
     selectedFilter= 'Manual Records';
     filterOptions = [
-        { label: 'All Records', value: 'All Records' },
         { label: 'Manual Records', value: 'Manual Records' },
         { label: 'Records Created Today', value: 'Records Created Today' }
     ];
@@ -156,15 +155,34 @@ export default class FuturecareRecordsCase extends LightningElement {
         this.onLoad();
     }
 
+    handleFilterChange(event) {
+        this.selectedFilter = event.target.value;
+        
+        if(this.selectedFilter == 'Manual Records')
+        {
+            this.hideDeleteButton = false;    
+        }
+        else if(this.selectedFilter == 'Records Created Today'){
+            this.hideDeleteButton = false;
+        }
+        else{
+            this.hideDeleteButton = true;
+        }
+        
+        this.pageNumber = 1;
+        this.onLoad();  
+               
+    }
+
     handleRefresh(){
         this.onLoad();
     }
 
-    async handleSelect(){
+    async handleSelect()
+    {
         var el = this.template.querySelector('lightning-datatable');
         var selected = el.getSelectedRows();
         let selectedCostRecords = [];
-        
         selected.forEach(function(element){
         selectedCostRecords.push(element);
         });
@@ -184,7 +202,7 @@ export default class FuturecareRecordsCase extends LightningElement {
                 this.dispatchEvent(
                     new ShowToastEvent({
                         title: 'Success',
-                        message: 'Selected Continuing Care record(s) deleted successfully',
+                        message: 'Selected Future Care record(s) deleted successfully',
                         variant: 'success'
                     })
                 );    
@@ -198,7 +216,7 @@ export default class FuturecareRecordsCase extends LightningElement {
                             variant: 'error'
                         })
                     );     
-                } 
+                }  
                 else if(result == 'Insufficient Privileges'){
                     this.dispatchEvent(
                         new ShowToastEvent({
@@ -207,7 +225,7 @@ export default class FuturecareRecordsCase extends LightningElement {
                             variant: 'error'
                         })
                     );  
-                }   
+                }       
             })
             .catch(error => {
                 this.dispatchEvent(
@@ -219,6 +237,7 @@ export default class FuturecareRecordsCase extends LightningElement {
                 );  
             });
         }
+       
     }
     
     handleSave(event){
@@ -272,7 +291,7 @@ export default class FuturecareRecordsCase extends LightningElement {
                     this.dispatchEvent(
                         new ShowToastEvent({
                             title: 'Success',
-                            message: 'HealthCare Cost Pharmacare record(s) updated successfully',
+                            message: 'HealthCare Cost Future Care record(s) updated successfully',
                             variant: 'success'
                         })
                     );    

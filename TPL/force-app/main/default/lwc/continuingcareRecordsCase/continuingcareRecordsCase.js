@@ -41,7 +41,6 @@ export default class ContinuingcareRecordsCase extends LightningElement {
     updateMessage='';
     selectedFilter= 'Manual Records';
     filterOptions = [
-        { label: 'All Records', value: 'All Records' },
         { label: 'Manual Records', value: 'Manual Records' },
         { label: 'Records Created Today', value: 'Records Created Today' }
     ];
@@ -160,11 +159,30 @@ export default class ContinuingcareRecordsCase extends LightningElement {
         this.onLoad();
     }
 
-    async handleSelect(){
+    handleFilterChange(event) {
+        this.selectedFilter = event.target.value;
+        
+        if(this.selectedFilter == 'Manual Records')
+        {
+            this.hideDeleteButton = false;    
+        }
+        else if(this.selectedFilter == 'Records Created Today'){
+            this.hideDeleteButton = false;
+        }
+        else{
+            this.hideDeleteButton = true;
+        }
+        
+        this.pageNumber = 1;
+        this.onLoad();  
+               
+    }
+
+    async handleSelect()
+    {
         var el = this.template.querySelector('lightning-datatable');
         var selected = el.getSelectedRows();
         let selectedCostRecords = [];
-        
         selected.forEach(function(element){
         selectedCostRecords.push(element);
         });
@@ -198,7 +216,7 @@ export default class ContinuingcareRecordsCase extends LightningElement {
                             variant: 'error'
                         })
                     );     
-                } 
+                }  
                 else if(result == 'Insufficient Privileges'){
                     this.dispatchEvent(
                         new ShowToastEvent({
@@ -207,7 +225,7 @@ export default class ContinuingcareRecordsCase extends LightningElement {
                             variant: 'error'
                         })
                     );  
-                }
+                }       
             })
             .catch(error => {
                 this.dispatchEvent(
@@ -219,6 +237,7 @@ export default class ContinuingcareRecordsCase extends LightningElement {
                 );  
             });
         }
+       
     }
     
     handleSave(event){
@@ -273,7 +292,7 @@ export default class ContinuingcareRecordsCase extends LightningElement {
                     this.dispatchEvent(
                         new ShowToastEvent({
                             title: 'Success',
-                            message: 'HealthCare Cost Pharmacare record(s) updated successfully',
+                            message: 'HealthCare Cost Continuing Care record(s) updated successfully',
                             variant: 'success'
                         })
                     );    

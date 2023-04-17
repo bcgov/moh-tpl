@@ -14,6 +14,20 @@
         </lightning-layout>
     
     </template>
+    
+      <!-- Handle Filter code -->
+      <lightning-layout>
+        <lightning-layout-item>
+            <lightning-combobox
+            name="group-filter"
+            label="Select records to see" 
+            value={selectedFilter}
+            options={filterOptions}
+            onchange={handleFilterChange}
+            placeholder="Select an option"></lightning-combobox>
+        </lightning-layout-item>   
+    </lightning-layout>
+
         <!-- Continuing Care Records -->
      <lightning-card title="Continuing Care Records">
         <div class="slds-scrollable slds-m-around_medium" style="height:auto;width:auto">
