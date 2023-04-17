@@ -8,14 +8,12 @@ public with sharing class HCCCostController {
             JSON.serialize(data),
             List<Healthcare_Cost__c>.class
         );
-        System.debug('List size to update cases : ' + listOfHealthcareCost);
+     
         CaseListWrapper caseListWrapper = new CaseListWrapper();
         Map<Id, Integer> rowCountMap = new Map<Id,Integer>();
-      //  List<Healthcare_Cost__c> updatedHCost = new List<Healthcare_Cost__c>();
         Integer index = 1;
         for(Healthcare_Cost__c hcc: recordDisplay){
             rowCountMap.put(hcc.Id, index);
-           // updatedHCost.add(hcc);
             index++;
         }   
 
@@ -42,7 +40,7 @@ public with sharing class HCCCostController {
                 caseListWrapper.passedResult = Label.TPL_Passed;
             }
             else if(capturedIndex.size() > 0){
-                caseListWrapper.passedResult = 'Partial Success';
+                caseListWrapper.passedResult = Label.TPL_Partial_Success;
             }
             else if(capturedIndex.size() == 0){
                 caseListWrapper.passedResult = Label.TPL_Failed;
@@ -61,9 +59,6 @@ public with sharing class HCCCostController {
             caseList = [Select CaseNumber,Id from Case where Id IN :caseId];
         } catch (DmlException dml) {
             System.debug(dml.getMessage());
-        }
-        catch(Exception e){
-            throw new AuraHandledException(e.getMessage());
         }
         return caseList;
     }
@@ -91,7 +86,6 @@ public with sharing class HCCCostController {
                 }      
             }
             
-            System.debug('Records Display Length : ' + recordDisplay.size());
             if(!checkFail){ 
                 Map<Id, Integer> rowCountMap = new Map<Id, Integer>();
                 Integer index = 1;
@@ -120,7 +114,7 @@ public with sharing class HCCCostController {
                   
                     }
                     else if(capturedIndex.size()>0){
-                        passMessage = 'Partial Success';
+                        passMessage = Label.TPL_Partial_Success;
                         giveStatus = result;
                     }
                     else{
@@ -135,7 +129,7 @@ public with sharing class HCCCostController {
                 catch(NullPointerException np){
                     System.debug(np.getMessage());
                     giveStatus = Label.TPL_Failed;
-                }
+                } 
             }
             else{
                 passMessage = Label.TPL_Failed;
@@ -150,7 +144,6 @@ public with sharing class HCCCostController {
     @AuraEnabled
     public static String deleteHCCRecord(List<Healthcare_Cost__c> deletionRecords, String filterOption){
         String result = null;
-        System.debug('Deletion Records Size : ' + deletionRecords.size());
         try {
             if(deletionRecords.size() == 0 || deletionRecords == null || (filterOption != Label.TPL_Manual_Records && filterOption != Label.TPL_Records_Created_Today))
             {
@@ -167,9 +160,10 @@ public with sharing class HCCCostController {
                 result = Label.TPL_Passed;
             }
         } catch (DMLException dml) {
-            System.debug(dml.getMessage());
-        }catch (Exception e) {
-            throw new AuraHandledException(e.getMessage());
+            result = Label.TPL_Insufficient_Privileges;
+        }
+        catch(ListException le){
+            result = Label.TPL_Insufficient_Privileges;
         }
         return result; 
     }

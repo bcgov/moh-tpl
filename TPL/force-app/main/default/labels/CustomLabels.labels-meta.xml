@@ -92,6 +92,13 @@
         <value>Id, Name, Case2__c, Case_Number__c, Cost_Include__c, Cost_Review__c, Date_of_Service__c, Location_of_Incident__c, FacilityName__c, Service_Provider_Facility__c, Description_of_Incident__c, Intervention_Code_CCI__c, CCI_Level__c, Site_Code__c, Facility__c, Date_of_Admission__c, Date_of_Discharge__c, Number_of_Days__c, Service_Provided_by_Facility__c, Service_Type2__c, Standard_Daily_Rate__c, Total_Costs_Standard__c, Total_Cost_Override__c, Diagnostic_Treatment_Service2__c, Source_System_ID__c</value>
     </labels>
     <labels>
+        <fullName>TPL_Insufficient_Privileges</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Insufficient Privileges</shortDescription>
+        <value>Insufficient Privileges</value>
+    </labels>
+    <labels>
         <fullName>TPL_MSP_Fields</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -104,6 +111,13 @@
         <protected>false</protected>
         <shortDescription>Manual Records</shortDescription>
         <value>Manual Records</value>
+    </labels>
+    <labels>
+        <fullName>TPL_Partial_Success</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Partial Success</shortDescription>
+        <value>Partial Success</value>
     </labels>
     <labels>
         <fullName>TPL_Passed</fullName>

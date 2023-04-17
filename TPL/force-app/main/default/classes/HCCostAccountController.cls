@@ -33,18 +33,14 @@ public with sharing class HCCostAccountController {
             totalCount = HCCostAccountController.getHCCostCountonAccount(accId, selectedFilterValue, recordTypeId);
             startItemNumber = HCCostAccountController.getStartNumber(pageSize, pageNumber, totalCount);
             
-            System.debug('Page Size : ' + pageSize + ', Page Number : ' + pageNumber + ', Total Count : ' + totalCount +', Start Item Number : ' + startItemNumber );
-            System.debug('Ambulance Fields : ' + ambulanceFields);
             hccCostList = HCCostAccountDAO.getHCCostAccountRecords(accId, selectedFilterValue, recordTypeId, startItemNumber, pageSize, ambulanceFields);
             
-            System.debug('HCC Cost List Size : ' + hccCostList.size());
             accountDetailWrapper.hccList = hccCostList;
             accountDetailWrapper.totalCount = totalCount;
         } catch(NullPointerException nullpointer){
             System.debug(nullpointer.getMessage());
-        }
-        catch(Exception e) {
-            throw new AuraHandledException(e.getMessage());
+        } catch(QueryException qe){
+            System.debug(qe.getMessage());
         }
         return accountDetailWrapper;
     }
@@ -61,17 +57,13 @@ public with sharing class HCCostAccountController {
             Id recordTypeId = HCCostRecordTypeIds.getPharmacareRecordId();
             totalCount = HCCostAccountController.getHCCostCountonAccount(accId, selectedFilterValue, recordTypeId);
             startItemNumber = HCCostAccountController.getStartNumber(pageSize, pageNumber, totalCount);
-            System.debug('Pharmacare Fields : ' + pharmacareFields);
-            System.debug('Page Size : ' + pageSize + ', Page Number : ' + pageNumber + ', Total Count : ' + totalCount +', Start Item Number : ' + startItemNumber );
             hccCostList = HCCostAccountDAO.getHCCostAccountRecords(accId, selectedFilterValue, recordTypeId, startItemNumber, pageSize, pharmacareFields);
-            System.debug('HCC Cost List Size : ' + hccCostList.size());
             accountDetailWrapper.hccList = hccCostList;
             accountDetailWrapper.totalCount = totalCount;
         } catch(NullPointerException nullpointer){
             System.debug(nullpointer.getMessage());
-        }
-        catch(Exception e) {
-            throw new AuraHandledException(e.getMessage());
+        }catch(QueryException qe){
+            System.debug(qe.getMessage());
         }
         return accountDetailWrapper;
     }
@@ -88,17 +80,13 @@ public with sharing class HCCostAccountController {
             Id recordTypeId = HCCostRecordTypeIds.getMSPRecordId();
             totalCount = HCCostAccountController.getHCCostCountonAccount(accId, selectedFilterValue, recordTypeId);
             startItemNumber = HCCostAccountController.getStartNumber(pageSize, pageNumber, totalCount);
-            System.debug('MSP Fields : ' + mspFields);
-            System.debug('Page Size : ' + pageSize + ', Page Number : ' + pageNumber + ', Total Count : ' + totalCount +', Start Item Number : ' + startItemNumber );
             hccCostList = HCCostAccountDAO.getHCCostAccountRecords(accId, selectedFilterValue, recordTypeId, startItemNumber, pageSize, mspFields);
-            System.debug('HCC Cost List Size : ' + hccCostList.size());
             accountDetailWrapper.hccList = hccCostList;
             accountDetailWrapper.totalCount = totalCount;
         } catch(NullPointerException nullpointer){
             System.debug(nullpointer.getMessage());
-        }
-        catch(Exception e) {
-            throw new AuraHandledException(e.getMessage());
+        } catch(QueryException qe){
+            System.debug(qe.getMessage());
         }
         return accountDetailWrapper;
     }
@@ -115,17 +103,13 @@ public with sharing class HCCostAccountController {
         	Id recordTypeId = HCCostRecordTypeIds.getHospitalRecordId();
             totalCount = HCCostAccountController.getHCCostCountonAccount(accId, selectedFilterValue, recordTypeId);
             startItemNumber = HCCostAccountController.getStartNumber(pageSize, pageNumber, totalCount);
-            System.debug('Hospital Fields : ' + hospitalFields);
-            System.debug('Page Size : ' + pageSize + ', Page Number : ' + pageNumber + ', Total Count : ' + totalCount +', Start Item Number : ' + startItemNumber );
             hccCostList = HCCostAccountDAO.getHCCostAccountRecords(accId, selectedFilterValue, recordTypeId, startItemNumber, pageSize, hospitalFields);
-            System.debug('HCC Cost List Size : ' + hccCostList.size());
             accountDetailWrapper.hccList = hccCostList;
             accountDetailWrapper.totalCount = totalCount;
         } catch(NullPointerException nullpointer){
             System.debug(nullpointer.getMessage());
-        }
-        catch(Exception e) {
-            throw new AuraHandledException(e.getMessage());
+        } catch(QueryException qe){
+            System.debug(qe.getMessage());
         }
         return accountDetailWrapper;
     }
@@ -142,17 +126,13 @@ public with sharing class HCCostAccountController {
         	Id recordTypeId = HCCostRecordTypeIds.getContinuingCareRecordId();
             totalCount = HCCostAccountController.getHCCostCountonAccount(accId, selectedFilterValue, recordTypeId);
             startItemNumber = HCCostAccountController.getStartNumber(pageSize, pageNumber, totalCount);
-            System.debug('Continuing Care Fields : ' + continuingCareFields);
-            System.debug('Page Size : ' + pageSize + ', Page Number : ' + pageNumber + ', Total Count : ' + totalCount +', Start Item Number : ' + startItemNumber );
             hccCostList = HCCostAccountDAO.getHCCostAccountRecords(accId, selectedFilterValue, recordTypeId, startItemNumber, pageSize, continuingCareFields);
-            System.debug('HCC Cost List Size : ' + hccCostList.size());
             accountDetailWrapper.hccList = hccCostList;
             accountDetailWrapper.totalCount = totalCount;
         } catch(NullPointerException nullpointer){
             System.debug(nullpointer.getMessage());
-        }
-        catch(Exception e) {
-            throw new AuraHandledException(e.getMessage());
+        } catch(QueryException qe){
+            System.debug(qe.getMessage());
         }
         return accountDetailWrapper;
     }
@@ -169,20 +149,13 @@ public with sharing class HCCostAccountController {
         	Id recordTypeId = HCCostRecordTypeIds.getFutureCareRecordId();
             totalCount = HCCostAccountController.getHCCostCountonAccount(accId, selectedFilterValue, recordTypeId);
             startItemNumber = HCCostAccountController.getStartNumber(pageSize, pageNumber, totalCount);
-            System.debug('Future Care Fields : ' + futureCareFields);
-            System.debug('Page Size : ' + pageSize + ', Page Number : ' + pageNumber + ', Total Count : ' + totalCount +', Start Item Number : ' + startItemNumber );
             hccCostList = HCCostAccountDAO.getHCCostAccountRecords(accId, selectedFilterValue, recordTypeId, startItemNumber, pageSize, futureCareFields);
-            System.debug('HCC Cost List Size : ' + hccCostList.size());
             accountDetailWrapper.hccList = hccCostList;
             accountDetailWrapper.totalCount = totalCount;
         } catch(NullPointerException nullpointer){
             System.debug(nullpointer.getMessage());
-        }
-        catch(DmlException dml){
-            System.debug(dml.getMessage());
-        }
-        catch(Exception e) {
-            throw new AuraHandledException(e.getMessage());
+        } catch(QueryException qe){
+            System.debug(qe.getMessage());
         }
         return accountDetailWrapper;
     }

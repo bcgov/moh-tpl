@@ -36,15 +36,14 @@ public with sharing class HCCostCaseController {
             Id recordTypeId = HCCostRecordTypeIds.getAmbulanceRecordId();
             totalCount = HCCostCaseController.getHCCostCountonCase(caseId, filterValue, recordTypeId);
             startItemNumber = HCCostCaseController.getStartNumber(pageSize, pageNumber, totalCount);
-            System.debug('Page Size : ' + pageSize + ', Page Number : ' + pageNumber + ', startItemNumber : ' + startItemNumber);
             hccCostList = HCCostCaseDAO.getHCCostCaseRecords(caseId, filterValue, recordTypeId, startItemNumber, pageSize, ambulanceFields);
             caseDetailWrapper.hccList = hccCostList;
             caseDetailWrapper.totalCount = totalCount;
         } catch(NullPointerException nullpointer){
-            nullpointer.getMessage();
+            System.debug(nullpointer.getMessage());
         }
-        catch(Exception e) {
-            throw new AuraHandledException(e.getMessage());
+        catch(QueryException qe) {
+            System.debug(qe.getMessage());    
         }
         return caseDetailWrapper;
     }
@@ -61,15 +60,14 @@ public with sharing class HCCostCaseController {
             Id recordTypeId = HCCostRecordTypeIds.getPharmacareRecordId();
             totalCount = HCCostCaseController.getHCCostCountonCase(caseId, filterValue, recordTypeId);
             startItemNumber = HCCostCaseController.getStartNumber(pageSize, pageNumber, totalCount);
-            System.debug('Page Size : ' + pageSize + ', Page Number : ' + pageNumber + ', startItemNumber : ' + startItemNumber);
             hccCostList = HCCostCaseDAO.getHCCostCaseRecords(caseId, filterValue, recordTypeId, startItemNumber, pageSize, pharmacareFields);
             caseDetailWrapper.hccList = hccCostList;
             caseDetailWrapper.totalCount = totalCount;
         } catch(NullPointerException nullpointer){
-            nullpointer.getMessage();
+            System.debug(nullpointer.getMessage());
         }
-        catch(Exception e) {
-            throw new AuraHandledException(e.getMessage());
+        catch(QueryException qe) {
+            System.debug(qe.getMessage());    
         }
         return caseDetailWrapper;
     }
@@ -87,15 +85,14 @@ public with sharing class HCCostCaseController {
             Id recordTypeId = HCCostRecordTypeIds.getMSPRecordId();
             totalCount = HCCostCaseController.getHCCostCountonCase(caseId, filterValue, recordTypeId);
             startItemNumber = HCCostCaseController.getStartNumber(pageSize, pageNumber, totalCount);
-            System.debug('Page Size : ' + pageSize + ', Page Number : ' + pageNumber + ', startItemNumber : ' + startItemNumber);
             hccCostList = HCCostCaseDAO.getHCCostCaseRecords(caseId, filterValue, recordTypeId, startItemNumber, pageSize, mspFields);
             caseDetailWrapper.hccList = hccCostList;
             caseDetailWrapper.totalCount = totalCount;
         } catch(NullPointerException nullpointer){
             nullpointer.getMessage();
         }
-        catch(Exception e) {
-            throw new AuraHandledException(e.getMessage());
+        catch(QueryException qe) {
+            System.debug(qe.getMessage());    
         }
         return caseDetailWrapper;
     }
@@ -112,20 +109,19 @@ public with sharing class HCCostCaseController {
             Id recordTypeId = HCCostRecordTypeIds.getHospitalRecordId();
             totalCount = HCCostCaseController.getHCCostCountonCase(caseId, filterValue, recordTypeId);
             startItemNumber = HCCostCaseController.getStartNumber(pageSize, pageNumber, totalCount);
-            System.debug('Page Size : ' + pageSize + ', Page Number : ' + pageNumber + ', startItemNumber : ' + startItemNumber);
             hccCostList = HCCostCaseDAO.getHCCostCaseRecords(caseId, filterValue, recordTypeId, startItemNumber, pageSize, hospitalFields);
             caseDetailWrapper.hccList = hccCostList;
             caseDetailWrapper.totalCount = totalCount;
         } catch(NullPointerException nullpointer){
-            nullpointer.getMessage();
+            System.debug(nullpointer.getMessage());
         }
-        catch(Exception e) {
-            throw new AuraHandledException(e.getMessage());
+        catch(QueryException qe) {
+            System.debug(qe.getMessage());    
         }
         return caseDetailWrapper;
     }
 
-    @AuraEnabled(cacheable=true)
+    @AuraEnabled
     public static HCCostCaseDetailWrapper getHealthcareCostsCCForCase(String caseId, String filterValue, Integer pageNumber, Integer pageSize){
         List<Healthcare_Cost__c> hccCostList = new List<Healthcare_Cost__c> ();
         HCCostCaseDetailWrapper caseDetailWrapper = new HCCostCaseDetailWrapper();
@@ -136,21 +132,20 @@ public with sharing class HCCostCaseController {
             Id recordTypeId = HCCostRecordTypeIds.getContinuingCareRecordId();
             totalCount = HCCostCaseController.getHCCostCountonCase(caseId, filterValue, recordTypeId);
             startItemNumber = HCCostCaseController.getStartNumber(pageSize, pageNumber, totalCount);
-            System.debug('Page Size : ' + pageSize + ', Page Number : ' + pageNumber + ', startItemNumber : ' + startItemNumber);
             hccCostList = HCCostCaseDAO.getHCCostCaseRecords(caseId, filterValue, recordTypeId, startItemNumber, pageSize, countinuingCareFields);
             caseDetailWrapper.hccList = hccCostList;
             caseDetailWrapper.totalCount = totalCount;
         } catch(NullPointerException nullpointer){
-            nullpointer.getMessage();
+            System.debug(nullpointer.getMessage());
         }
-        catch(Exception e) {
-            throw new AuraHandledException(e.getMessage());
+        catch(QueryException qe) {
+            System.debug(qe.getMessage());    
         }
         return caseDetailWrapper;
     }
 
      
-    @AuraEnabled(cacheable=true)
+    @AuraEnabled
     public static HCCostCaseDetailWrapper getHealthcareCostsFCForCase(String caseId, String filterValue, Integer pageNumber, Integer pageSize){
         List<Healthcare_Cost__c> hccCostList = new List<Healthcare_Cost__c> ();
         HCCostCaseDetailWrapper caseDetailWrapper = new HCCostCaseDetailWrapper();
@@ -161,15 +156,14 @@ public with sharing class HCCostCaseController {
             Id recordTypeId = HCCostRecordTypeIds.getFutureCareRecordId();
             totalCount = HCCostCaseController.getHCCostCountonCase(caseId, filterValue, recordTypeId);
             startItemNumber = HCCostCaseController.getStartNumber(pageSize, pageNumber, totalCount);
-            System.debug('Page Size : ' + pageSize + ', Page Number : ' + pageNumber + ', startItemNumber : ' + startItemNumber);
             hccCostList = HCCostCaseDAO.getHCCostCaseRecords(caseId, filterValue, recordTypeId, startItemNumber, pageSize, futureCareFields);
             caseDetailWrapper.hccList = hccCostList;
             caseDetailWrapper.totalCount = totalCount;
         } catch(NullPointerException nullpointer){
-            nullpointer.getMessage();
+            System.debug(nullpointer.getMessage());
         }
-        catch(Exception e) {
-            throw new AuraHandledException(e.getMessage());
+        catch(QueryException qe) {
+            System.debug(qe.getMessage());    
         }
         return caseDetailWrapper;
     }

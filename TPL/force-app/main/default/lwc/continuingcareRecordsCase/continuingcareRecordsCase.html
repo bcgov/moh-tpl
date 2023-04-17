@@ -1,24 +1,56 @@
 <template>
     <template if:true={records}>
-        <lightning-record-edit-form object-api-name="Healthcare_Cost__c"  class="slds-text-align_left" id="assignCases" >
-            <lightning-button label="Delete selected Records" onclick={handleSelect}></lightning-button>
-        </lightning-record-edit-form>
+         <!-- Delete Button Code -->
+         <lightning-layout>
+            <lightning-layout-item class="slds-text-align_left">
+                <lightning-record-edit-form object-api-name="Healthcare_Cost__c"  class="slds-text-align_left" id="assignCases" >
+                    <lightning-button label="Delete selected Records" onclick={handleSelect}></lightning-button>
+                </lightning-record-edit-form>
+            </lightning-layout-item>
+        
+            <lightning-layout-item class="slds-text-align_right">
+                <lightning-button label="Refresh" onclick={handleRefresh}></lightning-button>
+            </lightning-layout-item>    
+        </lightning-layout>
+    
+    </template>
+    
+      <!-- Handle Filter code -->
+      <lightning-layout>
+        <lightning-layout-item>
+            <lightning-combobox
+            name="group-filter"
+            label="Select records to see" 
+            value={selectedFilter}
+            options={filterOptions}
+            onchange={handleFilterChange}
+            placeholder="Select an option"></lightning-combobox>
+        </lightning-layout-item>   
+    </lightning-layout>
+
         <!-- Continuing Care Records -->
      <lightning-card title="Continuing Care Records">
         <div class="slds-scrollable slds-m-around_medium" style="height:auto;width:auto">
-                <lightning-datatable
-                    key-field="Id"
-                    data={recordsToDisplay}
-                    columns={column}
-                    onsave={handleSave}
-                    sorted-by={sortBy}
-                    sorted-direction={sortDirection}
-                    onsort={doSorting}
-                    draft-values={draftValues} show-row-number-column="false" style="width: auto;">
-                </lightning-datatable>
-            
+            <template if:true={showErrorMessage}>
+                <div class="validation">
+                    <p>
+                      <lightning-formatted-text value={updateMessage} linkify ></lightning-formatted-text>
+                    </p>
+                </div> <br>
+            </template>
+            <lightning-datatable
+                key-field="Id"
+                data={recordsToDisplay}
+                columns={column}
+                onsave={handleSave}
+                sorted-by={sortBy}
+                sorted-direction={sortDirection}
+                onsort={doSorting}
+                draft-values={draftValues} show-row-number-column="false" style="width: auto; height: 500px;">
+            </lightning-datatable>
+    
             <template if:true={recordsToDisplay.error}>
-                <!-- handle Apex error -->
+        <!-- handle Apex error -->
             </template>
         </div>
 
