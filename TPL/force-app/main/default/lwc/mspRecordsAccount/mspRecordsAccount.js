@@ -1,8 +1,8 @@
 import { LightningElement, wire, api } from 'lwc';
 import { refreshApex } from '@salesforce/apex';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
-import getHealthcareCostsMSPForAccount from '@salesforce/apex/HCCCostMSPRecord.getHealthcareCostsMSPForAccount';
-import updateHCCCaseInformation from '@salesforce/apex/HCCCostMSPRecord.updateHCCCaseInformation';
+import getHealthcareCostsMSPForAccount from '@salesforce/apex/HCCostAccountController.getHealthcareCostsMSPForAccount';
+import updateHCCCaseInformation from '@salesforce/apex/HCCCostController.updateHCCCaseInformation';
 
 const COLUMNS = [
     {
@@ -256,24 +256,17 @@ export default class MspRecordsAccount extends LightningElement {
      
     handleSelect(){
      var el = this.template.querySelector('lightning-datatable');
-        console.log(el);
         var selected = el.getSelectedRows();
-        //console.log(selected);
-        console.log('selectedRows : ' + selected);
-        console.log('Selected Case ID : ' + this.selectedCase);
         
         let selectedCostRecords = [];
         
         selected.forEach(function(element){
         selectedCostRecords.push(element);
-           console.log(element);   
         });
 
         updateHCCCaseInformation({ caseId: this.selectedCase, hccList: selectedCostRecords, recordDisplay: this.recordsToDisplay})
         .then((data,error) => {
             this.displayMessage = data.updateMessage;
-            console.log("Display Message : " + this.displayMessage);
-            console.log("Partial Success : " + data.passMessage);
             if(this.displayMessage){
                 this.displayMessage = this.displayMessage.replace(/\r\n/g, "<br />");
                 this.showErrorMessage = true;
@@ -322,7 +315,6 @@ export default class MspRecordsAccount extends LightningElement {
                 }
             }
             else{
-                console.log(error);
                 this.dispatchEvent(
                     new ShowToastEvent({
                         title: 'Error',
@@ -361,8 +353,6 @@ export default class MspRecordsAccount extends LightningElement {
                      this.recordsToDisplay.push(this.records[i]);
                  }
          
-                 console.log("Records to display : " + JSON.stringify(this.recordsToDisplay));
-                 console.log('Total Count : ' + result.totalCount);
                  this.error = undefined;
                  
              }
@@ -372,7 +362,6 @@ export default class MspRecordsAccount extends LightningElement {
              }
         })
         .catch(error =>{
-            console.log(error);
             this.totalRecords = 0;
             this.records = []
         })
@@ -413,7 +402,6 @@ export default class MspRecordsAccount extends LightningElement {
 
     lastPage() {
         this.pageNumber = this.totalPages;
-        console.log('Page Number : ' + this.pageNumber); 
         this.onLoad();
     }
 
@@ -421,7 +409,6 @@ export default class MspRecordsAccount extends LightningElement {
         this.selectedFilter = event.target.value;
         this.pageNumber = 1;
         this.onLoad();  
-        console.log('Selected Filter Value : ' + this.selectedFilter);
                
     }
 }

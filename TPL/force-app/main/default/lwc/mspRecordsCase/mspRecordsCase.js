@@ -1,7 +1,7 @@
 import { LightningElement, wire, api, track } from 'lwc';
 import { refreshApex } from '@salesforce/apex';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
-import getHealthcareCostsMSPForCase from '@salesforce/apex/HCCCostMSPRecord.getHealthcareCostsMSPForCase';
+import getHealthcareCostsMSPForCase from '@salesforce/apex/HCCostCaseController.getHealthcareCostsMSPForCase';
 import saveDraftValues from '@salesforce/apex/HCCCostController.saveDraftValues'; 
 import deleteHCCRecord from '@salesforce/apex/HCCCostController.deleteHCCRecord';
 
@@ -455,7 +455,6 @@ export default class AmbulanceRecordsCase extends LightningElement {
             this.wiredRecords = result.hccList;
             this.recordsToDisplay = [];
             if(result.hccList != null && result.hccList){
-                console.log('MSP List :' + JSON.stringify(result.hccList));
                 this.records = JSON.parse(JSON.stringify(result.hccList));
                 this.records.forEach(record =>{
                     record.accountNameClass = 'slds-cell-edit';
@@ -476,8 +475,6 @@ export default class AmbulanceRecordsCase extends LightningElement {
                     this.recordsToDisplay.push(this.records[i]);
                 }
         
-                console.log("Records to display : " + JSON.stringify(this.recordsToDisplay));
-                console.log('Total Count : ' + result.totalCount);
                 this.error = undefined;
             }
             else{
@@ -488,7 +485,6 @@ export default class AmbulanceRecordsCase extends LightningElement {
             this.showSpinner = false;
         })
         .catch(error =>{
-            console.log(error);
             this.records = []
             this.totalRecords = 0;
         });
@@ -529,13 +525,11 @@ export default class AmbulanceRecordsCase extends LightningElement {
 
     lastPage() {
         this.pageNumber = this.totalPages;
-        console.log('Page Number : ' + this.pageNumber); 
         this.onLoad();
     }
 
     handleFilterChange(event) {
         this.selectedFilter = event.target.value;
-        console.log('Selected Filter Value : ' + this.selectedFilter);
         
         if(this.selectedFilter == 'Manual Records')
         {
@@ -553,7 +547,6 @@ export default class AmbulanceRecordsCase extends LightningElement {
         
         this.pageNumber = 1;
         this.onLoad();  
-        console.log('Selected Filter Value : ' + this.selectedFilter);
                
     }
 
@@ -585,7 +578,6 @@ export default class AmbulanceRecordsCase extends LightningElement {
      handleItemRegister(event) {
         event.stopPropagation(); //stops the window click to propagate to allow to register of markup.
         const item = event.detail;
-        console.log('Handle Item Register');
         if (!this.privateChildren.hasOwnProperty(item.name))
             this.privateChildren[item.name] = {};
         this.privateChildren[item.name][item.guid] = item;
@@ -597,7 +589,6 @@ export default class AmbulanceRecordsCase extends LightningElement {
         let dataRecieved = event.detail.data;
         let updatedItem;
        
-        console.log('Line 368 handle value change' + JSON.stringify(dataRecieved.value));
         if(!dataRecieved.value){
             dataRecieved.value ='';
         }
@@ -609,7 +600,6 @@ export default class AmbulanceRecordsCase extends LightningElement {
                     
                 };
                 // Set the cell edit class to edited to mark it as value changed.
-                console.log('At 376');
                 this.setClassesOnData(
                     dataRecieved.context,
                     'accountNameClass',
@@ -618,15 +608,12 @@ export default class AmbulanceRecordsCase extends LightningElement {
                 break;
             default:
                 this.setClassesOnData(dataRecieved.context, '', '');
-                console.log('At 384' + JSON.stringify(this.draftValues));
                 break;
         }
         this.updateDraftValues(updatedItem);
        // this.updateDataValues(updatedItem);
     }
     handleCellChange(event){
-        console.log(JSON.stringify(event)+'---- '+JSON.stringify(this.draftValues));
-        console.log( this.draftValues.findIndex(e=>e.Id === event.detail.draftValues[0].Id));
         this.showSection = true;
         for(let i = 0 ; i < event.detail.draftValues.length;i++){
             let index = this.draftValues.findIndex(e=>e.Id === event.detail.draftValues[i].Id);
@@ -698,7 +685,6 @@ export default class AmbulanceRecordsCase extends LightningElement {
                 if(event.detail.draftValues[i].Location_Type_Description2__c){
                     this.draftValues[index].Location_Type_Description2__c = event.detail.draftValues[i].Location_Type_Description2__c;
                 }
-                console.log(JSON.stringify(this.draftValues[i]));
             }else{
                 var obj ={
                     Id : event.detail.draftValues[i].Id,
@@ -724,29 +710,14 @@ export default class AmbulanceRecordsCase extends LightningElement {
                     Location_Type_Code__c: event.detail.draftValues[i].Location_Type_Code__c,
                     Location_Type_Description2__c: event.detail.draftValues[i].Location_Type_Description2__c,
                 };
-                console.log('before in');
-              
-                console.log(JSON.stringify(obj));
                 this.draftValues.push(obj);
             }
-            console.log('aaaaaa '+JSON.stringify(this.draftValues));
         }
-       /* updateItem ={
-            
-        }
-        copyDraftValues.forEach((item) => {
-            if (item.Id === updateItem.Id) {
-                for (let field in updateItem) {
-                    item[field] = updateItem[field];
-                }
-                draftValueChanged = true;
-            }
-        });*/
+      
     }
 
     handleChange(event) {
         event.preventDefault();
-        console.log('Inside Handle Change ');
         this.Facility__c = event.target.value;
         this.showSpinner = true;
       
@@ -756,32 +727,16 @@ export default class AmbulanceRecordsCase extends LightningElement {
         event.preventDefault();
         this.showSection = false;
         this.records = JSON.parse(JSON.stringify(this.lastSavedData));
-        console.log('Inside handle cancel');
         this.handleWindowOnclick('reset');
         this.draftValues = [];
         return this.refresh();
     }
 
-  /*handleCellChange(event) {
-        event.preventDefault();
-        var el = this.template.querySelector('c-custom-data-table');
-        console.log(el);
-        var selected = el.getSelectedRows();
-        console.log(JSON.stringify(selected));
-        console.log('Event Detail : ' + JSON.stringify(event.detail));
-        for(var i=0; i<selected.length;i++){
-         }
-        console.log('Handle cell change :' + JSON.stringify(event.detail.draftValues[0]));
-        this.updateDraftValues(event.detail.draftValues);
-    } 
- */
     handleEdit(event) {
         event.preventDefault();
         this.showSection = true;
         let dataRecieved = event.detail.data;
-        console.log('Handle edit draft values : ' + JSON.stringify(this.draftValues));
         this.handleWindowOnclick(dataRecieved.context);
-        console.log('At 412  handle edit:' + JSON.stringify(event.detail.data));
         switch (dataRecieved.label) {
             case 'Account':
                 this.setClassesOnData(
@@ -798,7 +753,6 @@ export default class AmbulanceRecordsCase extends LightningElement {
 
     updateDataValues(updateItem) {
         let copyData = JSON.parse(JSON.stringify(this.records));
-        console.log('Updated data values log' );
         copyData.forEach((item) => {
             if (item.Id === updateItem.Id) {
                 for (let field in updateItem) {
@@ -812,10 +766,8 @@ export default class AmbulanceRecordsCase extends LightningElement {
     }
 
     updateDraftValues(updateItem) {
-        console.log('draft'+JSON.stringify(this.draftValues));
         let draftValueChanged = false;
         let copyDraftValues = JSON.parse(JSON.stringify(this.draftValues));
-        console.log('At 442 ' + JSON.stringify(updateItem));
         copyDraftValues.forEach((item) => {
             if (item.Id === updateItem.Id) {
                 for (let field in updateItem) {
@@ -830,12 +782,9 @@ export default class AmbulanceRecordsCase extends LightningElement {
         } else {
             this.draftValues = [...copyDraftValues, updateItem];
         }
-        console.log('Update Draft values' + JSON.stringify(this.draftValues));
-        console.log('Update Draft values' + JSON.stringify(this.recordsToDisplay));
     }
 
     setClassesOnData(id, fieldName, fieldValue) {
-        console.log('Set classes on data');
         this.records = JSON.parse(JSON.stringify(this.records));
         this.records.forEach((detail) => {
             if (detail.Id === id) {
@@ -847,15 +796,10 @@ export default class AmbulanceRecordsCase extends LightningElement {
     async handleSelect()
     {
         var el = this.template.querySelector('c-custom-data-table');
-        console.log(el);
         var selected = el.getSelectedRows();
-        //console.log(selected);
-        console.log('selectedRows : ' + selected);
         let selectedCostRecords = [];
-        console.log('Selected Filter : ' + this.selectedFilter);
         selected.forEach(function(element){
         selectedCostRecords.push(element);
-           console.log(element);   
         });
         if(!selected || !selectedCostRecords){
             this.dispatchEvent(
@@ -869,16 +813,15 @@ export default class AmbulanceRecordsCase extends LightningElement {
         else{
             await deleteHCCRecord({deletionRecords: selectedCostRecords, filterOption: this.selectedFilter})
             .then((result) => {
-                console.log('Result : ' + result);
                if(result == 'Passed'){
                 this.dispatchEvent(
                     new ShowToastEvent({
                         title: 'Success',
-                        message: 'Selected Ambulance record(s) deleted successfully',
+                        message: 'Selected MSP record(s) deleted successfully',
                         variant: 'success'
                     })
                 );    
-                this.loadCount();
+                this.onLoad();
                }
                 else if(result == 'Failed' || result == null){
                     this.dispatchEvent(
@@ -888,10 +831,25 @@ export default class AmbulanceRecordsCase extends LightningElement {
                             variant: 'error'
                         })
                     );     
-                }    
+                }   
+                else if(result == 'Insufficient Privileges'){
+                    this.dispatchEvent(
+                        new ShowToastEvent({
+                            title: 'Error',
+                            message: 'Insufficient Privileges for record deletion. Please contact Administrator',
+                            variant: 'error'
+                        })
+                    );  
+                }     
             })
             .catch(error => {
-                console.log('error : ' + JSON.stringify(error));
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Error',
+                        message: 'Insufficient Privileges for record deletion. Please contact Administrator',
+                        variant: 'error'
+                    })
+                );  
             });
         }
        
@@ -905,11 +863,8 @@ export default class AmbulanceRecordsCase extends LightningElement {
         event.preventDefault();
         this.showSpinner = true;
         var el = this.template.querySelector('c-custom-data-table');
-        console.log(''+ el);
         var selected = el.getSelectedRows();
-        console.log(JSON.stringify(selected));
-        
-
+    
         if(selected.length <= 0){
             this.dispatchEvent(
                 new ShowToastEvent({
@@ -920,9 +875,7 @@ export default class AmbulanceRecordsCase extends LightningElement {
             );    
         }
         else{
-
-        
-        for(var i =0; i < selected.length;i++){ 
+            for(var i =0; i < selected.length;i++){ 
             
             let index = this.draftValues.findIndex(e=>e.Id === selected[i].Id);
             if(index > -1 ){
@@ -948,13 +901,16 @@ export default class AmbulanceRecordsCase extends LightningElement {
                 if(selected[i].Fee_Item_Code__c != this.draftValues[index].Fee_Item_Code__c){
                     selected[i].Fee_Item_Code__c = this.draftValues[index].Fee_Item_Code__c;
                 }
+                if(selected[i].Fee_Item_Title__c != this.draftValues[index].Fee_Item_Title__c){
+                    selected[i].Fee_Item_Title__c = this.draftValues[index].Fee_Item_Title__c;
+                }
                 if(selected[i].Fee_Item_Description__c != this.draftValues[index].Fee_Item_Description__c){
                     selected[i].Fee_Item_Description__c = this.draftValues[index].Fee_Item_Description__c;
                 }
-                if(selected[i].Practitioner_Name__c != this.draftValues[index].Practitioner_Number__c){
-                    selected[i].Practitioner_Name__c = this.draftValues[index].Practitioner_Number__c;
+                if(selected[i].Practitioner_Number__c != this.draftValues[index].Practitioner_Number__c){
+                    selected[i].Practitioner_Number__c = this.draftValues[index].Practitioner_Number__c;
                 }
-                if(this.draftValues[i].Practitioner_Name__c != this.draftValues[index].Practitioner_Name__c){
+                if(selected[i].Practitioner_Name__c != this.draftValues[index].Practitioner_Name__c){
                     selected[i].Practitioner_Name__c = this.draftValues[index].Practitioner_Name__c;
                 }
                 if(selected[i].Diagnostic_Code__c != this.draftValues[index].Diagnostic_Code__c){
@@ -993,21 +949,14 @@ export default class AmbulanceRecordsCase extends LightningElement {
                 if(selected[i].Location_Type_Description2__c != this.draftValues[index].Location_Type_Description2__c){
                     selected[i].Location_Type_Description2__c = this.draftValues[index].Location_Type_Description2__c;
                 }
-            }else{
-               
             }
         } 
-        console.log('updated selected '+JSON.stringify(selected));
-
+    
         saveDraftValues({data: selected, recordDisplay: this.recordsToDisplay})
         .then((data,error) => {
             this.updateMessage = data.actionMessage;
       
             var indexes = data.indexNumbers;
-      
-            console.log('passedResult : ' + data.passedResult);
-            console.log( 'Toast Message : ' + this.updateMessage);
-            console.log('Size of Index List : ' + indexes);
                    
             if(this.updateMessage){
                 this.updateMessage = this.updateMessage.replace(/\r\n/g, "<br />");
@@ -1021,7 +970,7 @@ export default class AmbulanceRecordsCase extends LightningElement {
                 this.dispatchEvent(
                     new ShowToastEvent({
                         title: 'Success',
-                        message: 'HealthCare Cost Ambulance record(s) updated successfully',
+                        message: 'HealthCare Cost MSP record(s) updated successfully',
                         variant: 'success'
                     })
                 );    
@@ -1065,28 +1014,10 @@ export default class AmbulanceRecordsCase extends LightningElement {
         }
             
     }
-    handleSuccess(){
-        if(this.recordId !== null){
-            this.dispatchEvent(new ShowToastEvent({
-                    title: "SUCCESS!",
-                    message: "New record has been created.",
-                   variant: "success",
-                }),  
-           );    
-         }
-       //  this.onLoad();
-         this.loadCount();
-    }
-   
+       
     handleRefresh(){
-        this.loadCount();
+        this.onLoad();
     }
-   /* handleSubmit(event){
-        event.preventDefault();
-        const fields = event.detail.fields;
-        fields.Case2__c = this.caseId;
-        this.template.querySelector('lightning-record-edit-form').submit(fields);
-        console.log(JSON.stringify(event.detail));
-    } */
+  
     
 }

@@ -1,7 +1,7 @@
 import { LightningElement, wire, api } from 'lwc';
 import { refreshApex } from '@salesforce/apex';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
-import getHealthcareCostsPharmacareForCase from '@salesforce/apex/HCCCostPharmacareRecord.getHealthcareCostsPharmacareForCase';
+import getHealthcareCostsPharmacareForCase from '@salesforce/apex/HCCostCaseController.getHealthcareCostsPharmacareForCase';
 import saveDraftValues from '@salesforce/apex/HCCCostController.saveDraftValues';
 import deleteHCCRecord from '@salesforce/apex/HCCCostController.deleteHCCRecord';
 
@@ -200,8 +200,6 @@ export default class PharmacareRecordsCase extends LightningElement {
                      this.recordsToDisplay.push(this.records[i]);
                  }
          
-                 console.log("Records to display : " + JSON.stringify(this.recordsToDisplay));
-                 console.log('Total Count : ' + result.totalCount);
                  this.error = undefined;
                  
              }
@@ -211,7 +209,6 @@ export default class PharmacareRecordsCase extends LightningElement {
              }
         })
         .catch(error =>{
-            console.log(error);
             this.records = []
             this.totalRecords = 0;
         })
@@ -251,13 +248,11 @@ export default class PharmacareRecordsCase extends LightningElement {
 
     lastPage() {
         this.pageNumber = this.totalPages;
-        console.log('Page Number : ' + this.pageNumber); 
         this.onLoad();
     }
 
     handleFilterChange(event) {
         this.selectedFilter = event.target.value;
-        console.log('Selected Filter Value : ' + this.selectedFilter);
         
         if(this.selectedFilter == 'Manual Records')
         {
@@ -275,7 +270,6 @@ export default class PharmacareRecordsCase extends LightningElement {
         
         this.pageNumber = 1;
         this.onLoad();  
-        console.log('Selected Filter Value : ' + this.selectedFilter);
                
     }
 
@@ -310,15 +304,10 @@ export default class PharmacareRecordsCase extends LightningElement {
     async handleSelect()
     {
         var el = this.template.querySelector('lightning-datatable');
-        console.log(el);
         var selected = el.getSelectedRows();
-        //console.log(selected);
-        console.log('selectedRows : ' + selected);
         let selectedCostRecords = [];
-        console.log('Selected Filter : ' + this.selectedFilter);
         selected.forEach(function(element){
         selectedCostRecords.push(element);
-           console.log(element);   
         });
         if(!selected || !selectedCostRecords){
             this.dispatchEvent(
@@ -332,7 +321,6 @@ export default class PharmacareRecordsCase extends LightningElement {
         else{
             await deleteHCCRecord({deletionRecords: selectedCostRecords, filterOption: this.selectedFilter})
             .then((result) => {
-                console.log('Result : ' + result);
                if(result == 'Passed'){
                 this.dispatchEvent(
                     new ShowToastEvent({
@@ -351,10 +339,25 @@ export default class PharmacareRecordsCase extends LightningElement {
                             variant: 'error'
                         })
                     );     
-                }    
+                }  
+                else if(result == 'Insufficient Privileges'){
+                    this.dispatchEvent(
+                        new ShowToastEvent({
+                            title: 'Error',
+                            message: 'Insufficient Privileges for record deletion. Please contact Administrator',
+                            variant: 'error'
+                        })
+                    );  
+                }       
             })
             .catch(error => {
-                console.log('error : ' + JSON.stringify(error));
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Error',
+                        message: 'Insufficient Privileges for record deletion. Please contact Administrator',
+                        variant: 'error'
+                    })
+                );  
             });
         }
        
@@ -366,11 +369,8 @@ export default class PharmacareRecordsCase extends LightningElement {
 
     handleSave(event){
         var el = this.template.querySelector('lightning-datatable');
-        console.log(''+ el);
         var selected = el.getSelectedRows();
-        console.log(JSON.stringify(selected));
-        console.log(JSON.stringify(event.detail.draftValues));
-
+    
         if(selected.length <= 0){
             this.dispatchEvent(
                 new ShowToastEvent({
@@ -447,8 +447,6 @@ export default class PharmacareRecordsCase extends LightningElement {
                            
                          }
                          
-                         console.log('Selected Value : ' + JSON.stringify(selected[i]));
-         
                      }
                 }
              } 
@@ -458,10 +456,6 @@ export default class PharmacareRecordsCase extends LightningElement {
       
                 var indexes = data.indexNumbers;
           
-                console.log('passedResult : ' + data.passedResult);
-                console.log( 'Toast Message : ' + this.updateMessage);
-                console.log('Size of Index List : ' + indexes);
-                       
                 if(this.updateMessage){
                     this.updateMessage = this.updateMessage.replace(/\r\n/g, "<br />");
                     this.showErrorMessage = true;
@@ -514,7 +508,6 @@ export default class PharmacareRecordsCase extends LightningElement {
                 return this.refresh();    
             })
             .catch(error => {
-                console.log('error : ' + JSON.stringify(error));
             });
         }
         

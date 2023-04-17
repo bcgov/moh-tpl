@@ -1,8 +1,8 @@
 import { LightningElement, wire, api } from 'lwc';
 import { refreshApex } from '@salesforce/apex';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
-import updateHCCCaseInformation from '@salesforce/apex/HCCCostAmbulanceRecord.updateHCCCaseInformation';
-import getHealthcareCostsAmbulanceForAccount from '@salesforce/apex/HCCCostAmbulanceRecord.getHealthcareCostsAmbulanceForAccount';
+import updateHCCCaseInformation from '@salesforce/apex/HCCCostController.updateHCCCaseInformation';
+import getHealthcareCostsAmbulanceForAccount from '@salesforce/apex/HCCostAccountController.getHealthcareCostsAmbulanceForAccount';
 
 const COLUMNS = [
     {
@@ -144,10 +144,7 @@ export default class AmbulanceRecordsAccount extends LightningElement {
      
      handleSelect(){
         var el = this.template.querySelector('lightning-datatable');
-        console.log(el);
         var selected = el.getSelectedRows();
-        console.log('Selected Case ID : ' + this.selectedCase);
-        console.log('selectedRows : ' + JSON.stringify(selected));
         
         let selectedCostRecords = [];
         if(this.selectedCase == null || !this.selectedCase){
@@ -161,16 +158,13 @@ export default class AmbulanceRecordsAccount extends LightningElement {
         }
         else{             
             selected.forEach(function(element){
-                selectedCostRecords.push(element);
-                   console.log(element);   
+                selectedCostRecords.push(element);  
                 });           
                 
                 return updateHCCCaseInformation({ caseId: this.selectedCase, hccList: selectedCostRecords, recordDisplay: this.recordsToDisplay})
                 .then((data,error) => {
                     this.displayMessage = data.updateMessage;
-                    console.log("Display Message : " + this.displayMessage);
-                    console.log("Partial Success : " + data.passMessage);
-                    if(this.displayMessage){
+                   if(this.displayMessage){
                         this.displayMessage = this.displayMessage.replace(/\r\n/g, "<br />");
                         this.showErrorMessage = true;
                     }
@@ -218,7 +212,6 @@ export default class AmbulanceRecordsAccount extends LightningElement {
                         }
                     }
                     else{
-                        console.log(error);
                         this.dispatchEvent(
                             new ShowToastEvent({
                                 title: 'Error',
@@ -240,6 +233,7 @@ export default class AmbulanceRecordsAccount extends LightningElement {
         return getHealthcareCostsAmbulanceForAccount({accId: this.recordId, selectedFilterValue: this.selectedFilter, pageNumber: this.pageNumber, pageSize: this.pageSize})
         .then(result=>{
            this.recordsToDisplay = [];
+
            if(result.hccList != null && result.hccList){
                 this.records = JSON.parse(JSON.stringify(result.hccList));
                 this.totalRecords = result.totalCount;
@@ -258,8 +252,6 @@ export default class AmbulanceRecordsAccount extends LightningElement {
                     this.recordsToDisplay.push(this.records[i]);
                 }
         
-                console.log("Records to display : " + JSON.stringify(this.recordsToDisplay));
-                console.log('Total Count : ' + result.totalCount);
                 this.error = undefined;
                 
             }
@@ -269,7 +261,6 @@ export default class AmbulanceRecordsAccount extends LightningElement {
             }
         })
         .catch(error =>{
-            console.log(error);
             this.records = [];
         })
     }
@@ -309,39 +300,12 @@ export default class AmbulanceRecordsAccount extends LightningElement {
 
     lastPage() {
         this.pageNumber = this.totalPages;
-        console.log('Page Number : ' + this.pageNumber); 
         this.onLoad();
     }
-
-
-    // JS function to handel pagination logic 
- /*   paginationHelper() {
-        console.log('records : ' + JSON.stringify(this.records));
-        this.recordsToDisplay = [];
-        // calculate total pages
-        this.totalPages = Math.ceil(this.recordsCount / this.pageSize);
-        // set page number 
-        if (this.pageNumber <= 1) {
-            this.pageNumber = 1;
-        } else if (this.pageNumber >= this.totalPages) {
-            this.pageNumber = this.totalPages;
-        }
-        // set records to display on current page 
-        for(let i=0;i<this.records.length;i++){
-            console.log('Inside for loop to assign records to display');
-            if(i=== this.recordsCount){
-                break;
-            }
-            this.recordsToDisplay.push(this.records[i]);
-        }
-        console.log("Records to display : " + JSON.stringify(this.recordsToDisplay));
-    } */
 
     handleFilterChange(event) {
         this.selectedFilter = event.target.value;
         this.pageNumber = 1;
-        this.onLoad();  
-        console.log('Selected Filter Value : ' + this.selectedFilter);
-               
+        this.onLoad();               
     }
 }
