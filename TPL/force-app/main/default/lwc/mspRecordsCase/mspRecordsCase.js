@@ -487,6 +487,13 @@ export default class AmbulanceRecordsCase extends LightningElement {
         .catch(error =>{
             this.records = []
             this.totalRecords = 0;
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Error',
+                    message: 'Some issues occured while loading MSP Records. Please contact Administrator',
+                    variant: 'error'
+                })
+            );    
         });
     }
 
@@ -510,21 +517,25 @@ export default class AmbulanceRecordsCase extends LightningElement {
     }
     previousPage() {
         this.pageNumber = this.pageNumber - 1;
+        this.showSection = false;
         this.onLoad();
    
     }
     nextPage() {
-        this.pageNumber = this.pageNumber + 1;
+       this.pageNumber = this.pageNumber + 1;
+       this.showSection = false;
        this.onLoad();
     }
 
     firstPage() {
         this.pageNumber = 1;
+        this.showSection = false;
         this.onLoad();
     }
 
     lastPage() {
         this.pageNumber = this.totalPages;
+        this.showSection = false;
         this.onLoad();
     }
 
