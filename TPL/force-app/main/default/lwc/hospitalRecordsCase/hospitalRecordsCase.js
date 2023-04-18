@@ -3,7 +3,6 @@ import { refreshApex } from '@salesforce/apex';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import getHealthcareCostsHospitalForCase from '@salesforce/apex/HCCostCaseController.getHealthcareCostsHospitalForCase';
 import saveDraftValues from '@salesforce/apex/HCCCostController.saveDraftValues'; 
-import deleteHCCRecord from '@salesforce/apex/HCCCostController.deleteHCCRecord';
 
 const INTEGRATION_COLUMNS = [
     {
@@ -180,7 +179,7 @@ const MANUAL_COLUMNS = [
         label: 'Intervention Code (CCI)',
         fieldName: 'Intervention_Code_CCI__c',
         type: 'text',
-        editable: true,
+        editable: false,
         sortable: true,
     },
     {
@@ -351,11 +350,15 @@ export default class HospitalRecordsCase extends LightningElement {
         if (!this.isComponentLoaded) {
             /* Add Click event listener to listen to window click to reset the lookup selection 
             to text view if context is out of sync*/
+            window.addEventListener('click', (evt) => {
+                this.handleWindowOnclick(evt);
+            });
             this.isComponentLoaded = true;
         }
     }
 
     disconnectedCallback() {
+        clearInterval(this.event2);
         window.removeEventListener('click', () => { });
     }
     
@@ -379,6 +382,7 @@ export default class HospitalRecordsCase extends LightningElement {
             this.wiredRecords = result.hccList;
             this.recordsToDisplay = [];
             if(result.hccList != null && result.hccList){
+                console.log('MSP List :' + JSON.stringify(result.hccList));
                 this.records = JSON.parse(JSON.stringify(result.hccList));
                 this.records.forEach(record =>{
                     record.accountNameClass = 'slds-cell-edit';
@@ -399,6 +403,8 @@ export default class HospitalRecordsCase extends LightningElement {
                     this.recordsToDisplay.push(this.records[i]);
                 }
         
+                console.log("Records to display : " + JSON.stringify(this.recordsToDisplay));
+                console.log('Total Count : ' + result.totalCount);
                 this.error = undefined;
             }
             else{
@@ -409,6 +415,7 @@ export default class HospitalRecordsCase extends LightningElement {
             this.showSpinner = false;
         })
         .catch(error =>{
+            console.log(error);
             this.records = []
             this.totalRecords = 0;
         });
@@ -449,11 +456,13 @@ export default class HospitalRecordsCase extends LightningElement {
 
     lastPage() {
         this.pageNumber = this.totalPages;
+        console.log('Page Number : ' + this.pageNumber); 
         this.onLoad();
     }
 
     handleFilterChange(event) {
         this.selectedFilter = event.target.value;
+        console.log('Selected Filter Value : ' + this.selectedFilter);
         
         if(this.selectedFilter == 'Manual Records')
         {
@@ -471,6 +480,7 @@ export default class HospitalRecordsCase extends LightningElement {
         
         this.pageNumber = 1;
         this.onLoad();  
+        console.log('Selected Filter Value : ' + this.selectedFilter);
                
     }
 
@@ -502,6 +512,7 @@ export default class HospitalRecordsCase extends LightningElement {
      handleItemRegister(event) {
         event.stopPropagation(); //stops the window click to propagate to allow to register of markup.
         const item = event.detail;
+        console.log('Handle Item Register');
         if (!this.privateChildren.hasOwnProperty(item.name))
             this.privateChildren[item.name] = {};
         this.privateChildren[item.name][item.guid] = item;
@@ -513,6 +524,8 @@ export default class HospitalRecordsCase extends LightningElement {
         event.stopPropagation();
         let dataRecieved = event.detail.data;
         let updatedItem;
+        console.log('before 368 ');
+        console.log('Line 368 handle value change' + JSON.stringify(dataRecieved));
         if(!dataRecieved.value){
             dataRecieved.value ='';
         }
@@ -524,6 +537,7 @@ export default class HospitalRecordsCase extends LightningElement {
                     
                 };
                 // Set the cell edit class to edited to mark it as value changed.
+                console.log('At 376');
                 this.setClassesOnData(
                     dataRecieved.context,
                     'accountNameClass',
@@ -543,12 +557,15 @@ export default class HospitalRecordsCase extends LightningElement {
                 break;
             default:
                 this.setClassesOnData(dataRecieved.context, '', '');
+                console.log('At 384' + JSON.stringify(this.draftValues));
                 break;
         }
         this.updateDraftValues(updatedItem);
        // this.updateDataValues(updatedItem);
     }
     handleCellChange(event){
+        console.log(JSON.stringify(event)+'---- '+JSON.stringify(this.draftValues));
+        console.log( this.draftValues.findIndex(e=>e.Id === event.detail.draftValues[0].Id));
         this.showSection = true;
         for(let i = 0 ; i < event.detail.draftValues.length;i++){
             let index = this.draftValues.findIndex(e=>e.Id === event.detail.draftValues[i].Id);
@@ -609,6 +626,7 @@ export default class HospitalRecordsCase extends LightningElement {
                     this.draftValues[index].Diagnostic_Treatment_Service2__c = event.detail.draftValues[i].Diagnostic_Treatment_Service2__c;
                 }
                 
+                console.log(JSON.stringify(this.draftValues[i]));
             }else{
                 var obj ={
                     Id : event.detail.draftValues[i].Id,
@@ -631,14 +649,19 @@ export default class HospitalRecordsCase extends LightningElement {
                     Total_Cost_Override__c: event.detail.draftValues[i].Total_Cost_Override__c,
                     Diagnostic_Treatment_Service2__c: event.detail.draftValues[i].Diagnostic_Treatment_Service2__c,
                 };
+                console.log('before in');
+              
+                console.log(JSON.stringify(obj));
                 this.draftValues.push(obj);
             }
+            console.log('aaaaaa '+JSON.stringify(this.draftValues));
         }
      
     }
 
     handleChange(event) {
         event.preventDefault();
+        console.log('Inside Handle Change ');
         this.Facility__c = event.target.value;
         this.showSpinner = true;
       
@@ -648,6 +671,7 @@ export default class HospitalRecordsCase extends LightningElement {
         event.preventDefault();
         this.showSection = false;
         this.records = JSON.parse(JSON.stringify(this.lastSavedData));
+        console.log('Inside handle cancel');
         this.handleWindowOnclick('reset');
         this.draftValues = [];
         return this.refresh();
@@ -658,7 +682,9 @@ export default class HospitalRecordsCase extends LightningElement {
         event.preventDefault();
         this.showSection = true;
         let dataRecieved = event.detail.data;
+        console.log('Handle edit draft values : ' + JSON.stringify(this.draftValues));
         this.handleWindowOnclick(dataRecieved.context);
+        console.log('At 412  handle edit:' + JSON.stringify(event.detail.data));
         switch (dataRecieved.label) {
             case 'Account':
                 this.setClassesOnData(
@@ -675,6 +701,7 @@ export default class HospitalRecordsCase extends LightningElement {
 
     updateDataValues(updateItem) {
         let copyData = JSON.parse(JSON.stringify(this.records));
+        console.log('Updated data values log' );
         copyData.forEach((item) => {
             if (item.Id === updateItem.Id) {
                 for (let field in updateItem) {
@@ -688,8 +715,10 @@ export default class HospitalRecordsCase extends LightningElement {
     }
 
     updateDraftValues(updateItem) {
+        console.log('draft'+JSON.stringify(this.draftValues));
         let draftValueChanged = false;
         let copyDraftValues = JSON.parse(JSON.stringify(this.draftValues));
+        console.log('At 442 ' + JSON.stringify(updateItem));
         copyDraftValues.forEach((item) => {
             if (item.Id === updateItem.Id) {
                 for (let field in updateItem) {
@@ -704,9 +733,12 @@ export default class HospitalRecordsCase extends LightningElement {
         } else {
             this.draftValues = [...copyDraftValues, updateItem];
         }
+        console.log('Update Draft values' + JSON.stringify(this.draftValues));
+        //console.log('Update Draft values' + JSON.stringify(this.recordsToDisplay));
     }
 
     setClassesOnData(id, fieldName, fieldValue) {
+        console.log('Set classes on data');
         this.records = JSON.parse(JSON.stringify(this.records));
         this.records.forEach((detail) => {
             if (detail.Id === id) {
@@ -718,10 +750,15 @@ export default class HospitalRecordsCase extends LightningElement {
     async handleSelect()
     {
         var el = this.template.querySelector('c-custom-data-table');
+        console.log(el);
         var selected = el.getSelectedRows();
+        //console.log(selected);
+        console.log('selectedRows : ' + selected);
         let selectedCostRecords = [];
+        console.log('Selected Filter : ' + this.selectedFilter);
         selected.forEach(function(element){
         selectedCostRecords.push(element);
+           console.log(element);   
         });
         if(!selected || !selectedCostRecords){
             this.dispatchEvent(
@@ -735,6 +772,7 @@ export default class HospitalRecordsCase extends LightningElement {
         else{
             await deleteHCCRecord({deletionRecords: selectedCostRecords, filterOption: this.selectedFilter})
             .then((result) => {
+                console.log('Result : ' + result);
                if(result == 'Passed'){
                 this.dispatchEvent(
                     new ShowToastEvent({
@@ -786,6 +824,7 @@ export default class HospitalRecordsCase extends LightningElement {
         this.showSpinner = true;
         var el = this.template.querySelector('c-custom-data-table');
         var selected = el.getSelectedRows();
+        console.log(JSON.stringify(selected));
         
 
         if(selected.length <= 0){
@@ -803,6 +842,7 @@ export default class HospitalRecordsCase extends LightningElement {
         for(var i =0; i < selected.length;i++){ 
           
             let index = this.draftValues.findIndex(e=>e.Id === selected[i].Id);
+            console.log('At 831 '+JSON.stringify(this.draftValues[index]));
             if(index > -1 ){
                 if( selected[i].Cost_Include__c != this.draftValues[index].Cost_Include__c){
                     selected[i].Cost_Include__c = this.draftValues[index].Cost_Include__c;
@@ -841,8 +881,8 @@ export default class HospitalRecordsCase extends LightningElement {
                 if(selected[i].Number_of_Days__c != this.draftValues[index].Number_of_Days__c){
                     selected[i].Number_of_Days__c = this.draftValues[index].Number_of_Days__c;
                 }
-                if(selected[i].Service_Provided_by_Facility__c != this.draftValues[index].Service_Provided_by_Facility__c){
-                    selected[i].Service_Provided_by_Facility__c = this.draftValues[index].Service_Provided_by_Facility__c;
+                if(selected[i].Service_Provided_by_Facility__c != this.draftValues[index].Product2){
+                    selected[i].Service_Provided_by_Facility__c = this.draftValues[index].Product2;
                 }
                 if(selected[i].Service_Type2__c!= this.draftValues[index].Service_Type2__c){
                     selected[i].Service_Type2__c = this.draftValues[index].Service_Type2__c;

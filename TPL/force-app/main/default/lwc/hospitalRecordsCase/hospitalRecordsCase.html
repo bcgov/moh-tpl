@@ -31,6 +31,13 @@
             </lightning-layout-item>   
         </lightning-layout>
         <div class="slds-scrollable slds-m-around_medium" style="height:auto;width:auto">
+            <template if:true={showErrorMessage}>
+                <div class="validation">
+                    <p>
+                    <lightning-formatted-text value={updateMessage} linkify ></lightning-formatted-text>
+                    </p>
+                </div> <br>
+            </template>
             <c-custom-data-table class="slds-max-medium-table_stacked" onvaluechange={handleValueChange} oncellchange={handleCellChange}
             data={recordsToDisplay} columns={column} show-row-number-column="false" onedit={handleEdit}
             key-field="Id" draft-values={draftValues}  data-record="Id" min-column-width="150" 
