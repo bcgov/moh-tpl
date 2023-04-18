@@ -436,21 +436,25 @@ export default class HospitalRecordsCase extends LightningElement {
        this.onLoad();
     }
     previousPage() {
+        this.showSection = false;
         this.pageNumber = this.pageNumber - 1;
         this.onLoad();
    
     }
     nextPage() {
+        this.showSection = false;
         this.pageNumber = this.pageNumber + 1;
        this.onLoad();
     }
 
     firstPage() {
+        this.showSection = false;
         this.pageNumber = 1;
         this.onLoad();
     }
 
     lastPage() {
+        this.showSection = false;
         this.pageNumber = this.totalPages;
       
         this.onLoad();
