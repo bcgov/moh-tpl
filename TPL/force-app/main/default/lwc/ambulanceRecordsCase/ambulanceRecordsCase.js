@@ -272,6 +272,13 @@ export default class AmbulanceRecordsCase extends LightningElement {
         .catch(error =>{
             this.records = []
             this.totalRecords = 0;
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Error',
+                    message: 'Some issues occured while loading Ambulance Records. Please contact Administrator',
+                    variant: 'error'
+                })
+            );    
         });
     }
 
