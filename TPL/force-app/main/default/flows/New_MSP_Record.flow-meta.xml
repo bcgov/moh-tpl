@@ -5,7 +5,7 @@
         <name>Empty_Record_Check</name>
         <label>Empty Record Check</label>
         <locationX>176</locationX>
-        <locationY>398</locationY>
+        <locationY>518</locationY>
         <defaultConnector>
             <targetReference>New_MSP</targetReference>
         </defaultConnector>
@@ -209,7 +209,7 @@
         <name>New_MSP</name>
         <label>New MSP</label>
         <locationX>308</locationX>
-        <locationY>518</locationY>
+        <locationY>638</locationY>
         <connector>
             <isGoTo>true</isGoTo>
             <targetReference>Get_Case_Record</targetReference>
@@ -343,7 +343,7 @@
         <inputAssignments>
             <field>RecordTypeId</field>
             <value>
-                <stringValue>012Au000000Bi12IAC</stringValue>
+                <elementReference>MSP_recordTypeId</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -386,7 +386,7 @@
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>New_MSP_Record_Screen</targetReference>
+            <targetReference>Get_MSP_Record_Type</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -400,11 +400,41 @@
         <object>Case</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordLookups>
+        <name>Get_MSP_Record_Type</name>
+        <label>Get MSP Record Type</label>
+        <locationX>176</locationX>
+        <locationY>278</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>New_MSP_Record_Screen</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>SobjectType</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Healthcare_Cost__c</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>MSP</stringValue>
+            </value>
+        </filters>
+        <object>RecordType</object>
+        <outputAssignments>
+            <assignToReference>MSP_recordTypeId</assignToReference>
+            <field>Id</field>
+        </outputAssignments>
+    </recordLookups>
     <screens>
         <name>New_MSP_Record_Screen</name>
         <label>New MSP Record Screen</label>
         <locationX>176</locationX>
-        <locationY>278</locationY>
+        <locationY>398</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -955,6 +985,13 @@
         </connector>
     </start>
     <status>Active</status>
+    <variables>
+        <name>MSP_recordTypeId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
     <variables>
         <name>recordId</name>
         <dataType>String</dataType>

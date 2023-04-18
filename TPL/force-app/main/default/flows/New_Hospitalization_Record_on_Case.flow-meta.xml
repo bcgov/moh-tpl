@@ -5,7 +5,7 @@
         <name>Validation_Checks</name>
         <label>Validation Checks</label>
         <locationX>842</locationX>
-        <locationY>638</locationY>
+        <locationY>758</locationY>
         <defaultConnector>
             <targetReference>New_Hospitalization</targetReference>
         </defaultConnector>
@@ -109,7 +109,7 @@
         <name>Validation_Checks_DOA</name>
         <label>Validation Checks</label>
         <locationX>50</locationX>
-        <locationY>1118</locationY>
+        <locationY>1238</locationY>
         <defaultConnector>
             <targetReference>New_Hospitalization_from_DOA</targetReference>
         </defaultConnector>
@@ -171,7 +171,7 @@
         <name>Validation_Checks_F</name>
         <label>Validation Checks</label>
         <locationX>842</locationX>
-        <locationY>1118</locationY>
+        <locationY>1238</locationY>
         <defaultConnector>
             <targetReference>New_Hospitalization_from_Facility_Error_Screen</targetReference>
         </defaultConnector>
@@ -229,7 +229,8 @@
             <label>When specific is chosen</label>
         </rules>
     </decisions>
-    <description>This flow is used to create Manual HCC - Hospitalization Record</description>
+    <description>This flow is used to create Manual HCC - Hospitalization Record - 
+Modifying the solution - v1</description>
     <dynamicChoiceSets>
         <name>CCILevel</name>
         <dataType>Picklist</dataType>
@@ -269,7 +270,7 @@
         <name>New_Hospitalization</name>
         <label>New Hospitalization</label>
         <locationX>1634</locationX>
-        <locationY>758</locationY>
+        <locationY>878</locationY>
         <connector>
             <targetReference>Populate_Intervention_Code_and_CCI_Level</targetReference>
         </connector>
@@ -348,7 +349,7 @@
         <inputAssignments>
             <field>RecordTypeId</field>
             <value>
-                <stringValue>012Au000000Bi11IAC</stringValue>
+                <elementReference>Hospitalization_recordTypeId</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -370,7 +371,7 @@
         <name>New_Hospitalization_from_Both</name>
         <label>New Hospitalization from Both</label>
         <locationX>1370</locationX>
-        <locationY>878</locationY>
+        <locationY>998</locationY>
         <connector>
             <targetReference>Populate_Intervention_Code_and_CCI_Level_Both</targetReference>
         </connector>
@@ -449,7 +450,7 @@
         <inputAssignments>
             <field>RecordTypeId</field>
             <value>
-                <stringValue>012Au000000Bi11IAC</stringValue>
+                <elementReference>Hospitalization_recordTypeId</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -471,7 +472,7 @@
         <name>New_Hospitalization_from_DOA</name>
         <label>New Hospitalization from DOA</label>
         <locationX>314</locationX>
-        <locationY>1238</locationY>
+        <locationY>1358</locationY>
         <connector>
             <targetReference>Populate_Intervention_Code_and_CCI_Level_DOA</targetReference>
         </connector>
@@ -550,7 +551,7 @@
         <inputAssignments>
             <field>RecordTypeId</field>
             <value>
-                <stringValue>012Au000000Bi11IAC</stringValue>
+                <elementReference>Hospitalization_recordTypeId</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -572,7 +573,7 @@
         <name>New_Hospitalization_from_DOAF</name>
         <label>New Hospitalization from DOA</label>
         <locationX>50</locationX>
-        <locationY>1358</locationY>
+        <locationY>1478</locationY>
         <connector>
             <targetReference>Populate_Intervention_Code_and_CCI_Level_DOAF</targetReference>
         </connector>
@@ -651,7 +652,7 @@
         <inputAssignments>
             <field>RecordTypeId</field>
             <value>
-                <stringValue>012Au000000Bi11IAC</stringValue>
+                <elementReference>Hospitalization_recordTypeId</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -673,7 +674,7 @@
         <name>New_Hospitalization_from_Facility_Error_Screen</name>
         <label>New Hospitalization from Facility Error Screen</label>
         <locationX>1106</locationX>
-        <locationY>1238</locationY>
+        <locationY>1358</locationY>
         <connector>
             <targetReference>Populate_Intervention_Code_and_CCI_Level_F</targetReference>
         </connector>
@@ -752,7 +753,7 @@
         <inputAssignments>
             <field>RecordTypeId</field>
             <value>
-                <stringValue>012Au000000Bi11IAC</stringValue>
+                <elementReference>Hospitalization_recordTypeId</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -774,7 +775,7 @@
         <name>New_Hospitalization_from_FDOA_Error_Screen</name>
         <label>New Hospitalization from FDOA Error Screen</label>
         <locationX>578</locationX>
-        <locationY>1358</locationY>
+        <locationY>1478</locationY>
         <connector>
             <targetReference>Populate_Intervention_Code_and_CCI_Level_FDOA</targetReference>
         </connector>
@@ -853,7 +854,7 @@
         <inputAssignments>
             <field>RecordTypeId</field>
             <value>
-                <stringValue>012Au000000Bi11IAC</stringValue>
+                <elementReference>Hospitalization_recordTypeId</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -878,7 +879,7 @@
         <locationY>518</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Validation_Checks</targetReference>
+            <targetReference>New_Hospitalization_Record_Screen</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -896,7 +897,7 @@
         <name>Get_Account_Records_DOA</name>
         <label>Get Account Records DOA</label>
         <locationX>50</locationX>
-        <locationY>878</locationY>
+        <locationY>998</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Product_Records_DOA</targetReference>
@@ -913,7 +914,7 @@
             <field>RecordTypeId</field>
             <operator>EqualTo</operator>
             <value>
-                <stringValue>012Au000000Bi0vIAC</stringValue>
+                <stringValue>0126s000000CtUzAAK</stringValue>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
@@ -924,7 +925,7 @@
         <name>Get_Account_Records_F</name>
         <label>Get Account Records F</label>
         <locationX>842</locationX>
-        <locationY>878</locationY>
+        <locationY>998</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Product_Records_F</targetReference>
@@ -941,7 +942,7 @@
             <field>RecordTypeId</field>
             <operator>EqualTo</operator>
             <value>
-                <stringValue>012Au000000Bi0vIAC</stringValue>
+                <stringValue>0126s000000CtUzAAK</stringValue>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
@@ -955,7 +956,7 @@
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>New_Hospitalization_Record_Screen</targetReference>
+            <targetReference>Get_Hospitalization_Record_Type</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -968,6 +969,36 @@
         <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>Case</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Hospitalization_Record_Type</name>
+        <label>Get Hospitalization Record Type</label>
+        <locationX>842</locationX>
+        <locationY>278</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_Product_Records</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>SobjectType</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Healthcare_Cost__c</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Hospitalization</stringValue>
+            </value>
+        </filters>
+        <object>RecordType</object>
+        <outputAssignments>
+            <assignToReference>Hospitalization_recordTypeId</assignToReference>
+            <field>Id</field>
+        </outputAssignments>
     </recordLookups>
     <recordLookups>
         <name>Get_Product_Records</name>
@@ -994,7 +1025,7 @@
         <name>Get_Product_Records_DOA</name>
         <label>Get Product Records</label>
         <locationX>50</locationX>
-        <locationY>998</locationY>
+        <locationY>1118</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Validation_Checks_DOA</targetReference>
@@ -1015,7 +1046,7 @@
         <name>Get_Product_Records_F</name>
         <label>Get Product Records F</label>
         <locationX>842</locationX>
-        <locationY>998</locationY>
+        <locationY>1118</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Validation_Checks_F</targetReference>
@@ -1036,7 +1067,7 @@
         <name>New_Hospitalization_Record_Both_Error_Screen</name>
         <label>New Hospitalization Record Both Error Screen</label>
         <locationX>1370</locationX>
-        <locationY>758</locationY>
+        <locationY>878</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -1393,7 +1424,7 @@
         <name>New_Hospitalization_Record_DOA_ErrorScreen</name>
         <label>New Hospitalization Record DOA Error Screen</label>
         <locationX>50</locationX>
-        <locationY>758</locationY>
+        <locationY>878</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -1750,7 +1781,7 @@
         <name>New_Hospitalization_Record_DOAF_Error_Screen</name>
         <label>New Hospitalization Record DOAF Error Screen</label>
         <locationX>50</locationX>
-        <locationY>1238</locationY>
+        <locationY>1358</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -2102,7 +2133,7 @@
         <name>New_Hospitalization_Record_Facility_Error_Screen</name>
         <label>New Hospitalization Record Facility Error Screen</label>
         <locationX>842</locationX>
-        <locationY>758</locationY>
+        <locationY>878</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -2446,7 +2477,7 @@
         <name>New_Hospitalization_Record_FDOA_Error_Screen</name>
         <label>New Hospitalization Record FDOA Error Screen</label>
         <locationX>578</locationX>
-        <locationY>1238</locationY>
+        <locationY>1358</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -2803,12 +2834,12 @@
         <name>New_Hospitalization_Record_Screen</name>
         <label>New Hospitalization Record Screen</label>
         <locationX>842</locationX>
-        <locationY>278</locationY>
+        <locationY>638</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>Get_Product_Records</targetReference>
+            <targetReference>Validation_Checks</targetReference>
         </connector>
         <fields>
             <name>New_Hospitalization_Record_Screen_Section1</name>
@@ -2927,6 +2958,12 @@
                     <fieldText>Date of Admission</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>true</isRequired>
+                    <validationRule>
+                        <errorMessage>&lt;p&gt;Please check &quot;Date of Admission&quot; field.&lt;/p&gt;</errorMessage>
+                        <formulaExpression>({!Date_of_Admission} &gt; {!Date_of_Discharge}) OR 
+({!Date_of_Admission} &gt; {!Get_Account_Records.Deactivation_Date__c}) OR 
+({!Date_of_Admission} &gt; {!Get_Product_Records.Effective_Start_Date__c}</formulaExpression>
+                    </validationRule>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -3110,12 +3147,12 @@
             <targetReference>Get_Case_Record</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>InvalidDraft</status>
     <subflows>
         <name>Populate_Intervention_Code_and_CCI_Level</name>
         <label>Populate Intervention Code and CCI Level</label>
         <locationX>1634</locationX>
-        <locationY>878</locationY>
+        <locationY>998</locationY>
         <connector>
             <isGoTo>true</isGoTo>
             <targetReference>Get_Case_Record</targetReference>
@@ -3139,7 +3176,7 @@
         <name>Populate_Intervention_Code_and_CCI_Level_Both</name>
         <label>Populate Intervention Code and CCI Level Both</label>
         <locationX>1370</locationX>
-        <locationY>998</locationY>
+        <locationY>1118</locationY>
         <connector>
             <isGoTo>true</isGoTo>
             <targetReference>Get_Case_Record</targetReference>
@@ -3163,7 +3200,7 @@
         <name>Populate_Intervention_Code_and_CCI_Level_DOA</name>
         <label>Populate Intervention Code and CCI Level DOA</label>
         <locationX>314</locationX>
-        <locationY>1358</locationY>
+        <locationY>1478</locationY>
         <connector>
             <isGoTo>true</isGoTo>
             <targetReference>Get_Case_Record</targetReference>
@@ -3187,7 +3224,7 @@
         <name>Populate_Intervention_Code_and_CCI_Level_DOAF</name>
         <label>Populate Intervention Code and CCI Level DOAF</label>
         <locationX>50</locationX>
-        <locationY>1478</locationY>
+        <locationY>1598</locationY>
         <connector>
             <isGoTo>true</isGoTo>
             <targetReference>Get_Case_Record</targetReference>
@@ -3211,7 +3248,7 @@
         <name>Populate_Intervention_Code_and_CCI_Level_F</name>
         <label>Populate Intervention Code and CCI Level F</label>
         <locationX>1106</locationX>
-        <locationY>1358</locationY>
+        <locationY>1478</locationY>
         <connector>
             <isGoTo>true</isGoTo>
             <targetReference>Get_Case_Record</targetReference>
@@ -3235,7 +3272,7 @@
         <name>Populate_Intervention_Code_and_CCI_Level_FDOA</name>
         <label>Populate Intervention Code and CCI Level FDOA</label>
         <locationX>578</locationX>
-        <locationY>1478</locationY>
+        <locationY>1598</locationY>
         <connector>
             <isGoTo>true</isGoTo>
             <targetReference>Get_Case_Record</targetReference>
@@ -3257,6 +3294,13 @@
     </subflows>
     <variables>
         <name>AccountrecordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>Hospitalization_recordTypeId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>

@@ -5,7 +5,7 @@
         <name>Empty_Record_Check</name>
         <label>Empty Record Check</label>
         <locationX>176</locationX>
-        <locationY>398</locationY>
+        <locationY>518</locationY>
         <defaultConnector>
             <targetReference>New_Future_Care</targetReference>
         </defaultConnector>
@@ -61,7 +61,7 @@
         <name>New_Future_Care</name>
         <label>New Future Care</label>
         <locationX>308</locationX>
-        <locationY>518</locationY>
+        <locationY>638</locationY>
         <connector>
             <isGoTo>true</isGoTo>
             <targetReference>Get_Case_Record</targetReference>
@@ -93,7 +93,7 @@
         <inputAssignments>
             <field>RecordTypeId</field>
             <value>
-                <stringValue>012Au000000Bi10IAC</stringValue>
+                <elementReference>FutureCare_recordTypeId</elementReference>
             </value>
         </inputAssignments>
         <object>Healthcare_Cost__c</object>
@@ -106,7 +106,7 @@
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>New_Future_Care_Record_Screen</targetReference>
+            <targetReference>Get_Future_Care_Record_Type</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -120,11 +120,41 @@
         <object>Case</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordLookups>
+        <name>Get_Future_Care_Record_Type</name>
+        <label>Get Future Care Record Type</label>
+        <locationX>176</locationX>
+        <locationY>278</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>New_Future_Care_Record_Screen</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>SobjectType</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Healthcare_Cost__c</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Future_Care</stringValue>
+            </value>
+        </filters>
+        <object>RecordType</object>
+        <outputAssignments>
+            <assignToReference>FutureCare_recordTypeId</assignToReference>
+            <field>Id</field>
+        </outputAssignments>
+    </recordLookups>
     <screens>
         <name>New_Future_Care_Record_Screen</name>
         <label>New Future Care Record Screen</label>
         <locationX>176</locationX>
-        <locationY>278</locationY>
+        <locationY>398</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -213,6 +243,13 @@
         </connector>
     </start>
     <status>Active</status>
+    <variables>
+        <name>FutureCare_recordTypeId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
     <variables>
         <name>recordId</name>
         <dataType>String</dataType>
