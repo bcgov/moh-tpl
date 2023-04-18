@@ -1,5 +1,4 @@
-import { LightningElement, wire, api } from 'lwc';
-import { updateRecord } from 'lightning/uiRecordApi';
+import { LightningElement, api } from 'lwc';
 import { refreshApex } from '@salesforce/apex';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import getHealthcareCostsCCForCase from '@salesforce/apex/HCCostCaseController.getHealthcareCostsCCForCase';
