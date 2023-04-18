@@ -3,7 +3,7 @@ import { refreshApex } from '@salesforce/apex';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import getHealthcareCostsHospitalForCase from '@salesforce/apex/HCCostCaseController.getHealthcareCostsHospitalForCase';
 import saveDraftValues from '@salesforce/apex/HCCCostController.saveDraftValues'; 
-
+import deleteHCCRecord from '@salesforce/apex/HCCCostController.deleteHCCRecord';
 const INTEGRATION_COLUMNS = [
     {
         label: 'Cost Include',
