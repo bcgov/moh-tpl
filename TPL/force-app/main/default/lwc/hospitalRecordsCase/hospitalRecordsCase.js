@@ -351,6 +351,9 @@ export default class HospitalRecordsCase extends LightningElement {
         if (!this.isComponentLoaded) {
             /* Add Click event listener to listen to window click to reset the lookup selection 
             to text view if context is out of sync*/
+            window.addEventListener('click', (evt) => {
+                this.handleWindowOnclick(evt);
+            });
             this.isComponentLoaded = true;
         }
     }
