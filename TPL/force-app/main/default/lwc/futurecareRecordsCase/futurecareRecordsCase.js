@@ -332,7 +332,13 @@ export default class FuturecareRecordsCase extends LightningElement {
                 return this.refresh();    
             })
             .catch(error => {
-              
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Error',
+                        message: 'Some issues occured while loading Future Care Records. Please contact Administrator',
+                        variant: 'error'
+                    })
+                );    
             });
         }
     }

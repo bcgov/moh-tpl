@@ -245,7 +245,14 @@ export default class PharmacareRecordsAccount extends LightningElement {
         })
         .catch(error =>{
             this.totalRecords = 0;
-            this.records = []
+            this.records = [];
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Error',
+                    message: 'Some issues occured while loading Pharmacare Records. Please contact Administrator',
+                    variant: 'error'
+                })
+            );    
         })
     }
 

@@ -211,6 +211,13 @@ export default class PharmacareRecordsCase extends LightningElement {
         .catch(error =>{
             this.records = []
             this.totalRecords = 0;
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Error',
+                    message: 'Some issues occured while loading Pharmacare Records. Please contact Administrator',
+                    variant: 'error'
+                })
+            );    
         })
      }
      get bDisableFirst() {
@@ -508,6 +515,13 @@ export default class PharmacareRecordsCase extends LightningElement {
                 return this.refresh();    
             })
             .catch(error => {
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Error',
+                        message: 'Some issues occured while saving Pharmacare Records. Please contact Administrator',
+                        variant: 'error'
+                    })
+                );    
             });
         }
         

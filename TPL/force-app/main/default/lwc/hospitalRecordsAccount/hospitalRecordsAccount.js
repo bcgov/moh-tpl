@@ -231,6 +231,13 @@ export default class HospitalRecordsAccount extends LightningElement {
         .catch(error =>{
             this.totalRecords = 0;
             this.records = []
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Error',
+                    message: 'Some issues occured while loading Hospitalization Records. Please contact Administrator',
+                    variant: 'error'
+                })
+            );    
         })
     }
 

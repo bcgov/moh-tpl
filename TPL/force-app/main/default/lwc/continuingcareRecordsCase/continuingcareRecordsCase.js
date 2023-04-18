@@ -114,6 +114,15 @@ export default class ContinuingcareRecordsCase extends LightningElement {
          })
          .catch(error =>{
              this.records = [];
+             this.totalRecords = 0;
+             this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Error',
+                    message: 'Some issues occured while loading Continuing Care Records. Please contact Administrator',
+                    variant: 'error'
+                })
+            );    
+
          })
     }
  
@@ -333,7 +342,14 @@ export default class ContinuingcareRecordsCase extends LightningElement {
                 return this.refresh();    
             })
             .catch(error => {
-               
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Error',
+                        message: 'Some issues occured while saving Continuing Care Records. Please contact Administrator',
+                        variant: 'error'
+                    })
+                );    
+    
             });
         }
                
