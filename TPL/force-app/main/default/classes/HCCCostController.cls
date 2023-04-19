@@ -123,12 +123,10 @@ public with sharing class HCCCostController {
                                         
                 } 
                 catch(DmlException dml){
-                    System.debug(dml.getMessage());
                     giveStatus = dml.getMessage();
                 }
                 catch(NullPointerException np){
-                    System.debug(np.getMessage());
-                    giveStatus = Label.TPL_Failed;
+                    giveStatus = np.getMessage();
                 } 
             }
             else{
