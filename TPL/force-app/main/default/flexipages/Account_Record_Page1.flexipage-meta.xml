@@ -11,10 +11,6 @@
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
-        <name>Facet-724c12ea-4b02-4382-add3-307d1f35dff6</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
         <itemInstances>
             <componentInstance>
                 <componentName>ambulanceRecordsAccount</componentName>
@@ -25,20 +21,6 @@
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>body</name>
-                    <value>Facet-724c12ea-4b02-4382-add3-307d1f35dff6</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>title</name>
-                    <value>Refresh Ambulance</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:tab</componentName>
-                <identifier>flexipage_tab6</identifier>
-            </componentInstance>
-        </itemInstances>
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
@@ -98,6 +80,26 @@
             </componentInstance>
         </itemInstances>
         <name>Facet-15e1d2a7-f455-4754-b816-da263c5f802a</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentName>continuingcareRecordsAccount</componentName>
+                <identifier>c_continuingcareRecordsAccount</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-81e412bb-7c97-4c9d-ab77-feb0b5d90d3b</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentName>futurecareRecordsAccount</componentName>
+                <identifier>c_futurecareRecordsAccount</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-dfi4gybseoa</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -173,6 +175,34 @@
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
                 <identifier>flexipage_tab3</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-81e412bb-7c97-4c9d-ab77-feb0b5d90d3b</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>Continuing Care</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tab</componentName>
+                <identifier>flexipage_tab5</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-dfi4gybseoa</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>Future Care</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tab</componentName>
+                <identifier>flexipage_tab6</identifier>
             </componentInstance>
         </itemInstances>
         <name>tabs</name>
