@@ -229,8 +229,7 @@
             <label>When specific is chosen</label>
         </rules>
     </decisions>
-    <description>This flow is used to create Manual HCC - Hospitalization Record - 
-Modifying the solution - v1</description>
+    <description>This flow is used to create Manual HCC - Hospitalization Record -</description>
     <dynamicChoiceSets>
         <name>CCILevel</name>
         <dataType>Picklist</dataType>
@@ -2958,12 +2957,6 @@ Modifying the solution - v1</description>
                     <fieldText>Date of Admission</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>true</isRequired>
-                    <validationRule>
-                        <errorMessage>&lt;p&gt;Please check &quot;Date of Admission&quot; field.&lt;/p&gt;</errorMessage>
-                        <formulaExpression>({!Date_of_Admission} &gt; {!Date_of_Discharge}) OR 
-({!Date_of_Admission} &gt; {!Get_Account_Records.Deactivation_Date__c}) OR 
-({!Date_of_Admission} &gt; {!Get_Product_Records.Effective_Start_Date__c}</formulaExpression>
-                    </validationRule>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -3147,7 +3140,7 @@ Modifying the solution - v1</description>
             <targetReference>Get_Case_Record</targetReference>
         </connector>
     </start>
-    <status>InvalidDraft</status>
+    <status>Active</status>
     <subflows>
         <name>Populate_Intervention_Code_and_CCI_Level</name>
         <label>Populate Intervention Code and CCI Level</label>
