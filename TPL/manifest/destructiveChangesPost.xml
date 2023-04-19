@@ -23,7 +23,18 @@
         <name>CustomField</name>
     </types> -->
     <types>
-     <members>HCCCostAmbulanceAccountHelper</members>
+     <members>HCCCostAmbulanceRecord</members>
+     <members>HCCCostAmbulanceRecordTest</members>
+     <members>HCCCostCCRecord</members>
+     <members>HCCCostCCRecordTest</members>
+     <members>HCCCostFCRecord</members>
+     <members>HCCCostFCRecordTest</members>
+     <members>HCCCostHospitalizationRecord</members>
+     <members>HCCCostHospitalizationRecordTest</members>
+     <members>HCCCostMSPRecord</members>
+     <members>HCCCostMSPRecordTest</members>
+     <members>HCCCostPharmacareRecord</members>
+     <members>HCCCostPharmacareRecordTest</members>
         <name>ApexClass</name>
     </types>
 </Package>
