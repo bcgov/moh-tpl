@@ -1312,7 +1312,7 @@ Updated flow with field validations - v6 (Final Version)</description>
         <allowPause>false</allowPause>
         <fields>
             <name>Fault_Message</name>
-            <fieldText>&lt;p&gt;Something is wrong. Please check the exception and reach out to Administrator.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(255, 0, 0);&quot;&gt;{!$Flow.FaultMessage}&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Something is wrong. Please check the exception and reach out to System Administrator.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(255, 0, 0);&quot;&gt;{!$Flow.FaultMessage}&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
