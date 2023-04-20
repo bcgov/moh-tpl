@@ -4,7 +4,7 @@
     <decisions>
         <name>Validation_Checks</name>
         <label>Validation Checks</label>
-        <locationX>842</locationX>
+        <locationX>1744</locationX>
         <locationY>758</locationY>
         <defaultConnector>
             <targetReference>New_Hospitalization</targetReference>
@@ -12,16 +12,44 @@
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Date_of_Admission_after_Deactivation_Date</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>(1 AND 2) OR 3 OR (4 AND 6) OR (5 AND 6)</conditionLogic>
             <conditions>
                 <leftValueReference>Date_of_Admission</leftValueReference>
-                <operator>GreaterThan</operator>
+                <operator>GreaterThanOrEqualTo</operator>
                 <rightValue>
                     <elementReference>Get_Account_Records.Deactivation_Date__c</elementReference>
                 </rightValue>
             </conditions>
             <conditions>
                 <leftValueReference>Get_Account_Records.Deactivation_Date__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Date_of_Admission</leftValueReference>
+                <operator>GreaterThanOrEqualTo</operator>
+                <rightValue>
+                    <elementReference>Date_of_Discharge</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Date_of_Admission</leftValueReference>
+                <operator>LessThan</operator>
+                <rightValue>
+                    <elementReference>Get_Product_Records.Effective_Start_Date__c</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Date_of_Discharge</leftValueReference>
+                <operator>GreaterThan</operator>
+                <rightValue>
+                    <elementReference>Get_Product_Records.Effective_End_Date__c</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>StoreServiceProvidedbyFacility</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -63,16 +91,44 @@
         </rules>
         <rules>
             <name>When_both_are_wrong</name>
-            <conditionLogic>(1 AND 2) AND (3 AND 4 AND 5)</conditionLogic>
+            <conditionLogic>((1 AND 2) OR 3 OR (4 AND 6) OR (5 AND 6)) AND (7 AND 8 AND 9)</conditionLogic>
             <conditions>
                 <leftValueReference>Date_of_Admission</leftValueReference>
-                <operator>GreaterThan</operator>
+                <operator>GreaterThanOrEqualTo</operator>
                 <rightValue>
                     <elementReference>Get_Account_Records.Deactivation_Date__c</elementReference>
                 </rightValue>
             </conditions>
             <conditions>
                 <leftValueReference>Get_Account_Records.Deactivation_Date__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Date_of_Admission</leftValueReference>
+                <operator>GreaterThanOrEqualTo</operator>
+                <rightValue>
+                    <elementReference>Date_of_Discharge</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Date_of_Admission</leftValueReference>
+                <operator>LessThan</operator>
+                <rightValue>
+                    <elementReference>Get_Product_Records.Effective_Start_Date__c</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Date_of_Discharge</leftValueReference>
+                <operator>GreaterThan</operator>
+                <rightValue>
+                    <elementReference>Get_Product_Records.Effective_End_Date__c</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>StoreServiceProvidedbyFacility</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -104,11 +160,103 @@
             </connector>
             <label>When both are wrong</label>
         </rules>
+        <rules>
+            <name>Empty_Record_Check</name>
+            <conditionLogic>1 AND 2 AND 3 AND 4 AND 5 AND 6 AND 7 AND 8 AND 9 AND 10 AND (11 OR 12)</conditionLogic>
+            <conditions>
+                <leftValueReference>Cost_Include</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Cost_Review</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Date_of_Service</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Location_of_Incident</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Description_of_Incident</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Date_of_Discharge</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>StoreFacility</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>StoreServiceProvidedbyFacility</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Total_Cost_Override</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Diagnostic_Treatment_Service</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Date_of_Admission</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Date_of_Admission</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>New_Hospitalization_Record_Both_Error_Screen</targetReference>
+            </connector>
+            <label>Empty Record Check</label>
+        </rules>
     </decisions>
     <decisions>
         <name>Validation_Checks_DOA</name>
         <label>Validation Checks</label>
-        <locationX>50</locationX>
+        <locationX>182</locationX>
         <locationY>1238</locationY>
         <defaultConnector>
             <targetReference>New_Hospitalization_from_DOA</targetReference>
@@ -116,9 +264,9 @@
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Date_of_Admission_after_Deactivation_Date_DOA</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>(1 AND 2) OR 3 OR (4 AND 6) OR (5 AND 6)</conditionLogic>
             <conditions>
-                <leftValueReference>Date_of_Admission</leftValueReference>
+                <leftValueReference>Date_of_Admission_DOA</leftValueReference>
                 <operator>GreaterThan</operator>
                 <rightValue>
                     <elementReference>Get_Account_Records_DOA.Deactivation_Date__c</elementReference>
@@ -126,6 +274,34 @@
             </conditions>
             <conditions>
                 <leftValueReference>Get_Account_Records_DOA.Deactivation_Date__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Date_of_Admission_DOA</leftValueReference>
+                <operator>GreaterThanOrEqualTo</operator>
+                <rightValue>
+                    <elementReference>Date_of_Discharge_DOA</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Date_of_Admission_DOA</leftValueReference>
+                <operator>LessThan</operator>
+                <rightValue>
+                    <elementReference>Get_Product_Records_DOA.Effective_Start_Date__c</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Date_of_Discharge_DOA</leftValueReference>
+                <operator>GreaterThan</operator>
+                <rightValue>
+                    <elementReference>Get_Product_Records_DOA.Effective_End_Date__c</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>StoreServiceProvidedbyFacility_DOA</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -170,7 +346,7 @@
     <decisions>
         <name>Validation_Checks_F</name>
         <label>Validation Checks</label>
-        <locationX>842</locationX>
+        <locationX>1766</locationX>
         <locationY>1238</locationY>
         <defaultConnector>
             <targetReference>New_Hospitalization_from_Facility_Error_Screen</targetReference>
@@ -178,16 +354,44 @@
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Date_of_Admission_after_Deactivation_Date_F</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>(1 AND 2) OR 3 OR (4 AND 6) OR (5 AND 6)</conditionLogic>
             <conditions>
-                <leftValueReference>Date_of_Admission</leftValueReference>
-                <operator>GreaterThan</operator>
+                <leftValueReference>Date_of_Admission_F</leftValueReference>
+                <operator>GreaterThanOrEqualTo</operator>
                 <rightValue>
                     <elementReference>Get_Account_Records_F.Deactivation_Date__c</elementReference>
                 </rightValue>
             </conditions>
             <conditions>
                 <leftValueReference>Get_Account_Records_F.Deactivation_Date__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Date_of_Admission_F</leftValueReference>
+                <operator>GreaterThanOrEqualTo</operator>
+                <rightValue>
+                    <elementReference>Date_of_Discharge_F</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Date_of_Admission_F</leftValueReference>
+                <operator>LessThan</operator>
+                <rightValue>
+                    <elementReference>Get_Product_Records_F.Effective_Start_Date__c</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Date_of_Discharge_F</leftValueReference>
+                <operator>GreaterThan</operator>
+                <rightValue>
+                    <elementReference>Get_Product_Records_F.Effective_End_Date__c</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>StoreServiceProvidedbyFacility_F</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -229,7 +433,8 @@
             <label>When specific is chosen</label>
         </rules>
     </decisions>
-    <description>This flow is used to create Manual HCC - Hospitalization Record -</description>
+    <description>This flow is used to create Manual HCC - Hospitalization Record 
+Updated flow with field validations - v6 (Final Version)</description>
     <dynamicChoiceSets>
         <name>CCILevel</name>
         <dataType>Picklist</dataType>
@@ -268,11 +473,14 @@
     <recordCreates>
         <name>New_Hospitalization</name>
         <label>New Hospitalization</label>
-        <locationX>1634</locationX>
+        <locationX>3306</locationX>
         <locationY>878</locationY>
         <connector>
             <targetReference>Populate_Intervention_Code_and_CCI_Level</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Fault_Message_Screen</targetReference>
+        </faultConnector>
         <inputAssignments>
             <field>Account__c</field>
             <value>
@@ -369,11 +577,15 @@
     <recordCreates>
         <name>New_Hospitalization_from_Both</name>
         <label>New Hospitalization from Both</label>
-        <locationX>1370</locationX>
-        <locationY>998</locationY>
+        <locationX>1744</locationX>
+        <locationY>2090</locationY>
         <connector>
             <targetReference>Populate_Intervention_Code_and_CCI_Level_Both</targetReference>
         </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Message_Screen</targetReference>
+        </faultConnector>
         <inputAssignments>
             <field>Account__c</field>
             <value>
@@ -470,11 +682,15 @@
     <recordCreates>
         <name>New_Hospitalization_from_DOA</name>
         <label>New Hospitalization from DOA</label>
-        <locationX>314</locationX>
+        <locationX>578</locationX>
         <locationY>1358</locationY>
         <connector>
             <targetReference>Populate_Intervention_Code_and_CCI_Level_DOA</targetReference>
         </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Message_Screen</targetReference>
+        </faultConnector>
         <inputAssignments>
             <field>Account__c</field>
             <value>
@@ -576,6 +792,10 @@
         <connector>
             <targetReference>Populate_Intervention_Code_and_CCI_Level_DOAF</targetReference>
         </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Message_Screen</targetReference>
+        </faultConnector>
         <inputAssignments>
             <field>Account__c</field>
             <value>
@@ -672,11 +892,15 @@
     <recordCreates>
         <name>New_Hospitalization_from_Facility_Error_Screen</name>
         <label>New Hospitalization from Facility Error Screen</label>
-        <locationX>1106</locationX>
+        <locationX>2162</locationX>
         <locationY>1358</locationY>
         <connector>
             <targetReference>Populate_Intervention_Code_and_CCI_Level_F</targetReference>
         </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Message_Screen</targetReference>
+        </faultConnector>
         <inputAssignments>
             <field>Account__c</field>
             <value>
@@ -773,11 +997,15 @@
     <recordCreates>
         <name>New_Hospitalization_from_FDOA_Error_Screen</name>
         <label>New Hospitalization from FDOA Error Screen</label>
-        <locationX>578</locationX>
+        <locationX>1370</locationX>
         <locationY>1478</locationY>
         <connector>
             <targetReference>Populate_Intervention_Code_and_CCI_Level_FDOA</targetReference>
         </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Message_Screen</targetReference>
+        </faultConnector>
         <inputAssignments>
             <field>Account__c</field>
             <value>
@@ -811,7 +1039,7 @@
         <inputAssignments>
             <field>Date_of_Discharge__c</field>
             <value>
-                <elementReference>Discharge_FDOA</elementReference>
+                <elementReference>Date_of_Discharge_FDOA</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -874,11 +1102,11 @@
     <recordLookups>
         <name>Get_Account_Records</name>
         <label>Get Account Records</label>
-        <locationX>842</locationX>
-        <locationY>518</locationY>
+        <locationX>1744</locationX>
+        <locationY>638</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>New_Hospitalization_Record_Screen</targetReference>
+            <targetReference>Validation_Checks</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -895,12 +1123,16 @@
     <recordLookups>
         <name>Get_Account_Records_DOA</name>
         <label>Get Account Records DOA</label>
-        <locationX>50</locationX>
+        <locationX>182</locationX>
         <locationY>998</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Product_Records_DOA</targetReference>
         </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Message_Screen</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -923,12 +1155,16 @@
     <recordLookups>
         <name>Get_Account_Records_F</name>
         <label>Get Account Records F</label>
-        <locationX>842</locationX>
+        <locationX>1766</locationX>
         <locationY>998</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Product_Records_F</targetReference>
         </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Message_Screen</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -951,7 +1187,7 @@
     <recordLookups>
         <name>Get_Case_Record</name>
         <label>Get Case Record</label>
-        <locationX>842</locationX>
+        <locationX>1744</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -972,11 +1208,11 @@
     <recordLookups>
         <name>Get_Hospitalization_Record_Type</name>
         <label>Get Hospitalization Record Type</label>
-        <locationX>842</locationX>
+        <locationX>1744</locationX>
         <locationY>278</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Get_Product_Records</targetReference>
+            <targetReference>New_Hospitalization_Record_Screen</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -1002,12 +1238,16 @@
     <recordLookups>
         <name>Get_Product_Records</name>
         <label>Get Product Records</label>
-        <locationX>842</locationX>
-        <locationY>398</locationY>
+        <locationX>1744</locationX>
+        <locationY>518</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Account_Records</targetReference>
         </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Fault_Message_Screen</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -1022,8 +1262,8 @@
     </recordLookups>
     <recordLookups>
         <name>Get_Product_Records_DOA</name>
-        <label>Get Product Records</label>
-        <locationX>50</locationX>
+        <label>Get Product Records DOA</label>
+        <locationX>182</locationX>
         <locationY>1118</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1044,7 +1284,7 @@
     <recordLookups>
         <name>Get_Product_Records_F</name>
         <label>Get Product Records F</label>
-        <locationX>842</locationX>
+        <locationX>1766</locationX>
         <locationY>1118</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1063,10 +1303,26 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <screens>
+        <name>Fault_Message_Screen</name>
+        <label>Fault Message Screen</label>
+        <locationX>3570</locationX>
+        <locationY>998</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>Fault_Message</name>
+            <fieldText>&lt;p&gt;Something is wrong. Please check the exception and reach out to System Administrator.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(255, 0, 0);&quot;&gt;{!$Flow.FaultMessage}&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
         <name>New_Hospitalization_Record_Both_Error_Screen</name>
         <label>New Hospitalization Record Both Error Screen</label>
-        <locationX>1370</locationX>
-        <locationY>878</locationY>
+        <locationX>1744</locationX>
+        <locationY>1970</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -1214,9 +1470,34 @@
                     </validationRule>
                 </fields>
                 <fields>
-                    <name>Copy_2_of_DOA_ErrorMessage</name>
-                    <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(255, 0, 0);&quot;&gt;Date of Admission must be before the Deactivation Date.&lt;/span&gt;&lt;/p&gt;</fieldText>
+                    <name>B_DOA_ErrorMessage1</name>
+                    <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(255, 0, 0); background-color: rgb(255, 255, 255);&quot;&gt;Date of Admission must be before the Facility Deactivation Date.&lt;/span&gt;&lt;/p&gt;</fieldText>
                     <fieldType>DisplayText</fieldType>
+                    <visibilityRule>
+                        <conditionLogic>or</conditionLogic>
+                        <conditions>
+                            <leftValueReference>Date_of_Admission_B</leftValueReference>
+                            <operator>GreaterThanOrEqualTo</operator>
+                            <rightValue>
+                                <elementReference>Get_Account_Records.Deactivation_Date__c</elementReference>
+                            </rightValue>
+                        </conditions>
+                    </visibilityRule>
+                </fields>
+                <fields>
+                    <name>B_DOA_ErrorMessage2</name>
+                    <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(255, 0, 0);&quot;&gt;Date of Admission must be greater than selected Product Effective Start Date&lt;/span&gt;&lt;/p&gt;</fieldText>
+                    <fieldType>DisplayText</fieldType>
+                    <visibilityRule>
+                        <conditionLogic>and</conditionLogic>
+                        <conditions>
+                            <leftValueReference>Date_of_Admission_B</leftValueReference>
+                            <operator>LessThan</operator>
+                            <rightValue>
+                                <elementReference>Get_Product_Records.Effective_Start_Date__c</elementReference>
+                            </rightValue>
+                        </conditions>
+                    </visibilityRule>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -1238,10 +1519,36 @@
                     <fieldText>Date of Discharge</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
-                    <validationRule>
-                        <errorMessage>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 11.36px; font-family: Arial, Helvetica, sans-serif; color: rgb(255, 0, 0);&quot;&gt;Date of discharge should always be greater than Date of Admission&lt;/span&gt;&lt;/p&gt;</errorMessage>
-                        <formulaExpression>{!Date_of_Discharge_DOA} &gt;= {!Date_of_Admission_DOA}</formulaExpression>
-                    </validationRule>
+                </fields>
+                <fields>
+                    <name>B_DOA_ErrorMessage3</name>
+                    <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(255, 0, 0);&quot;&gt;Date of Discharge should always be after Date of Admission.&lt;/span&gt;&lt;/p&gt;</fieldText>
+                    <fieldType>DisplayText</fieldType>
+                    <visibilityRule>
+                        <conditionLogic>and</conditionLogic>
+                        <conditions>
+                            <leftValueReference>Date_of_Discharge_B</leftValueReference>
+                            <operator>LessThanOrEqualTo</operator>
+                            <rightValue>
+                                <elementReference>Date_of_Admission_B</elementReference>
+                            </rightValue>
+                        </conditions>
+                    </visibilityRule>
+                </fields>
+                <fields>
+                    <name>B_DOA_ErrorMessage4</name>
+                    <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(255, 0, 0);&quot;&gt;Date of Discharge should always be before or equal to the selected Product&apos;s Effective End Date.&lt;/span&gt;&lt;/p&gt;</fieldText>
+                    <fieldType>DisplayText</fieldType>
+                    <visibilityRule>
+                        <conditionLogic>and</conditionLogic>
+                        <conditions>
+                            <leftValueReference>Date_of_Discharge_B</leftValueReference>
+                            <operator>GreaterThan</operator>
+                            <rightValue>
+                                <elementReference>Get_Product_Records.Effective_End_Date__c</elementReference>
+                            </rightValue>
+                        </conditions>
+                    </visibilityRule>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -1290,9 +1597,33 @@
                     </outputParameters>
                 </fields>
                 <fields>
-                    <name>Copy_2_of_Facility1_ErrorMessage</name>
-                    <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(255, 0, 0); background-color: rgb(255, 255, 255);&quot;&gt;Please select valid Facility. Date of Admission must be before the Deactivation Date &amp;amp; Facility on Product must be equal to the Facility on Account.&lt;/span&gt;&lt;/p&gt;</fieldText>
+                    <name>B_Facility1_ErrorMessage</name>
+                    <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(255, 0, 0);&quot;&gt;Facility on Product must be equal to the Facility on Account.&lt;/span&gt;&lt;/p&gt;</fieldText>
                     <fieldType>DisplayText</fieldType>
+                    <visibilityRule>
+                        <conditionLogic>and</conditionLogic>
+                        <conditions>
+                            <leftValueReference>Get_Product_Records.Account__r.Id</leftValueReference>
+                            <operator>NotEqualTo</operator>
+                            <rightValue>
+                                <elementReference>StoreFacility_B</elementReference>
+                            </rightValue>
+                        </conditions>
+                        <conditions>
+                            <leftValueReference>StoreFacility_B</leftValueReference>
+                            <operator>IsNull</operator>
+                            <rightValue>
+                                <booleanValue>false</booleanValue>
+                            </rightValue>
+                        </conditions>
+                        <conditions>
+                            <leftValueReference>Get_Product_Records.Family</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <stringValue>Specific</stringValue>
+                            </rightValue>
+                        </conditions>
+                    </visibilityRule>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -1422,7 +1753,7 @@
     <screens>
         <name>New_Hospitalization_Record_DOA_ErrorScreen</name>
         <label>New Hospitalization Record DOA Error Screen</label>
-        <locationX>50</locationX>
+        <locationX>182</locationX>
         <locationY>878</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -1565,15 +1896,36 @@
                     <fieldText>Date of Admission</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>true</isRequired>
-                    <validationRule>
-                        <errorMessage>&lt;p&gt;Date of Admission must be before the Deactivation Date.&lt;/p&gt;</errorMessage>
-                        <formulaExpression>{!Date_of_Admission} &gt; {!RetrieveDeactivationDate}</formulaExpression>
-                    </validationRule>
                 </fields>
                 <fields>
-                    <name>DOA_ErrorMessage</name>
-                    <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(255, 0, 0);&quot;&gt;Date of Admission must be before the Deactivation Date.&lt;/span&gt;&lt;/p&gt;</fieldText>
+                    <name>DOA_ErrorMessage1</name>
+                    <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(255, 0, 0);&quot;&gt;Date of Admission must be before the Facility Deactivation Date.&lt;/span&gt;&lt;/p&gt;</fieldText>
                     <fieldType>DisplayText</fieldType>
+                    <visibilityRule>
+                        <conditionLogic>or</conditionLogic>
+                        <conditions>
+                            <leftValueReference>Date_of_Admission_DOA</leftValueReference>
+                            <operator>GreaterThanOrEqualTo</operator>
+                            <rightValue>
+                                <elementReference>Get_Account_Records.Deactivation_Date__c</elementReference>
+                            </rightValue>
+                        </conditions>
+                    </visibilityRule>
+                </fields>
+                <fields>
+                    <name>DOA_ErrorMessage2</name>
+                    <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(255, 0, 0); background-color: rgb(255, 255, 255);&quot;&gt;Date of Admission must be after selected Product Effective Start Date&lt;/span&gt;&lt;/p&gt;</fieldText>
+                    <fieldType>DisplayText</fieldType>
+                    <visibilityRule>
+                        <conditionLogic>or</conditionLogic>
+                        <conditions>
+                            <leftValueReference>Date_of_Admission_DOA</leftValueReference>
+                            <operator>LessThan</operator>
+                            <rightValue>
+                                <elementReference>Get_Product_Records.Effective_Start_Date__c</elementReference>
+                            </rightValue>
+                        </conditions>
+                    </visibilityRule>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -1595,10 +1947,36 @@
                     <fieldText>Date of Discharge</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
-                    <validationRule>
-                        <errorMessage>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 11.36px; font-family: Arial, Helvetica, sans-serif; color: rgb(255, 0, 0);&quot;&gt;Date of discharge should always be greater than Date of Admission&lt;/span&gt;&lt;/p&gt;</errorMessage>
-                        <formulaExpression>{!Date_of_Discharge_DOA} &gt;= {!Date_of_Admission_DOA}</formulaExpression>
-                    </validationRule>
+                </fields>
+                <fields>
+                    <name>DOA_ErrorMessage3</name>
+                    <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(255, 0, 0);&quot;&gt;Date of Discharge should always be after Date of Admission.&lt;/span&gt;&lt;/p&gt;</fieldText>
+                    <fieldType>DisplayText</fieldType>
+                    <visibilityRule>
+                        <conditionLogic>and</conditionLogic>
+                        <conditions>
+                            <leftValueReference>Date_of_Discharge_DOA</leftValueReference>
+                            <operator>LessThanOrEqualTo</operator>
+                            <rightValue>
+                                <elementReference>Date_of_Admission_DOA</elementReference>
+                            </rightValue>
+                        </conditions>
+                    </visibilityRule>
+                </fields>
+                <fields>
+                    <name>DOA_ErrorMessage4</name>
+                    <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(255, 0, 0);&quot;&gt;Date of Discharge should always be before or equal to the selected Product&apos;s Effective End Date.&lt;/span&gt;&lt;/p&gt;</fieldText>
+                    <fieldType>DisplayText</fieldType>
+                    <visibilityRule>
+                        <conditionLogic>or</conditionLogic>
+                        <conditions>
+                            <leftValueReference>Date_of_Discharge_DOA</leftValueReference>
+                            <operator>GreaterThan</operator>
+                            <rightValue>
+                                <elementReference>Get_Product_Records.Effective_End_Date__c</elementReference>
+                            </rightValue>
+                        </conditions>
+                    </visibilityRule>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -1645,11 +2023,6 @@
                         <assignToReference>StoreFacility_DOA</assignToReference>
                         <name>recordId</name>
                     </outputParameters>
-                </fields>
-                <fields>
-                    <name>Facility1_ErrorMessage</name>
-                    <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(255, 0, 0);&quot;&gt;Please select valid Facility. Date of Admission must be before the Deactivation Date.&lt;/span&gt;&lt;/p&gt;</fieldText>
-                    <fieldType>DisplayText</fieldType>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -1947,10 +2320,6 @@
                     <fieldText>Date of Discharge</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
-                    <validationRule>
-                        <errorMessage>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 11.36px; font-family: Arial, Helvetica, sans-serif; color: rgb(255, 0, 0);&quot;&gt;Date of discharge should always be greater than Date of Admission&lt;/span&gt;&lt;/p&gt;</errorMessage>
-                        <formulaExpression>{!Date_of_Discharge_DOA} &gt;= {!Date_of_Admission_DOA}</formulaExpression>
-                    </validationRule>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -2002,6 +2371,30 @@
                     <name>Facility_ErrorMessage_DOAF</name>
                     <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(255, 0, 0); background-color: rgb(255, 255, 255);&quot;&gt;Facility on Product must be equal to the Facility on Account.&lt;/span&gt;&lt;/p&gt;</fieldText>
                     <fieldType>DisplayText</fieldType>
+                    <visibilityRule>
+                        <conditionLogic>and</conditionLogic>
+                        <conditions>
+                            <leftValueReference>Get_Product_Records_DOA.Account__r.Id</leftValueReference>
+                            <operator>NotEqualTo</operator>
+                            <rightValue>
+                                <elementReference>StoreServiceProvidedbyFacility_DOAF</elementReference>
+                            </rightValue>
+                        </conditions>
+                        <conditions>
+                            <leftValueReference>StoreServiceProvidedbyFacility_DOAF</leftValueReference>
+                            <operator>IsNull</operator>
+                            <rightValue>
+                                <booleanValue>false</booleanValue>
+                            </rightValue>
+                        </conditions>
+                        <conditions>
+                            <leftValueReference>Get_Product_Records_DOA.Family</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <stringValue>Specific</stringValue>
+                            </rightValue>
+                        </conditions>
+                    </visibilityRule>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -2131,7 +2524,7 @@
     <screens>
         <name>New_Hospitalization_Record_Facility_Error_Screen</name>
         <label>New Hospitalization Record Facility Error Screen</label>
-        <locationX>842</locationX>
+        <locationX>1766</locationX>
         <locationY>878</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -2346,6 +2739,30 @@
                     <name>Facility_ErrorMessage</name>
                     <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(255, 0, 0);&quot;&gt;Facility on Product must be equal to the Facility on Account.&lt;/span&gt;&lt;/p&gt;</fieldText>
                     <fieldType>DisplayText</fieldType>
+                    <visibilityRule>
+                        <conditionLogic>and</conditionLogic>
+                        <conditions>
+                            <leftValueReference>Get_Product_Records.Account__r.Id</leftValueReference>
+                            <operator>NotEqualTo</operator>
+                            <rightValue>
+                                <elementReference>StoreFacility_F</elementReference>
+                            </rightValue>
+                        </conditions>
+                        <conditions>
+                            <leftValueReference>StoreFacility_F</leftValueReference>
+                            <operator>IsNull</operator>
+                            <rightValue>
+                                <booleanValue>false</booleanValue>
+                            </rightValue>
+                        </conditions>
+                        <conditions>
+                            <leftValueReference>Get_Product_Records.Family</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <stringValue>Specific</stringValue>
+                            </rightValue>
+                        </conditions>
+                    </visibilityRule>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -2475,7 +2892,7 @@
     <screens>
         <name>New_Hospitalization_Record_FDOA_Error_Screen</name>
         <label>New Hospitalization Record FDOA Error Screen</label>
-        <locationX>578</locationX>
+        <locationX>1370</locationX>
         <locationY>1358</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -2624,9 +3041,34 @@
                     </validationRule>
                 </fields>
                 <fields>
-                    <name>Copy_1_of_DOA_ErrorMessage</name>
-                    <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(255, 0, 0);&quot;&gt;Date of Admission must be before the Deactivation Date.&lt;/span&gt;&lt;/p&gt;</fieldText>
+                    <name>FDOA_ErrorMessage1</name>
+                    <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(255, 0, 0); background-color: rgb(255, 255, 255);&quot;&gt;Date of Admission must be before the Facility Deactivation Date.&lt;/span&gt;&lt;/p&gt;</fieldText>
                     <fieldType>DisplayText</fieldType>
+                    <visibilityRule>
+                        <conditionLogic>and</conditionLogic>
+                        <conditions>
+                            <leftValueReference>Date_of_Admission_FDOA</leftValueReference>
+                            <operator>GreaterThanOrEqualTo</operator>
+                            <rightValue>
+                                <elementReference>Get_Account_Records_F.Deactivation_Date__c</elementReference>
+                            </rightValue>
+                        </conditions>
+                    </visibilityRule>
+                </fields>
+                <fields>
+                    <name>FDOA_ErrorMessage2</name>
+                    <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(255, 0, 0);&quot;&gt;Date of Admission must be after selected Product Effective Start Date&lt;/span&gt;&lt;/p&gt;</fieldText>
+                    <fieldType>DisplayText</fieldType>
+                    <visibilityRule>
+                        <conditionLogic>and</conditionLogic>
+                        <conditions>
+                            <leftValueReference>Date_of_Admission_FDOA</leftValueReference>
+                            <operator>LessThan</operator>
+                            <rightValue>
+                                <elementReference>Get_Product_Records_F.Effective_Start_Date__c</elementReference>
+                            </rightValue>
+                        </conditions>
+                    </visibilityRule>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -2640,7 +3082,7 @@
                 <name>New_Hospitalization_Record_FDOA_Error_Screen_Section2_Column3</name>
                 <fieldType>Region</fieldType>
                 <fields>
-                    <name>Discharge_FDOA</name>
+                    <name>Date_of_Discharge_FDOA</name>
                     <dataType>Date</dataType>
                     <defaultValue>
                         <elementReference>Date_of_Discharge</elementReference>
@@ -2648,10 +3090,36 @@
                     <fieldText>Date of Discharge</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
-                    <validationRule>
-                        <errorMessage>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 11.36px; font-family: Arial, Helvetica, sans-serif; color: rgb(255, 0, 0);&quot;&gt;Date of discharge should always be greater than Date of Admission&lt;/span&gt;&lt;/p&gt;</errorMessage>
-                        <formulaExpression>{!Date_of_Discharge_DOA} &gt;= {!Date_of_Admission_DOA}</formulaExpression>
-                    </validationRule>
+                </fields>
+                <fields>
+                    <name>FDOA_ErrorMessage3</name>
+                    <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(255, 0, 0);&quot;&gt;Date of Discharge should always be after Date of Admission.&lt;/span&gt;&lt;/p&gt;</fieldText>
+                    <fieldType>DisplayText</fieldType>
+                    <visibilityRule>
+                        <conditionLogic>and</conditionLogic>
+                        <conditions>
+                            <leftValueReference>Date_of_Discharge_FDOA</leftValueReference>
+                            <operator>LessThanOrEqualTo</operator>
+                            <rightValue>
+                                <elementReference>Date_of_Admission_FDOA</elementReference>
+                            </rightValue>
+                        </conditions>
+                    </visibilityRule>
+                </fields>
+                <fields>
+                    <name>FDOA_ErrorMessage4</name>
+                    <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(255, 0, 0);&quot;&gt;Date of Discharge should always be before or equal to the selected Product&apos;s Effective End Date.&lt;/span&gt;&lt;/p&gt;</fieldText>
+                    <fieldType>DisplayText</fieldType>
+                    <visibilityRule>
+                        <conditionLogic>and</conditionLogic>
+                        <conditions>
+                            <leftValueReference>Date_of_Discharge_FDOA</leftValueReference>
+                            <operator>GreaterThan</operator>
+                            <rightValue>
+                                <elementReference>Get_Product_Records_F.Effective_End_Date__c</elementReference>
+                            </rightValue>
+                        </conditions>
+                    </visibilityRule>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -2698,11 +3166,6 @@
                         <assignToReference>StoreFacility_FDOA</assignToReference>
                         <name>recordId</name>
                     </outputParameters>
-                </fields>
-                <fields>
-                    <name>Copy_1_of_Facility1_ErrorMessage</name>
-                    <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(255, 0, 0);&quot;&gt;Please select valid Facility. Date of Admission must be before the Deactivation Date.&lt;/span&gt;&lt;/p&gt;</fieldText>
-                    <fieldType>DisplayText</fieldType>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -2832,13 +3295,13 @@
     <screens>
         <name>New_Hospitalization_Record_Screen</name>
         <label>New Hospitalization Record Screen</label>
-        <locationX>842</locationX>
-        <locationY>638</locationY>
+        <locationX>1744</locationX>
+        <locationY>398</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>Validation_Checks</targetReference>
+            <targetReference>Get_Product_Records</targetReference>
         </connector>
         <fields>
             <name>New_Hospitalization_Record_Screen_Section1</name>
@@ -2956,6 +3419,7 @@
                     <dataType>Date</dataType>
                     <fieldText>Date of Admission</fieldText>
                     <fieldType>InputField</fieldType>
+                    <helpText>&lt;p&gt;1. Date of Admission should always be lesser than Date of Discharge.&lt;/p&gt;&lt;p&gt;2. Date of Admission should always be lesser than selected Facility&apos;s Deactivation Date.&amp;nbsp;&lt;/p&gt;&lt;p&gt;3. Date of Admission should always be greater than or equal to the selected Product&apos;s Effective Start Date.&lt;/p&gt;</helpText>
                     <isRequired>true</isRequired>
                 </fields>
                 <inputParameters>
@@ -2974,11 +3438,8 @@
                     <dataType>Date</dataType>
                     <fieldText>Date of Discharge</fieldText>
                     <fieldType>InputField</fieldType>
+                    <helpText>&lt;p&gt;1. Date of Discharge should always be greater than Date of Admission.&lt;/p&gt;&lt;p&gt;2. Date of Discharge should always be lesser than or equal to the selected Product&apos;s Effective End Date.&lt;/p&gt;</helpText>
                     <isRequired>false</isRequired>
-                    <validationRule>
-                        <errorMessage>&lt;p&gt;&lt;span style=&quot;font-size: 11.36px; font-family: Arial, Helvetica, sans-serif; color: rgb(255, 0, 0);&quot;&gt;Date of discharge should always be greater than Date of Admission&lt;/span&gt;&lt;/p&gt;</errorMessage>
-                        <formulaExpression>{!Date_of_Discharge} &gt;= {!Date_of_Admission}</formulaExpression>
-                    </validationRule>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -3134,7 +3595,7 @@
         <showHeader>true</showHeader>
     </screens>
     <start>
-        <locationX>716</locationX>
+        <locationX>1618</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Case_Record</targetReference>
@@ -3144,7 +3605,7 @@
     <subflows>
         <name>Populate_Intervention_Code_and_CCI_Level</name>
         <label>Populate Intervention Code and CCI Level</label>
-        <locationX>1634</locationX>
+        <locationX>3306</locationX>
         <locationY>998</locationY>
         <connector>
             <isGoTo>true</isGoTo>
@@ -3168,8 +3629,8 @@
     <subflows>
         <name>Populate_Intervention_Code_and_CCI_Level_Both</name>
         <label>Populate Intervention Code and CCI Level Both</label>
-        <locationX>1370</locationX>
-        <locationY>1118</locationY>
+        <locationX>1744</locationX>
+        <locationY>2210</locationY>
         <connector>
             <isGoTo>true</isGoTo>
             <targetReference>Get_Case_Record</targetReference>
@@ -3192,7 +3653,7 @@
     <subflows>
         <name>Populate_Intervention_Code_and_CCI_Level_DOA</name>
         <label>Populate Intervention Code and CCI Level DOA</label>
-        <locationX>314</locationX>
+        <locationX>578</locationX>
         <locationY>1478</locationY>
         <connector>
             <isGoTo>true</isGoTo>
@@ -3240,7 +3701,7 @@
     <subflows>
         <name>Populate_Intervention_Code_and_CCI_Level_F</name>
         <label>Populate Intervention Code and CCI Level F</label>
-        <locationX>1106</locationX>
+        <locationX>2162</locationX>
         <locationY>1478</locationY>
         <connector>
             <isGoTo>true</isGoTo>
@@ -3264,7 +3725,7 @@
     <subflows>
         <name>Populate_Intervention_Code_and_CCI_Level_FDOA</name>
         <label>Populate Intervention Code and CCI Level FDOA</label>
-        <locationX>578</locationX>
+        <locationX>1370</locationX>
         <locationY>1598</locationY>
         <connector>
             <isGoTo>true</isGoTo>
