@@ -56,7 +56,7 @@ public with sharing class HCCostAccountControllerTest {
         insert c;
         
         Product2 pr = TestDataFactory.newProduct(facility.Id);
-
+        String serviceType = pr.Service_Type__c;
         Test.startTest();
         String filterAllRecords = Label.TPL_All_Records;
         String filterUncheckedRecords = Label.TPL_Both_Unchecked;
@@ -68,17 +68,21 @@ public with sharing class HCCostAccountControllerTest {
         
         try{
             insert pr;
-            Healthcare_Cost__c hcc1 = TestDataFactory.hospitalizationCostRecord(acc.Id, c.Id, facility.Id, pr.Id);
-            Healthcare_Cost__c hcc2 = TestDataFactory.hospitalizationCostRecord(acc.Id, c.Id, facility.Id, pr.Id);
-            Healthcare_Cost__c hcc3 = TestDataFactory.hospitalizationCostRecord(acc.Id, c.Id, facility.Id, pr.Id);
-            Healthcare_Cost__c hcc4 = TestDataFactory.hospitalizationCostRecord(acc.Id, c.Id, facility.Id, pr.Id);
+            Healthcare_Cost__c hcc1 = TestDataFactory.hospitalizationCostRecord(acc.Id, c.Id, facility.Id, pr.Id, serviceType);
+            Healthcare_Cost__c hcc2 = TestDataFactory.hospitalizationCostRecord(acc.Id, c.Id, facility.Id, pr.Id, serviceType);
+            Healthcare_Cost__c hcc3 = TestDataFactory.hospitalizationCostRecord(acc.Id, c.Id, facility.Id, pr.Id, serviceType);
+            Healthcare_Cost__c hcc4 = TestDataFactory.hospitalizationCostRecord(acc.Id, c.Id, facility.Id, pr.Id, serviceType);
+            hcc4.Cost_Include__c = false;
+            hcc4.Cost_Review__c = false;
                 
-            insert new Healthcare_Cost__c[] {hcc1, hcc2, hcc3, hcc4};    
+            insert new Healthcare_Cost__c[] {hcc1, hcc2, hcc3, hcc4};   
+            System.debug('I am inside for testing'); 
             accountDetailWrapper1 = HCCostAccountController.getHealthcareCostsHospitalForAccount(acc.Id, filterAllRecords, pageNumber, pageSize);
             accountDetailWrapper2 = HCCostAccountController.getHealthcareCostsHospitalForAccount(acc.Id, filterUncheckedRecords, pageNumber, pageSize);
         }
         catch(DmlException dml){
             exceptionMessage = dml.getMessage();
+            System.debug('Exception Message Hospitalization Account : ' + exceptionMessage);
         }
         
         Test.stopTest();

@@ -55,10 +55,13 @@ public with sharing class TestDataFactory {
         Product2 pr = new Product2();
         pr.Account__c = accountId;
         pr.IsActive = true;
+        pr.Name = 'test';
         pr.Family = 'Specific';
+        pr.Description = 'Product Description';
         pr.Service_Type__c = 'Acute (Daily)';
         pr.Effective_Start_Date__c = Date.newInstance(2023, 01, 01);
         pr.Effective_End_Date__c = Date.newInstance(2100, 12, 12);
+        pr.Effective_year__c = '2023';
         return pr;     
     }
     /*
@@ -116,7 +119,7 @@ public with sharing class TestDataFactory {
 		Parameters: Account ID, Case ID
 		Description: Test method used to return a list having Hospitalization Healthcare cost records having an account and case associated with it
 	*/
-    public static Healthcare_Cost__c hospitalizationCostRecord(String accountId, String caseId, String facilityId, String serviceProviderFacility){
+    public static Healthcare_Cost__c hospitalizationCostRecord(String accountId, String caseId, String facilityId, String serviceProviderFacility, String serviceType){
         Healthcare_Cost__c hcc = new Healthcare_Cost__c();
         Id recordTypeId = [SELECT Id FROM RecordType WHERE DeveloperName = 'Hospitalization' AND sObjectType = 'Healthcare_Cost__c'].Id;
         hcc.RecordTypeId = recordTypeId;
@@ -130,6 +133,7 @@ public with sharing class TestDataFactory {
         hcc.Standard_Daily_Rate__c = 4500;
         hcc.Total_Cost_Override__c = 6000;
         hcc.Service_Provided_by_Facility__c = serviceProviderFacility;
+        hcc.Service_Type2__c = serviceType;
         hcc.Diagnostic_Treatment_Service2__c = 'Testing Hospital Services';
         return hcc;
     }

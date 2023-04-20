@@ -7,14 +7,19 @@ public class HCCCostControllerTest {
         insert acc;
         Case c = TestDataFactory.newCase(acc.Id);
         insert c;
-		Healthcare_Cost__c hcc1 = TestDataFactory.ambulanceCostRecord(acc.Id, c.Id);
+        
+        String filterAllRecords = Label.TPL_All_Records;
+        String filterManualRecords = Label.TPL_Manual_Records;
+        String filterRecordsToday = Label.TPL_Records_Created_Today;
+        
+        Healthcare_Cost__c hcc1 = TestDataFactory.ambulanceCostRecord(acc.Id, c.Id);
         Healthcare_Cost__c hcc2 = TestDataFactory.ambulanceCostRecord(acc.Id, c.Id);
         Healthcare_Cost__c hcc3 = TestDataFactory.ambulanceCostRecord(acc.Id, c.Id);
         hcc3.Source_System_ID__c = 'abcd';
-
+       
         List<Healthcare_Cost__c> hccList1 = new List <Healthcare_Cost__c>();
         List<Healthcare_Cost__c> hccList2 = new List<Healthcare_Cost__c>();
-        List<Healthcare_Cost__c> hccList3 = new List<Healthcare_Cost__c>();
+        List<Healthcare_Cost__c> hccList3 = new List<Healthcare_Cost__c>(); 
         hccList1.add(hcc1);
         hccList1.add(hcc2);
         hccList2.add(hcc3);
@@ -31,7 +36,6 @@ public class HCCCostControllerTest {
         	insert hccList2;
             for(Healthcare_Cost__c hcc: hccList1){
             	hcc.Cost_Include__c = false;    
-                hcc.Date_of_Service__c = Date.newInstance(2022,12, 12);
             }for(Healthcare_Cost__c hcc: hccList2){
                 hcc.Cost_Review__c = false;
             }
@@ -44,7 +48,6 @@ public class HCCCostControllerTest {
         Test.stopTest();
 
         if(exceptionMessage !=null){
-            System.debug('Inside Exception : ' + exceptionMessage);
             System.assertNotEquals(null, exceptionMessage);
         }
         else{        

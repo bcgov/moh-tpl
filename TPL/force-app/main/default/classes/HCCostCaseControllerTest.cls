@@ -55,7 +55,7 @@ public with sharing class HCCostCaseControllerTest {
         Case c = TestDataFactory.newCase(acc.Id);
         insert c;
         Product2 pr = TestDataFactory.newProduct(facility.Id);
-        
+        String serviceType = pr.Service_Type__c;
         Test.startTest();
         String filterAllRecords = Label.TPL_All_Records;
         String filterManualRecords = Label.TPL_Manual_Records;
@@ -69,9 +69,9 @@ public with sharing class HCCostCaseControllerTest {
 
         try{
             insert pr;
-            Healthcare_Cost__c hcc1 = TestDataFactory.hospitalizationCostRecord(acc.Id, c.Id, facility.Id, pr.Id);
-            Healthcare_Cost__c hcc2 = TestDataFactory.hospitalizationCostRecord(acc.Id, c.Id, facility.Id, pr.Id);
-            Healthcare_Cost__c hcc3 = TestDataFactory.hospitalizationCostRecord(acc.Id, c.Id, facility.Id, pr.Id);
+            Healthcare_Cost__c hcc1 = TestDataFactory.hospitalizationCostRecord(acc.Id, c.Id, facility.Id, pr.Id, serviceType);
+            Healthcare_Cost__c hcc2 = TestDataFactory.hospitalizationCostRecord(acc.Id, c.Id, facility.Id, pr.Id, serviceType);
+            Healthcare_Cost__c hcc3 = TestDataFactory.hospitalizationCostRecord(acc.Id, c.Id, facility.Id, pr.Id, serviceType);
             insert new Healthcare_Cost__c[] {hcc1, hcc2, hcc3};
             caseDetailWrapper1 = HCCostCaseController.getHealthcareCostsHospitalForCase(c.Id,filterAllRecords,pageSize, pageNumber);
             caseDetailWrapper2 = HCCostCaseController.getHealthcareCostsHospitalForCase(c.Id,filterManualRecords,pageSize, pageNumber);
