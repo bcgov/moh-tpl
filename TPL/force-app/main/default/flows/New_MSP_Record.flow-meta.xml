@@ -214,6 +214,9 @@
             <isGoTo>true</isGoTo>
             <targetReference>Get_Case_Record</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Fault_Message_Screen</targetReference>
+        </faultConnector>
         <inputAssignments>
             <field>Account__c</field>
             <value>
@@ -431,6 +434,22 @@
         </outputAssignments>
     </recordLookups>
     <screens>
+        <name>Fault_Message_Screen</name>
+        <label>Fault Message Screen</label>
+        <locationX>572</locationX>
+        <locationY>758</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>Fault_Message</name>
+            <fieldText>&lt;p&gt;Something is wrong. Please check the exception and reach out to System Administrator.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(255, 0, 0);&quot;&gt;{!$Flow.FaultMessage}&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
         <name>New_MSP_Record_Screen</name>
         <label>New MSP Record Screen</label>
         <locationX>176</locationX>
@@ -490,6 +509,10 @@
                     <fieldType>InputField</fieldType>
                     <helpText>&lt;p&gt;Date Format: YYYY-MM-DD&lt;/p&gt;</helpText>
                     <isRequired>false</isRequired>
+                    <validationRule>
+                        <errorMessage>&lt;p&gt;&lt;span style=&quot;color: rgb(255, 0, 0);&quot;&gt;Date of Service provided cannot be in Future.&lt;/span&gt;&lt;/p&gt;</errorMessage>
+                        <formulaExpression>{!Date_of_Service} &lt;= Today()</formulaExpression>
+                    </validationRule>
                 </fields>
                 <inputParameters>
                     <name>width</name>
