@@ -3,6 +3,6 @@
     <fullName>Product_Effective_Year_Check_for_Integra</fullName>
     <active>true</active>
     <description>This rule will validate the product effective year and the year of adimition.</description>
-    <errorConditionFormula>NOT(Text(year (  Date_of_Admission__c ))  =   Service_Provided_by_Facility__r.Effective_year__c)</errorConditionFormula>
+    <errorConditionFormula>IF( RecordType.DeveloperName = &quot;Hospitalization&quot;, NOT(Text(year (  Date_of_Admission__c ))  =   Service_Provided_by_Facility__r.Effective_year__c),  NOT( ISBLANK( Date_of_Admission__c ) ) )</errorConditionFormula>
     <errorMessage>Product effective year does not match with Year of Admission.</errorMessage>
 </ValidationRule>
