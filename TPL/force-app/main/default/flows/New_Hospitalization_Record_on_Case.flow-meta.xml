@@ -4,7 +4,7 @@
     <decisions>
         <name>Validation_Checks</name>
         <label>Validation Checks</label>
-        <locationX>1744</locationX>
+        <locationX>1832</locationX>
         <locationY>758</locationY>
         <defaultConnector>
             <targetReference>New_Hospitalization</targetReference>
@@ -159,98 +159,6 @@
                 <targetReference>New_Hospitalization_Record_Both_Error_Screen</targetReference>
             </connector>
             <label>When both are wrong</label>
-        </rules>
-        <rules>
-            <name>Empty_Record_Check</name>
-            <conditionLogic>1 AND 2 AND 3 AND 4 AND 5 AND 6 AND 7 AND 8 AND 9 AND 10 AND (11 OR 12)</conditionLogic>
-            <conditions>
-                <leftValueReference>Cost_Include</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Cost_Review</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Date_of_Service</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Location_of_Incident</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Description_of_Incident</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Date_of_Discharge</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>StoreFacility</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>StoreServiceProvidedbyFacility</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Total_Cost_Override</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Diagnostic_Treatment_Service</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Date_of_Admission</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Date_of_Admission</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>New_Hospitalization_Record_Both_Error_Screen</targetReference>
-            </connector>
-            <label>Empty Record Check</label>
         </rules>
     </decisions>
     <decisions>
@@ -434,7 +342,7 @@
         </rules>
     </decisions>
     <description>This flow is used to create Manual HCC - Hospitalization Record 
-Updated flow with field validations - v6 (Final Version)</description>
+Updated flow with field validations - v8</description>
     <dynamicChoiceSets>
         <name>CCILevel</name>
         <dataType>Picklist</dataType>
@@ -473,7 +381,7 @@ Updated flow with field validations - v6 (Final Version)</description>
     <recordCreates>
         <name>New_Hospitalization</name>
         <label>New Hospitalization</label>
-        <locationX>3306</locationX>
+        <locationX>3482</locationX>
         <locationY>878</locationY>
         <connector>
             <targetReference>Populate_Intervention_Code_and_CCI_Level</targetReference>
@@ -577,8 +485,8 @@ Updated flow with field validations - v6 (Final Version)</description>
     <recordCreates>
         <name>New_Hospitalization_from_Both</name>
         <label>New Hospitalization from Both</label>
-        <locationX>1744</locationX>
-        <locationY>2090</locationY>
+        <locationX>2954</locationX>
+        <locationY>998</locationY>
         <connector>
             <targetReference>Populate_Intervention_Code_and_CCI_Level_Both</targetReference>
         </connector>
@@ -1102,7 +1010,7 @@ Updated flow with field validations - v6 (Final Version)</description>
     <recordLookups>
         <name>Get_Account_Records</name>
         <label>Get Account Records</label>
-        <locationX>1744</locationX>
+        <locationX>1832</locationX>
         <locationY>638</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1187,7 +1095,7 @@ Updated flow with field validations - v6 (Final Version)</description>
     <recordLookups>
         <name>Get_Case_Record</name>
         <label>Get Case Record</label>
-        <locationX>1744</locationX>
+        <locationX>1832</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1208,7 +1116,7 @@ Updated flow with field validations - v6 (Final Version)</description>
     <recordLookups>
         <name>Get_Hospitalization_Record_Type</name>
         <label>Get Hospitalization Record Type</label>
-        <locationX>1744</locationX>
+        <locationX>1832</locationX>
         <locationY>278</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1238,7 +1146,7 @@ Updated flow with field validations - v6 (Final Version)</description>
     <recordLookups>
         <name>Get_Product_Records</name>
         <label>Get Product Records</label>
-        <locationX>1744</locationX>
+        <locationX>1832</locationX>
         <locationY>518</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1305,7 +1213,7 @@ Updated flow with field validations - v6 (Final Version)</description>
     <screens>
         <name>Fault_Message_Screen</name>
         <label>Fault Message Screen</label>
-        <locationX>3570</locationX>
+        <locationX>3746</locationX>
         <locationY>998</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -1321,8 +1229,8 @@ Updated flow with field validations - v6 (Final Version)</description>
     <screens>
         <name>New_Hospitalization_Record_Both_Error_Screen</name>
         <label>New Hospitalization Record Both Error Screen</label>
-        <locationX>1744</locationX>
-        <locationY>1970</locationY>
+        <locationX>2954</locationX>
+        <locationY>878</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -1464,10 +1372,6 @@ Updated flow with field validations - v6 (Final Version)</description>
                     <fieldText>Date of Admission</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>true</isRequired>
-                    <validationRule>
-                        <errorMessage>&lt;p&gt;Date of Admission must be before the Deactivation Date.&lt;/p&gt;</errorMessage>
-                        <formulaExpression>{!Date_of_Admission} &gt; {!RetrieveDeactivationDate}</formulaExpression>
-                    </validationRule>
                 </fields>
                 <fields>
                     <name>B_DOA_ErrorMessage1</name>
@@ -1480,6 +1384,13 @@ Updated flow with field validations - v6 (Final Version)</description>
                             <operator>GreaterThanOrEqualTo</operator>
                             <rightValue>
                                 <elementReference>Get_Account_Records.Deactivation_Date__c</elementReference>
+                            </rightValue>
+                        </conditions>
+                        <conditions>
+                            <leftValueReference>Get_Account_Records.Status__c</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <booleanValue>false</booleanValue>
                             </rightValue>
                         </conditions>
                     </visibilityRule>
@@ -1607,13 +1518,6 @@ Updated flow with field validations - v6 (Final Version)</description>
                             <operator>NotEqualTo</operator>
                             <rightValue>
                                 <elementReference>StoreFacility_B</elementReference>
-                            </rightValue>
-                        </conditions>
-                        <conditions>
-                            <leftValueReference>StoreFacility_B</leftValueReference>
-                            <operator>IsNull</operator>
-                            <rightValue>
-                                <booleanValue>false</booleanValue>
                             </rightValue>
                         </conditions>
                         <conditions>
@@ -1908,6 +1812,13 @@ Updated flow with field validations - v6 (Final Version)</description>
                             <operator>GreaterThanOrEqualTo</operator>
                             <rightValue>
                                 <elementReference>Get_Account_Records.Deactivation_Date__c</elementReference>
+                            </rightValue>
+                        </conditions>
+                        <conditions>
+                            <leftValueReference>Get_Account_Records.Status__c</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <booleanValue>false</booleanValue>
                             </rightValue>
                         </conditions>
                     </visibilityRule>
@@ -2295,10 +2206,6 @@ Updated flow with field validations - v6 (Final Version)</description>
                     <fieldText>Date of Admission</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>true</isRequired>
-                    <validationRule>
-                        <errorMessage>&lt;p&gt;Date of Admission must be before the Deactivation Date.&lt;/p&gt;</errorMessage>
-                        <formulaExpression>{!Date_of_Admission} &gt; {!RetrieveDeactivationDate}</formulaExpression>
-                    </validationRule>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -2378,13 +2285,6 @@ Updated flow with field validations - v6 (Final Version)</description>
                             <operator>NotEqualTo</operator>
                             <rightValue>
                                 <elementReference>StoreServiceProvidedbyFacility_DOAF</elementReference>
-                            </rightValue>
-                        </conditions>
-                        <conditions>
-                            <leftValueReference>StoreServiceProvidedbyFacility_DOAF</leftValueReference>
-                            <operator>IsNull</operator>
-                            <rightValue>
-                                <booleanValue>false</booleanValue>
                             </rightValue>
                         </conditions>
                         <conditions>
@@ -2749,13 +2649,6 @@ Updated flow with field validations - v6 (Final Version)</description>
                             </rightValue>
                         </conditions>
                         <conditions>
-                            <leftValueReference>StoreFacility_F</leftValueReference>
-                            <operator>IsNull</operator>
-                            <rightValue>
-                                <booleanValue>false</booleanValue>
-                            </rightValue>
-                        </conditions>
-                        <conditions>
                             <leftValueReference>Get_Product_Records.Family</leftValueReference>
                             <operator>EqualTo</operator>
                             <rightValue>
@@ -3035,10 +2928,6 @@ Updated flow with field validations - v6 (Final Version)</description>
                     <fieldText>Date of Admission</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>true</isRequired>
-                    <validationRule>
-                        <errorMessage>&lt;p&gt;Date of Admission must be before the Deactivation Date.&lt;/p&gt;</errorMessage>
-                        <formulaExpression>{!Date_of_Admission} &gt; {!RetrieveDeactivationDate}</formulaExpression>
-                    </validationRule>
                 </fields>
                 <fields>
                     <name>FDOA_ErrorMessage1</name>
@@ -3051,6 +2940,13 @@ Updated flow with field validations - v6 (Final Version)</description>
                             <operator>GreaterThanOrEqualTo</operator>
                             <rightValue>
                                 <elementReference>Get_Account_Records_F.Deactivation_Date__c</elementReference>
+                            </rightValue>
+                        </conditions>
+                        <conditions>
+                            <leftValueReference>Get_Account_Records.Status__c</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <booleanValue>false</booleanValue>
                             </rightValue>
                         </conditions>
                     </visibilityRule>
@@ -3295,7 +3191,7 @@ Updated flow with field validations - v6 (Final Version)</description>
     <screens>
         <name>New_Hospitalization_Record_Screen</name>
         <label>New Hospitalization Record Screen</label>
-        <locationX>1744</locationX>
+        <locationX>1832</locationX>
         <locationY>398</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -3595,7 +3491,7 @@ Updated flow with field validations - v6 (Final Version)</description>
         <showHeader>true</showHeader>
     </screens>
     <start>
-        <locationX>1618</locationX>
+        <locationX>1706</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Case_Record</targetReference>
@@ -3605,7 +3501,7 @@ Updated flow with field validations - v6 (Final Version)</description>
     <subflows>
         <name>Populate_Intervention_Code_and_CCI_Level</name>
         <label>Populate Intervention Code and CCI Level</label>
-        <locationX>3306</locationX>
+        <locationX>3482</locationX>
         <locationY>998</locationY>
         <connector>
             <isGoTo>true</isGoTo>
@@ -3629,8 +3525,8 @@ Updated flow with field validations - v6 (Final Version)</description>
     <subflows>
         <name>Populate_Intervention_Code_and_CCI_Level_Both</name>
         <label>Populate Intervention Code and CCI Level Both</label>
-        <locationX>1744</locationX>
-        <locationY>2210</locationY>
+        <locationX>2954</locationX>
+        <locationY>1118</locationY>
         <connector>
             <isGoTo>true</isGoTo>
             <targetReference>Get_Case_Record</targetReference>
