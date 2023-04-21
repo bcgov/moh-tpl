@@ -71,7 +71,8 @@ public with sharing class TestDataFactory {
 	*/
     public static Healthcare_Cost__c ambulanceCostRecord(String accountId, String caseId){
         Healthcare_Cost__c hcc = new Healthcare_Cost__c();
-        Id recordTypeId = [SELECT Id FROM RecordType WHERE DeveloperName = 'Ambulance' AND sObjectType = 'Healthcare_Cost__c'].Id;
+        Id recordTypeId = Schema.SObjectType.Healthcare_Cost__c.getRecordTypeInfosByName().get('Ambulance').getRecordTypeId();
+
         hcc.RecordTypeId = recordTypeId;
         hcc.Account__c = accountId;
         hcc.Case2__c = caseId;
@@ -89,7 +90,7 @@ public with sharing class TestDataFactory {
 	*/
     public static Healthcare_Cost__c continuingcareCostRecord(String accountId, String caseId){
         Healthcare_Cost__c hcc = new Healthcare_Cost__c();
-        Id recordTypeId = [SELECT Id FROM RecordType WHERE DeveloperName = 'Continuing_Care' AND sObjectType = 'Healthcare_Cost__c'].Id;
+        Id recordTypeId = Schema.SObjectType.Healthcare_Cost__c.getRecordTypeInfosByName().get('Continuing Care').getRecordTypeId();
         hcc.RecordTypeId = recordTypeId;
         hcc.Account__c = accountId;
         hcc.Case2__c = caseId;
@@ -105,7 +106,7 @@ public with sharing class TestDataFactory {
 	*/
     public static Healthcare_Cost__c futurecareCostRecord(String accountId, String caseId){
         Healthcare_Cost__c hcc = new Healthcare_Cost__c();
-        Id recordTypeId = [SELECT Id FROM RecordType WHERE DeveloperName = 'Future_Care' AND sObjectType = 'Healthcare_Cost__c'].Id;
+        Id recordTypeId = Schema.SObjectType.Healthcare_Cost__c.getRecordTypeInfosByName().get('Future Care').getRecordTypeId(); 
         hcc.RecordTypeId = recordTypeId;
         hcc.Account__c = accountId;
         hcc.Case2__c = caseId;
@@ -121,7 +122,7 @@ public with sharing class TestDataFactory {
 	*/
     public static Healthcare_Cost__c hospitalizationCostRecord(String accountId, String caseId, String facilityId, String serviceProviderFacility, String serviceType){
         Healthcare_Cost__c hcc = new Healthcare_Cost__c();
-        Id recordTypeId = [SELECT Id FROM RecordType WHERE DeveloperName = 'Hospitalization' AND sObjectType = 'Healthcare_Cost__c'].Id;
+        Id recordTypeId = Schema.SObjectType.Healthcare_Cost__c.getRecordTypeInfosByName().get('Hospitalization').getRecordTypeId();
         hcc.RecordTypeId = recordTypeId;
         hcc.Account__c = accountId;
         hcc.Case2__c = caseId;
@@ -145,7 +146,7 @@ public with sharing class TestDataFactory {
 	*/
     public static Healthcare_Cost__c mspCostRecord(String accountId, String caseId){
         Healthcare_Cost__c hcc = new Healthcare_Cost__c();
-        Id recordTypeId = [SELECT Id FROM RecordType WHERE DeveloperName = 'MSP' AND sObjectType = 'Healthcare_Cost__c'].Id;
+        Id recordTypeId = Schema.SObjectType.Healthcare_Cost__c.getRecordTypeInfosByName().get('MSP').getRecordTypeId();
         hcc.RecordTypeId = recordTypeId;
         hcc.Account__c = accountId;
         hcc.Case2__c = caseId;
@@ -167,7 +168,7 @@ public with sharing class TestDataFactory {
 	*/
     public static Healthcare_Cost__c pharmacareCostRecord(String accountId, String caseId){
         Healthcare_Cost__c hcc = new Healthcare_Cost__c();
-        Id recordTypeId = [SELECT Id FROM RecordType WHERE DeveloperName = 'Pharmacare' AND sObjectType = 'Healthcare_Cost__c'].Id;
+        Id recordTypeId = Schema.SObjectType.Healthcare_Cost__c.getRecordTypeInfosByName().get('Pharmacare').getRecordTypeId();
         hcc.RecordTypeId = recordTypeId;
         hcc.Account__c = accountId;
         hcc.Case2__c = caseId;
