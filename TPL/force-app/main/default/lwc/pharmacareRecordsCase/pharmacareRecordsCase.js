@@ -460,9 +460,7 @@ export default class PharmacareRecordsCase extends LightningElement {
              saveDraftValues({data: selected, recordDisplay: this.recordsToDisplay })
             .then((data,error) => {
                 this.updateMessage = data.actionMessage;
-      
-                var indexes = data.indexNumbers;
-          
+                this.onLoad();    
                 if(this.updateMessage){
                     this.updateMessage = this.updateMessage.replace(/\r\n/g, "<br />");
                     this.showErrorMessage = true;
@@ -470,7 +468,6 @@ export default class PharmacareRecordsCase extends LightningElement {
                 
                 if(data.passedResult == 'Passed'){
                     this.draftValues = [];  
-                    this.onLoad();   
                     this.dispatchEvent(
                         new ShowToastEvent({
                             title: 'Success',
@@ -492,7 +489,6 @@ export default class PharmacareRecordsCase extends LightningElement {
                 } 
                 else if(data.passedResult == 'Partial Success'){
                     this.draftValues = [];
-                    this.onLoad();  
                     this.dispatchEvent(
                         new ShowToastEvent({
                             title: 'Warning',

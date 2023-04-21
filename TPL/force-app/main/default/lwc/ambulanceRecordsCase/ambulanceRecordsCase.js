@@ -651,9 +651,8 @@ export default class AmbulanceRecordsCase extends LightningElement {
         saveDraftValues({data: selected, recordDisplay: this.recordsToDisplay})
         .then((data,error) => {
             this.updateMessage = data.actionMessage;
-      
-            var indexes = data.indexNumbers;
-      
+            this.onLoad();
+
             if(this.updateMessage){
                 this.updateMessage = this.updateMessage.replace(/\r\n/g, "<br />");
                 this.showErrorMessage = true;
@@ -661,7 +660,6 @@ export default class AmbulanceRecordsCase extends LightningElement {
             
             if(data.passedResult == 'Passed'){
                 this.draftValues = [];  
-                this.onLoad();   
                 this.dispatchEvent(
                     new ShowToastEvent({
                         title: 'Success',
@@ -672,7 +670,7 @@ export default class AmbulanceRecordsCase extends LightningElement {
                              
             }
             else if(data.passedResult == 'Failed' || data.passedResult == null){
-                this.draftValues = [];   
+                this.draftValues = []; 
                 this.dispatchEvent(
                     new ShowToastEvent({
                         title: 'Error',
@@ -683,7 +681,6 @@ export default class AmbulanceRecordsCase extends LightningElement {
             } 
             else if(data.passedResult == 'Partial Success'){
                 this.draftValues = [];
-                this.onLoad();  
                 this.dispatchEvent(
                     new ShowToastEvent({
                         title: 'Warning',
@@ -706,18 +703,6 @@ export default class AmbulanceRecordsCase extends LightningElement {
             })
         }
             
-    }
-    handleSuccess(){
-        if(this.recordId !== null){
-            this.dispatchEvent(new ShowToastEvent({
-                    title: "SUCCESS!",
-                    message: "New record has been created.",
-                   variant: "success",
-                }),  
-           );    
-         }
-       //  this.onLoad();
-         this.onLoad();
     }
    
     handleRefresh(){

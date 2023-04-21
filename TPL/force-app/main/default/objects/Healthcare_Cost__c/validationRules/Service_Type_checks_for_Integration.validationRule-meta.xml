@@ -3,8 +3,8 @@
     <fullName>Service_Type_checks_for_Integration</fullName>
     <active>true</active>
     <description>This validation rule will validate</description>
-    <errorConditionFormula>AND (
+    <errorConditionFormula>IF( RecordType.DeveloperName = &quot;Hospitalization&quot;, AND (
 Source_System_ID__c &lt;&gt; &quot;&quot;,        
-TEXT(Service_Provided_by_Facility__r.Service_Type__c)  = Service_Type2__c )</errorConditionFormula>
+TEXT(Service_Provided_by_Facility__r.Service_Type__c)  = Service_Type2__c ),   NOT(ISBLANK(Service_Type2__c )) )</errorConditionFormula>
     <errorMessage>Service Type does not match with selected Service Provided by Facility.</errorMessage>
 </ValidationRule>
