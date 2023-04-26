@@ -57,8 +57,7 @@
         <name>CustomField</name>
     </types> -->
     <types>
-    <members>Product_Effective_Year_Check_for_Integra</members>
-    <members>Check_date_Hospitalization</members>
+    <members>Contact_Name_Mandatory</members>
     <name>ValidationRule</name>
     </types>
     

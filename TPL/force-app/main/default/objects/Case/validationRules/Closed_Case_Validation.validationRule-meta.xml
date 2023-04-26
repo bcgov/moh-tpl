@@ -3,7 +3,8 @@
     <fullName>Closed_Case_Validation</fullName>
     <active>true</active>
     <description>Changing Status from Closed to Reopened</description>
-    <errorConditionFormula>OR (
+    <errorConditionFormula>ISBLANK ( Source_System_ID__c  ) &amp;&amp;
+OR (
 AND(
 	ISPICKVAL( PRIORVALUE( Status ) , &quot;Closed&quot;),
 	ISPICKVAL( Status , &quot;Open&quot;)
