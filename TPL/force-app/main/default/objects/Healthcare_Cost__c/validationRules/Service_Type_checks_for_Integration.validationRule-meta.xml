@@ -3,7 +3,7 @@
     <fullName>Service_Type_checks_for_Integration</fullName>
     <active>true</active>
     <description>This validation rule will validate</description>
-    <errorConditionFormula>ISBLANK ( Source_System_ID2__c ) &amp;&amp;
+    <errorConditionFormula>$Setup.Data_Migration_Check__c.Bypass_Flow_Validations__c = FALSE &amp;&amp;
 AND (
 Source_System_ID__c &lt;&gt; &quot;&quot;,        
 TEXT(Service_Provided_by_Facility__r.Service_Type__c)  = Service_Type2__c )</errorConditionFormula>
