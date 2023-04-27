@@ -3,7 +3,7 @@
     <fullName>Site_Code_Numeric_only</fullName>
     <active>true</active>
     <description>Site Code must be numeric only</description>
-    <errorConditionFormula>ISBLANK ( Source_System_ID__c  ) &amp;&amp;
+    <errorConditionFormula>$Setup.Data_Migration_Check__c.Bypass_Flow_Validations__c = FALSE &amp;&amp;
 NOT(REGEX(  Site_Code__c  ,&quot;[0-9]{0,3}&quot;))</errorConditionFormula>
     <errorMessage>Site Code must be 3 Digit Numeric value.</errorMessage>
 </ValidationRule>

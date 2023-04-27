@@ -3,7 +3,7 @@
     <fullName>Closed_Case_Validation</fullName>
     <active>true</active>
     <description>Changing Status from Closed to Reopened</description>
-    <errorConditionFormula>ISBLANK ( Source_System_ID__c  ) &amp;&amp;
+    <errorConditionFormula>$Setup.Data_Migration_Check__c.Bypass_Flow_Validations__c = FALSE &amp;&amp;
 OR (
 AND(
 	ISPICKVAL( PRIORVALUE( Status ) , &quot;Closed&quot;),

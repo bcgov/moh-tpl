@@ -3,7 +3,7 @@
     <fullName>DoA_Is_Greater_than_Product_Start_Date</fullName>
     <active>true</active>
     <description>Date Of Admission Is less than the Service provided by facility Effective Start Date</description>
-    <errorConditionFormula>ISBLANK ( Source_System_ID2__c ) &amp;&amp;
+    <errorConditionFormula>$Setup.Data_Migration_Check__c.Bypass_Flow_Validations__c = FALSE &amp;&amp;
   Date_of_Admission__c &lt;  Service_Provided_by_Facility__r.Effective_End_Date__c</errorConditionFormula>
     <errorMessage>Date Of Admission Is Not Covered Under This Service Code, Please Contact Supervisor</errorMessage>
 </ValidationRule>

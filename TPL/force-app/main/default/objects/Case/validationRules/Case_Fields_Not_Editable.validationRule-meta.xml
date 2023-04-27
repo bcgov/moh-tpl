@@ -2,7 +2,7 @@
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Case_Fields_Not_Editable</fullName>
     <active>true</active>
-    <errorConditionFormula>ISBLANK ( Source_System_ID__c  ) &amp;&amp;
+    <errorConditionFormula>$Setup.Data_Migration_Check__c.Bypass_Flow_Validations__c = FALSE &amp;&amp;
 ISPICKVAL(Status,&quot;Closed&quot;)&amp;&amp;(ISCHANGED(AccountId) || ISCHANGED(OwnerId) || ISCHANGED(AssetId) || ISCHANGED(BusinessHoursId) || ISCHANGED(CaseNumber) || ISCHANGED(Origin) || ISCHANGED(Reason) || ISCHANGED(RecordTypeId) || ISCHANGED(Case_Reopened_Date__c	) || ISCHANGED(Claim_Number__c) || ISCHANGED(IsClosedOnCreate) || ISCHANGED(Commissions__c) ||    ISCHANGED(Court_Registry_Number__c	) || ISCHANGED(CreatedById) ||  ISCHANGED(ClosedDate) ||
 ISCHANGED( Description) || ISCHANGED( EntitlementId ) || ISCHANGED( SlaExitDate ) || ISCHANGED( SlaStartDate ) || ISCHANGED( IsEscalated )|| ISCHANGED( Expenses__c ) || ISCHANGED( Health_Care_Cost_Recovery_Act_Claimed__c) || ISCHANGED( Incident_Date__c) || ISCHANGED( Incident_Type__c)|| ISCHANGED( Last_day_of_Service__c) || ISCHANGED( LastModifiedById)|| ISCHANGED( Legal_Service_Branch_LSB__c) || ISCHANGED( Maxpath_for_Emergency_Visit__c)  || ISCHANGED( ParentId)|| ISCHANGED( Plantiff_Counsel_Acting_PC__c) || ISCHANGED( Priority) || ISCHANGED( ProductId) || ISCHANGED( ServiceContractId) || ISCHANGED( Settlement_Amount__c) || ISCHANGED( Settlement_Date__c) || ISCHANGED( IsStopped)|| ISCHANGED( StopStartDate) || ISCHANGED( Subject) || ISCHANGED( Type)|| ISCHANGED( SuppliedCompany) || ISCHANGED( SuppliedEmail) || ISCHANGED( SuppliedName)|| ISCHANGED( SuppliedPhone) )</errorConditionFormula>
     <errorMessage>You can&apos;t edit the fields once the case is Closed</errorMessage>

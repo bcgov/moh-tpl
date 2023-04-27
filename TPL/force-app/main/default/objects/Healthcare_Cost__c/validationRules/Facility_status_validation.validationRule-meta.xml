@@ -3,7 +3,7 @@
     <fullName>Facility_status_validation</fullName>
     <active>true</active>
     <description>Date of Admission must be before facility deactivation date</description>
-    <errorConditionFormula>ISBLANK ( Source_System_ID2__c ) &amp;&amp;
+    <errorConditionFormula>$Setup.Data_Migration_Check__c.Bypass_Flow_Validations__c = FALSE &amp;&amp;
 IF ( 
 (NOT(ISNULL(Facility__r.Deactivation_Date__c))), (Facility__r.Deactivation_Date__c &lt;  Date_of_Admission__c),
 (NOT(ISNULL(Facility__r.Deactivation_Date__c))))</errorConditionFormula>

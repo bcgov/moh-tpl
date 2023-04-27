@@ -2,7 +2,7 @@
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>DoD_should_be_Greater_Than_DoA</fullName>
     <active>true</active>
-    <errorConditionFormula>ISBLANK ( Source_System_ID2__c ) &amp;&amp;
+    <errorConditionFormula>$Setup.Data_Migration_Check__c.Bypass_Flow_Validations__c = FALSE &amp;&amp;
   Date_of_Discharge__c &lt;  Date_of_Admission__c</errorConditionFormula>
-    <errorMessage>Date of Discharge should be greater than Date of Addmission.</errorMessage>
+    <errorMessage>Date of Discharge should be greater than Date of Admission.</errorMessage>
 </ValidationRule>

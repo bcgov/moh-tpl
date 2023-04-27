@@ -2,7 +2,7 @@
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Accident_Date_Cannot_Be_In_Future</fullName>
     <active>true</active>
-    <errorConditionFormula>ISBLANK ( Source_System_ID__c  ) &amp;&amp;
+    <errorConditionFormula>$Setup.Data_Migration_Check__c.Bypass_Flow_Validations__c = FALSE &amp;&amp;
  Incident_Date__c &gt;  TODAY()</errorConditionFormula>
     <errorMessage>Accident Date Cannot Be In Future</errorMessage>
 </ValidationRule>

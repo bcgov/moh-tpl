@@ -151,6 +151,6 @@
     <types>
         <members>*</members>
         <name>QuickAction</name>
-    </types>   
-    <version>57.0</version>
+    </types> 
+<version>57.0</version>
 </Package>
