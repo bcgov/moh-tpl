@@ -151,6 +151,10 @@
     <types>
         <members>*</members>
         <name>QuickAction</name>
-    </types>   
+    </types> 
+        <types>
+        <members>*</members>
+        <name>CustomSettings</name>
+    </types>  
     <version>57.0</version>
 </Package>
