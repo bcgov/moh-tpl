@@ -61,9 +61,5 @@
         <members>Healthcare_Cost__c.Check_date_Hospitalization</members>
         <members>Case.Contact_Name_Mandatory</members>
         <name>ValidationRule</name>
-    </types>
-    <types>
-        <members>New_Hospitalization_Record_on_Case</members>
-        <name>Flow</name>
-    </types>      
+    </types>    
 </Package>
