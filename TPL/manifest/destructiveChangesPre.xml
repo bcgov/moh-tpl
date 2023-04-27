@@ -56,9 +56,11 @@
         <members>Contact.Gender__c</members>
         <name>CustomField</name>
     </types> -->
-    <types>
-    <members>Contact_Name_Mandatory</members>
-    <name>ValidationRule</name>
-    </types>
+ <types>
+<members>Healthcare_Cost__c.Product_Effective_Year_Check_for_Integra</members>
+<members>Healthcare_Cost__c.Check_date_Hospitalization</members>
+<members>Case.Contact_Name_Mandatory</members>
+<name>ValidationRule</name>
+</types>
     
 </Package>
