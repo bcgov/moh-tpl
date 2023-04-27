@@ -3,6 +3,7 @@
     <fullName>Facility_fields_cannot_be_editable</fullName>
     <active>true</active>
     <description>Facility Account cannot be editable if the status is INACTIVE</description>
-    <errorConditionFormula>(RecordType.DeveloperName = &apos;Facility&apos;) &amp;&amp; (Status__c  =  False)&amp;&amp; (ISCHANGED( Site_Code__c )|| ISCHANGED( Name ) || ISCHANGED( Type ) || ISCHANGED( BillingAddress ))</errorConditionFormula>
+    <errorConditionFormula>ISBLANK ( Source_System_ID__c  ) &amp;&amp; 
+(RecordType.DeveloperName = &apos;Facility&apos;) &amp;&amp; (Status__c  =  False)&amp;&amp; (ISCHANGED( Site_Code__c )|| ISCHANGED( Name ) || ISCHANGED( Type ) || ISCHANGED( BillingAddress ))</errorConditionFormula>
     <errorMessage>Facility Account has been Deactivated and can no longer be editable.</errorMessage>
 </ValidationRule>
