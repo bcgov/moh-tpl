@@ -1,6 +1,118 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>57.0</apiVersion>
+    <assignments>
+        <name>Assign_Cache_Values</name>
+        <label>Assign Cache Values</label>
+        <locationX>572</locationX>
+        <locationY>758</locationY>
+        <assignmentItems>
+            <assignToReference>ErrorMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>ErrorMessage1</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ErrorMessageFormula</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>LocationResponded</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Location_Responded</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>TotalCostOverride</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Total_Cost_Override</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>FixedWingHelicopter</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Fixed_Wing_Helicopter</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>CostVariable</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Cost</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SubTotal</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Sub_Total</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>DateofService</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Date_of_Service</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>New_Ambulance_Record_Screen</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Copy_1_of_Assign_Cache_Values</name>
+        <label>Copy 1 of Assign Cache Values</label>
+        <locationX>308</locationX>
+        <locationY>758</locationY>
+        <assignmentItems>
+            <assignToReference>ErrorMessage</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>ErrorMessage1</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>LocationResponded</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>TotalCostOverride</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>FixedWingHelicopter</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>CostVariable</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SubTotal</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>DateofService</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>StoreFacility</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>New_Ambulance_Record_Screen</targetReference>
+        </connector>
+    </assignments>
     <decisions>
         <name>Empty_Record_Check</name>
         <label>Empty Record Check</label>
@@ -14,25 +126,8 @@
             <name>Empty_Record</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Cost_Include</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Cost_Review</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
                 <leftValueReference>Date_of_Service</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
+                <operator>EqualTo</operator>
             </conditions>
             <conditions>
                 <leftValueReference>Location_Responded</leftValueReference>
@@ -42,7 +137,7 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>FacilityLookup.recordId</leftValueReference>
+                <leftValueReference>StoreFacility</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -50,41 +145,39 @@
             </conditions>
             <conditions>
                 <leftValueReference>Total_Cost_Override</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
+                <operator>EqualTo</operator>
             </conditions>
             <conditions>
                 <leftValueReference>Fixed_Wing_Helicopter</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
+                <operator>EqualTo</operator>
             </conditions>
             <conditions>
                 <leftValueReference>Cost</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
+                <operator>EqualTo</operator>
             </conditions>
             <conditions>
                 <leftValueReference>Sub_Total</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
+                <operator>EqualTo</operator>
             </conditions>
             <connector>
                 <isGoTo>true</isGoTo>
-                <targetReference>Get_Case_Record</targetReference>
+                <targetReference>New_Ambulance_Record_Screen</targetReference>
             </connector>
             <label>Empty Record</label>
         </rules>
     </decisions>
     <description>This flow is used to create Manual HCC - Ambulance Record</description>
     <environments>Default</environments>
+    <formulas>
+        <name>ErrorMessageFormula</name>
+        <dataType>String</dataType>
+        <expression>SUBSTITUTE({!ErrorMessage}, &apos;This error occurred when the flow tried to create records: FIELD_CUSTOM_VALIDATION_EXCEPTION: &apos;, &apos;Error: &apos;)</expression>
+    </formulas>
+    <formulas>
+        <name>ErrorMessageFormula1</name>
+        <dataType>String</dataType>
+        <expression>SUBSTITUTE({!ErrorMessage1}, &quot;. You can look up ExceptionCode values in the &lt;a href=&apos;https://developer.salesforce.com/docs/atlas.en-us.api.meta/api/sforce_api_calls_concepts_core_data_objects.htm#&apos;&gt;SOAP API Developer Guide&lt;/a&gt;.&quot;, &apos; &apos;)</expression>
+    </formulas>
     <interviewLabel>New Ambulance Record on Case {!$Flow.CurrentDateTime}</interviewLabel>
     <label>New Ambulance Record</label>
     <processMetadataValues>
@@ -112,9 +205,11 @@
         <locationX>308</locationX>
         <locationY>638</locationY>
         <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Get_Case_Record</targetReference>
+            <targetReference>Copy_1_of_Assign_Cache_Values</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Assign_Cache_Values</targetReference>
+        </faultConnector>
         <inputAssignments>
             <field>Account__c</field>
             <value>
@@ -130,13 +225,13 @@
         <inputAssignments>
             <field>Cost_Include__c</field>
             <value>
-                <elementReference>Cost_Include</elementReference>
+                <booleanValue>true</booleanValue>
             </value>
         </inputAssignments>
         <inputAssignments>
             <field>Cost_Review__c</field>
             <value>
-                <elementReference>Cost_Review</elementReference>
+                <booleanValue>true</booleanValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -154,7 +249,7 @@
         <inputAssignments>
             <field>Facility__c</field>
             <value>
-                <elementReference>FacilityLookup.recordId</elementReference>
+                <elementReference>StoreFacility</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -271,11 +366,14 @@
                 <name>New_Ambulance_Record_Screen_Section1_Column1</name>
                 <fieldType>Region</fieldType>
                 <fields>
-                    <name>Cost_Include</name>
-                    <dataType>Boolean</dataType>
-                    <fieldText>Cost Include</fieldText>
+                    <name>Date_of_Service</name>
+                    <dataType>Date</dataType>
+                    <defaultValue>
+                        <elementReference>DateofService</elementReference>
+                    </defaultValue>
+                    <fieldText>Date of Service</fieldText>
                     <fieldType>InputField</fieldType>
-                    <isRequired>true</isRequired>
+                    <isRequired>false</isRequired>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -289,45 +387,11 @@
                 <name>New_Ambulance_Record_Screen_Section1_Column2</name>
                 <fieldType>Region</fieldType>
                 <fields>
-                    <name>Cost_Review</name>
-                    <dataType>Boolean</dataType>
-                    <fieldText>Cost Review</fieldText>
-                    <fieldType>InputField</fieldType>
-                    <isRequired>true</isRequired>
-                </fields>
-                <inputParameters>
-                    <name>width</name>
-                    <value>
-                        <stringValue>3</stringValue>
-                    </value>
-                </inputParameters>
-                <isRequired>false</isRequired>
-            </fields>
-            <fields>
-                <name>New_Ambulance_Record_Screen_Section1_Column3</name>
-                <fieldType>Region</fieldType>
-                <fields>
-                    <name>Date_of_Service</name>
-                    <dataType>Date</dataType>
-                    <fieldText>Date of Service</fieldText>
-                    <fieldType>InputField</fieldType>
-                    <helpText>&lt;p&gt;Date Format: YYYY-MM-DD&lt;/p&gt;</helpText>
-                    <isRequired>false</isRequired>
-                </fields>
-                <inputParameters>
-                    <name>width</name>
-                    <value>
-                        <stringValue>3</stringValue>
-                    </value>
-                </inputParameters>
-                <isRequired>false</isRequired>
-            </fields>
-            <fields>
-                <name>New_Ambulance_Record_Screen_Section1_Column4</name>
-                <fieldType>Region</fieldType>
-                <fields>
                     <name>Location_Responded</name>
                     <dataType>String</dataType>
+                    <defaultValue>
+                        <elementReference>LocationResponded</elementReference>
+                    </defaultValue>
                     <fieldText>Location Responded</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
@@ -344,14 +408,8 @@
                 </inputParameters>
                 <isRequired>false</isRequired>
             </fields>
-            <isRequired>false</isRequired>
-            <regionContainerType>SectionWithoutHeader</regionContainerType>
-        </fields>
-        <fields>
-            <name>New_Ambulance_Record_Screen_Section2</name>
-            <fieldType>RegionContainer</fieldType>
             <fields>
-                <name>New_Ambulance_Record_Screen_Section2_Column1</name>
+                <name>New_Ambulance_Record_Screen_Section1_Column3</name>
                 <fieldType>Region</fieldType>
                 <fields>
                     <name>FacilityLookup</name>
@@ -375,9 +433,18 @@
                             <stringValue>Healthcare_Cost__c</stringValue>
                         </value>
                     </inputParameters>
+                    <inputParameters>
+                        <name>recordId</name>
+                        <value>
+                            <elementReference>StoreFacility</elementReference>
+                        </value>
+                    </inputParameters>
                     <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
-                    <storeOutputAutomatically>true</storeOutputAutomatically>
+                    <outputParameters>
+                        <assignToReference>StoreFacility</assignToReference>
+                        <name>recordId</name>
+                    </outputParameters>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -388,56 +455,22 @@
                 <isRequired>false</isRequired>
             </fields>
             <fields>
-                <name>New_Ambulance_Record_Screen_Section2_Column2</name>
+                <name>New_Ambulance_Record_Screen_Section1_Column4</name>
                 <fieldType>Region</fieldType>
                 <fields>
                     <name>Total_Cost_Override</name>
                     <dataType>Currency</dataType>
+                    <defaultValue>
+                        <elementReference>TotalCostOverride</elementReference>
+                    </defaultValue>
                     <fieldText>Total Cost Override</fieldText>
                     <fieldType>InputField</fieldType>
-                    <helpText>&lt;p&gt;Maximum field limit is Integers 14, Decimals 2 &lt;strong&gt;[Ex: 12345678901234.12]&lt;/strong&gt;&lt;/p&gt;</helpText>
                     <isRequired>false</isRequired>
                     <scale>2</scale>
-                </fields>
-                <inputParameters>
-                    <name>width</name>
-                    <value>
-                        <stringValue>3</stringValue>
-                    </value>
-                </inputParameters>
-                <isRequired>false</isRequired>
-            </fields>
-            <fields>
-                <name>New_Ambulance_Record_Screen_Section2_Column3</name>
-                <fieldType>Region</fieldType>
-                <fields>
-                    <name>Fixed_Wing_Helicopter</name>
-                    <dataType>Currency</dataType>
-                    <fieldText>Fixed Wing/Helicopter</fieldText>
-                    <fieldType>InputField</fieldType>
-                    <helpText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Maximum field limit is Integers 14, Decimals 2 &lt;/span&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;[Ex: 12345678901234.12]&lt;/strong&gt;&lt;/p&gt;</helpText>
-                    <isRequired>false</isRequired>
-                    <scale>2</scale>
-                </fields>
-                <inputParameters>
-                    <name>width</name>
-                    <value>
-                        <stringValue>3</stringValue>
-                    </value>
-                </inputParameters>
-                <isRequired>false</isRequired>
-            </fields>
-            <fields>
-                <name>New_Ambulance_Record_Screen_Section2_Column4</name>
-                <fieldType>Region</fieldType>
-                <fields>
-                    <name>Cost</name>
-                    <dataType>Currency</dataType>
-                    <fieldText>Cost</fieldText>
-                    <fieldType>InputField</fieldType>
-                    <helpText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Maximum field limit is Integers 14, Decimals 2 &lt;/span&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;[Ex: 12345678901234.12]&lt;/strong&gt;&lt;/p&gt;</helpText>
-                    <isRequired>false</isRequired>
-                    <scale>2</scale>
+                    <validationRule>
+                        <errorMessage>&lt;p&gt;Not more than 14 digits with 2 decimals are allowed.&lt;/p&gt;</errorMessage>
+                        <formulaExpression>{!Total_Cost_Override} &gt; 0  &amp;&amp; {!Total_Cost_Override} &lt; 100000000000000</formulaExpression>
+                    </validationRule>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -451,19 +484,25 @@
             <regionContainerType>SectionWithoutHeader</regionContainerType>
         </fields>
         <fields>
-            <name>New_Ambulance_Record_Screen_Section3</name>
+            <name>New_Ambulance_Record_Screen_Section2</name>
             <fieldType>RegionContainer</fieldType>
             <fields>
-                <name>New_Ambulance_Record_Screen_Section3_Column1</name>
+                <name>New_Ambulance_Record_Screen_Section2_Column1</name>
                 <fieldType>Region</fieldType>
                 <fields>
-                    <name>Sub_Total</name>
+                    <name>Fixed_Wing_Helicopter</name>
                     <dataType>Currency</dataType>
-                    <fieldText>Sub Total</fieldText>
+                    <defaultValue>
+                        <elementReference>FixedWingHelicopter</elementReference>
+                    </defaultValue>
+                    <fieldText>Fixed Wing/Helicopter</fieldText>
                     <fieldType>InputField</fieldType>
-                    <helpText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Maximum field limit is Integers 14, Decimals 2 &lt;/span&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;[Ex: 12345678901234.12]&lt;/strong&gt;&lt;/p&gt;</helpText>
                     <isRequired>false</isRequired>
                     <scale>2</scale>
+                    <validationRule>
+                        <errorMessage>&lt;p&gt;Not more than 14 digits with 2 decimals are allowed.&lt;/p&gt;</errorMessage>
+                        <formulaExpression>{!Fixed_Wing_Helicopter} &gt; 0  &amp;&amp; {!Fixed_Wing_Helicopter} &lt; 100000000000000</formulaExpression>
+                    </validationRule>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -474,8 +513,23 @@
                 <isRequired>false</isRequired>
             </fields>
             <fields>
-                <name>New_Ambulance_Record_Screen_Section3_Column2</name>
+                <name>New_Ambulance_Record_Screen_Section2_Column2</name>
                 <fieldType>Region</fieldType>
+                <fields>
+                    <name>Cost</name>
+                    <dataType>Currency</dataType>
+                    <defaultValue>
+                        <elementReference>CostVariable</elementReference>
+                    </defaultValue>
+                    <fieldText>Cost</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>false</isRequired>
+                    <scale>2</scale>
+                    <validationRule>
+                        <errorMessage>&lt;p&gt;Not more than 14 digits with 2 decimals are allowed.&lt;/p&gt;</errorMessage>
+                        <formulaExpression>{!Cost} &gt; 0  &amp;&amp; {!Cost} &lt; 100000000000000</formulaExpression>
+                    </validationRule>
+                </fields>
                 <inputParameters>
                     <name>width</name>
                     <value>
@@ -485,8 +539,23 @@
                 <isRequired>false</isRequired>
             </fields>
             <fields>
-                <name>New_Ambulance_Record_Screen_Section3_Column3</name>
+                <name>New_Ambulance_Record_Screen_Section2_Column3</name>
                 <fieldType>Region</fieldType>
+                <fields>
+                    <name>Sub_Total</name>
+                    <dataType>Currency</dataType>
+                    <defaultValue>
+                        <elementReference>SubTotal</elementReference>
+                    </defaultValue>
+                    <fieldText>Sub Total</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>false</isRequired>
+                    <scale>2</scale>
+                    <validationRule>
+                        <errorMessage>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Not more than 14 digits with 2 decimals are allowed.&lt;/span&gt;&lt;/p&gt;</errorMessage>
+                        <formulaExpression>{!Sub_Total} &gt; 0  &amp;&amp; {!Sub_Total} &lt; 100000000000000</formulaExpression>
+                    </validationRule>
+                </fields>
                 <inputParameters>
                     <name>width</name>
                     <value>
@@ -496,7 +565,7 @@
                 <isRequired>false</isRequired>
             </fields>
             <fields>
-                <name>New_Ambulance_Record_Screen_Section3_Column4</name>
+                <name>New_Ambulance_Record_Screen_Section2_Column4</name>
                 <fieldType>Region</fieldType>
                 <inputParameters>
                     <name>width</name>
@@ -508,6 +577,11 @@
             </fields>
             <isRequired>false</isRequired>
             <regionContainerType>SectionWithoutHeader</regionContainerType>
+        </fields>
+        <fields>
+            <name>ErrorMessage2</name>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;strong style=&quot;color: rgb(255, 0, 0); background-color: rgb(255, 255, 255);&quot;&gt;{!ErrorMessageFormula1}&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
         </fields>
         <nextOrFinishButtonLabel>Next</nextOrFinishButtonLabel>
         <showFooter>true</showFooter>
@@ -522,7 +596,51 @@
     </start>
     <status>Active</status>
     <variables>
+        <name>CostVariable</name>
+        <dataType>Currency</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>2</scale>
+    </variables>
+    <variables>
+        <name>DateofService</name>
+        <dataType>Date</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>ErrorMessage</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>ErrorMessage1</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>FixedWingHelicopter</name>
+        <dataType>Currency</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>2</scale>
+    </variables>
+    <variables>
         <name>Hospitalization_recordTypeId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>LocationResponded</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
@@ -534,5 +652,28 @@
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>StoreFacility</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>SubTotal</name>
+        <dataType>Currency</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>2</scale>
+    </variables>
+    <variables>
+        <name>TotalCostOverride</name>
+        <dataType>Currency</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>2</scale>
     </variables>
 </Flow>
