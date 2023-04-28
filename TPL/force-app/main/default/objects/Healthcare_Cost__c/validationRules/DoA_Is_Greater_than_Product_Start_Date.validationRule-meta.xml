@@ -4,6 +4,6 @@
     <active>true</active>
     <description>Date Of Admission Is less than the Service provided by facility Effective Start Date</description>
     <errorConditionFormula>$Setup.Data_Migration_Check__c.Bypass_Flow_Validations__c = FALSE &amp;&amp;
-  Date_of_Admission__c &lt;  Service_Provided_by_Facility__r.Effective_End_Date__c</errorConditionFormula>
+  Date_of_Admission__c &lt;   Service_Provided_by_Facility__r.Effective_Start_Date__c</errorConditionFormula>
     <errorMessage>Date Of Admission Is Not Covered Under This Service Code, Please Contact Supervisor</errorMessage>
 </ValidationRule>
