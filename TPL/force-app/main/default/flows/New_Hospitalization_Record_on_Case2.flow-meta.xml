@@ -553,6 +553,10 @@
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
                     <scale>2</scale>
+                    <validationRule>
+                        <errorMessage>&lt;p&gt;Not more than 14 digits with 2 decimals are allowed.&lt;/p&gt;</errorMessage>
+                        <formulaExpression>{!Total_Cost_Override} &gt; 0  &amp;&amp; {!Total_Cost_Override} &lt; 100000000000000</formulaExpression>
+                    </validationRule>
                 </fields>
                 <inputParameters>
                     <name>width</name>

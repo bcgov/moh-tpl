@@ -1,6 +1,70 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>57.0</apiVersion>
+    <assignments>
+        <name>Assign_Cache_Values</name>
+        <label>Assign Cache Values</label>
+        <locationX>572</locationX>
+        <locationY>758</locationY>
+        <assignmentItems>
+            <assignToReference>DescriptionVariable</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Description</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>CostVariable</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Cost</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>ErrorMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>ErrorMessage1</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ErrorMessageFormula</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>New_Future_Care_Record_Screen</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Copy_1_of_Assign_Cache_Values</name>
+        <label>Copy 1 of Assign Cache Values</label>
+        <locationX>308</locationX>
+        <locationY>758</locationY>
+        <assignmentItems>
+            <assignToReference>DescriptionVariable</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>CostVariable</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>ErrorMessage</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>ErrorMessage1</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>New_Future_Care_Record_Screen</targetReference>
+        </connector>
+    </assignments>
     <decisions>
         <name>Empty_Record_Check</name>
         <label>Empty Record Check</label>
@@ -29,13 +93,23 @@
             </conditions>
             <connector>
                 <isGoTo>true</isGoTo>
-                <targetReference>Get_Case_Record</targetReference>
+                <targetReference>New_Future_Care_Record_Screen</targetReference>
             </connector>
             <label>Empty Record</label>
         </rules>
     </decisions>
     <description>This flow is used to create Manual HCC - Future Care Record</description>
     <environments>Default</environments>
+    <formulas>
+        <name>ErrorMessageFormula</name>
+        <dataType>String</dataType>
+        <expression>SUBSTITUTE({!ErrorMessage}, &apos;This error occurred when the flow tried to create records: FIELD_CUSTOM_VALIDATION_EXCEPTION: &apos;, &apos;Error: &apos;)</expression>
+    </formulas>
+    <formulas>
+        <name>ErrorMessageFormula1</name>
+        <dataType>String</dataType>
+        <expression>SUBSTITUTE({!ErrorMessage1}, &quot;. You can look up ExceptionCode values in the &lt;a href=&apos;https://developer.salesforce.com/docs/atlas.en-us.api.meta/api/sforce_api_calls_concepts_core_data_objects.htm#&apos;&gt;SOAP API Developer Guide&lt;/a&gt;.&quot;, &apos; &apos;)</expression>
+    </formulas>
     <interviewLabel>New Future Care Record {!$Flow.CurrentDateTime}</interviewLabel>
     <label>New Future Care Record</label>
     <processMetadataValues>
@@ -63,9 +137,11 @@
         <locationX>308</locationX>
         <locationY>638</locationY>
         <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Get_Case_Record</targetReference>
+            <targetReference>Copy_1_of_Assign_Cache_Values</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Assign_Cache_Values</targetReference>
+        </faultConnector>
         <inputAssignments>
             <field>Account__c</field>
             <value>
@@ -170,6 +246,9 @@
                 <fields>
                     <name>Description</name>
                     <dataType>String</dataType>
+                    <defaultValue>
+                        <elementReference>DescriptionVariable</elementReference>
+                    </defaultValue>
                     <fieldText>Description</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
@@ -192,11 +271,17 @@
                 <fields>
                     <name>Cost</name>
                     <dataType>Currency</dataType>
+                    <defaultValue>
+                        <elementReference>CostVariable</elementReference>
+                    </defaultValue>
                     <fieldText>Cost</fieldText>
                     <fieldType>InputField</fieldType>
-                    <helpText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Maximum field limit is Integers 14, Decimals 2 &lt;/span&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;[Ex: 12345678901234.12]&lt;/strong&gt;&lt;/p&gt;</helpText>
                     <isRequired>false</isRequired>
                     <scale>2</scale>
+                    <validationRule>
+                        <errorMessage>&lt;p&gt;Not more than 14 digits with 2 decimals are allowed.&lt;/p&gt;</errorMessage>
+                        <formulaExpression>{!Cost} &gt; 0  &amp;&amp; {!Cost} &lt; 100000000000000</formulaExpression>
+                    </validationRule>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -231,6 +316,11 @@
             <isRequired>false</isRequired>
             <regionContainerType>SectionWithoutHeader</regionContainerType>
         </fields>
+        <fields>
+            <name>ErrorMessage2</name>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); color: rgb(255, 0, 0);&quot;&gt;{!ErrorMessageFormula1}&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
         <nextOrFinishButtonLabel>Next</nextOrFinishButtonLabel>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
@@ -243,6 +333,35 @@
         </connector>
     </start>
     <status>Active</status>
+    <variables>
+        <name>CostVariable</name>
+        <dataType>Currency</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>2</scale>
+    </variables>
+    <variables>
+        <name>DescriptionVariable</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>ErrorMessage</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>ErrorMessage1</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
     <variables>
         <name>FutureCare_recordTypeId</name>
         <dataType>String</dataType>
