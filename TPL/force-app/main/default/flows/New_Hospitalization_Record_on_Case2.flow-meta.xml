@@ -108,15 +108,19 @@
             <operator>Assign</operator>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>ErrorMessage</assignToReference>
-            <operator>Assign</operator>
-        </assignmentItems>
-        <assignmentItems>
             <assignToReference>StoreServiceProvidedbyFacility</assignToReference>
             <operator>Assign</operator>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>StoreFacility</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>ErrorMessage</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>ErrorMessage1</assignToReference>
             <operator>Assign</operator>
         </assignmentItems>
         <connector>
