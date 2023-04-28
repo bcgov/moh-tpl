@@ -21,7 +21,7 @@
         <members>Healthcare_Cost__c.Location_Type_Description__c</members>
         <members>Healthcare_Cost__c.Specialty_Description__c</members>
         <name>CustomField</name>
-    </types> -->
+    </types> >
     <types>
      <members>HCCCostAmbulanceRecord</members>
      <members>HCCCostAmbulanceRecordTest</members>
@@ -36,5 +36,9 @@
      <members>HCCCostPharmacareRecord</members>
      <members>HCCCostPharmacareRecordTest</members>
         <name>ApexClass</name>
+    </types-->
+    <types>
+         <members>New_Hospitalization_Record_on_Case</members>
+        <name>Flow</name>
     </types>
 </Package>
