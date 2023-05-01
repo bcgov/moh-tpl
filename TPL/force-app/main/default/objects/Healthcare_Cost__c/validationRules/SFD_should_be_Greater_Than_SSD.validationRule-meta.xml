@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SFD_should_be_Greater_Than_SSD</fullName>
+    <active>true</active>
+    <description>Service Finished Date should be after Service Start Date.</description>
+    <errorConditionFormula>$Setup.Data_Migration_Check__c.Bypass_Flow_Validations__c = FALSE &amp;&amp;
+   Service_Finish_Date__c  &lt;   Service_Start_Date__c</errorConditionFormula>
+    <errorMessage>Service Finished Date should be after Service Start Date.</errorMessage>
+</ValidationRule>
