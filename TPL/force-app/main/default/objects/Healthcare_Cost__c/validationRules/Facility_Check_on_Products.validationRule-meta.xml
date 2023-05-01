@@ -4,10 +4,10 @@
     <active>true</active>
     <description>This validation rule will validate the facility on product should match with facility selected on Healthcare record.</description>
     <errorConditionFormula>$Setup.Data_Migration_Check__c.Bypass_Flow_Validations__c = FALSE &amp;&amp;
-ISPICKVAL( Service_Provided_by_Facility__r.Family , &quot;Specific&quot; ) 
+NOT( ISBLANK( Facility__c ) )
 &amp;&amp;
-Facility__c &lt;&gt; Service_Provided_by_Facility__r.Account__c 
-||
- NOT( ISBLANK( Facility__c ) )</errorConditionFormula>
+ISPICKVAL( Service_Provided_by_Facility__r.Family ,&quot;Specific&quot; )
+&amp;&amp;
+Facility__c &lt;&gt; Service_Provided_by_Facility__r.Account__c</errorConditionFormula>
     <errorMessage>Facility does not provide the selected Service. Please select the correct Facility or Service provided by Facility.</errorMessage>
 </ValidationRule>
