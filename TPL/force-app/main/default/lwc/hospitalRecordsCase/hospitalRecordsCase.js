@@ -87,8 +87,23 @@ const INTEGRATION_COLUMNS = [
     },
     {
         label: ' Service Provided by Facility',
-        fieldName: 'Service_Provider_Facility__c',
-        editable: false,
+        fieldName: 'Service_Provided_by_Facility__c',
+        type:'lookup',
+        typeAttributes: {
+            placeholder: 'Choose Facility Account',
+            object: 'Healthcare_Cost__c',
+            fieldName: 'Service_Provided_by_Facility__c',
+            label: 'Product',
+            value: { fieldName: 'Service_Provided_by_Facility__c'},
+            context:{fieldName: 'Id'},
+            variant: 'label-hidden',
+            name: 'Product2',
+            fields: ['Product2.Name'],
+            target: '_self'
+        },
+        cellAttributes:{
+            class: { fieldName: 'accountNameClass'}
+        },
         sortable: true
     },
     {
