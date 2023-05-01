@@ -377,7 +377,7 @@ export default class PharmacareRecordsCase extends LightningElement {
     handleSave(event){
         var el = this.template.querySelector('lightning-datatable');
         var selected = el.getSelectedRows();
-    
+        selected = this.draftValues;
         if(selected.length <= 0){
             this.dispatchEvent(
                 new ShowToastEvent({

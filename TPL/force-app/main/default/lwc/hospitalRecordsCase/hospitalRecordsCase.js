@@ -803,11 +803,12 @@ export default class HospitalRecordsCase extends LightningElement {
     }
 
     handleSave(event){
+        console.log(JSON.stringify(this.draftValues));
         event.preventDefault();
         this.showSpinner = true;
         var el = this.template.querySelector('c-custom-data-table');
         var selected = el.getSelectedRows();
-        
+        selected = this.draftValues;
 
         if(selected.length <= 0){
             this.dispatchEvent(
@@ -883,7 +884,7 @@ export default class HospitalRecordsCase extends LightningElement {
         
             }
         } 
-
+        console.log('selected '+JSON.stringify(selected));
         saveDraftValues({data: selected, recordDisplay: this.recordsToDisplay})
         .then((data,error) => {
             this.updateMessage = data.actionMessage;
