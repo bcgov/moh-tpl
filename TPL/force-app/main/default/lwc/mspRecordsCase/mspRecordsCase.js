@@ -875,7 +875,7 @@ export default class AmbulanceRecordsCase extends LightningElement {
         this.showSpinner = true;
         var el = this.template.querySelector('c-custom-data-table');
         var selected = el.getSelectedRows();
-    
+        selected = this.draftValues;
         if(selected.length <= 0){
             this.dispatchEvent(
                 new ShowToastEvent({
