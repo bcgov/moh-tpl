@@ -247,6 +247,10 @@
             <assignToReference>ErrorMessage1</assignToReference>
             <operator>Assign</operator>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>StoreFacility</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
         <connector>
             <isGoTo>true</isGoTo>
             <targetReference>New_MSP_Record_Screen</targetReference>
