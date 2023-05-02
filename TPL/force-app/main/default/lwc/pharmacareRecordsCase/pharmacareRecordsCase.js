@@ -132,7 +132,7 @@ const INTEGRATION_COLUMNS = [
         label: 'Total Cost Override',
         fieldName: 'Total_Cost_Override__c',
         type: 'currency',
-        editable: true,
+        editable: false,
         sortable: true
     },
     {
