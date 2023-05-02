@@ -112,7 +112,7 @@ const INTEGRATION_COLUMNS = [
         label: 'Total Cost Override',
         fieldName: 'Total_Cost_Override__c',
         type: 'currency',
-        editable: true,
+        editable: false,
         sortable: true
     },
     {
@@ -380,7 +380,7 @@ const MANUAL_COLUMNS =
         label: 'Source System ID',
         fieldName: 'Source_System_ID__c',
         type: 'text',
-        editable: false,
+        editable: true,
         sortable: true
     }
 ];
@@ -696,6 +696,9 @@ export default class AmbulanceRecordsCase extends LightningElement {
                 if(event.detail.draftValues[i].Location_Type_Description2__c){
                     this.draftValues[index].Location_Type_Description2__c = event.detail.draftValues[i].Location_Type_Description2__c;
                 }
+                if(event.detail.draftValues[i].Source_System_ID__c){
+                    this.draftValues[index].Source_System_ID__c = event.detail.draftValues[i].Source_System_ID__c;
+                }
             }else{
                 var obj ={
                     Id : event.detail.draftValues[i].Id,
@@ -720,6 +723,7 @@ export default class AmbulanceRecordsCase extends LightningElement {
                     Service_Finish_Date__c: event.detail.draftValues[i].Service_Finish_Date__c,
                     Location_Type_Code__c: event.detail.draftValues[i].Location_Type_Code__c,
                     Location_Type_Description2__c: event.detail.draftValues[i].Location_Type_Description2__c,
+                    Source_System_ID__c: event.detail.draftValues[i].Source_System_ID__c,
                 };
                 this.draftValues.push(obj);
             }

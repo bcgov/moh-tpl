@@ -131,7 +131,7 @@ const INTEGRATION_COLUMNS = [
         label: 'Total Cost Override',
         fieldName: 'Total_Cost_Override__c',
         type: 'currency',
-        editable: true,
+        editable: false,
         sortable: true
     },
     {
@@ -321,7 +321,7 @@ const MANUAL_COLUMNS = [
         label: 'Source System ID',
         fieldName: 'Source_System_ID__c',
         type: 'text',
-        editable: false,
+        editable: true,
         sortable: true
     }
 ];
@@ -640,8 +640,10 @@ export default class HospitalRecordsCase extends LightningElement {
                 if(event.detail.draftValues[i].Diagnostic_Treatment_Service2__c){
                     this.draftValues[index].Diagnostic_Treatment_Service2__c = event.detail.draftValues[i].Diagnostic_Treatment_Service2__c;
                 }
-                
-                
+                if(event.detail.draftValues[i].Source_System_ID__c){
+                    this.draftValues[index].Source_System_ID__c = event.detail.draftValues[i].Source_System_ID__c;
+                }
+                 
             }else{
                 var obj ={
                     Id : event.detail.draftValues[i].Id,
@@ -663,6 +665,7 @@ export default class HospitalRecordsCase extends LightningElement {
                     Total_Costs_Standard__c: event.detail.draftValues[i].Total_Costs_Standard__c,
                     Total_Cost_Override__c: event.detail.draftValues[i].Total_Cost_Override__c,
                     Diagnostic_Treatment_Service2__c: event.detail.draftValues[i].Diagnostic_Treatment_Service2__c,
+                    Source_System_ID__c: event.detail.draftValues[i].Source_System_ID__c,
                 };
                 this.draftValues.push(obj);
             }
@@ -818,7 +821,6 @@ export default class HospitalRecordsCase extends LightningElement {
     }
 
     handleSave(event){
-        console.log(JSON.stringify(this.draftValues));
         event.preventDefault();
         this.showSpinner = true;
         var el = this.template.querySelector('c-custom-data-table');
@@ -895,11 +897,13 @@ export default class HospitalRecordsCase extends LightningElement {
                 }
                 if(selected[i].Diagnostic_Treatment_Service2__c != this.draftValues[index].Diagnostic_Treatment_Service2__c){
                     selected[i].Diagnostic_Treatment_Service2__c = this.draftValues[index].Diagnostic_Treatment_Service2__c;
+                } 
+                if(selected[i].Source_System_ID__c != this.draftValues[index].Source_System_ID__c){
+                    selected[i].Source_System_ID__c = this.draftValues[index].Source_System_ID__c;
                 }
-        
+                
             }
         } 
-        console.log('selected '+JSON.stringify(selected));
         saveDraftValues({data: selected, recordDisplay: this.recordsToDisplay})
         .then((data,error) => {
             this.updateMessage = data.actionMessage;
