@@ -5,75 +5,6 @@ import getHealthcareCostsPharmacareForCase from '@salesforce/apex/HCCostCaseCont
 import saveDraftValues from '@salesforce/apex/HCCCostController.saveDraftValues';
 import deleteHCCRecord from '@salesforce/apex/HCCCostController.deleteHCCRecord';
 
-const MANUAL_COLUMNS = [
-    {
-        label: 'Cost Include',
-        fieldName: 'Cost_Include__c',
-        type:'boolean',
-        editable: true,
-        sortable: true
-    },
-    {
-        label: 'Cost Review',
-        fieldName: 'Cost_Review__c',
-        type:'boolean',
-        editable:true,
-        sortable: true
-    },
-    {
-        label: 'Date of Service',
-        fieldName: 'Date_of_Service__c',
-        type:'date-local',
-        typeAttributes:{ 
-            day: "2-digit",
-            month: "2-digit",
-            year: "numeric"},
-        sortable: true,
-        editable: true
-    }, 
-    {
-        label: 'Practitioner Name',
-        fieldName: 'Practitioner_Name__c',
-        type: 'text',
-        editable: true,
-        sortable: true
-    },
-    {
-        label: 'DIN',
-        fieldName: 'DIN__c',
-        type: 'text',
-        editable: true,
-        sortable: true
-    },
-    {
-        label: 'Name of Drug',
-        fieldName: 'Name_of_Drug__c',
-        type: 'text',
-        editable: true,
-        sortable: true
-    },
-    {
-        label: 'Cost of Drug',
-        fieldName: 'Cost_of_Drug__c',
-        type: 'currency',
-        editable: true,
-        sortable: true
-    },
-    {
-        label: 'Total Cost Override',
-        fieldName: 'Total_Cost_Override__c',
-        type: 'currency',
-        editable: true,
-        sortable: true
-    },
-    {
-        label: 'Source System ID',
-        fieldName: 'Source_System_ID__c',
-        type: 'text',
-        editable: true,
-        sortable: true
-    }
-];
 const INTEGRATION_COLUMNS = [
     {
         label: 'Cost Include',
@@ -132,7 +63,7 @@ const INTEGRATION_COLUMNS = [
         label: 'Total Cost Override',
         fieldName: 'Total_Cost_Override__c',
         type: 'currency',
-        editable: true,
+        editable: false,
         sortable: true
     },
     {
@@ -160,9 +91,7 @@ export default class PharmacareRecordsCase extends LightningElement {
     updateMessage='';
     selectedFilter= 'All Records';
     filterOptions = [
-        { label: 'All Records', value: 'All Records' },
-        { label: 'Manual Records', value: 'Manual Records' },
-        { label: 'Records Created Today', value: 'Records Created Today' }
+        { label: 'All Records', value: 'All Records' }
     ];
 
     connectedCallback() {
@@ -258,29 +187,7 @@ export default class PharmacareRecordsCase extends LightningElement {
         this.onLoad();
     }
 
-    handleFilterChange(event) {
-        this.selectedFilter = event.target.value;
-        
-        if(this.selectedFilter == 'Manual Records')
-        {
-            this.hideDeleteButton = false;
-            this.column = MANUAL_COLUMNS;    
-        }
-        else if(this.selectedFilter == 'Records Created Today'){
-            this.hideDeleteButton = false;
-            this.column = MANUAL_COLUMNS;  
-        }
-        else{
-            this.hideDeleteButton = true;
-            this.column = INTEGRATION_COLUMNS;
-        }
-        
-        this.pageNumber = 1;
-        this.onLoad();  
-               
-    }
-
-    doSorting(event) {
+   doSorting(event) {
         this.sortBy = event.detail.fieldName;
         this.sortDirection = event.detail.sortDirection;
         this.sortData(this.sortBy, this.sortDirection);
@@ -377,7 +284,7 @@ export default class PharmacareRecordsCase extends LightningElement {
     handleSave(event){
         var el = this.template.querySelector('lightning-datatable');
         var selected = el.getSelectedRows();
-        selected = this.draftValues;
+        selected = event.detail.draftValues;
         if(selected.length <= 0){
             this.dispatchEvent(
                 new ShowToastEvent({

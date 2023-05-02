@@ -91,7 +91,7 @@ const MANUAL_COLUMNS = [
         label: 'Source System ID',
         fieldName: 'Source_System_ID__c',
         type: 'text',
-        editable: false,
+        editable: true,
         sortable: true
     }
 ];
@@ -435,6 +435,9 @@ export default class AmbulanceRecordsCase extends LightningElement {
                 if(event.detail.draftValues[i].Fixed_Wing_Helicopter__c){
                     this.draftValues[index].Fixed_Wing_Helicopter__c = event.detail.draftValues[i].Fixed_Wing_Helicopter__c;
                 }
+                if(event.detail.draftValues[i].Source_System_ID__c) {
+                    this.draftValues[index].Source_System_ID__c = event.detail.draftValues[i].Source_System_ID__c;
+                }
         
             }else{
                 var obj ={
@@ -447,6 +450,7 @@ export default class AmbulanceRecordsCase extends LightningElement {
                     Basic_Amount__c:event.detail.draftValues[i].Basic_Amount__c,
                     Total_Cost_Override__c:event.detail.draftValues[i].Total_Cost_Override__c,
                     Fixed_Wing_Helicopter__c:event.detail.draftValues[i].Fixed_Wing_Helicopter__c,
+                    Source_System_ID__c: event.detail.draftValues[i].Source_System_ID__c,
                 };
                
                 this.draftValues.push(obj);
