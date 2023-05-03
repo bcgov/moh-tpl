@@ -518,24 +518,28 @@ export default class AmbulanceRecordsCase extends LightningElement {
     previousPage() {
         this.pageNumber = this.pageNumber - 1;
         this.showSection = false;
+        this.draftValues = [];
         this.onLoad();
    
     }
     nextPage() {
        this.pageNumber = this.pageNumber + 1;
        this.showSection = false;
+       this.draftValues = [];
        this.onLoad();
     }
 
     firstPage() {
         this.pageNumber = 1;
         this.showSection = false;
+        this.draftValues = [];
         this.onLoad();
     }
 
     lastPage() {
         this.pageNumber = this.totalPages;
         this.showSection = false;
+        this.draftValues = [];
         this.onLoad();
     }
 
@@ -880,18 +884,8 @@ export default class AmbulanceRecordsCase extends LightningElement {
         var el = this.template.querySelector('c-custom-data-table');
         var selected = el.getSelectedRows();
         selected = this.draftValues;
-        if(selected.length <= 0){
-            this.dispatchEvent(
-                new ShowToastEvent({
-                    title: 'Review',
-                    message: 'Please select the record being edited before continuing to save',
-                    variant: 'warning'
-                })
-            );    
-        }
-        else{
-            for(var i =0; i < selected.length;i++){ 
-            
+       
+        for(var i =0; i < selected.length;i++){ 
             let index = this.draftValues.findIndex(e=>e.Id === selected[i].Id);
             if(index > -1 ){
                 if( selected[i].Cost_Include__c != this.draftValues[index].Cost_Include__c){
@@ -1022,14 +1016,13 @@ export default class AmbulanceRecordsCase extends LightningElement {
                 ); 
             }
             return this.refresh();
-            })
+        }).catch(error =>{
+
+        })
+    }
+        handleRefresh(){
+            this.onLoad();
         }
-            
+           
     }
-       
-    handleRefresh(){
-        this.onLoad();
-    }
-  
-    
-}
+   
