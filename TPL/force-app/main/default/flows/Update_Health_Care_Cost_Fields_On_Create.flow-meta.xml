@@ -4,29 +4,13 @@
     <assignments>
         <name>Add_Updated_Health_Care_Cost_to_Collection</name>
         <label>Add Updated Health Care Cost to Collection</label>
-        <locationX>880</locationX>
-        <locationY>1790</locationY>
+        <locationX>1760</locationX>
+        <locationY>1838</locationY>
         <assignmentItems>
             <assignToReference>HealthCareCostsToUpdate</assignToReference>
             <operator>Add</operator>
             <value>
                 <elementReference>currentRec</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Loop_PriceBookEntries</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>AddToCollectionHCC</name>
-        <label>AddToCollectionHCC</label>
-        <locationX>880</locationX>
-        <locationY>734</locationY>
-        <assignmentItems>
-            <assignToReference>HCCCollection</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <elementReference>CurrentHealthCareCost</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -36,31 +20,31 @@
     <assignments>
         <name>Ambulance_Cost</name>
         <label>Ambulance Cost</label>
-        <locationX>440</locationX>
+        <locationX>264</locationX>
         <locationY>518</locationY>
         <assignmentItems>
-            <assignToReference>CurrentHealthCareCost.Total_Cost_Override__c</assignToReference>
+            <assignToReference>currentRec.Total_Cost_Override__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>LoopThroughHealthCareCost.Basic_Amount__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>CurrentHealthCareCost.Id</assignToReference>
+            <assignToReference>currentRec.Id</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>LoopThroughHealthCareCost.Id</elementReference>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>AddToCollectionHCC</targetReference>
+            <targetReference>Add_Updated_Health_Care_Cost_to_Collection</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Assign_Health_Care_Cost_fields</name>
         <label>Assign Health Care Cost fields</label>
-        <locationX>880</locationX>
-        <locationY>1670</locationY>
+        <locationX>4092</locationX>
+        <locationY>1238</locationY>
         <assignmentItems>
             <assignToReference>currentRec.Standard_Daily_Rate__c</assignToReference>
             <operator>Assign</operator>
@@ -90,23 +74,53 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Add_Updated_Health_Care_Cost_to_Collection</targetReference>
+            <targetReference>Loop_PriceBookEntries</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_Health_Care_Cost_fields_No_Override</name>
+        <label>Assign Health Care Cost fields No Override</label>
+        <locationX>4356</locationX>
+        <locationY>1238</locationY>
+        <assignmentItems>
+            <assignToReference>currentRec.Standard_Daily_Rate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Loop_PriceBookEntries.UnitPrice</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>currentRec.Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>loop_updated_HealthCareCosts.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>currentRec.Pricebook__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_TPL_Pricebook.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Loop_PriceBookEntries</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>AssigningPHN</name>
         <label>AssigningPHN</label>
-        <locationX>880</locationX>
+        <locationX>1760</locationX>
         <locationY>278</locationY>
         <assignmentItems>
-            <assignToReference>CurrentHealthCareCost.PHN__c</assignToReference>
+            <assignToReference>currentRec.PHN__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>LoopThroughHealthCareCost.Account__r.PHN__pc</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>CurrentHealthCareCost.Id</assignToReference>
+            <assignToReference>currentRec.Id</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>LoopThroughHealthCareCost.Id</elementReference>
@@ -117,112 +131,60 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Hospitalization_Cost</name>
-        <label>Hospitalization Cost</label>
-        <locationX>1232</locationX>
-        <locationY>518</locationY>
-        <assignmentItems>
-            <assignToReference>CurrentHealthCareCost.Total_Cost_Override__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>LoopThroughHealthCareCost.Total_Costs_Standard__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>CurrentHealthCareCost.Id</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>LoopThroughHealthCareCost.Id</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>AddToCollectionHCC</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>MSP_Cost</name>
         <label>MSP Cost</label>
-        <locationX>704</locationX>
+        <locationX>528</locationX>
         <locationY>518</locationY>
         <assignmentItems>
-            <assignToReference>CurrentHealthCareCost.Total_Cost_Override__c</assignToReference>
+            <assignToReference>currentRec.Total_Cost_Override__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>LoopThroughHealthCareCost.Amount_Paid__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>CurrentHealthCareCost.Id</assignToReference>
+            <assignToReference>currentRec.Id</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>LoopThroughHealthCareCost.Id</elementReference>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>AddToCollectionHCC</targetReference>
+            <targetReference>Add_Updated_Health_Care_Cost_to_Collection</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Pharmacare_Cost</name>
         <label>Pharmacare Cost</label>
-        <locationX>968</locationX>
+        <locationX>792</locationX>
         <locationY>518</locationY>
         <assignmentItems>
-            <assignToReference>CurrentHealthCareCost.Total_Cost_Override__c</assignToReference>
+            <assignToReference>currentRec.Total_Cost_Override__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>LoopThroughHealthCareCost.Cost_of_Drug__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>CurrentHealthCareCost.Id</assignToReference>
+            <assignToReference>currentRec.Id</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>LoopThroughHealthCareCost.Id</elementReference>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>AddToCollectionHCC</targetReference>
+            <targetReference>Add_Updated_Health_Care_Cost_to_Collection</targetReference>
         </connector>
     </assignments>
     <decisions>
         <name>Check_for_Record_Type_and_Total_Cost_Override_fields</name>
         <label>Check for Record Type and Total Cost Override fields</label>
-        <locationX>880</locationX>
+        <locationX>1760</locationX>
         <locationY>398</locationY>
         <defaultConnector>
-            <targetReference>AddToCollectionHCC</targetReference>
+            <targetReference>Add_Updated_Health_Care_Cost_to_Collection</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Non_Applicable_conditions</name>
-            <conditionLogic>or</conditionLogic>
-            <conditions>
-                <leftValueReference>LoopThroughHealthCareCost.Total_Cost_Override__c</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>LoopThroughHealthCareCost.RecordType.DeveloperName</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Continuing Care</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>LoopThroughHealthCareCost.RecordType.DeveloperName</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Future Care</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>AddToCollectionHCC</targetReference>
-            </connector>
-            <label>Non Applicable conditions</label>
-        </rules>
         <rules>
             <name>Ambulance</name>
             <conditionLogic>and</conditionLogic>
@@ -231,6 +193,13 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Ambulance</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>LoopThroughHealthCareCost.Total_Cost_Override__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -248,6 +217,13 @@
                     <stringValue>MSP</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>LoopThroughHealthCareCost.Total_Cost_Override__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>MSP_Cost</targetReference>
             </connector>
@@ -261,6 +237,13 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Pharmacare</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>LoopThroughHealthCareCost.Total_Cost_Override__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -279,7 +262,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Hospitalization_Cost</targetReference>
+                <targetReference>Get_TPL_Pricebook</targetReference>
             </connector>
             <label>Hospitalization</label>
         </rules>
@@ -287,8 +270,11 @@
     <decisions>
         <name>Check_if_PriceBookEntry_product_matches_Health_Care_Cost_Product</name>
         <label>Check if PriceBookEntry product matches Health Care Cost Product</label>
-        <locationX>1100</locationX>
-        <locationY>1550</locationY>
+        <locationX>4510</locationX>
+        <locationY>998</locationY>
+        <defaultConnector>
+            <targetReference>Loop_PriceBookEntries</targetReference>
+        </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Product_Match</name>
@@ -301,7 +287,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Assign_Health_Care_Cost_fields</targetReference>
+                <targetReference>Check_if_Total_cost_Override_has_Value</targetReference>
             </connector>
             <label>Product Match</label>
         </rules>
@@ -321,6 +307,31 @@
             <label>No Product Match</label>
         </rules>
     </decisions>
+    <decisions>
+        <name>Check_if_Total_cost_Override_has_Value</name>
+        <label>Check if Total cost Override has Value</label>
+        <locationX>4224</locationX>
+        <locationY>1118</locationY>
+        <defaultConnector>
+            <targetReference>Assign_Health_Care_Cost_fields_No_Override</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Total_Cost_override_is_blank</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>loop_updated_HealthCareCosts.Total_Cost_Override__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_Health_Care_Cost_fields</targetReference>
+            </connector>
+            <label>Total Cost override is blank</label>
+        </rules>
+    </decisions>
     <description>This is the subflow which would handle the On Create event on Health Care Cost Object.
 Update to PHN Value reference</description>
     <environments>Default</environments>
@@ -335,8 +346,8 @@ Update to PHN Value reference</description>
     <loops>
         <name>Loop_PriceBookEntries</name>
         <label>Loop PriceBookEntries</label>
-        <locationX>792</locationX>
-        <locationY>1430</locationY>
+        <locationX>4004</locationX>
+        <locationY>878</locationY>
         <collectionReference>Get_Price_Book_Entry</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -349,15 +360,15 @@ Update to PHN Value reference</description>
     <loops>
         <name>loop_updated_HealthCareCosts</name>
         <label>loop updated HealthCareCosts</label>
-        <locationX>176</locationX>
-        <locationY>1310</locationY>
+        <locationX>2992</locationX>
+        <locationY>758</locationY>
         <collectionReference>updatedHealthCareCost</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
             <targetReference>Loop_PriceBookEntries</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
-            <targetReference>Update_Health_Care_Cost</targetReference>
+            <targetReference>Add_Updated_Health_Care_Cost_to_Collection</targetReference>
         </noMoreValuesConnector>
     </loops>
     <loops>
@@ -371,7 +382,7 @@ Update to PHN Value reference</description>
             <targetReference>AssigningPHN</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
-            <targetReference>updateCollection</targetReference>
+            <targetReference>Update_Health_Care_Cost</targetReference>
         </noMoreValuesConnector>
     </loops>
     <processMetadataValues>
@@ -396,8 +407,8 @@ Update to PHN Value reference</description>
     <recordLookups>
         <name>Get_Price_Book_Entry</name>
         <label>Get Price Book Entry</label>
-        <locationX>176</locationX>
-        <locationY>1190</locationY>
+        <locationX>2992</locationX>
+        <locationY>638</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>loop_updated_HealthCareCosts</targetReference>
@@ -417,8 +428,8 @@ Update to PHN Value reference</description>
     <recordLookups>
         <name>Get_TPL_Pricebook</name>
         <label>Get TPL Pricebook</label>
-        <locationX>176</locationX>
-        <locationY>1070</locationY>
+        <locationX>2992</locationX>
+        <locationY>518</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Price_Book_Entry</targetReference>
@@ -439,18 +450,8 @@ Update to PHN Value reference</description>
         <name>Update_Health_Care_Cost</name>
         <label>Update Health Care Cost</label>
         <locationX>176</locationX>
-        <locationY>2198</locationY>
+        <locationY>2054</locationY>
         <inputReference>HealthCareCostsToUpdate</inputReference>
-    </recordUpdates>
-    <recordUpdates>
-        <name>updateCollection</name>
-        <label>updateCollection</label>
-        <locationX>176</locationX>
-        <locationY>950</locationY>
-        <connector>
-            <targetReference>Get_TPL_Pricebook</targetReference>
-        </connector>
-        <inputReference>HCCCollection</inputReference>
     </recordUpdates>
     <start>
         <locationX>50</locationX>
@@ -461,25 +462,9 @@ Update to PHN Value reference</description>
     </start>
     <status>Active</status>
     <variables>
-        <name>CurrentHealthCareCost</name>
-        <dataType>SObject</dataType>
-        <isCollection>false</isCollection>
-        <isInput>true</isInput>
-        <isOutput>true</isOutput>
-        <objectType>Healthcare_Cost__c</objectType>
-    </variables>
-    <variables>
         <name>currentRec</name>
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
-        <isInput>true</isInput>
-        <isOutput>true</isOutput>
-        <objectType>Healthcare_Cost__c</objectType>
-    </variables>
-    <variables>
-        <name>HCCCollection</name>
-        <dataType>SObject</dataType>
-        <isCollection>true</isCollection>
         <isInput>true</isInput>
         <isOutput>true</isOutput>
         <objectType>Healthcare_Cost__c</objectType>
