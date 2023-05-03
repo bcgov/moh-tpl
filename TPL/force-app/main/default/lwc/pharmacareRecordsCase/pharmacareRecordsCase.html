@@ -30,7 +30,7 @@
         </lightning-layout>
     
         <!-- Grid Representation -->
-        <div class="slds-scrollable slds-m-around_medium" style="height:400px;width:auto">
+        <div class="slds-scrollable slds-m-around_medium" style="height:auto;width:auto">
             <template if:true={showErrorMessage}>
                 <div class="validation">
                     <p>
@@ -46,7 +46,7 @@
                     sorted-by={sortBy}
                     sorted-direction={sortDirection}
                     onsort={doSorting}
-                    draft-values={draftValues} show-row-number-column="false" style="width: auto; height: 500px;">
+                    draft-values={draftValues} show-row-number-column="false" style="width: auto; height: 500px;" >
                 </lightning-datatable>
             
             <template if:true={recordsToDisplay.error}>
