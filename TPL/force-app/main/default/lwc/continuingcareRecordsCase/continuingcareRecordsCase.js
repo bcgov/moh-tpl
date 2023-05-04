@@ -38,6 +38,7 @@ export default class ContinuingcareRecordsCase extends LightningElement {
     pageSize; //No.of records to be displayed per page
     recordsToDisplay = []; //Records to be displayed on the page
     wiredRecords;
+    draftValues = [];
     updateMessage='';
     selectedFilter= 'Manual Records';
     filterOptions = [
@@ -145,21 +146,29 @@ export default class ContinuingcareRecordsCase extends LightningElement {
     }
     previousPage() {
         this.pageNumber = this.pageNumber - 1;
+        this.showSection = false;
+        this.draftValues = [];
         this.onLoad();
    
     }
     nextPage() {
         this.pageNumber = this.pageNumber + 1;
+        this.showSection = false;
+        this.draftValues = [];
        this.onLoad();
     }
 
     firstPage() {
         this.pageNumber = 1;
+        this.showSection = false;
+        this.draftValues = [];
         this.onLoad();
     }
 
     lastPage() {
         this.pageNumber = this.totalPages;
+        this.showSection = false;
+        this.draftValues = [];
         this.onLoad();
     }
 
@@ -248,105 +257,124 @@ export default class ContinuingcareRecordsCase extends LightningElement {
        
     }
     
-    handleSave(event){
-        var el = this.template.querySelector('lightning-datatable');
-        var selected = el.getSelectedRows();
-        selected = event.detail.draftValues;
-        if(selected.length <= 0){
-            this.dispatchEvent(
-                new ShowToastEvent({
-                    title: 'Review',
-                    message: 'Please select the record being edited before continuing to save',
-                    variant: 'warning'
-                })
-            );    
-        }
-        else{
-            for(var i =0; i < selected.length;i++){ 
-                for(var j=0;j<event.detail.draftValues.length;j++){
-                     if(selected[i].Id == event.detail.draftValues[j].Id){
-                         
-                         if(event.detail.draftValues[j].Cost__c != undefined || event.detail.draftValues[j].Cost__c ){
-                             if( selected[i].Cost__c != event.detail.draftValues[j].Cost__c){
-                                 selected[i].Cost__c = event.detail.draftValues[j].Cost__c;
-                             }
-     
-                         }
-                        
-                         if(event.detail.draftValues[j].Description__c != undefined || event.detail.draftValues[j].Description__c == null ){
-                             if(selected[i].Description__c != event.detail.draftValues[j].Description__c){
-                                 selected[i].Description__c = event.detail.draftValues[j].Description__c;
-                             }
-                           
-                         }
-                        
-                     }
-                }
-             } 
-             saveDraftValues({data: selected, recordDisplay: this.recordsToDisplay })
-            .then((data,error) => {
-                this.updateMessage = data.actionMessage;
-                this.onLoad();
+    handleCancel(event) {
+        event.preventDefault();
+        this.showSection = false;
+        this.records = JSON.parse(JSON.stringify(this.lastSavedData));
+        this.draftValues = [];
+        return this.refresh();
+    }
 
-                if(this.updateMessage){
-                    this.updateMessage = this.updateMessage.replace(/\r\n/g, "<br />");
-                    this.showErrorMessage = true;
+    handleEdit(event) {
+        event.preventDefault();
+        this.showSection = true;
+    }
+
+    handleCellChange(event){
+        this.showSection = true;
+        for(let i = 0 ; i < event.detail.draftValues.length;i++){
+            let index = this.draftValues.findIndex(e=>e.Id === event.detail.draftValues[i].Id);
+            if(index > -1 ){
+                if(event.detail.draftValues[i].Cost__c != null){
+                    this.draftValues[index].Cost__c = event.detail.draftValues[i].Cost__c;
                 }
+                if(event.detail.draftValues[i].Description__c != null){
+                    this.draftValues[index].Description__c = event.detail.draftValues[i].Description__c;
+                }
+        
+            }else{
+                var obj ={
+                    Id : event.detail.draftValues[i].Id,
+                    Cost__c:event.detail.draftValues[i].Cost__c,
+                    Description__c:event.detail.draftValues[i].Description__c,
+                };          
+                this.draftValues.push(obj);
+            }
+            
+        }
+    }
+
+    handleSave(event){
+        var el = this.template.querySelector('c-custom-data-table ');
+        var selected = el.getSelectedRows();
+        selected = this.draftValues;
+      
+        for(var i =0; i < selected.length;i++){ 
+            let index = this.draftValues.findIndex(e=>e.Id === selected[i].Id);
+            if(index > -1 ){
+                if( selected[i].Cost__c != this.draftValues[index].Cost__c){
+                    selected[i].Cost__c = this.draftValues[index].Cost__c;
+                }
+                if(selected[i].Description__c != this.draftValues[index].Description__c){
+                    selected[i].Description__c = this.draftValues[index].Description__c;
+                }
+                   
+            }
+        }
+             
+        saveDraftValues({data: selected, recordDisplay: this.recordsToDisplay })
+        .then((data,error) => {
+            this.updateMessage = data.actionMessage;
+            this.onLoad();
+
+            if(this.updateMessage){
+                this.updateMessage = this.updateMessage.replace(/\r\n/g, "<br />");
+                this.showErrorMessage = true;
+            }
                 
-                if(data.passedResult == 'Passed'){
-                    this.draftValues = [];  
-                    this.dispatchEvent(
-                        new ShowToastEvent({
-                            title: 'Success',
-                            message: 'HealthCare Cost Continuing Care record(s) updated successfully',
-                            variant: 'success'
-                        })
-                    );    
+            if(data.passedResult == 'Passed'){
+                this.draftValues = [];  
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Success',
+                        message: 'HealthCare Cost Continuing Care record(s) updated successfully',
+                        variant: 'success'
+                    })
+                );    
                                  
-                }
-                else if(data.passedResult == 'Failed' || data.passedResult == null){
-                    this.draftValues = [];   
-                    this.dispatchEvent(
-                        new ShowToastEvent({
-                            title: 'Error',
-                            message: 'Please review the error message shown below and try again!',
-                            variant: 'error'
-                        })
-                    );   
-                } 
-                else if(data.passedResult == 'Partial Success'){
-                    this.draftValues = [];
-                    this.dispatchEvent(
-                        new ShowToastEvent({
-                            title: 'Warning',
-                            message: 'Few Healthcare Cost record(s) updated successfully. Errors on remaining shown below!',
-                            variant: 'Warning'
-                        })
-                    );
-                }   
-                if(error){
-                    this.draftValues = [];
-                    this.dispatchEvent(
-                        new ShowToastEvent({
-                            title: 'Error',
-                            message: error,
-                            variant: 'error'
-                        })
-                    ); 
-                }
-                //Get the updated list with refreshApex.
-                return this.refresh();    
-            })
-            .catch(error => {
+            }
+            else if(data.passedResult == 'Failed' || data.passedResult == null){
+                this.draftValues = [];   
                 this.dispatchEvent(
                     new ShowToastEvent({
                         title: 'Error',
-                        message: 'Some issues occured while saving Continuing Care Records. Please contact Administrator',
+                        message: 'Please review the error message shown below and try again!',
                         variant: 'error'
                     })
-                );    
-            });
-        }
-               
+                );   
+            } 
+            else if(data.passedResult == 'Partial Success'){
+                this.draftValues = [];
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Warning',
+                        message: 'Few Healthcare Cost record(s) updated successfully. Errors on remaining shown below!',
+                        variant: 'Warning'
+                    })
+                );
+            }   
+            if(error){
+                this.draftValues = [];
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Error',
+                        message: error,
+                        variant: 'error'
+                    })
+                ); 
+            }
+            //Get the updated list with refreshApex.
+            return this.refresh();    
+        })
+        .catch(error => {
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Error',
+                    message: 'Some issues occured while saving Continuing Care Records. Please contact Administrator',
+                    variant: 'error'
+                })
+            );    
+        });
     }
+               
 }

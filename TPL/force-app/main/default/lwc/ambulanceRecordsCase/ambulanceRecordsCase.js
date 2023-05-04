@@ -42,7 +42,7 @@ const MANUAL_COLUMNS = [
         label: 'Site Code',
         fieldName: 'Site_Code__c',
         type: 'text',
-        editable: false,
+        editable: true,
         sortable: true
     },
     {
@@ -129,7 +129,7 @@ const INTEGRATION_COLUMNS = [
         label: 'Site Code',
         fieldName: 'Site_Code__c',
         type: 'text',
-        editable: false,
+        editable: true,
         sortable: true
     },
     {
@@ -414,6 +414,24 @@ export default class AmbulanceRecordsCase extends LightningElement {
         }
         this.updateDraftValues(updatedItem);
        // this.updateDataValues(updatedItem);
+    }
+     handleEdit(event) {
+        event.preventDefault();
+        this.showSection = true;
+        let dataRecieved = event.detail.data;
+        this.handleWindowOnclick(dataRecieved.context);
+        switch (dataRecieved.label) {
+            case 'Account':
+                this.setClassesOnData(
+                    dataRecieved.context,
+                    'accountNameClass',
+                    'slds-cell-edit'
+                );
+                break;
+            default:
+                this.setClassesOnData(dataRecieved.context, '', '');
+                break;
+        };
     }
     handleCellChange(event){
         this.showSection = true;
