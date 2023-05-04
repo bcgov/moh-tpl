@@ -92,6 +92,7 @@ export default class PharmacareRecordsCase extends LightningElement {
     updateMessage='';
     selectedFilter= 'All Records';
     showSection = false;
+    showErrorMessage = false;
     lastSavedData;
     filterOptions = [
         { label: 'All Records', value: 'All Records' }

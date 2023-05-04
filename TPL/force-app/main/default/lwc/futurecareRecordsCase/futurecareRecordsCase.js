@@ -28,6 +28,7 @@ const COLUMNS = [
 export default class FuturecareRecordsCase extends LightningElement {
     @api recordId;
     column = COLUMNS;
+    records = []; //All records available in the data table
     isFirstPage = true;
     isLastPage = false;
     hideDeleteButton = true;
@@ -43,6 +44,7 @@ export default class FuturecareRecordsCase extends LightningElement {
     selectedFilter= 'Manual Records';
     lastSavedData;
     showSection = false;
+    showErrorMessage = false;
     filterOptions = [
         { label: 'Manual Records', value: 'Manual Records' },
         { label: 'Records Created Today', value: 'Records Created Today' }

@@ -28,6 +28,7 @@ const COLUMNS = [
 export default class ContinuingcareRecordsCase extends LightningElement {
     @api recordId;
     column = COLUMNS;
+    records = []; //All records available in the data table
     isFirstPage = true;
     isLastPage = false;
     hideDeleteButton = true;
