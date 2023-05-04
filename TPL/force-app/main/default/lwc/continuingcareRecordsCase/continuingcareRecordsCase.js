@@ -39,6 +39,7 @@ export default class ContinuingcareRecordsCase extends LightningElement {
     recordsToDisplay = []; //Records to be displayed on the page
     wiredRecords;
     draftValues = [];
+    showSection = false;
     updateMessage='';
     selectedFilter= 'Manual Records';
     filterOptions = [
@@ -197,7 +198,7 @@ export default class ContinuingcareRecordsCase extends LightningElement {
 
     async handleSelect()
     {
-        var el = this.template.querySelector('lightning-datatable');
+        var el = this.template.querySelector('c-custom-data-table');
         var selected = el.getSelectedRows();
         let selectedCostRecords = [];
         selected.forEach(function(element){
@@ -295,7 +296,7 @@ export default class ContinuingcareRecordsCase extends LightningElement {
     }
 
     handleSave(event){
-        var el = this.template.querySelector('c-custom-data-table ');
+        var el = this.template.querySelector('c-custom-data-table');
         var selected = el.getSelectedRows();
         selected = this.draftValues;
       
@@ -316,6 +317,8 @@ export default class ContinuingcareRecordsCase extends LightningElement {
         .then((data,error) => {
             this.updateMessage = data.actionMessage;
             this.onLoad();
+            this.draftValues = [];  
+            this.showSection = false;
 
             if(this.updateMessage){
                 this.updateMessage = this.updateMessage.replace(/\r\n/g, "<br />");
@@ -323,7 +326,7 @@ export default class ContinuingcareRecordsCase extends LightningElement {
             }
                 
             if(data.passedResult == 'Passed'){
-                this.draftValues = [];  
+                
                 this.dispatchEvent(
                     new ShowToastEvent({
                         title: 'Success',
@@ -334,7 +337,7 @@ export default class ContinuingcareRecordsCase extends LightningElement {
                                  
             }
             else if(data.passedResult == 'Failed' || data.passedResult == null){
-                this.draftValues = [];   
+               
                 this.dispatchEvent(
                     new ShowToastEvent({
                         title: 'Error',
@@ -344,7 +347,7 @@ export default class ContinuingcareRecordsCase extends LightningElement {
                 );   
             } 
             else if(data.passedResult == 'Partial Success'){
-                this.draftValues = [];
+               
                 this.dispatchEvent(
                     new ShowToastEvent({
                         title: 'Warning',
@@ -354,7 +357,7 @@ export default class ContinuingcareRecordsCase extends LightningElement {
                 );
             }   
             if(error){
-                this.draftValues = [];
+              
                 this.dispatchEvent(
                     new ShowToastEvent({
                         title: 'Error',

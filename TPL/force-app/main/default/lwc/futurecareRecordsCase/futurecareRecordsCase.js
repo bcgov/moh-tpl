@@ -289,10 +289,10 @@ export default class FuturecareRecordsCase extends LightningElement {
     }
     
     handleSave(){
-        var el = this.template.querySelector('c-custom-data-table ');
+        var el = this.template.querySelector('c-custom-data-table');
         var selected = el.getSelectedRows();
         selected = this.draftValues;
-      
+        
         for(var i =0; i < selected.length;i++){ 
             let index = this.draftValues.findIndex(e=>e.Id === selected[i].Id);
             if(index > -1 ){
@@ -301,8 +301,7 @@ export default class FuturecareRecordsCase extends LightningElement {
                 }
                 if(selected[i].Description__c != this.draftValues[index].Description__c){
                     selected[i].Description__c = this.draftValues[index].Description__c;
-                }
-                   
+                }                 
             }
         }
              
@@ -310,14 +309,15 @@ export default class FuturecareRecordsCase extends LightningElement {
         .then((data,error) => {
             this.updateMessage = data.actionMessage;
             this.onLoad();
+            this.showSection = false;
+            this.draftValues = [];
             if(this.updateMessage){
                 this.updateMessage = this.updateMessage.replace(/\r\n/g, "<br />");
                 this.showErrorMessage = true;
             }
               
             if(data.passedResult == 'Passed'){
-                this.showSection = false;
-                this.draftValues = [];
+              
                 this.dispatchEvent(
                     new ShowToastEvent({
                         title: 'Success',
@@ -328,8 +328,7 @@ export default class FuturecareRecordsCase extends LightningElement {
                                
             }
             else if(data.passedResult == 'Failed' || data.passedResult == null){
-                this.showSection = false;
-                this.draftValues = [];   
+               
                 this.dispatchEvent(
                     new ShowToastEvent({
                         title: 'Error',
@@ -339,8 +338,7 @@ export default class FuturecareRecordsCase extends LightningElement {
                 );   
             } 
             else if(data.passedResult == 'Partial Success'){
-                this.showSection = false;
-                this.draftValues = [];
+              
                 this.dispatchEvent(
                     new ShowToastEvent({
                         title: 'Warning',
@@ -350,8 +348,7 @@ export default class FuturecareRecordsCase extends LightningElement {
                 );
             }   
             if(error){
-                this.showSection = false;
-                this.draftValues = [];
+               
                 this.dispatchEvent(
                     new ShowToastEvent({
                         title: 'Error',

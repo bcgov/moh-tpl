@@ -357,14 +357,15 @@ export default class PharmacareRecordsCase extends LightningElement {
         .then((data,error) => {
             this.updateMessage = data.actionMessage;
             this.onLoad();    
+            this.draftValues = [];  
+            this.showSection = false;
             if(this.updateMessage){
                 this.updateMessage = this.updateMessage.replace(/\r\n/g, "<br />");
                 this.showErrorMessage = true;
             }
                
             if(data.passedResult == 'Passed'){
-                this.draftValues = [];  
-                this.showSection = false;
+               
                 this.dispatchEvent(
                     new ShowToastEvent({
                         title: 'Success',
@@ -375,8 +376,7 @@ export default class PharmacareRecordsCase extends LightningElement {
                                
             }
             else if(data.passedResult == 'Failed' || data.passedResult == null){
-                this.draftValues = [];   
-                this.showSection = false;
+              
                 this.dispatchEvent(
                     new ShowToastEvent({
                         title: 'Error',
@@ -387,8 +387,7 @@ export default class PharmacareRecordsCase extends LightningElement {
             } 
         
             else if(data.passedResult == 'Partial Success'){
-                this.draftValues = [];
-                this.showSection = false;
+             
                 this.dispatchEvent(
                     new ShowToastEvent({
                         title: 'Warning',
@@ -398,7 +397,7 @@ export default class PharmacareRecordsCase extends LightningElement {
                 );
             }   
             if(error){
-                this.draftValues = [];
+              
                 this.dispatchEvent(
                     new ShowToastEvent({
                         title: 'Error',

@@ -42,7 +42,7 @@ const MANUAL_COLUMNS = [
         label: 'Site Code',
         fieldName: 'Site_Code__c',
         type: 'text',
-        editable: true,
+        editable: false,
         sortable: true
     },
     {
@@ -129,7 +129,7 @@ const INTEGRATION_COLUMNS = [
         label: 'Site Code',
         fieldName: 'Site_Code__c',
         type: 'text',
-        editable: true,
+        editable: false,
         sortable: true
     },
     {
@@ -676,15 +676,15 @@ export default class AmbulanceRecordsCase extends LightningElement {
         .then((data,error) => {
             this.updateMessage = data.actionMessage;
             this.onLoad();
-
+            this.showSection = false;
+            this.draftValues = [];  
             if(this.updateMessage){
                 this.updateMessage = this.updateMessage.replace(/\r\n/g, "<br />");
                 this.showErrorMessage = true;
             }
             
             if(data.passedResult == 'Passed'){
-                this.showSection = false;
-                this.draftValues = [];  
+              
                 this.dispatchEvent(
                     new ShowToastEvent({
                         title: 'Success',
@@ -695,8 +695,7 @@ export default class AmbulanceRecordsCase extends LightningElement {
                              
             }
             else if(data.passedResult == 'Failed' || data.passedResult == null){
-                this.showSection = false;
-                this.draftValues = []; 
+                
                 this.dispatchEvent(
                     new ShowToastEvent({
                         title: 'Error',
@@ -706,8 +705,7 @@ export default class AmbulanceRecordsCase extends LightningElement {
                 );   
             } 
             else if(data.passedResult == 'Partial Success'){
-                this.showSection = false;
-                this.draftValues = [];
+                
                 this.dispatchEvent(
                     new ShowToastEvent({
                         title: 'Warning',
@@ -717,7 +715,7 @@ export default class AmbulanceRecordsCase extends LightningElement {
                 );
             }   
             if(error){
-                this.draftValues = [];
+              
                 this.dispatchEvent(
                     new ShowToastEvent({
                         title: 'Error',
