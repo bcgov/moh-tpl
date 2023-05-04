@@ -307,7 +307,7 @@ const MANUAL_COLUMNS = [
         label: 'Total Cost Override',
         fieldName: 'Total_Cost_Override__c',
         type: 'currency',
-        editable: true,
+        editable: false,
         sortable: true
     },
     {
@@ -900,14 +900,15 @@ export default class HospitalRecordsCase extends LightningElement {
         .then((data,error) => {
             this.updateMessage = data.actionMessage;
             this.onLoad();      
+            this.showSection = false;
+            this.draftValues = [];  
             if(this.updateMessage){
                 this.updateMessage = this.updateMessage.replace(/\r\n/g, "<br />");
                 this.showErrorMessage = true;
             }
             
             if(data.passedResult == 'Passed'){
-                this.showSection = false;
-                this.draftValues = [];  
+              
                 this.dispatchEvent(
                     new ShowToastEvent({
                         title: 'Success',
@@ -918,8 +919,7 @@ export default class HospitalRecordsCase extends LightningElement {
                              
             }
             else if(data.passedResult == 'Failed' || data.passedResult == null){
-                this.showSection = false;
-                this.draftValues = [];   
+                
                 this.dispatchEvent(
                     new ShowToastEvent({
                         title: 'Error',
@@ -929,8 +929,7 @@ export default class HospitalRecordsCase extends LightningElement {
                 );   
             } 
             else if(data.passedResult == 'Partial Success'){
-                this.showSection = false;
-                this.draftValues = [];
+            
                 this.dispatchEvent(
                     new ShowToastEvent({
                         title: 'Warning',
@@ -940,7 +939,7 @@ export default class HospitalRecordsCase extends LightningElement {
                 );
             }   
             if(error){
-                this.draftValues = [];
+              
                 this.dispatchEvent(
                     new ShowToastEvent({
                         title: 'Error',
