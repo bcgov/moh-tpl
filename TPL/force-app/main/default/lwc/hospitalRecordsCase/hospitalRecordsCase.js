@@ -457,24 +457,28 @@ export default class HospitalRecordsCase extends LightningElement {
     }
     previousPage() {
         this.showSection = false;
+        this.draftValues = [];
         this.pageNumber = this.pageNumber - 1;
         this.onLoad();
    
     }
     nextPage() {
         this.showSection = false;
+        this.draftValues = [];
         this.pageNumber = this.pageNumber + 1;
        this.onLoad();
     }
 
     firstPage() {
         this.showSection = false;
+        this.draftValues = [];
         this.pageNumber = 1;
         this.onLoad();
     }
 
     lastPage() {
         this.showSection = false;
+        this.draftValues = [];
         this.pageNumber = this.totalPages;
       
         this.onLoad();
@@ -827,18 +831,6 @@ export default class HospitalRecordsCase extends LightningElement {
         var selected = el.getSelectedRows();
         selected = this.draftValues;
 
-        if(selected.length <= 0){
-            this.dispatchEvent(
-                new ShowToastEvent({
-                    title: 'Review',
-                    message: 'Please select the record being edited before continuing to save',
-                    variant: 'warning'
-                })
-            );    
-        }
-        else{
-
-        
         for(var i =0; i < selected.length;i++){ 
           
             let index = this.draftValues.findIndex(e=>e.Id === selected[i].Id);
@@ -958,12 +950,14 @@ export default class HospitalRecordsCase extends LightningElement {
                 ); 
             }
             return this.refresh();
+            }). catch(error =>{
+
             })
         }
-            
-    }
     
     handleRefresh(){
         this.onLoad();
-    }
+    }     
 }
+    
+  

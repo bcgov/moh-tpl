@@ -189,6 +189,7 @@ export default class AmbulanceRecordsCase extends LightningElement {
     showErrorMessage = false;
     updateMessage='';
     selectedFilter= 'All Records';
+    showSection = false;
     filterOptions = [
         { label: 'All Records', value: 'All Records' },
         { label: 'Manual Records', value: 'Manual Records' },
@@ -302,21 +303,29 @@ export default class AmbulanceRecordsCase extends LightningElement {
     }
     previousPage() {
         this.pageNumber = this.pageNumber - 1;
+        this.showSection = false;
+        this.draftValues = [];
         this.onLoad();
    
     }
     nextPage() {
         this.pageNumber = this.pageNumber + 1;
-       this.onLoad();
+        this.showSection = false;
+        this.draftValues = [];
+        this.onLoad();
     }
 
     firstPage() {
         this.pageNumber = 1;
+        this.showSection = false;
+        this.draftValues = [];
         this.onLoad();
     }
 
     lastPage() {
         this.pageNumber = this.totalPages;
+        this.showSection = false;
+        this.draftValues = [];
         this.onLoad();
     }
 
@@ -407,6 +416,7 @@ export default class AmbulanceRecordsCase extends LightningElement {
        // this.updateDataValues(updatedItem);
     }
     handleCellChange(event){
+        this.showSection = true;
         for(let i = 0 ; i < event.detail.draftValues.length;i++){
             let index = this.draftValues.findIndex(e=>e.Id === event.detail.draftValues[i].Id);
             if(index > -1 ){
@@ -468,17 +478,18 @@ export default class AmbulanceRecordsCase extends LightningElement {
 
     handleCancel(event) {
         event.preventDefault();
+        this.showSection = false;
         this.records = JSON.parse(JSON.stringify(this.lastSavedData));
         this.handleWindowOnclick('reset');
         this.draftValues = [];
         return this.refresh();
     }
 
-      handleEdit(event) {
+    handleEdit(event) {
         event.preventDefault();
+        this.showSection = true;
         let dataRecieved = event.detail.data;
         this.handleWindowOnclick(dataRecieved.context);
-      
         switch (dataRecieved.label) {
             case 'Account':
                 this.setClassesOnData(
@@ -608,17 +619,8 @@ export default class AmbulanceRecordsCase extends LightningElement {
         var el = this.template.querySelector('c-custom-data-table');
         var selected = el.getSelectedRows();
         selected = this.draftValues;
-        if(selected.length <= 0){
-            this.dispatchEvent(
-                new ShowToastEvent({
-                    title: 'Review',
-                    message: 'Please select the record being edited before continuing to save',
-                    variant: 'warning'
-                })
-            );    
-        }
-        else{
-            for(var i =0; i < selected.length;i++){ 
+       
+        for(var i =0; i < selected.length;i++){ 
                
                 let index = this.draftValues.findIndex(e=>e.Id === selected[i].Id);
                 if(index > -1 ){
@@ -649,8 +651,8 @@ export default class AmbulanceRecordsCase extends LightningElement {
                     if(selected[i].Source_System_ID__c != this.draftValues[index].Source_System_ID__c) {
                         selected[i].Source_System_ID__c = this.draftValues[index].Source_System_ID__c;
                     }
-                }
-            } 
+                
+        } 
         
         saveDraftValues({data: selected, recordDisplay: this.recordsToDisplay})
         .then((data,error) => {
@@ -663,6 +665,7 @@ export default class AmbulanceRecordsCase extends LightningElement {
             }
             
             if(data.passedResult == 'Passed'){
+                this.showSection = false;
                 this.draftValues = [];  
                 this.dispatchEvent(
                     new ShowToastEvent({
@@ -674,6 +677,7 @@ export default class AmbulanceRecordsCase extends LightningElement {
                              
             }
             else if(data.passedResult == 'Failed' || data.passedResult == null){
+                this.showSection = false;
                 this.draftValues = []; 
                 this.dispatchEvent(
                     new ShowToastEvent({
@@ -684,6 +688,7 @@ export default class AmbulanceRecordsCase extends LightningElement {
                 );   
             } 
             else if(data.passedResult == 'Partial Success'){
+                this.showSection = false;
                 this.draftValues = [];
                 this.dispatchEvent(
                     new ShowToastEvent({

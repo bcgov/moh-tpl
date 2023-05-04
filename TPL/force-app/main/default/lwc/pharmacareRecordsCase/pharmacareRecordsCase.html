@@ -38,17 +38,17 @@
                     </p>
                 </div> <br>
             </template>
-                <lightning-datatable
-                    key-field="Id"
-                    data={recordsToDisplay}
-                    columns={column}
-                    onsave={handleSave}
-                    sorted-by={sortBy}
-                    sorted-direction={sortDirection}
-                    onsort={doSorting}
-                    draft-values={draftValues} show-row-number-column="false" style="width: auto; height: 500px;" >
-                </lightning-datatable>
-            
+            <c-custom-data-table class="slds-max-medium-table_stacked" onvaluechange={handleValueChange} oncellchange={handleCellChange}
+            data={recordsToDisplay} columns={column} show-row-number-column="false" onedit={handleEdit}
+            key-field="Id" draft-values={draftValues}  data-record="Id" min-column-width="150" 
+            style="width: auto; height: 500px;" suppress-bottom-bar	>
+            </c-custom-data-table>
+               <template if:true={showSection}>
+                    <div class="slds-align_absolute-center slds-modal__footer">
+                    <button class="slds-button slds-button_neutral" type="button" onclick={handleCancel}>Cancel</button>
+                    <button class="slds-button slds-button_brand save-btn" type="button" onclick={handleSave}>Save</button>
+                </div>
+                </template>    
             <template if:true={recordsToDisplay.error}>
                 <!-- handle Apex error -->
             </template>
