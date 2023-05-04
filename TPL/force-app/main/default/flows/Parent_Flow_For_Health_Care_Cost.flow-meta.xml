@@ -30,7 +30,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Update_Health_Care_Cost_Fields_On_Update</targetReference>
+            <targetReference>Update_HealthCare_Cost</targetReference>
         </connector>
     </assignments>
     <decisions>
@@ -314,15 +314,14 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </subflows>
     <subflows>
-        <description>This flow would be called based on the update made on Health Care Cost Object.</description>
-        <name>Update_Health_Care_Cost_Fields_On_Update</name>
-        <label>Update Health Care Cost Fields On Update</label>
+        <name>Update_HealthCare_Cost</name>
+        <label>Update HealthCare Cost</label>
         <locationX>1106</locationX>
         <locationY>695</locationY>
         <connector>
             <targetReference>Check_Record_Type_1</targetReference>
         </connector>
-        <flowName>Update_Health_Care_Cost_Fields_On_Update</flowName>
+        <flowName>Update_Health_Care_Cost_Fields_On_Create</flowName>
         <inputAssignments>
             <name>updatedHealthCareCost</name>
             <value>
