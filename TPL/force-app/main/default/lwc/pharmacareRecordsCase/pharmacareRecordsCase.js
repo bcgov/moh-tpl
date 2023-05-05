@@ -354,17 +354,17 @@ export default class PharmacareRecordsCase extends LightningElement {
             }
         }
 
-        saveDraftValues({data: selected, recordDisplay: this.recordsToDisplay })
+        saveDraftValues({data: selected, recordDisplay: this.recordsToDisplay, recordType: 'Pharmacare' })
         .then((data,error) => {
             this.updateMessage = data.actionMessage;
-            this.onLoad();    
+            this.recordsToDisplay = data.updatedRecords;
             this.draftValues = [];  
             this.showSection = false;
             if(this.updateMessage){
                 this.updateMessage = this.updateMessage.replace(/\r\n/g, "<br />");
                 this.showErrorMessage = true;
             }
-               
+            this.recordsToDisplay = updatedRecords;
             if(data.passedResult == 'Passed'){
                
                 this.dispatchEvent(

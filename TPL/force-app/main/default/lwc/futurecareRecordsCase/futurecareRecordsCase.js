@@ -307,12 +307,13 @@ export default class FuturecareRecordsCase extends LightningElement {
             }
         }
              
-        saveDraftValues({data: selected, recordDisplay: this.recordsToDisplay })
+        saveDraftValues({data: selected, recordDisplay: this.recordsToDisplay, recordType: 'Future Care' })
         .then((data,error) => {
             this.updateMessage = data.actionMessage;
-            this.onLoad();
             this.showSection = false;
             this.draftValues = [];
+            this.recordsToDisplay = data.updatedRecords;
+
             if(this.updateMessage){
                 this.updateMessage = this.updateMessage.replace(/\r\n/g, "<br />");
                 this.showErrorMessage = true;
