@@ -1,19 +1,20 @@
 public with sharing class HCCCostController {
 
     @AuraEnabled
-    public static CaseListWrapper saveDraftValues(Object data , List<Healthcare_Cost__c> recordDisplay ) {
+    public static CaseListWrapper saveDraftValues(Object data , List<Healthcare_Cost__c> recordDisplay,String recordType ) {
         String result = '';
         String passedResult = '';
         List<Healthcare_Cost__c> listOfHealthcareCost = (List<Healthcare_Cost__c>) JSON.deserialize(
             JSON.serialize(data),
             List<Healthcare_Cost__c>.class
         );
-     
         CaseListWrapper caseListWrapper = new CaseListWrapper();
         Map<Id, Integer> rowCountMap = new Map<Id,Integer>();
+        Map<Id,Healthcare_Cost__c> healthCareMap = new Map<Id,Healthcare_Cost__c>();
         Integer index = 1;
         for(Healthcare_Cost__c hcc: recordDisplay){
             rowCountMap.put(hcc.Id, index);
+            healthCareMap.put(hcc.Id,hcc);
             index++;
         }   
 
@@ -33,23 +34,51 @@ public with sharing class HCCCostController {
                   
                 }
             }
+            String fields = '';
+            if(recordType == 'Ambulance'){
+                fields = Label.TPL_Ambulance_Fields;
+            }
+            else if(recordType == 'MSP'){
+                fields = Label.TPL_MSP_Fields;
+            }
+            else if(recordType == 'Hospitalization'){
+                fields = Label.TPL_Hospitalization_Fields;
+            }
+            else if(recordType == 'Pharmacare')
+            {
+                fields = Label.TPL_Pharmacare_Fields;
+            }
+            else if(recordType == 'Continuing Care')
+            {
+                fields = Label.TPL_Continuing_Care_Fields;
+            }
+            else if(recordType == 'Future Care'){
+                fields = Label.TPL_Future_Care_Fields;
+            }
+
             caseListWrapper.actionMessage = result;
             caseListWrapper.indexNumbers = capturedIndex;
-
+            String query =  'SELECT ' + fields + ' FROM Healthcare_Cost__c WHERE ID IN:recordDisplay ';
+            
+           List<Healthcare_Cost__c> updatedRecords = database.query(query);
             if(capturedIndex.size() == listOfHealthcareCost.size()){
                 caseListWrapper.passedResult = Label.TPL_Passed;
+                caseListWrapper.updatedRecords = updatedRecords;
             }
             else if(capturedIndex.size() > 0){
                 caseListWrapper.passedResult = Label.TPL_Partial_Success;
+                caseListWrapper.updatedRecords = updatedRecords;
             }
             else if(capturedIndex.size() == 0){
                 caseListWrapper.passedResult = Label.TPL_Failed;
+                caseListWrapper.updatedRecords = updatedRecords;
             }
             
         }
         else{
             caseListWrapper.passedResult = Label.TPL_Failed;
         }
+        System.debug(caseListWrapper);
         return caseListWrapper;
     }
 
@@ -165,11 +194,21 @@ public with sharing class HCCCostController {
         }
         return result; 
     }
+    @AuraEnabled
+    public static void getFacilityBySiteCode(String siteCode){
+        try {
+            Account acc = [select id from account where Site_Code__c =: siteCode LIMIT 1];
+            System.debug(acc);
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
+        }
+    }
 
     public class CaseListWrapper{
        @AuraEnabled public String actionMessage {get;set;}
        @AuraEnabled public String passedResult {get;set;}
        @AuraEnabled public List<Integer> indexNumbers {get;set;}
+       @AuraEnabled public List<Healthcare_Cost__c> updatedRecords{get;set;}
     }
       
     public class HCCostAccountCaseWrapper{

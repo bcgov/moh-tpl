@@ -672,10 +672,10 @@ export default class AmbulanceRecordsCase extends LightningElement {
                 
         } 
         
-        saveDraftValues({data: selected, recordDisplay: this.recordsToDisplay})
+        saveDraftValues({data: selected, recordDisplay: this.recordsToDisplay, recordType: 'Ambulance'})
         .then((data,error) => {
             this.updateMessage = data.actionMessage;
-            this.onLoad();
+            this.recordsToDisplay = data.updatedRecords;
             this.showSection = false;
             this.draftValues = [];  
             if(this.updateMessage){

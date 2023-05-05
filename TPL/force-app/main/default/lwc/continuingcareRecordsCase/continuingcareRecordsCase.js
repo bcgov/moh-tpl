@@ -314,12 +314,12 @@ export default class ContinuingcareRecordsCase extends LightningElement {
             }
         }
              
-        saveDraftValues({data: selected, recordDisplay: this.recordsToDisplay })
+        saveDraftValues({data: selected, recordDisplay: this.recordsToDisplay, recordType: 'Continuing Care' })
         .then((data,error) => {
             this.updateMessage = data.actionMessage;
-            this.onLoad();
             this.draftValues = [];  
             this.showSection = false;
+            this.recordsToDisplay = data.updatedRecords;
 
             if(this.updateMessage){
                 this.updateMessage = this.updateMessage.replace(/\r\n/g, "<br />");
