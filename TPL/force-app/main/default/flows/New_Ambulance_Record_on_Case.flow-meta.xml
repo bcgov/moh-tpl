@@ -4,8 +4,8 @@
     <assignments>
         <name>Assign_Cache_Values</name>
         <label>Assign Cache Values</label>
-        <locationX>572</locationX>
-        <locationY>758</locationY>
+        <locationX>578</locationX>
+        <locationY>1082</locationY>
         <assignmentItems>
             <assignToReference>ErrorMessage</assignToReference>
             <operator>Assign</operator>
@@ -70,8 +70,8 @@
     <assignments>
         <name>Copy_1_of_Assign_Cache_Values</name>
         <label>Copy 1 of Assign Cache Values</label>
-        <locationX>308</locationX>
-        <locationY>758</locationY>
+        <locationX>314</locationX>
+        <locationY>1082</locationY>
         <assignmentItems>
             <assignToReference>ErrorMessage</assignToReference>
             <operator>Assign</operator>
@@ -116,8 +116,8 @@
     <decisions>
         <name>Empty_Record_Check</name>
         <label>Empty Record Check</label>
-        <locationX>176</locationX>
-        <locationY>518</locationY>
+        <locationX>182</locationX>
+        <locationY>866</locationY>
         <defaultConnector>
             <targetReference>New_Ambulance</targetReference>
         </defaultConnector>
@@ -127,7 +127,10 @@
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>Date_of_Service</leftValueReference>
-                <operator>EqualTo</operator>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
             </conditions>
             <conditions>
                 <leftValueReference>Location_Responded</leftValueReference>
@@ -145,25 +148,62 @@
             </conditions>
             <conditions>
                 <leftValueReference>Total_Cost_Override</leftValueReference>
-                <operator>EqualTo</operator>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
             </conditions>
             <conditions>
                 <leftValueReference>Fixed_Wing_Helicopter</leftValueReference>
-                <operator>EqualTo</operator>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
             </conditions>
             <conditions>
                 <leftValueReference>Cost</leftValueReference>
-                <operator>EqualTo</operator>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
             </conditions>
             <conditions>
                 <leftValueReference>Sub_Total</leftValueReference>
-                <operator>EqualTo</operator>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
             </conditions>
             <connector>
                 <isGoTo>true</isGoTo>
                 <targetReference>New_Ambulance_Record_Screen</targetReference>
             </connector>
             <label>Empty Record</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Site_Code_Null_Check</name>
+        <label>Site Code Null Check</label>
+        <locationX>182</locationX>
+        <locationY>566</locationY>
+        <defaultConnector>
+            <targetReference>Empty_Record_Check</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Site_Code_Not_Null</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Facility_Code</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Facility</targetReference>
+            </connector>
+            <label>Site Code - Not Null</label>
         </rules>
     </decisions>
     <description>This flow is used to create Manual HCC - Ambulance Record</description>
@@ -202,8 +242,8 @@
     <recordCreates>
         <name>New_Ambulance</name>
         <label>New Ambulance</label>
-        <locationX>308</locationX>
-        <locationY>638</locationY>
+        <locationX>314</locationX>
+        <locationY>974</locationY>
         <connector>
             <targetReference>Copy_1_of_Assign_Cache_Values</targetReference>
         </connector>
@@ -249,7 +289,7 @@
         <inputAssignments>
             <field>Facility__c</field>
             <value>
-                <elementReference>StoreFacility</elementReference>
+                <elementReference>facilityrecordId</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -279,7 +319,13 @@
         <inputAssignments>
             <field>RecordTypeId</field>
             <value>
-                <elementReference>Hospitalization_recordTypeId</elementReference>
+                <elementReference>Ambulance_recordTypeId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Site_Code__c</field>
+            <value>
+                <elementReference>StoreFacility</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -298,34 +344,13 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
     <recordLookups>
-        <name>Get_Case_Record</name>
-        <label>Get Case Record</label>
-        <locationX>176</locationX>
-        <locationY>158</locationY>
+        <name>Get_Ambulance_Record_Type</name>
+        <label>Get Ambulance Record Type</label>
+        <locationX>182</locationX>
+        <locationY>242</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Get_Hospitalization_Record_Type</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>recordId</elementReference>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>Case</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordLookups>
-        <name>Get_Hospitalization_Record_Type</name>
-        <label>Get Hospitalization Record Type</label>
-        <locationX>176</locationX>
-        <locationY>278</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>New_Ambulance_Record_Screen</targetReference>
+            <targetReference>Get_Facility_Record_Type</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -344,20 +369,105 @@
         </filters>
         <object>RecordType</object>
         <outputAssignments>
-            <assignToReference>Hospitalization_recordTypeId</assignToReference>
+            <assignToReference>Ambulance_recordTypeId</assignToReference>
+            <field>Id</field>
+        </outputAssignments>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Case_Record</name>
+        <label>Get Case Record</label>
+        <locationX>182</locationX>
+        <locationY>134</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_Ambulance_Record_Type</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Facility</name>
+        <label>Get Facility</label>
+        <locationX>50</locationX>
+        <locationY>674</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Empty_Record_Check</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Site_Code__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Facility_Code</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>RecordTypeId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Facility_recordTypeId</elementReference>
+            </value>
+        </filters>
+        <object>Account</object>
+        <outputAssignments>
+            <assignToReference>facilityrecordId</assignToReference>
+            <field>Id</field>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>StoreFacility</assignToReference>
+            <field>Site_Code__c</field>
+        </outputAssignments>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Facility_Record_Type</name>
+        <label>Get Facility Record Type</label>
+        <locationX>182</locationX>
+        <locationY>350</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>New_Ambulance_Record_Screen</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>SobjectType</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Account</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Facility</stringValue>
+            </value>
+        </filters>
+        <object>RecordType</object>
+        <outputAssignments>
+            <assignToReference>Facility_recordTypeId</assignToReference>
             <field>Id</field>
         </outputAssignments>
     </recordLookups>
     <screens>
         <name>New_Ambulance_Record_Screen</name>
         <label>New Ambulance Record Screen</label>
-        <locationX>176</locationX>
-        <locationY>398</locationY>
+        <locationX>182</locationX>
+        <locationY>458</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>Empty_Record_Check</targetReference>
+            <targetReference>Site_Code_Null_Check</targetReference>
         </connector>
         <fields>
             <name>New_Ambulance_Record_Screen_Section1</name>
@@ -412,39 +522,14 @@
                 <name>New_Ambulance_Record_Screen_Section1_Column3</name>
                 <fieldType>Region</fieldType>
                 <fields>
-                    <name>FacilityLookup</name>
-                    <extensionName>flowruntime:lookup</extensionName>
-                    <fieldType>ComponentInstance</fieldType>
-                    <inputParameters>
-                        <name>fieldApiName</name>
-                        <value>
-                            <stringValue>Facility__c</stringValue>
-                        </value>
-                    </inputParameters>
-                    <inputParameters>
-                        <name>label</name>
-                        <value>
-                            <stringValue>Facility</stringValue>
-                        </value>
-                    </inputParameters>
-                    <inputParameters>
-                        <name>objectApiName</name>
-                        <value>
-                            <stringValue>Healthcare_Cost__c</stringValue>
-                        </value>
-                    </inputParameters>
-                    <inputParameters>
-                        <name>recordId</name>
-                        <value>
-                            <elementReference>StoreFacility</elementReference>
-                        </value>
-                    </inputParameters>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-                    <isRequired>true</isRequired>
-                    <outputParameters>
-                        <assignToReference>StoreFacility</assignToReference>
-                        <name>recordId</name>
-                    </outputParameters>
+                    <name>Facility_Code</name>
+                    <dataType>String</dataType>
+                    <defaultValue>
+                        <elementReference>StoreFacility</elementReference>
+                    </defaultValue>
+                    <fieldText>Facility Code</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>false</isRequired>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -588,13 +673,20 @@
         <showHeader>true</showHeader>
     </screens>
     <start>
-        <locationX>50</locationX>
+        <locationX>56</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Case_Record</targetReference>
         </connector>
     </start>
     <status>Active</status>
+    <variables>
+        <name>Ambulance_recordTypeId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
     <variables>
         <name>CostVariable</name>
         <dataType>Currency</dataType>
@@ -625,19 +717,26 @@
         <isOutput>false</isOutput>
     </variables>
     <variables>
+        <name>Facility_recordTypeId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>facilityrecordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
         <name>FixedWingHelicopter</name>
         <dataType>Currency</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <scale>2</scale>
-    </variables>
-    <variables>
-        <name>Hospitalization_recordTypeId</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
     </variables>
     <variables>
         <name>LocationResponded</name>

@@ -5,7 +5,7 @@
         <name>Assign_Cache_Values</name>
         <label>Assign Cache Values</label>
         <locationX>572</locationX>
-        <locationY>758</locationY>
+        <locationY>674</locationY>
         <assignmentItems>
             <assignToReference>DateofService</assignToReference>
             <operator>Assign</operator>
@@ -162,7 +162,7 @@
         <name>Copy_1_of_Assign_Cache_Values</name>
         <label>Copy 1 of Assign Cache Values</label>
         <locationX>308</locationX>
-        <locationY>758</locationY>
+        <locationY>674</locationY>
         <assignmentItems>
             <assignToReference>DateofService</assignToReference>
             <operator>Assign</operator>
@@ -260,7 +260,7 @@
         <name>Empty_Record_Check</name>
         <label>Empty Record Check</label>
         <locationX>176</locationX>
-        <locationY>518</locationY>
+        <locationY>458</locationY>
         <defaultConnector>
             <targetReference>New_MSP</targetReference>
         </defaultConnector>
@@ -270,13 +270,16 @@
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>Date_of_Service</leftValueReference>
-                <operator>EqualTo</operator>
-            </conditions>
-            <conditions>
-                <leftValueReference>StoreFacility</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>StoreFacility</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
                 </rightValue>
             </conditions>
             <conditions>
@@ -337,11 +340,17 @@
             </conditions>
             <conditions>
                 <leftValueReference>Amount_Paid</leftValueReference>
-                <operator>EqualTo</operator>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
             </conditions>
             <conditions>
                 <leftValueReference>Total_Cost_Override</leftValueReference>
-                <operator>EqualTo</operator>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
             </conditions>
             <conditions>
                 <leftValueReference>Speciality_Code</leftValueReference>
@@ -373,11 +382,17 @@
             </conditions>
             <conditions>
                 <leftValueReference>Service_Start_Date</leftValueReference>
-                <operator>EqualTo</operator>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
             </conditions>
             <conditions>
                 <leftValueReference>Service_Finish_Date</leftValueReference>
-                <operator>EqualTo</operator>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
             </conditions>
             <conditions>
                 <leftValueReference>Location_Type_Code</leftValueReference>
@@ -437,7 +452,7 @@
         <name>New_MSP</name>
         <label>New MSP</label>
         <locationX>308</locationX>
-        <locationY>638</locationY>
+        <locationY>566</locationY>
         <connector>
             <targetReference>Copy_1_of_Assign_Cache_Values</targetReference>
         </connector>
@@ -613,7 +628,7 @@
         <name>Get_Case_Record</name>
         <label>Get Case Record</label>
         <locationX>176</locationX>
-        <locationY>158</locationY>
+        <locationY>134</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_MSP_Record_Type</targetReference>
@@ -634,7 +649,7 @@
         <name>Get_MSP_Record_Type</name>
         <label>Get MSP Record Type</label>
         <locationX>176</locationX>
-        <locationY>278</locationY>
+        <locationY>242</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>New_MSP_Record_Screen</targetReference>
@@ -664,7 +679,7 @@
         <name>New_MSP_Record_Screen</name>
         <label>New MSP Record Screen</label>
         <locationX>176</locationX>
-        <locationY>398</locationY>
+        <locationY>350</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
