@@ -5,7 +5,7 @@
         <name>Assign_Cache_Values</name>
         <label>Assign Cache Values</label>
         <locationX>572</locationX>
-        <locationY>758</locationY>
+        <locationY>674</locationY>
         <assignmentItems>
             <assignToReference>DateofService</assignToReference>
             <operator>Assign</operator>
@@ -71,7 +71,7 @@
         <name>Copy_1_of_Assign_Cache_Values</name>
         <label>Copy 1 of Assign Cache Values</label>
         <locationX>308</locationX>
-        <locationY>758</locationY>
+        <locationY>674</locationY>
         <assignmentItems>
             <assignToReference>DateofService</assignToReference>
             <operator>Assign</operator>
@@ -113,7 +113,7 @@
         <name>Empty_Record_Check</name>
         <label>Empty Record Check</label>
         <locationX>176</locationX>
-        <locationY>518</locationY>
+        <locationY>458</locationY>
         <defaultConnector>
             <targetReference>New_Pharmacare</targetReference>
         </defaultConnector>
@@ -123,7 +123,10 @@
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>Date_of_Service</leftValueReference>
-                <operator>EqualTo</operator>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
             </conditions>
             <conditions>
                 <leftValueReference>Practitioner_Name</leftValueReference>
@@ -148,11 +151,17 @@
             </conditions>
             <conditions>
                 <leftValueReference>Cost_of_Drug</leftValueReference>
-                <operator>EqualTo</operator>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
             </conditions>
             <conditions>
                 <leftValueReference>Total_Cost_Override</leftValueReference>
-                <operator>EqualTo</operator>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
             </conditions>
             <connector>
                 <isGoTo>true</isGoTo>
@@ -206,7 +215,7 @@
         <name>New_Pharmacare</name>
         <label>New Pharmacare</label>
         <locationX>308</locationX>
-        <locationY>638</locationY>
+        <locationY>566</locationY>
         <connector>
             <targetReference>Copy_1_of_Assign_Cache_Values</targetReference>
         </connector>
@@ -298,7 +307,7 @@
         <name>Get_Case_Record</name>
         <label>Get Case Record</label>
         <locationX>176</locationX>
-        <locationY>158</locationY>
+        <locationY>134</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Pharmacare_Record_Type</targetReference>
@@ -319,7 +328,7 @@
         <name>Get_Pharmacare_Record_Type</name>
         <label>Get Pharmacare Record Type</label>
         <locationX>176</locationX>
-        <locationY>278</locationY>
+        <locationY>242</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>New_Pharmacare_Record_Screen</targetReference>
@@ -349,7 +358,7 @@
         <name>New_Pharmacare_Record_Screen</name>
         <label>New Pharmacare Record Screen</label>
         <locationX>176</locationX>
-        <locationY>398</locationY>
+        <locationY>350</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
