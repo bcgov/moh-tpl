@@ -4,6 +4,7 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import getHealthcareCostsMSPForCase from '@salesforce/apex/HCCostCaseController.getHealthcareCostsMSPForCase';
 import saveDraftValues from '@salesforce/apex/HCCCostController.saveDraftValues'; 
 import deleteHCCRecord from '@salesforce/apex/HCCCostController.deleteHCCRecord';
+import getFacilityBySiteCode from '@salesforce/apex/HCCCostController.getFacilityBySiteCode';
 
 const INTEGRATION_COLUMNS = [
     {
@@ -630,7 +631,9 @@ export default class AmbulanceRecordsCase extends LightningElement {
     }
     handleCellChange(event){
         this.showSection = true;
+        var siteCodeIds = [];
         for(let i = 0 ; i < event.detail.draftValues.length;i++){
+            siteCodeIds.push({id:event.detail.draftValues[i].Id,siteCode:event.detail.draftValues[i].Site_Code__c});
             let index = this.draftValues.findIndex(e=>e.Id === event.detail.draftValues[i].Id);
             if(index > -1 ){
                 if(event.detail.draftValues[i].Cost_Include__c != null){
@@ -732,6 +735,13 @@ export default class AmbulanceRecordsCase extends LightningElement {
                 this.draftValues.push(obj);
             }
         }
+
+        getFacilityBySiteCode({siteCodeIds:siteCodeIds}).then(response=>{
+            
+          
+        }).catch(error=>{
+            
+        })
       
     }
 
@@ -1024,4 +1034,3 @@ export default class AmbulanceRecordsCase extends LightningElement {
         }
            
     }
-   

@@ -4,6 +4,8 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import getHealthcareCostsHospitalForCase from '@salesforce/apex/HCCostCaseController.getHealthcareCostsHospitalForCase';
 import saveDraftValues from '@salesforce/apex/HCCCostController.saveDraftValues'; 
 import deleteHCCRecord from '@salesforce/apex/HCCCostController.deleteHCCRecord';
+import getFacilityBySiteCode from '@salesforce/apex/HCCCostController.getFacilityBySiteCode';
+
 const INTEGRATION_COLUMNS = [
     {
         label: 'Cost Include',
@@ -208,7 +210,7 @@ const MANUAL_COLUMNS = [
         label: 'Site Code',
         fieldName: 'Site_Code__c',
         type: 'text',
-        editable: false,
+        editable: true,
         sortable: false
     },
     {
@@ -586,8 +588,10 @@ export default class HospitalRecordsCase extends LightningElement {
     }
     handleCellChange(event){
         this.showSection = true;
+        var siteCodeIds = [];
         for(let i = 0 ; i < event.detail.draftValues.length;i++){
             let index = this.draftValues.findIndex(e=>e.Id === event.detail.draftValues[i].Id);
+            siteCodeIds.push({id:event.detail.draftValues[i].Id,siteCode:event.detail.draftValues[i].Site_Code__c});
             if(index > -1 ){
                 if(event.detail.draftValues[i].Cost_Include__c != null){
                     this.draftValues[index].Cost_Include__c = event.detail.draftValues[i].Cost_Include__c;
@@ -674,6 +678,12 @@ export default class HospitalRecordsCase extends LightningElement {
                 this.draftValues.push(obj);
             }
         }
+        getFacilityBySiteCode({siteCodeIds:siteCodeIds}).then(response=>{
+            
+          
+        }).catch(error=>{
+            
+        })
      
     }
 
@@ -959,5 +969,3 @@ export default class HospitalRecordsCase extends LightningElement {
         this.onLoad();
     }     
 }
-    
-  
