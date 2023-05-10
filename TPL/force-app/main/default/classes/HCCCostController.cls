@@ -42,6 +42,20 @@ public with sharing class HCCCostController {
             else if(recordType == 'MSP'){
                 fields = Label.TPL_MSP_Fields;
             }
+            else if(recordType == 'Hospitalization'){
+                fields = Label.TPL_Hospitalization_Fields;
+            }
+            else if(recordType == 'Pharmacare')
+            {
+                fields = Label.TPL_Pharmacare_Fields;
+            }
+            else if(recordType == 'Continuing Care')
+            {
+                fields = Label.TPL_Continuing_Care_Fields;
+            }
+            else if(recordType == 'Future Care'){
+                fields = Label.TPL_Future_Care_Fields;
+            }
             
             caseListWrapper.actionMessage = result;
             caseListWrapper.indexNumbers = capturedIndex;
