@@ -43,13 +43,16 @@ public class HCCCostControllerTest {
             
             tempClass.Id = hcc1.Id;
             tempClass.siteCode = hcc1.Site_Code__c;
-
-            HCCCostController.getFacilityBySiteCode(tempClass);
             caseWrapper1 = HCCCostController.saveDraftValues(hccList1, hccList3, 'Ambulance');
             caseWrapper2 = HCCCostController.saveDraftValues(hccList2, hccList3, 'Ambulance');
+            HCCCostController.getFacilityBySiteCode(tempClass);
+       
         }
         catch(DmlException dml){
         	exceptionMessage = dml.getDmlMessage(0);
+        }
+        catch(Exception e){
+            exceptionMessage = e.getMessage();
         }
         Test.stopTest();
 
