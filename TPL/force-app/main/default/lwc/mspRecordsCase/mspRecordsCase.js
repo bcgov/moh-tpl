@@ -735,11 +735,12 @@ export default class AmbulanceRecordsCase extends LightningElement {
                 this.draftValues.push(obj);
             }
         }
+
         getFacilityBySiteCode({siteCodeIds:siteCodeIds}).then(response=>{
-            console.log(response);
+            
           
         }).catch(error=>{
-            console.log(error);
+            
         })
       
     }

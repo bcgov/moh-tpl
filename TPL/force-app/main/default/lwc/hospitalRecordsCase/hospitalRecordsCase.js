@@ -679,10 +679,10 @@ export default class HospitalRecordsCase extends LightningElement {
             }
         }
         getFacilityBySiteCode({siteCodeIds:siteCodeIds}).then(response=>{
-            console.log(response);
+            
           
         }).catch(error=>{
-            console.log(error);
+            
         })
      
     }

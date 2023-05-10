@@ -389,7 +389,7 @@ export default class AmbulanceRecordsCase extends LightningElement {
       //Captures the changed lookup value and updates the records list variable.
       handleValueChange(event) {
         event.stopPropagation();
-        console.log('00');
+  
         let dataRecieved = event.detail.data;
         let updatedItem;
        
@@ -436,7 +436,7 @@ export default class AmbulanceRecordsCase extends LightningElement {
         };
     }
     handleCellChange(event){
-        console.log(JSON.stringify(event.detail.draftValues));
+    
         var siteCodeIds = [];
         this.showSection = true;
         for(let i = 0 ; i < event.detail.draftValues.length;i++){
@@ -490,12 +490,9 @@ export default class AmbulanceRecordsCase extends LightningElement {
             }
             
         }
-        console.log(this.draftValues);
-        getFacilityBySiteCode({siteCodeIds:siteCodeIds}).then(response=>{
-            console.log(response);
-          
+
+        getFacilityBySiteCode({siteCodeIds:siteCodeIds}).then(response=>{       
         }).catch(error=>{
-            console.log(error);
         })
     }
 
@@ -651,7 +648,7 @@ export default class AmbulanceRecordsCase extends LightningElement {
         var el = this.template.querySelector('c-custom-data-table');
         var selected = el.getSelectedRows();
         saveRows = this.draftValues;
-        console.log(this.draftValues);
+
         for(var i =0; i < saveRows.length;i++){ 
                
                 let index = this.draftValues.findIndex(e=>e.Id === saveRows[i].Id);
@@ -685,11 +682,11 @@ export default class AmbulanceRecordsCase extends LightningElement {
                     }
                 
         } 
-        console.log(JSON.stringify(saveRows));
+  
         saveDraftValues({data: saveRows, recordDisplay: this.recordsToDisplay, recordType:'Ambulance'})
         .then((data,error) => {
             this.updateMessage = data.actionMessage;
-            console.log('aa'+JSON.stringify(data.updatedRecords));
+  
             this.recordsToDisplay = data.updatedRecords;
 
             if(this.updateMessage){

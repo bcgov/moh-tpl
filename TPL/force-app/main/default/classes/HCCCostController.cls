@@ -8,7 +8,7 @@ public with sharing class HCCCostController {
             JSON.serialize(data),
             List<Healthcare_Cost__c>.class
         );
-        System.debug(recordDisplay);
+     
         CaseListWrapper caseListWrapper = new CaseListWrapper();
         Map<Id, Integer> rowCountMap = new Map<Id,Integer>();
         Map<Id,Healthcare_Cost__c> healthCareMap = new Map<Id,Healthcare_Cost__c>();
@@ -65,7 +65,6 @@ public with sharing class HCCCostController {
         else{
             caseListWrapper.passedResult = Label.TPL_Failed;
         }
-        System.debug(caseListWrapper);
         return caseListWrapper;
     }
 
@@ -206,8 +205,8 @@ public with sharing class HCCCostController {
                     helathCareMap.put(obj.siteCode,tempStringList);
                 }
             }
-           System.debug(helathCareMap);
-           List<Healthcare_Cost__c> hccUpdate = new List<Healthcare_Cost__c>();
+        
+            List<Healthcare_Cost__c> hccUpdate = new List<Healthcare_Cost__c>();
             List<Account> accList = [select id,name,Site_Code__c from account where Site_Code__c IN:helathCareMap.keySet()  LIMIT 1];
             for(Account a : accList){
                 for(String id : helathCareMap.get(a.Site_Code__c)){
