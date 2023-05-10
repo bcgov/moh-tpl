@@ -8,6 +8,7 @@ public with sharing class HCCCostController {
             JSON.serialize(data),
             List<Healthcare_Cost__c>.class
         );
+        System.debug(recordDisplay);
         CaseListWrapper caseListWrapper = new CaseListWrapper();
         Map<Id, Integer> rowCountMap = new Map<Id,Integer>();
         Map<Id,Healthcare_Cost__c> healthCareMap = new Map<Id,Healthcare_Cost__c>();
@@ -41,21 +42,7 @@ public with sharing class HCCCostController {
             else if(recordType == 'MSP'){
                 fields = Label.TPL_MSP_Fields;
             }
-            else if(recordType == 'Hospitalization'){
-                fields = Label.TPL_Hospitalization_Fields;
-            }
-            else if(recordType == 'Pharmacare')
-            {
-                fields = Label.TPL_Pharmacare_Fields;
-            }
-            else if(recordType == 'Continuing Care')
-            {
-                fields = Label.TPL_Continuing_Care_Fields;
-            }
-            else if(recordType == 'Future Care'){
-                fields = Label.TPL_Future_Care_Fields;
-            }
-
+            
             caseListWrapper.actionMessage = result;
             caseListWrapper.indexNumbers = capturedIndex;
             String query =  'SELECT ' + fields + ' FROM Healthcare_Cost__c WHERE ID IN:recordDisplay ';
@@ -194,16 +181,49 @@ public with sharing class HCCCostController {
         }
         return result; 
     }
+    public class tempClass{
+        public string Id;
+        public string siteCode;
+    }
     @AuraEnabled
-    public static void getFacilityBySiteCode(String siteCode){
+    public static List<Account> getFacilityBySiteCode(Object siteCodeIds){
+        
         try {
-            Account acc = [select id from account where Site_Code__c =: siteCode LIMIT 1];
-            System.debug(acc);
+            List<tempClass> contactsForUpdate = (List<tempClass>) JSON.deserialize(
+         JSON.serialize(siteCodeIds),
+         List<tempClass>.class
+        );
+        Map<String,List<String>> helathCareMap = new Map<String,List<String>>();
+            for(tempClass obj:contactsForUpdate){
+                List<String> tempStringList = new List<String>();
+                if(helathCareMap.containsKey(obj.siteCode)){
+                    tempStringList.addAll(helathCareMap.get(obj.siteCode));
+                    tempStringList.add(obj.Id);
+                    helathCareMap.put(obj.siteCode,tempStringList);
+                }
+                else{
+                    tempStringList.add(obj.Id);
+                    helathCareMap.put(obj.siteCode,tempStringList);
+                }
+            }
+           System.debug(helathCareMap);
+           List<Healthcare_Cost__c> hccUpdate = new List<Healthcare_Cost__c>();
+            List<Account> accList = [select id,name,Site_Code__c from account where Site_Code__c IN:helathCareMap.keySet()  LIMIT 1];
+            for(Account a : accList){
+                for(String id : helathCareMap.get(a.Site_Code__c)){
+                    Healthcare_Cost__c hcc = new Healthcare_Cost__c();
+                    hcc.id = id;
+                    hcc.Facility__c = a.id;
+                    hccUpdate.add(hcc);
+                }
+            }
+            update hccUpdate;
+            return accList;
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
         }
     }
-
+    
     public class CaseListWrapper{
        @AuraEnabled public String actionMessage {get;set;}
        @AuraEnabled public String passedResult {get;set;}

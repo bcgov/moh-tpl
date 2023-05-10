@@ -4,6 +4,7 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import getHealthcareCostsAmbulanceForCase from '@salesforce/apex/HCCostCaseController.getHealthcareCostsAmbulanceForCase';
 import saveDraftValues from '@salesforce/apex/HCCCostController.saveDraftValues'; 
 import deleteHCCRecord from '@salesforce/apex/HCCCostController.deleteHCCRecord';
+import getFacilityBySiteCode from '@salesforce/apex/HCCCostController.getFacilityBySiteCode';
 
 const MANUAL_COLUMNS = [
     {
@@ -42,7 +43,7 @@ const MANUAL_COLUMNS = [
         label: 'Site Code',
         fieldName: 'Site_Code__c',
         type: 'text',
-        editable: false,
+        editable: true,
         sortable: true
     },
     {
@@ -388,6 +389,7 @@ export default class AmbulanceRecordsCase extends LightningElement {
       //Captures the changed lookup value and updates the records list variable.
       handleValueChange(event) {
         event.stopPropagation();
+        console.log('00');
         let dataRecieved = event.detail.data;
         let updatedItem;
        
@@ -434,8 +436,11 @@ export default class AmbulanceRecordsCase extends LightningElement {
         };
     }
     handleCellChange(event){
+        console.log(JSON.stringify(event.detail.draftValues));
+        var siteCodeIds = [];
         this.showSection = true;
         for(let i = 0 ; i < event.detail.draftValues.length;i++){
+            siteCodeIds.push({id:event.detail.draftValues[i].Id,siteCode:event.detail.draftValues[i].Site_Code__c});
             let index = this.draftValues.findIndex(e=>e.Id === event.detail.draftValues[i].Id);
             if(index > -1 ){
                 if(event.detail.draftValues[i].Cost_Include__c != null){
@@ -485,6 +490,13 @@ export default class AmbulanceRecordsCase extends LightningElement {
             }
             
         }
+        console.log(this.draftValues);
+        getFacilityBySiteCode({siteCodeIds:siteCodeIds}).then(response=>{
+            console.log(response);
+          
+        }).catch(error=>{
+            console.log(error);
+        })
     }
 
     handleChange(event) {
@@ -632,59 +644,62 @@ export default class AmbulanceRecordsCase extends LightningElement {
     }
 
     handleSave(event){
+        
         event.preventDefault();
         this.showSpinner = true;
+        let saveRows = [];
         var el = this.template.querySelector('c-custom-data-table');
         var selected = el.getSelectedRows();
-        selected = this.draftValues;
-       
-        for(var i =0; i < selected.length;i++){ 
+        saveRows = this.draftValues;
+        console.log(this.draftValues);
+        for(var i =0; i < saveRows.length;i++){ 
                
-                let index = this.draftValues.findIndex(e=>e.Id === selected[i].Id);
+                let index = this.draftValues.findIndex(e=>e.Id === saveRows[i].Id);
                 if(index > -1 ){
-                    if( selected[i].Cost_Include__c != this.draftValues[index].Cost_Include__c){
-                        selected[i].Cost_Include__c = this.draftValues[index].Cost_Include__c;
+                    if( saveRows[i].Cost_Include__c != this.draftValues[index].Cost_Include__c){
+                        saveRows[i].Cost_Include__c = this.draftValues[index].Cost_Include__c;
                     }
-                    if(selected[i].Cost_Review__c != this.draftValues[index].Cost_Review__c){
-                        selected[i].Cost_Review__c = this.draftValues[index].Cost_Review__c;
+                    if(saveRows[i].Cost_Review__c != this.draftValues[index].Cost_Review__c){
+                        saveRows[i].Cost_Review__c = this.draftValues[index].Cost_Review__c;
                     }
-                    if(selected[i].Date_of_Service__c != this.draftValues[index].Date_of_Service__c){
-                        selected[i].Date_of_Service__c = this.draftValues[index].Date_of_Service__c;
+                    if(saveRows[i].Date_of_Service__c != this.draftValues[index].Date_of_Service__c){
+                        saveRows[i].Date_of_Service__c = this.draftValues[index].Date_of_Service__c;
                     }
-                    if(selected[i].Location_Responded__c != this.draftValues[index].Location_Responded__c){
-                        selected[i].Location_Responded__c = this.draftValues[index].Location_Responded__c;
+                    if(saveRows[i].Location_Responded__c != this.draftValues[index].Location_Responded__c){
+                        saveRows[i].Location_Responded__c = this.draftValues[index].Location_Responded__c;
                     }
-                    if(selected[i].Facility__c != this.draftValues[index].Facility__c){
-                        selected[i].Facility__c = this.draftValues[index].Facility__c;
+                    if(saveRows[i].Facility__c != this.draftValues[index].Facility__c){
+                        saveRows[i].Facility__c = this.draftValues[index].Facility__c;
                     }
-                    if(selected[i].Basic_Amount__c != this.draftValues[index].Basic_Amount__c){
-                        selected[i].Basic_Amount__c = this.draftValues[index].Basic_Amount__c;
+                    if(saveRows[i].Basic_Amount__c != this.draftValues[index].Basic_Amount__c){
+                        saveRows[i].Basic_Amount__c = this.draftValues[index].Basic_Amount__c;
                     }
-                    if(selected[i].Total_Cost_Override__c != this.draftValues[index].Total_Cost_Override__c){
-                        selected[i].Total_Cost_Override__c = this.draftValues[index].Total_Cost_Override__c;
+                    if(saveRows[i].Total_Cost_Override__c != this.draftValues[index].Total_Cost_Override__c){
+                        saveRows[i].Total_Cost_Override__c = this.draftValues[index].Total_Cost_Override__c;
                     }
-                    if(selected[i].Fixed_Wing_Helicopter__c != this.draftValues[index].Fixed_Wing_Helicopter__c) {
-                        selected[i].Fixed_Wing_Helicopter__c = this.draftValues[index].Fixed_Wing_Helicopter__c;
+                    if(saveRows[i].Fixed_Wing_Helicopter__c != this.draftValues[index].Fixed_Wing_Helicopter__c) {
+                        saveRows[i].Fixed_Wing_Helicopter__c = this.draftValues[index].Fixed_Wing_Helicopter__c;
                     }
-                    if(selected[i].Source_System_ID__c != this.draftValues[index].Source_System_ID__c) {
-                        selected[i].Source_System_ID__c = this.draftValues[index].Source_System_ID__c;
+                    if(saveRows[i].Source_System_ID__c != this.draftValues[index].Source_System_ID__c) {
+                        saveRows[i].Source_System_ID__c = this.draftValues[index].Source_System_ID__c;
                     }
                 
         } 
-        
-        saveDraftValues({data: selected, recordDisplay: this.recordsToDisplay, recordType: 'Ambulance'})
+        console.log(JSON.stringify(saveRows));
+        saveDraftValues({data: saveRows, recordDisplay: this.recordsToDisplay, recordType:'Ambulance'})
         .then((data,error) => {
             this.updateMessage = data.actionMessage;
+            console.log('aa'+JSON.stringify(data.updatedRecords));
             this.recordsToDisplay = data.updatedRecords;
-            this.showSection = false;
-            this.draftValues = [];  
+
             if(this.updateMessage){
                 this.updateMessage = this.updateMessage.replace(/\r\n/g, "<br />");
                 this.showErrorMessage = true;
             }
             
             if(data.passedResult == 'Passed'){
-              
+                this.showSection = false;
+                this.draftValues = [];  
                 this.dispatchEvent(
                     new ShowToastEvent({
                         title: 'Success',
@@ -695,7 +710,8 @@ export default class AmbulanceRecordsCase extends LightningElement {
                              
             }
             else if(data.passedResult == 'Failed' || data.passedResult == null){
-                
+                this.showSection = false;
+                this.draftValues = []; 
                 this.dispatchEvent(
                     new ShowToastEvent({
                         title: 'Error',
@@ -705,7 +721,8 @@ export default class AmbulanceRecordsCase extends LightningElement {
                 );   
             } 
             else if(data.passedResult == 'Partial Success'){
-                
+                this.showSection = false;
+                this.draftValues = [];
                 this.dispatchEvent(
                     new ShowToastEvent({
                         title: 'Warning',
@@ -715,7 +732,7 @@ export default class AmbulanceRecordsCase extends LightningElement {
                 );
             }   
             if(error){
-              
+                this.draftValues = [];
                 this.dispatchEvent(
                     new ShowToastEvent({
                         title: 'Error',
