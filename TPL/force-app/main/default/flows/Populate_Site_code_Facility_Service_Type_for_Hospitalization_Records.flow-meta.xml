@@ -4,8 +4,8 @@
     <assignments>
         <name>AddingCurrentHCCtoCollectionVariable</name>
         <label>AddingCurrentHCCtoCollectionVariable</label>
-        <locationX>528</locationX>
-        <locationY>1310</locationY>
+        <locationX>704</locationX>
+        <locationY>1358</locationY>
         <assignmentItems>
             <assignToReference>CollectionVariable</assignToReference>
             <operator>Add</operator>
@@ -18,10 +18,40 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Empty_Facility_Site_Code</name>
+        <label>Empty Facility Site Code</label>
+        <locationX>264</locationX>
+        <locationY>674</locationY>
+        <assignmentItems>
+            <assignToReference>CurrentHCCRecord.Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Loop_through_collection.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>CurrentHCCRecord.Site_Code__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>CurrentHCCRecord.Facility_Type__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>AddingCurrentHCCtoCollectionVariable</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Populate_Facility</name>
         <label>Populate Facility</label>
-        <locationX>792</locationX>
-        <locationY>878</locationY>
+        <locationX>1056</locationX>
+        <locationY>782</locationY>
         <assignmentItems>
             <assignToReference>CurrentHCCRecord.Id</assignToReference>
             <operator>Assign</operator>
@@ -43,7 +73,7 @@
     <assignments>
         <name>Populate_Site_Code</name>
         <label>Populate Site Code</label>
-        <locationX>440</locationX>
+        <locationX>704</locationX>
         <locationY>998</locationY>
         <assignmentItems>
             <assignToReference>CurrentHCCRecord.Id</assignToReference>
@@ -74,8 +104,8 @@
         <name>Facility_for_Integration_Records</name>
         <elementSubtype>FilterCollectionProcessor</elementSubtype>
         <label>Facility for Integration Records</label>
-        <locationX>704</locationX>
-        <locationY>638</locationY>
+        <locationX>968</locationX>
+        <locationY>566</locationY>
         <assignNextValueToReference>currentItem_Facility_for_Integration_Records</assignNextValueToReference>
         <collectionProcessorType>FilterCollectionProcessor</collectionProcessorType>
         <collectionReference>Get_Facilities</collectionReference>
@@ -95,8 +125,8 @@
         <name>Facility_for_Manual_Record</name>
         <elementSubtype>FilterCollectionProcessor</elementSubtype>
         <label>Facility for Manual Record</label>
-        <locationX>352</locationX>
-        <locationY>638</locationY>
+        <locationX>616</locationX>
+        <locationY>674</locationY>
         <assignNextValueToReference>currentItem_Facility_for_Manual_Record</assignNextValueToReference>
         <collectionProcessorType>FilterCollectionProcessor</collectionProcessorType>
         <collectionReference>Get_Facilities</collectionReference>
@@ -115,8 +145,8 @@
     <decisions>
         <name>Check_for_Record_creation_Source</name>
         <label>Check for Record creation Source</label>
-        <locationX>528</locationX>
-        <locationY>518</locationY>
+        <locationX>704</locationX>
+        <locationY>458</locationY>
         <defaultConnector>
             <targetReference>Facility_for_Integration_Records</targetReference>
         </defaultConnector>
@@ -132,9 +162,34 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Facility_for_Manual_Record</targetReference>
+                <targetReference>Check_if_facility_is_empty</targetReference>
             </connector>
             <label>Manual Record Creation</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_if_facility_is_empty</name>
+        <label>Check if facility is empty</label>
+        <locationX>440</locationX>
+        <locationY>566</locationY>
+        <defaultConnector>
+            <targetReference>Facility_for_Manual_Record</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Is_Empty</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Loop_through_collection.Facility__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Empty_Facility_Site_Code</targetReference>
+            </connector>
+            <label>Is Empty</label>
         </rules>
     </decisions>
     <description>This flow will populate site code from Facility or vise versa and Service Type from Selected Product.</description>
@@ -145,7 +200,7 @@
         <name>Loop_through_collection</name>
         <label>Loop through collection</label>
         <locationX>176</locationX>
-        <locationY>398</locationY>
+        <locationY>350</locationY>
         <collectionReference>InputCorrectionVariable</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -158,8 +213,8 @@
     <loops>
         <name>Loop_through_Facilities_for_Integration_Records</name>
         <label>Loop through Facilities for Integration Records</label>
-        <locationX>704</locationX>
-        <locationY>758</locationY>
+        <locationX>968</locationX>
+        <locationY>674</locationY>
         <collectionReference>Facility_for_Integration_Records</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -172,8 +227,8 @@
     <loops>
         <name>Loop_through_Facility_for_manual_record</name>
         <label>Loop through Facility for manual record</label>
-        <locationX>352</locationX>
-        <locationY>758</locationY>
+        <locationX>616</locationX>
+        <locationY>782</locationY>
         <collectionReference>Facility_for_Manual_Record</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -206,7 +261,7 @@
         <name>Get_Facilities</name>
         <label>Get Facilities</label>
         <locationX>176</locationX>
-        <locationY>278</locationY>
+        <locationY>242</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Loop_through_collection</targetReference>
@@ -227,7 +282,7 @@
         <name>Get_Facility_Record_Type</name>
         <label>Get Facility Record Type</label>
         <locationX>176</locationX>
-        <locationY>158</locationY>
+        <locationY>134</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Facilities</targetReference>
@@ -256,8 +311,8 @@
     <recordLookups>
         <name>Get_Products</name>
         <label>Get Products</label>
-        <locationX>440</locationX>
-        <locationY>878</locationY>
+        <locationX>704</locationX>
+        <locationY>890</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Populate_Site_Code</targetReference>
@@ -280,7 +335,7 @@
         <name>Update_Record_Site_Code</name>
         <label>Update Record - Site Code</label>
         <locationX>176</locationX>
-        <locationY>1526</locationY>
+        <locationY>1550</locationY>
         <inputReference>CollectionVariable</inputReference>
     </recordUpdates>
     <start>

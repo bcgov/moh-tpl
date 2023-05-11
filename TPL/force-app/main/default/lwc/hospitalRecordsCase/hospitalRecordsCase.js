@@ -615,9 +615,6 @@ export default class HospitalRecordsCase extends LightningElement {
                 if(event.detail.draftValues[i].CCI_Level__c){
                     this.draftValues[index].CCI_Level__c = event.detail.draftValues[i].CCI_Level__c;
                 }
-                if(event.detail.draftValues[i].Site_Code__c){
-                    this.draftValues[index].Site_Code__c = event.detail.draftValues[i].Site_Code__c;
-                }
                 if(event.detail.draftValues[i].Facility__c){
                     this.draftValues[index].Facility__c = event.detail.draftValues[i].Facility__c;
                 }
@@ -662,7 +659,6 @@ export default class HospitalRecordsCase extends LightningElement {
                     Description_of_Incident__c:event.detail.draftValues[i].Description_of_Incident__c,
                     Intervention_Code_CCI__c: event.detail.draftValues[i].Intervention_Code_CCI__c,
                     CCI_Level__c:event.detail.draftValues[i].CCI_Level__c,
-                    Site_Code__c:event.detail.draftValues[i].Site_Code__c,
                     Facility__c: event.detail.draftValues[i].Facility__c,
                     Date_of_Admission__c: event.detail.draftValues[i].Date_of_Admission__c,
                     Date_of_Discharge__c: event.detail.draftValues[i].Date_of_Discharge__c,
