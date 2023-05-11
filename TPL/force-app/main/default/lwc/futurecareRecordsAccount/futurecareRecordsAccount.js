@@ -16,14 +16,14 @@ const COLUMNS = [
         fieldName: 'Description__c',
         type:'text',
         sortable: true,
-        editable:true
+        editable:false
     },
     {
         label: 'Cost',
         fieldName: 'Cost__c',
         type: 'currency',
         sortable: true,
-        editable: true
+        editable: false
     }
 ];
 
@@ -124,6 +124,55 @@ export default class FuturecareRecordsAccount extends LightningElement {
                  })
              );    
          })
+    }
+    get bDisableFirst() {
+        return this.pageNumber == 1;
+    }
+    get bDisableLast() {
+        return this.pageNumber == this.totalPages;
+    }
+    
+    handleRecordsPerPage(event) {
+        this.pageSize = event.target.value;
+        this.totalPages = Math.ceil(this.totalRecords / this.pageSize);
+        // set page number 
+        if (this.pageNumber <= 1) {
+            this.pageNumber = 1;
+        } else if (this.pageNumber >= this.totalPages) {
+            this.pageNumber = this.totalPages;
+        }
+       this.onLoad();
+    }
+    previousPage() {
+        this.pageNumber = this.pageNumber - 1;
+        this.showSection = false;
+        this.draftValues = [];
+        this.onLoad();
+   
+    }
+    nextPage() {
+        this.pageNumber = this.pageNumber + 1;
+        this.showSection = false;
+        this.draftValues = [];
+       this.onLoad();
+    }
+
+    firstPage() {
+        this.pageNumber = 1;
+        this.showSection = false;
+        this.draftValues = [];
+        this.onLoad();
+    }
+
+    lastPage() {
+        this.pageNumber = this.totalPages;
+        this.showSection = false;
+        this.draftValues = [];
+        this.onLoad();
+    }
+
+    handleRefresh(){
+        this.onLoad();
     }
 
 }
