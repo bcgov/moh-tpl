@@ -42,6 +42,7 @@
         <connector>
             <targetReference>assignDafaultValuetoActiveField</targetReference>
         </connector>
+        <filterFormula>{!$Setup.Data_Migration_Check__c.Bypass_Flow_Validations__c} = False</filterFormula>
         <object>Product2</object>
         <recordTriggerType>Create</recordTriggerType>
         <triggerType>RecordBeforeSave</triggerType>

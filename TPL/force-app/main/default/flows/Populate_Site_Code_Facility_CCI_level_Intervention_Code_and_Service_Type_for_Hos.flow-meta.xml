@@ -4,7 +4,7 @@
     <assignments>
         <name>AddingCurrentHCCtoCollectionVariable</name>
         <label>AddingCurrentHCCtoCollectionVariable</label>
-        <locationX>704</locationX>
+        <locationX>1166</locationX>
         <locationY>1358</locationY>
         <assignmentItems>
             <assignToReference>CollectionVariable</assignToReference>
@@ -18,8 +18,8 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Empty_Facility_Site_Code</name>
-        <label>Empty Facility Site Code</label>
+        <name>All_Values_Blank</name>
+        <label>All Values Blank</label>
         <locationX>264</locationX>
         <locationY>674</locationY>
         <assignmentItems>
@@ -43,6 +43,27 @@
                 <stringValue></stringValue>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>CurrentHCCRecord.CCI_Level__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>CurrentHCCRecord.Intervention_Code_CCI__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>CurrentHCCRecord.Service_Type2__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>AddingCurrentHCCtoCollectionVariable</targetReference>
         </connector>
@@ -50,7 +71,7 @@
     <assignments>
         <name>Populate_Facility</name>
         <label>Populate Facility</label>
-        <locationX>1056</locationX>
+        <locationX>1672</locationX>
         <locationY>782</locationY>
         <assignmentItems>
             <assignToReference>CurrentHCCRecord.Id</assignToReference>
@@ -71,9 +92,53 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Populate_Service_provided_by_product_CCI_Level_Intervention_Code</name>
+        <label>Populate Service provided by product, CCI Level &amp; Intervention Code</label>
+        <locationX>880</locationX>
+        <locationY>782</locationY>
+        <assignmentItems>
+            <assignToReference>CurrentHCCRecord.Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Loop_through_collection.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>CurrentHCCRecord.Site_Code__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>CurrentHCCRecord.Service_Type2__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Products_1.Service_Type__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>CurrentHCCRecord.CCI_Level__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Products_1.CCI_Level__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>CurrentHCCRecord.Intervention_Code_CCI__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Products_1.Intervention_Code_CCI__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>AddingCurrentHCCtoCollectionVariable</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Populate_Site_Code</name>
         <label>Populate Site Code</label>
-        <locationX>704</locationX>
+        <locationX>1320</locationX>
         <locationY>998</locationY>
         <assignmentItems>
             <assignToReference>CurrentHCCRecord.Id</assignToReference>
@@ -96,15 +161,73 @@
                 <elementReference>Get_Products.Service_Type__c</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>CurrentHCCRecord.CCI_Level__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Products.CCI_Level__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>CurrentHCCRecord.Intervention_Code_CCI__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Products.Intervention_Code_CCI__c</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Loop_through_Facility_for_manual_record</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Populate_Site_Code1</name>
+        <label>Populate Site Code</label>
+        <locationX>704</locationX>
+        <locationY>890</locationY>
+        <assignmentItems>
+            <assignToReference>CurrentHCCRecord.Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Loop_through_collection.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>CurrentHCCRecord.Site_Code__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Loop_through_Facility_for_manual_record_1.Site_Code__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>CurrentHCCRecord.Service_Type2__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>CurrentHCCRecord.CCI_Level__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>CurrentHCCRecord.Intervention_Code_CCI__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Loop_through_Facility_for_manual_record_1</targetReference>
         </connector>
     </assignments>
     <collectionProcessors>
         <name>Facility_for_Integration_Records</name>
         <elementSubtype>FilterCollectionProcessor</elementSubtype>
         <label>Facility for Integration Records</label>
-        <locationX>968</locationX>
+        <locationX>1584</locationX>
         <locationY>566</locationY>
         <assignNextValueToReference>currentItem_Facility_for_Integration_Records</assignNextValueToReference>
         <collectionProcessorType>FilterCollectionProcessor</collectionProcessorType>
@@ -125,14 +248,14 @@
         <name>Facility_for_Manual_Record</name>
         <elementSubtype>FilterCollectionProcessor</elementSubtype>
         <label>Facility for Manual Record</label>
-        <locationX>616</locationX>
+        <locationX>1232</locationX>
         <locationY>674</locationY>
-        <assignNextValueToReference>currentItem_Facility_for_Manual_Record</assignNextValueToReference>
+        <assignNextValueToReference>currentItem_Facility_for_Manual_Record_1_0</assignNextValueToReference>
         <collectionProcessorType>FilterCollectionProcessor</collectionProcessorType>
         <collectionReference>Get_Facilities</collectionReference>
         <conditionLogic>and</conditionLogic>
         <conditions>
-            <leftValueReference>currentItem_Facility_for_Manual_Record.Name</leftValueReference>
+            <leftValueReference>currentItem_Facility_for_Manual_Record_1_0.Name</leftValueReference>
             <operator>EqualTo</operator>
             <rightValue>
                 <elementReference>Loop_through_collection.Facility__r.Name</elementReference>
@@ -142,10 +265,107 @@
             <targetReference>Loop_through_Facility_for_manual_record</targetReference>
         </connector>
     </collectionProcessors>
+    <collectionProcessors>
+        <name>Facility_for_Manual_Record_1</name>
+        <elementSubtype>FilterCollectionProcessor</elementSubtype>
+        <label>Facility for Manual Record 1</label>
+        <locationX>616</locationX>
+        <locationY>674</locationY>
+        <assignNextValueToReference>currentItem_Facility_for_Manual_Record_1_0</assignNextValueToReference>
+        <collectionProcessorType>FilterCollectionProcessor</collectionProcessorType>
+        <collectionReference>Get_Facilities</collectionReference>
+        <conditionLogic>and</conditionLogic>
+        <conditions>
+            <leftValueReference>currentItem_Facility_for_Manual_Record_1_0.Name</leftValueReference>
+            <operator>EqualTo</operator>
+            <rightValue>
+                <elementReference>Loop_through_collection.Facility__r.Name</elementReference>
+            </rightValue>
+        </conditions>
+        <connector>
+            <targetReference>Loop_through_Facility_for_manual_record_1</targetReference>
+        </connector>
+    </collectionProcessors>
+    <decisions>
+        <name>Check_Facility_Service_Provided_by_Facility_values</name>
+        <label>Check Facility &amp; Service Provided by Facility values</label>
+        <locationX>748</locationX>
+        <locationY>566</locationY>
+        <defaultConnector>
+            <targetReference>Facility_for_Manual_Record</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Facility &amp; Product are non Blank</defaultConnectorLabel>
+        <rules>
+            <name>Facility_Product_are_Blank</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Loop_through_collection.Facility__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Loop_through_collection.Service_Provided_by_Facility__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>All_Values_Blank</targetReference>
+            </connector>
+            <label>Facility &amp; Product are Blank</label>
+        </rules>
+        <rules>
+            <name>Facility_Non_blank_Product_Blank</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Loop_through_collection.Facility__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Loop_through_collection.Service_Provided_by_Facility__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Facility_for_Manual_Record_1</targetReference>
+            </connector>
+            <label>Facility Non blank &amp; Product Blank</label>
+        </rules>
+        <rules>
+            <name>Facility_Blank_Product_Non_Blank</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Loop_through_collection.Facility__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Loop_through_collection.Service_Provided_by_Facility__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Products_1</targetReference>
+            </connector>
+            <label>Facility Blank &amp; Product Non Blank</label>
+        </rules>
+    </decisions>
     <decisions>
         <name>Check_for_Record_creation_Source</name>
         <label>Check for Record creation Source</label>
-        <locationX>704</locationX>
+        <locationX>1166</locationX>
         <locationY>458</locationY>
         <defaultConnector>
             <targetReference>Facility_for_Integration_Records</targetReference>
@@ -155,47 +375,22 @@
             <name>Manual_Record_Creation</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Loop_through_collection.Source_System_ID__c</leftValueReference>
+                <leftValueReference>Loop_through_collection.Source_System_ID2__c</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Check_if_facility_is_empty</targetReference>
+                <targetReference>Check_Facility_Service_Provided_by_Facility_values</targetReference>
             </connector>
             <label>Manual Record Creation</label>
         </rules>
     </decisions>
-    <decisions>
-        <name>Check_if_facility_is_empty</name>
-        <label>Check if facility is empty</label>
-        <locationX>440</locationX>
-        <locationY>566</locationY>
-        <defaultConnector>
-            <targetReference>Facility_for_Manual_Record</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Is_Empty</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Loop_through_collection.Facility__c</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Empty_Facility_Site_Code</targetReference>
-            </connector>
-            <label>Is Empty</label>
-        </rules>
-    </decisions>
-    <description>This flow will populate site code from Facility or vise versa and Service Type from Selected Product.</description>
+    <description>This flow will populate site code from Facility or vise versa and Service Type, CCI Level and Intervention Code from Selected Product.</description>
     <environments>Default</environments>
-    <interviewLabel>Populate Site {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Populate Site code, Facility &amp; Service Type for Hospitalization Records</label>
+    <interviewLabel>Populate Site Code, Facility, CCI level, Intervention Code and Service Type for Hospitalization Records {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Populate Site Code, Facility, CCI level, Intervention Code and Service Type for Hospitalization Records</label>
     <loops>
         <name>Loop_through_collection</name>
         <label>Loop through collection</label>
@@ -213,7 +408,7 @@
     <loops>
         <name>Loop_through_Facilities_for_Integration_Records</name>
         <label>Loop through Facilities for Integration Records</label>
-        <locationX>968</locationX>
+        <locationX>1584</locationX>
         <locationY>674</locationY>
         <collectionReference>Facility_for_Integration_Records</collectionReference>
         <iterationOrder>Asc</iterationOrder>
@@ -227,12 +422,26 @@
     <loops>
         <name>Loop_through_Facility_for_manual_record</name>
         <label>Loop through Facility for manual record</label>
-        <locationX>616</locationX>
+        <locationX>1232</locationX>
         <locationY>782</locationY>
         <collectionReference>Facility_for_Manual_Record</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
             <targetReference>Get_Products</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>AddingCurrentHCCtoCollectionVariable</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <loops>
+        <name>Loop_through_Facility_for_manual_record_1</name>
+        <label>Loop through Facility for manual record 1</label>
+        <locationX>616</locationX>
+        <locationY>782</locationY>
+        <collectionReference>Facility_for_Manual_Record_1</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Populate_Site_Code1</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
             <targetReference>AddingCurrentHCCtoCollectionVariable</targetReference>
@@ -311,7 +520,7 @@
     <recordLookups>
         <name>Get_Products</name>
         <label>Get Products</label>
-        <locationX>704</locationX>
+        <locationX>1320</locationX>
         <locationY>890</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -329,6 +538,33 @@
         <object>Product2</object>
         <queriedFields>Id</queriedFields>
         <queriedFields>Service_Type__c</queriedFields>
+        <queriedFields>CCI_Level__c</queriedFields>
+        <queriedFields>Intervention_Code_CCI__c</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Products_1</name>
+        <label>Get Products 1</label>
+        <locationX>880</locationX>
+        <locationY>674</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Populate_Service_provided_by_product_CCI_Level_Intervention_Code</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Loop_through_collection.Service_Provided_by_Facility__r.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Product2</object>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Service_Type__c</queriedFields>
+        <queriedFields>CCI_Level__c</queriedFields>
+        <queriedFields>Intervention_Code_CCI__c</queriedFields>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordUpdates>
@@ -371,7 +607,7 @@
         <objectType>Account</objectType>
     </variables>
     <variables>
-        <name>currentItem_Facility_for_Manual_Record</name>
+        <name>currentItem_Facility_for_Manual_Record_1_0</name>
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
