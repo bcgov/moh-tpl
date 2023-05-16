@@ -115,7 +115,11 @@ const INTEGRATION_COLUMNS = [
     {
         label: 'Date of Service',
         fieldName: 'Date_of_Service__c',
-        type: 'date',
+        type:'date-local',
+        typeAttributes:{ 
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric"},
         editable: false,
         sortable: true
     },
