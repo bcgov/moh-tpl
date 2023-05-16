@@ -29,6 +29,11 @@ const COLUMNS = [
     {
         label: 'Date of Service',
         fieldName: 'Date_of_Service__c',
+        type:'date-local',
+        typeAttributes:{ 
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric"},
         editable: false,
         sortable: true
     },
@@ -76,13 +81,23 @@ const COLUMNS = [
     },
     {
         label: 'Date of Admission',
-        fieldName:'Date_of_Admission__c',
+        fieldName: 'Date_of_Admission__c',
+        type:'date-local',
+        typeAttributes:{ 
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric"},
         editable: false,
         sortable: true
     },
     {
         label: 'Date of Discharge',
         fieldName: 'Date_of_Discharge__c',
+        type:'date-local',
+        typeAttributes:{ 
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric"},
         editable: false,
         sortable: true
     },
