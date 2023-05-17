@@ -61,7 +61,7 @@ const INTEGRATION_COLUMNS = [
         sortable: true,
     },
     {
-        label: 'Site Code',
+        label: 'Facility Code',
         fieldName: 'Site_Code__c',
         type: 'text',
         editable: false,
@@ -222,7 +222,7 @@ const MANUAL_COLUMNS = [
         sortable: true,
     },
     {
-        label: 'Site Code',
+        label: 'Facility Code',
         fieldName: 'Site_Code__c',
         type: 'text',
         editable: true,
