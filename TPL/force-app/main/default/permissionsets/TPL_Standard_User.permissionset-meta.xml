@@ -393,7 +393,11 @@
         <field>Case_Relation__c.Related_Case__c</field>
         <readable>true</readable>
     </fieldPermissions>
-
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>DocumentTemplate.Title__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>Healthcare_Cost__c.Amount_Paid__c</field>
