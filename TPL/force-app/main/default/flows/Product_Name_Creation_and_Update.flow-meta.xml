@@ -230,6 +230,7 @@
         <connector>
             <targetReference>assignmentofConcatFields_0</targetReference>
         </connector>
+        <filterFormula>{!$Setup.Data_Migration_Check__c.Bypass_Flow_Validations__c} = False</filterFormula>
         <object>Product2</object>
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>

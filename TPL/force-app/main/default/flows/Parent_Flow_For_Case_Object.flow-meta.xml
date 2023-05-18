@@ -281,6 +281,7 @@
         <connector>
             <targetReference>Check_for_the_create_and_update</targetReference>
         </connector>
+        <filterFormula>{!$Setup.Data_Migration_Check__c.Bypass_Flow_Validations__c}= False</filterFormula>
         <object>Case</object>
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>

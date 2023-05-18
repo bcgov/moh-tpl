@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
-         <members>Update_Health_Care_Cost_Fields_On_Update</members>
+         <members>Populate_Site_code_Facility_Service_Type_on_Hospitalization_record</members>
+         <members>Populate_Intervention_code_CCI_Level_for_Hospitalization_Records</members>
         <name>Flow</name>
     </types>
+    <!--types>
+         <members>Update_Health_Care_Cost_Fields_On_Update</members>
+        <name>Flow</name>
+    </types-->
 
     <!-- <types>
         <members>case.Incident_Details__c</members>

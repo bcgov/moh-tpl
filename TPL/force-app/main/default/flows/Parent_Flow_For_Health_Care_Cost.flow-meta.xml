@@ -72,7 +72,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Populate_Site_Code_Facility_Service_Type</targetReference>
+                <targetReference>Populate_fields_for_hospitalization_records</targetReference>
             </connector>
             <label>Hospitalization</label>
         </rules>
@@ -116,7 +116,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Populate_Site_Code_Facility_Service_Type1</targetReference>
+                <targetReference>Populate_fields_for_hospitalization_records_1</targetReference>
             </connector>
             <label>Hospitalization1</label>
         </rules>
@@ -230,17 +230,48 @@
         <connector>
             <targetReference>checkDecisions</targetReference>
         </connector>
+        <filterFormula>{!$Setup.Data_Migration_Check__c.Bypass_Flow_Validations__c} = FALSE</filterFormula>
         <object>Healthcare_Cost__c</object>
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
     <status>Active</status>
     <subflows>
+        <description>This flow will populate site code from Facility or vise versa and Service Type, CCI Level and Intervention Code from Selected Product.</description>
+        <name>Populate_fields_for_hospitalization_records</name>
+        <label>Populate fields for hospitalization records</label>
+        <locationX>314</locationX>
+        <locationY>863</locationY>
+        <flowName>Populate_Site_Code_Facility_CCI_level_Intervention_Code_and_Service_Type_for_Hos</flowName>
+        <inputAssignments>
+            <name>InputCorrectionVariable</name>
+            <value>
+                <elementReference>updatedHealthCareCost_col</elementReference>
+            </value>
+        </inputAssignments>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </subflows>
+    <subflows>
+        <description>This flow will populate site code from Facility or vise versa and Service Type, CCI Level and Intervention Code from Selected Product.</description>
+        <name>Populate_fields_for_hospitalization_records_1</name>
+        <label>Populate fields for hospitalization records 1</label>
+        <locationX>1106</locationX>
+        <locationY>863</locationY>
+        <flowName>Populate_Site_Code_Facility_CCI_level_Intervention_Code_and_Service_Type_for_Hos</flowName>
+        <inputAssignments>
+            <name>InputCorrectionVariable</name>
+            <value>
+                <elementReference>updatedHealthCareCost_col</elementReference>
+            </value>
+        </inputAssignments>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </subflows>
+    <subflows>
         <description>This flow will populate Site code and Facility Name</description>
         <name>Populate_Site_Code_and_Facility</name>
         <label>Populate Site Code and Facility</label>
         <locationX>842</locationX>
-        <locationY>935</locationY>
+        <locationY>863</locationY>
         <flowName>Populate_site_code_and_Facility_on_Ambulance_Record</flowName>
         <inputAssignments>
             <name>InputCorrectionVariable</name>
@@ -255,38 +286,8 @@
         <name>Populate_Site_Code_and_Facility1</name>
         <label>Populate Site Code and Facility1</label>
         <locationX>50</locationX>
-        <locationY>935</locationY>
+        <locationY>863</locationY>
         <flowName>Populate_site_code_and_Facility_on_Ambulance_Record</flowName>
-        <inputAssignments>
-            <name>InputCorrectionVariable</name>
-            <value>
-                <elementReference>updatedHealthCareCost_col</elementReference>
-            </value>
-        </inputAssignments>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </subflows>
-    <subflows>
-        <description>This flow will populate site code Facility and Service Type deepening on the conditions.</description>
-        <name>Populate_Site_Code_Facility_Service_Type</name>
-        <label>Populate Site Code Facility &amp; Service Type</label>
-        <locationX>314</locationX>
-        <locationY>935</locationY>
-        <flowName>Populate_Site_code_Facility_Service_Type_for_Hospitalization_Records</flowName>
-        <inputAssignments>
-            <name>InputCorrectionVariable</name>
-            <value>
-                <elementReference>updatedHealthCareCost_col</elementReference>
-            </value>
-        </inputAssignments>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </subflows>
-    <subflows>
-        <description>This flow will populate site code Facility and Service Type deepening on the conditions.</description>
-        <name>Populate_Site_Code_Facility_Service_Type1</name>
-        <label>Populate Site Code Facility &amp; Service Type</label>
-        <locationX>1106</locationX>
-        <locationY>935</locationY>
-        <flowName>Populate_Site_code_Facility_Service_Type_for_Hospitalization_Records</flowName>
         <inputAssignments>
             <name>InputCorrectionVariable</name>
             <value>
