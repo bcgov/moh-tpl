@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Permission Sets for TPL System Admin</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>TPL_System_Admin</label>
+    <permissionSets>Manage_ENCRYPTION</permissionSets>
+    <permissionSets>OmniStudio_Standard_User</permissionSets>
+    <permissionSets>OmniStudio_Standard_User_Extras</permissionSets>
+    <permissionSets>TPL_Finance</permissionSets>
+    <permissionSets>TPL_Standard_User</permissionSets>
+    <permissionSets>TPL_System_Administrator</permissionSets>
+    <permissionSets>force__DocGenDesigner</permissionSets>
+    <status>Updated</status>
+</PermissionSetGroup>
