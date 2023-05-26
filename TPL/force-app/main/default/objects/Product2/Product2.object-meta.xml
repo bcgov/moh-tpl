@@ -129,22 +129,49 @@
     <compactLayoutAssignment>Product_Compact_Layout</compactLayoutAssignment>
     <enableFeeds>false</enableFeeds>
     <externalSharingModel>ReadWrite</externalSharingModel>
+    <profileSearchLayouts>
+        <fields>PRODUCT2.NAME</fields>
+        <fields>Service_Type__c</fields>
+        <fields>Intervention_Code_CCI__c</fields>
+        <fields>CCI_Level__c</fields>
+        <fields>Effective_Start_Date__c</fields>
+        <fields>Effective_End_Date__c</fields>
+        <profileName>System Administrator</profileName>
+    </profileSearchLayouts>
+    <profileSearchLayouts>
+        <fields>PRODUCT2.NAME</fields>
+        <fields>Service_Type__c</fields>
+        <fields>Intervention_Code_CCI__c</fields>
+        <fields>CCI_Level__c</fields>
+        <fields>Effective_Start_Date__c</fields>
+        <fields>Effective_End_Date__c</fields>
+        <profileName>MoH Standard User</profileName>
+    </profileSearchLayouts>
     <searchLayouts>
         <customTabListAdditionalFields>PRODUCT2.NAME</customTabListAdditionalFields>
-        <customTabListAdditionalFields>PRODUCT2.CUSTOMER_PRODUCT_ID</customTabListAdditionalFields>
-        <customTabListAdditionalFields>PRODUCT2.DESCRIPTION</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Service_Type__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Intervention_Code_CCI__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>CCI_Level__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Effective_Start_Date__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Effective_End_Date__c</customTabListAdditionalFields>
         <lookupDialogsAdditionalFields>PRODUCT2.NAME</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields>PRODUCT2.CUSTOMER_PRODUCT_ID</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields>PRODUCT2.DESCRIPTION</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields>PRODUCT2.FAMILY</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Service_Type__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Intervention_Code_CCI__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>CCI_Level__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Effective_Start_Date__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Effective_End_Date__c</lookupDialogsAdditionalFields>
         <lookupPhoneDialogsAdditionalFields>PRODUCT2.NAME</lookupPhoneDialogsAdditionalFields>
-        <lookupPhoneDialogsAdditionalFields>PRODUCT2.CUSTOMER_PRODUCT_ID</lookupPhoneDialogsAdditionalFields>
-        <lookupPhoneDialogsAdditionalFields>PRODUCT2.DESCRIPTION</lookupPhoneDialogsAdditionalFields>
-        <lookupPhoneDialogsAdditionalFields>PRODUCT2.FAMILY</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Service_Type__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Intervention_Code_CCI__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>CCI_Level__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Effective_Start_Date__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Effective_End_Date__c</lookupPhoneDialogsAdditionalFields>
         <searchResultsAdditionalFields>PRODUCT2.NAME</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>PRODUCT2.CUSTOMER_PRODUCT_ID</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>PRODUCT2.DESCRIPTION</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>PRODUCT2.FAMILY</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Service_Type__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Intervention_Code_CCI__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>CCI_Level__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Effective_Start_Date__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Effective_End_Date__c</searchResultsAdditionalFields>
     </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
 </CustomObject>
