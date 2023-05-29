@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Permission Sets for TPL Case Analyst/Clerk</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>TPL Case Analyst</label>
+    <permissionSets>OmniStudio_Standard_User</permissionSets>
+    <permissionSets>OmniStudio_Standard_User_Extras</permissionSets>
+    <permissionSets>TPL_Standard_User</permissionSets>
+    <permissionSets>force__DocGenDesigner</permissionSets>
+    <status>Updated</status>
+</PermissionSetGroup>
