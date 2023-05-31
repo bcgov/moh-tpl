@@ -3,4 +3,5 @@
     <fullName>Name</fullName>
     <encryptionScheme>CaseInsensitiveDeterministicEncryption</encryptionScheme>
     <trackFeedHistory>true</trackFeedHistory>
+    <trackHistory>true</trackHistory>
 </CustomField>
