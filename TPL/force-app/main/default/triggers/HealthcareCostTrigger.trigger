@@ -3,8 +3,9 @@ trigger HealthcareCostTrigger on Healthcare_Cost__c (after insert,after update, 
         if(Trigger.isInsert || Trigger.isUpdate ){
             if(HealthcareCostTriggerHandler.isFirstTime){
                 HealthcareCostTriggerHandler.isFirstTime = false;
-                System.debug('Inside trigger '+trigger.new);
+                
                 HealthcareCostTriggerHandler.updateRollup(Trigger.new);
+                
             }
             
         }
