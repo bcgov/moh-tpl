@@ -221,7 +221,7 @@
         <field>Case.Case_AccountName__c</field>
         <readable>true</readable>
     </fieldPermissions>
-	<fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Case.Case_LastName_FirstName__c</field>
         <readable>true</readable>
@@ -584,6 +584,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Healthcare_Cost__c.DIN__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Healthcare_Cost__c.DateId__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
