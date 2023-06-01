@@ -142,7 +142,7 @@
         <field>Case.Case_AccountName__c</field>
         <readable>true</readable>
     </fieldPermissions>
-	<fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Case.Case_LastName_FirstName__c</field>
         <readable>true</readable>
@@ -368,7 +368,7 @@
         <field>Case.Origin</field>
         <readable>false</readable>
     </fieldPermissions>
-       <fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Case.SlaExitDate</field>
         <readable>true</readable>
@@ -446,6 +446,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Healthcare_Cost__c.DIN__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Healthcare_Cost__c.DateId__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -806,8 +811,8 @@
         <editable>true</editable>
         <field>Case.Ambulance_Total2__c</field>
         <readable>true</readable>
- </fieldPermissions>
- <fieldPermissions>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Case.Continuing_Care_Total2__c</field>
         <readable>true</readable>
@@ -821,33 +826,33 @@
         <editable>true</editable>
         <field>Case.Hospitalization_Total2__c</field>
         <readable>true</readable>
- </fieldPermissions>
- <fieldPermissions>
-    <editable>true</editable>
-    <field>Product2.Source_System_ID__c</field>
-    <readable>true</readable>
-</fieldPermissions>
-  <fieldPermissions>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Product2.Source_System_ID__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Case.MSP_Total2__c</field>
         <readable>true</readable>
- </fieldPermissions>
-  <fieldPermissions>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Case.Pharmacare_Total2__c</field>
         <readable>true</readable>
- </fieldPermissions>
- <fieldPermissions>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Healthcare_Cost__c.Case2__c</field>
         <readable>true</readable>
- </fieldPermissions>
-  <fieldPermissions>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Healthcare_Cost__c.Account__c</field>
         <readable>true</readable>
- </fieldPermissions>
-<fieldPermissions>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Healthcare_Cost__c.Facility_Code2__c</field>
         <readable>true</readable>
@@ -861,7 +866,7 @@
         <editable>true</editable>
         <field>Healthcare_Cost__c.Service_Type2__c</field>
         <readable>true</readable>
- </fieldPermissions>	
+    </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
     <label>TPL Standard User</label>
     <license>Salesforce</license>
