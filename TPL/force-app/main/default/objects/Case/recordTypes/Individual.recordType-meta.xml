@@ -3,6 +3,7 @@
     <fullName>Individual</fullName>
     <active>true</active>
     <businessProcess>Individual</businessProcess>
+    <compactLayoutAssignment>Compact_Layout_Case_Individual</compactLayoutAssignment>
     <description>This is for Private, Motor Vehicle or Class Action Member Case</description>
     <label>Individual</label>
     <picklistValues>

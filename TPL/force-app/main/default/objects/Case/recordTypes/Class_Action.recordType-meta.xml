@@ -3,6 +3,7 @@
     <fullName>Class_Action</fullName>
     <active>true</active>
     <businessProcess>Class Action</businessProcess>
+    <compactLayoutAssignment>Compact_Layout_Case_ClassAction</compactLayoutAssignment>
     <description>This is for Class Action Case</description>
     <label>Class Action</label>
     <picklistValues>
