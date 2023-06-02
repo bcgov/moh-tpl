@@ -3,6 +3,7 @@ import { refreshApex } from '@salesforce/apex';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import updateHCCCaseInformation from '@salesforce/apex/HCCCostController.updateHCCCaseInformation';
 import getHealthcareCostsAmbulanceForAccount from '@salesforce/apex/HCCostAccountController.getHealthcareCostsAmbulanceForAccount';
+import assignAll from '@salesforce/apex/HCCostAccountController.assignAll';
 
 const COLUMNS = [
     {
@@ -227,6 +228,20 @@ export default class AmbulanceRecordsAccount extends LightningElement {
                 });
         
             }
+
+    }
+    handleAssign(){
+        if(!this.selectedCase){
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Error',
+                    message: 'Please select Case  to assign.',
+                    variant: 'error'
+                })
+            );
+        }else{
+            assignAll({currentAccountId:this.recordId,newCaseId:this.selectedCase})
+        }
 
     }
     async refresh(){

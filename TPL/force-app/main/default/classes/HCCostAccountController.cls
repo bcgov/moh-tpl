@@ -159,6 +159,14 @@ public with sharing class HCCostAccountController {
         }
         return accountDetailWrapper;
     }
+    @AuraEnabled
+    public static void assignAll(String currentAccountId,String newCaseId){
+        List<Healthcare_Cost__c> hccList = [select id,case2__c from Healthcare_Cost__c where Account__c =: currentAccountId and Cost_Include__c = false and Cost_Review__c = false FOR UPDATE];
+        for(Healthcare_Cost__c hcc : hccList){
+            hcc.case2__c = newCaseId;
+        }
+        System.enqueueJob(new AccountQueueable(hccList));
+    }
 
     public class HCCostAccountDetailWrapper{
         @AuraEnabled public List<Healthcare_Cost__c> hccList {get;set;}

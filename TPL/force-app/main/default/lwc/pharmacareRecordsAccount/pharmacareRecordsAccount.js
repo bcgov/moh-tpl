@@ -3,6 +3,7 @@ import { refreshApex } from '@salesforce/apex';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import getHealthcareCostsPharmacareForAccount from '@salesforce/apex/HCCostAccountController.getHealthcareCostsPharmacareForAccount';
 import updateHCCCaseInformation from '@salesforce/apex/HCCCostController.updateHCCCaseInformation';
+import assignAll from '@salesforce/apex/HCCostAccountController.assignAll';
 
 const COLUMNS = [
     {
@@ -298,6 +299,21 @@ export default class PharmacareRecordsAccount extends LightningElement {
         this.onLoad();
     }
 
+    handleAssign(){
+        if(!this.selectedCase){
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Error',
+                    message: 'Please select Case  to assign.',
+                    variant: 'error'
+                })
+            );
+        }else{
+            assignAll({currentAccountId:this.recordId,newCaseId:this.selectedCase})
+        }
+
+    }
+    
     handleFilterChange(event) {
         this.selectedFilter = event.target.value;
         this.pageNumber = 1;
