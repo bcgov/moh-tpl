@@ -931,6 +931,11 @@
         <field>Healthcare_Cost__c.Account__c</field>
         <readable>true</readable>
  </fieldPermissions>
+ <fieldPermissions>
+        <editable>true</editable>
+        <field>Healthcare_Cost__c.DateId__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
 <fieldPermissions>
         <editable>true</editable>
         <field>Healthcare_Cost__c.Service_Type2__c</field>
