@@ -9,6 +9,7 @@
     <permissionSets>TPL_Set_Audit_Fields_upon_Record_Creation</permissionSets>
     <permissionSets>TPL_Standard_User</permissionSets>
     <permissionSets>TPL_System_Administrator</permissionSets>
+    <permissionSets>Two_factor_Authentication</permissionSets>
     <permissionSets>force__DocGenDesigner</permissionSets>
     <permissionSets>force__OmniStudioAdmin</permissionSets>
     <status>Updated</status>
