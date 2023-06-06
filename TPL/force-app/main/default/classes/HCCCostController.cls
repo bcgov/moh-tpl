@@ -236,6 +236,15 @@ public with sharing class HCCCostController {
             throw new AuraHandledException(e.getMessage());
         }
     }
+    @AuraEnabled
+    public static void updateAll(String caseId,Boolean costReview, Boolean costInclude){
+        List<Healthcare_Cost__c> hccList = [select id,case2__c from Healthcare_Cost__c where case2__c  =: caseId FOR UPDATE];
+        for(Healthcare_Cost__c hcc : hccList){
+            hcc.Cost_Include__c = costInclude;
+            hcc.Cost_Review__c = costReview;
+        }
+        System.enqueueJob(new AccountQueueable(hccList));
+    }
     
     public class CaseListWrapper{
        @AuraEnabled public String actionMessage {get;set;}

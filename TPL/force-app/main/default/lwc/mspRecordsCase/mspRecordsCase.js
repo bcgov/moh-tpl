@@ -5,6 +5,8 @@ import getHealthcareCostsMSPForCase from '@salesforce/apex/HCCostCaseController.
 import saveDraftValues from '@salesforce/apex/HCCCostController.saveDraftValues'; 
 import deleteHCCRecord from '@salesforce/apex/HCCCostController.deleteHCCRecord';
 import getFacilityBySiteCode from '@salesforce/apex/HCCCostController.getFacilityBySiteCode';
+import updateAll from '@salesforce/apex/HCCCostController.updateAll';
+
 
 const INTEGRATION_COLUMNS = [
     {
@@ -407,6 +409,9 @@ export default class AmbulanceRecordsCase extends LightningElement {
     updateMessage='';
     selectedFilter= 'All Records';
     showSection = false;
+    showMassUpdateSection = false;
+    costReview = false;
+    costInclude = false;
     filterOptions = [
         { label: 'All Records', value: 'All Records' },
         { label: 'Manual Records', value: 'Manual Records' },
@@ -449,7 +454,13 @@ export default class AmbulanceRecordsCase extends LightningElement {
             });
         }
     }
-
+    handleMassUpdate(){
+        if(this.showMassUpdateSection){
+             this.showMassUpdateSection = false;
+        }else{
+             this.showMassUpdateSection = true;
+        }
+     }
     onLoad(){
         return getHealthcareCostsMSPForCase({caseId: this.recordId, filterValue: this.selectedFilter, pageSize: this.pageSize, pageNumber: this.pageNumber})
         .then(result=>{
@@ -628,6 +639,17 @@ export default class AmbulanceRecordsCase extends LightningElement {
         }
         this.updateDraftValues(updatedItem);
        // this.updateDataValues(updatedItem);
+    }
+    changeCostReview(event){
+        this.costReview = event.target.checked;
+        console.log(this.costReview);
+    }
+    changeCostInclude(event){
+        this.costInclude = event.target.checked;
+        console.log(this.costInclude);
+    }
+    updateAll(){
+        updateAll({caseId: this.recordId,costReview:this.costReview,costInclude:this.costInclude})
     }
     handleCellChange(event){
         this.showSection = true;
