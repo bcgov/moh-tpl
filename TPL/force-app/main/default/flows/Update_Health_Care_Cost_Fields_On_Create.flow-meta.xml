@@ -5,7 +5,7 @@
         <name>Add_Updated_Health_Care_Cost_to_Collection</name>
         <label>Add Updated Health Care Cost to Collection</label>
         <locationX>1208</locationX>
-        <locationY>1658</locationY>
+        <locationY>1862</locationY>
         <assignmentItems>
             <assignToReference>HealthCareCostsToUpdate</assignToReference>
             <operator>Add</operator>
@@ -21,7 +21,7 @@
         <name>Ambulance_Cost</name>
         <label>Ambulance Cost</label>
         <locationX>264</locationX>
-        <locationY>674</locationY>
+        <locationY>758</locationY>
         <assignmentItems>
             <assignToReference>currentRec.Total_Cost_Override__c</assignToReference>
             <operator>Assign</operator>
@@ -44,7 +44,7 @@
         <name>Assign_Health_Care_Cost_fields</name>
         <label>Assign Health Care Cost fields</label>
         <locationX>1760</locationX>
-        <locationY>1214</locationY>
+        <locationY>1358</locationY>
         <assignmentItems>
             <assignToReference>currentRec.Standard_Daily_Rate__c</assignToReference>
             <operator>Assign</operator>
@@ -81,7 +81,7 @@
         <name>Assign_Health_Care_Cost_fields_No_Override</name>
         <label>Assign Health Care Cost fields No Override</label>
         <locationX>2024</locationX>
-        <locationY>1214</locationY>
+        <locationY>1358</locationY>
         <assignmentItems>
             <assignToReference>currentRec.Standard_Daily_Rate__c</assignToReference>
             <operator>Assign</operator>
@@ -111,7 +111,7 @@
         <name>Assign_Health_Care_Cost_fields_without_assigned_service</name>
         <label>Assign Health Care Cost fields without assigned service</label>
         <locationX>1888</locationX>
-        <locationY>674</locationY>
+        <locationY>758</locationY>
         <assignmentItems>
             <assignToReference>currentRec.Standard_Daily_Rate__c</assignToReference>
             <operator>Assign</operator>
@@ -142,7 +142,7 @@
         <name>Assign_Health_Care_Cost_fields_without_Price</name>
         <label>Assign Health Care Cost fields without Price</label>
         <locationX>1056</locationX>
-        <locationY>998</locationY>
+        <locationY>1118</locationY>
         <assignmentItems>
             <assignToReference>currentRec.Standard_Daily_Rate__c</assignToReference>
             <operator>Assign</operator>
@@ -173,7 +173,7 @@
         <name>AssigningPHN</name>
         <label>AssigningPHN</label>
         <locationX>1208</locationX>
-        <locationY>458</locationY>
+        <locationY>518</locationY>
         <assignmentItems>
             <assignToReference>currentRec.PHN__c</assignToReference>
             <operator>Assign</operator>
@@ -188,6 +188,13 @@
                 <elementReference>LoopThroughHealthCareCost.Id</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>currentRec.DateId__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>dateidformula</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Check_for_Record_Type_and_Total_Cost_Override_fields</targetReference>
         </connector>
@@ -196,7 +203,7 @@
         <name>Count_Pricebook_entry</name>
         <label>Count Pricebook entry</label>
         <locationX>1364</locationX>
-        <locationY>782</locationY>
+        <locationY>878</locationY>
         <assignmentItems>
             <assignToReference>CountPricebookentryRecords</assignToReference>
             <operator>AssignCount</operator>
@@ -212,7 +219,7 @@
         <name>MSP_Cost</name>
         <label>MSP Cost</label>
         <locationX>528</locationX>
-        <locationY>674</locationY>
+        <locationY>758</locationY>
         <assignmentItems>
             <assignToReference>currentRec.Total_Cost_Override__c</assignToReference>
             <operator>Assign</operator>
@@ -235,7 +242,7 @@
         <name>Pharmacare_Cost</name>
         <label>Pharmacare Cost</label>
         <locationX>792</locationX>
-        <locationY>674</locationY>
+        <locationY>758</locationY>
         <assignmentItems>
             <assignToReference>currentRec.Total_Cost_Override__c</assignToReference>
             <operator>Assign</operator>
@@ -259,7 +266,7 @@
         <elementSubtype>FilterCollectionProcessor</elementSubtype>
         <label>Filter Pricebook Entry</label>
         <locationX>1364</locationX>
-        <locationY>674</locationY>
+        <locationY>758</locationY>
         <assignNextValueToReference>currentItem_Filter_Pricebook_Entry</assignNextValueToReference>
         <collectionProcessorType>FilterCollectionProcessor</collectionProcessorType>
         <collectionReference>Get_Price_Book_Entry</collectionReference>
@@ -279,7 +286,7 @@
         <name>Check_for_Pricebook_entry_record</name>
         <label>Check for Pricebook entry record</label>
         <locationX>1364</locationX>
-        <locationY>890</locationY>
+        <locationY>998</locationY>
         <defaultConnector>
             <targetReference>Loop_through_Filtered_Record</targetReference>
         </defaultConnector>
@@ -304,7 +311,7 @@
         <name>Check_for_Record_Type_and_Total_Cost_Override_fields</name>
         <label>Check for Record Type and Total Cost Override fields</label>
         <locationX>1208</locationX>
-        <locationY>566</locationY>
+        <locationY>638</locationY>
         <defaultConnector>
             <targetReference>Add_Updated_Health_Care_Cost_to_Collection</targetReference>
         </defaultConnector>
@@ -424,7 +431,7 @@
         <name>Check_if_Total_cost_Override_has_Value</name>
         <label>Check if Total cost Override has Value</label>
         <locationX>1892</locationX>
-        <locationY>1106</locationY>
+        <locationY>1238</locationY>
         <defaultConnector>
             <targetReference>Assign_Health_Care_Cost_fields_No_Override</targetReference>
         </defaultConnector>
@@ -449,6 +456,11 @@
 Update to PHN Value reference</description>
     <environments>Default</environments>
     <formulas>
+        <name>dateidformula</name>
+        <dataType>String</dataType>
+        <expression>SUBSTITUTE(if(Text({!LoopThroughHealthCareCost.Date_of_Service__c})==null,&apos;00000000&apos;,Text({!LoopThroughHealthCareCost.Date_of_Service__c})), &apos;-&apos;, &apos;&apos;)&amp;&apos;&apos;&amp;{!LoopThroughHealthCareCost.Id}</expression>
+    </formulas>
+    <formulas>
         <name>updateTotalCostOverride</name>
         <dataType>Number</dataType>
         <expression>{!currentItem_Filter_Pricebook_Entry.UnitPrice}*{!LoopThroughHealthCareCost.Number_of_Days__c}</expression>
@@ -460,7 +472,7 @@ Update to PHN Value reference</description>
         <name>Loop_through_Filtered_Record</name>
         <label>Loop through Filtered Record</label>
         <locationX>1672</locationX>
-        <locationY>998</locationY>
+        <locationY>1118</locationY>
         <collectionReference>Filter_Pricebook_Entry</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -474,7 +486,7 @@ Update to PHN Value reference</description>
         <name>LoopThroughHealthCareCost</name>
         <label>LoopThroughHealthCareCost</label>
         <locationX>176</locationX>
-        <locationY>350</locationY>
+        <locationY>398</locationY>
         <collectionReference>updatedHealthCareCost</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -507,7 +519,7 @@ Update to PHN Value reference</description>
         <name>Get_Price_Book_Entry</name>
         <label>Get Price Book Entry</label>
         <locationX>176</locationX>
-        <locationY>242</locationY>
+        <locationY>278</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>LoopThroughHealthCareCost</targetReference>
@@ -528,7 +540,7 @@ Update to PHN Value reference</description>
         <name>Get_TPL_Pricebook</name>
         <label>Get TPL Pricebook</label>
         <locationX>176</locationX>
-        <locationY>134</locationY>
+        <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Price_Book_Entry</targetReference>
@@ -549,7 +561,7 @@ Update to PHN Value reference</description>
         <name>Update_Health_Care_Cost</name>
         <label>Update Health Care Cost</label>
         <locationX>176</locationX>
-        <locationY>1850</locationY>
+        <locationY>2078</locationY>
         <inputReference>HealthCareCostsToUpdate</inputReference>
     </recordUpdates>
     <start>
