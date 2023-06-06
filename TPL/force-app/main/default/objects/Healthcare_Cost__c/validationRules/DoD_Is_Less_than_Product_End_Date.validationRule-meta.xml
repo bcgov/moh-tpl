@@ -3,7 +3,7 @@
     <fullName>DoD_Is_Less_than_Product_End_Date</fullName>
     <active>true</active>
     <description>Date Of Discharge Is greater than the Service provided by facility Effective End Date</description>
-    <errorConditionFormula>$Setup.Data_Migration_Check__c.Bypass_Flow_Validations__c = FALSE &amp;&amp;
+    <errorConditionFormula>$Setup.Data_Migration_Check__c.Bypass_Flow_Validations__c = FALSE &amp;&amp; ISBLANK(Source_System_ID__c)  &amp;&amp;
  Date_of_Discharge__c &gt;  Service_Provided_by_Facility__r.Effective_End_Date__c</errorConditionFormula>
     <errorMessage>Date Of Discharge Is Not Covered Under this Service Type Code - Please Contact Your Supervisor</errorMessage>
 </ValidationRule>

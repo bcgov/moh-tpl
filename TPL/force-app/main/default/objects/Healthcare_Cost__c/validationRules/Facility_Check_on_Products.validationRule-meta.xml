@@ -3,7 +3,7 @@
     <fullName>Facility_Check_on_Products</fullName>
     <active>true</active>
     <description>This validation rule will validate the facility on product should match with facility selected on Healthcare record.</description>
-    <errorConditionFormula>$Setup.Data_Migration_Check__c.Bypass_Flow_Validations__c = FALSE &amp;&amp;
+    <errorConditionFormula>$Setup.Data_Migration_Check__c.Bypass_Flow_Validations__c = FALSE &amp;&amp; ISBLANK(Source_System_ID__c)  &amp;&amp;
 NOT( ISBLANK( Facility__c ) )
 &amp;&amp;
 ISPICKVAL( Service_Provided_by_Facility__r.Family ,&quot;Specific&quot; )

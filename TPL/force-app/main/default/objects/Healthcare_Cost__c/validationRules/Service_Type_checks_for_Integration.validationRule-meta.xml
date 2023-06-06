@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Service_Type_checks_for_Integration</fullName>
-    <active>true</active>
+    <active>false</active>
     <description>This validation rule will validate</description>
-    <errorConditionFormula>$Setup.Data_Migration_Check__c.Bypass_Flow_Validations__c = FALSE &amp;&amp;
+    <errorConditionFormula>$Setup.Data_Migration_Check__c.Bypass_Flow_Validations__c = FALSE &amp;&amp; ISBLANK(Source_System_ID__c)  &amp;&amp;
 AND (
 Source_System_ID__c &lt;&gt; &quot;&quot;,        
 TEXT(Service_Provided_by_Facility__r.Service_Type__c)  &lt;&gt; Service_Type2__c )</errorConditionFormula>
