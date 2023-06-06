@@ -5,6 +5,8 @@ import getHealthcareCostsHospitalForCase from '@salesforce/apex/HCCostCaseContro
 import saveDraftValues from '@salesforce/apex/HCCCostController.saveDraftValues'; 
 import deleteHCCRecord from '@salesforce/apex/HCCCostController.deleteHCCRecord';
 import getFacilityBySiteCode from '@salesforce/apex/HCCCostController.getFacilityBySiteCode';
+import updateAll from '@salesforce/apex/HCCCostController.updateAll';
+
 
 const INTEGRATION_COLUMNS = [
     {
@@ -364,6 +366,9 @@ export default class HospitalRecordsCase extends LightningElement {
     updateMessage='';
     selectedFilter= 'All Records';
     showSection = false;
+    showMassUpdateSection = false;
+    costReview = false;
+    costInclude = false;
     filterOptions = [
         { label: 'All Records', value: 'All Records' },
         { label: 'Manual Records', value: 'Manual Records' },
@@ -389,7 +394,13 @@ export default class HospitalRecordsCase extends LightningElement {
         }
     }
 
-    
+    handleMassUpdate(){
+        if(this.showMassUpdateSection){
+             this.showMassUpdateSection = false;
+        }else{
+             this.showMassUpdateSection = true;
+        }
+     }
     
     handleWindowOnclick(context) {
         this.resetPopups('c-datatable-lookup', context);
@@ -844,7 +855,17 @@ export default class HospitalRecordsCase extends LightningElement {
     async refresh(){
         await refreshApex(this.wiredRecords);
     }
-
+    changeCostReview(event){
+        this.costReview = event.target.checked;
+        console.log(this.costReview);
+    }
+    changeCostInclude(event){
+        this.costInclude = event.target.checked;
+        console.log(this.costInclude);
+    }
+    updateAll(){
+        updateAll({caseId: this.recordId,costReview:this.costReview,costInclude:this.costInclude})
+    }
     handleSave(event){
         event.preventDefault();
         this.showSpinner = true;

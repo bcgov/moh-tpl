@@ -4,6 +4,8 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import getHealthcareCostsPharmacareForCase from '@salesforce/apex/HCCostCaseController.getHealthcareCostsPharmacareForCase';
 import saveDraftValues from '@salesforce/apex/HCCCostController.saveDraftValues';
 import deleteHCCRecord from '@salesforce/apex/HCCCostController.deleteHCCRecord';
+import updateAll from '@salesforce/apex/HCCCostController.updateAll';
+
 
 const INTEGRATION_COLUMNS = [
     {
@@ -93,6 +95,9 @@ export default class PharmacareRecordsCase extends LightningElement {
     selectedFilter= 'All Records';
     showSection = false;
     showErrorMessage = false;
+    showMassUpdateSection = false;
+    costReview = false;
+    costInclude = false;
     lastSavedData;
     filterOptions = [
         { label: 'All Records', value: 'All Records' }
@@ -169,7 +174,13 @@ export default class PharmacareRecordsCase extends LightningElement {
         }
        this.onLoad();
     }
-
+    handleMassUpdate(){
+        if(this.showMassUpdateSection){
+             this.showMassUpdateSection = false;
+        }else{
+             this.showMassUpdateSection = true;
+        }
+     }
     previousPage() {
         this.pageNumber = this.pageNumber - 1;
         this.showSection = false;
@@ -332,7 +343,17 @@ export default class PharmacareRecordsCase extends LightningElement {
             
         }
     }
-
+    changeCostReview(event){
+        this.costReview = event.target.checked;
+        console.log(this.costReview);
+    }
+    changeCostInclude(event){
+        this.costInclude = event.target.checked;
+        console.log(this.costInclude);
+    }
+    updateAll(){
+        updateAll({caseId: this.recordId,costReview:this.costReview,costInclude:this.costInclude})
+    }
     handleSave(){
         var el = this.template.querySelector('c-custom-data-table');
         var selected = el.getSelectedRows();

@@ -28,8 +28,18 @@
                 options={filterOptions}
                 onchange={handleFilterChange}
                 placeholder="Select an option"></lightning-combobox>
-            </lightning-layout-item>   
+            </lightning-layout-item>  
+            <lightning-layout-item>
+                <lightning-button label="Mass Update Cost Include / Review" onclick={handleMassUpdate}></lightning-button>
+            </lightning-layout-item> 
         </lightning-layout>
+        <template if:true={showMassUpdateSection}>
+            <lightning-input type="checkbox" name="valid" label="Cost Review" onchange={changeCostReview}>
+            </lightning-input>
+            <lightning-input type="checkbox" name="valid" label="Cost Include" onchange={changeCostInclude}>
+            </lightning-input>
+            <lightning-button label="Go" onclick={updateAll}></lightning-button>
+        </template>
         <div class="slds-scrollable slds-m-around_medium" style="height:auto;width:auto" onitemregister={handleItemRegister}>
             <template if:true={showErrorMessage}>
                 <div class="validation">

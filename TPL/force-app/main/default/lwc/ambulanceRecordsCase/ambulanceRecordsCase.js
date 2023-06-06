@@ -5,6 +5,7 @@ import getHealthcareCostsAmbulanceForCase from '@salesforce/apex/HCCostCaseContr
 import saveDraftValues from '@salesforce/apex/HCCCostController.saveDraftValues'; 
 import deleteHCCRecord from '@salesforce/apex/HCCCostController.deleteHCCRecord';
 import getFacilityBySiteCode from '@salesforce/apex/HCCCostController.getFacilityBySiteCode';
+import updateAll from '@salesforce/apex/HCCCostController.updateAll';
 
 const MANUAL_COLUMNS = [
     {
@@ -195,6 +196,9 @@ export default class AmbulanceRecordsCase extends LightningElement {
     updateMessage='';
     selectedFilter= 'All Records';
     showSection = false;
+    showMassUpdateSection = false;
+    costReview = false;
+    costInclude = false;
     filterOptions = [
         { label: 'All Records', value: 'All Records' },
         { label: 'Manual Records', value: 'Manual Records' },
@@ -244,7 +248,7 @@ export default class AmbulanceRecordsCase extends LightningElement {
         .then(result=>{
             this.wiredRecords = result.hccList;
             this.recordsToDisplay = [];
-           
+           console.log( this.wiredRecords);
             if(result.hccList != null && result.hccList){
                 this.records = JSON.parse(JSON.stringify(result.hccList));
                 this.records.forEach(record =>{
@@ -287,14 +291,30 @@ export default class AmbulanceRecordsCase extends LightningElement {
             );    
         });
     }
-
+    handleMassUpdate(){
+       if(this.showMassUpdateSection){
+            this.showMassUpdateSection = false;
+       }else{
+            this.showMassUpdateSection = true;
+       }
+    }
     get bDisableFirst() {
         return this.pageNumber == 1;
     }
     get bDisableLast() {
         return this.pageNumber == this.totalPages;
     }
-    
+    changeCostReview(event){
+        this.costReview = event.target.checked;
+        console.log(this.costReview);
+    }
+    changeCostInclude(event){
+        this.costInclude = event.target.checked;
+        console.log(this.costInclude);
+    }
+    updateAll(){
+        updateAll({caseId: this.recordId,costReview:this.costReview,costInclude:this.costInclude})
+    }
     handleRecordsPerPage(event) {
         this.pageSize = event.target.value;
         this.totalPages = Math.ceil(this.totalRecords / this.pageSize);
@@ -684,6 +704,8 @@ export default class AmbulanceRecordsCase extends LightningElement {
                 
         } 
   
+        
+        }
         saveDraftValues({data: saveRows, recordDisplay: this.recordsToDisplay, recordType:'Ambulance'})
         .then((data,error) => {
             this.updateMessage = data.actionMessage;
@@ -741,7 +763,6 @@ export default class AmbulanceRecordsCase extends LightningElement {
             }
             return this.refresh();
             })
-        }
             
     }
    
