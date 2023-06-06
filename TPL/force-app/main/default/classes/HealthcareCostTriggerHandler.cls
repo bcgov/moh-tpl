@@ -47,26 +47,4 @@ public with sharing class HealthcareCostTriggerHandler {
             System.debug(e.getMessage());
         }
     }
-    public static void populateDateId(List<Healthcare_Cost__c> hccList){
-        List<Healthcare_Cost__c> hccUpdateList = new List<Healthcare_Cost__c>();
-        for(Healthcare_Cost__c hcc : hccList){
-            Healthcare_Cost__c hcc1 = new Healthcare_Cost__c();
-            hcc1.id = hcc.id;
-            if(hcc.Date_of_Service__c != null){
-                String dateString = String.valueOf(hcc.Date_of_Service__c);
-                dateString = dateString.replace('-', '');
-                hcc1.dateId__c = dateString+hcc.Id;
-               
-            }else{
-                hcc1.dateId__c = '00000000'+hcc.Id;
-            }
-            hccUpdateList.add(hcc1);
-        }
-        try{
-            System.debug('updateing here'+hccUpdateList);
-            update hccUpdateList;
-        }catch(Exception e){
-            System.debug(e.getMessage());
-        }
-    }
 }

@@ -5,7 +5,6 @@ trigger HealthcareCostTrigger on Healthcare_Cost__c (after insert,after update, 
                 HealthcareCostTriggerHandler.isFirstTime = false;
                 System.debug('Inside trigger '+trigger.new);
                 HealthcareCostTriggerHandler.updateRollup(Trigger.new);
-                HealthcareCostTriggerHandler.populateDateId(Trigger.new);
             }
             
         }
