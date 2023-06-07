@@ -9,21 +9,10 @@
         <operation>equals</operation>
         <value>true</value>
     </exitCriteriaFilterItems>
+    <isVersionDefault>true</isVersionDefault>
     <milestones>
         <milestoneName>Case Expires In</milestoneName>
         <minutesToComplete>43800</minutesToComplete>
-        <timeTriggers>
-            <actions>
-                <name>case_field_update</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <timeLength>1</timeLength>
-            <workflowTimeTriggerUnit>Minutes</workflowTimeTriggerUnit>
-        </timeTriggers>
-        <timeTriggers>
-            <timeLength>-1</timeLength>
-            <workflowTimeTriggerUnit>Minutes</workflowTimeTriggerUnit>
-        </timeTriggers>
         <timeTriggers>
             <actions>
                 <name>Ultimate_limitation_for_follow_up_task</name>
@@ -32,6 +21,21 @@
             <timeLength>-30</timeLength>
             <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
         </timeTriggers>
+        <timeTriggers>
+            <timeLength>-1</timeLength>
+            <workflowTimeTriggerUnit>Minutes</workflowTimeTriggerUnit>
+        </timeTriggers>
+        <timeTriggers>
+            <actions>
+                <name>case_field_update</name>
+                <type>FieldUpdate</type>
+            </actions>
+            <timeLength>1</timeLength>
+            <workflowTimeTriggerUnit>Minutes</workflowTimeTriggerUnit>
+        </timeTriggers>
         <useCriteriaStartTime>false</useCriteriaStartTime>
     </milestones>
+    <name>case entitlement process</name>
+    <versionMaster>552Au000007Dskv</versionMaster>
+    <versionNumber>1</versionNumber>
 </EntitlementProcess>
