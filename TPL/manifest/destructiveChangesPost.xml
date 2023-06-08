@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
-    <types>
+    <!--types>
          <members>Populate_Site_code_Facility_Service_Type_on_Hospitalization_record</members>
          <members>Populate_Intervention_code_CCI_Level_for_Hospitalization_Records</members>
         <name>Flow</name>
-    </types>
+    </types-->
     <!--types>
          <members>Update_Health_Care_Cost_Fields_On_Update</members>
         <name>Flow</name>
@@ -40,9 +40,13 @@
      <members>HCCCostPharmacareRecord</members>
      <members>HCCCostPharmacareRecordTest</members>
         <name>ApexClass</name>
-    </types-->
-    <types>
+    </types--> 
+    <!--types>
          <members>New_Hospitalization_Record_on_Case</members>
         <name>Flow</name>
+    </types-->
+    <types>
+         <members>case entitlement process_v21</members>
+        <name>EntitlementProcess</name>
     </types>
 </Package>
