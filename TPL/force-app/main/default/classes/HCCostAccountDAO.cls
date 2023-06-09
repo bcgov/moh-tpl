@@ -25,7 +25,7 @@ public with sharing class HCCostAccountDAO {
                 }
                 query = 'SELECT ' + fields + ' FROM Healthcare_Cost__c WHERE Account__c = :accId and RecordTypeId = :recordTypeId and dateId__c > :dateId order by dateId__c LIMIT :pageSize';
                 hccList = Database.query(query);
-              //  hccList = [select Id, Name, Case2__c, Case2__r.CaseNumber, Case_Number__c, Cost_Include__c, Cost_Review__c, Date_of_Service__c, Location_Responded__c, Basic_Amount__c, Cost__c, Total_Cost_Override__c, Site_Code__c, Facility__c, FacilityName__c, Fixed_Wing_Helicopter__c, Source_System_ID__c, Service_Date_Index__c from Healthcare_Cost__c where Account__c = :accId and RecordTypeId = :recordTypeId and Id > :locationID order by Id LIMIT :pageSize];
+      
             }
             else {
                 if(itemsToRemove > 2000)
@@ -44,7 +44,7 @@ public with sharing class HCCostAccountDAO {
                 }
                 query = 'SELECT ' + fields + ' FROM Healthcare_Cost__c WHERE Account__c = :accId and RecordTypeId = :recordTypeId and Cost_Include__c = :costValue and Cost_Review__c = :costValue and dateId__c > :dateId order by dateId__c LIMIT :pageSize';
                 hccList = Database.query(query);
-                //    hccList = [select Id, Name, Case2__c, Case2__r.CaseNumber, Case_Number__c, Cost_Include__c, Cost_Review__c, Date_of_Service__c, Location_Responded__c, Basic_Amount__c, Cost__c, Total_Cost_Override__c, Site_Code__c, Facility__c, FacilityName__c, Fixed_Wing_Helicopter__c, Source_System_ID__c, Service_Date_Index__c from Healthcare_Cost__c where Account__c = :accId and RecordTypeId = :recordTypeId and Cost_Include__c = false and Cost_Review__c = false and Id > :locationID order by Id LIMIT :pageSize];
+      
             }
     
         }
