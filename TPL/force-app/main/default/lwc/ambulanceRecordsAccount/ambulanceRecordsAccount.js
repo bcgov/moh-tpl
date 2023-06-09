@@ -240,7 +240,7 @@ export default class AmbulanceRecordsAccount extends LightningElement {
                 })
             );
         }else{
-            assignAll({currentAccountId:this.recordId,newCaseId:this.selectedCase})
+            assignAll({currentAccountId:this.recordId,newCaseId:this.selectedCase,currentRecords:this.recordsToDisplay})
         }
 
     }

@@ -237,13 +237,23 @@ public with sharing class HCCCostController {
         }
     }
     @AuraEnabled
-    public static void updateAll(String caseId,Boolean costReview, Boolean costInclude){
-        List<Healthcare_Cost__c> hccList = [select id,case2__c from Healthcare_Cost__c where case2__c  =: caseId FOR UPDATE];
+    public static List<Healthcare_cost__c> updateAll(String caseId,Boolean costReview, Boolean costInclude,List<Healthcare_cost__c> currentRecords){
+        List<Healthcare_Cost__c> hccList = [select id,case2__c from Healthcare_Cost__c where ID NOT IN:currentRecords and case2__c  =: caseId FOR UPDATE];
+        for(Healthcare_Cost__c hcc : currentRecords){
+            hcc.Cost_Include__c = costInclude;
+            hcc.Cost_Review__c = costReview;
+        }
+        try{
+            database.update(currentRecords,false);
+        }catch(Exception e){
+            System.debug(e);
+        }
         for(Healthcare_Cost__c hcc : hccList){
             hcc.Cost_Include__c = costInclude;
             hcc.Cost_Review__c = costReview;
         }
         System.enqueueJob(new AccountQueueable(hccList));
+        return currentRecords;
     }
     
     public class CaseListWrapper{

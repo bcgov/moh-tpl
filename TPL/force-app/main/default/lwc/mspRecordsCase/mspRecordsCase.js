@@ -649,7 +649,21 @@ export default class AmbulanceRecordsCase extends LightningElement {
         console.log(this.costInclude);
     }
     updateAll(){
-        updateAll({caseId: this.recordId,costReview:this.costReview,costInclude:this.costInclude})
+        updateAll({caseId: this.recordId,costReview:this.costReview,costInclude:this.costInclude,currentRecords:this.recordsToDisplay})
+        .then(result=>{
+            this.onLoad();
+        })
+        .catch(error =>{
+            this.records = []
+            this.totalRecords = 0;
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Error',
+                    message: 'Some issues occured while loading Ambulance Records. Please contact Administrator',
+                    variant: 'error'
+                })
+            );    
+        });
     }
     handleCellChange(event){
         this.showSection = true;
