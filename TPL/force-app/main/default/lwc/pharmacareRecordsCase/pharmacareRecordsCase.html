@@ -11,9 +11,7 @@
                     </lightning-record-edit-form>
                 </lightning-layout-item>
             
-                <lightning-layout-item class="slds-text-align_right">
-                    <lightning-button label="Refresh" onclick={handleRefresh}></lightning-button>
-                </lightning-layout-item>    
+                
             </lightning-layout>
         
         </template>
@@ -27,9 +25,15 @@
                 options={filterOptions}
                 placeholder="Select an option"></lightning-combobox>
             </lightning-layout-item> 
+           
+        </lightning-layout>
+        <lightning-layout>
             <lightning-layout-item>
                 <lightning-button label="Mass Update Cost Include / Review" onclick={handleMassUpdate}></lightning-button>
-            </lightning-layout-item>  
+            </lightning-layout-item> 
+            <lightning-layout-item class="slds-text-align_right">
+                <lightning-button label="Refresh" onclick={handleRefresh}></lightning-button>
+            </lightning-layout-item>    
         </lightning-layout>
         <template if:true={showMassUpdateSection}>
             <lightning-input type="checkbox" name="valid" label="Cost Review" onchange={changeCostReview}>
