@@ -874,7 +874,7 @@ export default class HospitalRecordsCase extends LightningElement {
             this.dispatchEvent(
                 new ShowToastEvent({
                     title: 'Error',
-                    message: 'Some issues occured while loading Ambulance Records. Please contact Administrator',
+                    message: 'Some issues occured while loading Hospital Records. Please contact Administrator',
                     variant: 'error'
                 })
             );    

@@ -423,7 +423,21 @@ export default class MspRecordsAccount extends LightningElement {
                 })
             );
         }else{
-            assignAll({currentAccountId:this.recordId,newCaseId:this.selectedCase})
+            assignAll({currentAccountId:this.recordId,newCaseId:this.selectedCase,currentRecords:this.recordsToDisplay})
+            .then(result=>{
+                this.onLoad();
+            })
+            .catch(error =>{
+                this.records = []
+                this.totalRecords = 0;
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Error',
+                        message: 'Some issues occured while loading MSP Records. Please contact Administrator',
+                        variant: 'error'
+                    })
+                );    
+            });
         }
 
     }

@@ -160,7 +160,7 @@ public with sharing class HCCostAccountController {
         return accountDetailWrapper;
     }
     @AuraEnabled
-    public static void assignAll(String currentAccountId,String newCaseId,List<Healthcare_cost__c> currentRecords){
+    public static List<Healthcare_cost__c> assignAll(String currentAccountId,String newCaseId,List<Healthcare_cost__c> currentRecords){
         List<Healthcare_Cost__c> hccList = [select id,case2__c from Healthcare_Cost__c where Account__c =: currentAccountId and id NOT IN: currentRecords and Cost_Include__c = false and Cost_Review__c = false FOR UPDATE];
         for(Healthcare_Cost__c hcc : currentRecords){
             hcc.case2__c = newCaseId;
@@ -168,12 +168,13 @@ public with sharing class HCCostAccountController {
         try{
             Database.saveResult[] sr = database.update(currentRecords,false);
         }catch(Exception e){
-            System.debug(e);
+            System.debug(e.getMessage());
         }
         for(Healthcare_Cost__c hcc : hccList){
             hcc.case2__c = newCaseId;
         }
         System.enqueueJob(new AccountQueueable(hccList));
+        return currentRecords;
     }
 
     public class HCCostAccountDetailWrapper{

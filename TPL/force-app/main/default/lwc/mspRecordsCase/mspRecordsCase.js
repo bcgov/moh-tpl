@@ -659,7 +659,7 @@ export default class AmbulanceRecordsCase extends LightningElement {
             this.dispatchEvent(
                 new ShowToastEvent({
                     title: 'Error',
-                    message: 'Some issues occured while loading Ambulance Records. Please contact Administrator',
+                    message: 'Some issues occured while loading MSP Records. Please contact Administrator',
                     variant: 'error'
                 })
             );    
