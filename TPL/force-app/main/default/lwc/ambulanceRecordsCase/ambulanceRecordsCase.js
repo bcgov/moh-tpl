@@ -12,15 +12,13 @@ const MANUAL_COLUMNS = [
         label: 'Cost Include',
         fieldName: 'Cost_Include__c',
         type:'boolean',
-        sortable: true,
-        editable: true
+        sortable: true
     },
     {
         label: 'Cost Review',
         fieldName: 'Cost_Review__c',
         type:'boolean',
-        sortable: true,
-        editable:true
+        sortable: true
     },
     {
         label: 'Date of Service',
@@ -37,15 +35,13 @@ const MANUAL_COLUMNS = [
         label: 'Location Responded',
         fieldName: 'Location_Responded__c',
         type:'text',
-        editable: true,
-        sortable:true
+        editable: true
     },
     {
         label: 'Facility Code',
         fieldName: 'Site_Code__c',
         type: 'text',
-        editable: true,
-        sortable: true
+        editable: true
     },
     {
         label: 'Facility',
@@ -65,36 +61,32 @@ const MANUAL_COLUMNS = [
         },
         cellAttributes:{
             class: { fieldName: 'accountNameClass'}
-        },
-        sortable: true
+        }
+       
     },
     {
         label: 'Basic Amount',
         fieldName: 'Basic_Amount__c',
         type: 'currency',
-        sortable: true,
         editable: false
     },
     {
         label: 'Total Cost Override',
         fieldName: 'Total_Cost_Override__c',
         type: 'currency',
-        sortable: true,
         editable: true
     },
     {
         label: 'Fixed Wing/Helicopter',
         fieldName: 'Fixed_Wing_Helicopter__c',
         type: 'currency',
-        editable: true,
-        sortable: false
+        editable: true
     },
     {
         label: 'Source System ID',
         fieldName: 'Source_System_ID__c',
         type: 'text',
-        editable: true,
-        sortable: true
+        editable: true
     }
 ];
 
@@ -103,15 +95,13 @@ const INTEGRATION_COLUMNS = [
         label: 'Cost Include',
         fieldName: 'Cost_Include__c',
         type:'boolean',
-        editable: true,
-        sortable: true
+        editable: true
     },
     {
         label: 'Cost Review',
         fieldName: 'Cost_Review__c',
         type:'boolean',
-        editable: true,
-        sortable: true
+        editable: true
     },
     {
         label: 'Date of Service',
@@ -128,50 +118,43 @@ const INTEGRATION_COLUMNS = [
         label: 'Location Responded',
         fieldName: 'Location_Responded__c',
         type: 'text',
-        editable: false,
-        sortable: true
+        editable: false
     },
     {
         label: 'Facility Code',
         fieldName: 'Site_Code__c',
         type: 'text',
-        editable: false,
-        sortable: true
+        editable: false
     },
     {
         label: 'Facility',
         fieldName:'FacilityName__c',
         type: 'text',
-        editable: false,
-        sortable: true
+        editable: false
     },
     {
         label: 'Basic Amount',
         fieldName: 'Basic_Amount__c',
         type: 'currency',
-        editable: false,
-        sortable: true
+        editable: false
     },
     {
         label: 'Total Cost Override',
         fieldName: 'Total_Cost_Override__c',
         type: 'currency',
-        editable: true,
-        sortable: true
+        editable: true
     },
     {
         label: 'Fixed Wing Helicopter',
         fieldName: 'Fixed_Wing_Helicopter__c',
         type: 'currency',
-        editable: false,
-        sortable: true
+        editable: false
     },
     {
         label: 'Source System ID',
         fieldName: 'Source_System_ID__c',
         type: 'text',
-        editable: false,
-        sortable: true
+        editable: false
     }
 ];
 export default class AmbulanceRecordsCase extends LightningElement {

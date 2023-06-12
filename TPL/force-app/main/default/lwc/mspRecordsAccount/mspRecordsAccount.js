@@ -10,22 +10,19 @@ const COLUMNS = [
         label: 'Case Number',
         fieldName: 'Case_Number__c',
         type:'text',
-        editable: false,
-        sortable: true
+        editable: false
     },
     {
         label: 'Cost Include',
         fieldName: 'Cost_Include__c',
         type:'boolean',
-        editable: false,
-        sortable: true
+        editable: false
     },
     {
         label: 'Cost Review',
         fieldName: 'Cost_Review__c',
         type:'boolean',
-        editable:false,
-        sortable: true
+        editable:false
     },
     {
         label: 'Date of Service',
@@ -42,113 +39,97 @@ const COLUMNS = [
         label: 'Facility',
         fieldName: 'FacilityName__c',
         type: 'text',
-        editable: false,
-        sortable: false
+        editable: false
     },
     {
         label: 'Facility Type',
         fieldName: 'Facility_Type__c',
         type: 'text',
-        editable: false,
-        sortable: false
+        editable: false
     },
     {
         label: 'Descripiton of Service',
         fieldName: 'Description_of_Service2__c',
         type: 'text',
-        editable: false,
-        sortable: false
+        editable: false
     },
     {
         label: 'Fee Item Code',
         fieldName: 'Fee_Item_Code__c',
         type: 'text',
-        editable: false,
-        sortable: true
+        editable: false
     },
     {
         label: 'Fee Item Title',
         fieldName: 'Fee_Item_Title__c',
         type: 'text',
-        editable: false,
-        sortable: true
+        editable: false
     },
     {
         label: 'Fee Item Description',
         fieldName: 'Fee_Item_Description__c',
         type: 'text',
-        editable: false,
-        sortable: true
+        editable: false
     },
     {
         label: 'Practitioner Number',
         fieldName: 'Practitioner_Number__c',
         type: 'false',
-        editable: true,
-        sortable: true
+        editable: true
     },
     {
         label: 'Practitioner Name',
         fieldName: 'Practitioner_Name__c',
         type: 'text',
-        editable: false,
-        sortable: true
+        editable: false
     },
     {
         label: 'Diagnostic Code',
         fieldName: 'Diagnostic_Code__c',
         type: 'text',
-        editable: false,
-        sortable: true
+        editable: false
     },
     {
         label: 'Diagnostic Description',
         fieldName: 'Diagnostic_Description__c',
         type: 'text',
-        editable: false,
-        sortable: false
+        editable: false
     },
     {
         label: 'Amount Paid',
         fieldName: 'Amount_Paid__c',
         type: 'currency',
-        editable: false,
-        sortable: true
+        editable: false
     },
     {
         label: 'Total Cost Override',
         fieldName: 'Total_Cost_Override__c',
         type: 'currency',
-        editable: false,
-        sortable: true
+        editable: false
     },
     {
         label: 'Speciality Code',
         fieldName: 'Specialty_Code__c',
         type: 'text',
-        editable: false,
-        sortable: true
+        editable: false
     },
     {
         label: 'Speciality Description',
         fieldName: 'Specialty_Description2__c',
         type: 'text',
-        editable: false,
-        sortable: false
+        editable: false
     },
     {
         label: 'Payee Number',
         fieldName: 'Payee_Number__c',
         type: 'text',
-        editable: false,
-        sortable: true
+        editable: false
     },
     {
         label: 'Payee Descripiton',
         fieldName: 'Payee_Description__c',
         type: 'text',
-        editable: false,
-        sortable: true
+        editable: false
     },
     {
         label: 'Service Start Date',
@@ -158,8 +139,7 @@ const COLUMNS = [
             day: "2-digit",
             month: "2-digit",
             year: "numeric"},
-        editable: false,
-        sortable: true
+        editable: false
     },
     {
         label: 'Service Finish Date',
@@ -169,8 +149,7 @@ const COLUMNS = [
             day: "2-digit",
             month: "2-digit",
             year: "numeric"},
-        editable: false,
-        sortable: true
+        editable: false
     },
     {
         label: 'Location Type Code',
@@ -183,15 +162,13 @@ const COLUMNS = [
         label: 'Location Type Description',
         fieldName: 'Location_Type_Description2__c',
         type: 'text',
-        editable: false,
-        sortable: false
+        editable: false
     },
     {
         label: 'Source System ID',
         fieldName: 'Source_System_ID__c',
         type: 'text',
-        editable: false,
-        sortable: false
+        editable: false
     }
 ];
 

@@ -10,22 +10,19 @@ const COLUMNS = [
         label: 'Case Number',
         fieldName: 'Case_Number__c',
         type: 'text',
-        sortable: true,
-        editable: false,
+        editable: false
     },
     {
         label: 'Cost Include',
         fieldName: 'Cost_Include__c',
         type:'boolean',
-        editable: false,
-        sortable: true
+        editable: false
     },
     {
         label: 'Cost Review',
         fieldName: 'Cost_Review__c',
         type:'boolean',
-        editable:false,
-        sortable: true
+        editable:false
     },
     {
         label: 'Date of Service',
@@ -42,50 +39,43 @@ const COLUMNS = [
         label: 'Location Responded',
         fieldName: 'Location_Responded__c',
         type: 'text',
-        editable: false,
-        sortable: true
+        editable: false
     },
     {
         label: 'Facility Code',
         fieldName: 'Site_Code__c',
         type: 'text',
-        editable: false,
-        sortable: true
+        editable: false
     },
     {
         label: 'Facility',
         fieldName:'FacilityName__c',
         type: 'text',
-        editable: false,
-        sortable: true
+        editable: false
     },
     {
         label: 'Basic Amount',
         fieldName: 'Basic_Amount__c',
         type: 'currency',
-        editable: false,
-        sortable: true
+        editable: false
     },
     {
         label: 'Total Cost Override',
         fieldName: 'Total_Cost_Override__c',
         type: 'currency',
-        editable: false,
-        sortable: true
+        editable: false
     },
     {
         label: 'Fixed Wing Helicopter',
         fieldName: 'Fixed_Wing_Helicopter__c',
         type: 'currency',
-        editable: false,
-        sortable: true
+        editable: false
     },
     {
         label: 'Source System ID',
         fieldName: 'Source_System_ID__c',
         type: 'text',
-        editable: false,
-        sortable: true
+        editable: false
     }
 ];
 

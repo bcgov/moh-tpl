@@ -10,22 +10,19 @@ const COLUMNS = [
         label: 'Case Number',
         fieldName: 'Case_Number__c' ,
         type: 'text',
-        sortable: true,
         editable: false,
     },
     {
         label: 'Cost Include',
         fieldName: 'Cost_Include__c',
         type:'boolean',
-        editable: false,
-        sortable: true
+        editable: false
     },
     {
         label: 'Cost Review',
         fieldName: 'Cost_Review__c',
         type:'boolean',
-        editable:false,
-        sortable: true
+        editable:false
     },
     {
         label: 'Date of Service',
@@ -42,43 +39,37 @@ const COLUMNS = [
         label: 'Location of Incident',
         fieldName: 'Location_of_Incident__c',
         type: 'text',
-        editable: false,
-        sortable: true
+        editable: false
     },
     {
         label: 'Description of Incident',
         fieldName: 'Description_of_Incident__c',
         type: 'text',
-        editable: false,
-        sortable: true,
+        editable: false
     },
     {
         label: 'Intervention Code (CCI)',
         fieldName: 'Intervention_Code_CCI__c',
         type: 'text',
-        editable: false,
-        sortable: true,
+        editable: false
     },
     {
         label: 'CCI Level',
         fieldName: 'CCI_Level__c',
         type: 'text',
-        editable: false,
-        sortable: true,
+        editable: false
     },
     {
         label: 'Facility Code',
         fieldName: 'Site_Code__c',
         type: 'text',
-        editable: false,
-        sortable: false
+        editable: false
     },
     {
         label: 'Facility',
         fieldName: 'FacilityName__c',
         type: 'text',
-        editable: false,
-        sortable: false
+        editable: false
     },
     {
         label: 'Date of Admission',
@@ -88,8 +79,7 @@ const COLUMNS = [
             day: "2-digit",
             month: "2-digit",
             year: "numeric"},
-        editable: false,
-        sortable: true
+        editable: false
     },
     {
         label: 'Date of Discharge',
@@ -99,62 +89,53 @@ const COLUMNS = [
             day: "2-digit",
             month: "2-digit",
             year: "numeric"},
-        editable: false,
-        sortable: true
+        editable: false
     },
     {
         label: 'Number of Days',
         fieldName: 'Number_of_Days__c',
-        editable: false,
-        sortable: true
+        editable: false
     },
     {
         label: ' Service Provided by Facility',
         fieldName: 'Service_Provider_Facility__c',
-        editable: false,
-        sortable: true
+        editable: false
     },
     {
     
         label: 'Service Type',
         fieldName: 'Service_Type2__c',
-        editable: false,
-        sortable: true
+        editable: false
     },
     {
         label: 'Standard Daily Rate',
         type: 'currency',
         fieldName: 'Standard_Daily_Rate__c',
-        editable: false,
-        sortable: true
+        editable: false
     },
     {
         label: 'Total Cost Standard',
         fieldName: 'Total_Costs_Standard__c',
         type: 'currency',
-        editable: false,
-        sortable: true
+        editable: false
     },
     {
         label: 'Total Cost Override',
         fieldName: 'Total_Cost_Override__c',
         type: 'currency',
-        editable: false,
-        sortable: true
+        editable: false
     },
     {
         label: 'Diagnostic Treatment Service',
         fieldName : 'Diagnostic_Treatment_Service2__c',
         type: 'text',
-        editable: false,
-        sortable: true
+        editable: false
     },
     {
         label: 'Souce System ID',
         fieldName : 'Source_System_ID__c',
         type: 'text',
-        editable: false,
-        sortable: true
+        editable: false
     }
 
 ];
