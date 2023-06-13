@@ -30,6 +30,7 @@ export default class FuturecareRecordsAccount extends LightningElement {
     isFirstPage = true;
     isLastPage = false;
     hideDeleteButton = true;
+    sortSelection = 'asc'; // sort order
     totalRecords = 0; //Total no.of records
     totalPages; //Total no.of pages
     pageNumber = 1; //Page number
@@ -46,6 +47,7 @@ export default class FuturecareRecordsAccount extends LightningElement {
     connectedCallback(){
         this.selectedFilter= 'All Records';
         this.hideDeleteButton = false;
+        this.sortSelection = 'asc';
         this.pageSize = this.pageSizeOptions[0]; 
         this.pageNumber = 1;
         this.onLoad();
@@ -54,7 +56,9 @@ export default class FuturecareRecordsAccount extends LightningElement {
     doSorting(event) {
         this.sortBy = event.detail.fieldName;
         this.sortDirection = event.detail.sortDirection;
-        this.sortData(this.sortBy, this.sortDirection);
+        this.sortSelection = this.sortDirection;
+        this.onLoad();
+       // this.sortData(this.sortBy, this.sortDirection);
     }
 
     sortData(fieldname, direction) {
@@ -80,7 +84,7 @@ export default class FuturecareRecordsAccount extends LightningElement {
     }
 
     onLoad(){
-        return getHealthcareCostsFCForAccount({accId: this.recordId, selectedFilterValue: this.selectedFilter, pageNumber: this.pageNumber, pageSize: this.pageSize})
+        return getHealthcareCostsFCForAccount({accId: this.recordId, selectedFilterValue: this.selectedFilter, pageNumber: this.pageNumber, pageSize: this.pageSize, sortOrder: this.sortSelection})
         .then(result=>{
             this.recordsToDisplay = [];
  

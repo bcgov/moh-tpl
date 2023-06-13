@@ -145,6 +145,7 @@ export default class HospitalRecordsAccount extends LightningElement {
     column = COLUMNS;
     isFirstPage = true;
     isLastPage = false;
+    sortSelection = 'asc'; // sort order
     totalRecords = 0; //Total no.of records
     totalPages; //Total no.of pages
     pageNumber = 1; //Page number
@@ -166,6 +167,7 @@ export default class HospitalRecordsAccount extends LightningElement {
     connectedCallback(){
         this.selectedFilter = 'All Records';
         this.recordId;
+        this.sortSelection = 'asc';
         this.pageNumber = 1;
         this.pageSize = this.pageSizeOptions[0]; 
         this.onLoad();
@@ -174,7 +176,9 @@ export default class HospitalRecordsAccount extends LightningElement {
     doSorting(event) {
         this.sortBy = event.detail.fieldName;
         this.sortDirection = event.detail.sortDirection;
-        this.sortData(this.sortBy, this.sortDirection);
+        this.sortSelection = this.sortDirection;
+        this.onLoad();
+       // this.sortData(this.sortBy, this.sortDirection);
     }
 
     sortData(fieldname, direction) {
@@ -196,7 +200,7 @@ export default class HospitalRecordsAccount extends LightningElement {
     }    
 
     onLoad(){
-        return getHealthcareCostsHospitalForAccount({accId: this.recordId, selectedFilterValue: this.selectedFilter, pageNumber: this.pageNumber, pageSize: this.pageSize})
+        return getHealthcareCostsHospitalForAccount({accId: this.recordId, selectedFilterValue: this.selectedFilter, pageNumber: this.pageNumber, pageSize: this.pageSize, sortOrder: this.sortSelection})
         .then(result =>{
             this.recordsToDisplay = [];
             if(result.hccList != null && result.hccList){
