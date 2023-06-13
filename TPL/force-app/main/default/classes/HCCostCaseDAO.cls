@@ -1,7 +1,7 @@
 public with sharing class HCCostCaseDAO {
 public static List<Healthcare_Cost__c> getHCCostCaseRecords(String caseId, String filterValue, Id recordTypeId, Integer startItemNumber, Integer pageSize, String fields, String sortOrder){
 Integer itemsToRemove = startItemNumber - 2;
-System.debug(itemsToRemove);
+
 list<Healthcare_Cost__c> hccList = new list<Healthcare_Cost__c>();
 String dateId = '';
 String query = '';
@@ -11,7 +11,7 @@ try{
     if(sortOrder == null || sortOrder == ''){
         sortOrder = 'asc';
     }
-    System.debug('sortOrder : ' + sortOrder);
+
     if(sortOrder == Label.TPL_Descending){
     // Populate DateID to maximum value
         dateId = '99999999zz';
@@ -28,7 +28,7 @@ try{
                     dateId = [SELECT dateId__c FROM Healthcare_Cost__c WHERE Case2__c = :caseId AND RecordTypeId = :recordTypeId  AND Source_System_ID__c = :sourceSystemId AND dateId__c < :dateId ORDER BY dateId__c DESC LIMIT 1 OFFSET 2000][0].dateId__c;
                     itemsToRemove -= 2001;
                 }
-                System.debug('Items to remove : ' + itemsToRemove);
+               
             }
             
             if(itemsToRemove > 0){
@@ -42,9 +42,9 @@ try{
             query = 'SELECT ' + fields + ' FROM Healthcare_Cost__c WHERE Case2__c = \'' + caseId + '\' AND RecordTypeId = \'' 
             + recordTypeId +'\' AND Source_System_ID__c = ' + sourceSystemId + ' AND dateId__c < \'' + dateId 
             + '\' ORDER BY dateId__c DESC LIMIT ' + pageSize;
-            System.debug('Query : ' + query);
+           
             hccList = Database.query(query);
-            System.debug('List Size ' + hccList.size());
+            
         }
 
     else if(filterValue == Label.TPL_Records_Created_Today) {
@@ -67,7 +67,7 @@ try{
         query = 'SELECT ' + fields + ' FROM Healthcare_Cost__c WHERE Case2__c = \''+ caseId + '\' AND RecordTypeId = \'' 
         + recordTypeId +'\' AND Source_System_ID__c = ' + sourceSystemId +' AND CreatedDate = TODAY AND dateId__c < \''+ dateId 
         +'\' ORDER BY dateId__c DESC LIMIT '+ pageSize;
-        System.debug('Query : ' + query);
+        
         hccList = Database.query(query);
 
     }
@@ -90,10 +90,10 @@ try{
     
             query = 'SELECT ' + fields + ' FROM Healthcare_Cost__c WHERE Case2__c = \'' + caseId + '\' AND RecordTypeId = \'' 
             + recordTypeId + '\' AND dateId__c < \'' + dateId +'\' ORDER BY dateId__c DESC LIMIT ' + pageSize;
-            System.debug('Query : ' + query);
+            
             hccList = Database.query(query);
         }
-        System.debug('Start Item Number : ' + startItemNumber + ', Items to remove : ' + itemsToRemove +', Page Size : ' + pageSize +', List Size : ' + hccList.size());
+       
     }
     
     else
@@ -116,7 +116,7 @@ try{
         
             query = 'SELECT ' + fields + ' FROM Healthcare_Cost__c WHERE Case2__c = \''+caseId + '\' AND RecordTypeId = \''
             + recordTypeId + '\' AND Source_System_ID__c = '+ sourceSystemId +' AND dateId__c > \'' + dateId + '\' ORDER BY dateId__c ASC LIMIT '+ pageSize;
-            System.debug('Query : ' + query);
+          
             hccList = Database.query(query);
             
         }
@@ -141,7 +141,7 @@ try{
             query = 'SELECT ' + fields + ' FROM Healthcare_Cost__c WHERE Case2__c = \'' + caseId +'\' AND RecordTypeId = \'' 
             + recordTypeId +'\' AND Source_System_ID__c = ' + sourceSystemId + ' AND CreatedDate = TODAY AND dateId__c > \'' + dateId 
             +'\' ORDER BY dateId__c ASC LIMIT ' + pageSize;
-            System.debug('Query : ' + query);
+            
             hccList = Database.query(query);
     
         }
@@ -164,10 +164,10 @@ try{
         
             query = 'SELECT ' + fields + ' FROM Healthcare_Cost__c WHERE Case2__c = \'' + caseId + '\' AND RecordTypeId = \''
             + recordTypeId + '\' AND dateId__c > \'' + dateId + '\' ORDER BY dateId__c ASC LIMIT ' + pageSize;
-            System.debug('Query : ' + query);
+            
             hccList = Database.query(query);
         }
-        System.debug('Start Item Number : ' + startItemNumber + ', Items to remove : ' + itemsToRemove +', Page Size : ' + pageSize +', List Size : ' + hccList.size());
+        
     }
 
     
