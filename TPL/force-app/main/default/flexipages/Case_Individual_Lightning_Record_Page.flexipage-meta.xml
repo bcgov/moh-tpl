@@ -108,28 +108,8 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
-                <componentInstanceProperties>
-                    <name>dir</name>
-                    <value>ltr</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>inline</name>
-                    <value>false</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>inlineLabel</name>
-                    <value>Launch docGenerationSample/fndSingleDocxLwc</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>inlineVariant</name>
-                    <value>brand</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>layout</name>
-                    <value>lightning</value>
-                </componentInstanceProperties>
-                <componentName>docGenerationSampleFndSingleDocxLwcEnglish</componentName>
-                <identifier>c_docGenerationSampleFndSingleDocxLwcEnglish</identifier>
+                <componentName>cfDocGen_Card</componentName>
+                <identifier>c_cfDocGen_Card</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-81cc259d-340d-4946-addf-bba27e6611a8</name>
