@@ -12,13 +12,13 @@ const MANUAL_COLUMNS = [
         label: 'Cost Include',
         fieldName: 'Cost_Include__c',
         type:'boolean',
-        sortable: true
+        editable: true
     },
     {
         label: 'Cost Review',
         fieldName: 'Cost_Review__c',
         type:'boolean',
-        sortable: true
+        editable: true
     },
     {
         label: 'Date of Service',
