@@ -29,6 +29,13 @@
         <value>Id, Name, Case2__c, Case_Number__c, Cost_Include__c, Cost_Review__c, Date_of_Service__c, Location_Responded__c, Basic_Amount__c, Cost__c, Total_Cost_Override__c, Site_Code__c, Facility__c, FacilityName__c, Fixed_Wing_Helicopter__c, Source_System_ID__c</value>
     </labels>
     <labels>
+        <fullName>TPL_Ascending</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>TPL_Ascending</shortDescription>
+        <value>asc</value>
+    </labels>
+    <labels>
         <fullName>TPL_Both_Checked</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -62,6 +69,13 @@
         <protected>false</protected>
         <shortDescription>Cost Review Checked</shortDescription>
         <value>Cost Review Checked</value>
+    </labels>
+    <labels>
+        <fullName>TPL_Descending</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>TPL_Descending</shortDescription>
+        <value>desc</value>
     </labels>
     <labels>
         <fullName>TPL_Empty_Selection</fullName>
