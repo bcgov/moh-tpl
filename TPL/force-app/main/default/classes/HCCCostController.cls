@@ -100,17 +100,23 @@ public with sharing class HCCCostController {
         HCCostAccountCaseWrapper hac = new HCCostAccountCaseWrapper();
         List<Healthcare_Cost__c> updateHealthCareCost = new List<Healthcare_Cost__c>();
             
-        if(caseId == null || caseId.length() == 0 || hccList.size() == 0){
-                passMessage = Label.TPL_Empty_Selection;
-        }
-        else{
+      
             for(Healthcare_Cost__c hcc: hccList){
                 if(hcc.Cost_Include__c == true || hcc.Cost_Review__c == true){
                     checkFail = true;
                     break;
                 }
                 else{
-                    updateHealthCareCost.add(new Healthcare_Cost__c(Id = hcc.Id, Case2__c = caseId));
+                   System.debug(String.isEmpty(caseId));
+                   if(String.isEmpty(caseId)){
+                    caseId = null;
+                   }
+                    //updateHealthCareCost.add(new Healthcare_Cost__c(Id = hcc.Id, Case2__c = caseId));
+                    Healthcare_Cost__c hc = new Healthcare_Cost__c();
+                    hc.id = hcc.id;
+                    System.debug(caseId);
+                    hc.Case2__c = caseId;
+                    updateHealthCareCost.add(hc);
                     checkFail = false;
                 }      
             }
@@ -164,7 +170,7 @@ public with sharing class HCCCostController {
             
             hac.updateMessage = giveStatus;
             hac.passMessage = passMessage;
-        }
+        
         return hac;
     }
 
