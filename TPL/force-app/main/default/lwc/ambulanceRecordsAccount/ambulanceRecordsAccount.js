@@ -103,6 +103,7 @@ export default class AmbulanceRecordsAccount extends LightningElement {
 
     connectedCallback(){
         this.selectedFilter = 'All Records';
+        this.sortSelection = 'ASC';
         this.recordId;
         this.pageNumber = 1;
         this.pageSize = this.pageSizeOptions[0]; 
@@ -112,11 +113,13 @@ export default class AmbulanceRecordsAccount extends LightningElement {
     doSorting(event) {
         this.sortBy = event.detail.fieldName;
         this.sortDirection = event.detail.sortDirection;
+        console.log('Sort Direction : ' + this.sortDirection);
         this.sortData(this.sortBy, this.sortDirection);
     }
 
     sortData(fieldname, direction) {
         let parseData = JSON.parse(JSON.stringify(this.recordsToDisplay));
+        
         // Return the value stored in the field
         let keyValue = (a) => {
             return a[fieldname];

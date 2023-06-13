@@ -332,6 +332,7 @@ export default class HospitalRecordsCase extends LightningElement {
     records = []; //All records available in the data table
     isFirstPage = true;
     isLastPage = false;
+    sortSelection = 'asc';
     totalRecords = 0; //Total no.of records
     totalPages; //Total no.of pages
     pageNumber = 1; //Page number
@@ -359,6 +360,7 @@ export default class HospitalRecordsCase extends LightningElement {
 
     connectedCallback() {
         this.selectedFilter = 'All Records';
+        this.sortSelection = 'asc';
         this.hideDeleteButton = true;
         this.pageSize = this.pageSizeOptions[0]; 
         this.pageNumber = 1;
@@ -399,7 +401,7 @@ export default class HospitalRecordsCase extends LightningElement {
     }
 
       onLoad(){
-        return getHealthcareCostsHospitalForCase({caseId: this.recordId, filterValue: this.selectedFilter, pageSize: this.pageSize, pageNumber: this.pageNumber})
+        return getHealthcareCostsHospitalForCase({caseId: this.recordId, filterValue: this.selectedFilter, pageSize: this.pageSize, pageNumber: this.pageNumber, sortOrder: this.sortSelection})
         .then(result=>{
             this.wiredRecords = result.hccList;
             this.recordsToDisplay = [];
@@ -521,7 +523,10 @@ export default class HospitalRecordsCase extends LightningElement {
     doSorting(event) {
         this.sortBy = event.detail.fieldName;
         this.sortDirection = event.detail.sortDirection;
-        this.sortData(this.sortBy, this.sortDirection);
+        this.sortSelection = this.sortDirection;
+        console.log('Sort Direction : ' + this.sortSelection + ' , ' + this.sortDirection);
+        this.onLoad();
+      //  this.sortData(this.sortBy, this.sortDirection);
     }
 
     sortData(fieldname, direction) {

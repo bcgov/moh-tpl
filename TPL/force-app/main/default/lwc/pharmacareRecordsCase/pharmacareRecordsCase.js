@@ -77,6 +77,7 @@ export default class PharmacareRecordsCase extends LightningElement {
     hideDeleteButton = true;
     totalRecords = 0; //Total no.of records
     totalPages; //Total no.of pages
+    sortSelection = 'asc'; // sort selection
     pageNumber = 1; //Page number
     pageSizeOptions = [5, 10, 25, 50, 75, 100]; //Page size options
     pageSize; //No.of records to be displayed per page
@@ -98,13 +99,14 @@ export default class PharmacareRecordsCase extends LightningElement {
     connectedCallback() {
         this.selectedFilter = 'All Records';
         this.hideDeleteButton = true;
+        this.sortSelection = 'asc';
         this.pageSize = this.pageSizeOptions[0]; 
         this.pageNumber = 1;
         this.onLoad();
       }
     
     onLoad(){
-        return getHealthcareCostsPharmacareForCase({caseId: this.recordId, filterValue: this.selectedFilter, pageSize: this.pageSize, pageNumber: this.pageNumber})
+        return getHealthcareCostsPharmacareForCase({caseId: this.recordId, filterValue: this.selectedFilter, pageSize: this.pageSize, pageNumber: this.pageNumber, sortOrder: this.sortSelection})
         .then(result=>{
             this.wiredRecords = result.hccList;
             this.recordsToDisplay = [];
@@ -204,7 +206,10 @@ export default class PharmacareRecordsCase extends LightningElement {
    doSorting(event) {
         this.sortBy = event.detail.fieldName;
         this.sortDirection = event.detail.sortDirection;
-        this.sortData(this.sortBy, this.sortDirection);
+        this.sortSelection = this.sortDirection;
+        console.log('Sort Direction : ' + this.sortSelection + ' , ' + this.sortDirection);
+        this.onLoad();
+        //  this.sortData(this.sortBy, this.sortDirection);
     }
 
     sortData(fieldname, direction) {

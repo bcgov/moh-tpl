@@ -350,6 +350,7 @@ export default class AmbulanceRecordsCase extends LightningElement {
     isLastPage = false;
     totalRecords = 0; //Total no.of records
     totalPages; //Total no.of pages
+    sortSelection = 'asc'; // sort selection
     pageNumber = 1; //Page number
     pageSizeOptions = [5, 10, 25, 50, 75, 100]; //Page size options
     pageSize; //No.of records to be displayed per page
@@ -376,6 +377,7 @@ export default class AmbulanceRecordsCase extends LightningElement {
     connectedCallback() {
         this.selectedFilter = 'All Records';
         this.hideDeleteButton = true;
+        this.sortSelection = 'asc';
         this.pageSize = this.pageSizeOptions[0]; 
         this.pageNumber = 1;
         this.onLoad();
@@ -417,7 +419,7 @@ export default class AmbulanceRecordsCase extends LightningElement {
         }
      }
     onLoad(){
-        return getHealthcareCostsMSPForCase({caseId: this.recordId, filterValue: this.selectedFilter, pageSize: this.pageSize, pageNumber: this.pageNumber})
+        return getHealthcareCostsMSPForCase({caseId: this.recordId, filterValue: this.selectedFilter, pageSize: this.pageSize, pageNumber: this.pageNumber, sortOrder: this.sortSelection})
         .then(result=>{
             this.wiredRecords = result.hccList;
             this.recordsToDisplay = [];
@@ -535,7 +537,10 @@ export default class AmbulanceRecordsCase extends LightningElement {
     doSorting(event) {
         this.sortBy = event.detail.fieldName;
         this.sortDirection = event.detail.sortDirection;
-        this.sortData(this.sortBy, this.sortDirection);
+        this.sortSelection = this.sortDirection;
+        console.log('Sort Direction : ' + this.sortSelection + ' , ' + this.sortDirection);
+        this.onLoad();
+        //  this.sortData(this.sortBy, this.sortDirection);
     }
 
     sortData(fieldname, direction) {
