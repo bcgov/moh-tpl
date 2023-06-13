@@ -2,19 +2,7 @@
     <template if:true={records}>
            <!-- Pharmacare Records -->
      <lightning-card title="Pharmacare Records">
-        <template if:false={hideDeleteButton}>
-        <!-- Delete Button Code -->
-            <lightning-layout>
-                <lightning-layout-item class="slds-text-align_left">
-                    <lightning-record-edit-form object-api-name="Healthcare_Cost__c"  class="slds-text-align_left" id="assignCases" >
-                        <lightning-button label="Delete selected Records" onclick={handleSelect}></lightning-button>
-                    </lightning-record-edit-form>
-                </lightning-layout-item>
-            
-                
-            </lightning-layout>
-        
-        </template>
+       
         <!-- Handle Filter code -->
         <lightning-layout>
             <lightning-layout-item>
@@ -28,12 +16,23 @@
            
         </lightning-layout>
         <lightning-layout>
+            <template if:false={hideDeleteButton}>
+                <!-- Delete button code -->
+               
+                    <lightning-layout-item class="slds-text-align_left">
+                        <lightning-record-edit-form object-api-name="Healthcare_Cost__c"  class="slds-text-align_left" id="assignCases" >
+                            <lightning-button label="Delete selected Records" onclick={handleSelect}></lightning-button>
+                        </lightning-record-edit-form>
+                    </lightning-layout-item>
+            </template>
+            &nbsp;
             <lightning-layout-item>
                 <lightning-button label="Mass Update Cost Include / Review" onclick={handleMassUpdate}></lightning-button>
-            </lightning-layout-item> 
+            </lightning-layout-item>
+            &nbsp;
             <lightning-layout-item class="slds-text-align_right">
                 <lightning-button label="Refresh" onclick={handleRefresh}></lightning-button>
-            </lightning-layout-item>    
+            </lightning-layout-item>
         </lightning-layout>
         <template if:true={showMassUpdateSection}>
             <lightning-input type="checkbox" name="valid" label="Cost Review" onchange={changeCostReview}>

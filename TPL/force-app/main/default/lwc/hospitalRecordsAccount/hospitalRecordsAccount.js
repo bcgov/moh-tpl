@@ -241,79 +241,109 @@ export default class HospitalRecordsAccount extends LightningElement {
     handleCaseSelection(event){
         this.selectedCase = event.target.value;  
     }
-     
-    handleSelect(){
-     var el = this.template.querySelector('lightning-datatable');
-        var selected = el.getSelectedRows();
-        
-        let selectedCostRecords = [];
-        
-        selected.forEach(function(element){
-        selectedCostRecords.push(element);
-        });
-
-        updateHCCCaseInformation({ caseId: this.selectedCase, hccList: selectedCostRecords, recordDisplay: this.recordsToDisplay})
-        .then((data,error) => {
-            this.displayMessage = data.updateMessage;
-            if(this.displayMessage){
-                this.displayMessage = this.displayMessage.replace(/\r\n/g, "<br />");
-                this.showErrorMessage = true;
-            }
-            
-            if(this.displayMessage || data.passMessage){
-                if(data.passMessage == 'Passed'){
-                    this.onLoad();
-                    this.dispatchEvent(
-                        new ShowToastEvent({
-                            title: 'Success',
-                            message: 'Case assigned to Hospitalization HealthCare Cost record(s) updated successfully.',
-                            variant: 'success'
-                        })
-                    );    
-                }
-                else if(data.passMessage == 'Failed')
-                {
-                    this.dispatchEvent(
-                        new ShowToastEvent({
-                            title: 'Error',
-                            message: 'Please ensure cost review and cost include are unchecked for the Ambulance Healthcare Cost record(s) you want to assign a case.',
-                            variant: 'error'
-                        })
-                    );
-                }
-                else if(data.passMessage == 'Empty Selection')
-                {
-                    this.dispatchEvent(
-                        new ShowToastEvent({
-                            title: 'Error',
-                            message: 'Please select Case and HCC Records to map.',
-                            variant: 'error'
-                        })
-                    );
-                }
-                else if(data.passMessage == 'Partial Success'){
-                    this.onLoad();
-                    this.dispatchEvent(
-                        new ShowToastEvent({
-                            title: 'Warning',
-                            message: 'Case update on few records successful with validation issue on others as displayed below.',
-                            variant: 'warning'
-                        })
-                    ); 
-                }
-            }
-            else{
+    handleUnassign(){
+        assignAll({currentAccountId:this.recordId,newCaseId:this.selectedCase,currentRecords:this.recordsToDisplay})
+            .then(result=>{
+                this.onLoad();
+            })
+            .catch(error =>{
+                this.records = []
+                this.totalRecords = 0;
                 this.dispatchEvent(
                     new ShowToastEvent({
                         title: 'Error',
-                        message: 'Please select Case and Hospitalization Records together to assign.',
+                        message: 'Some issues occured while loading Ambulance Records. Please contact Administrator',
                         variant: 'error'
                     })
-                ); 
-            }
-        });
+                );    
+            });
+        
+    } 
+    handleSelect(){
+        var el = this.template.querySelector('lightning-datatable');
+        var selected = el.getSelectedRows();
+        
+        let selectedCostRecords = [];
+        if(selected.length==0){
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Error',
+                    message: 'Please select Case to assign/unassign.',
+                    variant: 'error'
+                })
+            );
+        }
+        else{
+                    
+            selected.forEach(function(element){
+                selectedCostRecords.push(element);  
+                });
+                 
+                
+                    console.log('else');
+                    return updateHCCCaseInformation({ caseId: this.selectedCase, hccList: selectedCostRecords, recordDisplay: this.recordsToDisplay})
+                    .then((data,error) => {
+                        this.displayMessage = data.updateMessage;
+                    if(this.displayMessage){
+                            this.displayMessage = this.displayMessage.replace(/\r\n/g, "<br />");
+                            this.showErrorMessage = true;
+                        }
+                        
+                        if(this.displayMessage || data.passMessage){
+                            if(data.passMessage == 'Passed'){
+                                this.onLoad();
+                                this.dispatchEvent(
+                                    new ShowToastEvent({
+                                        title: 'Success',
+                                        message: 'Case assigned to Hospital HealthCare Cost record(s) updated successfully.',
+                                        variant: 'success'
+                                    })
+                                );    
+                            }
+                            else if(data.passMessage == 'Failed')
+                            {
+                                this.dispatchEvent(
+                                    new ShowToastEvent({
+                                        title: 'Error',
+                                        message: 'Please ensure cost review and cost include are unchecked for the Hospital Healthcare Cost record(s) you want to assign a case.',
+                                        variant: 'error'
+                                    })
+                                );
+                            }
+                            else if(data.passMessage == 'Empty Selection')
+                            {
+                                this.dispatchEvent(
+                                    new ShowToastEvent({
+                                        title: 'Error',
+                                        message: 'Please select Case and HCC Records to map.',
+                                        variant: 'error'
+                                    })
+                                );
+                            }
+                            else if(data.passMessage == 'Partial Success'){
+                                this.onLoad();
+                                this.dispatchEvent(
+                                    new ShowToastEvent({
+                                        title: 'Warning',
+                                        message: 'Case update on few records successful with validation issue on others as displayed below.',
+                                        variant: 'warning'
+                                    })
+                                ); 
+                            }
+                        }
+                        else{
+                            this.dispatchEvent(
+                                new ShowToastEvent({
+                                    title: 'Error',
+                                    message: 'Please select Case and Hospital Records together to assign.',
+                                    variant: 'error'
+                                })
+                            ); 
+                        }
+                    });
+                }
+        }
 
-    }
 
     get bDisableFirst() {
         return this.pageNumber == 1;
@@ -354,15 +384,7 @@ export default class HospitalRecordsAccount extends LightningElement {
     }
 
     handleAssign(){
-        if(!this.selectedCase){
-            this.dispatchEvent(
-                new ShowToastEvent({
-                    title: 'Error',
-                    message: 'Please select Case  to assign.',
-                    variant: 'error'
-                })
-            );
-        }else{
+        
             assignAll({currentAccountId:this.recordId,newCaseId:this.selectedCase,currentRecords:this.recordsToDisplay})
             .then(result=>{
                 this.onLoad();
@@ -378,7 +400,7 @@ export default class HospitalRecordsAccount extends LightningElement {
                     })
                 );    
             });
-        }
+        
 
     }
     handleFilterChange(event) {
