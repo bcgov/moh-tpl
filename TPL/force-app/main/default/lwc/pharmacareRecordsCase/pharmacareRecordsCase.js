@@ -207,7 +207,6 @@ export default class PharmacareRecordsCase extends LightningElement {
         this.sortBy = event.detail.fieldName;
         this.sortDirection = event.detail.sortDirection;
         this.sortSelection = this.sortDirection;
-        console.log('Sort Direction : ' + this.sortSelection + ' , ' + this.sortDirection);
         this.onLoad();
         //  this.sortData(this.sortBy, this.sortDirection);
     }
@@ -342,11 +341,11 @@ export default class PharmacareRecordsCase extends LightningElement {
     }
     changeCostReview(event){
         this.costReview = event.target.checked;
-        console.log(this.costReview);
+        
     }
     changeCostInclude(event){
         this.costInclude = event.target.checked;
-        console.log(this.costInclude);
+      
     }
     updateAll(){
         updateAll({caseId: this.recordId,costReview:this.costReview,costInclude:this.costInclude,currentRecords:this.recordsToDisplay})
