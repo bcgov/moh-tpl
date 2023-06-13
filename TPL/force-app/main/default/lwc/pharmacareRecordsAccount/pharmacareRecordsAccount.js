@@ -10,22 +10,19 @@ const COLUMNS = [
         label: 'Case Number',
         fieldName: 'Case_Number__c',
         type: 'text',
-        sortable: true,
-        editable: false,
+        editable: false
     },
     {
         label: 'Cost Include',
         fieldName: 'Cost_Include__c',
         type:'boolean',
-        editable: false,
-        sortable: true
+        editable: false
     },
     {
         label: 'Cost Review',
         fieldName: 'Cost_Review__c',
         type:'boolean',
-        editable:false,
-        sortable: true
+        editable:false
     },
     {
         label: 'Date of Service',
@@ -42,43 +39,37 @@ const COLUMNS = [
         label: 'Practitioner Name',
         fieldName: 'Practitioner_Name__c',
         type: 'text',
-        editable: false,
-        sortable: true
+        editable: false
     },
     {
         label: 'DIN',
         fieldName: 'DIN__c',
         type: 'text',
-        editable: false,
-        sortable: true
+        editable: false
     },
     {
         label: 'Name of Drug',
         fieldName: 'Name_of_Drug__c',
         type: 'text',
-        editable: false,
-        sortable: true
+        editable: false
     },
     {
         label: 'Cost of Drug',
         fieldName: 'Cost_of_Drug__c',
         type: 'currency',
-        editable: false,
-        sortable: true
+        editable: false
     },
     {
         label: 'Total Cost Override',
         fieldName: 'Total_Cost_Override__c',
         type: 'currency',
-        editable: false,
-        sortable: true
+        editable: false
     },
     {
         label: 'Source System ID',
         fieldName: 'Source_System_ID__c',
         type: 'text',
-        editable: false,
-        sortable: true
+        editable: false
     }
 ];
 

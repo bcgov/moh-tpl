@@ -13,15 +13,13 @@ const INTEGRATION_COLUMNS = [
         label: 'Cost Include',
         fieldName: 'Cost_Include__c',
         type:'boolean',
-        editable: true,
-        sortable: true
+        editable: true
     },
     {
         label: 'Cost Review',
         fieldName: 'Cost_Review__c',
         type:'boolean',
-        editable:true,
-        sortable: true
+        editable:true
     },
     {
         label: 'Date of Service',
@@ -38,92 +36,79 @@ const INTEGRATION_COLUMNS = [
         label: 'Facility',
         fieldName: 'FacilityName__c',
         type: 'text',
-        editable: false,
-        sortable: false
+        editable: false
     },
     {
         label: 'Facility Type',
         fieldName: 'Facility_Type__c',
         type: 'text',
-        editable: false,
-        sortable: false
+        editable: false
     },
     {
         label: 'Descripiton of Service',
         fieldName: 'Description_of_Service2__c',
         type: 'text',
-        editable: false,
-        sortable: false
+        editable: false
     },
     {
         label: 'Fee Item Code',
         fieldName: 'Fee_Item_Code__c',
         type: 'text',
-        editable: false,
-        sortable: true
+        editable: false
     },
     {
         label: 'Fee Item Title',
         fieldName: 'Fee_Item_Title__c',
         type: 'text',
-        editable: false,
-        sortable: true
+        editable: false
     },
     {
         label: 'Fee Item Description',
         fieldName: 'Fee_Item_Description__c',
         type: 'text',
-        editable: false,
-        sortable: true
+        editable: false
     },
     {
         label: 'Practitioner Number',
         fieldName: 'Practitioner_Number__c',
         type: 'false',
-        editable: false,
-        sortable: true
+        editable: false
     },
     {
         label: 'Practitioner Name',
         fieldName: 'Practitioner_Name__c',
         type: 'text',
-        editable: false,
-        sortable: true
+        editable: false
     },
     {
         label: 'Diagnostic Code',
         fieldName: 'Diagnostic_Code__c',
         type: 'text',
-        editable: false,
-        sortable: true
+        editable: false
     },
     {
         label: 'Diagnostic Description',
         fieldName: 'Diagnostic_Description__c',
         type: 'text',
-        editable: false,
-        sortable: false
+        editable: false
     },
     {
         label: 'Amount Paid',
         fieldName: 'Amount_Paid__c',
         type: 'text',
-        editable: false,
-        sortable: true
+        editable: false
     },
     {
         label: 'Total Cost Override',
         fieldName: 'Total_Cost_Override__c',
         type: 'currency',
-        editable: false,
-        sortable: true
+        editable: false
     },
     {
         label: 'Speciality Code',
         fieldName: 'Specialty_Code__c',
         type: 'text',
-        editable: false,
-        sortable: true
+        editable: false
     },
     {
         label: 'Speciality Description',
@@ -136,15 +121,13 @@ const INTEGRATION_COLUMNS = [
         label: 'Payee Number',
         fieldName: 'Payee_Number__c',
         type: 'text',
-        editable: false,
-        sortable: true
+        editable: false
     },
     {
         label: 'Payee Descripiton',
         fieldName: 'Payee_Description__c',
         type: 'text',
-        editable: false,
-        sortable: true
+        editable: false
     },
     {
         label: 'Service Start Date',
@@ -154,8 +137,7 @@ const INTEGRATION_COLUMNS = [
             day: "2-digit",
             month: "2-digit",
             year: "numeric"},
-        editable: false,
-        sortable: true
+        editable: false
     },
     {
         label: 'Service Finish Date',
@@ -165,29 +147,25 @@ const INTEGRATION_COLUMNS = [
             day: "2-digit",
             month: "2-digit",
             year: "numeric"},
-        editable: false,
-        sortable: true
+        editable: false
     },
     {
         label: 'Location Type Code',
         fieldName: 'Location_Type_Code__c',
         type: 'text',
-        editable: false,
-        sortable: true
+        editable: false
     },
     {
         label: 'Location Type Description',
         fieldName: 'Location_Type_Description2__c',
         type: 'text',
-        editable: false,
-        sortable: false
+        editable: false
     },
     {
         label: 'Source System ID',
         fieldName: 'Source_System_ID__c',
         type: 'text',
-        editable: false,
-        sortable: true
+        editable: false
     }
 ];
 const MANUAL_COLUMNS = 
@@ -196,15 +174,13 @@ const MANUAL_COLUMNS =
         label: 'Cost Include',
         fieldName: 'Cost_Include__c',
         type:'boolean',
-        editable: true,
-        sortable: true
+        editable: true
     },
     {
         label: 'Cost Review',
         fieldName: 'Cost_Review__c',
         type:'boolean',
-        editable:true,
-        sortable: true
+        editable:true
     },
     {
         label: 'Date of Service',
@@ -235,113 +211,97 @@ const MANUAL_COLUMNS =
         },
         cellAttributes:{
             class: { fieldName: 'accountNameClass'}
-        },
-        sortable: true
+        }
     },
     {
         label: 'Facility Type',
         fieldName: 'Facility_Type__c',
         type: 'text',
-        editable: false,
-        sortable: false
+        editable: false
     },
     {
         label: 'Descripiton of Service',
         fieldName: 'Description_of_Service2__c',
         type: 'text',
-        editable: true,
-        sortable: false
+        editable: true
     },
     {
         label: 'Fee Item Code',
         fieldName: 'Fee_Item_Code__c',
         type: 'text',
-        editable: true,
-        sortable: true
+        editable: true
     },
     {
         label: 'Fee Item Title',
         fieldName: 'Fee_Item_Title__c',
         type: 'text',
-        editable: true,
-        sortable: true
+        editable: true
     },
     {
         label: 'Fee Item Description',
         fieldName: 'Fee_Item_Description__c',
         type: 'text',
-        editable: true,
-        sortable: true
+        editable: true
     },
     {
         label: 'Practitioner Number',
         fieldName: 'Practitioner_Number__c',
         type: 'false',
-        editable: true,
-        sortable: true
+        editable: true
     },
     {
         label: 'Practitioner Name',
         fieldName: 'Practitioner_Name__c',
         type: 'text',
-        editable: true,
-        sortable: true
+        editable: true
     },
     {
         label: 'Diagnostic Code',
         fieldName: 'Diagnostic_Code__c',
         type: 'text',
-        editable: true,
-        sortable: true
+        editable: true
     },
     {
         label: 'Diagnostic Description',
         fieldName: 'Diagnostic_Description__c',
         type: 'text',
-        editable: true,
-        sortable: false
+        editable: true
     },
     {
         label: 'Amount Paid',
         fieldName: 'Amount_Paid__c',
         type: 'text',
-        editable: true,
-        sortable: true
+        editable: true
     },
     {
         label: 'Total Cost Override',
         fieldName: 'Total_Cost_Override__c',
         type: 'currency',
-        editable: false,
-        sortable: true
+        editable: false
     },
     {
         label: 'Speciality Code',
         fieldName: 'Specialty_Code__c',
         type: 'text',
-        editable: true,
-        sortable: true
+        editable: true
     },
     {
         label: 'Speciality Description',
         fieldName: 'Specialty_Description2__c',
         type: 'text',
-        editable: true,
-        sortable: false
+        editable: true
     },
     {
         label: 'Payee Number',
         fieldName: 'Payee_Number__c',
         type: 'text',
-        editable: true,
-        sortable: true
+        editable: true
     },
     {
         label: 'Payee Descripiton',
         fieldName: 'Payee_Description__c',
         type: 'text',
-        editable: true,
-        sortable: true
+        editable: true
     },
     {
         label: 'Service Start Date',
@@ -351,8 +311,7 @@ const MANUAL_COLUMNS =
             day: "2-digit",
             month: "2-digit",
             year: "numeric"},
-        editable: true,
-        sortable: true
+        editable: true
     },
     {
         label: 'Service Finish Date',
@@ -362,29 +321,25 @@ const MANUAL_COLUMNS =
             day: "2-digit",
             month: "2-digit",
             year: "numeric"},
-        editable: true,
-        sortable: true
+        editable: true
     },
     {
         label: 'Location Type Code',
         fieldName: 'Location_Type_Code__c',
         type: 'text',
-        editable: true,
-        sortable: true
+        editable: true
     },
     {
         label: 'Location Type Description',
         fieldName: 'Location_Type_Description2__c',
         type: 'text',
-        editable: true,
-        sortable: false
+        editable: true
     },
     {
         label: 'Source System ID',
         fieldName: 'Source_System_ID__c',
         type: 'text',
-        editable: true,
-        sortable: true
+        editable: true
     }
 ];
 export default class AmbulanceRecordsCase extends LightningElement {
@@ -395,6 +350,7 @@ export default class AmbulanceRecordsCase extends LightningElement {
     isLastPage = false;
     totalRecords = 0; //Total no.of records
     totalPages; //Total no.of pages
+    sortSelection = 'asc'; // sort selection
     pageNumber = 1; //Page number
     pageSizeOptions = [5, 10, 25, 50, 75, 100]; //Page size options
     pageSize; //No.of records to be displayed per page
@@ -421,6 +377,7 @@ export default class AmbulanceRecordsCase extends LightningElement {
     connectedCallback() {
         this.selectedFilter = 'All Records';
         this.hideDeleteButton = true;
+        this.sortSelection = 'asc';
         this.pageSize = this.pageSizeOptions[0]; 
         this.pageNumber = 1;
         this.onLoad();
@@ -462,7 +419,7 @@ export default class AmbulanceRecordsCase extends LightningElement {
         }
      }
     onLoad(){
-        return getHealthcareCostsMSPForCase({caseId: this.recordId, filterValue: this.selectedFilter, pageSize: this.pageSize, pageNumber: this.pageNumber})
+        return getHealthcareCostsMSPForCase({caseId: this.recordId, filterValue: this.selectedFilter, pageSize: this.pageSize, pageNumber: this.pageNumber, sortOrder: this.sortSelection})
         .then(result=>{
             this.wiredRecords = result.hccList;
             this.recordsToDisplay = [];
@@ -580,7 +537,9 @@ export default class AmbulanceRecordsCase extends LightningElement {
     doSorting(event) {
         this.sortBy = event.detail.fieldName;
         this.sortDirection = event.detail.sortDirection;
-        this.sortData(this.sortBy, this.sortDirection);
+        this.sortSelection = this.sortDirection;
+        this.onLoad();
+        //  this.sortData(this.sortBy, this.sortDirection);
     }
 
     sortData(fieldname, direction) {
@@ -642,11 +601,11 @@ export default class AmbulanceRecordsCase extends LightningElement {
     }
     changeCostReview(event){
         this.costReview = event.target.checked;
-        console.log(this.costReview);
+       
     }
     changeCostInclude(event){
         this.costInclude = event.target.checked;
-        console.log(this.costInclude);
+        
     }
     updateAll(){
         updateAll({caseId: this.recordId,costReview:this.costReview,costInclude:this.costInclude,currentRecords:this.recordsToDisplay})

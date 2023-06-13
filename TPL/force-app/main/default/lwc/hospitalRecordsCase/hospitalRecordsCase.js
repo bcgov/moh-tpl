@@ -13,15 +13,13 @@ const INTEGRATION_COLUMNS = [
         label: 'Cost Include',
         fieldName: 'Cost_Include__c',
         type:'boolean',
-        editable: true,
-        sortable: true
+        editable: true
     },
     {
         label: 'Cost Review',
         fieldName: 'Cost_Review__c',
         type:'boolean',
-        editable:true,
-        sortable: true
+        editable:true
     },
     {
         label: 'Date of Service',
@@ -38,43 +36,37 @@ const INTEGRATION_COLUMNS = [
         label: 'Location of Incident',
         fieldName: 'Location_of_Incident__c',
         type: 'text',
-        editable: false,
-        sortable: true
+        editable: false
     },
     {
         label: 'Description of Incident',
         fieldName: 'Description_of_Incident__c',
         type: 'text',
-        editable: false,
-        sortable: true,
+        editable: false
     },
     {
         label: 'Intervention Code (CCI)',
         fieldName: 'Intervention_Code_CCI__c',
         type: 'text',
-        editable: false,
-        sortable: true,
+        editable: false
     },
     {
         label: 'CCI Level',
         fieldName: 'CCI_Level__c',
         type: 'text',
-        editable: false,
-        sortable: true,
+        editable: false
     },
     {
         label: 'Facility Code',
         fieldName: 'Site_Code__c',
         type: 'text',
-        editable: false,
-        sortable: false
+        editable: false
     },
     {
         label: 'Facility',
         fieldName: 'FacilityName__c',
         type: 'text',
-        editable: false,
-        sortable: false
+        editable: false
     },
     {
         label: 'Date of Admission',
@@ -84,8 +76,7 @@ const INTEGRATION_COLUMNS = [
             day: "2-digit",
             month: "2-digit",
             year: "numeric"},
-        editable: false,
-        sortable: true
+        editable: false
     },
     {
         label: 'Date of Discharge',
@@ -95,14 +86,12 @@ const INTEGRATION_COLUMNS = [
             day: "2-digit",
             month: "2-digit",
             year: "numeric"},
-        editable: false,
-        sortable: true
+        editable: false
     },
     {
         label: 'Number of Days',
         fieldName: 'Number_of_Days__c',
-        editable: false,
-        sortable: true
+        editable: false
     },
     {
         label: ' Service Provided by Facility',
@@ -122,50 +111,43 @@ const INTEGRATION_COLUMNS = [
         },
         cellAttributes:{
             class: { fieldName: 'accountNameClass'}
-        },
-        sortable: true
+        }
     },
     {
     
         label: 'Service Type',
         fieldName: 'Service_Type2__c',
-        editable: false,
-        sortable: true
+        editable: false
     },
     {
         label: 'Standard Daily Rate',
         type: 'currency',
         fieldName: 'Standard_Daily_Rate__c',
-        editable: false,
-        sortable: true
+        editable: false
     },
     {
         label: 'Total Cost Standard',
         fieldName: 'Total_Costs_Standard__c',
         type: 'currency',
-        editable: false,
-        sortable: true
+        editable: false
     },
     {
         label: 'Total Cost Override',
         fieldName: 'Total_Cost_Override__c',
         type: 'currency',
-        editable: false,
-        sortable: true
+        editable: false
     },
     {
         label: 'Diagnostic Treatment Service',
         fieldName :'Diagnostic_Treatment_Service2__c',
         type: 'text',
-        editable: false,
-        sortable: true
+        editable: false
     },
     {
         label: 'Source System ID',
         fieldName: 'Source_System_ID__c',
         type: 'text',
-        editable: false,
-        sortable: true
+        editable: false
     }
 ];
 
@@ -350,6 +332,7 @@ export default class HospitalRecordsCase extends LightningElement {
     records = []; //All records available in the data table
     isFirstPage = true;
     isLastPage = false;
+    sortSelection = 'asc';
     totalRecords = 0; //Total no.of records
     totalPages; //Total no.of pages
     pageNumber = 1; //Page number
@@ -377,6 +360,7 @@ export default class HospitalRecordsCase extends LightningElement {
 
     connectedCallback() {
         this.selectedFilter = 'All Records';
+        this.sortSelection = 'asc';
         this.hideDeleteButton = true;
         this.pageSize = this.pageSizeOptions[0]; 
         this.pageNumber = 1;
@@ -417,7 +401,7 @@ export default class HospitalRecordsCase extends LightningElement {
     }
 
       onLoad(){
-        return getHealthcareCostsHospitalForCase({caseId: this.recordId, filterValue: this.selectedFilter, pageSize: this.pageSize, pageNumber: this.pageNumber})
+        return getHealthcareCostsHospitalForCase({caseId: this.recordId, filterValue: this.selectedFilter, pageSize: this.pageSize, pageNumber: this.pageNumber, sortOrder: this.sortSelection})
         .then(result=>{
             this.wiredRecords = result.hccList;
             this.recordsToDisplay = [];
@@ -539,7 +523,9 @@ export default class HospitalRecordsCase extends LightningElement {
     doSorting(event) {
         this.sortBy = event.detail.fieldName;
         this.sortDirection = event.detail.sortDirection;
-        this.sortData(this.sortBy, this.sortDirection);
+        this.sortSelection = this.sortDirection;
+        this.onLoad();
+      //  this.sortData(this.sortBy, this.sortDirection);
     }
 
     sortData(fieldname, direction) {
@@ -857,11 +843,11 @@ export default class HospitalRecordsCase extends LightningElement {
     }
     changeCostReview(event){
         this.costReview = event.target.checked;
-        console.log(this.costReview);
+       
     }
     changeCostInclude(event){
         this.costInclude = event.target.checked;
-        console.log(this.costInclude);
+       
     }
     updateAll(){
         updateAll({caseId: this.recordId,costReview:this.costReview,costInclude:this.costInclude,currentRecords:this.recordsToDisplay})
@@ -874,7 +860,7 @@ export default class HospitalRecordsCase extends LightningElement {
             this.dispatchEvent(
                 new ShowToastEvent({
                     title: 'Error',
-                    message: 'Some issues occured while loading Hospital Records. Please contact Administrator',
+                    message: 'Some issues occured while loading Ambulance Records. Please contact Administrator',
                     variant: 'error'
                 })
             );    

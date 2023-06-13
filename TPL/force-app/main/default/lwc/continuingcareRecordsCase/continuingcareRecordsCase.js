@@ -12,14 +12,12 @@ const COLUMNS = [
         label: 'Description',
         fieldName: 'Description__c',
         type:'text',
-        sortable: true,
         editable:true
     },
     {
         label: 'Cost',
         fieldName: 'Cost__c',
         type: 'currency',
-        sortable: true,
         editable: true
     }
 ];
@@ -32,6 +30,7 @@ export default class ContinuingcareRecordsCase extends LightningElement {
     isFirstPage = true;
     isLastPage = false;
     hideDeleteButton = true;
+    sortSelection = 'asc'; // sort selection
     totalRecords = 0; //Total no.of records
     totalPages; //Total no.of pages
     pageNumber = 1; //Page number
@@ -51,6 +50,7 @@ export default class ContinuingcareRecordsCase extends LightningElement {
     connectedCallback(){
         this.selectedFilter= 'Manual Records';
         this.hideDeleteButton = false;
+        this. sortSelection = 'asc';
         this.pageSize = this.pageSizeOptions[0]; 
         this.pageNumber = 1;
         this.onLoad();
@@ -85,7 +85,7 @@ export default class ContinuingcareRecordsCase extends LightningElement {
     }
  
     onLoad(){
-        return getHealthcareCostsCCForCase({caseId: this.recordId, filterValue: this.selectedFilter ,pageNumber: this.pageNumber, pageSize: this.pageSize})
+        return getHealthcareCostsCCForCase({caseId: this.recordId, filterValue: this.selectedFilter ,pageNumber: this.pageNumber, pageSize: this.pageSize, sortOrder: this.sortSelection})
         .then(result =>{
             this.recordsToDisplay = [];
 

@@ -8,21 +8,18 @@ const COLUMNS = [
         label: 'Case',
         fieldName: 'Case_Number__c',
         type:'text',
-        sortable: true,
         editable:false
     },
     {
         label: 'Description',
         fieldName: 'Description__c',
         type:'text',
-        sortable: true,
         editable:false
     },
     {
         label: 'Cost',
         fieldName: 'Cost__c',
         type: 'currency',
-        sortable: true,
         editable: false
     }
 ];

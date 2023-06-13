@@ -13,14 +13,12 @@ const COLUMNS = [
         label: 'Description',
         fieldName: 'Description__c',
         type:'text',
-        sortable: true,
         editable:true
     },
     {
         label: 'Cost',
         fieldName: 'Cost__c',
         type: 'currency',
-        sortable: true,
         editable: true
     }
 ];
@@ -38,6 +36,7 @@ export default class FuturecareRecordsCase extends LightningElement {
     pageSizeOptions = [5, 10, 25, 50, 75, 100]; //Page size options
     pageSize; //No.of records to be displayed per page
     recordsToDisplay = []; //Records to be displayed on the page
+    sortSelection = 'asc'; // sort selection
     wiredRecords;
     updateMessage='';
     draftValues = [];
@@ -53,6 +52,7 @@ export default class FuturecareRecordsCase extends LightningElement {
     connectedCallback(){
         this.selectedFilter= 'Manual Records';
         this.hideDeleteButton = false;
+        this. sortSelection = 'asc';
         this.pageSize = this.pageSizeOptions[0]; 
         this.pageNumber = 1;
         this.onLoad();
@@ -87,7 +87,7 @@ export default class FuturecareRecordsCase extends LightningElement {
     }
 
     onLoad(){
-        return getHealthcareCostsFCForCase({caseId: this.recordId, pageNumber: this.pageNumber, pageSize: this.pageSize})
+        return getHealthcareCostsFCForCase({caseId: this.recordId, filterValue: this.selectedFilter, pageNumber: this.pageNumber, pageSize: this.pageSize, sortOrder: this.sortSelection})
         .then(result =>{
             this.recordsToDisplay = [];
 
