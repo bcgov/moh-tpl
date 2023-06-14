@@ -84,7 +84,7 @@ export default class AmbulanceRecordsAccount extends LightningElement {
     column = COLUMNS;
     isFirstPage = true;
     isLastPage = false;
-    sortSelection = 'ASC';
+    sortSelection = 'asc';
     totalRecords = 0; //Total no.of records
     totalPages; //Total no.of pages
     pageNumber = 1; //Page number
@@ -104,7 +104,7 @@ export default class AmbulanceRecordsAccount extends LightningElement {
 
     connectedCallback(){
         this.selectedFilter = 'All Records';
-        this.sortSelection = 'ASC';
+        this.sortSelection = 'asc';
         this.recordId;
         this.pageNumber = 1;
         this.pageSize = this.pageSizeOptions[0]; 
@@ -114,8 +114,9 @@ export default class AmbulanceRecordsAccount extends LightningElement {
     doSorting(event) {
         this.sortBy = event.detail.fieldName;
         this.sortDirection = event.detail.sortDirection;
-        console.log('Sort Direction : ' + this.sortDirection);
-        this.sortData(this.sortBy, this.sortDirection);
+        this.sortSelection = this.sortDirection;
+        this.onLoad();
+       // this.sortData(this.sortBy, this.sortDirection);
     }
 
     sortData(fieldname, direction) {
@@ -162,7 +163,7 @@ export default class AmbulanceRecordsAccount extends LightningElement {
                 });
                  
                 
-                    console.log('else');
+                    
                     return updateHCCCaseInformation({ caseId: this.selectedCase, hccList: selectedCostRecords, recordDisplay: this.recordsToDisplay})
                     .then((data,error) => {
                         this.displayMessage = data.updateMessage;
@@ -278,10 +279,9 @@ export default class AmbulanceRecordsAccount extends LightningElement {
     }
  
     onLoad(){
-        return getHealthcareCostsAmbulanceForAccount({accId: this.recordId, selectedFilterValue: this.selectedFilter, pageNumber: this.pageNumber, pageSize: this.pageSize})
+        return getHealthcareCostsAmbulanceForAccount({accId: this.recordId, selectedFilterValue: this.selectedFilter, pageNumber: this.pageNumber, pageSize: this.pageSize, sortOrder: this.sortSelection})
         .then(result=>{
            this.recordsToDisplay = [];
-
            if(result.hccList != null && result.hccList){
                 this.records = JSON.parse(JSON.stringify(result.hccList));
                 this.totalRecords = result.totalCount;

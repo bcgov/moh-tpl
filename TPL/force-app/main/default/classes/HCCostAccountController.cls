@@ -22,7 +22,7 @@ public with sharing class HCCostAccountController {
     }
 
     @AuraEnabled
-    public static HCCostAccountDetailWrapper getHealthcareCostsAmbulanceForAccount(String accId, String selectedFilterValue, Integer pageNumber, Integer pageSize){
+    public static HCCostAccountDetailWrapper getHealthcareCostsAmbulanceForAccount(String accId, String selectedFilterValue, Integer pageNumber, Integer pageSize, String sortOrder){
         List<Healthcare_Cost__c> hccCostList = new List<Healthcare_Cost__c> ();
         HCCostAccountDetailWrapper accountDetailWrapper = new HCCostAccountDetailWrapper();
         Integer startItemNumber = 0;
@@ -33,7 +33,7 @@ public with sharing class HCCostAccountController {
             totalCount = HCCostAccountController.getHCCostCountonAccount(accId, selectedFilterValue, recordTypeId);
             startItemNumber = HCCostAccountController.getStartNumber(pageSize, pageNumber, totalCount);
             
-            hccCostList = HCCostAccountDAO.getHCCostAccountRecords(accId, selectedFilterValue, recordTypeId, startItemNumber, pageSize, ambulanceFields);
+            hccCostList = HCCostAccountDAO.getHCCostAccountRecords(accId, selectedFilterValue, recordTypeId, startItemNumber, pageSize, ambulanceFields, sortOrder);
             
             accountDetailWrapper.hccList = hccCostList;
             accountDetailWrapper.totalCount = totalCount;
@@ -46,7 +46,7 @@ public with sharing class HCCostAccountController {
     }
 
     @AuraEnabled
-    public static HCCostAccountDetailWrapper getHealthcareCostsPharmacareForAccount(String accId, String selectedFilterValue, Integer pageNumber, Integer pageSize)
+    public static HCCostAccountDetailWrapper getHealthcareCostsPharmacareForAccount(String accId, String selectedFilterValue, Integer pageNumber, Integer pageSize, String sortOrder)
     {
         List<Healthcare_Cost__c> hccCostList = new List<Healthcare_Cost__c> ();
         HCCostAccountDetailWrapper accountDetailWrapper = new HCCostAccountDetailWrapper();
@@ -57,7 +57,7 @@ public with sharing class HCCostAccountController {
             Id recordTypeId = HCCostRecordTypeIds.getPharmacareRecordId();
             totalCount = HCCostAccountController.getHCCostCountonAccount(accId, selectedFilterValue, recordTypeId);
             startItemNumber = HCCostAccountController.getStartNumber(pageSize, pageNumber, totalCount);
-            hccCostList = HCCostAccountDAO.getHCCostAccountRecords(accId, selectedFilterValue, recordTypeId, startItemNumber, pageSize, pharmacareFields);
+            hccCostList = HCCostAccountDAO.getHCCostAccountRecords(accId, selectedFilterValue, recordTypeId, startItemNumber, pageSize, pharmacareFields, sortOrder);
             accountDetailWrapper.hccList = hccCostList;
             accountDetailWrapper.totalCount = totalCount;
         } catch(NullPointerException nullpointer){
@@ -69,7 +69,7 @@ public with sharing class HCCostAccountController {
     }
 
     @AuraEnabled
-    public static HCCostAccountDetailWrapper getHealthcareCostsMSPForAccount(String accId, String selectedFilterValue, Integer pageNumber, Integer pageSize)
+    public static HCCostAccountDetailWrapper getHealthcareCostsMSPForAccount(String accId, String selectedFilterValue, Integer pageNumber, Integer pageSize, String sortOrder)
     {      
         List<Healthcare_Cost__c> hccCostList = new List<Healthcare_Cost__c> ();
         HCCostAccountDetailWrapper accountDetailWrapper = new HCCostAccountDetailWrapper();
@@ -80,7 +80,7 @@ public with sharing class HCCostAccountController {
             Id recordTypeId = HCCostRecordTypeIds.getMSPRecordId();
             totalCount = HCCostAccountController.getHCCostCountonAccount(accId, selectedFilterValue, recordTypeId);
             startItemNumber = HCCostAccountController.getStartNumber(pageSize, pageNumber, totalCount);
-            hccCostList = HCCostAccountDAO.getHCCostAccountRecords(accId, selectedFilterValue, recordTypeId, startItemNumber, pageSize, mspFields);
+            hccCostList = HCCostAccountDAO.getHCCostAccountRecords(accId, selectedFilterValue, recordTypeId, startItemNumber, pageSize, mspFields, sortOrder);
             accountDetailWrapper.hccList = hccCostList;
             accountDetailWrapper.totalCount = totalCount;
         } catch(NullPointerException nullpointer){
@@ -92,7 +92,7 @@ public with sharing class HCCostAccountController {
     }
     
     @AuraEnabled
-    public static HCCostAccountDetailWrapper getHealthcareCostsHospitalForAccount(String accId, String selectedFilterValue, Integer pageNumber, Integer pageSize)
+    public static HCCostAccountDetailWrapper getHealthcareCostsHospitalForAccount(String accId, String selectedFilterValue, Integer pageNumber, Integer pageSize, String sortOrder)
     {
         List<Healthcare_Cost__c> hccCostList = new List<Healthcare_Cost__c> ();
         HCCostAccountDetailWrapper accountDetailWrapper = new HCCostAccountDetailWrapper();
@@ -103,7 +103,7 @@ public with sharing class HCCostAccountController {
         	Id recordTypeId = HCCostRecordTypeIds.getHospitalRecordId();
             totalCount = HCCostAccountController.getHCCostCountonAccount(accId, selectedFilterValue, recordTypeId);
             startItemNumber = HCCostAccountController.getStartNumber(pageSize, pageNumber, totalCount);
-            hccCostList = HCCostAccountDAO.getHCCostAccountRecords(accId, selectedFilterValue, recordTypeId, startItemNumber, pageSize, hospitalFields);
+            hccCostList = HCCostAccountDAO.getHCCostAccountRecords(accId, selectedFilterValue, recordTypeId, startItemNumber, pageSize, hospitalFields, sortOrder);
             accountDetailWrapper.hccList = hccCostList;
             accountDetailWrapper.totalCount = totalCount;
         } catch(NullPointerException nullpointer){
@@ -115,7 +115,7 @@ public with sharing class HCCostAccountController {
     }
 
     @AuraEnabled
-    public static HCCostAccountDetailWrapper getHealthcareCostsCCForAccount(String accId, String selectedFilterValue, Integer pageNumber, Integer pageSize)
+    public static HCCostAccountDetailWrapper getHealthcareCostsCCForAccount(String accId, String selectedFilterValue, Integer pageNumber, Integer pageSize, String sortOrder)
     {
         List<Healthcare_Cost__c> hccCostList = new List<Healthcare_Cost__c> ();
         HCCostAccountDetailWrapper accountDetailWrapper = new HCCostAccountDetailWrapper();
@@ -126,7 +126,7 @@ public with sharing class HCCostAccountController {
         	Id recordTypeId = HCCostRecordTypeIds.getContinuingCareRecordId();
             totalCount = HCCostAccountController.getHCCostCountonAccount(accId, selectedFilterValue, recordTypeId);
             startItemNumber = HCCostAccountController.getStartNumber(pageSize, pageNumber, totalCount);
-            hccCostList = HCCostAccountDAO.getHCCostAccountRecords(accId, selectedFilterValue, recordTypeId, startItemNumber, pageSize, continuingCareFields);
+            hccCostList = HCCostAccountDAO.getHCCostAccountRecords(accId, selectedFilterValue, recordTypeId, startItemNumber, pageSize, continuingCareFields, sortOrder);
             accountDetailWrapper.hccList = hccCostList;
             accountDetailWrapper.totalCount = totalCount;
         } catch(NullPointerException nullpointer){
@@ -138,7 +138,7 @@ public with sharing class HCCostAccountController {
     }
 
     @AuraEnabled
-    public static HCCostAccountDetailWrapper getHealthcareCostsFCForAccount(String accId, String selectedFilterValue, Integer pageNumber, Integer pageSize)
+    public static HCCostAccountDetailWrapper getHealthcareCostsFCForAccount(String accId, String selectedFilterValue, Integer pageNumber, Integer pageSize, String sortOrder)
     {
         List<Healthcare_Cost__c> hccCostList = new List<Healthcare_Cost__c> ();
         HCCostAccountDetailWrapper accountDetailWrapper = new HCCostAccountDetailWrapper();
@@ -149,7 +149,7 @@ public with sharing class HCCostAccountController {
         	Id recordTypeId = HCCostRecordTypeIds.getFutureCareRecordId();
             totalCount = HCCostAccountController.getHCCostCountonAccount(accId, selectedFilterValue, recordTypeId);
             startItemNumber = HCCostAccountController.getStartNumber(pageSize, pageNumber, totalCount);
-            hccCostList = HCCostAccountDAO.getHCCostAccountRecords(accId, selectedFilterValue, recordTypeId, startItemNumber, pageSize, futureCareFields);
+            hccCostList = HCCostAccountDAO.getHCCostAccountRecords(accId, selectedFilterValue, recordTypeId, startItemNumber, pageSize, futureCareFields, sortOrder);
             accountDetailWrapper.hccList = hccCostList;
             accountDetailWrapper.totalCount = totalCount;
         } catch(NullPointerException nullpointer){
