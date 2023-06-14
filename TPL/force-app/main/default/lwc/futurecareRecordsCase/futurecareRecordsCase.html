@@ -1,94 +1,96 @@
 <template>
-    <template if:true={records}>
-           <!-- Future Care Records -->
-     <lightning-card title="Future Care Records">
-          <!-- Delete Button Code -->
-          <lightning-layout>
-            <lightning-layout-item class="slds-text-align_left">
-                <lightning-record-edit-form object-api-name="Healthcare_Cost__c"  class="slds-text-align_left" id="assignCases" >
-                    <lightning-button label="Delete selected Records" onclick={handleSelect}></lightning-button>
-                </lightning-record-edit-form>
-            </lightning-layout-item>
+<template if:true={records}>
+        <!-- Future Care Records -->
+    <lightning-card title="Future Care Records">
         
-            <lightning-layout-item class="slds-text-align_right">
-                <lightning-button label="Refresh" onclick={handleRefresh}></lightning-button>
-            </lightning-layout-item>    
-        </lightning-layout>
 
-         <!-- Handle Filter code -->
+        <!-- Handle Filter code -->
+    <lightning-layout>
+        <lightning-layout-item>
+            <lightning-combobox
+            name="group-filter"
+            label="Select records to see" 
+            value={selectedFilter}
+            options={filterOptions}
+            onchange={handleFilterChange}
+            placeholder="Select an option"></lightning-combobox>
+        </lightning-layout-item>   
+    </lightning-layout>
+
+        <!-- Delete Button Code -->
         <lightning-layout>
-            <lightning-layout-item>
-                <lightning-combobox
-                name="group-filter"
-                label="Select records to see" 
-                value={selectedFilter}
-                options={filterOptions}
-                onchange={handleFilterChange}
-                placeholder="Select an option"></lightning-combobox>
-            </lightning-layout-item>   
-        </lightning-layout>
+        <lightning-layout-item class="slds-text-align_left">
+            <lightning-record-edit-form object-api-name="Healthcare_Cost__c"  class="slds-text-align_left" id="assignCases" >
+                <lightning-button label="Delete selected Records" onclick={handleSelect}></lightning-button>
+            </lightning-record-edit-form>
+        </lightning-layout-item>
+        &nbsp;
+        <lightning-layout-item class="slds-text-align_right">
+            <lightning-button label="Refresh" onclick={handleRefresh}></lightning-button>
+        </lightning-layout-item>    
+    </lightning-layout>
 
-           <!-- Grid Representation -->
-           <div class="slds-scrollable slds-m-around_medium" style="height:auto;width:auto">
-            <template if:true={showErrorMessage}>
-                <div class="validation">
-                    <p>
-                      <lightning-formatted-text value={updateMessage} linkify ></lightning-formatted-text>
-                    </p>
-                </div> <br>
-            </template>
-            <c-custom-data-table class="slds-max-medium-table_stacked" oncellchange={handleCellChange}
-            data={recordsToDisplay} columns={column} show-row-number-column="false" onedit={handleEdit}
-            key-field="Id" draft-values={draftValues}  data-record="Id"  
-            style="width: auto; height: 500px;" suppress-bottom-bar	>
-            </c-custom-data-table>
-               <template if:true={showSection}>
-                    <div class="slds-align_absolute-center slds-modal__footer">
-                    <button class="slds-button slds-button_neutral" type="button" onclick={handleCancel}>Cancel</button>
-                    <button class="slds-button slds-button_brand save-btn" type="button" onclick={handleSave}>Save</button>
-                </div>
-                </template>    
-            <template if:true={recordsToDisplay.error}>
-                <!-- handle Apex error -->
-            </template>
-        </div>
-     </lightning-card>
-      <!-- Pagination Logic -->
-
-      <div class="slds-grid slds-grid_vertical-align-center slds-grid_align-spread" style="padding-top: 0.5em;">
-        <!--RECORDS PER PAGE-->
-        <div class="slds-col">
-            <div class="slds-list_inline slds-p-bottom_xx-small">
-                <label class="slds-text-color_weak slds-p-horizontal_x-small" for="recordsPerPage">Page Size:</label>
-                <div class="slds-select_container">
-                    <select class="slds-select" id="recordsPerPage" onclick={handleRecordsPerPage} onchange={handleRecordsPerPage}>
-                        <template for:each={pageSizeOptions} for:item="option">
-                            <option key={option} value={option}>{option}</option>
-                        </template>
-                    </select>
-                </div>
+        <!-- Grid Representation -->
+        <div class="slds-scrollable slds-m-around_medium" style="height:auto;width:auto">
+        <template if:true={showErrorMessage}>
+            <div class="validation">
+                <p>
+                    <lightning-formatted-text value={updateMessage} linkify ></lightning-formatted-text>
+                </p>
+            </div> <br>
+        </template>
+        <c-custom-data-table class="slds-max-medium-table_stacked" oncellchange={handleCellChange}
+        data={recordsToDisplay} columns={column} show-row-number-column="false" onedit={handleEdit}
+        key-field="Id" draft-values={draftValues}  data-record="Id"  
+        style="width: auto; height: 500px;" suppress-bottom-bar	>
+        </c-custom-data-table>
+            <template if:true={showSection}>
+                <div class="slds-align_absolute-center slds-modal__footer">
+                <button class="slds-button slds-button_neutral" type="button" onclick={handleCancel}>Cancel</button>
+                <button class="slds-button slds-button_brand save-btn" type="button" onclick={handleSave}>Save</button>
             </div>
-        </div>
+            </template>    
+        <template if:true={recordsToDisplay.error}>
+            <!-- handle Apex error -->
+        </template>
+    </div>
+    </lightning-card>
+    <!-- Pagination Logic -->
 
-        <!--PAGE NAVIGATION-->
-        <div class="slds-align_absolute-center" style="height:5rem">
-            <lightning-button disabled={bDisableFirst} icon-name="utility:jump_to_left" label="First" class="slds-p-horizontal_x-small" alternative-text="first page" onclick={firstPage}></lightning-button>
-
-            <lightning-button disabled={bDisableFirst} icon-name="utility:chevronleft" label="Previous" alternative-text="Previous" onclick={previousPage}></lightning-button>
-            &nbsp;
-            <span class="slds-badge">Showing {pageNumber} &nbsp;of&nbsp; {totalPages} &nbsp;&nbsp;Page(s)</span>
-            &nbsp;
-            <lightning-button disabled={bDisableLast} icon-name="utility:chevronright" label="Next" alternative-text="Next" onclick={nextPage} class="slds-p-horizontal_x-small" icon-position="right"></lightning-button>
-
-            <lightning-button disabled={bDisableLast} icon-name="utility:jump_to_right" label="Last" alternative-text="last page" onclick={lastPage} icon-position="right"></lightning-button>
-        </div>
-
-        <!--TOTAL RECORDS-->
-        <div class="slds-clearfix">
-            <div class="slds-float_right">
-                <span class="slds-badge"> Total Records: {totalRecords}</span>
+    <div class="slds-grid slds-grid_vertical-align-center slds-grid_align-spread" style="padding-top: 0.5em;">
+    <!--RECORDS PER PAGE-->
+    <div class="slds-col">
+        <div class="slds-list_inline slds-p-bottom_xx-small">
+            <label class="slds-text-color_weak slds-p-horizontal_x-small" for="recordsPerPage">Page Size:</label>
+            <div class="slds-select_container">
+                <select class="slds-select" id="recordsPerPage" onclick={handleRecordsPerPage} onchange={handleRecordsPerPage}>
+                    <template for:each={pageSizeOptions} for:item="option">
+                        <option key={option} value={option}>{option}</option>
+                    </template>
+                </select>
             </div>
         </div>
     </div>
-    </template>
+
+    <!--PAGE NAVIGATION-->
+    <div class="slds-align_absolute-center" style="height:5rem">
+        <lightning-button disabled={bDisableFirst} icon-name="utility:jump_to_left" label="First" class="slds-p-horizontal_x-small" alternative-text="first page" onclick={firstPage}></lightning-button>
+
+        <lightning-button disabled={bDisableFirst} icon-name="utility:chevronleft" label="Previous" alternative-text="Previous" onclick={previousPage}></lightning-button>
+        &nbsp;
+        <span class="slds-badge">Showing {pageNumber} &nbsp;of&nbsp; {totalPages} &nbsp;&nbsp;Page(s)</span>
+        &nbsp;
+        <lightning-button disabled={bDisableLast} icon-name="utility:chevronright" label="Next" alternative-text="Next" onclick={nextPage} class="slds-p-horizontal_x-small" icon-position="right"></lightning-button>
+
+        <lightning-button disabled={bDisableLast} icon-name="utility:jump_to_right" label="Last" alternative-text="last page" onclick={lastPage} icon-position="right"></lightning-button>
+    </div>
+
+    <!--TOTAL RECORDS-->
+    <div class="slds-clearfix">
+        <div class="slds-float_right">
+            <span class="slds-badge"> Total Records: {totalRecords}</span>
+        </div>
+    </div>
+</div>
+</template>
 </template>
