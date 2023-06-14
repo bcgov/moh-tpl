@@ -398,10 +398,11 @@ public class HCCCostControllerTest {
         List<Healthcare_Cost__c> caseAssociation2 = new List<Healthcare_Cost__c>();
         String caseId = c2.Id;
         String exceptionMessage = null;   
+        String sortOrder = Label.TPL_Descending;
         try{
             insert new Healthcare_Cost__c[] {hcc1, hcc2, hcc3}; 
-            accountDetailWrapper1 = HCCostAccountController.getHealthcareCostsAmbulanceForAccount(acc.Id, filterAllRecords, pageNumber, pageSize);
-            accountDetailWrapper2 = HCCostAccountController.getHealthcareCostsAmbulanceForAccount(acc.Id, filterUncheckedRecords, pageNumber, pageSize);
+            accountDetailWrapper1 = HCCostAccountController.getHealthcareCostsAmbulanceForAccount(acc.Id, filterAllRecords, pageNumber, pageSize, sortOrder);
+            accountDetailWrapper2 = HCCostAccountController.getHealthcareCostsAmbulanceForAccount(acc.Id, filterUncheckedRecords, pageNumber, pageSize, sortOrder);
             caseAssociation1 = accountDetailWrapper1.hccList;
             caseAssociation2 = accountDetailWrapper2.hccList;
             accountCaseUpdateWrapper1 = HCCCostController.updateHCCCaseInformation(caseAssociation1, caseId, caseAssociation1);
