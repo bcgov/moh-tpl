@@ -3,13 +3,13 @@ public with sharing class HCCostAccountController {
     private static Integer getHCCostCountonAccount(String accId, String selectedFilterValue, Id recordTypeId){
         if(selectedFilterValue == Label.TPL_All_Records)
         {
-          return [SELECT count() from Healthcare_Cost__c where Account__c = :accId and RecordTypeId = :recordTypeId];            
+            return [SELECT count() from Healthcare_Cost__c where Account__c = :accId and RecordTypeId = :recordTypeId];            
         }
         else{
-          return [SELECT count() from Healthcare_Cost__c where Account__c = :accId and RecordTypeId = :recordTypeId and Cost_Include__c = false and Cost_Review__c = false];
+            return [SELECT count() from Healthcare_Cost__c where Account__c = :accId and RecordTypeId = :recordTypeId and Cost_Include__c = false and Cost_Review__c = false];
         }
     }
-
+    
     private static Integer getStartNumber(Integer pageSize, Integer pageNumber, Integer totalCount){
         Integer startNumber = 1;
         if(pageSize > = totalCount){
@@ -20,7 +20,7 @@ public with sharing class HCCostAccountController {
         }
         return startNumber;
     }
-
+    
     @AuraEnabled
     public static HCCostAccountDetailWrapper getHealthcareCostsAmbulanceForAccount(String accId, String selectedFilterValue, Integer pageNumber, Integer pageSize, String sortOrder){
         List<Healthcare_Cost__c> hccCostList = new List<Healthcare_Cost__c> ();
@@ -44,7 +44,7 @@ public with sharing class HCCostAccountController {
         }
         return accountDetailWrapper;
     }
-
+    
     @AuraEnabled
     public static HCCostAccountDetailWrapper getHealthcareCostsPharmacareForAccount(String accId, String selectedFilterValue, Integer pageNumber, Integer pageSize, String sortOrder)
     {
@@ -67,7 +67,7 @@ public with sharing class HCCostAccountController {
         }
         return accountDetailWrapper;
     }
-
+    
     @AuraEnabled
     public static HCCostAccountDetailWrapper getHealthcareCostsMSPForAccount(String accId, String selectedFilterValue, Integer pageNumber, Integer pageSize, String sortOrder)
     {      
@@ -100,7 +100,7 @@ public with sharing class HCCostAccountController {
         Integer totalCount = 0;
         String hospitalFields = Label.TPL_Hospitalization_Fields;
         try{
-        	Id recordTypeId = HCCostRecordTypeIds.getHospitalRecordId();
+            Id recordTypeId = HCCostRecordTypeIds.getHospitalRecordId();
             totalCount = HCCostAccountController.getHCCostCountonAccount(accId, selectedFilterValue, recordTypeId);
             startItemNumber = HCCostAccountController.getStartNumber(pageSize, pageNumber, totalCount);
             hccCostList = HCCostAccountDAO.getHCCostAccountRecords(accId, selectedFilterValue, recordTypeId, startItemNumber, pageSize, hospitalFields, sortOrder);
@@ -113,7 +113,7 @@ public with sharing class HCCostAccountController {
         }
         return accountDetailWrapper;
     }
-
+    
     @AuraEnabled
     public static HCCostAccountDetailWrapper getHealthcareCostsCCForAccount(String accId, String selectedFilterValue, Integer pageNumber, Integer pageSize, String sortOrder)
     {
@@ -123,7 +123,7 @@ public with sharing class HCCostAccountController {
         Integer totalCount = 0;
         String continuingCareFields = Label.TPL_Continuing_Care_Fields;
         try{
-        	Id recordTypeId = HCCostRecordTypeIds.getContinuingCareRecordId();
+            Id recordTypeId = HCCostRecordTypeIds.getContinuingCareRecordId();
             totalCount = HCCostAccountController.getHCCostCountonAccount(accId, selectedFilterValue, recordTypeId);
             startItemNumber = HCCostAccountController.getStartNumber(pageSize, pageNumber, totalCount);
             hccCostList = HCCostAccountDAO.getHCCostAccountRecords(accId, selectedFilterValue, recordTypeId, startItemNumber, pageSize, continuingCareFields, sortOrder);
@@ -136,7 +136,7 @@ public with sharing class HCCostAccountController {
         }
         return accountDetailWrapper;
     }
-
+    
     @AuraEnabled
     public static HCCostAccountDetailWrapper getHealthcareCostsFCForAccount(String accId, String selectedFilterValue, Integer pageNumber, Integer pageSize, String sortOrder)
     {
@@ -146,7 +146,7 @@ public with sharing class HCCostAccountController {
         Integer totalCount = 0;
         String futureCareFields = Label.TPL_Future_Care_Fields;
         try{
-        	Id recordTypeId = HCCostRecordTypeIds.getFutureCareRecordId();
+            Id recordTypeId = HCCostRecordTypeIds.getFutureCareRecordId();
             totalCount = HCCostAccountController.getHCCostCountonAccount(accId, selectedFilterValue, recordTypeId);
             startItemNumber = HCCostAccountController.getStartNumber(pageSize, pageNumber, totalCount);
             hccCostList = HCCostAccountDAO.getHCCostAccountRecords(accId, selectedFilterValue, recordTypeId, startItemNumber, pageSize, futureCareFields, sortOrder);
@@ -163,7 +163,9 @@ public with sharing class HCCostAccountController {
     public static List<Healthcare_cost__c> assignAll(String currentAccountId,String newCaseId,List<Healthcare_cost__c> currentRecords){
         List<Healthcare_Cost__c> hccList = [select id,case2__c from Healthcare_Cost__c where Account__c =: currentAccountId and id NOT IN: currentRecords and Cost_Include__c = false and Cost_Review__c = false FOR UPDATE];
         for(Healthcare_Cost__c hcc : currentRecords){
-            hcc.case2__c = newCaseId;
+            if(!hcc.Cost_Include__c && !hcc.Cost_Review__c) {
+                hcc.case2__c = newCaseId;    
+            }
         }
         try{
             Database.saveResult[] sr = database.update(currentRecords,false);
@@ -176,7 +178,7 @@ public with sharing class HCCostAccountController {
         System.enqueueJob(new AccountQueueable(hccList));
         return currentRecords;
     }
-
+    
     public class HCCostAccountDetailWrapper{
         @AuraEnabled public List<Healthcare_Cost__c> hccList {get;set;}
         @AuraEnabled public Integer totalCount {get;set;}
