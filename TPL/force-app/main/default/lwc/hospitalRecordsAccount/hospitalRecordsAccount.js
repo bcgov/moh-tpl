@@ -246,7 +246,7 @@ export default class HospitalRecordsAccount extends LightningElement {
         this.selectedCase = event.target.value;  
     }
     handleUnassign(){
-        assignAll({currentAccountId:this.recordId,newCaseId:this.selectedCase,currentRecords:this.recordsToDisplay})
+        assignAll({currentAccountId:this.recordId,newCaseId:'',currentRecords:this.recordsToDisplay})
             .then(result=>{
                 this.onLoad();
             })
