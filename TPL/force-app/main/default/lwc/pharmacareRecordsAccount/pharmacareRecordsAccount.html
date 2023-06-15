@@ -1,15 +1,23 @@
 <template>
     <template if:true={records}>
         <lightning-record-edit-form object-api-name="Account" id="assignCases" record-id={recordId}>
+            <lightning-layout multiple-rows>
+                <lightning-layout-item size="2.88">    
             <label for="selectCase">Please search and select a Case </label>
-            <br> <lightning-input-field id="selectCase" field-name="Case__c" title="Search Case Record" variant="label-hidden" onchange={handleCaseSelection}> </lightning-input-field>
-          <br><lightning-button label="Assign Case" onclick={handleSelect}> 
+            <br> <lightning-input-field id="selectCase" field-name="Case__c" title="Search Case Record" width = "75%" variant="label-hidden" onchange={handleCaseSelection}> </lightning-input-field>
+          </lightning-layout-item>
+        </lightning-layout>
+        </lightning-record-edit-form>
+        <lightning-layout>
+            <lightning-layout-item size="4">  
+            <lightning-button label="Assign Case" onclick={handleSelect}> 
             </lightning-button>
             &nbsp;
             <lightning-button label="Assign All" onclick={handleAssign}> </lightning-button>
             &nbsp;
             <lightning-button label="Unassign All" onclick={handleUnassign}> </lightning-button>
-        </lightning-record-edit-form><br>
+            </lightning-layout-item>
+        </lightning-layout>
 
         <lightning-layout>
             <lightning-layout-item>

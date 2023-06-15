@@ -162,6 +162,11 @@ public with sharing class HCCostAccountController {
     @AuraEnabled
     public static List<Healthcare_cost__c> assignAll(String currentAccountId,String newCaseId,List<Healthcare_cost__c> currentRecords){
         List<Healthcare_Cost__c> hccList = [select id,case2__c from Healthcare_Cost__c where Account__c =: currentAccountId and id NOT IN: currentRecords and Cost_Include__c = false and Cost_Review__c = false FOR UPDATE];
+        System.debug(newCaseId);
+        if(String.isBlank(newCaseId)){
+           newCaseId = null; 
+        }
+        System.debug(newCaseId);
         for(Healthcare_Cost__c hcc : currentRecords){
             if(!hcc.Cost_Include__c && !hcc.Cost_Review__c) {
                 hcc.case2__c = newCaseId;    
@@ -172,6 +177,7 @@ public with sharing class HCCostAccountController {
         }catch(Exception e){
             System.debug(e.getMessage());
         }
+        
         for(Healthcare_Cost__c hcc : hccList){
             hcc.case2__c = newCaseId;
         }

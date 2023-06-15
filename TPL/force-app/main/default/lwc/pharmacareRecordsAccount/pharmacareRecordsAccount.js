@@ -315,7 +315,7 @@ export default class PharmacareRecordsAccount extends LightningElement {
 
     }
     handleUnassign(){
-            assignAll({currentAccountId:this.recordId,newCaseId:this.selectedCase,currentRecords:this.recordsToDisplay})
+            assignAll({currentAccountId:this.recordId,newCaseId:'',currentRecords:this.recordsToDisplay})
             .then(result=>{
                 this.onLoad();
             })
