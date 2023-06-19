@@ -468,6 +468,11 @@
         <field>Healthcare_Cost__c.Description__c</field>
         <readable>true</readable>
     </fieldPermissions>
+        <fieldPermissions>
+        <editable>false</editable>
+        <field>Healthcare_Cost__c.RecordTypeName__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>Healthcare_Cost__c.Description_of_Incident__c</field>
