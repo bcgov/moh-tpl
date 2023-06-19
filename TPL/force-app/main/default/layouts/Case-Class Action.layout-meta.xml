@@ -275,6 +275,9 @@
         <relatedList>Case_Relation__c.Case__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <relatedList>RelatedEntityHistoryList</relatedList>
+    </relatedLists>
+    <relatedLists>
         <fields>NAME</fields>
         <relatedList>Payment__c.Case_Number__c</relatedList>
     </relatedLists>
