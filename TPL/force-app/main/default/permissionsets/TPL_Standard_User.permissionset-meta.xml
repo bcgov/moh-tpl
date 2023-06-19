@@ -468,6 +468,11 @@
         <field>Healthcare_Cost__c.Description__c</field>
         <readable>true</readable>
     </fieldPermissions>
+        <fieldPermissions>
+        <editable>false</editable>
+        <field>Healthcare_Cost__c.RecordTypeName__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>Healthcare_Cost__c.Description_of_Incident__c</field>
@@ -529,12 +534,12 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Healthcare_Cost__c.Import_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Healthcare_Cost__c.Intervention_Code_CCI__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -574,7 +579,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Healthcare_Cost__c.PHN__c</field>
         <readable>true</readable>
     </fieldPermissions>
