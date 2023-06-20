@@ -286,7 +286,7 @@
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Obsolete</status>
     <subflows>
         <name>case_relation_with_entitlement_process</name>
         <label>case relation with entitlement process</label>

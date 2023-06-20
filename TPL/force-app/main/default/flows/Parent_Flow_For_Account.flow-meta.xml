@@ -219,7 +219,7 @@
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Obsolete</status>
     <subflows>
         <name>Changing_Last_Name_to_Upper_Case_on_Create</name>
         <label>Changing Last Name to Upper Case on Create</label>
