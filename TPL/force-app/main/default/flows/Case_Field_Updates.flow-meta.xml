@@ -5,7 +5,7 @@
         <name>Status_Closed</name>
         <label>Status Closed</label>
         <locationX>314</locationX>
-        <locationY>311</locationY>
+        <locationY>287</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Status_Closed1</name>
@@ -66,7 +66,7 @@
         <name>Closed_Case_Reopened</name>
         <label>Closed Case Reopened</label>
         <locationX>314</locationX>
-        <locationY>431</locationY>
+        <locationY>395</locationY>
         <inputAssignments>
             <field>Case_Reopened_Date__c</field>
             <value>
@@ -79,7 +79,7 @@
         <name>Date_Closed</name>
         <label>Date Closed</label>
         <locationX>50</locationX>
-        <locationY>431</locationY>
+        <locationY>395</locationY>
         <inputAssignments>
             <field>Date_Closed__c</field>
             <value>
@@ -94,6 +94,7 @@
         <connector>
             <targetReference>Status_Closed</targetReference>
         </connector>
+        <filterFormula>{!$Setup.Data_Migration_Check__c.Bypass_Flow_Validations__c} = False</filterFormula>
         <object>Case</object>
         <recordTriggerType>Update</recordTriggerType>
         <triggerType>RecordBeforeSave</triggerType>

@@ -5,7 +5,7 @@
         <name>healthCareCostToCollection</name>
         <label>healthCareCostToCollection</label>
         <locationX>314</locationX>
-        <locationY>575</locationY>
+        <locationY>539</locationY>
         <assignmentItems>
             <assignToReference>updatedHealthCareCost_col</assignToReference>
             <operator>Add</operator>
@@ -21,7 +21,7 @@
         <name>updatedRecordAssignment</name>
         <label>updatedRecordAssignment</label>
         <locationX>1106</locationX>
-        <locationY>575</locationY>
+        <locationY>539</locationY>
         <assignmentItems>
             <assignToReference>updatedHealthCareCost_col</assignToReference>
             <operator>Add</operator>
@@ -37,7 +37,7 @@
         <name>Check_Record_Type</name>
         <label>Check Record Type</label>
         <locationX>314</locationX>
-        <locationY>815</locationY>
+        <locationY>755</locationY>
         <defaultConnectorLabel>All other record types</defaultConnectorLabel>
         <rules>
             <name>Ambulance_MSP</name>
@@ -81,7 +81,7 @@
         <name>Check_Record_Type_1</name>
         <label>Check Record Type_1</label>
         <locationX>1106</locationX>
-        <locationY>815</locationY>
+        <locationY>755</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Ambulance_MSP_1</name>
@@ -125,7 +125,7 @@
         <name>checkDecisions</name>
         <label>checkDecisions</label>
         <locationX>974</locationX>
-        <locationY>335</locationY>
+        <locationY>323</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>checkForCreate</name>
@@ -186,7 +186,7 @@
         <name>getCreatedHealthCareCost</name>
         <label>getCreatedHealthCareCost</label>
         <locationX>314</locationX>
-        <locationY>455</locationY>
+        <locationY>431</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>healthCareCostToCollection</targetReference>
@@ -207,7 +207,7 @@
         <name>getUpdatedHealthCareCost</name>
         <label>getUpdatedHealthCareCost</label>
         <locationX>1106</locationX>
-        <locationY>455</locationY>
+        <locationY>431</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>updatedRecordAssignment</targetReference>
@@ -235,7 +235,7 @@
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Obsolete</status>
     <subflows>
         <description>This flow will populate site code from Facility or vise versa and Service Type, CCI Level and Intervention Code from Selected Product.</description>
         <name>Populate_fields_for_hospitalization_records</name>
@@ -301,7 +301,7 @@
         <name>Update_Health_Care_Cost_Fields_On_Create</name>
         <label>Update Health Care Cost Fields On Create</label>
         <locationX>314</locationX>
-        <locationY>695</locationY>
+        <locationY>647</locationY>
         <connector>
             <targetReference>Check_Record_Type</targetReference>
         </connector>
@@ -318,7 +318,7 @@
         <name>Update_HealthCare_Cost</name>
         <label>Update HealthCare Cost</label>
         <locationX>1106</locationX>
-        <locationY>695</locationY>
+        <locationY>647</locationY>
         <connector>
             <targetReference>Check_Record_Type_1</targetReference>
         </connector>
