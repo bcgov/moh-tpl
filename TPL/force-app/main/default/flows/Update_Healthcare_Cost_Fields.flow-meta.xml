@@ -147,7 +147,7 @@ DateId</description>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>$Record.Site_Code__c</assignToReference>
+            <assignToReference>currentRecord.Site_Code__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue></stringValue>
