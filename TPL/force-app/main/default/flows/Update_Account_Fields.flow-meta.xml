@@ -197,7 +197,7 @@
                 <leftValueReference>$Record.RecordType.DeveloperName</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Individual</stringValue>
+                    <stringValue>PersonAccount</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -260,6 +260,7 @@
         <connector>
             <targetReference>Record_Type_Check</targetReference>
         </connector>
+        <filterFormula>{!$Setup.Data_Migration_Check__c.Bypass_Flow_Validations__c} = False</filterFormula>
         <object>Account</object>
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
