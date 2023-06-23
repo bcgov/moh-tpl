@@ -127,6 +127,13 @@ DateId</description>
                 <elementReference>dateidformula</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>currentRecord.Date_of_Service__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Date_of_Admission__c</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Check_for_Service_Provided_by_Facility</targetReference>
         </connector>
