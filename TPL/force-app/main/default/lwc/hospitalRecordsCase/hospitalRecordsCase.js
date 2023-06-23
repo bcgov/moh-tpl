@@ -881,6 +881,7 @@ export default class HospitalRecordsCase extends LightningElement {
             .then(result=>{
                 this.onLoad();
                 this.checkIfUnderUpdate();
+               
             })
             .catch(error =>{
                 this.records = []
