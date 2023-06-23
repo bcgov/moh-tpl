@@ -378,6 +378,8 @@ export default class PharmacareRecordsCase extends LightningElement {
             .then(result=>{
                 this.onLoad();
                 this.checkIfUnderUpdate();
+                this.costInclude = false;
+                this.costReview = false;
             })
             .catch(error =>{
                 this.records = []
