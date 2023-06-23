@@ -160,8 +160,8 @@ public with sharing class HCCostAccountController {
         return accountDetailWrapper;
     }
     @AuraEnabled
-    public static List<Healthcare_cost__c> assignAll(String currentAccountId,String newCaseId,List<Healthcare_cost__c> currentRecords){
-        List<Healthcare_Cost__c> hccList = [select id,case2__c from Healthcare_Cost__c where Account__c =: currentAccountId and id NOT IN: currentRecords and Cost_Include__c = false and Cost_Review__c = false FOR UPDATE];
+    public static List<Healthcare_cost__c> assignAll(String currentAccountId,String newCaseId,List<Healthcare_cost__c> currentRecords,String recordType){
+        List<Healthcare_Cost__c> hccList = [select id,case2__c from Healthcare_Cost__c where Account__c =: currentAccountId and id NOT IN: currentRecords and Cost_Include__c = false and Cost_Review__c = false and recordType.name =: RecordType FOR UPDATE];
         System.debug(newCaseId);
         if(String.isBlank(newCaseId)){
            newCaseId = null; 
@@ -184,7 +184,17 @@ public with sharing class HCCostAccountController {
         System.enqueueJob(new AccountQueueable(hccList));
         return currentRecords;
     }
-    
+    @AuraEnabled
+    public static boolean checkIfProcessing(String userId){
+        System.debug(userId);
+        List<AsyncApexJob> listOfJobs = [Select id ,Status, ApexClass.Name,CreatedById from AsyncApexJob where Status='Processing' and JobType = 'Queueable' and CreatedById =:userId];
+        System.debug(listOfJobs);
+        if(listOfJobs.size()>0){
+            return true;
+        }else{
+            return false;
+        }
+    }
     public class HCCostAccountDetailWrapper{
         @AuraEnabled public List<Healthcare_Cost__c> hccList {get;set;}
         @AuraEnabled public Integer totalCount {get;set;}

@@ -42,6 +42,9 @@
             </lightning-input>
             <lightning-button label="Go" onclick={updateAll}></lightning-button>
         </template>
+        <template if:true = {updateHappening}>
+            <p>Your updates are in progress. Please wait....</p>
+        </template>
         <!-- Grid Representation -->
         <div class="slds-scrollable slds-m-around_medium" style="height:auto;width:auto">
             <template if:true={showErrorMessage}>

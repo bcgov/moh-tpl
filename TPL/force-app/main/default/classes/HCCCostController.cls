@@ -243,8 +243,8 @@ public with sharing class HCCCostController {
         }
     }
     @AuraEnabled
-    public static List<Healthcare_cost__c> updateAll(String caseId,Boolean costReview, Boolean costInclude,List<Healthcare_cost__c> currentRecords){
-        List<Healthcare_Cost__c> hccList = [select id,case2__c from Healthcare_Cost__c where ID NOT IN:currentRecords and case2__c  =: caseId FOR UPDATE];
+    public static List<Healthcare_cost__c> updateAll(String caseId,Boolean costReview, Boolean costInclude,List<Healthcare_cost__c> currentRecords,String recordType){
+        List<Healthcare_Cost__c> hccList = [select id,case2__c from Healthcare_Cost__c where ID NOT IN:currentRecords and case2__c  =: caseId and RecordType.developerName =:recordType   FOR UPDATE];
         for(Healthcare_Cost__c hcc : currentRecords){
             hcc.Cost_Include__c = costInclude;
             hcc.Cost_Review__c = costReview;
@@ -258,8 +258,22 @@ public with sharing class HCCCostController {
             hcc.Cost_Include__c = costInclude;
             hcc.Cost_Review__c = costReview;
         }
-        System.enqueueJob(new AccountQueueable(hccList));
+        System.enqueueJob(new HCCQueueable(hccList));
         return currentRecords;
+    }
+    @AuraEnabled
+    public static boolean findIfUnderUpdate(String userId){
+        try {
+            List<AsyncApexJob> apexJobs = [Select id ,Status, ApexClass.Name,CreatedById,JobType   from AsyncApexJob where  JobType = 'Queueable'  and (status = 'Processing' or status = 'Queued') and createdbyId =:userId];
+            if(apexJobs.size()>0){
+                return true;
+            }else{
+                return false;
+            }
+            
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
+        }
     }
     
     public class CaseListWrapper{
