@@ -89,7 +89,7 @@ public with sharing class UserRegistrationService{
             for (IDP_User_Registration_User_Mapping__mdt userRole_rec : userRole_list)
             {
             system.debug('userRole_rec:' + userRole_rec );
-                Profile p = [SELECT Id FROM profile WHERE name=:userRole_rec.Salesforce_User_Profile__c]; //:userRole_rec.Salesforce_User_Profile__c];
+                Profile p = [SELECT Id FROM profile WHERE name=:userRole_rec.Salesforce_User_Profile__c];
         
                 newUser.username = l_username;
                 newUser.email = data.email;
@@ -115,8 +115,8 @@ public with sharing class UserRegistrationService{
             {
                 if (matchingRole_rec.Salesforce_User_License__c == SALESFORCE_USER_LICENSE_COMMUNITY)
                 {
-                    String contactId = managePersonAccount(data);
-                    newUser.ContactId = contactId;
+                    //String contactId = managePersonAccount(data);
+                    //newUser.ContactId = contactId;
                 }
             }
 
@@ -235,94 +235,6 @@ public with sharing class UserRegistrationService{
 
         return existingUser;
         
-    }
-
-    private static String managePersonAccount(Auth.UserData data) 
-    {
-        Boolean isNewAccount = false;
-        Id newCommUser = null;
-        String searchEmail = '';
-        
-        if (data.email!= null) {
-            searchEmail = data.email;
-        } else {
-            searchEmail = data.username;
-        }
-        
-        List<Account> existingAccount = [
-            SELECT Id, PersonContactId, FirstName, LastName, PersonEmail, RecordTypeId 
-            FROM Account where PersonEmail =: searchEmail 
-            AND RecordType.DeveloperName =: ACCOUNT_PERSONACCOUNT_RECORDTYPE];
-        Account newPersonAccount = new Account();
-        
-        if (existingAccount.size() == 0) 
-        {
-            isNewAccount = true;
-            Id personAccountRecordTypeId =  Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('PersonAccount').getRecordTypeId();
-        
-            newPersonAccount.FirstName = data.firstName ;
-
-            newPersonAccount.LastName = data.lastName;
-
-            if(data.email!= null) {
-                String emailaddress = data.email;
-                if (emailaddress.length() > 0) {
-                    newPersonAccount.PersonEmail = emailaddress;
-                } else {
-                    newPersonAccount.PersonEmail = data.username;
-                }
-            } else {
-                newPersonAccount.PersonEmail = data.username;
-            }
-
-            newPersonAccount.RecordTypeId = personAccountRecordTypeId;
-            insert newPersonAccount;
-
-            newCommUser = [SELECT PersonContactId FROM Account WHERE Id =:newPersonAccount.Id ].PersonContactId;
-        } else {
-            newCommUser = existingAccount[0].PersonContactId;
-        }
-
-        if (!isNewAccount) {
-            update(existingAccount);
-        }
-        return newCommUser ;
-    }
-
-
-    private static CommunityUserContact manageContact(CommunityUserContact initContact, Auth.UserData data)
-    {
-        CommunityUserContact newContact = New CommunityUserContact(); 
-        Account existingAccount = new Account();
-        Contact communityContact = new Contact();
-
-        newContact.AccountName = initContact.AccountName;
-        // get existing Contact Account
-        for (Account processAccount : [SELECT Id FROM Account WHERE Name =: initContact.AccountName Limit 1])
-        {
-            existingAccount.Id = processAccount.Id;
-        }
-        communityContact.AccountId = existingAccount.Id <> null ? existingAccount.Id: null;
-        // Check for existing Contact
-        if (communityContact.AccountId != null)
-        {
-            Id businessRecordTypeId = Schema.Sobjecttype.Contact.getRecordTypeInfosByName().get('Business').getRecordTypeId();
-            for (Contact processContact : [SELECT Id FROM Contact WHERE Email =: data.email Limit 1]) // And RecordTypeId =: businessRecordTypeId
-            {
-                communityContact.Id = processContact.Id;
-            }
-            // Create new contact
-            //communityContact.RecordTypeId = businessRecordTypeId;
-            communityContact.FirstName = data.firstName;
-            communityContact.LastName = data.lastName;
-            communityContact.Email = data.email;
-            upsert communityContact;
-            newContact.ContactId = communityContact.Id;
-            newContact.AccountId = communityContact.AccountId;
-
-        }
-
-        return newContact;
     }
     
     private static void managePermissionSet(Id userId, Auth.UserData data)
