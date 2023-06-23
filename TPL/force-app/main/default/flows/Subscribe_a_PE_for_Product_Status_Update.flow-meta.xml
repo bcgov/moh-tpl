@@ -91,7 +91,7 @@
         <object>Update_Product_Status_on_Account_Status__e</object>
         <triggerType>PlatformEvent</triggerType>
     </start>
-    <status>Active</status>
+    <status>Obsolete</status>
     <variables>
         <name>isActive</name>
         <dataType>Boolean</dataType>
