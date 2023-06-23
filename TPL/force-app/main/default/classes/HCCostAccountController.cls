@@ -161,8 +161,9 @@ public with sharing class HCCostAccountController {
     }
     @AuraEnabled
     public static List<Healthcare_cost__c> assignAll(String currentAccountId,String newCaseId,List<Healthcare_cost__c> currentRecords,String recordType){
-        List<Healthcare_Cost__c> hccList = [select id,case2__c from Healthcare_Cost__c where Account__c =: currentAccountId and id NOT IN: currentRecords and Cost_Include__c = false and Cost_Review__c = false and recordType.name =: RecordType FOR UPDATE];
-        System.debug(newCaseId);
+        
+        List<Healthcare_Cost__c> hccList = [select id,case2__c from Healthcare_Cost__c where Account__c =: currentAccountId and id NOT IN: currentRecords and Cost_Include__c = false and Cost_Review__c = false and RecordType.developerName =:recordType FOR UPDATE];
+        
         if(String.isBlank(newCaseId)){
            newCaseId = null; 
         }
@@ -181,18 +182,23 @@ public with sharing class HCCostAccountController {
         for(Healthcare_Cost__c hcc : hccList){
             hcc.case2__c = newCaseId;
         }
+        System.debug(hccList);
         System.enqueueJob(new AccountQueueable(hccList));
         return currentRecords;
     }
+    
     @AuraEnabled
-    public static boolean checkIfProcessing(String userId){
-        System.debug(userId);
-        List<AsyncApexJob> listOfJobs = [Select id ,Status, ApexClass.Name,CreatedById from AsyncApexJob where Status='Processing' and JobType = 'Queueable' and CreatedById =:userId];
-        System.debug(listOfJobs);
-        if(listOfJobs.size()>0){
-            return true;
-        }else{
-            return false;
+    public static boolean findIfUnderUpdate(String userId){
+        try {
+            List<AsyncApexJob> apexJobs = [Select id ,Status, ApexClass.Name,CreatedById,JobType   from AsyncApexJob where  JobType = 'Queueable'  and (status = 'Processing' or status = 'Queued') and createdbyId =:userId];
+            if(apexJobs.size()>0){
+                return true;
+            }else{
+                return false;
+            }
+            
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
         }
     }
     public class HCCostAccountDetailWrapper{

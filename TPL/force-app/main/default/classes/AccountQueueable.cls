@@ -1,6 +1,6 @@
 public with sharing class AccountQueueable implements Queueable {
     private List<Healthcare_cost__c> hccupdateList;
-    Integer BatchSize = 5000;
+    Integer BatchSize = 200;
     private AccountQueueable followupJob;
     public AccountQueueable(List<Healthcare_cost__c> hccList){
         this.hccupdateList = hccList;

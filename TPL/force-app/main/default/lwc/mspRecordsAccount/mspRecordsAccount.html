@@ -19,6 +19,9 @@
             <lightning-button label="Unassign All" onclick={handleUnassign}> </lightning-button>
             </lightning-layout-item>
         </lightning-layout>
+        <template if:true = {updateHappening}>
+            <p>Your updates are in progress. Please wait....</p>
+        </template>
         </lightning-record-edit-form><br>
         <lightning-layout>
             <lightning-layout-item>

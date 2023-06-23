@@ -7,7 +7,7 @@ import deleteHCCRecord from '@salesforce/apex/HCCCostController.deleteHCCRecord'
 import getFacilityBySiteCode from '@salesforce/apex/HCCCostController.getFacilityBySiteCode';
 import updateAll from '@salesforce/apex/HCCCostController.updateAll';
 import userId from '@salesforce/user/Id';
-import checkIfProcessing from '@salesforce/apex/HCCostAccountController.checkIfProcessing';
+import findIfUnderUpdate from '@salesforce/apex/HCCCostController.findIfUnderUpdate';
 
 
 const INTEGRATION_COLUMNS = [
@@ -369,6 +369,7 @@ export default class HospitalRecordsCase extends LightningElement {
         this.pageSize = this.pageSizeOptions[0]; 
         this.pageNumber = 1;
         this.onLoad();
+        this.checkIfUnderUpdate();
       }
     
       renderedCallback() {
@@ -887,7 +888,7 @@ export default class HospitalRecordsCase extends LightningElement {
                 this.dispatchEvent(
                     new ShowToastEvent({
                         title: 'Error',
-                        message: 'Some issues occured while loading Ambulance Records. Please contact Administrator',
+                        message: 'Some issues occured while loading Hospitalization Records. Please contact Administrator',
                         variant: 'error'
                     })
                 );    

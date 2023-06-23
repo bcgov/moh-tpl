@@ -4,7 +4,8 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import getHealthcareCostsMSPForAccount from '@salesforce/apex/HCCostAccountController.getHealthcareCostsMSPForAccount';
 import updateHCCCaseInformation from '@salesforce/apex/HCCCostController.updateHCCCaseInformation';
 import assignAll from '@salesforce/apex/HCCostAccountController.assignAll';
-
+import findIfUnderUpdate from '@salesforce/apex/HCCCostController.findIfUnderUpdate';
+import userId from '@salesforce/user/Id';
 const COLUMNS = [
     {
         label: 'Case Number',
@@ -191,6 +192,8 @@ export default class MspRecordsAccount extends LightningElement {
     showErrorMessage = false;
     displayMessage='';
     selectedFilter= 'All Records';
+    updateHappening = false;
+    updateTriggered = false;
     filterOptions = [
         { label: 'All Records', value: 'All Records' },
         { label: 'Both Unchecked', value: 'Both Unchecked'}
@@ -204,6 +207,7 @@ export default class MspRecordsAccount extends LightningElement {
         this.pageNumber = 1;
         this.pageSize = this.pageSizeOptions[0]; 
         this.onLoad();
+        this.checkIfUnderUpdate();
     }
 
     doSorting(event) {
@@ -272,7 +276,7 @@ export default class MspRecordsAccount extends LightningElement {
                                 this.dispatchEvent(
                                     new ShowToastEvent({
                                         title: 'Success',
-                                        message: 'Case assigned to Hospital HealthCare Cost record(s) updated successfully.',
+                                        message: 'Case assigned to MSP HealthCare Cost record(s) updated successfully.',
                                         variant: 'success'
                                     })
                                 );    
@@ -282,7 +286,7 @@ export default class MspRecordsAccount extends LightningElement {
                                 this.dispatchEvent(
                                     new ShowToastEvent({
                                         title: 'Error',
-                                        message: 'Please ensure cost review and cost include are unchecked for the Hospital Healthcare Cost record(s) you want to assign a case.',
+                                        message: 'Please ensure cost review and cost include are unchecked for the MSP Healthcare Cost record(s) you want to assign a case.',
                                         variant: 'error'
                                     })
                                 );
@@ -312,7 +316,7 @@ export default class MspRecordsAccount extends LightningElement {
                             this.dispatchEvent(
                                 new ShowToastEvent({
                                     title: 'Error',
-                                    message: 'Please select Case and Hospital Records together to assign.',
+                                    message: 'Please select Case and MSP Records together to assign.',
                                     variant: 'error'
                                 })
                             ); 
@@ -406,44 +410,79 @@ export default class MspRecordsAccount extends LightningElement {
         this.onLoad();
     }
 
-    handleAssign(){
-        
-            assignAll({currentAccountId:this.recordId,newCaseId:this.selectedCase,currentRecords:this.recordsToDisplay})
-            .then(result=>{
-                this.onLoad();
-            })
-            .catch(error =>{
-                this.records = []
-                this.totalRecords = 0;
-                this.dispatchEvent(
-                    new ShowToastEvent({
-                        title: 'Error',
-                        message: 'Some issues occured while loading MSP Records. Please contact Administrator',
-                        variant: 'error'
-                    })
-                );    
-            });
-        
-
-    }
-    handleUnassign(){
-        assignAll({currentAccountId:this.recordId,newCaseId:'',currentRecords:this.recordsToDisplay})
-            .then(result=>{
-                this.onLoad();
-            })
-            .catch(error =>{
-                this.records = []
-                this.totalRecords = 0;
-                this.dispatchEvent(
-                    new ShowToastEvent({
-                        title: 'Error',
-                        message: 'Some issues occured while loading MSP Records. Please contact Administrator',
-                        variant: 'error'
-                    })
-                );    
-            });
+   handleUnassign(){
+        this.checkIfUnderUpdate();
+            if(!this.updateHappening){
+                this.updateTriggered = true;
+                assignAll({currentAccountId:this.recordId,newCaseId:this.selectedCase,currentRecords:this.recordsToDisplay,recordType:'MSP'})
+                .then(result=>{
+                    this.onLoad();
+                    this.checkIfUnderUpdate();
+                })
+                .catch(error =>{
+                    this.records = []
+                    this.totalRecords = 0;
+                    this.dispatchEvent(
+                        new ShowToastEvent({
+                            title: 'Error',
+                            message: 'Some issues occured while loading MSP Records. Please contact Administrator',
+                            variant: 'error'
+                        })
+                    );    
+                });
+            }
         
     } 
+    checkIfUnderUpdate(){
+        console.log('called');
+       
+            findIfUnderUpdate({userId:userId})
+            .then(result=>{
+                this.updateHappening = result;
+                this.showMassUpdateSection = !result;
+                if(result){
+                    console.log('yes');
+                    setTimeout(() => { this.checkIfUnderUpdate();}, 5000);
+                    
+                }
+            })
+            .catch(error=>{
+                console.log(error);
+            });
+    }
+    handleAssign(){
+        
+        if(!this.selectedCase){
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Error',
+                    message: 'Please select Case  to assign.',
+                    variant: 'error'
+                })
+            );
+        }else{
+            this.checkIfUnderUpdate();
+            if(!this.updateHappening){
+                this.updateTriggered = true;
+                assignAll({currentAccountId:this.recordId,newCaseId:this.selectedCase,currentRecords:this.recordsToDisplay,recordType:'MSP'})
+                .then(result=>{
+                    this.onLoad();
+                    this.checkIfUnderUpdate();
+                })
+                .catch(error =>{
+                    this.records = []
+                    this.totalRecords = 0;
+                    this.dispatchEvent(
+                        new ShowToastEvent({
+                            title: 'Error',
+                            message: 'Some issues occured while loading MSP Records. Please contact Administrator',
+                            variant: 'error'
+                        })
+                    );    
+                });
+            }
+        }
+    }
     handleFilterChange(event) {
         this.selectedFilter = event.target.value;
         this.pageNumber = 1;
