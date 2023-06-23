@@ -1,6 +1,6 @@
 public with sharing class HCCQueueable implements Queueable {
     private List<Healthcare_cost__c> hccupdateList;
-    Integer BatchSize = 5000;
+    Integer BatchSize = 200;
     private HCCQueueable followupJob;
     public HCCQueueable(List<Healthcare_cost__c> hccList){
         this.hccupdateList = hccList;
@@ -29,6 +29,6 @@ public with sharing class HCCQueueable implements Queueable {
                 System.enqueueJob(followupJob);
             }
         }
-        System.debug(activeBatch);      
+        System.debug(activeBatch); 
     }
 }

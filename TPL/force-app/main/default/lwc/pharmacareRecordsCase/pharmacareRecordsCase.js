@@ -5,7 +5,8 @@ import getHealthcareCostsPharmacareForCase from '@salesforce/apex/HCCostCaseCont
 import saveDraftValues from '@salesforce/apex/HCCCostController.saveDraftValues';
 import deleteHCCRecord from '@salesforce/apex/HCCCostController.deleteHCCRecord';
 import updateAll from '@salesforce/apex/HCCCostController.updateAll';
-
+import userId from '@salesforce/user/Id';
+import checkIfProcessing from '@salesforce/apex/HCCostAccountController.checkIfProcessing';
 
 const INTEGRATION_COLUMNS = [
     {
@@ -91,6 +92,8 @@ export default class PharmacareRecordsCase extends LightningElement {
     showMassUpdateSection = false;
     costReview = false;
     costInclude = false;
+    updateHappening = false;
+    updateTriggered = false;
     lastSavedData;
     filterOptions = [
         { label: 'All Records', value: 'All Records' }
@@ -347,22 +350,49 @@ export default class PharmacareRecordsCase extends LightningElement {
         this.costInclude = event.target.checked;
       
     }
+    checkIfUnderUpdate(){
+        console.log('called');
+       
+            findIfUnderUpdate({userId:userId})
+            .then(result=>{
+                this.updateHappening = result;
+                this.showMassUpdateSection = !result;
+                if(result){
+                    console.log('yes');
+                    setTimeout(() => { this.checkIfUnderUpdate();}, 5000);
+                    
+                }
+            })
+            .catch(error=>{
+                console.log(error);
+            });
+        
+        
+    }
     updateAll(){
-        updateAll({caseId: this.recordId,costReview:this.costReview,costInclude:this.costInclude,currentRecords:this.recordsToDisplay})
-        .then(result=>{
-            this.onLoad();
-        })
-        .catch(error =>{
-            this.records = []
-            this.totalRecords = 0;
-            this.dispatchEvent(
-                new ShowToastEvent({
-                    title: 'Error',
-                    message: 'Some issues occured while loading Pharmacare Records. Please contact Administrator',
-                    variant: 'error'
-                })
-            );    
-        });
+        this.checkIfUnderUpdate();
+        if(!this.updateHappening){
+            this.updateTriggered = true;
+            updateAll({caseId: this.recordId,costReview:this.costReview,costInclude:this.costInclude,currentRecords:this.recordsToDisplay,recordType:'Pharmacare'})
+            .then(result=>{
+                this.onLoad();
+                this.checkIfUnderUpdate();
+            })
+            .catch(error =>{
+                this.records = []
+                this.totalRecords = 0;
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Error',
+                        message: 'Some issues occured while loading Ambulance Records. Please contact Administrator',
+                        variant: 'error'
+                    })
+                );    
+            });  
+        }
+        
+        
+        
     }
     handleSave(){
         var el = this.template.querySelector('c-custom-data-table');
