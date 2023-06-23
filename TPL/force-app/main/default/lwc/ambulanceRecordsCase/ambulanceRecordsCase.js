@@ -334,6 +334,7 @@ export default class AmbulanceRecordsCase extends LightningElement {
                 this.checkIfUnderUpdate();
                 this.costInclude = false;
                 this.costReview = false;
+                
             })
             .catch(error =>{
                 this.records = []

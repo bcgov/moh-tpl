@@ -883,6 +883,7 @@ export default class HospitalRecordsCase extends LightningElement {
                 this.checkIfUnderUpdate();
                 this.costInclude = false;
                 this.costReview = false;
+               
             })
             .catch(error =>{
                 this.records = []
