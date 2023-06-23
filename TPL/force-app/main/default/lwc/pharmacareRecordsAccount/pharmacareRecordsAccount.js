@@ -4,7 +4,8 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import getHealthcareCostsPharmacareForAccount from '@salesforce/apex/HCCostAccountController.getHealthcareCostsPharmacareForAccount';
 import updateHCCCaseInformation from '@salesforce/apex/HCCCostController.updateHCCCaseInformation';
 import assignAll from '@salesforce/apex/HCCostAccountController.assignAll';
-
+import findIfUnderUpdate from '@salesforce/apex/HCCCostController.findIfUnderUpdate';
+import userId from '@salesforce/user/Id';
 const COLUMNS = [
     {
         label: 'Case Number',
@@ -92,6 +93,8 @@ export default class PharmacareRecordsAccount extends LightningElement {
     showErrorMessage = false;
     displayMessage='';
     selectedFilter= 'All Records';
+    updateHappening = false;
+    updateTriggered = false;
     filterOptions = [
         { label: 'All Records', value: 'All Records' },
         { label: 'Both Unchecked', value: 'Both Unchecked'}
@@ -294,44 +297,79 @@ export default class PharmacareRecordsAccount extends LightningElement {
         this.onLoad();
     }
 
+    handleUnassign(){
+        this.checkIfUnderUpdate();
+            if(!this.updateHappening){
+                this.updateTriggered = true;
+                assignAll({currentAccountId:this.recordId,newCaseId:this.selectedCase,currentRecords:this.recordsToDisplay,recordType:'Pharmacare'})
+                .then(result=>{
+                    this.onLoad();
+                    this.checkIfUnderUpdate();
+                })
+                .catch(error =>{
+                    this.records = []
+                    this.totalRecords = 0;
+                    this.dispatchEvent(
+                        new ShowToastEvent({
+                            title: 'Error',
+                            message: 'Some issues occured while loading Pharmacare Records. Please contact Administrator',
+                            variant: 'error'
+                        })
+                    );    
+                });
+            }
+        
+    } 
+    checkIfUnderUpdate(){
+        console.log('called');
+       
+            findIfUnderUpdate({userId:userId})
+            .then(result=>{
+                this.updateHappening = result;
+                this.showMassUpdateSection = !result;
+                if(result){
+                    console.log('yes');
+                    setTimeout(() => { this.checkIfUnderUpdate();}, 5000);
+                    
+                }
+            })
+            .catch(error=>{
+                console.log(error);
+            });
+    }
     handleAssign(){
         
-            assignAll({currentAccountId:this.recordId,newCaseId:this.selectedCase,currentRecords:this.recordsToDisplay})
-            .then(result=>{
-                this.onLoad();
-            })
-            .catch(error =>{
-                this.records = []
-                this.totalRecords = 0;
+        if(!this.selectedCase){
             this.dispatchEvent(
                 new ShowToastEvent({
                     title: 'Error',
-                        message: 'Some issues occured while loading Pharmacare Records. Please contact Administrator',
+                    message: 'Please select Case  to assign.',
                     variant: 'error'
                 })
             );
-            });
-        
-
-    }
-    handleUnassign(){
-            assignAll({currentAccountId:this.recordId,newCaseId:'',currentRecords:this.recordsToDisplay})
-            .then(result=>{
-                this.onLoad();
-            })
-            .catch(error =>{
-                this.records = []
-                this.totalRecords = 0;
-                this.dispatchEvent(
-                    new ShowToastEvent({
-                        title: 'Error',
-                        message: 'Some issues occured while loading Pharmacare Records. Please contact Administrator',
-                        variant: 'error'
-                    })
-                );    
-            });
-        
+        }else{
+            this.checkIfUnderUpdate();
+            if(!this.updateHappening){
+                this.updateTriggered = true;
+                assignAll({currentAccountId:this.recordId,newCaseId:this.selectedCase,currentRecords:this.recordsToDisplay,recordType:'Pharmacare'})
+                .then(result=>{
+                    this.onLoad();
+                    this.checkIfUnderUpdate();
+                })
+                .catch(error =>{
+                    this.records = []
+                    this.totalRecords = 0;
+                    this.dispatchEvent(
+                        new ShowToastEvent({
+                            title: 'Error',
+                            message: 'Some issues occured while loading Pharmacare Records. Please contact Administrator',
+                            variant: 'error'
+                        })
+                    );    
+                });
+            }
         }
+    }
     handleSelect(){
         var el = this.template.querySelector('lightning-datatable');
         var selected = el.getSelectedRows();
