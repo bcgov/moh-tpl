@@ -297,10 +297,12 @@ export default class AmbulanceRecordsCase extends LightningElement {
     }
     changeCostReview(event){
         this.costReview = event.target.checked;
+        console.log(this.costReview);
         
     }
     changeCostInclude(event){
         this.costInclude = event.target.checked;
+        console.log(this.costInclude);
         
     }
     checkIfUnderUpdate(){
@@ -330,6 +332,8 @@ export default class AmbulanceRecordsCase extends LightningElement {
             .then(result=>{
                 this.onLoad();
                 this.checkIfUnderUpdate();
+                this.costInclude = false;
+                this.costReview = false;
             })
             .catch(error =>{
                 this.records = []
