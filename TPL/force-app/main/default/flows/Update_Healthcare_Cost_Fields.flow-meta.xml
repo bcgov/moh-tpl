@@ -121,17 +121,17 @@ DateId</description>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>currentRecord.DateId__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>dateidformula</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
             <assignToReference>currentRecord.Date_of_Service__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>$Record.Date_of_Admission__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>currentRecord.DateId__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>dateidformula</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -757,7 +757,7 @@ Service Type</description>
     <formulas>
         <name>dateidformula</name>
         <dataType>String</dataType>
-        <expression>SUBSTITUTE(if(Text({!$Record.Date_of_Service__c})==null,&apos;00000000&apos;,TEXT({!$Record.Date_of_Service__c})), &apos;_&apos;, &apos;&apos; ) &amp; &apos;&apos; &amp; {!$Record.Id}</expression>
+        <expression>SUBSTITUTE(if(Text({!$Record.Date_of_Admission__c})==null,&apos;00000000&apos;,TEXT({!$Record.Date_of_Admission__c})), &apos;-&apos;, &apos;&apos; ) &amp; &apos;&apos; &amp; {!$Record.Id}</expression>
     </formulas>
     <formulas>
         <name>HospitalizationTotalCostOverride</name>
