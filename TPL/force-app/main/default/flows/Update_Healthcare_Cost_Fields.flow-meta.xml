@@ -131,7 +131,7 @@ DateId</description>
             <assignToReference>currentRecord.DateId__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>dateidformula</elementReference>
+                <elementReference>dateidformula_hospital</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -747,6 +747,7 @@ Service Type</description>
             <label>Facility Code is blank</label>
         </rules>
     </decisions>
+    <description>dateidformula seperated for Hospital and other record types</description>
     <environments>Default</environments>
     <formulas>
         <name>AmbulanceTotalCostOverride</name>
@@ -756,6 +757,12 @@ Service Type</description>
     </formulas>
     <formulas>
         <name>dateidformula</name>
+        <dataType>String</dataType>
+        <expression>SUBSTITUTE(if(Text({!$Record.Date_of_Service__c})==null,&apos;00000000&apos;,TEXT({!$Record.Date_of_Service__c})), &apos;-&apos;, &apos;&apos; ) &amp; &apos;&apos; &amp; {!$Record.Id}</expression>
+    </formulas>
+    <formulas>
+        <description>date ID calculation formula for Hospitalization</description>
+        <name>dateidformula_hospital</name>
         <dataType>String</dataType>
         <expression>SUBSTITUTE(if(Text({!$Record.Date_of_Admission__c})==null,&apos;00000000&apos;,TEXT({!$Record.Date_of_Admission__c})), &apos;-&apos;, &apos;&apos; ) &amp; &apos;&apos; &amp; {!$Record.Id}</expression>
     </formulas>
