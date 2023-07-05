@@ -483,7 +483,7 @@ public class HCCCostControllerTest {
         Case c2 = TestDataFactory.newCase(acc.Id);
         insert  new Case[] {c1, c2};
             
-        Healthcare_Cost__c hcc1 = TestDataFactory.ambulanceCostRecord(acc.Id, c1.Id);
+            Healthcare_Cost__c hcc1 = TestDataFactory.ambulanceCostRecord(acc.Id, c1.Id);
         Healthcare_Cost__c hcc2 = TestDataFactory.ambulanceCostRecord(acc.Id, c1.Id);
         hcc2.Cost_Include__c = false;
         hcc2.Cost_Review__c = false;

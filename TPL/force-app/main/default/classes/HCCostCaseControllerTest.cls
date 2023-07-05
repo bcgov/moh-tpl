@@ -63,18 +63,18 @@ public with sharing class HCCostCaseControllerTest {
         Case c = TestDataFactory.newCase(acc.Id);
         insert c;
         Test.startTest();
-        HCCostCaseDAO.getHCCostCaseRecords(c.Id,Label.TPL_Manual_Records,Schema.SObjectType.Healthcare_Cost__c.getRecordTypeInfosByName().get('Ambulance').getRecordTypeId(),4000,10,Label.TPL_Ambulance_Fields,
-                                           Label.TPL_Descending);
-        HCCostCaseDAO.getHCCostCaseRecords(c.Id,Label.TPL_Manual_Records,Schema.SObjectType.Healthcare_Cost__c.getRecordTypeInfosByName().get('Ambulance').getRecordTypeId(),4000,10,Label.TPL_Ambulance_Fields,
-                                           '');
-        HCCostCaseDAO.getHCCostCaseRecords(c.Id,Label.TPL_Records_Created_Today,Schema.SObjectType.Healthcare_Cost__c.getRecordTypeInfosByName().get('Ambulance').getRecordTypeId(),4000,10,Label.TPL_Ambulance_Fields,
-                                           Label.TPL_Descending);
-        HCCostCaseDAO.getHCCostCaseRecords(c.Id,Label.TPL_Records_Created_Today,Schema.SObjectType.Healthcare_Cost__c.getRecordTypeInfosByName().get('Ambulance').getRecordTypeId(),4000,10,Label.TPL_Ambulance_Fields,
-                                           '');
-        HCCostCaseDAO.getHCCostCaseRecords(c.Id,Label.TPL_All_Records,Schema.SObjectType.Healthcare_Cost__c.getRecordTypeInfosByName().get('Ambulance').getRecordTypeId(),4000,10,Label.TPL_Ambulance_Fields,
-                                           Label.TPL_Descending);
-        HCCostCaseDAO.getHCCostCaseRecords(c.Id,Label.TPL_All_Records,Schema.SObjectType.Healthcare_Cost__c.getRecordTypeInfosByName().get('Ambulance').getRecordTypeId(),4000,10,Label.TPL_Ambulance_Fields,
-                                           '');
+        String manualRecords = Label.TPL_Manual_Records;
+        String recordsCreatedToday = Label.TPL_Records_Created_Today;
+        String totalTecords = Label.TPL_All_Records;
+        Integer startNumber = 4000;
+        Integer pageSize = 10;
+        Id recordTypeId = Schema.SObjectType.Healthcare_Cost__c.getRecordTypeInfosByName().get('Ambulance').getRecordTypeId(); 
+        HCCostCaseDAO.getHCCostCaseRecords(c.Id,manualRecords,recordTypeId,startNumber,pageSize,Label.TPL_Ambulance_Fields,Label.TPL_Descending);
+        HCCostCaseDAO.getHCCostCaseRecords(c.Id,manualRecords,recordTypeId,startNumber,pageSize,Label.TPL_Ambulance_Fields,'');
+        HCCostCaseDAO.getHCCostCaseRecords(c.Id,recordsCreatedToday,recordTypeId,startNumber,pageSize,Label.TPL_Ambulance_Fields,Label.TPL_Descending);
+        HCCostCaseDAO.getHCCostCaseRecords(c.Id,recordsCreatedToday,recordTypeId,startNumber,pageSize,Label.TPL_Ambulance_Fields,'');
+        HCCostCaseDAO.getHCCostCaseRecords(c.Id,Label.TPL_All_Records,recordTypeId,startNumber,pageSize,Label.TPL_Ambulance_Fields,Label.TPL_Descending);
+        HCCostCaseDAO.getHCCostCaseRecords(c.Id,Label.TPL_All_Records,recordTypeId,startNumber,pageSize,Label.TPL_Ambulance_Fields,'');
         Test.stopTest();
     }
     
