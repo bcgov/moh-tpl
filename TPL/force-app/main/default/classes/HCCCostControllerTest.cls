@@ -62,13 +62,9 @@ public class HCCCostControllerTest {
                 hcc.Cost_Include__c = false;    
             }for(Healthcare_Cost__c hcc: hccList2){
                 hcc.Cost_Review__c = false;
-            }
-            
-            tempClass.Id = hcc1.Id;
-            tempClass.siteCode = hcc1.Site_Code__c;
+            } 
             caseWrapper1 = HCCCostController.saveDraftValues(hccList1, hccList3, 'Ambulance');
             caseWrapper2 = HCCCostController.saveDraftValues(hccList2, hccList3, 'Ambulance');
-            HCCCostController.getFacilityBySiteCode(tempClass);
             
         }
         catch(DmlException dml){
@@ -387,6 +383,33 @@ public class HCCCostControllerTest {
         insert c;
         Account facility = TestDataFactory.facilityAccount();
         insert facility;
+        List<HCCCostController.tempClass> tempClassList = new List<HCCCostController.tempClass>();
+        List<HCCCostController.tempClass> tempClassList2 = new List<HCCCostController.tempClass>();
+        HCCCostController.tempClass temp = new HCCCostController.tempClass();
+        String exceptionMessage = null;
+        for(Integer i=0;i<2;i++){
+            temp.Id = facility.Id;
+            temp.siteCode = facility.Site_Code__c;
+            tempClassList.add(temp);
+        }
+        
+        Account facilityAccount = TestDataFactory.facilityAccount();
+        facilityAccount.Site_Code__c = '122';
+        facilityAccount.Name = 'Facility Account 2';
+        insert facilityAccount;
+        temp.Id = facilityAccount.Id;
+        temp.siteCode = facilityAccount.Site_Code__c;
+        tempClassList2.add(temp);   
+        Test.startTest();
+        HCCCostController.getFacilityBySiteCode(tempClassList);
+        HCCCostController.getFacilityBySiteCode(tempClassList2);
+        Test.stopTest();
+        if(exceptionMessage != null){
+            System.assertNotEquals(null, exceptionMessage);
+        }
+        else{
+            System.assertEquals(tempClassList2[0].siteCode, facilityAccount.Site_Code__c);
+        }
     }
     
     @isTest
@@ -414,7 +437,11 @@ public class HCCCostControllerTest {
         String exceptionMessage = null;
         try{
             insert hccList;
-            resultHCCList = HCCCostController.updateAll(c.Id,costReview, costInclude, hccList, recordType);
+            List<Healthcare_Cost__c> currentList = new List <Healthcare_Cost__c>();
+            for(Integer i = 0 ; i<5;i++){
+                currentList.add(hccList[i]);
+            }
+            resultHCCList = HCCCostController.updateAll(c.Id,costReview, costInclude, currentList, recordType);
             Id userId = UserInfo.getUserId();
             getStatus = HCCCostController.findIfUnderUpdate(userId);
         }catch(DmlException dml){

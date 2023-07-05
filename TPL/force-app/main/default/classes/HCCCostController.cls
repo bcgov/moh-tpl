@@ -154,7 +154,7 @@ public with sharing class HCCCostController {
                 break;
             }
             else{
-                System.debug(String.isEmpty(caseId));
+                
                 if(String.isEmpty(caseId)){
                     caseId = null;
                    }
