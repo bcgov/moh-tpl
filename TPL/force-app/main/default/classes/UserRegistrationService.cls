@@ -97,6 +97,8 @@ public with sharing class UserRegistrationService{
                 newUser.firstName = data.firstName;
                 newUser.FederationIdentifier = data.username;
                 newUser.alias = UserRegistrationService.generateUserAlias(data);
+                newUser.UserPermissionsInteractionUser = true;
+                newUser.UserPermissionsSupportUser = true;
                 
                 newUser.languagelocalekey = UserInfo.getLanguage();
                 newUser.localesidkey = UserInfo.getLocale();
