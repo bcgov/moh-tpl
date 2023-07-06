@@ -167,7 +167,7 @@ public with sharing class HCCostAccountController {
         if(String.isBlank(newCaseId)){
            newCaseId = null; 
         }
-        System.debug(newCaseId);
+      
         for(Healthcare_Cost__c hcc : currentRecords){
             if(!hcc.Cost_Include__c && !hcc.Cost_Review__c) {
                 hcc.case2__c = newCaseId;    
@@ -182,7 +182,7 @@ public with sharing class HCCostAccountController {
         for(Healthcare_Cost__c hcc : hccList){
             hcc.case2__c = newCaseId;
         }
-        System.debug(hccList);
+       
         System.enqueueJob(new AccountQueueable(hccList));
         return currentRecords;
     }

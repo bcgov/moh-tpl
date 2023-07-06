@@ -46,6 +46,21 @@ public with sharing class TestDataFactory {
         return c;     
     }
 
+     /*
+		Method Name:newClassActionCase
+		Parameters: Account ID
+		Description: Test method used to return a new Class Action Case having an account associated for creating the record
+	*/
+    public static Case newClassActionCase(String accountId){
+        Case c = new Case();
+        c.AccountId = accountId;
+        c.RecordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByName().get('Class Action').getRecordTypeId();
+        c.Status = 'Open';
+        c.Priority = 'Medium';
+        c.Incident_Date__c = Date.newInstance(2022, 09, 16);
+        return c;     
+    }
+
     /*
 		Method Name:new Product
 		Parameters: Account ID
