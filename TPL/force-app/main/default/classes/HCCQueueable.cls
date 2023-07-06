@@ -22,13 +22,13 @@ public with sharing class HCCQueueable implements Queueable {
         } else {
             activeBatch = this.hccupdateList;
         }
-        System.debug(LoggingLevel.INFO, 'Updating ' + activeBatch.size() + ' ' + sObjectType + ' records.');
+     
         Database.saveResult[] sr = database.update(activeBatch,false); 
         if (followupJob != null) {
             if(!Test.isRunningTest()) {                        
                 System.enqueueJob(followupJob);
             }
         }
-        System.debug(activeBatch); 
+    
     }
 }
