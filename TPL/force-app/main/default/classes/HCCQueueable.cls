@@ -1,3 +1,14 @@
+/*
+* Company: CGI for BC Ministry of Health
+* Date: May 30, 2023
+* Author: Ahmed Shaik
+* Description: public with sharing class HCCQueueable that implements the Queueable functionality for Case level grids
+*    Methods:
+*         execute(QueueableContext context) : executes the Queueable Context where a batch update is performed on Healthcare Cost Records
+* History:
+*     Initial version: June 10, 2023 - AS
+*/
+
 public with sharing class HCCQueueable implements Queueable {
     private List<Healthcare_cost__c> hccupdateList;
     Integer BatchSize = 200;

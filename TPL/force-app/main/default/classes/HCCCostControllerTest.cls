@@ -1,6 +1,6 @@
 /*
 * Company: CGI for BC Ministry of Health
-* Date: March 30, 2023
+* Date: April 30, 2023
 * Author: Anudish Jinturkar
 * Description: public class HCCCostControllerTest : Test class written on the generic controller class HCCCostController
 *    Test Methods:
@@ -15,6 +15,7 @@
 *		  testupdateAll():Test Method to update all the records of Healthcare cost associated with the particular account
 *		  testCaseNumber(): Test Method to fetch the case number of the respective case ID
 *		  testUpdatetoCaseValues(): Test Method to update the case value for the Healthcare Cost record
+*         testUpdatetoCaseValuesFailScenario(): Test Method to validate the updation of the case value for the Healthcare Cost when incorrect Healthcare Cost record is present
 * History:
 *     Initial version: March 30, 2023 - AJ
 *     Updates to codebase: May 10, 2023 - AJ
