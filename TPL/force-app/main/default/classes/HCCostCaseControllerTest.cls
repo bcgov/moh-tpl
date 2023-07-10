@@ -1,3 +1,26 @@
+/*
+* Company: CGI for BC Ministry of Health
+* Date: April 30, 2023
+* Author: Anudish Jinturkar
+* Description: public class HCCostCaseControllerTest : Test class written on the generic controller class HCCostCaseController covers the Case level-based functionality of Healthcare Cost
+*    Test Methods:
+*         testGetHealthcareCostsAmbulanceForCaseDescendingSort() : Test Method to test the Ambulance records fetched in the descending sort order on the case level based on case and related account selected for Healthcare cost records
+*         insertHCCFutureMethod() : Test Method to insert bulk records for processing mass healthcare cost records testing on case level 
+*         testHCCostCaseDAO() : Test Method to test the execution of case assignment to bulk healthcare cost records on case level
+*         testGetHealthcareCostsAmbulanceForCaseAscendingSort():Test Method to test the Ambulance records fetched in the ascending sort order on the case level based on case and related account selected for Healthcare cost records
+*         testGetHealthcareCostsHospitalForCaseDescendingSort(): Test Method to test the Hospitalization records fetched in the descending sort order on the case level based on case and related account selected for Healthcare cost records
+*         testGetHealthcareCostsHospitalForCaseAscendingSort(): Test Method to test the Hospitalization records fetched in the ascending sort order on the case level based on case and related account selected for Healthcare cost records
+*		  testGetHealthcareCostsMSPForCaseDescendingSort(): Test Method to test the MSP records fetched in the descending sort order on the case level based on case and related account selected for Healthcare cost records
+*		  testGetHealthcareCostsMSPForCaseAscendingSort(): Test Method to test the MSP records fetched in the ascending sort order on the case level based on case and related account selected for Healthcare cost records
+*		  testGetHealthcareCostsPharmacareForCaseDescendingSort():Test Method to test the Pharmacare records fetched in the descending sort order on the case level based on case and related account selected for Healthcare cost records
+*		  testGetHealthcareCostsPharmacareForCaseAscendingSort(): Test Method to test the Pharmacare records fetched in the ascending sort order on the case level based on case and related account selected for Healthcare cost records
+*		  testGetHealthcareCostsContinuingCareForCase(): Test Method to test the Continuing Care records fetched on the case level based on case and related account selected for Healthcare cost records
+*         testGetHealthcareCostsFutureCareForCase(): Test Method to test the Future Care records fetched on the case level based on case and related account selected for Healthcare cost records
+* History:
+*     Initial version: March 30, 2023 - AJ
+*     Updates to codebase: May 10, 2023 - AJ
+*     Updates to codebase: July 4, 2023 - AJ
+*/
 @isTest
 public with sharing class HCCostCaseControllerTest {
     @isTest

@@ -15,6 +15,7 @@ updateHCCCaseInformation (List<Healthcare_Cost__c> hccList, String caseId,List<H
 *     Initial version: March 31, 2023 - AJ
 *     Updates to codebase: May 1, 2023 - AJ
 *     Updates to codebase: Jun 20, 2023 - AS
+*     Updates to codebase: Jul 6, 2023 - AJ
 */
 
 public with sharing class HCCCostController {
@@ -122,7 +123,9 @@ public with sharing class HCCCostController {
     public static List<Case> getCaseNumber(Set<Id> caseId){
         List<Case> caseList = new List<Case>();
         try {
-            caseList = [Select CaseNumber,Id from Case where Id IN :caseId];
+            caseList = [SELECT CaseNumber,Id 
+                        FROM Case 
+                        WHERE Id IN :caseId];
         } catch (Exception e) {
             System.debug(e.getMessage());
         }
@@ -193,7 +196,7 @@ public with sharing class HCCCostController {
                         
                     }
                 }
-
+                
                 if(capturedIndex.size() == updateHealthCareCost.size())
                 {
                     passMessage = Label.TPL_Passed;
@@ -297,7 +300,9 @@ public with sharing class HCCCostController {
             }
             
             List<Healthcare_Cost__c> hccUpdate = new List<Healthcare_Cost__c>();
-            List<Account> accList = [select id,name,Site_Code__c from account where Site_Code__c IN:healthCareMap.keySet()  LIMIT 1];
+            List<Account> accList = [SELECT id,name,Site_Code__c 
+                                     FROM Account 
+                                     WHERE Site_Code__c IN:healthCareMap.keySet() LIMIT 1];
             for(Account a : accList){
                 for(String id : healthCareMap.get(a.Site_Code__c)){
                     Healthcare_Cost__c hcc = new Healthcare_Cost__c();
@@ -328,13 +333,16 @@ public with sharing class HCCCostController {
     */  
     @AuraEnabled
     public static List<Healthcare_cost__c> updateAll(String caseId,Boolean costReview, Boolean costInclude,List<Healthcare_cost__c> currentRecords,String recordType){
-        List<Healthcare_Cost__c> hccList = [select id,case2__c from Healthcare_Cost__c where ID NOT IN:currentRecords and case2__c  =: caseId and RecordType.developerName =:recordType   FOR UPDATE];
+        List<Healthcare_Cost__c> hccList = [SELECT id,case2__c 
+                                            FROM Healthcare_Cost__c 
+                                            WHERE ID NOT IN:currentRecords AND case2__c  =: caseId 
+                                            AND RecordType.developerName =:recordType FOR UPDATE];
         for(Healthcare_Cost__c hcc : currentRecords){
             hcc.Cost_Include__c = costInclude;
             hcc.Cost_Review__c = costReview;
         }
         try{
-            database.update(currentRecords,false);
+            Database.update(currentRecords,false);
         }catch(Exception e){
             System.debug(e.getMessage());
         }
@@ -357,7 +365,10 @@ public with sharing class HCCCostController {
     @AuraEnabled
     public static Boolean findIfUnderUpdate(String userId){
         try {
-            List<AsyncApexJob> apexJobs = [Select id ,Status, ApexClass.Name,CreatedById,JobType from AsyncApexJob where  JobType = 'Queueable'  and (status = 'Processing' or status = 'Queued') and createdbyId =:userId];
+            List<AsyncApexJob> apexJobs = [SELECT id ,Status, ApexClass.Name,CreatedById,JobType 
+                                           FROM AsyncApexJob 
+                                           WHERE JobType = 'Queueable'  AND (status = 'Processing' OR status = 'Queued') 
+                                           AND createdbyId =:userId];
             if(apexJobs.size()>0){
                 return true;
             }else{
