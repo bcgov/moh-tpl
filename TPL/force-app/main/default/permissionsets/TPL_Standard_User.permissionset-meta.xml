@@ -649,6 +649,10 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>Healthcare_Cost__c.Facility_Name__c</field>
+        <readable>true<
+    <fieldPermissions>
         <editable>false</editable>
         <field>Healthcare_Cost__c.FacilityName__c</field>
         <readable>true</readable>
@@ -666,6 +670,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Healthcare_Cost__c.Fee_Item_Title__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Healthcare_Cost__c.Fixed_Wing_Helicopter2__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

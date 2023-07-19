@@ -70,7 +70,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Facility__c</field>
+                <field>Facility_Name__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>

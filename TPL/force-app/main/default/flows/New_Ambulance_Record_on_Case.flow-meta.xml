@@ -66,10 +66,10 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>FixedWingHelicopter</assignToReference>
+            <assignToReference>FixedWingHelicopter2</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Copy_1_of_Fixed_Wing_Helicopter</elementReference>
+                <elementReference>Copy_1_Fixed_Wing_Helicopter2</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -139,10 +139,10 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>FixedWingHelicopter</assignToReference>
+            <assignToReference>FixedWingHelicopter2</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Fixed_Wing_Helicopter</elementReference>
+                <elementReference>Fixed_Wing_Helicopter2</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -199,7 +199,7 @@
             <operator>Assign</operator>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>FixedWingHelicopter</assignToReference>
+            <assignToReference>FixedWingHelicopter2</assignToReference>
             <operator>Assign</operator>
         </assignmentItems>
         <assignmentItems>
@@ -264,10 +264,10 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>Fixed_Wing_Helicopter</leftValueReference>
-                <operator>IsNull</operator>
+                <leftValueReference>Fixed_Wing_Helicopter2</leftValueReference>
+                <operator>EqualTo</operator>
                 <rightValue>
-                    <booleanValue>true</booleanValue>
+                    <stringValue></stringValue>
                 </rightValue>
             </conditions>
             <conditions>
@@ -400,9 +400,9 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Fixed_Wing_Helicopter__c</field>
+            <field>Fixed_Wing_Helicopter2__c</field>
             <value>
-                <elementReference>FixedWingHelicopter</elementReference>
+                <elementReference>FixedWingHelicopter2</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -613,7 +613,7 @@
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
                     <validationRule>
-                        <errorMessage>&lt;p&gt;&lt;span style=&quot;color: rgb(255, 0, 0); font-family: Arial, Helvetica, sans-serif; font-size: 11.36px;&quot;&gt;Not more than 30 Characters are allowed.&lt;/span&gt;&lt;/p&gt;</errorMessage>
+                        <errorMessage>&lt;p&gt;&lt;span style=&quot;font-size: 11.36px; font-family: Arial, Helvetica, sans-serif; color: rgb(0, 0, 0);&quot;&gt;Not more than 30 Characters are allowed.&lt;/span&gt;&lt;/p&gt;</errorMessage>
                         <formulaExpression>LEN({!Location_Responded}) &lt; 30</formulaExpression>
                     </validationRule>
                 </fields>
@@ -682,18 +682,17 @@
                 <name>Invalid_Facility_Screen_Section2_Column1</name>
                 <fieldType>Region</fieldType>
                 <fields>
-                    <name>Copy_1_of_Fixed_Wing_Helicopter</name>
-                    <dataType>Currency</dataType>
+                    <name>Copy_1_Fixed_Wing_Helicopter2</name>
+                    <dataType>String</dataType>
                     <defaultValue>
-                        <elementReference>FixedWingHelicopter</elementReference>
+                        <elementReference>FixedWingHelicopter2</elementReference>
                     </defaultValue>
                     <fieldText>Fixed Wing/Helicopter</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
-                    <scale>2</scale>
                     <validationRule>
-                        <errorMessage>&lt;p&gt;Not more than 14 digits with 2 decimals are allowed.&lt;/p&gt;</errorMessage>
-                        <formulaExpression>{!Fixed_Wing_Helicopter} &gt; 0  &amp;&amp; {!Fixed_Wing_Helicopter} &lt; 100000000000000</formulaExpression>
+                        <errorMessage>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Not more than 14 digits with 2 decimals are allowed.&lt;/span&gt;&lt;/p&gt;</errorMessage>
+                        <formulaExpression>LEN({!Fixed_Wing_Helicopter2}) &gt; 0  &amp;&amp; LEN({!Fixed_Wing_Helicopter2}) &lt; 11</formulaExpression>
                     </validationRule>
                 </fields>
                 <inputParameters>
@@ -827,7 +826,7 @@
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
                     <validationRule>
-                        <errorMessage>&lt;p&gt;&lt;span style=&quot;color: rgb(255, 0, 0); font-family: Arial, Helvetica, sans-serif; font-size: 11.36px;&quot;&gt;Not more than 30 Characters are allowed.&lt;/span&gt;&lt;/p&gt;</errorMessage>
+                        <errorMessage>&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-family: Arial, Helvetica, sans-serif; font-size: 11.36px; background-color: rgb(255, 255, 255);&quot;&gt;Not more than 30 Characters are allowed.&lt;/span&gt;&lt;/p&gt;</errorMessage>
                         <formulaExpression>LEN({!Location_Responded}) &lt; 30</formulaExpression>
                     </validationRule>
                 </fields>
@@ -896,18 +895,17 @@
                 <name>New_Ambulance_Record_Screen_Section2_Column1</name>
                 <fieldType>Region</fieldType>
                 <fields>
-                    <name>Fixed_Wing_Helicopter</name>
-                    <dataType>Currency</dataType>
+                    <name>Fixed_Wing_Helicopter2</name>
+                    <dataType>String</dataType>
                     <defaultValue>
-                        <elementReference>FixedWingHelicopter</elementReference>
+                        <elementReference>FixedWingHelicopter2</elementReference>
                     </defaultValue>
                     <fieldText>Fixed Wing/Helicopter</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
-                    <scale>2</scale>
                     <validationRule>
-                        <errorMessage>&lt;p&gt;Not more than 14 digits with 2 decimals are allowed.&lt;/p&gt;</errorMessage>
-                        <formulaExpression>{!Fixed_Wing_Helicopter} &gt; 0  &amp;&amp; {!Fixed_Wing_Helicopter} &lt; 100000000000000</formulaExpression>
+                        <errorMessage>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 11.36px; font-family: Arial, Helvetica, sans-serif; color: rgb(0, 0, 0);&quot;&gt;Not more than 10 Characters are allowed.&lt;/span&gt;&lt;/p&gt;</errorMessage>
+                        <formulaExpression>LEN({!Fixed_Wing_Helicopter2}) &gt; 0  &amp;&amp; LEN({!Fixed_Wing_Helicopter2}) &lt; 11</formulaExpression>
                     </validationRule>
                 </fields>
                 <inputParameters>
@@ -1058,6 +1056,13 @@
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <scale>2</scale>
+    </variables>
+    <variables>
+        <name>FixedWingHelicopter2</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
     </variables>
     <variables>
         <name>LocationResponded</name>
