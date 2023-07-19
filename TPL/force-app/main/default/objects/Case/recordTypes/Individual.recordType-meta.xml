@@ -31,59 +31,63 @@
     <picklistValues>
         <picklist>Incident_Type__c</picklist>
         <values>
-            <fullName>01 - MVA Passenger</fullName>
+            <fullName>01- MVA - Passenger</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>05 - MV vs non-MV</fullName>
+            <fullName>05-MV vs non-MV</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>09 - Unknown MVA</fullName>
+            <fullName>09-Unknown MVA</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>11 - MVA Driver</fullName>
+            <fullName>11-MVA Driver</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>30 - Unknown</fullName>
+            <fullName>30-Unknown</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>49 - Municipality Policy Claim</fullName>
+            <fullName>49-Municipality Policy Claim</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>50 - Business Policy Claim</fullName>
+            <fullName>50-Business Policy Claim</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>51 - Homeowner Policy Claim</fullName>
+            <fullName>51-Homeowner Policy Claim</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>53 - Other Craft</fullName>
+            <fullName>53-Other Craft</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>56 - Sports Injury</fullName>
+            <fullName>56-Sports Injury</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>59 - Misc</fullName>
+            <fullName>59-Misc</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>60 - Malpractice</fullName>
+            <fullName>60-Malpractice</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>61 - Criminal Activity</fullName>
+            <fullName>61-Criminal Activity</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>62 - WorkSafeBC</fullName>
+            <fullName>62-WorkSafeBC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -153,67 +157,67 @@
     <picklistValues>
         <picklist>Reason_for_Closing__c</picklist>
         <values>
-            <fullName>00 - Unpaid%2FUnrequested</fullName>
+            <fullName>00-Unpaid%2FUnrequested</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>01 - Unpaid%2FRequested</fullName>
+            <fullName>01-Unpaid%2FRequested</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>02 - Paid</fullName>
+            <fullName>02-Paid</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>03 - No Third Party Liability</fullName>
+            <fullName>03-No Third Party Liability</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>04 - No Claim</fullName>
+            <fullName>04-No Claim</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>07 - Policy Limits</fullName>
+            <fullName>07-Policy Limits</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>08 - Workers Compensation Board</fullName>
+            <fullName>08-Workers Compensation Board</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>09 - Non-Beneficiary</fullName>
+            <fullName>09-Non-Beneficiary</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>11 - Abandoned</fullName>
+            <fullName>11-Abandoned</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>16 - RMB</fullName>
+            <fullName>16-RMB</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>17 - Other Federal Gov%27t</fullName>
+            <fullName>17-Other Federal Gov%27t</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>31 - HCCRA Not Applicable</fullName>
+            <fullName>31-HCCRA Not Applicable</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>32 - VMP</fullName>
+            <fullName>32-VMP</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>33 - RCMP</fullName>
+            <fullName>33-RCMP</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>50 - File Merged into Other</fullName>
+            <fullName>50-File Merged into Other</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>99 - No Hospital MSP Closed</fullName>
+            <fullName>99-No Hospital MSP Closed</fullName>
             <default>false</default>
         </values>
     </picklistValues>
