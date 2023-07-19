@@ -7,7 +7,7 @@
 -Facility Type</description>
         <name>Populate_Facility_Facility_Type</name>
         <label>Populate Facility &amp; Facility Type</label>
-        <locationX>1898</locationX>
+        <locationX>1370</locationX>
         <locationY>647</locationY>
         <assignmentItems>
             <assignToReference>currentRecord.Id</assignToReference>
@@ -23,13 +23,6 @@
                 <stringValue></stringValue>
             </value>
         </assignmentItems>
-        <assignmentItems>
-            <assignToReference>currentRecord.Facility_Type__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue></stringValue>
-            </value>
-        </assignmentItems>
         <connector>
             <targetReference>Update_current_Record</targetReference>
         </connector>
@@ -40,7 +33,7 @@
 -Facility Type</description>
         <name>Populate_Facility_Facility_Type1</name>
         <label>Populate Facility &amp; Facility Type</label>
-        <locationX>2162</locationX>
+        <locationX>1634</locationX>
         <locationY>755</locationY>
         <assignmentItems>
             <assignToReference>currentRecord.Id</assignToReference>
@@ -56,13 +49,6 @@
                 <elementReference>Get_Facility_from_Site_Code.Id</elementReference>
             </value>
         </assignmentItems>
-        <assignmentItems>
-            <assignToReference>currentRecord.Facility_Type__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Get_Facility_from_Site_Code.Type</elementReference>
-            </value>
-        </assignmentItems>
         <connector>
             <targetReference>Update_current_Record</targetReference>
         </connector>
@@ -72,7 +58,7 @@
 DateId</description>
         <name>Populate_PHN_DateId</name>
         <label>Populate PHN &amp; DateId</label>
-        <locationX>2690</locationX>
+        <locationX>2162</locationX>
         <locationY>431</locationY>
         <assignmentItems>
             <assignToReference>currentRecord.Id</assignToReference>
@@ -104,7 +90,7 @@ DateId</description>
 DateId</description>
         <name>Populate_PHN_DateId_Hospitalization</name>
         <label>Populate PHN &amp; DateId</label>
-        <locationX>1139</locationX>
+        <locationX>611</locationX>
         <locationY>431</locationY>
         <assignmentItems>
             <assignToReference>currentRecord.Id</assignToReference>
@@ -121,87 +107,21 @@ DateId</description>
             </value>
         </assignmentItems>
         <assignmentItems>
+            <assignToReference>currentRecord.DateId__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>dateidformula</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
             <assignToReference>currentRecord.Date_of_Service__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>$Record.Date_of_Admission__c</elementReference>
             </value>
         </assignmentItems>
-        <assignmentItems>
-            <assignToReference>currentRecord.DateId__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>dateidformula_hospital</elementReference>
-            </value>
-        </assignmentItems>
         <connector>
             <targetReference>Check_for_Service_Provided_by_Facility</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <description>Populates:
--Site Code
--Facility Type</description>
-        <name>Populate_Site_Code_Facility_Type</name>
-        <label>Populate Site Code &amp; Facility Type</label>
-        <locationX>50</locationX>
-        <locationY>755</locationY>
-        <assignmentItems>
-            <assignToReference>currentRecord.Id</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>$Record.Id</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>currentRecord.Site_Code__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue></stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>currentRecord.Facility_Type__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue></stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Update_current_Record</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <description>Populates:
--Site Code
--Facility Type</description>
-        <name>Populate_Site_Code_Facility_Type1</name>
-        <label>Populate Site Code &amp; Facility Type</label>
-        <locationX>314</locationX>
-        <locationY>863</locationY>
-        <assignmentItems>
-            <assignToReference>currentRecord.Id</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>$Record.Id</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>currentRecord.Site_Code__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Get_Site_Code_from_Facility.Site_Code__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>currentRecord.Facility_Type__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Get_Site_Code_from_Facility.Type</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Update_current_Record</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -210,7 +130,7 @@ DateId
 Total Cost Override</description>
         <name>Populate_Total_Cost_Override_PHN_DateId_Ambulance</name>
         <label>Populate Total Cost Override, PHN &amp; DateId</label>
-        <locationX>2030</locationX>
+        <locationX>1502</locationX>
         <locationY>431</locationY>
         <assignmentItems>
             <assignToReference>currentRecord.Id</assignToReference>
@@ -250,7 +170,7 @@ DateId
 Total Cost Override</description>
         <name>Populate_Total_Cost_Override_PHN_DateId_MSP</name>
         <label>Populate Total Cost Override, PHN &amp; DateId</label>
-        <locationX>380</locationX>
+        <locationX>50</locationX>
         <locationY>431</locationY>
         <assignmentItems>
             <assignToReference>currentRecord.Id</assignToReference>
@@ -281,7 +201,7 @@ Total Cost Override</description>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Check_for_Record_Creation_Source</targetReference>
+            <targetReference>Update_current_Record</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -290,7 +210,7 @@ DateId
 Total Cost Override</description>
         <name>Populate_Total_Cost_Override_PHN_DateId_Pharmacare</name>
         <label>Populate Total Cost Override, PHN &amp; DateId</label>
-        <locationX>2426</locationX>
+        <locationX>1898</locationX>
         <locationY>431</locationY>
         <assignmentItems>
             <assignToReference>currentRecord.Id</assignToReference>
@@ -330,7 +250,7 @@ Standard Daily Rate
 Pricebook</description>
         <name>Populates_Field_Values_8</name>
         <label>Populates Field Values 8</label>
-        <locationX>1260</locationX>
+        <locationX>732</locationX>
         <locationY>1079</locationY>
         <assignmentItems>
             <assignToReference>currentRecord.Id</assignToReference>
@@ -364,7 +284,7 @@ Standard Daily Rate
 Pricebook</description>
         <name>Populates_Field_Values_9</name>
         <label>Populates Field Values 9</label>
-        <locationX>1700</locationX>
+        <locationX>1172</locationX>
         <locationY>1187</locationY>
         <assignmentItems>
             <assignToReference>currentRecord.Id</assignToReference>
@@ -399,12 +319,13 @@ Pricebook</description>
         </connector>
     </assignments>
     <assignments>
-        <description>CCI Level
+        <description>If the service is removed the following fields will be made blank in this assignment.
+CCI Level
 Intervention Code
 Service Type</description>
         <name>Populates_Product_Related_Fields</name>
         <label>Populates Product Related Fields</label>
-        <locationX>1106</locationX>
+        <locationX>578</locationX>
         <locationY>1679</locationY>
         <assignmentItems>
             <assignToReference>currentRecord.Id</assignToReference>
@@ -436,7 +357,7 @@ Service Type</description>
         </assignmentItems>
         <connector>
             <isGoTo>true</isGoTo>
-            <targetReference>Check_if_facility_is_blank</targetReference>
+            <targetReference>Populate_Facility_from_Site_Code</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -445,7 +366,7 @@ Intervention Code
 Service Type</description>
         <name>Populates_Product_Related_Fields1</name>
         <label>Populates Product Related Fields</label>
-        <locationX>1370</locationX>
+        <locationX>842</locationX>
         <locationY>1787</locationY>
         <assignmentItems>
             <assignToReference>currentRecord.Id</assignToReference>
@@ -477,13 +398,13 @@ Service Type</description>
         </assignmentItems>
         <connector>
             <isGoTo>true</isGoTo>
-            <targetReference>Check_if_facility_is_blank</targetReference>
+            <targetReference>Populate_Facility_from_Site_Code</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>test</name>
         <label>Count Pricebook Entries</label>
-        <locationX>1436</locationX>
+        <locationX>908</locationX>
         <locationY>863</locationY>
         <assignmentItems>
             <assignToReference>CountPricebookentryRecords</assignToReference>
@@ -500,7 +421,7 @@ Service Type</description>
         <description>If Pricebook entry count is zero, it means that the TPL price book is not assigned to the product.</description>
         <name>Check_for_Pricebook_entry</name>
         <label>Check for Pricebook entry</label>
-        <locationX>1436</locationX>
+        <locationX>908</locationX>
         <locationY>971</locationY>
         <defaultConnector>
             <targetReference>Loop_Pricebook_Entries</targetReference>
@@ -523,35 +444,10 @@ Service Type</description>
         </rules>
     </decisions>
     <decisions>
-        <name>Check_for_Record_Creation_Source</name>
-        <label>Check for Record Creation Source</label>
-        <locationX>380</locationX>
-        <locationY>539</locationY>
-        <defaultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Populate_Facility_from_Site_Code</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Integration Record</defaultConnectorLabel>
-        <rules>
-            <name>Manual_Record</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>$Record.Source_System_ID__c</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Check_if_facility_is_blank</targetReference>
-            </connector>
-            <label>Manual Record</label>
-        </rules>
-    </decisions>
-    <decisions>
+        <description>This check will populate CCI Level, Intervention Code and Service Type of manual records. For integration records these fields will populate values from external system.</description>
         <name>Check_for_Record_Creation_Source1</name>
         <label>Check for Record Creation Source</label>
-        <locationX>1436</locationX>
+        <locationX>908</locationX>
         <locationY>1463</locationY>
         <defaultConnector>
             <isGoTo>true</isGoTo>
@@ -577,7 +473,7 @@ Service Type</description>
     <decisions>
         <name>Check_for_Record_Type</name>
         <label>Check for Record Type</label>
-        <locationX>1535</locationX>
+        <locationX>1106</locationX>
         <locationY>323</locationY>
         <defaultConnector>
             <targetReference>Populate_PHN_DateId</targetReference>
@@ -647,7 +543,7 @@ Service Type</description>
     <decisions>
         <name>Check_for_Service_Provided_by_Facility</name>
         <label>Check for Service Provided by Facility</label>
-        <locationX>1139</locationX>
+        <locationX>611</locationX>
         <locationY>539</locationY>
         <defaultConnector>
             <targetReference>Get_TPL_Pricebook_Id</targetReference>
@@ -671,35 +567,9 @@ Service Type</description>
         </rules>
     </decisions>
     <decisions>
-        <description>Check if facility is blank</description>
-        <name>Check_if_facility_is_blank</name>
-        <label>Populated Facility Code from Facility</label>
-        <locationX>182</locationX>
-        <locationY>647</locationY>
-        <defaultConnector>
-            <targetReference>Get_Site_Code_from_Facility</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Facility has value</defaultConnectorLabel>
-        <rules>
-            <name>Facility_is_blank</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>$Record.Facility__c</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Populate_Site_Code_Facility_Type</targetReference>
-            </connector>
-            <label>Facility is blank</label>
-        </rules>
-    </decisions>
-    <decisions>
         <name>Check_Product_Values</name>
         <label>Check Product Values</label>
-        <locationX>1238</locationX>
+        <locationX>710</locationX>
         <locationY>1571</locationY>
         <defaultConnector>
             <targetReference>Get_Product_for_Hospitalization_Manual_Record</targetReference>
@@ -725,7 +595,7 @@ Service Type</description>
         <description>Check if facility Code is blank</description>
         <name>Populate_Facility_from_Site_Code</name>
         <label>Populate Facility from Site Code</label>
-        <locationX>2030</locationX>
+        <locationX>1502</locationX>
         <locationY>539</locationY>
         <defaultConnector>
             <targetReference>Get_Facility_from_Site_Code</targetReference>
@@ -747,7 +617,6 @@ Service Type</description>
             <label>Facility Code is blank</label>
         </rules>
     </decisions>
-    <description>dateidformula seperated for Hospital and other record types</description>
     <environments>Default</environments>
     <formulas>
         <name>AmbulanceTotalCostOverride</name>
@@ -758,13 +627,7 @@ Service Type</description>
     <formulas>
         <name>dateidformula</name>
         <dataType>String</dataType>
-        <expression>SUBSTITUTE(if(Text({!$Record.Date_of_Service__c})==null,&apos;00000000&apos;,TEXT({!$Record.Date_of_Service__c})), &apos;-&apos;, &apos;&apos; ) &amp; &apos;&apos; &amp; {!$Record.Id}</expression>
-    </formulas>
-    <formulas>
-        <description>date ID calculation formula for Hospitalization</description>
-        <name>dateidformula_hospital</name>
-        <dataType>String</dataType>
-        <expression>SUBSTITUTE(if(Text({!$Record.Date_of_Admission__c})==null,&apos;00000000&apos;,TEXT({!$Record.Date_of_Admission__c})), &apos;-&apos;, &apos;&apos; ) &amp; &apos;&apos; &amp; {!$Record.Id}</expression>
+        <expression>SUBSTITUTE(if(Text({!$Record.Date_of_Service__c})==null,&apos;00000000&apos;,TEXT({!$Record.Date_of_Service__c})), &apos;_&apos;, &apos;&apos; ) &amp; &apos;&apos; &amp; {!$Record.Id}</expression>
     </formulas>
     <formulas>
         <name>HospitalizationTotalCostOverride</name>
@@ -790,7 +653,7 @@ Service Type</description>
         <description>Since all record are selected in &quot;Get pricebook Entries&quot; Element. which converts the get record in to collection. And to use the value from the collection, loop is required.</description>
         <name>Loop_Pricebook_Entries</name>
         <label>Loop Pricebook Entries</label>
-        <locationX>1612</locationX>
+        <locationX>1084</locationX>
         <locationY>1079</locationY>
         <collectionReference>Get_Pricebook_entries</collectionReference>
         <iterationOrder>Asc</iterationOrder>
@@ -823,7 +686,7 @@ Service Type</description>
     <recordLookups>
         <name>Get_Facility_from_Site_Code</name>
         <label>Get Facility from Site Code</label>
-        <locationX>2162</locationX>
+        <locationX>1634</locationX>
         <locationY>647</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -845,7 +708,7 @@ Service Type</description>
         <description>We have to use the count variable in the next step for decision. For using the COUNT operator: &quot;All records&quot; is selected in &quot;How many Record to Store&quot;</description>
         <name>Get_Pricebook_entries</name>
         <label>Get Pricebook entries</label>
-        <locationX>1436</locationX>
+        <locationX>908</locationX>
         <locationY>755</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -873,7 +736,7 @@ Service Type</description>
     <recordLookups>
         <name>Get_Product_for_Hospitalization_Manual_Record</name>
         <label>Get Product for Hospitalization Manual Record</label>
-        <locationX>1370</locationX>
+        <locationX>842</locationX>
         <locationY>1679</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -892,30 +755,9 @@ Service Type</description>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
-        <name>Get_Site_Code_from_Facility</name>
-        <label>Get Site Code from Facility</label>
-        <locationX>314</locationX>
-        <locationY>755</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Populate_Site_Code_Facility_Type1</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>$Record.Facility__r.Id</elementReference>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>Account</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordLookups>
         <name>Get_TPL_Pricebook_Id</name>
         <label>Get TPL Pricebook Id</label>
-        <locationX>1436</locationX>
+        <locationX>908</locationX>
         <locationY>647</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -936,12 +778,12 @@ Service Type</description>
     <recordUpdates>
         <name>Update_current_Record</name>
         <label>Update current Record</label>
-        <locationX>1535</locationX>
+        <locationX>1106</locationX>
         <locationY>2297</locationY>
         <inputReference>currentRecord</inputReference>
     </recordUpdates>
     <start>
-        <locationX>1409</locationX>
+        <locationX>980</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Check_for_Record_Type</targetReference>
