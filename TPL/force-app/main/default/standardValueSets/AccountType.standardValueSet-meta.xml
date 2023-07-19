@@ -46,4 +46,14 @@
         <default>false</default>
         <label>Rehabilitation</label>
     </standardValue>
+    <standardValue>
+        <fullName>Insurance Company</fullName>
+        <default>false</default>
+        <label>Insurance Company</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Legal Counsel</fullName>
+        <default>false</default>
+        <label>Legal Counsel</label>
+    </standardValue>
 </StandardValueSet>

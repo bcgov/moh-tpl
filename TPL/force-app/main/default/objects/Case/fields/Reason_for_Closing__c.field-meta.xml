@@ -13,84 +13,84 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>00 - Unpaid/Unrequested</fullName>
+                <fullName>00-Unpaid/Unrequested</fullName>
                 <default>false</default>
-                <label>00 - Unpaid/Unrequested</label>
+                <label>00-Unpaid/Unrequested</label>
             </value>
             <value>
-                <fullName>01 - Unpaid/Requested</fullName>
+                <fullName>01-Unpaid/Requested</fullName>
                 <default>false</default>
-                <label>01 - Unpaid/Requested</label>
+                <label>01-Unpaid/Requested</label>
             </value>
             <value>
-                <fullName>02 - Paid</fullName>
+                <fullName>02-Paid</fullName>
                 <default>false</default>
-                <label>02 - Paid</label>
+                <label>02-Paid</label>
             </value>
             <value>
-                <fullName>03 - No Third Party Liability</fullName>
+                <fullName>03-No Third Party Liability</fullName>
                 <default>false</default>
-                <label>03 - No Third Party Liability</label>
+                <label>03-No Third Party Liability</label>
             </value>
             <value>
-                <fullName>04 - No Claim</fullName>
+                <fullName>04-No Claim</fullName>
                 <default>false</default>
-                <label>04 - No Claim</label>
+                <label>04-No Claim</label>
             </value>
             <value>
-                <fullName>07 - Policy Limits</fullName>
+                <fullName>07-Policy Limits</fullName>
                 <default>false</default>
-                <label>07 - Policy Limits</label>
+                <label>07-Policy Limits</label>
             </value>
             <value>
-                <fullName>08 - Workers Compensation Board</fullName>
+                <fullName>08-Workers Compensation Board</fullName>
                 <default>false</default>
-                <label>08 - Workers Compensation Board</label>
+                <label>08-Workers Compensation Board</label>
             </value>
             <value>
-                <fullName>09 - Non-Beneficiary</fullName>
+                <fullName>09-Non-Beneficiary</fullName>
                 <default>false</default>
-                <label>09 - Non-Beneficiary</label>
+                <label>09-Non-Beneficiary</label>
             </value>
             <value>
-                <fullName>11 - Abandoned</fullName>
+                <fullName>11-Abandoned</fullName>
                 <default>false</default>
-                <label>11 - Abandoned</label>
+                <label>11-Abandoned</label>
             </value>
             <value>
-                <fullName>16 - RMB</fullName>
+                <fullName>16-RMB</fullName>
                 <default>false</default>
-                <label>16 - RMB</label>
+                <label>16-RMB</label>
             </value>
             <value>
-                <fullName>17 - Other Federal Gov&apos;t</fullName>
+                <fullName>17-Other Federal Gov&apos;t</fullName>
                 <default>false</default>
-                <label>17 - Other Federal Gov&apos;t</label>
+                <label>17-Other Federal Gov&apos;t</label>
             </value>
             <value>
-                <fullName>31 - HCCRA Not Applicable</fullName>
+                <fullName>31-HCCRA Not Applicable</fullName>
                 <default>false</default>
-                <label>31 - HCCRA Not Applicable</label>
+                <label>31-HCCRA Not Applicable</label>
             </value>
             <value>
-                <fullName>32 - VMP</fullName>
+                <fullName>32-VMP</fullName>
                 <default>false</default>
-                <label>32 - VMP</label>
+                <label>32-VMP</label>
             </value>
             <value>
-                <fullName>33 - RCMP</fullName>
+                <fullName>33-RCMP</fullName>
                 <default>false</default>
-                <label>33 - RCMP</label>
+                <label>33-RCMP</label>
             </value>
             <value>
-                <fullName>50 - File Merged into Other</fullName>
+                <fullName>50-File Merged into Other</fullName>
                 <default>false</default>
-                <label>50 - File Merged into Other</label>
+                <label>50-File Merged into Other</label>
             </value>
             <value>
-                <fullName>99 - No Hospital MSP Closed</fullName>
+                <fullName>99-No Hospital MSP Closed</fullName>
                 <default>false</default>
-                <label>99 - No Hospital MSP Closed</label>
+                <label>99-No Hospital MSP Closed</label>
             </value>
         </valueSetDefinition>
     </valueSet>

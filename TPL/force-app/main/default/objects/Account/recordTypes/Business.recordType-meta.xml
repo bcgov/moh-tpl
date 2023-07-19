@@ -29,5 +29,13 @@
             <fullName>Business for Class Action</fullName>
             <default>true</default>
         </values>
+        <values>
+            <fullName>Insurance Company</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Legal Counsel</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
 </RecordType>

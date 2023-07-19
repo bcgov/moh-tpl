@@ -28,7 +28,7 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Specific</controllingFieldValue>
-            <valueName>Rehabilitation Care</valueName>
+            <valueName>Rehabilitation Care (Daily)</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>
