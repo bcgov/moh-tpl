@@ -651,7 +651,8 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Healthcare_Cost__c.Facility_Name__c</field>
-        <readable>true<
+        <readable>true</readable>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Healthcare_Cost__c.FacilityName__c</field>
