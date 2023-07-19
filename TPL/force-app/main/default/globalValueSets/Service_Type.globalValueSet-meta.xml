@@ -21,9 +21,9 @@
         <label>Surgical Day Care (Daily)</label>
     </customValue>
     <customValue>
-        <fullName>Rehabilitation Care</fullName>
+        <fullName>Rehabilitation Care (Daily)</fullName>
         <default>false</default>
-        <label>Rehabilitation Care</label>
+        <label>Rehabilitation Care (Daily)</label>
     </customValue>
     <masterLabel>Service Type</masterLabel>
     <sorted>false</sorted>

@@ -6,7 +6,7 @@
     <encryptionScheme>CaseInsensitiveDeterministicEncryption</encryptionScheme>
     <externalId>false</externalId>
     <label>PHN</label>
-    <length>10</length>
+    <length>15</length>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>true</trackHistory>

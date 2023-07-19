@@ -13,74 +13,79 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>01 - MVA Passenger</fullName>
+                <fullName>01- MVA - Passenger</fullName>
                 <default>false</default>
-                <label>01 - MVA Passenger</label>
+                <label>01- MVA - Passenger</label>
             </value>
             <value>
-                <fullName>05 - MV vs non-MV</fullName>
+                <fullName>05-MV vs non-MV</fullName>
                 <default>false</default>
-                <label>05 - MV vs non-MV</label>
+                <label>05-MV vs non-MV</label>
             </value>
             <value>
-                <fullName>09 - Unknown MVA</fullName>
+                <fullName>09-Unknown MVA</fullName>
                 <default>false</default>
-                <label>09 - Unknown MVA</label>
+                <label>09-Unknown MVA</label>
             </value>
             <value>
-                <fullName>11 - MVA Driver</fullName>
+                <fullName>11-MVA Driver</fullName>
                 <default>false</default>
-                <label>11 - MVA Driver</label>
+                <label>11-MVA Driver</label>
             </value>
             <value>
-                <fullName>30 - Unknown</fullName>
+                <fullName>30-Unknown</fullName>
                 <default>false</default>
-                <label>30 - Unknown</label>
+                <label>30-Unknown</label>
             </value>
             <value>
-                <fullName>49 - Municipality Policy Claim</fullName>
+                <fullName>49-Municipality Policy Claim</fullName>
                 <default>false</default>
-                <label>49 - Municipality Policy Claim</label>
+                <label>49-Municipality Policy Claim</label>
             </value>
             <value>
-                <fullName>50 - Business Policy Claim</fullName>
+                <fullName>50-Business Policy Claim</fullName>
                 <default>false</default>
-                <label>50 - Business Policy Claim</label>
+                <label>50-Business Policy Claim</label>
             </value>
             <value>
-                <fullName>51 - Homeowner Policy Claim</fullName>
+                <fullName>51-Homeowner Policy Claim</fullName>
                 <default>false</default>
-                <label>51 - Homeowner Policy Claim</label>
+                <label>51-Homeowner Policy Claim</label>
             </value>
             <value>
-                <fullName>53 - Other Craft</fullName>
+                <fullName>53-Other Craft</fullName>
                 <default>false</default>
-                <label>53 - Other Craft</label>
+                <label>53-Other Craft</label>
             </value>
             <value>
-                <fullName>56 - Sports Injury</fullName>
+                <fullName>56-Sports Injury</fullName>
                 <default>false</default>
-                <label>56 - Sports Injury</label>
+                <label>56-Sports Injury</label>
             </value>
             <value>
-                <fullName>59 - Misc</fullName>
+                <fullName>59-Misc</fullName>
                 <default>false</default>
-                <label>59 - Misc</label>
+                <label>59-Misc</label>
             </value>
             <value>
-                <fullName>60 - Malpractice</fullName>
+                <fullName>60-Malpractice</fullName>
                 <default>false</default>
-                <label>60 - Malpractice</label>
+                <label>60-Malpractice</label>
             </value>
             <value>
-                <fullName>61 - Criminal Activity</fullName>
+                <fullName>61-Criminal Activity</fullName>
                 <default>false</default>
-                <label>61 - Criminal Activity</label>
+                <label>61-Criminal Activity</label>
             </value>
             <value>
-                <fullName>62 - WorkSafeBC</fullName>
+                <fullName>62-WorkSafeBC</fullName>
                 <default>false</default>
-                <label>62 - WorkSafeBC</label>
+                <label>62-WorkSafeBC</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
             </value>
         </valueSetDefinition>
     </valueSet>
