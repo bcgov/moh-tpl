@@ -137,5 +137,5 @@
         <searchResultsAdditionalFields>IsActive</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>IsMetadataCacheDisabled</searchResultsAdditionalFields>
     </searchLayouts>
-    <sharingModel>Private</sharingModel>
+    <sharingModel>Read</sharingModel>
 </CustomObject>

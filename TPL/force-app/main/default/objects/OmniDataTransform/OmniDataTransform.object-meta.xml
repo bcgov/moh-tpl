@@ -135,5 +135,5 @@
         <searchResultsAdditionalFields>Description</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>SourceObject</searchResultsAdditionalFields>
     </searchLayouts>
-    <sharingModel>Private</sharingModel>
+    <sharingModel>Read</sharingModel>
 </CustomObject>

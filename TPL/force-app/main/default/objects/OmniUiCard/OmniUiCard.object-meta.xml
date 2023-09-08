@@ -139,5 +139,5 @@
         <customTabListAdditionalFields>IsActive</customTabListAdditionalFields>
         <searchResultsAdditionalFields>IsActive</searchResultsAdditionalFields>
     </searchLayouts>
-    <sharingModel>Private</sharingModel>
+    <sharingModel>Read</sharingModel>
 </CustomObject>
