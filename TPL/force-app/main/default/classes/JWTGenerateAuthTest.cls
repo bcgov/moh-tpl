@@ -11,7 +11,7 @@
 public class JWTGenerateAuthTest {
         public static final String CONTENT_TYPE_HEADER = 'Content-Type';
         public static final String CONTENT_TYPE_JSON = 'application/json';
-        private static final String ACCESS_TOKEN = 'gv6iCx48OaH76ufiGXBUlRTRTXxx';
+        private static final String ACCESS_TOKEN = '00000000000000';
         private static final String EXPIRES_IN = '300';
         private static final String STATE = 'mocktestState'; 
         private static final String TOKEN_TYPE = 'Bearer'; 
@@ -40,7 +40,7 @@ public class JWTGenerateAuthTest {
         '  \"token_type\" : \"Bearer\",'+
         '  \"issued_at\" : \"1521077832490\",'+
         '  \"client_id\" : \"testKey\",'+
-        '  \"access_token\" : \"gv6iCx48OaH76ufiGXBUlRTRTXxx\",'+
+        '  \"access_token\" : \"00000000000000\",'+
         '  \"application_name\" : \"47bc6c8d-34f3-4141-b9e6-f1679a8240e7\",'+
         '  \"scope\" : \"\",'+
         '  \"expires_in\" : \"3599\",'+
@@ -256,7 +256,7 @@ public class JWTGenerateAuthTest {
         System.AssertEquals('bobbywhite-eval',resp.organization_name);
         System.AssertEquals('Bearer',resp.token_type);
         System.AssertEquals('1521077832490',resp.issued_at);
-        System.AssertEquals('gv6iCx48OaH76ufiGXBUlRTRTXxx',resp.access_token);
+        System.AssertEquals('00000000000000',resp.access_token);
         System.AssertEquals('47bc6c8d-34f3-4141-b9e6-f1679a8240e7',resp.application_name);
         System.AssertEquals('',resp.scope);
         System.AssertEquals('3599',resp.expires_in);
