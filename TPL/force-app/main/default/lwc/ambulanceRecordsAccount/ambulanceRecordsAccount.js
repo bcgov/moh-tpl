@@ -282,6 +282,7 @@ export default class AmbulanceRecordsAccount extends LightningElement {
 
     }
     handleUnassign(){
+        this.selectedCase = '';
         this.checkIfUnderUpdate();
         if(!this.updateHappening){
             this.updateTriggered = true;

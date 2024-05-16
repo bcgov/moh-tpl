@@ -411,6 +411,7 @@ export default class MspRecordsAccount extends LightningElement {
     }
 
    handleUnassign(){
+        this.selectedCase = '';
         this.checkIfUnderUpdate();
             if(!this.updateHappening){
                 this.updateTriggered = true;
