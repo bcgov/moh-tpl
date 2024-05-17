@@ -250,6 +250,7 @@ export default class HospitalRecordsAccount extends LightningElement {
         this.selectedCase = event.target.value;  
     }
     handleUnassign(){
+        this.selectedCase = '';
         this.checkIfUnderUpdate();
             if(!this.updateHappening){
                 this.updateTriggered = true;

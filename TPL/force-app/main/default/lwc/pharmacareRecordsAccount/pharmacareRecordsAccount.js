@@ -298,6 +298,7 @@ export default class PharmacareRecordsAccount extends LightningElement {
     }
 
     handleUnassign(){
+        this.selectedCase = '';
         this.checkIfUnderUpdate();
             if(!this.updateHappening){
                 this.updateTriggered = true;
