@@ -1206,8 +1206,8 @@
         <tab>standard-Task</tab>
         <visibility>Visible</visibility>
     </tabSettings>
-    <tabSettings>
-        <tab>Case_Relation__c</tab>
-        <visibility>Visible</visibility>
-    </tabSettings>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>CreateCustomizeFilters</name>
+    </userPermissions>
 </PermissionSet>
