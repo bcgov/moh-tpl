@@ -29,7 +29,17 @@ public with sharing class TestDataFactory {
         acc.Status__c = true;
         return acc;
     }
-
+      /*
+		Method Name:newBatch
+		Description: Test method used to return a batch
+	*/
+    public static Batch__c newBatch(){
+        Batch__c batch = new Batch__c();
+        batch.Batch_Status__c = 'Open';
+        batch.Batch_Type__c = 'Private';
+        batch.Batch_Date__c = System.now();
+        return batch;
+    }
     /*
 		Method Name:newCase
 		Parameters: Account ID
@@ -196,5 +206,14 @@ public with sharing class TestDataFactory {
         hcc.Cost_of_Drug__c = 500;
         hcc.Total_Cost_Override__c = 6000;
         return hcc;
+    }
+    
+    public Static Payment__c newPayments(Id caseId, Integer paymentAmt, String paymentMethod, Id batchId){
+        Payment__c payment = new Payment__c();
+        payment.Case_Number__c = caseId;
+        payment.Payment_Amount__c = paymentAmt;
+        payment.Payment_Method__c = paymentMethod;
+        payment.Batch_Number__c = batchId;
+        return payment;
     }
 }

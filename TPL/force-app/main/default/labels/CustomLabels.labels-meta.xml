@@ -148,6 +148,13 @@
         <value>Id, Name, Case2__c, Case_Number__c, Cost_Include__c, Cost_Review__c, Date_of_Service__c, Practitioner_Name__c, DIN__c, Name_of_Drug__c, Cost_of_Drug__c, Total_Cost_Override__c, Source_System_ID__c</value>
     </labels>
     <labels>
+        <fullName>TPL_Prevent_Batch_Deletion</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>TPL_Prevent_Batch _Deletion</shortDescription>
+        <value>Cannot delete this Batch record because there are related Payment records.</value>
+    </labels>
+    <labels>
         <fullName>TPL_Records_Created_Today</fullName>
         <language>en_US</language>
         <protected>false</protected>
