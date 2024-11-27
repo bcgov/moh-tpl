@@ -8,5 +8,6 @@
     <permissionSets>TPL_Finance</permissionSets>
     <permissionSets>TPL_Standard_User</permissionSets>
     <permissionSets>force__DocGenDesigner</permissionSets>
+    <permissionSets>force__DocGenUser</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>
