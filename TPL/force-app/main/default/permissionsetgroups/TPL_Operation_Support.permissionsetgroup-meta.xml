@@ -11,6 +11,7 @@
     <permissionSets>TPL_System_Administrator</permissionSets>
     <permissionSets>Two_factor_Authentication</permissionSets>
     <permissionSets>force__DocGenDesigner</permissionSets>
+    <permissionSets>force__DocGenUser</permissionSets>
     <permissionSets>force__OmniStudioAdmin</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>
