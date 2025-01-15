@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
-    <apiVersion>57.0</apiVersion>
+    <apiVersion>62.0</apiVersion>
     <assignments>
         <name>New_Files_Collection</name>
         <label>New Files Collection</label>
         <locationX>264</locationX>
-        <locationY>518</locationY>
+        <locationY>458</locationY>
         <assignmentItems>
             <assignToReference>NewFilesCollection</assignToReference>
             <operator>Add</operator>
@@ -21,7 +21,7 @@
         <name>Update_Owner</name>
         <label>Update Owner</label>
         <locationX>264</locationX>
-        <locationY>398</locationY>
+        <locationY>350</locationY>
         <assignmentItems>
             <assignToReference>ContentDocument.Id</assignToReference>
             <operator>Assign</operator>
@@ -40,14 +40,15 @@
             <targetReference>New_Files_Collection</targetReference>
         </connector>
     </assignments>
+    <description>This flow updates the file owner to the current session user, enabling the current user to delete attachments originally owned by others.</description>
     <environments>Default</environments>
     <interviewLabel>Change File Owner1 {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Change File Owner</label>
+    <label>TPL_Change File Owner</label>
     <loops>
         <name>Loop_through_files</name>
         <label>Loop through files</label>
         <locationX>176</locationX>
-        <locationY>278</locationY>
+        <locationY>242</locationY>
         <collectionReference>Get_Files</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -80,7 +81,7 @@
         <name>Get_Files</name>
         <label>Get Files</label>
         <locationX>176</locationX>
-        <locationY>158</locationY>
+        <locationY>134</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Loop_through_files</targetReference>
@@ -101,7 +102,7 @@
         <name>Update_File_Owners</name>
         <label>Update File Owners</label>
         <locationX>176</locationX>
-        <locationY>734</locationY>
+        <locationY>650</locationY>
         <connector>
             <targetReference>Success_Message</targetReference>
         </connector>
@@ -113,7 +114,7 @@
         <name>Success_Message</name>
         <label>Success Message</label>
         <locationX>176</locationX>
-        <locationY>854</locationY>
+        <locationY>758</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>

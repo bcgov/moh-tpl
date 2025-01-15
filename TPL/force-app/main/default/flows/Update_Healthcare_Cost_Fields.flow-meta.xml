@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
-    <apiVersion>58.0</apiVersion>
+    <apiVersion>62.0</apiVersion>
     <assignments>
         <description>Populates:
 -Facility
@@ -444,7 +444,7 @@ Service Type</description>
         </rules>
     </decisions>
     <decisions>
-        <description>This check will populate CCI Level, Intervention Code and Service Type of manual records. For integration records these fields will populate values from external system.</description>
+        <description>This check populates Tier Level, Procedure Code, and Service Type for manual records. For integration records, these fields are populated with values from the external system.</description>
         <name>Check_for_Record_Creation_Source1</name>
         <label>Check for Record Creation Source</label>
         <locationX>908</locationX>
@@ -541,6 +541,7 @@ Service Type</description>
         </rules>
     </decisions>
     <decisions>
+        <description>Check if the product is selected and Retrieve the price of selected product.</description>
         <name>Check_for_Service_Provided_by_Facility</name>
         <label>Check for Service Provided by Facility</label>
         <locationX>611</locationX>
@@ -567,6 +568,7 @@ Service Type</description>
         </rules>
     </decisions>
     <decisions>
+        <description>Populate Tier Level, Procedure Code and Service Type of manual records.</description>
         <name>Check_Product_Values</name>
         <label>Check Product Values</label>
         <locationX>710</locationX>
@@ -592,7 +594,7 @@ Service Type</description>
         </rules>
     </decisions>
     <decisions>
-        <description>Check if facility Code is blank</description>
+        <description>Populate Facility from Facility code for Ambulance and Hospitalization records.</description>
         <name>Populate_Facility_from_Site_Code</name>
         <label>Populate Facility from Site Code</label>
         <locationX>1502</locationX>
@@ -617,6 +619,12 @@ Service Type</description>
             <label>Facility Code is blank</label>
         </rules>
     </decisions>
+    <description>This flow performs the following actions:
+
+1- Populates &apos;Total Cost Override&apos;, PHN, and DateID for MSP, Ambulance, Pharmacare, Continuing Care, Future Care, and Hospitalization records.
+2- Populates Facility Name from Facility Code for Ambulance and Hospitalization records.
+3- Populates price for selected service for integration Hospitalization records.
+4- Populates Tear level, Procedure code, and service type for manual Hospitalization records.</description>
     <environments>Default</environments>
     <formulas>
         <name>AmbulanceTotalCostOverride</name>
@@ -648,7 +656,7 @@ Service Type</description>
         <scale>2</scale>
     </formulas>
     <interviewLabel>Update Healthcare Cost Fields {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Update Healthcare Cost Fields</label>
+    <label>TPL_Update Healthcare Cost Fields</label>
     <loops>
         <description>Since all record are selected in &quot;Get pricebook Entries&quot; Element. which converts the get record in to collection. And to use the value from the collection, loop is required.</description>
         <name>Loop_Pricebook_Entries</name>
