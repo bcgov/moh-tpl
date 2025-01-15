@@ -5,7 +5,7 @@
         <name>New_Account_Collection</name>
         <label>New Account Collection</label>
         <locationX>314</locationX>
-        <locationY>575</locationY>
+        <locationY>539</locationY>
         <assignmentItems>
             <assignToReference>AccountCollection</assignToReference>
             <operator>Assign</operator>
@@ -20,8 +20,8 @@
     <assignments>
         <name>Updated_Account_Collection</name>
         <label>Updated Account Collection</label>
-        <locationX>1018</locationX>
-        <locationY>575</locationY>
+        <locationX>1106</locationX>
+        <locationY>539</locationY>
         <assignmentItems>
             <assignToReference>AccountCollection</assignToReference>
             <operator>Assign</operator>
@@ -36,8 +36,8 @@
     <decisions>
         <name>Check_for_Create_and_Update</name>
         <label>Check for Create and Update</label>
-        <locationX>886</locationX>
-        <locationY>335</locationY>
+        <locationX>974</locationX>
+        <locationY>323</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Check_for_Create</name>
@@ -74,7 +74,7 @@
         <name>Check_Record_Type_on_Create</name>
         <label>Check Record Type on Create</label>
         <locationX>314</locationX>
-        <locationY>695</locationY>
+        <locationY>647</locationY>
         <defaultConnectorLabel>Business Account</defaultConnectorLabel>
         <rules>
             <name>Facility_Account</name>
@@ -110,8 +110,8 @@
     <decisions>
         <name>Check_Record_Type_on_Update</name>
         <label>Check Record Type on Update</label>
-        <locationX>1018</locationX>
-        <locationY>695</locationY>
+        <locationX>1106</locationX>
+        <locationY>647</locationY>
         <defaultConnectorLabel>Business Account</defaultConnectorLabel>
         <rules>
             <name>Facility_Account_Update</name>
@@ -146,7 +146,7 @@
     </decisions>
     <environments>Default</environments>
     <interviewLabel>Parent Flow For Account {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Parent Flow For Account</label>
+    <label>X-Parent Flow For Account</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -170,7 +170,7 @@
         <name>Get_NEW_Account_Record</name>
         <label>Get NEW Account Record</label>
         <locationX>314</locationX>
-        <locationY>455</locationY>
+        <locationY>431</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>New_Account_Collection</targetReference>
@@ -190,8 +190,8 @@
     <recordLookups>
         <name>Get_Updated_Account_Record</name>
         <label>Get Updated Account Record</label>
-        <locationX>1018</locationX>
-        <locationY>455</locationY>
+        <locationX>1106</locationX>
+        <locationY>431</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Updated_Account_Collection</targetReference>
@@ -209,7 +209,7 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <start>
-        <locationX>760</locationX>
+        <locationX>848</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Check_for_Create_and_Update</targetReference>
@@ -219,12 +219,12 @@
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Obsolete</status>
+    <status>Draft</status>
     <subflows>
         <name>Changing_Last_Name_to_Upper_Case_on_Create</name>
         <label>Changing Last Name to Upper Case on Create</label>
         <locationX>314</locationX>
-        <locationY>815</locationY>
+        <locationY>755</locationY>
         <flowName>Changing_Individual_Last_Name_to_Upper_case</flowName>
         <inputAssignments>
             <name>AccountCollectionIntake</name>
@@ -237,8 +237,8 @@
     <subflows>
         <name>Changing_Last_Name_to_Upper_Case_On_Update</name>
         <label>Changing Last Name to Upper Case On Update</label>
-        <locationX>1018</locationX>
-        <locationY>815</locationY>
+        <locationX>1106</locationX>
+        <locationY>755</locationY>
         <flowName>Changing_Individual_Last_Name_to_Upper_case</flowName>
         <inputAssignments>
             <name>AccountCollectionIntake</name>
@@ -251,8 +251,8 @@
     <subflows>
         <name>Set_Facility_Deactivation_Date</name>
         <label>Set Facility Deactivation Date</label>
-        <locationX>754</locationX>
-        <locationY>815</locationY>
+        <locationX>842</locationX>
+        <locationY>755</locationY>
         <flowName>Set_Facility_Deactivation_Date</flowName>
         <inputAssignments>
             <name>AccountCollectionInTake</name>
@@ -266,7 +266,7 @@
         <name>Update_Account_Status_to_Active</name>
         <label>Update Account Status to Active</label>
         <locationX>50</locationX>
-        <locationY>815</locationY>
+        <locationY>755</locationY>
         <flowName>Update_Account_Status_to_Active1</flowName>
         <inputAssignments>
             <name>AccountCollectionIntake</name>

@@ -5,7 +5,7 @@
         <name>Add_to_Collection</name>
         <label>Add to Collection</label>
         <locationX>264</locationX>
-        <locationY>398</locationY>
+        <locationY>350</locationY>
         <assignmentItems>
             <assignToReference>AccountCollection</assignToReference>
             <operator>Add</operator>
@@ -21,7 +21,7 @@
         <name>Changing_Last_Name_to_Upper_Case</name>
         <label>Changing Last Name to Upper Case</label>
         <locationX>264</locationX>
-        <locationY>278</locationY>
+        <locationY>242</locationY>
         <assignmentItems>
             <assignToReference>CurrentAccount.Id</assignToReference>
             <operator>Assign</operator>
@@ -48,12 +48,12 @@
         <expression>Upper({!Loop_Through_Account.LastName})</expression>
     </formulas>
     <interviewLabel>Changing Individual Last Name to Upper case {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Changing Individual Last Name to Upper case</label>
+    <label>X-Changing Individual Last Name to Upper case</label>
     <loops>
         <name>Loop_Through_Account</name>
         <label>Loop Through Account</label>
         <locationX>176</locationX>
-        <locationY>158</locationY>
+        <locationY>134</locationY>
         <collectionReference>AccountCollectionIntake</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -86,7 +86,7 @@
         <name>Update_Last_Name_to_Upper_Case</name>
         <label>Update Last Name to Upper Case</label>
         <locationX>176</locationX>
-        <locationY>614</locationY>
+        <locationY>542</locationY>
         <inputReference>AccountCollection</inputReference>
     </recordUpdates>
     <start>
@@ -96,7 +96,7 @@
             <targetReference>Loop_Through_Account</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <variables>
         <name>AccountCollection</name>
         <dataType>SObject</dataType>

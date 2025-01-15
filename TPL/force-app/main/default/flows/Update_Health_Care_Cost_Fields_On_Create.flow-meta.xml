@@ -5,7 +5,7 @@
         <name>Add_Updated_Health_Care_Cost_to_Collection</name>
         <label>Add Updated Health Care Cost to Collection</label>
         <locationX>1208</locationX>
-        <locationY>1862</locationY>
+        <locationY>1658</locationY>
         <assignmentItems>
             <assignToReference>HealthCareCostsToUpdate</assignToReference>
             <operator>Add</operator>
@@ -21,7 +21,7 @@
         <name>Ambulance_Cost</name>
         <label>Ambulance Cost</label>
         <locationX>264</locationX>
-        <locationY>758</locationY>
+        <locationY>674</locationY>
         <assignmentItems>
             <assignToReference>currentRec.Total_Cost_Override__c</assignToReference>
             <operator>Assign</operator>
@@ -44,7 +44,7 @@
         <name>Assign_Health_Care_Cost_fields</name>
         <label>Assign Health Care Cost fields</label>
         <locationX>1760</locationX>
-        <locationY>1358</locationY>
+        <locationY>1214</locationY>
         <assignmentItems>
             <assignToReference>currentRec.Standard_Daily_Rate__c</assignToReference>
             <operator>Assign</operator>
@@ -81,7 +81,7 @@
         <name>Assign_Health_Care_Cost_fields_No_Override</name>
         <label>Assign Health Care Cost fields No Override</label>
         <locationX>2024</locationX>
-        <locationY>1358</locationY>
+        <locationY>1214</locationY>
         <assignmentItems>
             <assignToReference>currentRec.Standard_Daily_Rate__c</assignToReference>
             <operator>Assign</operator>
@@ -111,7 +111,7 @@
         <name>Assign_Health_Care_Cost_fields_without_assigned_service</name>
         <label>Assign Health Care Cost fields without assigned service</label>
         <locationX>1888</locationX>
-        <locationY>758</locationY>
+        <locationY>674</locationY>
         <assignmentItems>
             <assignToReference>currentRec.Standard_Daily_Rate__c</assignToReference>
             <operator>Assign</operator>
@@ -142,7 +142,7 @@
         <name>Assign_Health_Care_Cost_fields_without_Price</name>
         <label>Assign Health Care Cost fields without Price</label>
         <locationX>1056</locationX>
-        <locationY>1118</locationY>
+        <locationY>998</locationY>
         <assignmentItems>
             <assignToReference>currentRec.Standard_Daily_Rate__c</assignToReference>
             <operator>Assign</operator>
@@ -173,7 +173,7 @@
         <name>AssigningPHN</name>
         <label>AssigningPHN</label>
         <locationX>1208</locationX>
-        <locationY>518</locationY>
+        <locationY>458</locationY>
         <assignmentItems>
             <assignToReference>currentRec.PHN__c</assignToReference>
             <operator>Assign</operator>
@@ -203,7 +203,7 @@
         <name>Count_Pricebook_entry</name>
         <label>Count Pricebook entry</label>
         <locationX>1364</locationX>
-        <locationY>878</locationY>
+        <locationY>782</locationY>
         <assignmentItems>
             <assignToReference>CountPricebookentryRecords</assignToReference>
             <operator>AssignCount</operator>
@@ -219,7 +219,7 @@
         <name>MSP_Cost</name>
         <label>MSP Cost</label>
         <locationX>528</locationX>
-        <locationY>758</locationY>
+        <locationY>674</locationY>
         <assignmentItems>
             <assignToReference>currentRec.Total_Cost_Override__c</assignToReference>
             <operator>Assign</operator>
@@ -242,7 +242,7 @@
         <name>Pharmacare_Cost</name>
         <label>Pharmacare Cost</label>
         <locationX>792</locationX>
-        <locationY>758</locationY>
+        <locationY>674</locationY>
         <assignmentItems>
             <assignToReference>currentRec.Total_Cost_Override__c</assignToReference>
             <operator>Assign</operator>
@@ -266,7 +266,7 @@
         <elementSubtype>FilterCollectionProcessor</elementSubtype>
         <label>Filter Pricebook Entry</label>
         <locationX>1364</locationX>
-        <locationY>758</locationY>
+        <locationY>674</locationY>
         <assignNextValueToReference>currentItem_Filter_Pricebook_Entry</assignNextValueToReference>
         <collectionProcessorType>FilterCollectionProcessor</collectionProcessorType>
         <collectionReference>Get_Price_Book_Entry</collectionReference>
@@ -286,7 +286,7 @@
         <name>Check_for_Pricebook_entry_record</name>
         <label>Check for Pricebook entry record</label>
         <locationX>1364</locationX>
-        <locationY>998</locationY>
+        <locationY>890</locationY>
         <defaultConnector>
             <targetReference>Loop_through_Filtered_Record</targetReference>
         </defaultConnector>
@@ -311,7 +311,7 @@
         <name>Check_for_Record_Type_and_Total_Cost_Override_fields</name>
         <label>Check for Record Type and Total Cost Override fields</label>
         <locationX>1208</locationX>
-        <locationY>638</locationY>
+        <locationY>566</locationY>
         <defaultConnector>
             <targetReference>Add_Updated_Health_Care_Cost_to_Collection</targetReference>
         </defaultConnector>
@@ -431,7 +431,7 @@
         <name>Check_if_Total_cost_Override_has_Value</name>
         <label>Check if Total cost Override has Value</label>
         <locationX>1892</locationX>
-        <locationY>1238</locationY>
+        <locationY>1106</locationY>
         <defaultConnector>
             <targetReference>Assign_Health_Care_Cost_fields_No_Override</targetReference>
         </defaultConnector>
@@ -467,12 +467,12 @@ Update to PHN Value reference</description>
         <scale>2</scale>
     </formulas>
     <interviewLabel>Update Health Care Cost Fields On Create {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Update Health Care Cost Fields On Create</label>
+    <label>X-Update Health Care Cost Fields On Create</label>
     <loops>
         <name>Loop_through_Filtered_Record</name>
         <label>Loop through Filtered Record</label>
         <locationX>1672</locationX>
-        <locationY>1118</locationY>
+        <locationY>998</locationY>
         <collectionReference>Filter_Pricebook_Entry</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -486,7 +486,7 @@ Update to PHN Value reference</description>
         <name>LoopThroughHealthCareCost</name>
         <label>LoopThroughHealthCareCost</label>
         <locationX>176</locationX>
-        <locationY>398</locationY>
+        <locationY>350</locationY>
         <collectionReference>updatedHealthCareCost</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -519,7 +519,7 @@ Update to PHN Value reference</description>
         <name>Get_Price_Book_Entry</name>
         <label>Get Price Book Entry</label>
         <locationX>176</locationX>
-        <locationY>278</locationY>
+        <locationY>242</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>LoopThroughHealthCareCost</targetReference>
@@ -540,7 +540,7 @@ Update to PHN Value reference</description>
         <name>Get_TPL_Pricebook</name>
         <label>Get TPL Pricebook</label>
         <locationX>176</locationX>
-        <locationY>158</locationY>
+        <locationY>134</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Price_Book_Entry</targetReference>
@@ -561,7 +561,7 @@ Update to PHN Value reference</description>
         <name>Update_Health_Care_Cost</name>
         <label>Update Health Care Cost</label>
         <locationX>176</locationX>
-        <locationY>2078</locationY>
+        <locationY>1850</locationY>
         <inputReference>HealthCareCostsToUpdate</inputReference>
     </recordUpdates>
     <start>
@@ -571,7 +571,7 @@ Update to PHN Value reference</description>
             <targetReference>Get_TPL_Pricebook</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <variables>
         <name>CountPricebookentryRecords</name>
         <dataType>Number</dataType>

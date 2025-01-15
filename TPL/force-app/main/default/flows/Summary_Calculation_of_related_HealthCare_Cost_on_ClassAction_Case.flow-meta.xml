@@ -238,7 +238,7 @@
     <description>This flow will calculate the sum of Healthcare cost and payments made on child cases (Individual Cases) and display on parent case (Class Action)</description>
     <environments>Default</environments>
     <interviewLabel>Summary Calculation of related HealthCare Cost on ClassAction Case {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Summary Calculation of related HealthCare Cost on ClassAction Case</label>
+    <label>X-Summary Calculation of related HealthCare Cost on ClassAction Case</label>
     <loops>
         <name>Loop_through_Child_cases</name>
         <label>Loop through Child cases</label>
@@ -300,7 +300,7 @@
             <targetReference>Loop_through_Grandparent_cases</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <variables>
         <name>ambulanceTotal</name>
         <dataType>Currency</dataType>

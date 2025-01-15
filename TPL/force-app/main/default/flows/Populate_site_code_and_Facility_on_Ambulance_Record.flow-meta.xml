@@ -195,7 +195,7 @@
     <description>This flow will populate Site code based on selected Facility for manual created records and also populate Facility based on selected site code coming from integration</description>
     <environments>Default</environments>
     <interviewLabel>Populate site code and Facility on Ambulance Record {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Populate site code and Facility on Ambulance Record</label>
+    <label>X-Populate site code and Facility on Ambulance Record</label>
     <loops>
         <name>Loop_through_collection</name>
         <label>Loop through collection</label>
@@ -322,7 +322,7 @@
             <targetReference>Get_Facility_Record_Type</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <variables>
         <name>CollectionVariable</name>
         <dataType>SObject</dataType>

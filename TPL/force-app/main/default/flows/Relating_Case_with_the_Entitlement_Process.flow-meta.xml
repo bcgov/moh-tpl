@@ -5,7 +5,7 @@
         <name>agecalculation</name>
         <label>agecalculation</label>
         <locationX>528</locationX>
-        <locationY>518</locationY>
+        <locationY>458</locationY>
         <assignmentItems>
             <assignToReference>age</assignToReference>
             <operator>Assign</operator>
@@ -28,7 +28,7 @@
         <name>AssignEntitlementId</name>
         <label>AssignEntitlementId</label>
         <locationX>528</locationX>
-        <locationY>758</locationY>
+        <locationY>674</locationY>
         <assignmentItems>
             <assignToReference>caseIdsingle.Id</assignToReference>
             <operator>Assign</operator>
@@ -65,7 +65,7 @@
         <name>MilestonesCriteriaForMinors</name>
         <label>MilestonesCriteriaForMinors</label>
         <locationX>792</locationX>
-        <locationY>758</locationY>
+        <locationY>674</locationY>
         <assignmentItems>
             <assignToReference>caseIdsingle.Id</assignToReference>
             <operator>Assign</operator>
@@ -102,7 +102,7 @@
         <name>Record_Collection_for_update</name>
         <label>Record Collection for update</label>
         <locationX>528</locationX>
-        <locationY>974</locationY>
+        <locationY>866</locationY>
         <assignmentItems>
             <assignToReference>ExpectedCloseDateUpdate</assignToReference>
             <operator>Add</operator>
@@ -125,7 +125,7 @@
         <name>RemoveAssignedEntitlementId</name>
         <label>RemoveAssignedEntitlementId</label>
         <locationX>264</locationX>
-        <locationY>758</locationY>
+        <locationY>674</locationY>
         <assignmentItems>
             <assignToReference>caseIdsingle.Id</assignToReference>
             <operator>Assign</operator>
@@ -153,7 +153,7 @@
         <name>checkAge</name>
         <label>checkAge</label>
         <locationX>528</locationX>
-        <locationY>638</locationY>
+        <locationY>566</locationY>
         <defaultConnector>
             <targetReference>MilestonesCriteriaForMinors</targetReference>
         </defaultConnector>
@@ -228,7 +228,7 @@
         <name>checkRecordTypeOfCases</name>
         <label>checkRecordTypeOfCases</label>
         <locationX>792</locationX>
-        <locationY>398</locationY>
+        <locationY>350</locationY>
         <defaultConnector>
             <targetReference>assignFromTheParentFlow</targetReference>
         </defaultConnector>
@@ -274,12 +274,12 @@
         <scale>0</scale>
     </formulas>
     <interviewLabel>Relating Case with the Entitlement Process {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Relating Case with the Entitlement Process</label>
+    <label>X-Relating Case with the Entitlement Process</label>
     <loops>
         <name>assignFromTheParentFlow</name>
         <label>assignFromTheParentFlow</label>
         <locationX>176</locationX>
-        <locationY>278</locationY>
+        <locationY>242</locationY>
         <collectionReference>collectionCaseIds</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -312,7 +312,7 @@
         <name>getEntitlementRecords</name>
         <label>getEntitlementRecords</label>
         <locationX>176</locationX>
-        <locationY>158</locationY>
+        <locationY>134</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>assignFromTheParentFlow</targetReference>
@@ -333,7 +333,7 @@
         <name>updateExpectedClosedDate</name>
         <label>updateExpectedClosedDate</label>
         <locationX>176</locationX>
-        <locationY>1286</locationY>
+        <locationY>1142</locationY>
         <inputReference>ExpectedCloseDateUpdate</inputReference>
     </recordUpdates>
     <runInMode>DefaultMode</runInMode>
@@ -344,7 +344,7 @@
             <targetReference>getEntitlementRecords</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <variables>
         <name>age</name>
         <dataType>Number</dataType>

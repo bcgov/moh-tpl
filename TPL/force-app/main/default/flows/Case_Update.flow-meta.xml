@@ -4,7 +4,7 @@
     <description>When there is any update on the Account, this flow will update a case record to recalculate the milestone SLA.</description>
     <environments>Default</environments>
     <interviewLabel>Case Update {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Case Update</label>
+    <label>X-Case Update</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -28,7 +28,7 @@
         <name>Update_Case</name>
         <label>Update Case</label>
         <locationX>176</locationX>
-        <locationY>335</locationY>
+        <locationY>323</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>AccountId</field>
@@ -52,5 +52,5 @@
         <recordTriggerType>Update</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
 </Flow>

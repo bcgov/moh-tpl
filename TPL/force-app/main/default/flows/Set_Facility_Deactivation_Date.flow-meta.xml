@@ -5,7 +5,7 @@
         <name>Add_to_Collection</name>
         <label>Add to Collection</label>
         <locationX>528</locationX>
-        <locationY>734</locationY>
+        <locationY>650</locationY>
         <assignmentItems>
             <assignToReference>AccountCollection</assignToReference>
             <operator>Add</operator>
@@ -21,7 +21,7 @@
         <name>Assigning_Status_Value</name>
         <label>Assigning Status Value</label>
         <locationX>528</locationX>
-        <locationY>278</locationY>
+        <locationY>242</locationY>
         <assignmentItems>
             <assignToReference>CurrentAccount.Id</assignToReference>
             <operator>Assign</operator>
@@ -51,7 +51,7 @@
         <name>Set_Deactivation_Date</name>
         <label>Set Deactivation Date</label>
         <locationX>264</locationX>
-        <locationY>518</locationY>
+        <locationY>458</locationY>
         <assignmentItems>
             <assignToReference>CurrentAccount.Deactivation_Date__c</assignToReference>
             <operator>Assign</operator>
@@ -67,7 +67,7 @@
         <name>Set_Deactivation_date_to_Blank</name>
         <label>Set Deactivation date to Blank</label>
         <locationX>528</locationX>
-        <locationY>518</locationY>
+        <locationY>458</locationY>
         <assignmentItems>
             <assignToReference>CurrentAccount.Deactivation_Date__c</assignToReference>
             <operator>Assign</operator>
@@ -80,7 +80,7 @@
         <name>Check_Facility_Status</name>
         <label>Check Facility Status</label>
         <locationX>528</locationX>
-        <locationY>398</locationY>
+        <locationY>350</locationY>
         <defaultConnector>
             <targetReference>Add_to_Collection</targetReference>
         </defaultConnector>
@@ -123,13 +123,14 @@
             <label>Facility is Activated</label>
         </rules>
     </decisions>
+    <environments>Default</environments>
     <interviewLabel>Set Facility Deactivation Date {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Set Facility Deactivation Date</label>
+    <label>X-Set Facility Deactivation Date</label>
     <loops>
         <name>Loop_through_Account</name>
         <label>Loop through Account</label>
         <locationX>176</locationX>
-        <locationY>158</locationY>
+        <locationY>134</locationY>
         <collectionReference>AccountCollectionInTake</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -162,7 +163,7 @@
         <name>Assign_deactivation_Date</name>
         <label>Assign deactivation Date</label>
         <locationX>176</locationX>
-        <locationY>950</locationY>
+        <locationY>842</locationY>
         <inputReference>AccountCollection</inputReference>
     </recordUpdates>
     <start>
@@ -172,7 +173,7 @@
             <targetReference>Loop_through_Account</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <variables>
         <name>AccountCollection</name>
         <dataType>SObject</dataType>
