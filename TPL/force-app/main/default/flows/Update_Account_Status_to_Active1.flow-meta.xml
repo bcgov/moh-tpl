@@ -5,7 +5,7 @@
         <name>Add_to_Collection</name>
         <label>Add to Collection</label>
         <locationX>264</locationX>
-        <locationY>398</locationY>
+        <locationY>350</locationY>
         <assignmentItems>
             <assignToReference>AccountCollection</assignToReference>
             <operator>Add</operator>
@@ -21,7 +21,7 @@
         <name>Assigning_Status_Value</name>
         <label>Assigning Status Value</label>
         <locationX>264</locationX>
-        <locationY>278</locationY>
+        <locationY>242</locationY>
         <assignmentItems>
             <assignToReference>CurrentAccount.Id</assignToReference>
             <operator>Assign</operator>
@@ -40,13 +40,14 @@
             <targetReference>Add_to_Collection</targetReference>
         </connector>
     </assignments>
+    <environments>Default</environments>
     <interviewLabel>Update Account Status to Active {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Update Account Status to Active</label>
+    <label>X-Update Account Status to Active</label>
     <loops>
         <name>Loop_Through_Account</name>
         <label>Loop Through Account</label>
         <locationX>176</locationX>
-        <locationY>158</locationY>
+        <locationY>134</locationY>
         <collectionReference>AccountCollectionIntake</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -79,7 +80,7 @@
         <name>Assign_Status_field_Default_Value_to_Active</name>
         <label>Assign Status field - Default Value to Active</label>
         <locationX>176</locationX>
-        <locationY>614</locationY>
+        <locationY>542</locationY>
         <inputReference>AccountCollection</inputReference>
     </recordUpdates>
     <start>
@@ -89,7 +90,7 @@
             <targetReference>Loop_Through_Account</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <variables>
         <name>AccountCollection</name>
         <dataType>SObject</dataType>

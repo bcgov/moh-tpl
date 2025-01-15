@@ -5,7 +5,7 @@
         <name>Assign_Status</name>
         <label>Assign Status</label>
         <locationX>176</locationX>
-        <locationY>314</locationY>
+        <locationY>278</locationY>
         <assignmentItems>
             <assignToReference>isActive</assignToReference>
             <operator>Assign</operator>
@@ -17,8 +17,9 @@
             <targetReference>Update_Product_Status</targetReference>
         </connector>
     </assignments>
+    <environments>Default</environments>
     <interviewLabel>Subscribe a PE to Update P {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Subscribe a PE for Product Status Update</label>
+    <label>X-Subscribe a PE for Product Status Update</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -42,7 +43,7 @@
         <name>Get_Product_Records</name>
         <label>Get Product Records</label>
         <locationX>176</locationX>
-        <locationY>194</locationY>
+        <locationY>170</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Assign_Status</targetReference>
@@ -65,7 +66,7 @@
         <name>Update_Product_Status</name>
         <label>Update Product Status</label>
         <locationX>176</locationX>
-        <locationY>434</locationY>
+        <locationY>386</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Account__c</field>
@@ -91,7 +92,7 @@
         <object>Update_Product_Status_on_Account_Status__e</object>
         <triggerType>PlatformEvent</triggerType>
     </start>
-    <status>Obsolete</status>
+    <status>Draft</status>
     <variables>
         <name>isActive</name>
         <dataType>Boolean</dataType>

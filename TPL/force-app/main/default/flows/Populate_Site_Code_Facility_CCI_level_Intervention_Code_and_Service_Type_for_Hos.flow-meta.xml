@@ -390,7 +390,7 @@
     <description>This flow will populate site code from Facility or vise versa and Service Type, CCI Level and Intervention Code from Selected Product.</description>
     <environments>Default</environments>
     <interviewLabel>Populate Site Code, Facility, CCI level, Intervention Code and Service Type for Hospitalization Records {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Populate Site Code, Facility, CCI level, Intervention Code and Service Type for Hospitalization Records</label>
+    <label>X-Populate Site Code, Facility, CCI level, Intervention Code and Service Type for Hospitalization Records</label>
     <loops>
         <name>Loop_through_collection</name>
         <label>Loop through collection</label>
@@ -581,7 +581,7 @@
             <targetReference>Get_Facility_Record_Type</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <variables>
         <name>CollectionVariable</name>
         <dataType>SObject</dataType>
