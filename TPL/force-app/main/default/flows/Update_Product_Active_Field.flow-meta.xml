@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
-    <apiVersion>57.0</apiVersion>
-    <description>Optimized the flow to: Fast Field Updates</description>
+    <apiVersion>62.0</apiVersion>
+    <description>This flow activates the product status upon creation.</description>
+    <environments>Default</environments>
     <interviewLabel>Update Product Active Field {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Update Product Active Field</label>
+    <label>TPL_Update Product Active Field</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -27,7 +28,7 @@
         <name>assignDafaultValuetoActiveField</name>
         <label>assignDafaultValuetoActiveField</label>
         <locationX>176</locationX>
-        <locationY>311</locationY>
+        <locationY>287</locationY>
         <inputAssignments>
             <field>IsActive</field>
             <value>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
-    <apiVersion>57.0</apiVersion>
+    <apiVersion>62.0</apiVersion>
     <decisions>
         <name>Status_Closed</name>
         <label>Status Closed</label>
@@ -40,9 +40,10 @@
             <label>Date Reopened</label>
         </rules>
     </decisions>
-    <description>Reopened Status Version1(Reason for closing)</description>
+    <description>This flow populates the &quot;Date closed&quot; and &quot;Case Reopen Date&quot; fields upon case updates.</description>
+    <environments>Default</environments>
     <interviewLabel>Case Field Updates {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Case Field Updates</label>
+    <label>TPL_Case Field Updates</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>

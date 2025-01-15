@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
-    <apiVersion>57.0</apiVersion>
+    <apiVersion>62.0</apiVersion>
     <assignments>
         <name>Add_to_collection</name>
         <label>Add to collection</label>
@@ -261,6 +261,14 @@
             <label>Facility</label>
         </rules>
     </decisions>
+    <description>This flow performs the following actions:
+
+1- Converts the last name of a person account to uppercase during creation or update.
+2- Sets a facility to &quot;Active&quot; upon creation.
+3- Populates the deactivation date when a facility is deactivated.
+4- Removes the deactivation date when a facility is activated.
+5- Deactivates all products associated with a facility for effective year equal to the system year when the facility is deactivated.
+6- Activates all products associated with a facility for effective year equal to the system year when the facility is activated.</description>
     <environments>Default</environments>
     <formulas>
         <name>ChangingLastNametoUpperCase</name>
@@ -273,7 +281,7 @@
         <expression>TEXT(Year(TODAY()))</expression>
     </formulas>
     <interviewLabel>Update Account Fields {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Update Account Fields</label>
+    <label>TPL_Update Account Fields</label>
     <loops>
         <name>Loop_through_the_products</name>
         <label>Loop through the products</label>
