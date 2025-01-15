@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>TPL_Procedure_Code_Population_Validation</fullName>
+    <active>true</active>
+    <description>Prevent Procedure Code from Populating when Service Type not Surgical Day Care</description>
+    <errorConditionFormula>ISPICKVAL ( Service_Type__c , &quot;Surgical Day Care&quot;) &amp;&amp; ISBLANK( Intervention_Code_CCI__c )</errorConditionFormula>
+    <errorDisplayField>Intervention_Code_CCI__c</errorDisplayField>
+    <errorMessage>Fill-up Procedure Code when Service Type is Surgical Day Care. Otherwise, keep it blank.</errorMessage>
+</ValidationRule>
