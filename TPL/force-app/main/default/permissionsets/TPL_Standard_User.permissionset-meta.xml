@@ -940,6 +940,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Product2.Cost__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Product2.Effective_year__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1173,6 +1178,10 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <recordType>Healthcare_Cost__c.Pharmacare</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <recordType>Product2.TPL_Product</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <tabSettings>
