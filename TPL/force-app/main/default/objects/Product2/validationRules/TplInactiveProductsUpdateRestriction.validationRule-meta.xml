@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>TplInactiveProductsUpdateRestriction</fullName>
+    <active>true</active>
+    <description>When product is inactive, product can not be updated.</description>
+    <errorConditionFormula>NOT ( IsActive ) &amp;&amp;
+(  
+ISCHANGED(  Name  ) || 
+ISCHANGED(  Family  ) || 
+ISCHANGED(  Service_Type__c  ) || 
+ISCHANGED(  Description ) || 
+ISCHANGED(  Effective_year__c ) || 
+ISCHANGED(  Effective_Start_Date__c ) || 
+ISCHANGED(  Effective_End_Date__c ) ||
+ISCHANGED( Intervention_Code_CCI__c ) ||
+ISCHANGED( CCI_Level__c )  ||
+ISCHANGED( Cost__c )
+)</errorConditionFormula>
+    <errorMessage>Fields cannot be edited on a deactivated product. Activate the product to make changes.</errorMessage>
+</ValidationRule>
