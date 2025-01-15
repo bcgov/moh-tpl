@@ -561,7 +561,13 @@
                     <name>actionNames</name>
                     <valueList>
                         <valueListItems>
+                            <value>Case.Refresh_Case_Summary</value>
+                        </valueListItems>
+                        <valueListItems>
                             <value>Case.Change_File_Owner</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Case.Upload_Signed_Certificate</value>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
@@ -593,7 +599,7 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>hideUpdateButton</name>
-                    <value>false</value>
+                    <value>true</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>variant</name>

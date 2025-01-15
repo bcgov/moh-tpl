@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QuickAction xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>This flow will update the case financial summary.</description>
+    <flowDefinition>TPL_Case_Summary_Refresh</flowDefinition>
+    <label>Refresh Case Summary</label>
+    <optionsCreateFeedItem>false</optionsCreateFeedItem>
+    <type>Flow</type>
+</QuickAction>
