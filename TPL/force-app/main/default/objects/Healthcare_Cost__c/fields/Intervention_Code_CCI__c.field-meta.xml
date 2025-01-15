@@ -3,7 +3,7 @@
     <fullName>Intervention_Code_CCI__c</fullName>
     <description>Intervention Code (CCI)</description>
     <externalId>false</externalId>
-    <label>Intervention Code (CCI)</label>
+    <label>Procedure Code</label>
     <length>80</length>
     <required>false</required>
     <trackTrending>false</trackTrending>
