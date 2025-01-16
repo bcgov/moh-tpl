@@ -978,6 +978,7 @@
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
+        <default>true</default>    
         <recordType>Product2.TPL_Product</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
