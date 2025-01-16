@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>TPL_Product</fullName>
+    <active>true</active>
+    <label>TPL Product</label>
+    <picklistValues>
+        <picklist>CCI_Level__c</picklist>
+        <values>
+            <fullName>Tier 1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tier 2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tier 3</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Family</picklist>
+        <values>
+            <fullName>Generic</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Specific</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>QuantityUnitOfMeasure</picklist>
+        <values>
+            <fullName>Each</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Service_Type__c</picklist>
+        <values>
+            <fullName>Acute</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Extended Care</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Out Patient</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rehabilitation Care</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Surgical Day Care</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>
