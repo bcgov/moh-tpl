@@ -354,7 +354,7 @@ export default class AmbulanceRecordsCase extends LightningElement {
     totalPages; //Total no.of pages
     sortSelection = 'asc'; // sort selection
     pageNumber = 1; //Page number
-    pageSizeOptions = [5, 10, 25, 50, 75, 100]; //Page size options
+    pageSizeOptions = [25, 50, 75, 100]; //Page size options
     pageSize; //No.of records to be displayed per page
     recordsToDisplay = []; //Records to be displayed on the page
     hideDeleteButton = true;
@@ -787,7 +787,7 @@ export default class AmbulanceRecordsCase extends LightningElement {
         this.records = JSON.parse(JSON.stringify(this.lastSavedData));
         this.handleWindowOnclick('reset');
         this.draftValues = [];
-        return this.refresh();
+        handleRefresh();
     }
 
     handleEdit(event) {

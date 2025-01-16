@@ -47,13 +47,13 @@ const INTEGRATION_COLUMNS = [
         editable: false
     },
     {
-        label: 'Intervention Code (CCI)',
+        label: 'Procedure Code',
         fieldName: 'Intervention_Code_CCI__c',
         type: 'text',
         editable: false
     },
     {
-        label: 'CCI Level',
+        label: 'Tier Level',
         fieldName: 'CCI_Level__c',
         type: 'text',
         editable: false
@@ -194,14 +194,14 @@ const MANUAL_COLUMNS = [
         sortable: true,
     },
     {
-        label: 'Intervention Code (CCI)',
+        label: 'Procedure Code',
         fieldName: 'Intervention_Code_CCI__c',
         type: 'text',
         editable: false,
         sortable: true,
     },
     {
-        label: 'CCI Level',
+        label: 'Tier Level',
         fieldName: 'CCI_Level__c',
         type: 'text',
         editable: false,
@@ -338,7 +338,7 @@ export default class HospitalRecordsCase extends LightningElement {
     totalRecords = 0; //Total no.of records
     totalPages; //Total no.of pages
     pageNumber = 1; //Page number
-    pageSizeOptions = [5, 10, 25, 50, 75, 100]; //Page size options
+    pageSizeOptions = [25, 50, 75, 100]; //Page size options
     pageSize; //No.of records to be displayed per page
     recordsToDisplay = []; //Records to be displayed on the page
     hideDeleteButton = true;
