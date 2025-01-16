@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>First_Name_Mandatory_Check</fullName>
+    <fullName>TPL_First_Name_Mandatory_Check</fullName>
     <active>true</active>
     <errorConditionFormula>$Setup.Data_Migration_Check__c.Bypass_Flow_Validations__c = FALSE &amp;&amp;
 IF(  RecordType.Name = &quot;Individual&quot; &amp;&amp; ISBLANK( FirstName ), true, false)</errorConditionFormula>
