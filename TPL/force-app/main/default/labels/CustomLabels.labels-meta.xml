@@ -161,4 +161,18 @@
         <shortDescription>Records Created Today</shortDescription>
         <value>Records Created Today</value>
     </labels>
+    <labels>
+        <fullName>TPL_RestrictedFolder</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>TPL_RestrictedFolder</shortDescription>
+        <value>Signed Certificates</value>
+    </labels>
+    <labels>
+        <fullName>TPL_SignedCertDeletion</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>TPL_SignedCertDeletion</shortDescription>
+        <value>Signed Certificates could not be deleted.</value>
+    </labels>
 </CustomLabels>
