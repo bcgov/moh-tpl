@@ -70,7 +70,7 @@ public class JWTGenerateAuth extends Auth.AuthProviderPluginClass{
     private String getCallbackUrl(Map<string,string> config) {
         // https://{salesforce-hostname}/services/authcallback/{urlsuffix}
         final String overrideUrl = config.get(CMT_FIELD_CALLBACK_URL);
-        final String generatedUrl = URL.getSalesforceBaseUrl().toExternalForm() + RESOURCE_CALLBACK + config.get('Auth_Provider_Name__c');
+        final String generatedUrl = URL.getOrgDomainURL().toExternalForm() + RESOURCE_CALLBACK + config.get('Auth_Provider_Name__c');
 
         return String.isEmpty(overrideUrl) ? generatedUrl : overrideUrl;
     }

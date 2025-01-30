@@ -417,7 +417,7 @@ public with sharing class UserRegistrationService{
         * 
         */
         String suffixName = '';
-        String customDomain = URL.getSalesforceBaseUrl()
+        String customDomain = URL.getOrgDomainURL()
                         .toExternalForm()
                         .substringAfter('https://')
                         .substringBefore('.');
