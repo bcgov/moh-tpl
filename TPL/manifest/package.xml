@@ -102,22 +102,28 @@
     </types>
     <types>
         <members>*</members>
-        <name>ReportFolder</name>
-    </types>
-    <types>
-        <members>*</members>
         <name>ReportType</name>
     </types>  
     <types>
-        <members>*</members>
+        <members>TPLReports/Account_Audit_Report_DrX</members>
+        <members>TPLReports/Analyst_Case_Count_Report_Report_6m4</members>
+        <members>TPLReports/Case_Report_by_Status_OpenClosed_0zz</members>
+        <members>TPLReports/Cases_Audit_Report_ZWg</members>
+         <members>TPLReports/Cases_with_Payments_Report_yRI</members>
+         <members>TPLReports/Class_Action_Case_OS_payments_3060_wUV</members>
+         <members>TPLReports/Class_Action_OS_payments_90_Days_rFE</members>
+         <members>TPLReports/Class_Action_OS_payments_6090_Days_8Ig</members>
+         <members>TPLReports/Indiv_Case_OS_payments_90_SAV</members>
+         <members>TPLReports/Indiv_Case_OS_payments_3060_Days_SDc</members>
+         <members>TPLReports/Indiv_Case_OS_payments_6090_fX3</members>
+         <members>TPLReports/Payments_Received_Report_0jL</members>
+        <members>TPLReports/TPL_Task_Report_7YZ</members>
+        <members>TPLReports</members>
         <name>Report</name>
     </types>
     <types>
-        <members>*</members>
-        <name>DashboardFolder</name>
-    </types>
-    <types>
-        <members>*</members>
+        <members>TPLDashboards/QvjRjrbJnQpkNHCkXAKEouLJxWKurk</members>
+        <members>TPLDashboards</members>
         <name>Dashboard</name>
     </types>
     <types>
