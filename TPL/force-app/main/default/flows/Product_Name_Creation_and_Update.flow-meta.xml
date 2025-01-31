@@ -93,6 +93,16 @@
             <targetReference>Check_for_existing_Specific_product</targetReference>
         </connector>
     </assignments>
+    <customErrors>
+        <name>Error_Message</name>
+        <label>Error Message</label>
+        <locationX>1018</locationX>
+        <locationY>1211</locationY>
+        <customErrorMessages>
+            <errorMessage>A product with the same name already exists. Please use a unique product name or check for duplicates before creating a new product.</errorMessage>
+            <isFieldError>false</isFieldError>
+        </customErrorMessages>
+    </customErrors>
     <decisions>
         <name>checkProductFamily</name>
         <label>checkProductFamily</label>
