@@ -5,21 +5,17 @@
     <description>To be used with Client and Class Action Member</description>
     <label>Individual</label>
     <picklistValues>
-        <picklist>Ownership</picklist>
+        <picklist>Gender__pc</picklist>
+        <values>
+            <fullName>Female</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Male</fullName>
+            <default>false</default>
+        </values>
         <values>
             <fullName>Other</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Private</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Public</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Subsidiary</fullName>
             <default>false</default>
         </values>
     </picklistValues>
