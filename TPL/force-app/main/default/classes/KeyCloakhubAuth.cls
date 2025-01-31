@@ -67,7 +67,7 @@ Normally one should not override the callback URL, but it's there in case the ge
     private String getCallbackUrl(Map<string,string> config) {
         // https://{salesforce-hostname}/services/authcallback/{urlsuffix}
         final String overrideUrl = config.get(CMT_FIELD_CALLBACK_URL);
-        final String generatedUrl = URL.getSalesforceBaseUrl().toExternalForm() + RESOURCE_CALLBACK + config.get(CMT_FIELD_PROVIDER_NAME);    
+        final String generatedUrl = URL.getOrgDomainURL().toExternalForm() + RESOURCE_CALLBACK + config.get(CMT_FIELD_PROVIDER_NAME);    
         return String.isEmpty(overrideUrl) ? generatedUrl : overrideUrl;
     }
     

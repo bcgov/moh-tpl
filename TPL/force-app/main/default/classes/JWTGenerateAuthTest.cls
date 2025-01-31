@@ -19,7 +19,7 @@ public class JWTGenerateAuthTest {
         private static final String PROVIDER_NAME = 'UnitTestProvider'; 
         
         private static final String CALLBACK_URL_OVERRIDE = 
-        System.URL.getSalesforceBaseUrl().getHost()+'/services/authcallback/' + PROVIDER_NAME; 
+        System.URL.getOrgDomainURL().getHost()+'/services/authcallback/' + PROVIDER_NAME; 
     
         private static final String TEST_USER_EMAIL = 'developer@example.com';
         private static final String KEY = 'testKey'; 
