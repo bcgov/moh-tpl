@@ -4,7 +4,7 @@
     <assignments>
         <name>assignmentofConcatFields_0</name>
         <label>assignmentofConcatFields</label>
-        <locationX>1018</locationX>
+        <locationX>622</locationX>
         <locationY>287</locationY>
         <assignmentItems>
             <assignToReference>ProductFamilyRecord</assignToReference>
@@ -48,7 +48,7 @@
     <assignments>
         <name>updateProductNameFormula</name>
         <label>updateProductNameFormula</label>
-        <locationX>314</locationX>
+        <locationX>182</locationX>
         <locationY>503</locationY>
         <assignmentItems>
             <assignToReference>updatedProductName</assignToReference>
@@ -64,7 +64,7 @@
     <assignments>
         <name>updateProductNameFormula1</name>
         <label>updateProductNameFormula1</label>
-        <locationX>1018</locationX>
+        <locationX>622</locationX>
         <locationY>503</locationY>
         <assignmentItems>
             <assignToReference>updatedProductName</assignToReference>
@@ -80,7 +80,7 @@
     <assignments>
         <name>updateProductNameFormula_0</name>
         <label>updateProductNameFormula</label>
-        <locationX>1722</locationX>
+        <locationX>1062</locationX>
         <locationY>503</locationY>
         <assignmentItems>
             <assignToReference>updatedProductName</assignToReference>
@@ -96,7 +96,7 @@
     <customErrors>
         <name>Error_Message</name>
         <label>Error Message</label>
-        <locationX>1018</locationX>
+        <locationX>622</locationX>
         <locationY>1211</locationY>
         <customErrorMessages>
             <errorMessage>A product with the same name already exists. Please use a unique product name or check for duplicates before creating a new product.</errorMessage>
@@ -106,7 +106,7 @@
     <decisions>
         <name>checkProductFamily</name>
         <label>checkProductFamily</label>
-        <locationX>1018</locationX>
+        <locationX>622</locationX>
         <locationY>395</locationY>
         <defaultConnector>
             <targetReference>updateProductNameFormula_0</targetReference>
@@ -160,15 +160,15 @@
     <decisions>
         <name>Duplicate_product_check</name>
         <label>Duplicate product check</label>
-        <locationX>314</locationX>
+        <locationX>182</locationX>
         <locationY>719</locationY>
         <defaultConnector>
             <targetReference>Error_Message</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>Existing product name change</defaultConnectorLabel>
+        <defaultConnectorLabel>Duplicate Product</defaultConnectorLabel>
         <rules>
-            <name>New_Produst</name>
-            <conditionLogic>and</conditionLogic>
+            <name>Create_Update_Product</name>
+            <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>Check_for_existing_Generic_product</leftValueReference>
                 <operator>IsNull</operator>
@@ -176,14 +176,6 @@
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
-            <connector>
-                <targetReference>updateProductName</targetReference>
-            </connector>
-            <label>New Produst</label>
-        </rules>
-        <rules>
-            <name>Existing_product_update</name>
-            <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>$Record__Prior.Name</leftValueReference>
                 <operator>EqualTo</operator>
@@ -191,21 +183,24 @@
                     <elementReference>Generic_Product_Name</elementReference>
                 </rightValue>
             </conditions>
-            <label>Existing product update</label>
+            <connector>
+                <targetReference>updateProductName</targetReference>
+            </connector>
+            <label>Create Update Product</label>
         </rules>
     </decisions>
     <decisions>
         <name>Duplicate_product_check2</name>
         <label>Duplicate product check2</label>
-        <locationX>1018</locationX>
+        <locationX>622</locationX>
         <locationY>719</locationY>
         <defaultConnector>
             <targetReference>Error_Message</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>Existing product name change</defaultConnectorLabel>
+        <defaultConnectorLabel>Duplicate Product</defaultConnectorLabel>
         <rules>
-            <name>New_Product2</name>
-            <conditionLogic>and</conditionLogic>
+            <name>Create_Update_Product_2</name>
+            <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>Check_for_existing_Surgical_Day_product</leftValueReference>
                 <operator>IsNull</operator>
@@ -213,14 +208,6 @@
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
-            <connector>
-                <targetReference>updateProductName2</targetReference>
-            </connector>
-            <label>New Product2</label>
-        </rules>
-        <rules>
-            <name>Existing_product_update2</name>
-            <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>$Record__Prior.Name</leftValueReference>
                 <operator>EqualTo</operator>
@@ -228,21 +215,24 @@
                     <elementReference>SurgicalDay_Product_Name</elementReference>
                 </rightValue>
             </conditions>
-            <label>Existing product update2</label>
+            <connector>
+                <targetReference>updateProductName2</targetReference>
+            </connector>
+            <label>Create Update Product 2</label>
         </rules>
     </decisions>
     <decisions>
         <name>Duplicate_product_check3</name>
         <label>Duplicate product check3</label>
-        <locationX>1722</locationX>
+        <locationX>1062</locationX>
         <locationY>719</locationY>
         <defaultConnector>
             <targetReference>Error_Message</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>Existing product name change</defaultConnectorLabel>
+        <defaultConnectorLabel>Duplicate Product</defaultConnectorLabel>
         <rules>
-            <name>New_Product3</name>
-            <conditionLogic>and</conditionLogic>
+            <name>Create_Update_Product_3</name>
+            <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>Check_for_existing_Specific_product</leftValueReference>
                 <operator>IsNull</operator>
@@ -250,14 +240,6 @@
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
-            <connector>
-                <targetReference>updateProductName3</targetReference>
-            </connector>
-            <label>New Product3</label>
-        </rules>
-        <rules>
-            <name>Existing_product_update3</name>
-            <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>$Record__Prior.Name</leftValueReference>
                 <operator>EqualTo</operator>
@@ -265,7 +247,10 @@
                     <elementReference>Specific_Product_name</elementReference>
                 </rightValue>
             </conditions>
-            <label>Existing product update3</label>
+            <connector>
+                <targetReference>updateProductName3</targetReference>
+            </connector>
+            <label>Create Update Product 3</label>
         </rules>
     </decisions>
     <description>This flow generates a Product Name for new product creation or updates to existing products while preventing duplicate entries.</description>
@@ -309,7 +294,7 @@
     <recordLookups>
         <name>Check_for_existing_Generic_product</name>
         <label>Check for existing Generic product</label>
-        <locationX>314</locationX>
+        <locationX>182</locationX>
         <locationY>611</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -330,7 +315,7 @@
     <recordLookups>
         <name>Check_for_existing_Specific_product</name>
         <label>Check for existing Specific product</label>
-        <locationX>1722</locationX>
+        <locationX>1062</locationX>
         <locationY>611</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -351,7 +336,7 @@
     <recordLookups>
         <name>Check_for_existing_Surgical_Day_product</name>
         <label>Check for existing Surgical Day product</label>
-        <locationX>1018</locationX>
+        <locationX>622</locationX>
         <locationY>611</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -385,7 +370,7 @@
     <recordUpdates>
         <name>updateProductName2</name>
         <label>updateProductName2</label>
-        <locationX>754</locationX>
+        <locationX>490</locationX>
         <locationY>827</locationY>
         <inputAssignments>
             <field>Name</field>
@@ -398,7 +383,7 @@
     <recordUpdates>
         <name>updateProductName3</name>
         <label>updateProductName3</label>
-        <locationX>1458</locationX>
+        <locationX>930</locationX>
         <locationY>827</locationY>
         <inputAssignments>
             <field>Name</field>
@@ -409,7 +394,7 @@
         <inputReference>$Record</inputReference>
     </recordUpdates>
     <start>
-        <locationX>892</locationX>
+        <locationX>496</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>assignmentofConcatFields_0</targetReference>
