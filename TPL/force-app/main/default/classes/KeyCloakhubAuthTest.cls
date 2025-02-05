@@ -244,7 +244,6 @@ public class KeyCloakhubAuthTest {
         final Map<String,String> config = setupAuthProviderConfig();
         
         final String output = new KeyCloakhubAuth().encodeParameters(config,KeyCloakhubAuth.ENCODING_JSON);
-        System.debug('encoded jSON: ' + output);
         
         // Assert that we deserialize parse the output as JSON
         Map<String,Object> result = (Map<String,Object>)JSON.deserializeUntyped(output);

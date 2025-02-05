@@ -27,8 +27,6 @@ global class KeycloakRegistrationHandler implements Auth.RegistrationHandler{
      *     Boolean: true = user does not exist, create new user; false = user exists, do not create new user
      * 
      */
-        system.debug('data:'+ json.serializePretty(data));
-        system.debug('roles:'+ json.serializePretty(data.attributeMap.get('roles')));
         boolean isUserCreate = false;
         
         User[] fetchExistingUser = [Select Id, FederationIdentifier FROM User where FederationIdentifier =: data.username Limit 1];

@@ -82,13 +82,11 @@ public with sharing class UserRegistrationService{
         UserRegistrationCustomMetadataUtility fetchRoles = new UserRegistrationCustomMetadataUtility(data.attributeMap.get('roles'));
         list<IDP_User_Registration_User_Mapping__mdt> userRole_list = new list<IDP_User_Registration_User_Mapping__mdt>();
         userRole_list.add(fetchRoles.ReadMapping(data.attributeMap.get('roles')));
-        system.debug('data:'+ json.serializePretty(data));
         User newUser = new User();
         if (userRole_list.size() > 0)
         {
             for (IDP_User_Registration_User_Mapping__mdt userRole_rec : userRole_list)
             {
-            system.debug('userRole_rec:' + userRole_rec );
                 Profile p = [SELECT Id FROM profile WHERE name=:userRole_rec.Salesforce_User_Profile__c];
         
                 newUser.username = l_username;
@@ -172,7 +170,6 @@ public with sharing class UserRegistrationService{
         *     None
         * 
         */       
-        system.debug('data:'+ json.serializePretty(data));
         //Fetch Salesforce Id
         User existingUser = [Select Id, username, email,lastname,firstname,alias,
                                 emailEncodingKey,timeZoneSidKey,languagelocaleKey,localesidkey
@@ -330,7 +327,6 @@ public with sharing class UserRegistrationService{
             PermissionSetAssignment psa = new PermissionSetAssignment (PermissionSetId = perm.Id, AssigneeId = userId);
             permissionSetAssignList.add(psa);
         }
-        System.debug('associatedPermsetGroup:' + associatedPermsetGroup);
         // PermissionSetGroup's
         for (PermissionSetGroup perm : [SELECT ID FROM PermissionSetGroup  WHERE  DeveloperName IN: associatedPermsetGroup])
         { 

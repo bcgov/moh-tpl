@@ -236,8 +236,7 @@ public class JWTGenerateAuthTest {
         final Map<String,String> config = setupAuthProviderConfig();
 
         final String output = new JWTGenerateAuth().encodeParameters(config,JWTGenerateAuth.ENCODING_JSON);
-        System.debug('encoded jSON: ' + output);
-
+        
         // Assert that we deserialize parse the output as JSON
         Map<String,Object> result = (Map<String,Object>)JSON.deserializeUntyped(output);
  
