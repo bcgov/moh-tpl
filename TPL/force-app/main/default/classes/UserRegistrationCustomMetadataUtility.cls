@@ -109,8 +109,6 @@ public class UserRegistrationCustomMetadataUtility{
         IDP_User_Registration_User_Mapping__mdt foundUserMapping_md = new IDP_User_Registration_User_Mapping__mdt();
         //Create list of Metadata
         List<IDP_User_Registration_Permission_Set__mdt> foundPermissionSet_list = new List<IDP_User_Registration_Permission_Set__mdt>();
-        system.debug('keycloakRole:' + keycloakRole);
-        system.debug('userMappingByRole_map:' + userMappingByRole_map);
         //Find role in userMapping
         if (userMappingByRole_map.containsKey(keycloakRole))
         {
@@ -125,7 +123,6 @@ public class UserRegistrationCustomMetadataUtility{
                 }
             }
         }
-        system.debug('foundPermissionSet_list:' + foundPermissionSet_list );
         return foundPermissionSet_list;
     }
 }

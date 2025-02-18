@@ -85,8 +85,7 @@ public class KeycloakRegistrationHandlerTest {
         null,
         attribmap
       );
-      System.debug('sampleData:' + sampleData);
-
+      
       test.startTest();
       Contact c = new Contact();
       c.Birthdate = Date.newInstance(2001, 12, 9);
