@@ -3,36 +3,9 @@
     <apiVersion>62.0</apiVersion>
     <assignments>
         <description>Populates:
--Facility
--Facility Type</description>
-        <name>Populate_Facility_Facility_Type</name>
-        <label>Populate Facility &amp; Facility Type</label>
-        <locationX>1370</locationX>
-        <locationY>647</locationY>
-        <assignmentItems>
-            <assignToReference>currentRecord.Id</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>$Record.Id</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>currentRecord.Facility__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue></stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Update_current_Record</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <description>Populates:
--Facility
--Facility Type</description>
-        <name>Populate_Facility_Facility_Type1</name>
-        <label>Populate Facility &amp; Facility Type</label>
+-Facility</description>
+        <name>Populate_Facility</name>
+        <label>Populate Facility</label>
         <locationX>1634</locationX>
         <locationY>755</locationY>
         <assignmentItems>
@@ -54,11 +27,69 @@
         </connector>
     </assignments>
     <assignments>
+        <description>Populates:
+-Facility Code</description>
+        <name>Populate_Facility_Code</name>
+        <label>Populate Facility Code</label>
+        <locationX>1898</locationX>
+        <locationY>755</locationY>
+        <assignmentItems>
+            <assignToReference>currentRecord.Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>currentRecord.Site_Code__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Code_from_Facility.Site_Code__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_current_Record</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Populates:
+-Facility
+-Facility Type</description>
+        <name>Populate_Facility_Facility_Type</name>
+        <label>Populate Facility &amp; Facility Type</label>
+        <locationX>1370</locationX>
+        <locationY>647</locationY>
+        <assignmentItems>
+            <assignToReference>currentRecord.Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>currentRecord.Facility__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>currentRecord.Site_Code__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_current_Record</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <description>PHN
 DateId</description>
         <name>Populate_PHN_DateId</name>
         <label>Populate PHN &amp; DateId</label>
-        <locationX>2162</locationX>
+        <locationX>2602</locationX>
         <locationY>431</locationY>
         <assignmentItems>
             <assignToReference>currentRecord.Id</assignToReference>
@@ -130,7 +161,7 @@ DateId
 Total Cost Override</description>
         <name>Populate_Total_Cost_Override_PHN_DateId_Ambulance</name>
         <label>Populate Total Cost Override, PHN &amp; DateId</label>
-        <locationX>1502</locationX>
+        <locationX>1766</locationX>
         <locationY>431</locationY>
         <assignmentItems>
             <assignToReference>currentRecord.Id</assignToReference>
@@ -161,7 +192,7 @@ Total Cost Override</description>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Populate_Facility_from_Site_Code</targetReference>
+            <targetReference>Populate_Facility_and_Facility_Code</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -210,7 +241,7 @@ DateId
 Total Cost Override</description>
         <name>Populate_Total_Cost_Override_PHN_DateId_Pharmacare</name>
         <label>Populate Total Cost Override, PHN &amp; DateId</label>
-        <locationX>1898</locationX>
+        <locationX>2338</locationX>
         <locationY>431</locationY>
         <assignmentItems>
             <assignToReference>currentRecord.Id</assignToReference>
@@ -357,7 +388,7 @@ Service Type</description>
         </assignmentItems>
         <connector>
             <isGoTo>true</isGoTo>
-            <targetReference>Populate_Facility_from_Site_Code</targetReference>
+            <targetReference>Populate_Facility_and_Facility_Code</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -398,7 +429,7 @@ Service Type</description>
         </assignmentItems>
         <connector>
             <isGoTo>true</isGoTo>
-            <targetReference>Populate_Facility_from_Site_Code</targetReference>
+            <targetReference>Populate_Facility_and_Facility_Code</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -444,14 +475,14 @@ Service Type</description>
         </rules>
     </decisions>
     <decisions>
-        <description>This check populates Tier Level, Procedure Code, and Service Type for manual records. For integration records, these fields are populated with values from the external system.</description>
+        <description>This check populates Tear Level, Procedure Code, and Service Type for manual records. For integration records, these fields are populated with values from the external system.</description>
         <name>Check_for_Record_Creation_Source1</name>
         <label>Check for Record Creation Source</label>
         <locationX>908</locationX>
         <locationY>1463</locationY>
         <defaultConnector>
             <isGoTo>true</isGoTo>
-            <targetReference>Populate_Facility_from_Site_Code</targetReference>
+            <targetReference>Populate_Facility_and_Facility_Code</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Integration</defaultConnectorLabel>
         <rules>
@@ -473,7 +504,7 @@ Service Type</description>
     <decisions>
         <name>Check_for_Record_Type</name>
         <label>Check for Record Type</label>
-        <locationX>1106</locationX>
+        <locationX>1326</locationX>
         <locationY>323</locationY>
         <defaultConnector>
             <targetReference>Populate_PHN_DateId</targetReference>
@@ -568,7 +599,7 @@ Service Type</description>
         </rules>
     </decisions>
     <decisions>
-        <description>Populate Tier Level, Procedure Code and Service Type of manual records.</description>
+        <description>Populate Tear Level, Procedure Code and Service Type of manual records.</description>
         <name>Check_Product_Values</name>
         <label>Check Product Values</label>
         <locationX>710</locationX>
@@ -594,17 +625,36 @@ Service Type</description>
         </rules>
     </decisions>
     <decisions>
-        <description>Populate Facility from Facility code for Ambulance and Hospitalization records.</description>
-        <name>Populate_Facility_from_Site_Code</name>
-        <label>Populate Facility from Site Code</label>
-        <locationX>1502</locationX>
+        <description>1- Code will populate Facility
+Facility Code   Facility	
+Value	        Blank
+Is Changed	Is Changed
+Is Changed	Old
+Is Changed	Blank
+
+2- Facility will populate Code
+Facility Code   Facility	
+Blank	        Value
+Old	                Is Changed
+Blank	        Is Changed
+
+3- Both Blank
+Facility Code   Facility	
+Blank	        Blank
+
+1- Code populates Facility when the Facility Code has a valid or changed value, and the Facility is blank or outdated.
+2- Facility populates Code when the Facility has a valid or changed value, and the Facility Code is blank or outdated.
+3- Both Blank if neither Facility Code nor Facility has a value.</description>
+        <name>Populate_Facility_and_Facility_Code</name>
+        <label>Populate Facility and Facility Code</label>
+        <locationX>1766</locationX>
         <locationY>539</locationY>
         <defaultConnector>
-            <targetReference>Get_Facility_from_Site_Code</targetReference>
+            <targetReference>Update_current_Record</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>Facility Code has Value</defaultConnectorLabel>
+        <defaultConnectorLabel>Default</defaultConnectorLabel>
         <rules>
-            <name>Facility_Code_is_blank</name>
+            <name>Both_Blank</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.Site_Code__c</leftValueReference>
@@ -613,10 +663,103 @@ Service Type</description>
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>$Record.Facility__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Populate_Facility_Facility_Type</targetReference>
             </connector>
-            <label>Facility Code is blank</label>
+            <label>Both Blank</label>
+        </rules>
+        <rules>
+            <name>Code_will_populate_Facility</name>
+            <conditionLogic>(1 AND 2) OR ( ( 3 AND 1 ) AND ( ( 4 AND 6 ) OR 5 OR 2 ) )</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Site_Code__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Facility__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Site_Code__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Facility__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Facility__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Facility__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Facility_from_Site_Code</targetReference>
+            </connector>
+            <label>Code will populate Facility</label>
+        </rules>
+        <rules>
+            <name>Facility_will_populate_Code</name>
+            <conditionLogic>(1 AND 2) OR ( ( 4 AND 2 ) OR ( 3 OR 1))</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Site_Code__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Facility__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Site_Code__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Facility__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Code_from_Facility</targetReference>
+            </connector>
+            <label>Facility will populate Code</label>
         </rules>
     </decisions>
     <description>This flow performs the following actions:
@@ -692,13 +835,34 @@ Service Type</description>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <recordLookups>
+        <name>Get_Code_from_Facility</name>
+        <label>Get Code from Facility</label>
+        <locationX>1898</locationX>
+        <locationY>647</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Populate_Facility_Code</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Facility__r.Name</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Account</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>Get_Facility_from_Site_Code</name>
         <label>Get Facility from Site Code</label>
         <locationX>1634</locationX>
         <locationY>647</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Populate_Facility_Facility_Type1</targetReference>
+            <targetReference>Populate_Facility</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -786,12 +950,12 @@ Service Type</description>
     <recordUpdates>
         <name>Update_current_Record</name>
         <label>Update current Record</label>
-        <locationX>1106</locationX>
+        <locationX>1326</locationX>
         <locationY>2297</locationY>
         <inputReference>currentRecord</inputReference>
     </recordUpdates>
     <start>
-        <locationX>980</locationX>
+        <locationX>1200</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Check_for_Record_Type</targetReference>
