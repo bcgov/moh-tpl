@@ -26,5 +26,9 @@
             <controllingFieldValue>Specific</controllingFieldValue>
             <valueName>Acute</valueName>
         </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Specific</controllingFieldValue>
+            <valueName>Rehabilitation Care</valueName>
+        </valueSettings>
     </valueSet>
 </CustomField>
