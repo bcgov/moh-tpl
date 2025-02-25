@@ -92,16 +92,17 @@ export default class DatatableLookup extends LightningElement {
         return fieldName;
     }
 
-    //label of formatted url
     get lookupName() {
-        if(!this.value){
-            return ' ';
+        if (!this.value || this.value === '') {
+            return '';
         }
-        return (this.record.data != null) ?  this.record.data.fields[this.getFieldName()].value : '';
+        return (this.record.data?.fields[this.getFieldName()]?.value) || '';
     }
 
     //value of formatted url
     get lookupValue() {
-        return (this.record.data != null && this.record.data.fields[this.getFieldName()].value) ? '/' + this.value : '';
+        return (this.value && this.record.data?.fields[this.getFieldName()]?.value)
+            ? '/' + this.value
+            : '';
     }
 }

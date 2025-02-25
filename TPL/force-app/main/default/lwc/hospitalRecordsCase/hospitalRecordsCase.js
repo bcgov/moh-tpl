@@ -562,47 +562,30 @@ export default class HospitalRecordsCase extends LightningElement {
 
       //Captures the changed lookup value and updates the records list variable.
       handleValueChange(event) {
-        
         event.stopPropagation();
-        let dataRecieved = event.detail.data;
-        let updatedItem;
-        if(!dataRecieved.value){
-            dataRecieved.value ='';
-        }
-        switch (dataRecieved.label) {
-            case 'Account':
-                updatedItem = {
-                    Id: dataRecieved.context,
-                    Facility__c: dataRecieved.value,
-                    
-                };
-                // Set the cell edit class to edited to mark it as value changed.
-                
-                this.setClassesOnData(
-                    dataRecieved.context,
-                    'accountNameClass',
-                    'slds-cell-edit slds-is-edited'
-                );
-                break;
-            case 'Product':
-                updatedItem = {
-                    Id:dataRecieved.context,
-                    Product2:dataRecieved.value,
-                }
-                this.setClassesOnData(
-                    dataRecieved.context,
-                    'accountNameClass',
-                    'slds-cell-edit slds-is-edited'
-                );
-                break;
-            default:
-                this.setClassesOnData(dataRecieved.context, '', '');
-                
-                break;
-        }
-        this.updateDraftValues(updatedItem);
-       // this.updateDataValues(updatedItem);
+        let dataReceived = event.detail.data;
+        
+        let updatedField = dataReceived.label === 'Account' ? 'Facility__c' : 'Service_Provided_by_Facility__c';
+    
+        // Update recordsToDisplay in place
+        this.recordsToDisplay = this.recordsToDisplay.map(record => {
+            if (record.Id === dataReceived.context) {
+                return { ...record, [updatedField]: dataReceived.value || '' }; 
+            }
+            return record;
+        });
+    
+        // Update draftValues to track changes
+        this.updateDraftValues({
+            Id: dataReceived.context,
+            [updatedField]: dataReceived.value || ''
+        });
+    
+        // Force UI refresh
+        this.recordsToDisplay = [...this.recordsToDisplay];
     }
+    
+
     handleCellChange(event){
         this.showSection = true;
         var siteCodeIds = [];
@@ -631,6 +614,9 @@ export default class HospitalRecordsCase extends LightningElement {
                 }
                 if(event.detail.draftValues[i].CCI_Level__c){
                     this.draftValues[index].CCI_Level__c = event.detail.draftValues[i].CCI_Level__c;
+                }
+                if(event.detail.draftValues[i].Site_Code__c){
+                    this.draftValues[index].Site_Code__c = event.detail.draftValues[i].Site_Code__c;
                 }
                 if(event.detail.draftValues[i].Facility__c){
                     this.draftValues[index].Facility__c = event.detail.draftValues[i].Facility__c;
@@ -676,6 +662,7 @@ export default class HospitalRecordsCase extends LightningElement {
                     Description_of_Incident__c:event.detail.draftValues[i].Description_of_Incident__c,
                     Intervention_Code_CCI__c: event.detail.draftValues[i].Intervention_Code_CCI__c,
                     CCI_Level__c:event.detail.draftValues[i].CCI_Level__c,
+                    Site_Code__c:event.detail.draftValues[i].Site_Code__c,
                     Facility__c: event.detail.draftValues[i].Facility__c,
                     Date_of_Admission__c: event.detail.draftValues[i].Date_of_Admission__c,
                     Date_of_Discharge__c: event.detail.draftValues[i].Date_of_Discharge__c,
@@ -710,13 +697,27 @@ export default class HospitalRecordsCase extends LightningElement {
     handleCancel(event) {
         event.preventDefault();
         this.showSection = false;
+    
+        // Reset records to last saved state
         this.records = JSON.parse(JSON.stringify(this.lastSavedData));
-        this.handleWindowOnclick('reset');
+        this.recordsToDisplay = JSON.parse(JSON.stringify(this.lastSavedData));
+    
+        // Ensure lookup fields are properly reset
+        this.recordsToDisplay.forEach(record => {
+            record.Facility__c = this.lastSavedData.find(r => r.Id === record.Id)?.Facility__c || '';
+            record.Service_Provided_by_Facility__c = this.lastSavedData.find(r => r.Id === record.Id)?.Service_Provided_by_Facility__c || '';
+        });
+    
+        // Clear drafts to prevent UI holding onto old edits
         this.draftValues = [];
-        return this.onLoad();
+    
+        // Ensure UI refresh
+        this.recordsToDisplay = [...this.recordsToDisplay];
+    
+        // Reset lookup UI interactions
+        this.handleWindowOnclick('reset');
     }
-
-
+    
     handleEdit(event) {
         event.preventDefault();
         this.showSection = true;
@@ -752,15 +753,14 @@ export default class HospitalRecordsCase extends LightningElement {
     }
 
     updateDraftValues(updateItem) {
-       
         let draftValueChanged = false;
         let copyDraftValues = JSON.parse(JSON.stringify(this.draftValues));
-       
+    
         copyDraftValues.forEach((item) => {
             if (item.Id === updateItem.Id) {
                 for (let field in updateItem) {
-                    item[field] = updateItem[field];
-                    
+                    // Allow setting blank values explicitly
+                    item[field] = updateItem[field] || '';
                 }
                 draftValueChanged = true;
             }
@@ -855,14 +855,12 @@ export default class HospitalRecordsCase extends LightningElement {
        
     }
     checkIfUnderUpdate(){
-        console.log('called');
        
             findIfUnderUpdate({userId:userId})
             .then(result=>{
                 this.updateHappening = result;
                 this.showMassUpdateSection = !result;
                 if(result){
-                    console.log('yes');
                     setTimeout(() => { this.checkIfUnderUpdate();}, 5000);
                     
                 }
@@ -948,8 +946,8 @@ export default class HospitalRecordsCase extends LightningElement {
                 if(selected[i].Number_of_Days__c != this.draftValues[index].Number_of_Days__c){
                     selected[i].Number_of_Days__c = this.draftValues[index].Number_of_Days__c;
                 }
-                if(selected[i].Service_Provided_by_Facility__c != this.draftValues[index].Product2){
-                    selected[i].Service_Provided_by_Facility__c = this.draftValues[index].Product2;
+                if(selected[i].Service_Provided_by_Facility__c != this.draftValues[index].Service_Provided_by_Facility__c){
+                    selected[i].Service_Provided_by_Facility__c = this.draftValues[index].Service_Provided_by_Facility__c;
                 }
                 if(selected[i].Service_Type2__c!= this.draftValues[index].Service_Type2__c){
                     selected[i].Service_Type2__c = this.draftValues[index].Service_Type2__c;

@@ -232,14 +232,11 @@ export default class AmbulanceRecordsAccount extends LightningElement {
         }
 
     checkIfUnderUpdate(){
-        console.log('called');
-       
             findIfUnderUpdate({userId:userId})
             .then(result=>{
                 this.updateHappening = result;
                 this.showMassUpdateSection = !result;
                 if(result){
-                    console.log('yes');
                     setTimeout(() => { this.checkIfUnderUpdate();}, 5000);
                     
                 }

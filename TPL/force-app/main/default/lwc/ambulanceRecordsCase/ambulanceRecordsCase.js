@@ -297,12 +297,10 @@ export default class AmbulanceRecordsCase extends LightningElement {
     }
     changeCostReview(event){
         this.costReview = event.target.checked;
-        console.log(this.costReview);
         
     }
     changeCostInclude(event){
         this.costInclude = event.target.checked;
-        console.log(this.costInclude);
         
     }
     checkIfUnderUpdate(){
@@ -447,35 +445,26 @@ export default class AmbulanceRecordsCase extends LightningElement {
       //Captures the changed lookup value and updates the records list variable.
       handleValueChange(event) {
         event.stopPropagation();
-  
-        let dataRecieved = event.detail.data;
-        let updatedItem;
-       
-       if(!dataRecieved.value){
-            dataRecieved.value ='';
-        }
-        switch (dataRecieved.label) {
-            case 'Account':
-                updatedItem = {
-                    Id: dataRecieved.context,
-                    Facility__c: dataRecieved.value,
-                    
-                };
-                // Set the cell edit class to edited to mark it as value changed.
-                this.setClassesOnData(
-                    dataRecieved.context,
-                    'accountNameClass',
-                    'slds-cell-edit slds-is-edited'
-                );
-                break;
-            default:
-                this.setClassesOnData(dataRecieved.context, '', '');
-                break;
-        }
+        let dataReceived = event.detail.data;
+    
+        // Ensure blank values are handled correctly
+        let updatedItem = {
+            Id: dataReceived.context,
+            Facility__c: dataReceived.value || ''  // Fix: Ensure blank values are stored properly
+        };
+    
+        // Update recordsToDisplay
+        this.recordsToDisplay = this.recordsToDisplay.map(record => 
+            record.Id === updatedItem.Id ? { ...record, ...updatedItem } : record
+        );
+    
+        // Update draftValues
         this.updateDraftValues(updatedItem);
-       // this.updateDataValues(updatedItem);
-    }
-     handleEdit(event) {
+    
+        // Force UI refresh
+        this.recordsToDisplay = [...this.recordsToDisplay];
+    }     
+    handleEdit(event) {
         event.preventDefault();
         this.showSection = true;
         let dataRecieved = event.detail.data;
@@ -527,6 +516,13 @@ export default class AmbulanceRecordsCase extends LightningElement {
                 if(event.detail.draftValues[i].Source_System_ID__c) {
                     this.draftValues[index].Source_System_ID__c = event.detail.draftValues[i].Source_System_ID__c;
                 }
+                if(event.detail.draftValues[i].Facility__c){
+                    this.draftValues[index].Facility__c = event.detail.draftValues[i].Facility__c;
+                }
+                if(event.detail.draftValues[i].Site_Code__c)
+                {
+                    this.draftValues[index].Site_Code__c = event.detail.draftValues[i].Site_Code__c;
+                }
         
             }else{
                 var obj ={
@@ -539,6 +535,8 @@ export default class AmbulanceRecordsCase extends LightningElement {
                     Total_Cost_Override__c:event.detail.draftValues[i].Total_Cost_Override__c,
                     Fixed_Wing_Helicopter__c:event.detail.draftValues[i].Fixed_Wing_Helicopter__c,
                     Source_System_ID__c: event.detail.draftValues[i].Source_System_ID__c,
+                    Facility__c: event.detail.draftValues[i].Facility__c,
+                    Site_Code__c : event.detail.draftValues[i].Site_Code__c
                 };
                
                 this.draftValues.push(obj);
@@ -561,11 +559,25 @@ export default class AmbulanceRecordsCase extends LightningElement {
     handleCancel(event) {
         event.preventDefault();
         this.showSection = false;
+    
+        // Reset to last saved state
         this.records = JSON.parse(JSON.stringify(this.lastSavedData));
-        this.handleWindowOnclick('reset');
+        this.recordsToDisplay = JSON.parse(JSON.stringify(this.lastSavedData));
+    
+        // Ensure Facility__c is restored properly
+        this.recordsToDisplay.forEach(record => {
+            record.Facility__c = this.lastSavedData.find(r => r.Id === record.Id)?.Facility__c || '';
+        });
+    
+        // Clear draft values
         this.draftValues = [];
-        handleRefresh();
-    }
+    
+        // Force UI refresh
+        this.recordsToDisplay = [...this.recordsToDisplay];
+    
+        // Reset lookup UI interactions
+        this.handleWindowOnclick('reset');
+    }   
 
     handleEdit(event) {
         event.preventDefault();
