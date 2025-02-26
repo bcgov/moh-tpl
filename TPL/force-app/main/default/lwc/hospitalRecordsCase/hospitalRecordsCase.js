@@ -564,128 +564,84 @@ export default class HospitalRecordsCase extends LightningElement {
       handleValueChange(event) {
         event.stopPropagation();
         let dataReceived = event.detail.data;
-        
+    
         let updatedField = dataReceived.label === 'Account' ? 'Facility__c' : 'Service_Provided_by_Facility__c';
     
-        // Update recordsToDisplay in place
-        this.recordsToDisplay = this.recordsToDisplay.map(record => {
-            if (record.Id === dataReceived.context) {
-                return { ...record, [updatedField]: dataReceived.value || '' }; 
-            }
-            return record;
-        });
-    
-        // Update draftValues to track changes
-        this.updateDraftValues({
+        let updatedItem = {
             Id: dataReceived.context,
-            [updatedField]: dataReceived.value || ''
-        });
+            [updatedField]: dataReceived.value || ''  // Ensure blank values are handled correctly
+        };
+    
+        // Update recordsToDisplay
+        this.recordsToDisplay = this.recordsToDisplay.map(record =>
+            record.Id === updatedItem.Id ? { ...record, ...updatedItem } : record
+        );
+    
+        // Ensure blank values get stored in draftValues
+        this.updateDraftValues(updatedItem);
     
         // Force UI refresh
         this.recordsToDisplay = [...this.recordsToDisplay];
     }
     
-
-    handleCellChange(event){
+    handleCellChange(event) {
         this.showSection = true;
         var siteCodeIds = [];
-        for(let i = 0 ; i < event.detail.draftValues.length;i++){
-            let index = this.draftValues.findIndex(e=>e.Id === event.detail.draftValues[i].Id);
-            siteCodeIds.push({id:event.detail.draftValues[i].Id,siteCode:event.detail.draftValues[i].Site_Code__c});
-            if(index > -1 ){
-                if(event.detail.draftValues[i].Cost_Include__c != null){
-                    this.draftValues[index].Cost_Include__c = event.detail.draftValues[i].Cost_Include__c;
-                }
-                if(event.detail.draftValues[i].Cost_Review__c != null){
-                    this.draftValues[index].Cost_Review__c = event.detail.draftValues[i].Cost_Review__c;
-                }
-                
-                if(event.detail.draftValues[i].Date_of_Service__c){
-                    this.draftValues[index].Date_of_Service__c = event.detail.draftValues[i].Date_of_Service__c;
-                }
-                if(event.detail.draftValues[i].Location_of_Incident__c){
-                    this.draftValues[index].Location_of_Incident__c = event.detail.draftValues[i].Location_of_Incident__c;
-                }
-                if(event.detail.draftValues[i].Description_of_Incident__c){
-                    this.draftValues[index].Description_of_Incident__c = event.detail.draftValues[i].Description_of_Incident__c;
-                }
-                if(event.detail.draftValues[i].Intervention_Code_CCI__c){
-                    this.draftValues[index].Intervention_Code_CCI__c = event.detail.draftValues[i].Intervention_Code_CCI__c;
-                }
-                if(event.detail.draftValues[i].CCI_Level__c){
-                    this.draftValues[index].CCI_Level__c = event.detail.draftValues[i].CCI_Level__c;
-                }
-                if(event.detail.draftValues[i].Site_Code__c){
-                    this.draftValues[index].Site_Code__c = event.detail.draftValues[i].Site_Code__c;
-                }
-                if(event.detail.draftValues[i].Facility__c){
-                    this.draftValues[index].Facility__c = event.detail.draftValues[i].Facility__c;
-                }
-                if(event.detail.draftValues[i].Date_of_Admission__c){
-                    this.draftValues[index].Date_of_Admission__c = event.detail.draftValues[i].Date_of_Admission__c;
-                }
-                if(event.detail.draftValues[i].Date_of_Discharge__c){
-                    this.draftValues[index].Date_of_Discharge__c = event.detail.draftValues[i].Date_of_Discharge__c;
-                }
-                if(event.detail.draftValues[i].Number_of_Days__c){
-                    this.draftValues[index].Number_of_Days__c = event.detail.draftValues[i].Number_of_Days__c;
-                }
-                if(event.detail.draftValues[i].Service_Provided_by_Facility__c){
-                    this.draftValues[index].Service_Provided_by_Facility__c = event.detail.draftValues[i].Service_Provided_by_Facility__c;
-                }
-                if(event.detail.draftValues[i].Service_Type2__c){
-                    this.draftValues[index].Service_Type2__c = event.detail.draftValues[i].Service_Type2__c;
-                }
-                if(event.detail.draftValues[i].Standard_Daily_Rate__c){
-                    this.draftValues[index].Standard_Daily_Rate__c = event.detail.draftValues[i].Standard_Daily_Rate__c;
-                }
-                if(event.detail.draftValues[i].Total_Costs_Standard__c){
-                    this.draftValues[index].Total_Costs_Standard__c = event.detail.draftValues[i].Total_Costs_Standard__c;
-                }
-                if(event.detail.draftValues[i].Total_Cost_Override__c){
-                    this.draftValues[index].Total_Cost_Override__c = event.detail.draftValues[i].Total_Cost_Override__c;
-                }
-                if(event.detail.draftValues[i].Diagnostic_Treatment_Service2__c){
-                    this.draftValues[index].Diagnostic_Treatment_Service2__c = event.detail.draftValues[i].Diagnostic_Treatment_Service2__c;
-                }
-                if(event.detail.draftValues[i].Source_System_ID__c){
-                    this.draftValues[index].Source_System_ID__c = event.detail.draftValues[i].Source_System_ID__c;
-                }
-                 
-            }else{
-                var obj ={
-                    Id : event.detail.draftValues[i].Id,
-                    Cost_Review__c:event.detail.draftValues[i].Cost_Review__c,
-                    Cost_Include__c:event.detail.draftValues[i].Cost_Include__c,
-                    Date_of_Service__c:event.detail.draftValues[i].Date_of_Service__c,
-                    Location_of_Incident__c:event.detail.draftValues[i].Location_of_Incident__c,
-                    Description_of_Incident__c:event.detail.draftValues[i].Description_of_Incident__c,
-                    Intervention_Code_CCI__c: event.detail.draftValues[i].Intervention_Code_CCI__c,
-                    CCI_Level__c:event.detail.draftValues[i].CCI_Level__c,
-                    Site_Code__c:event.detail.draftValues[i].Site_Code__c,
-                    Facility__c: event.detail.draftValues[i].Facility__c,
-                    Date_of_Admission__c: event.detail.draftValues[i].Date_of_Admission__c,
-                    Date_of_Discharge__c: event.detail.draftValues[i].Date_of_Discharge__c,
-                    Number_of_Days__c: event.detail.draftValues[i].Number_of_Days__c,
-                    Service_Provided_by_Facility__c: event.detail.draftValues[i].Service_Provided_by_Facility__c,
-                    Service_Type2__c: event.detail.draftValues[i].Service_Type2__c,
-                    Standard_Daily_Rate__c: event.detail.draftValues[i].Standard_Daily_Rate__c,
-                    Total_Costs_Standard__c: event.detail.draftValues[i].Total_Costs_Standard__c,
-                    Total_Cost_Override__c: event.detail.draftValues[i].Total_Cost_Override__c,
-                    Diagnostic_Treatment_Service2__c: event.detail.draftValues[i].Diagnostic_Treatment_Service2__c,
-                    Source_System_ID__c: event.detail.draftValues[i].Source_System_ID__c,
-                };
-                this.draftValues.push(obj);
+    
+        event.detail.draftValues.forEach(draft => {
+            let index = this.draftValues.findIndex(e => e.Id === draft.Id);
+    
+            // Store Site_Code__c changes separately
+            if (draft.Site_Code__c !== undefined) {
+                siteCodeIds.push({ id: draft.Id, siteCode: draft.Site_Code__c });
             }
+    
+            if (index > -1) {
+                Object.keys(draft).forEach(field => {
+                    if (field !== 'Facility__c' && field !== 'Service_Provided_by_Facility__c') {
+                        // Prevent lookup fields from being unintentionally erased
+                        this.draftValues[index][field] = draft[field];
+                    }
+                });
+            } else {
+                let newDraft = { ...draft };
+                delete newDraft.Facility__c;  // Prevent unwanted clearing
+                delete newDraft.Service_Provided_by_Facility__c;
+                this.draftValues.push(newDraft);
+            }
+        });
+    
+        // Ensure lookup fields are tracked correctly
+        this.recordsToDisplay = this.recordsToDisplay.map(record => {
+            let matchingDraft = this.draftValues.find(d => d.Id === record.Id);
+            if (matchingDraft) {
+                return { ...record, ...matchingDraft };
+            }
+            return record;
+        });
+    
+        this.recordsToDisplay = [...this.recordsToDisplay]; // Force UI update
+    
+        // Fetch updated Facility__c only when Site_Code__c is changed
+        if (siteCodeIds.length > 0) {
+            getFacilityBySiteCode({ siteCodeIds: siteCodeIds })
+                .then(response => {
+                    response.forEach(updatedRecord => {
+                        let recordIndex = this.recordsToDisplay.findIndex(r => r.Id === updatedRecord.Id);
+                        if (recordIndex !== -1) {
+                            this.recordsToDisplay[recordIndex].Facility__c = updatedRecord.Facility__c;
+                        }
+                    });
+                    this.recordsToDisplay = [...this.recordsToDisplay]; // Refresh UI
+                })
+                .catch(error => {
+                    console.error("Error fetching facility by site code:", error);
+                });
         }
-        getFacilityBySiteCode({siteCodeIds:siteCodeIds}).then(response=>{
-            
-          
-        }).catch(error=>{
-            
-        })
-     
     }
+    
+
+  
 
     handleChange(event) {
         event.preventDefault();
@@ -698,25 +654,24 @@ export default class HospitalRecordsCase extends LightningElement {
         event.preventDefault();
         this.showSection = false;
     
-        // Reset records to last saved state
+        // Reset to last saved state
         this.records = JSON.parse(JSON.stringify(this.lastSavedData));
         this.recordsToDisplay = JSON.parse(JSON.stringify(this.lastSavedData));
     
-        // Ensure lookup fields are properly reset
+        // Ensure Facility__c and Service_Provided_by_Facility__c are restored properly
         this.recordsToDisplay.forEach(record => {
             record.Facility__c = this.lastSavedData.find(r => r.Id === record.Id)?.Facility__c || '';
             record.Service_Provided_by_Facility__c = this.lastSavedData.find(r => r.Id === record.Id)?.Service_Provided_by_Facility__c || '';
         });
     
-        // Clear drafts to prevent UI holding onto old edits
         this.draftValues = [];
     
-        // Ensure UI refresh
         this.recordsToDisplay = [...this.recordsToDisplay];
     
         // Reset lookup UI interactions
         this.handleWindowOnclick('reset');
     }
+    
     
     handleEdit(event) {
         event.preventDefault();
@@ -898,136 +853,50 @@ export default class HospitalRecordsCase extends LightningElement {
         
         
     }
-    handleSave(event){
+    handleSave(event) {
         event.preventDefault();
         this.showSpinner = true;
-        var el = this.template.querySelector('c-custom-data-table');
-        var selected = el.getSelectedRows();
-        selected = this.draftValues;
-
-        for(var i =0; i < selected.length;i++){ 
-          
-            let index = this.draftValues.findIndex(e=>e.Id === selected[i].Id);
-            if(index > -1 ){
-                if( selected[i].Cost_Include__c != this.draftValues[index].Cost_Include__c){
-                    selected[i].Cost_Include__c = this.draftValues[index].Cost_Include__c;
-                }
-                if(selected[i].Cost_Review__c != this.draftValues[index].Cost_Review__c){ 
-                    selected[i].Cost_Review__c = this.draftValues[index].Cost_Review__c;
-                }
-                
-                if(selected[i].Date_of_Service__c != this.draftValues[index].Date_of_Service__c){
-                    selected[i].Date_of_Service__c = this.draftValues[index].Date_of_Service__c;
-                }
-                if(selected[i].Location_of_Incident__c != this.draftValues[index].Location_of_Incident__c){
-                    selected[i].Location_of_Incident__c = this.draftValues[index].Location_of_Incident__c;
-                }
-                if(selected[i].Description_of_Incident__c != this.draftValues[index].Description_of_Incident__c){
-                    selected[i].Description_of_Incident__c = this.draftValues[index].Description_of_Incident__c;
-                }
-                if(selected[i].Intervention_Code_CCI__c != this.draftValues[index].Intervention_Code_CCI__c){
-                    selected[i].Intervention_Code_CCI__c = this.draftValues[index].Intervention_Code_CCI__c;    
-                }
-                if(selected[i].CCI_Level__c != this.draftValues[index].CCI_Level__c){
-                    selected[i].CCI_Level__c = this.draftValues[index].CCI_Level__c;
-                }
-                if(selected[i].Site_Code__c != this.draftValues[index].Site_Code__c){
-                    selected[i].Site_Code__c = this.draftValues[index].Site_Code__c;
-                }
-                if(selected[i].Facility__c != this.draftValues[index].Facility__c){
-                    selected[i].Facility__c = this.draftValues[index].Facility__c;
-                }
-                if(selected[i].Date_of_Admission__c != this.draftValues[index].Date_of_Admission__c){
-                    selected[i].Date_of_Admission__c = this.draftValues[index].Date_of_Admission__c;
-                }
-                if(selected[i].Date_of_Discharge__c != this.draftValues[index].Date_of_Discharge__c){
-                    selected[i].Date_of_Discharge__c = this.draftValues[index].Date_of_Discharge__c;
-                }
-                if(selected[i].Number_of_Days__c != this.draftValues[index].Number_of_Days__c){
-                    selected[i].Number_of_Days__c = this.draftValues[index].Number_of_Days__c;
-                }
-                if(selected[i].Service_Provided_by_Facility__c != this.draftValues[index].Service_Provided_by_Facility__c){
-                    selected[i].Service_Provided_by_Facility__c = this.draftValues[index].Service_Provided_by_Facility__c;
-                }
-                if(selected[i].Service_Type2__c!= this.draftValues[index].Service_Type2__c){
-                    selected[i].Service_Type2__c = this.draftValues[index].Service_Type2__c;
-                }
-                if(selected[i].Standard_Daily_Rate__c != this.draftValues[index].Standard_Daily_Rate__c){
-                    selected[i].Standard_Daily_Rate__c = this.draftValues[index].Standard_Daily_Rate__c;
-                }
-                if(selected[i].Total_Costs_Standard__c != this.draftValues[index].Total_Costs_Standard__c) {
-                    selected[i].Total_Costs_Standard__c = this.draftValues[index].Total_Costs_Standard__c;
-                }
-                if(selected[i].Total_Cost_Override__c != this.draftValues[index].Total_Cost_Override__c){
-                    selected[i].Total_Cost_Override__c = this.draftValues[index].Total_Cost_Override__c;
-                }
-                if(selected[i].Diagnostic_Treatment_Service2__c != this.draftValues[index].Diagnostic_Treatment_Service2__c){
-                    selected[i].Diagnostic_Treatment_Service2__c = this.draftValues[index].Diagnostic_Treatment_Service2__c;
-                } 
-                if(selected[i].Source_System_ID__c != this.draftValues[index].Source_System_ID__c){
-                    selected[i].Source_System_ID__c = this.draftValues[index].Source_System_ID__c;
-                }
-                
-            }
-        } 
-        saveDraftValues({data: selected, recordDisplay: this.recordsToDisplay, recordType: 'Hospitalization'})
-        .then((data,error) => {
-            this.updateMessage = data.actionMessage;
-            this.showSection = false;
-            this.draftValues = [];  
-            this.recordsToDisplay = data.updatedRecords;
-
-            if(this.updateMessage){
-                this.updateMessage = this.updateMessage.replace(/\r\n/g, "<br />");
-                this.showErrorMessage = true;
-            }
-            
-            if(data.passedResult == 'Passed'){
-              
-                this.dispatchEvent(
-                    new ShowToastEvent({
+    
+        let finalDrafts = this.draftValues.map(draft => ({
+            Id: draft.Id,
+            Site_Code__c: draft.Site_Code__c !== undefined ? draft.Site_Code__c : undefined,  
+            Facility__c: draft.Facility__c !== undefined ? draft.Facility__c : undefined, 
+            Service_Provided_by_Facility__c: draft.Service_Provided_by_Facility__c !== undefined ? draft.Service_Provided_by_Facility__c : undefined, 
+            ...draft
+        }));
+    
+        saveDraftValues({ data: finalDrafts, recordDisplay: this.recordsToDisplay, recordType: 'Hospitalization' })
+            .then(data => {
+                this.updateMessage = data.actionMessage;
+                this.showSection = false;
+                this.draftValues = [];
+                this.recordsToDisplay = data.updatedRecords;
+    
+                if (data.passedResult === 'Passed') {
+                    this.dispatchEvent(new ShowToastEvent({
                         title: 'Success',
                         message: 'HealthCare Cost Hospitalization record(s) updated successfully',
                         variant: 'success'
-                    })
-                );    
-                             
-            }
-            else if(data.passedResult == 'Failed' || data.passedResult == null){
-                
-                this.dispatchEvent(
-                    new ShowToastEvent({
+                    }));
+                } else {
+                    this.dispatchEvent(new ShowToastEvent({
                         title: 'Error',
                         message: 'Please review the error message shown below and try again!',
                         variant: 'error'
-                    })
-                );   
-            } 
-            else if(data.passedResult == 'Partial Success'){
-            
-                this.dispatchEvent(
-                    new ShowToastEvent({
-                        title: 'Warning',
-                        message: 'Few Healthcare Cost record(s) updated successfully. Errors on remaining shown below!',
-                        variant: 'Warning'
-                    })
-                );
-            }   
-            if(error){
-              
-                this.dispatchEvent(
-                    new ShowToastEvent({
-                        title: 'Error',
-                        message: error,
-                        variant: 'error'
-                    })
-                ); 
-            }
-            return this.refresh();
-            }). catch(error =>{
-
+                    }));
+                }
+    
+                return this.refresh();
             })
-        }
+            .catch(error => {
+                this.dispatchEvent(new ShowToastEvent({
+                    title: 'Error',
+                    message: 'An issue occurred while saving. Please contact support.',
+                    variant: 'error'
+                }));
+            });
+    }
+    
     
     handleRefresh(){
         this.onLoad();
