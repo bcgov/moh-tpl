@@ -297,12 +297,10 @@ export default class AmbulanceRecordsCase extends LightningElement {
     }
     changeCostReview(event){
         this.costReview = event.target.checked;
-        console.log(this.costReview);
         
     }
     changeCostInclude(event){
         this.costInclude = event.target.checked;
-        console.log(this.costInclude);
         
     }
     checkIfUnderUpdate(){
@@ -447,35 +445,27 @@ export default class AmbulanceRecordsCase extends LightningElement {
       //Captures the changed lookup value and updates the records list variable.
       handleValueChange(event) {
         event.stopPropagation();
-  
-        let dataRecieved = event.detail.data;
-        let updatedItem;
-       
-       if(!dataRecieved.value){
-            dataRecieved.value ='';
+        let dataReceived = event.detail.data;
+    
+        if (dataReceived.label === 'Account') {
+            let updatedItem = {
+                Id: dataReceived.context,
+                Facility__c: dataReceived.value || ''
+            };
+    
+            // Update recordsToDisplay
+            this.recordsToDisplay = this.recordsToDisplay.map(record =>
+                record.Id === updatedItem.Id ? { ...record, ...updatedItem } : record
+            );
+    
+            this.updateDraftValues(updatedItem);
+    
+            // Force UI refresh
+            this.recordsToDisplay = [...this.recordsToDisplay];
         }
-        switch (dataRecieved.label) {
-            case 'Account':
-                updatedItem = {
-                    Id: dataRecieved.context,
-                    Facility__c: dataRecieved.value,
-                    
-                };
-                // Set the cell edit class to edited to mark it as value changed.
-                this.setClassesOnData(
-                    dataRecieved.context,
-                    'accountNameClass',
-                    'slds-cell-edit slds-is-edited'
-                );
-                break;
-            default:
-                this.setClassesOnData(dataRecieved.context, '', '');
-                break;
-        }
-        this.updateDraftValues(updatedItem);
-       // this.updateDataValues(updatedItem);
     }
-     handleEdit(event) {
+    
+    handleEdit(event) {
         event.preventDefault();
         this.showSection = true;
         let dataRecieved = event.detail.data;
@@ -493,64 +483,59 @@ export default class AmbulanceRecordsCase extends LightningElement {
                 break;
         };
     }
-    handleCellChange(event){
-    
-        var siteCodeIds = [];
+    handleCellChange(event) {
         this.showSection = true;
-        for(let i = 0 ; i < event.detail.draftValues.length;i++){
-            siteCodeIds.push({id:event.detail.draftValues[i].Id,siteCode:event.detail.draftValues[i].Site_Code__c});
-            let index = this.draftValues.findIndex(e=>e.Id === event.detail.draftValues[i].Id);
-            if(index > -1 ){
-                if(event.detail.draftValues[i].Cost_Include__c != null){
-                    this.draftValues[index].Cost_Include__c = event.detail.draftValues[i].Cost_Include__c;
-                }
-                if(event.detail.draftValues[i].Cost_Review__c != null){
-                    this.draftValues[index].Cost_Review__c = event.detail.draftValues[i].Cost_Review__c;
-                }
-                
-                if(event.detail.draftValues[i].Date_of_Service__c){
-                    this.draftValues[index].Date_of_Service__c = event.detail.draftValues[i].Date_of_Service__c;
-                }
-                if(event.detail.draftValues[i].Location_Responded__c){
-                    this.draftValues[index].Location_Responded__c = event.detail.draftValues[i].Location_Responded__c;
-                }
-               
-                if(event.detail.draftValues[i].Basic_Amount__c){
-                    this.draftValues[index].Basic_Amount__c = event.detail.draftValues[i].Basic_Amount__c;
-                }
-                if(event.detail.draftValues[i].Total_Cost_Override__c){
-                    this.draftValues[index].Total_Cost_Override__c = event.detail.draftValues[i].Total_Cost_Override__c;
-                }
-                if(event.detail.draftValues[i].Fixed_Wing_Helicopter__c){
-                    this.draftValues[index].Fixed_Wing_Helicopter__c = event.detail.draftValues[i].Fixed_Wing_Helicopter__c;
-                }
-                if(event.detail.draftValues[i].Source_System_ID__c) {
-                    this.draftValues[index].Source_System_ID__c = event.detail.draftValues[i].Source_System_ID__c;
-                }
-        
-            }else{
-                var obj ={
-                    Id : event.detail.draftValues[i].Id,
-                    Cost_Review__c:event.detail.draftValues[i].Cost_Review__c,
-                    Cost_Include__c:event.detail.draftValues[i].Cost_Include__c,
-                    Date_of_Service__c:event.detail.draftValues[i].Date_of_Service__c,
-                    Location_Responded__c:event.detail.draftValues[i].Location_Responded__c,
-                    Basic_Amount__c:event.detail.draftValues[i].Basic_Amount__c,
-                    Total_Cost_Override__c:event.detail.draftValues[i].Total_Cost_Override__c,
-                    Fixed_Wing_Helicopter__c:event.detail.draftValues[i].Fixed_Wing_Helicopter__c,
-                    Source_System_ID__c: event.detail.draftValues[i].Source_System_ID__c,
-                };
-               
-                this.draftValues.push(obj);
+        var siteCodeIds = [];
+    
+        event.detail.draftValues.forEach(draft => {
+            let index = this.draftValues.findIndex(e => e.Id === draft.Id);
+    
+            if (draft.Site_Code__c !== undefined) {
+                siteCodeIds.push({ id: draft.Id, siteCode: draft.Site_Code__c });
             }
-            
+    
+            if (index > -1) {
+                Object.keys(draft).forEach(field => {
+                    if (field !== 'Facility__c') {  // Prevent Facility__c from being erased incorrectly
+                        this.draftValues[index][field] = draft[field];
+                    }
+                });
+            } else {
+                let newDraft = { ...draft };
+                delete newDraft.Facility__c;  // Prevent Facility__c from being erased incorrectly
+                this.draftValues.push(newDraft);
+            }
+        });
+    
+        // Ensure lookup field is also tracked
+        this.recordsToDisplay = this.recordsToDisplay.map(record => {
+            let matchingDraft = this.draftValues.find(d => d.Id === record.Id);
+            if (matchingDraft) {
+                return { ...record, ...matchingDraft };
+            }
+            return record;
+        });
+    
+        this.recordsToDisplay = [...this.recordsToDisplay]; // Force UI update
+    
+        // Fetch updated Facility__c only when Site_Code__c is changed
+        if (siteCodeIds.length > 0) {
+            getFacilityBySiteCode({ siteCodeIds: siteCodeIds })
+                .then(response => {
+                    response.forEach(updatedRecord => {
+                        let recordIndex = this.recordsToDisplay.findIndex(r => r.Id === updatedRecord.Id);
+                        if (recordIndex !== -1) {
+                            this.recordsToDisplay[recordIndex].Facility__c = updatedRecord.Facility__c;
+                        }
+                    });
+                    this.recordsToDisplay = [...this.recordsToDisplay]; // Refresh UI
+                })
+                .catch(error => {
+                    console.error("Error fetching facility by site code:", error);
+                });
         }
-
-        getFacilityBySiteCode({siteCodeIds:siteCodeIds}).then(response=>{       
-        }).catch(error=>{
-        })
     }
-
+    
     handleChange(event) {
         event.preventDefault();
        this.Facility__c = event.target.value;
@@ -561,11 +546,25 @@ export default class AmbulanceRecordsCase extends LightningElement {
     handleCancel(event) {
         event.preventDefault();
         this.showSection = false;
+    
+        // Reset to last saved state
         this.records = JSON.parse(JSON.stringify(this.lastSavedData));
-        this.handleWindowOnclick('reset');
+        this.recordsToDisplay = JSON.parse(JSON.stringify(this.lastSavedData));
+    
+        // Ensure Facility__c is restored properly
+        this.recordsToDisplay.forEach(record => {
+            record.Facility__c = this.lastSavedData.find(r => r.Id === record.Id)?.Facility__c || '';
+        });
+    
+        // Clear draft values
         this.draftValues = [];
-        handleRefresh();
-    }
+    
+        // Force UI refresh
+        this.recordsToDisplay = [...this.recordsToDisplay];
+    
+        // Reset lookup UI interactions
+        this.handleWindowOnclick('reset');
+    }   
 
     handleEdit(event) {
         event.preventDefault();
@@ -695,110 +694,49 @@ export default class AmbulanceRecordsCase extends LightningElement {
         await refreshApex(this.wiredRecords);
     }
 
-    handleSave(event){
-        
+    handleSave(event) {
         event.preventDefault();
         this.showSpinner = true;
-        let saveRows = [];
-        var el = this.template.querySelector('c-custom-data-table');
-        var selected = el.getSelectedRows();
-        saveRows = this.draftValues;
-
-        for(var i =0; i < saveRows.length;i++){ 
-               
-                let index = this.draftValues.findIndex(e=>e.Id === saveRows[i].Id);
-                if(index > -1 ){
-                    if( saveRows[i].Cost_Include__c != this.draftValues[index].Cost_Include__c){
-                        saveRows[i].Cost_Include__c = this.draftValues[index].Cost_Include__c;
-                    }
-                    if(saveRows[i].Cost_Review__c != this.draftValues[index].Cost_Review__c){
-                        saveRows[i].Cost_Review__c = this.draftValues[index].Cost_Review__c;
-                    }
-                    if(saveRows[i].Date_of_Service__c != this.draftValues[index].Date_of_Service__c){
-                        saveRows[i].Date_of_Service__c = this.draftValues[index].Date_of_Service__c;
-                    }
-                    if(saveRows[i].Location_Responded__c != this.draftValues[index].Location_Responded__c){
-                        saveRows[i].Location_Responded__c = this.draftValues[index].Location_Responded__c;
-                    }
-                    if(saveRows[i].Facility__c != this.draftValues[index].Facility__c){
-                        saveRows[i].Facility__c = this.draftValues[index].Facility__c;
-                    }
-                    if(saveRows[i].Basic_Amount__c != this.draftValues[index].Basic_Amount__c){
-                        saveRows[i].Basic_Amount__c = this.draftValues[index].Basic_Amount__c;
-                    }
-                    if(saveRows[i].Total_Cost_Override__c != this.draftValues[index].Total_Cost_Override__c){
-                        saveRows[i].Total_Cost_Override__c = this.draftValues[index].Total_Cost_Override__c;
-                    }
-                    if(saveRows[i].Fixed_Wing_Helicopter__c != this.draftValues[index].Fixed_Wing_Helicopter__c) {
-                        saveRows[i].Fixed_Wing_Helicopter__c = this.draftValues[index].Fixed_Wing_Helicopter__c;
-                    }
-                    if(saveRows[i].Source_System_ID__c != this.draftValues[index].Source_System_ID__c) {
-                        saveRows[i].Source_System_ID__c = this.draftValues[index].Source_System_ID__c;
-                    }
-                
-        } 
-  
-        
-        }
-        saveDraftValues({data: saveRows, recordDisplay: this.recordsToDisplay, recordType:'Ambulance'})
-        .then((data,error) => {
-            this.updateMessage = data.actionMessage;
-  
-            this.recordsToDisplay = data.updatedRecords;
-
-            if(this.updateMessage){
-                this.updateMessage = this.updateMessage.replace(/\r\n/g, "<br />");
-                this.showErrorMessage = true;
-            }
-            
-            if(data.passedResult == 'Passed'){
+    
+        let finalDrafts = this.draftValues.map(draft => ({
+            Id: draft.Id,
+            Site_Code__c: draft.Site_Code__c !== undefined ? draft.Site_Code__c : undefined,  // Only update Site_Code__c when changed
+            Facility__c: draft.Facility__c !== undefined ? draft.Facility__c : undefined, // Only update Facility__c when changed
+            ...draft
+        }));
+    
+        saveDraftValues({ data: finalDrafts, recordDisplay: this.recordsToDisplay, recordType: 'Hospitalization' })
+            .then(data => {
+                this.updateMessage = data.actionMessage;
                 this.showSection = false;
-                this.draftValues = [];  
-                this.dispatchEvent(
-                    new ShowToastEvent({
+                this.draftValues = [];
+                this.recordsToDisplay = data.updatedRecords;
+    
+                if (data.passedResult === 'Passed') {
+                    this.dispatchEvent(new ShowToastEvent({
                         title: 'Success',
                         message: 'HealthCare Cost Ambulance record(s) updated successfully',
                         variant: 'success'
-                    })
-                );    
-                             
-            }
-            else if(data.passedResult == 'Failed' || data.passedResult == null){
-                this.showSection = false;
-                this.draftValues = []; 
-                this.dispatchEvent(
-                    new ShowToastEvent({
+                    }));
+                } else {
+                    this.dispatchEvent(new ShowToastEvent({
                         title: 'Error',
                         message: 'Please review the error message shown below and try again!',
                         variant: 'error'
-                    })
-                );   
-            } 
-            else if(data.passedResult == 'Partial Success'){
-                this.showSection = false;
-                this.draftValues = [];
-                this.dispatchEvent(
-                    new ShowToastEvent({
-                        title: 'Warning',
-                        message: 'Few Healthcare Cost record(s) updated successfully. Errors on remaining shown below!',
-                        variant: 'Warning'
-                    })
-                );
-            }   
-            if(error){
-                this.draftValues = [];
-                this.dispatchEvent(
-                    new ShowToastEvent({
-                        title: 'Error',
-                        message: error,
-                        variant: 'error'
-                    })
-                ); 
-            }
-            return this.refresh();
+                    }));
+                }
+    
+                return this.refresh();
             })
-            
+            .catch(error => {
+                this.dispatchEvent(new ShowToastEvent({
+                    title: 'Error',
+                    message: 'An issue occurred while saving. Please contact support.',
+                    variant: 'error'
+                }));
+            });
     }
+    
    
     handleRefresh(){
         this.onLoad();

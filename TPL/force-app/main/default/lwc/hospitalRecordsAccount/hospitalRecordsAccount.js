@@ -288,7 +288,6 @@ export default class HospitalRecordsAccount extends LightningElement {
                 });
                  
                 
-                    console.log('else');
                     return updateHCCCaseInformation({ caseId: this.selectedCase, hccList: selectedCostRecords, recordDisplay: this.recordsToDisplay})
                     .then((data,error) => {
                         this.displayMessage = data.updateMessage;
@@ -391,14 +390,12 @@ export default class HospitalRecordsAccount extends LightningElement {
         this.onLoad();
     }
     checkIfUnderUpdate(){
-        console.log('called');
-       
+        
             findIfUnderUpdate({userId:userId})
             .then(result=>{
                 this.updateHappening = result;
                 this.showMassUpdateSection = !result;
                 if(result){
-                    console.log('yes');
                     setTimeout(() => { this.checkIfUnderUpdate();}, 5000);
                     
                 }

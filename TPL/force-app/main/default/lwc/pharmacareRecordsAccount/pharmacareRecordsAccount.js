@@ -322,14 +322,11 @@ export default class PharmacareRecordsAccount extends LightningElement {
         
     } 
     checkIfUnderUpdate(){
-        console.log('called');
-       
             findIfUnderUpdate({userId:userId})
             .then(result=>{
                 this.updateHappening = result;
                 this.showMassUpdateSection = !result;
                 if(result){
-                    console.log('yes');
                     setTimeout(() => { this.checkIfUnderUpdate();}, 5000);
                     
                 }
@@ -391,8 +388,6 @@ export default class PharmacareRecordsAccount extends LightningElement {
                 selectedCostRecords.push(element);  
                 });
                  
-                
-                    console.log('else');
                     return updateHCCCaseInformation({ caseId: this.selectedCase, hccList: selectedCostRecords, recordDisplay: this.recordsToDisplay})
                     .then((data,error) => {
                         this.displayMessage = data.updateMessage;
