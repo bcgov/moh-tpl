@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>TplInactiveProductsUpdateRestriction</fullName>
+    <fullName>TPL_InactiveProductsUpdateRestriction</fullName>
     <active>true</active>
     <description>When product is inactive, product can not be updated.</description>
     <errorConditionFormula>NOT ( IsActive ) &amp;&amp;
