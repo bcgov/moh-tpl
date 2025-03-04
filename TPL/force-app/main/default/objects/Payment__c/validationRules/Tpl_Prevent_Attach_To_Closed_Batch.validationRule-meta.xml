@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Tpl_Prevent_Attach_To_Closed_Batch</fullName>
+    <active>true</active>
+    <errorConditionFormula>ISPICKVAL(Batch_Number__r.Batch_Status__c, &quot;Closed&quot;)</errorConditionFormula>
+    <errorMessage>Cannot attach a payment record to a batch that is in Closed status.</errorMessage>
+</ValidationRule>
