@@ -435,7 +435,7 @@
         <expression>SUBSTITUTE({!ErrorMessage1}, &quot;. You can look up ExceptionCode values in the &lt;a href=&apos;https://developer.salesforce.com/docs/atlas.en-us.api.meta/api/sforce_api_calls_concepts_core_data_objects.htm#&apos;&gt;SOAP API Developer Guide&lt;/a&gt;.&quot;, &apos; &apos;)</expression>
     </formulas>
     <interviewLabel>New MSP Record {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>TPL_New MSP Record</label>
+    <label>X-TPL_New MSP Record</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -1227,7 +1227,7 @@
             <targetReference>Get_Case_Record</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <variables>
         <name>AmountPaid</name>
         <dataType>Currency</dataType>
