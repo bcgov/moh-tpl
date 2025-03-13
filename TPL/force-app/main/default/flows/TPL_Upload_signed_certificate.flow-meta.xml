@@ -5,7 +5,7 @@
         <name>Assign_Certificate_Name</name>
         <label>Assign Certificate Name</label>
         <locationX>264</locationX>
-        <locationY>674</locationY>
+        <locationY>782</locationY>
         <assignmentItems>
             <assignToReference>NewSignedCertificateName.Id</assignToReference>
             <operator>Assign</operator>
@@ -17,7 +17,30 @@
             <assignToReference>NewSignedCertificateName.Title</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>CertificateNameCreation</elementReference>
+                <elementReference>CaseHistoryCertificateName</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Signed_Certificate_Name</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_Certificate_Name2</name>
+        <label>Assign Certificate Name</label>
+        <locationX>528</locationX>
+        <locationY>782</locationY>
+        <assignmentItems>
+            <assignToReference>NewSignedCertificateName.Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>LoopThroughUploadedFiles</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>NewSignedCertificateName.Title</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>MinistersCertificateName</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -27,7 +50,7 @@
     <assignments>
         <name>Create_CDL_for_Case</name>
         <label>Create CDL for Case</label>
-        <locationX>264</locationX>
+        <locationX>396</locationX>
         <locationY>458</locationY>
         <assignmentItems>
             <assignToReference>New_CDL.ContentDocumentId</assignToReference>
@@ -47,6 +70,47 @@
             <targetReference>Content_Document_Link</targetReference>
         </connector>
     </assignments>
+    <choices>
+        <name>Case_History</name>
+        <choiceText>&lt;strong style=&quot;font-family: sans-serif;&quot;&gt;Case History&lt;/strong&gt;</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <elementReference>Case_History</elementReference>
+        </value>
+    </choices>
+    <choices>
+        <name>MinisterCertificate</name>
+        <choiceText>﻿&lt;strong style=&quot;font-family: sans-serif;&quot;&gt;Minister&apos;s Certificate&lt;/strong&gt;</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>MinisterCertificate</stringValue>
+        </value>
+    </choices>
+    <decisions>
+        <name>Certificate_Check1</name>
+        <label>Certificate Check</label>
+        <locationX>396</locationX>
+        <locationY>674</locationY>
+        <defaultConnector>
+            <targetReference>Assign_Certificate_Name2</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Ministers Certificate</defaultConnectorLabel>
+        <rules>
+            <name>Case_History1</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Certificate_Type1</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>Case_History</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_Certificate_Name</targetReference>
+            </connector>
+            <label>Case History</label>
+        </rules>
+    </decisions>
     <description>This flow will:
 
 Upload the signed certificate to the associated case.
@@ -54,9 +118,14 @@ Save the certificate in the &quot;Signed Certificates&quot; folder.
 Assign a name to the uploaded attachment.</description>
     <environments>Default</environments>
     <formulas>
-        <name>CertificateNameCreation</name>
+        <name>CaseHistoryCertificateName</name>
         <dataType>String</dataType>
-        <expression>{!recordId.CaseNumber}&amp; &quot;-Signed Certificate - &quot; &amp; Text(Today())</expression>
+        <expression>&quot;Signed Case History - &quot; &amp; TEXT(TODAY())</expression>
+    </formulas>
+    <formulas>
+        <name>MinistersCertificateName</name>
+        <dataType>String</dataType>
+        <expression>&quot;Signed Minister&apos;s Certificate - &quot; &amp; TEXT(TODAY())</expression>
     </formulas>
     <interviewLabel>TPL Upload signed certificate {!$Flow.CurrentDateTime}</interviewLabel>
     <label>TPL Upload signed certificate</label>
@@ -93,10 +162,10 @@ Assign a name to the uploaded attachment.</description>
     <recordCreates>
         <name>Content_Document_Link</name>
         <label>Content Document Link</label>
-        <locationX>264</locationX>
+        <locationX>396</locationX>
         <locationY>566</locationY>
         <connector>
-            <targetReference>Assign_Certificate_Name</targetReference>
+            <targetReference>Certificate_Check1</targetReference>
         </connector>
         <inputReference>New_CDL</inputReference>
     </recordCreates>
@@ -124,8 +193,8 @@ Assign a name to the uploaded attachment.</description>
     <recordUpdates>
         <name>Update_Signed_Certificate_Name</name>
         <label>Update Signed Certificate Name</label>
-        <locationX>264</locationX>
-        <locationY>782</locationY>
+        <locationX>396</locationX>
+        <locationY>974</locationY>
         <connector>
             <targetReference>LoopThroughUploadedFiles</targetReference>
         </connector>
@@ -142,6 +211,16 @@ Assign a name to the uploaded attachment.</description>
         <connector>
             <targetReference>LoopThroughUploadedFiles</targetReference>
         </connector>
+        <fields>
+            <name>Certificate_Type1</name>
+            <choiceReferences>Case_History</choiceReferences>
+            <choiceReferences>MinisterCertificate</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Certificate Type</fieldText>
+            <fieldType>RadioButtons</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+        </fields>
         <fields>
             <name>Select_Signed_Certificate</name>
             <extensionName>forceContent:fileUpload</extensionName>
