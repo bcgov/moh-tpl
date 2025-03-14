@@ -73,13 +73,6 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>CostVariable</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Copy_1_of_Cost</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
             <assignToReference>SubTotal</assignToReference>
             <operator>Assign</operator>
             <value>
@@ -143,13 +136,6 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>Fixed_Wing_Helicopter2</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>CostVariable</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Cost</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -271,13 +257,6 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>Cost</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
                 <leftValueReference>Sub_Total</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
@@ -379,12 +358,6 @@
             <field>Cost_Review__c</field>
             <value>
                 <booleanValue>true</booleanValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Cost__c</field>
-            <value>
-                <elementReference>Cost</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -590,6 +563,7 @@
                     </defaultValue>
                     <fieldText>Date of Service</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <inputParameters>
@@ -611,6 +585,7 @@
                     </defaultValue>
                     <fieldText>Location Responded</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <validationRule>
                         <errorMessage>&lt;p&gt;&lt;span style=&quot;font-size: 11.36px; font-family: Arial, Helvetica, sans-serif; color: rgb(0, 0, 0);&quot;&gt;Not more than 30 Characters are allowed.&lt;/span&gt;&lt;/p&gt;</errorMessage>
@@ -636,6 +611,7 @@
                     </defaultValue>
                     <fieldText>Facility Code</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <inputParameters>
@@ -657,6 +633,7 @@
                     </defaultValue>
                     <fieldText>Total Cost Override</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>2</scale>
                     <validationRule>
@@ -689,6 +666,7 @@
                     </defaultValue>
                     <fieldText>Fixed Wing/Helicopter</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <validationRule>
                         <errorMessage>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Not more than 14 digits with 2 decimals are allowed.&lt;/span&gt;&lt;/p&gt;</errorMessage>
@@ -707,18 +685,19 @@
                 <name>Invalid_Facility_Screen_Section2_Column2</name>
                 <fieldType>Region</fieldType>
                 <fields>
-                    <name>Copy_1_of_Cost</name>
+                    <name>Copy_1_of_Sub_Total</name>
                     <dataType>Currency</dataType>
                     <defaultValue>
-                        <elementReference>CostVariable</elementReference>
+                        <elementReference>SubTotal</elementReference>
                     </defaultValue>
-                    <fieldText>Cost</fieldText>
+                    <fieldText>Sub Total</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>2</scale>
                     <validationRule>
-                        <errorMessage>&lt;p&gt;Not more than 14 digits with 2 decimals are allowed.&lt;/p&gt;</errorMessage>
-                        <formulaExpression>{!Cost} &gt; 0  &amp;&amp; {!Cost} &lt; 100000000000000</formulaExpression>
+                        <errorMessage>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Not more than 14 digits with 2 decimals are allowed.&lt;/span&gt;&lt;/p&gt;</errorMessage>
+                        <formulaExpression>{!Sub_Total} &gt; 0  &amp;&amp; {!Sub_Total} &lt; 100000000000000</formulaExpression>
                     </validationRule>
                 </fields>
                 <inputParameters>
@@ -732,21 +711,6 @@
             <fields>
                 <name>Invalid_Facility_Screen_Section2_Column3</name>
                 <fieldType>Region</fieldType>
-                <fields>
-                    <name>Copy_1_of_Sub_Total</name>
-                    <dataType>Currency</dataType>
-                    <defaultValue>
-                        <elementReference>SubTotal</elementReference>
-                    </defaultValue>
-                    <fieldText>Sub Total</fieldText>
-                    <fieldType>InputField</fieldType>
-                    <isRequired>false</isRequired>
-                    <scale>2</scale>
-                    <validationRule>
-                        <errorMessage>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Not more than 14 digits with 2 decimals are allowed.&lt;/span&gt;&lt;/p&gt;</errorMessage>
-                        <formulaExpression>{!Sub_Total} &gt; 0  &amp;&amp; {!Sub_Total} &lt; 100000000000000</formulaExpression>
-                    </validationRule>
-                </fields>
                 <inputParameters>
                     <name>width</name>
                     <value>
@@ -803,6 +767,7 @@
                     </defaultValue>
                     <fieldText>Date of Service</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <inputParameters>
@@ -824,6 +789,7 @@
                     </defaultValue>
                     <fieldText>Location Responded</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <validationRule>
                         <errorMessage>&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-family: Arial, Helvetica, sans-serif; font-size: 11.36px; background-color: rgb(255, 255, 255);&quot;&gt;Not more than 30 Characters are allowed.&lt;/span&gt;&lt;/p&gt;</errorMessage>
@@ -849,6 +815,7 @@
                     </defaultValue>
                     <fieldText>Facility Code</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <inputParameters>
@@ -870,6 +837,7 @@
                     </defaultValue>
                     <fieldText>Total Cost Override</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>2</scale>
                     <validationRule>
@@ -902,6 +870,7 @@
                     </defaultValue>
                     <fieldText>Fixed Wing/Helicopter</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <validationRule>
                         <errorMessage>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 11.36px; font-family: Arial, Helvetica, sans-serif; color: rgb(0, 0, 0);&quot;&gt;Not more than 10 Characters are allowed.&lt;/span&gt;&lt;/p&gt;</errorMessage>
@@ -920,18 +889,19 @@
                 <name>New_Ambulance_Record_Screen_Section2_Column2</name>
                 <fieldType>Region</fieldType>
                 <fields>
-                    <name>Cost</name>
+                    <name>Sub_Total</name>
                     <dataType>Currency</dataType>
                     <defaultValue>
-                        <elementReference>CostVariable</elementReference>
+                        <elementReference>SubTotal</elementReference>
                     </defaultValue>
-                    <fieldText>Cost</fieldText>
+                    <fieldText>Sub Total</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>2</scale>
                     <validationRule>
-                        <errorMessage>&lt;p&gt;Not more than 14 digits with 2 decimals are allowed.&lt;/p&gt;</errorMessage>
-                        <formulaExpression>{!Cost} &gt; 0  &amp;&amp; {!Cost} &lt; 100000000000000</formulaExpression>
+                        <errorMessage>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Not more than 14 digits with 2 decimals are allowed.&lt;/span&gt;&lt;/p&gt;</errorMessage>
+                        <formulaExpression>{!Sub_Total} &gt; 0  &amp;&amp; {!Sub_Total} &lt; 100000000000000</formulaExpression>
                     </validationRule>
                 </fields>
                 <inputParameters>
@@ -945,21 +915,6 @@
             <fields>
                 <name>New_Ambulance_Record_Screen_Section2_Column3</name>
                 <fieldType>Region</fieldType>
-                <fields>
-                    <name>Sub_Total</name>
-                    <dataType>Currency</dataType>
-                    <defaultValue>
-                        <elementReference>SubTotal</elementReference>
-                    </defaultValue>
-                    <fieldText>Sub Total</fieldText>
-                    <fieldType>InputField</fieldType>
-                    <isRequired>false</isRequired>
-                    <scale>2</scale>
-                    <validationRule>
-                        <errorMessage>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Not more than 14 digits with 2 decimals are allowed.&lt;/span&gt;&lt;/p&gt;</errorMessage>
-                        <formulaExpression>{!Sub_Total} &gt; 0  &amp;&amp; {!Sub_Total} &lt; 100000000000000</formulaExpression>
-                    </validationRule>
-                </fields>
                 <inputParameters>
                     <name>width</name>
                     <value>

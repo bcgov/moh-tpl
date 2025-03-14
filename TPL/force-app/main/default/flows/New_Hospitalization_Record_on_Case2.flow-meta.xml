@@ -80,13 +80,6 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>DateofService</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Copy_1_of_Date_of_Service</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
             <assignToReference>ErrorMessage</assignToReference>
             <operator>Assign</operator>
             <value>
@@ -157,13 +150,6 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>Total_Cost_Override</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>DateofService</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Date_of_Service</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -358,12 +344,6 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Date_of_Service__c</field>
-            <value>
-                <elementReference>Date_of_Service</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
             <field>Description_of_Incident__c</field>
             <value>
                 <elementReference>Description_of_Incident</elementReference>
@@ -553,27 +533,6 @@
                 <name>Invalid_Facility_Screen_Section1_Column1</name>
                 <fieldType>Region</fieldType>
                 <fields>
-                    <name>Copy_1_of_Date_of_Service</name>
-                    <dataType>Date</dataType>
-                    <defaultValue>
-                        <elementReference>DateofService</elementReference>
-                    </defaultValue>
-                    <fieldText>Date of Service</fieldText>
-                    <fieldType>InputField</fieldType>
-                    <isRequired>false</isRequired>
-                </fields>
-                <inputParameters>
-                    <name>width</name>
-                    <value>
-                        <stringValue>3</stringValue>
-                    </value>
-                </inputParameters>
-                <isRequired>false</isRequired>
-            </fields>
-            <fields>
-                <name>Invalid_Facility_Screen_Section1_Column2</name>
-                <fieldType>Region</fieldType>
-                <fields>
                     <name>Copy_1_of_Location_of_Incident</name>
                     <dataType>String</dataType>
                     <defaultValue>
@@ -581,6 +540,7 @@
                     </defaultValue>
                     <fieldText>Location of Incident</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <validationRule>
                         <errorMessage>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 11.36px; font-family: Arial, Helvetica, sans-serif; color: rgb(255, 0, 0);&quot;&gt;Not more than 50 Characters are allowed.&lt;/span&gt;&lt;/p&gt;</errorMessage>
@@ -596,7 +556,7 @@
                 <isRequired>false</isRequired>
             </fields>
             <fields>
-                <name>Invalid_Facility_Screen_Section1_Column3</name>
+                <name>Invalid_Facility_Screen_Section1_Column2</name>
                 <fieldType>Region</fieldType>
                 <fields>
                     <name>Copy_1_of_Description_of_Incident</name>
@@ -605,6 +565,7 @@
                     </defaultValue>
                     <fieldText>Description of Incident</fieldText>
                     <fieldType>LargeTextArea</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <validationRule>
                         <errorMessage>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 11.36px; font-family: Arial, Helvetica, sans-serif; color: rgb(255, 0, 0);&quot;&gt;Not more than 100 Characters are allowed.&lt;/span&gt;&lt;/p&gt;</errorMessage>
@@ -620,7 +581,7 @@
                 <isRequired>false</isRequired>
             </fields>
             <fields>
-                <name>Invalid_Facility_Screen_Section1_Column4</name>
+                <name>Invalid_Facility_Screen_Section1_Column3</name>
                 <fieldType>Region</fieldType>
                 <fields>
                     <name>Copy_1_of_Date_of_Admission</name>
@@ -630,7 +591,30 @@
                     </defaultValue>
                     <fieldText>Date of Admission</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>3</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <fields>
+                <name>Invalid_Facility_Screen_Section1_Column4</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>Copy_1_of_Date_of_Discharge</name>
+                    <dataType>Date</dataType>
+                    <defaultValue>
+                        <elementReference>DateofDischarge</elementReference>
+                    </defaultValue>
+                    <fieldText>Date of Discharge</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>false</isRequired>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -650,13 +634,14 @@
                 <name>Invalid_Facility_Screen_Section2_Column1</name>
                 <fieldType>Region</fieldType>
                 <fields>
-                    <name>Copy_1_of_Date_of_Discharge</name>
-                    <dataType>Date</dataType>
+                    <name>Copy_1_of_Facility_Code</name>
+                    <dataType>String</dataType>
                     <defaultValue>
-                        <elementReference>DateofDischarge</elementReference>
+                        <elementReference>StoreFacility2</elementReference>
                     </defaultValue>
-                    <fieldText>Date of Discharge</fieldText>
+                    <fieldText>Facility Code</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <inputParameters>
@@ -669,27 +654,6 @@
             </fields>
             <fields>
                 <name>Invalid_Facility_Screen_Section2_Column2</name>
-                <fieldType>Region</fieldType>
-                <fields>
-                    <name>Copy_1_of_Facility_Code</name>
-                    <dataType>String</dataType>
-                    <defaultValue>
-                        <elementReference>StoreFacility2</elementReference>
-                    </defaultValue>
-                    <fieldText>Facility Code</fieldText>
-                    <fieldType>InputField</fieldType>
-                    <isRequired>false</isRequired>
-                </fields>
-                <inputParameters>
-                    <name>width</name>
-                    <value>
-                        <stringValue>3</stringValue>
-                    </value>
-                </inputParameters>
-                <isRequired>false</isRequired>
-            </fields>
-            <fields>
-                <name>Invalid_Facility_Screen_Section2_Column3</name>
                 <fieldType>Region</fieldType>
                 <fields>
                     <name>Copy_1_of_Service_Provided_by_Facility</name>
@@ -739,7 +703,7 @@
                 <isRequired>false</isRequired>
             </fields>
             <fields>
-                <name>Invalid_Facility_Screen_Section2_Column4</name>
+                <name>Invalid_Facility_Screen_Section2_Column3</name>
                 <fieldType>Region</fieldType>
                 <fields>
                     <name>Copy_1_of_Total_Cost_Override</name>
@@ -749,11 +713,37 @@
                     </defaultValue>
                     <fieldText>Total Cost Override</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>2</scale>
                     <validationRule>
                         <errorMessage>&lt;p&gt;Not more than 14 digits with 2 decimals are allowed.&lt;/p&gt;</errorMessage>
                         <formulaExpression>{!Total_Cost_Override} &gt; 0  &amp;&amp; {!Total_Cost_Override} &lt; 100000000000000</formulaExpression>
+                    </validationRule>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>3</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <fields>
+                <name>Invalid_Facility_Screen_Section2_Column4</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>Copy_1_of_Diagnostic_Treatment_Service</name>
+                    <defaultValue>
+                        <stringValue>{!DiagnosticTreatmentService}</stringValue>
+                    </defaultValue>
+                    <fieldText>Diagnostic Treatment Service</fieldText>
+                    <fieldType>LargeTextArea</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>false</isRequired>
+                    <validationRule>
+                        <errorMessage>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 11.36px; font-family: Arial, Helvetica, sans-serif; color: rgb(255, 0, 0);&quot;&gt;Not more than 100 Characters are allowed.&lt;/span&gt;&lt;/p&gt;</errorMessage>
+                        <formulaExpression>LEN ( {!Diagnostic_Treatment_Service} ) &lt; 100</formulaExpression>
                     </validationRule>
                 </fields>
                 <inputParameters>
@@ -773,19 +763,6 @@
             <fields>
                 <name>Invalid_Facility_Screen_Section3_Column1</name>
                 <fieldType>Region</fieldType>
-                <fields>
-                    <name>Copy_1_of_Diagnostic_Treatment_Service</name>
-                    <defaultValue>
-                        <stringValue>{!DiagnosticTreatmentService}</stringValue>
-                    </defaultValue>
-                    <fieldText>Diagnostic Treatment Service</fieldText>
-                    <fieldType>LargeTextArea</fieldType>
-                    <isRequired>false</isRequired>
-                    <validationRule>
-                        <errorMessage>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 11.36px; font-family: Arial, Helvetica, sans-serif; color: rgb(255, 0, 0);&quot;&gt;Not more than 100 Characters are allowed.&lt;/span&gt;&lt;/p&gt;</errorMessage>
-                        <formulaExpression>LEN ( {!Diagnostic_Treatment_Service} ) &lt; 100</formulaExpression>
-                    </validationRule>
-                </fields>
                 <inputParameters>
                     <name>width</name>
                     <value>
@@ -857,27 +834,6 @@
                 <name>New_Hospitalization_Record_Section1_Column1</name>
                 <fieldType>Region</fieldType>
                 <fields>
-                    <name>Date_of_Service</name>
-                    <dataType>Date</dataType>
-                    <defaultValue>
-                        <elementReference>DateofService</elementReference>
-                    </defaultValue>
-                    <fieldText>Date of Service</fieldText>
-                    <fieldType>InputField</fieldType>
-                    <isRequired>false</isRequired>
-                </fields>
-                <inputParameters>
-                    <name>width</name>
-                    <value>
-                        <stringValue>3</stringValue>
-                    </value>
-                </inputParameters>
-                <isRequired>false</isRequired>
-            </fields>
-            <fields>
-                <name>New_Hospitalization_Record_Section1_Column2</name>
-                <fieldType>Region</fieldType>
-                <fields>
                     <name>Location_of_Incident</name>
                     <dataType>String</dataType>
                     <defaultValue>
@@ -885,6 +841,7 @@
                     </defaultValue>
                     <fieldText>Location of Incident</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <validationRule>
                         <errorMessage>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 11.36px; font-family: Arial, Helvetica, sans-serif; color: rgb(255, 0, 0);&quot;&gt;Not more than 50 Characters are allowed.&lt;/span&gt;&lt;/p&gt;</errorMessage>
@@ -900,7 +857,7 @@
                 <isRequired>false</isRequired>
             </fields>
             <fields>
-                <name>New_Hospitalization_Record_Section1_Column3</name>
+                <name>New_Hospitalization_Record_Section1_Column2</name>
                 <fieldType>Region</fieldType>
                 <fields>
                     <name>Description_of_Incident</name>
@@ -909,6 +866,7 @@
                     </defaultValue>
                     <fieldText>Description of Incident</fieldText>
                     <fieldType>LargeTextArea</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <validationRule>
                         <errorMessage>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 11.36px; font-family: Arial, Helvetica, sans-serif; color: rgb(255, 0, 0);&quot;&gt;Not more than 100 Characters are allowed.&lt;/span&gt;&lt;/p&gt;</errorMessage>
@@ -924,7 +882,7 @@
                 <isRequired>false</isRequired>
             </fields>
             <fields>
-                <name>New_Hospitalization_Record_Section1_Column4</name>
+                <name>New_Hospitalization_Record_Section1_Column3</name>
                 <fieldType>Region</fieldType>
                 <fields>
                     <name>Date_of_Admission</name>
@@ -934,7 +892,30 @@
                     </defaultValue>
                     <fieldText>Date of Admission</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>3</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <fields>
+                <name>New_Hospitalization_Record_Section1_Column4</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>Date_of_Discharge</name>
+                    <dataType>Date</dataType>
+                    <defaultValue>
+                        <elementReference>DateofDischarge</elementReference>
+                    </defaultValue>
+                    <fieldText>Date of Discharge</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>false</isRequired>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -954,13 +935,14 @@
                 <name>New_Hospitalization_Record_Section2_Column1</name>
                 <fieldType>Region</fieldType>
                 <fields>
-                    <name>Date_of_Discharge</name>
-                    <dataType>Date</dataType>
+                    <name>Facility_Code</name>
+                    <dataType>String</dataType>
                     <defaultValue>
-                        <elementReference>DateofDischarge</elementReference>
+                        <elementReference>StoreFacility</elementReference>
                     </defaultValue>
-                    <fieldText>Date of Discharge</fieldText>
+                    <fieldText>Facility Code</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <inputParameters>
@@ -973,27 +955,6 @@
             </fields>
             <fields>
                 <name>New_Hospitalization_Record_Section2_Column2</name>
-                <fieldType>Region</fieldType>
-                <fields>
-                    <name>Facility_Code</name>
-                    <dataType>String</dataType>
-                    <defaultValue>
-                        <elementReference>StoreFacility</elementReference>
-                    </defaultValue>
-                    <fieldText>Facility Code</fieldText>
-                    <fieldType>InputField</fieldType>
-                    <isRequired>false</isRequired>
-                </fields>
-                <inputParameters>
-                    <name>width</name>
-                    <value>
-                        <stringValue>3</stringValue>
-                    </value>
-                </inputParameters>
-                <isRequired>false</isRequired>
-            </fields>
-            <fields>
-                <name>New_Hospitalization_Record_Section2_Column3</name>
                 <fieldType>Region</fieldType>
                 <fields>
                     <name>Service_Provided_by_Facility</name>
@@ -1043,7 +1004,7 @@
                 <isRequired>false</isRequired>
             </fields>
             <fields>
-                <name>New_Hospitalization_Record_Section2_Column4</name>
+                <name>New_Hospitalization_Record_Section2_Column3</name>
                 <fieldType>Region</fieldType>
                 <fields>
                     <name>Total_Cost_Override</name>
@@ -1053,11 +1014,37 @@
                     </defaultValue>
                     <fieldText>Total Cost Override</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>2</scale>
                     <validationRule>
                         <errorMessage>&lt;p&gt;Not more than 14 digits with 2 decimals are allowed.&lt;/p&gt;</errorMessage>
                         <formulaExpression>{!Total_Cost_Override} &gt; 0  &amp;&amp; {!Total_Cost_Override} &lt; 100000000000000</formulaExpression>
+                    </validationRule>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>3</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <fields>
+                <name>New_Hospitalization_Record_Section2_Column4</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>Diagnostic_Treatment_Service</name>
+                    <defaultValue>
+                        <stringValue>{!DiagnosticTreatmentService}</stringValue>
+                    </defaultValue>
+                    <fieldText>Diagnostic Treatment Service</fieldText>
+                    <fieldType>LargeTextArea</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>false</isRequired>
+                    <validationRule>
+                        <errorMessage>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 11.36px; font-family: Arial, Helvetica, sans-serif; color: rgb(255, 0, 0);&quot;&gt;Not more than 100 Characters are allowed.&lt;/span&gt;&lt;/p&gt;</errorMessage>
+                        <formulaExpression>LEN ( {!Diagnostic_Treatment_Service} ) &lt; 100</formulaExpression>
                     </validationRule>
                 </fields>
                 <inputParameters>
@@ -1077,19 +1064,6 @@
             <fields>
                 <name>New_Hospitalization_Record_Section3_Column1</name>
                 <fieldType>Region</fieldType>
-                <fields>
-                    <name>Diagnostic_Treatment_Service</name>
-                    <defaultValue>
-                        <stringValue>{!DiagnosticTreatmentService}</stringValue>
-                    </defaultValue>
-                    <fieldText>Diagnostic Treatment Service</fieldText>
-                    <fieldType>LargeTextArea</fieldType>
-                    <isRequired>false</isRequired>
-                    <validationRule>
-                        <errorMessage>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 11.36px; font-family: Arial, Helvetica, sans-serif; color: rgb(255, 0, 0);&quot;&gt;Not more than 100 Characters are allowed.&lt;/span&gt;&lt;/p&gt;</errorMessage>
-                        <formulaExpression>LEN ( {!Diagnostic_Treatment_Service} ) &lt; 100</formulaExpression>
-                    </validationRule>
-                </fields>
                 <inputParameters>
                     <name>width</name>
                     <value>
