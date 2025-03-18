@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>UI_Restriction_on_integration_records</fullName>
+    <fullName>TPL_UIRestriction_on_integration_records</fullName>
     <active>false</active>
     <description>This validation rule will restrict changes from UI in fields coming from integration.</description>
     <errorConditionFormula>$Setup.Data_Migration_Check__c.Bypass_Flow_Validations__c = FALSE &amp;&amp;

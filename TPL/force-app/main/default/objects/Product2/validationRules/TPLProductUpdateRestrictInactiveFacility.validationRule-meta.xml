@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>TplProductUpdateRestrictInactiveFacility</fullName>
+    <fullName>TPLProductUpdateRestrictInactiveFacility</fullName>
     <active>true</active>
     <description>When the Facility Account is Inactive, Product fields cannot be edited.</description>
     <errorConditionFormula>NOT(ISBLANK( Account__c )) &amp;&amp; NOT (  Account__r.Status__c  ) &amp;&amp;  IsActive = TRUE</errorConditionFormula>

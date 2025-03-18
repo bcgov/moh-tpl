@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>DoD_Is_Less_than_Product_End_Date</fullName>
+    <fullName>TPL_DoDIs_Less_than_Product_End_Date</fullName>
     <active>true</active>
     <description>Date Of Discharge Is greater than the Service provided by facility Effective End Date</description>
     <errorConditionFormula>$Setup.Data_Migration_Check__c.Bypass_Flow_Validations__c = FALSE &amp;&amp; ISBLANK(Source_System_ID__c)  &amp;&amp;
