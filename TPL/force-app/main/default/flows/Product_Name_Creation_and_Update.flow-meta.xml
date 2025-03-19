@@ -268,7 +268,7 @@
     <formulas>
         <name>SurgicalDay_Product_Name</name>
         <dataType>String</dataType>
-        <expression>{!CCI}+&apos;-&apos;+ {!ServiceTypeRecord} + &apos;-&apos;+ {!EffectiveYear}</expression>
+        <expression>{!$Record.Intervention_Code_CCI__c}+&apos;-&apos;+ {!ServiceTypeRecord} + &apos;-&apos;+ {!EffectiveYear}</expression>
     </formulas>
     <interviewLabel>Product Name Creation and Update {!$Flow.CurrentDateTime}</interviewLabel>
     <label>TPL_Product Name Creation and Update</label>
