@@ -868,17 +868,47 @@ export default class HospitalRecordsCase extends LightningElement {
         saveDraftValues({ data: finalDrafts, recordDisplay: this.recordsToDisplay, recordType: 'Hospitalization' })
             .then(data => {
                 this.updateMessage = data.actionMessage;
+                this.recordsToDisplay = data.updatedRecords;
                 this.showSection = false;
                 this.draftValues = [];
-                this.recordsToDisplay = data.updatedRecords;
-    
-                if (data.passedResult === 'Passed') {
-                    this.dispatchEvent(new ShowToastEvent({
-                        title: 'Success',
-                        message: 'HealthCare Cost Hospitalization record(s) updated successfully',
-                        variant: 'success'
-                    }));
-                } else {
+                          
+                if(this.updateMessage){
+                    this.updateMessage = this.updateMessage.replace(/\r\n/g, "<br />");
+                    this.showErrorMessage = true;
+                }
+
+                if(data.passedResult == 'Passed'){
+              
+                    this.dispatchEvent(
+                        new ShowToastEvent({
+                            title: 'Success',
+                            message: 'HealthCare Cost Hospitalization record(s) updated successfully',
+                            variant: 'success'
+                        })
+                    );    
+                                 
+                }
+                else if(data.passedResult == 'Failed' || data.passedResult == null){
+                    
+                    this.dispatchEvent(
+                        new ShowToastEvent({
+                            title: 'Error',
+                            message: 'Please review the error message shown below and try again!',
+                            variant: 'error'
+                        })
+                    );   
+                } 
+                else if(data.passedResult == 'Partial Success'){
+                
+                    this.dispatchEvent(
+                        new ShowToastEvent({
+                            title: 'Warning',
+                            message: 'Few Healthcare Cost record(s) updated successfully. Errors on remaining shown below!',
+                            variant: 'Warning'
+                        })
+                    );
+                }   
+                 else {
                     this.dispatchEvent(new ShowToastEvent({
                         title: 'Error',
                         message: 'Please review the error message shown below and try again!',
