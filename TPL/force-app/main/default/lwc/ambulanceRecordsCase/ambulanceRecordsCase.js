@@ -711,15 +711,38 @@ export default class AmbulanceRecordsCase extends LightningElement {
                 this.showSection = false;
                 this.draftValues = [];
                 this.recordsToDisplay = data.updatedRecords;
-    
+                
+                if(this.updateMessage){
+                    this.updateMessage = this.updateMessage.replace(/\r\n/g, "<br />");
+                    this.showErrorMessage = true;
+                }
                 if (data.passedResult === 'Passed') {
-                    this.dispatchEvent(new ShowToastEvent({
+                        this.dispatchEvent(new ShowToastEvent({
                         title: 'Success',
                         message: 'HealthCare Cost Ambulance record(s) updated successfully',
                         variant: 'success'
                     }));
-                } else {
-                    this.dispatchEvent(new ShowToastEvent({
+                } 
+                else if(data.passedResult == 'Failed' || data.passedResult == null){
+                        this.dispatchEvent(
+                        new ShowToastEvent({
+                            title: 'Error',
+                            message: 'Please review the error message shown below and try again!',
+                            variant: 'error'
+                        })
+                    );   
+                }
+                else if(data.passedResult == 'Partial Success'){
+                        this.dispatchEvent(
+                        new ShowToastEvent({
+                            title: 'Warning',
+                            message: 'Few Healthcare Cost record(s) updated successfully. Errors on remaining shown below!',
+                            variant: 'Warning'
+                        })
+                    );
+                }
+                else {
+                        this.dispatchEvent(new ShowToastEvent({
                         title: 'Error',
                         message: 'Please review the error message shown below and try again!',
                         variant: 'error'
