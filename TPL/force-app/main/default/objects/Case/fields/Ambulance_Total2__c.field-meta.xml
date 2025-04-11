@@ -2,6 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Ambulance_Total2__c</fullName>
     <externalId>false</externalId>
+    <defaultValue>0.00</defaultValue>
     <label>Ambulance Total</label>
     <precision>18</precision>
     <required>false</required>

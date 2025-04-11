@@ -31,13 +31,21 @@ public with sharing class HealthcareCostTriggerHandler {
             if(caseMap.containsKey((String)agg.get('case2__c'))){
                 c = caseMap.get((String)agg.get('case2__c'));
             }else{
-                c.id = (String)agg.get('case2__c');
-                c.Pharmacare_Total2__c = 0.0;
-                c.Continuing_Care_Total2__c =0.0;
-                c.Ambulance_Total2__c = 0.0;
-                c.Future_Care_Total2__c = 0.0;
-                c.Hospitalization_Total2__c = 0.0;
-                c.MSP_Total2__c = 0.0;
+                c.Id = (String)agg.get('case2__c');
+                c.Pharmacare_Total2__c = 0.00;
+                c.Continuing_Care_Total2__c = 0.00;
+                c.Ambulance_Total2__c = 0.00;
+                c.Future_Care_Total2__c = 0.00;
+                c.Hospitalization_Total2__c = 0.00;
+                c.MSP_Total2__c = 0.00;
+                c.Ambulance_Total_ClassAction__c = 0.00;
+                c.Continuing_Care_Total_ClassAction__c = 0.00;
+                c.Future_Care_Total_ClassAction__c = 0.00;
+                c.Hospitalization_Total_ClassAction__c = 0.00;
+                c.MSP_Total_ClassAction__c = 0.00;
+                c.Pharmacare_Total_ClassAction__c = 0.00;
+                c.Related_Cases_Recovery_Amount__c = 0.00;
+
             }
             if((String)agg.get('DeveloperName') == 'Pharmacare'){
                 c.Pharmacare_Total2__c = (Decimal)agg.get('tot');
@@ -59,6 +67,25 @@ public with sharing class HealthcareCostTriggerHandler {
             }
             caseMap.put(c.id,c); 
         }
+
+         // Ensure fields are not null before update
+         for (Case c : caseMap.values()) {
+            if (c.Pharmacare_Total2__c == null) c.Pharmacare_Total2__c = 0.00;
+            if (c.Continuing_Care_Total2__c == null) c.Continuing_Care_Total2__c = 0.00;
+            if (c.Ambulance_Total2__c == null) c.Ambulance_Total2__c = 0.00;
+            if (c.Future_Care_Total2__c == null) c.Future_Care_Total2__c = 0.00;
+            if (c.Hospitalization_Total2__c == null) c.Hospitalization_Total2__c = 0.00;
+            if (c.MSP_Total2__c == null) c.MSP_Total2__c = 0.00;
+            if (c.Ambulance_Total_ClassAction__c == null) c.Ambulance_Total_ClassAction__c = 0.00;
+            if (c.Continuing_Care_Total_ClassAction__c == null) c.Continuing_Care_Total_ClassAction__c = 0.00;
+            if (c.Future_Care_Total_ClassAction__c == null) c.Future_Care_Total_ClassAction__c = 0.00;
+            if (c.Hospitalization_Total_ClassAction__c == null) c.Hospitalization_Total_ClassAction__c = 0.00;
+            if (c.MSP_Total_ClassAction__c == null) c.MSP_Total_ClassAction__c = 0.00;
+            if (c.Pharmacare_Total_ClassAction__c == null) c.Pharmacare_Total_ClassAction__c = 0.00;
+            if (c.Related_Cases_Recovery_Amount__c == null) c.Related_Cases_Recovery_Amount__c = 0.00;
+        }
+
+
         try{
             update caseMap.values();
         }Catch(Exception e){
