@@ -137,7 +137,7 @@ const INTEGRATION_COLUMNS = [
         label: 'Total Cost Override',
         fieldName: 'Total_Cost_Override__c',
         type: 'currency',
-        editable: false
+        editable: true
     },
     {
         label: 'Diagnostic Treatment Service',
@@ -310,7 +310,7 @@ const MANUAL_COLUMNS = [
         label: 'Total Cost Override',
         fieldName: 'Total_Cost_Override__c',
         type: 'currency',
-        editable: false,
+        editable: true,
         sortable: true
     },
     {
