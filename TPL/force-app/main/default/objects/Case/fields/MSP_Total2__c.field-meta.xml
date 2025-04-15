@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>MSP_Total2__c</fullName>
+    <defaultValue>0.00</defaultValue>
     <externalId>false</externalId>
     <label>MSP Total</label>
     <precision>18</precision>

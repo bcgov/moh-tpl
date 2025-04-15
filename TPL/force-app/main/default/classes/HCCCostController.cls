@@ -303,15 +303,6 @@ public with sharing class HCCCostController {
             List<Account> accList = [SELECT id,name,Site_Code__c 
                                      FROM Account 
                                      WHERE Site_Code__c IN:healthCareMap.keySet() LIMIT 1];
-            for(Account a : accList){
-                for(String id : healthCareMap.get(a.Site_Code__c)){
-                    Healthcare_Cost__c hcc = new Healthcare_Cost__c();
-                    hcc.id = id;
-                    hcc.Facility__c = a.id;
-                    hccUpdate.add(hcc);
-                }
-            }
-            update hccUpdate;
             return accList;
         } catch (Exception e) {
             System.debug(e.getMessage());
