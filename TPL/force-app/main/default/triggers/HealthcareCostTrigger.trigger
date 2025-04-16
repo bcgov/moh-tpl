@@ -6,23 +6,30 @@
 Trigger covers after insert, after update, and after delete scenarios
 * History:
 *     Initial version: June 10, 2023 - AS
+*     Revised version: Feb 03, 2025 - AJ
 */
 
-trigger HealthcareCostTrigger on Healthcare_Cost__c (after insert,after update, after delete) {
-    if(Trigger.isAfter){
-        if(Trigger.isInsert || Trigger.isUpdate ){
-            if(HealthcareCostTriggerHandler.isFirstTime){
+trigger HealthcareCostTrigger on Healthcare_Cost__c (after insert, after update, after delete) {
+
+    // AFTER logic: Handle insert, update, or delete of Healthcare_Cost__c
+    if (Trigger.isAfter) {
+
+        // Handle insert and update
+        if (Trigger.isInsert || Trigger.isUpdate) {
+            // If this is the first time the trigger is running, update rollups
+            if (HealthcareCostTriggerHandler.isFirstTime) {
                 HealthcareCostTriggerHandler.isFirstTime = false;
                 HealthcareCostTriggerHandler.updateRollup(Trigger.new);
             }
-            
+        }
+
+        // Handle delete
+        if (Trigger.isDelete) {
+            // If this is the first time the trigger is running for delete, update rollups
+            if (HealthcareCostTriggerHandler.isFirstTime) {
+                HealthcareCostTriggerHandler.isFirstTime = false;
+                HealthcareCostTriggerHandler.updateRollup(Trigger.old);
+            }
         }
     }
-    if(Trigger.isAfter && Trigger.isDelete){
-        if(HealthcareCostTriggerHandler.isFirstTime){
-            HealthcareCostTriggerHandler.isFirstTime = false;  
-            HealthcareCostTriggerHandler.updateRollup(Trigger.old);
-        }
-    }
-    
 }
