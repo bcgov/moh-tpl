@@ -367,32 +367,71 @@ export default class PharmacareRecordsCase extends LightningElement {
         
         
     }
-    updateAll(){
+   // Made changes to updateAll so that whenever we click on the Go button it should uncheck the checkboxes of CostInclude and/or CostReview if checked
+    updateAll() {
         this.checkIfUnderUpdate();
-        if(!this.updateHappening){
-            this.updateTriggered = true;
-            updateAll({caseId: this.recordId,costReview:this.costReview,costInclude:this.costInclude,currentRecords:this.recordsToDisplay,recordType:'Pharmacare'})
-            .then(result=>{
-                this.onLoad();
-                this.checkIfUnderUpdate();
-                this.costInclude = false;
-                this.costReview = false;
-            })
-            .catch(error =>{
-                this.records = []
-                this.totalRecords = 0;
-                this.dispatchEvent(
-                    new ShowToastEvent({
-                        title: 'Error',
-                        message: 'Some issues occured while loading Ambulance Records. Please contact Administrator',
-                        variant: 'error'
-                    })
-                );    
-            });  
+
+    if (!this.updateHappening) {
+        this.updateTriggered = true;
+
+        let updateCostInclude = this.costInclude;
+        let updateCostReview = this.costReview;
+
+        let updatedRecords = this.recordsToDisplay.map(record => {
+            let updateNeeded = false;
+            let updatedRecord = { Id: record.Id };
+
+            // Handle both checked and unchecked cases
+        if (updateCostInclude === true || updateCostInclude === false) {
+            updatedRecord.Cost_Include__c = updateCostInclude;
+            updateNeeded = true;
         }
-        
-        
-        
+
+        if (updateCostReview === true || updateCostReview === false) {
+            updatedRecord.Cost_Review__c = updateCostReview;
+            updateNeeded = true;
+        }
+
+            return updateNeeded ? updatedRecord : null;
+        }).filter(record => record !== null);
+
+        if (updatedRecords.length === 0) {
+            this.dispatchEvent(new ShowToastEvent({
+                title: 'No Records Updated',
+                message: 'No changes applied.',
+                variant: 'info'
+            }));
+            return;
+        }
+
+        updateAll({
+            caseId: this.recordId,
+            costReview: updateCostReview,
+            costInclude: updateCostInclude,
+            currentRecords: updatedRecords,
+            recordType: 'Pharmacare'
+        })
+        .then(() => {
+            this.onLoad();
+            this.checkIfUnderUpdate();
+            this.costInclude = false;
+            this.costReview = false;
+
+            this.dispatchEvent(new ShowToastEvent({
+                title: 'Success',
+                message: 'Mass update completed successfully.',
+                variant: 'success'
+            }));
+        })
+        .catch(error => {
+            console.error('Update error:', error);
+            this.dispatchEvent(new ShowToastEvent({
+                title: 'Error',
+                message: 'Failed to update records. Please contact Administrator.',
+                variant: 'error'
+            }));
+        });
+     }
     }
     handleSave(){
         var el = this.template.querySelector('c-custom-data-table');

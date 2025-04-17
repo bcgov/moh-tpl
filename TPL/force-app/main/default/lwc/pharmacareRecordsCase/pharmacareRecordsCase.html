@@ -36,9 +36,19 @@
             </lightning-layout-item>
         </lightning-layout>
         <template if:true={showMassUpdateSection}>
-            <lightning-input type="checkbox" name="valid" label="Cost Review" onchange={changeCostReview}>
+            <lightning-input
+                type="checkbox"
+                name="valid"
+                label="Cost Review"
+                onchange={changeCostReview}
+                checked={costReview}>
             </lightning-input>
-            <lightning-input type="checkbox" name="valid" label="Cost Include" onchange={changeCostInclude}>
+            <lightning-input
+                type="checkbox"
+                name="valid"
+                label="Cost Include"
+                onchange={changeCostInclude}
+                checked={costInclude}>
             </lightning-input>
             <lightning-button label="Go" onclick={updateAll}></lightning-button>
         </template>
