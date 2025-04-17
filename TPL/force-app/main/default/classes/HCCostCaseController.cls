@@ -24,6 +24,7 @@ This code contains callouts to case bound HC Cost Information.
 *     Update to codebase: June 10, 2023 - AJ
 *     Update to codebase: June 16, 2023 - AS
 *     Update to codebase: July 06, 2023 - AJ
+*     Update to codebase: April 17, 2025 - RRG
 */
 public with sharing class HCCostCaseController {
 
@@ -299,4 +300,30 @@ public class HCCostCaseDetailWrapper{
     @AuraEnabled public List<Healthcare_Cost__c> hccList {get;set;}
     @AuraEnabled public Integer totalCount {get;set;}
 }
+
+// To check the refresh after we click the Go button it should uncheck the CostInclude and/or CostReview if checked 
+@AuraEnabled
+public static void updateAll(Id caseId, Boolean costReview, Boolean costInclude, List<Healthcare_Cost__c> currentRecords, String recordType) {
+    List<Healthcare_Cost__c> toUpdate = new List<Healthcare_Cost__c>();
+
+    for (Healthcare_Cost__c record : currentRecords) {
+        Healthcare_Cost__c rec = new Healthcare_Cost__c(Id = record.Id);
+
+        if (record.Cost_Include__c != null) {
+            rec.Cost_Include__c = record.Cost_Include__c;
+        }
+
+        if (record.Cost_Review__c != null) {
+            rec.Cost_Review__c = record.Cost_Review__c;
+        }
+
+        toUpdate.add(rec);
+    }
+
+    if (!toUpdate.isEmpty()) {
+        update toUpdate;
+    }
+}
+
+
 }
