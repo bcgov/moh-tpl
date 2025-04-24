@@ -1184,7 +1184,7 @@
         <name>EditPublicTemplates</name>
     </userPermissions>
     <userPermissions>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
         <name>EditReadonlyFields</name>
     </userPermissions>
     <userPermissions>
