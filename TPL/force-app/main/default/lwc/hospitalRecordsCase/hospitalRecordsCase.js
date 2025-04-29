@@ -347,6 +347,9 @@ export default class HospitalRecordsCase extends LightningElement {
     privateChildren = {}; //used to get the datatable lookup as private childern of customDatatable
     wiredRecords;
     draftValues = [];
+    // for partial success
+    editedFieldKeys = new Set();//testing
+    successfullyUpdatedFields = new Set();
     showErrorMessage = false;
     updateMessage='';
     selectedFilter= 'All Records';
@@ -361,6 +364,13 @@ export default class HospitalRecordsCase extends LightningElement {
         { label: 'Manual Records', value: 'Manual Records' },
         { label: 'Records Created Today', value: 'Records Created Today' }
     ];
+    errorFields = [];
+    
+    getCellClass(rowIndex, fieldName) {
+        const recordId = this.recordsToDisplay[rowIndex]?.Id;
+        const key = `${recordId}.${fieldName}`;
+        return this.editedFieldKeys.has(key) ? 'error-cell' : '';
+    }
 
     connectedCallback() {
         this.selectedFilter = 'All Records';
@@ -652,6 +662,9 @@ export default class HospitalRecordsCase extends LightningElement {
 
     handleCancel(event) {
         event.preventDefault();
+        //  Reset error message
+        this.updateMessage = '';
+        this.showErrorMessage = false;
         this.showSection = false;
     
         // Reset to last saved state
@@ -663,13 +676,17 @@ export default class HospitalRecordsCase extends LightningElement {
             record.Facility__c = this.lastSavedData.find(r => r.Id === record.Id)?.Facility__c || '';
             record.Service_Provided_by_Facility__c = this.lastSavedData.find(r => r.Id === record.Id)?.Service_Provided_by_Facility__c || '';
         });
-    
+        //Clear field highlights and success tracker
         this.draftValues = [];
+        this.editedFieldKeys = new Set();
+        this.successfullyUpdatedFields = new Set();
+
     
         this.recordsToDisplay = [...this.recordsToDisplay];
     
         // Reset lookup UI interactions
         this.handleWindowOnclick('reset');
+        this.onLoad();
     }
     
     
@@ -898,47 +915,106 @@ export default class HospitalRecordsCase extends LightningElement {
         this.showSpinner = true;
     
         let finalDrafts = this.draftValues.map(draft => ({
-            Id: draft.Id,
-            Site_Code__c: draft.Site_Code__c !== undefined ? draft.Site_Code__c : undefined,  
-            Facility__c: draft.Facility__c !== undefined ? draft.Facility__c : undefined, 
-            Service_Provided_by_Facility__c: draft.Service_Provided_by_Facility__c !== undefined ? draft.Service_Provided_by_Facility__c : undefined, 
-            ...draft
+            ...draft,
+            Site_Code__c: draft.Site_Code__c !== undefined ? draft.Site_Code__c : undefined,
+            Facility__c: draft.Facility__c !== undefined ? draft.Facility__c : undefined,
+            Service_Provided_by_Facility__c: draft.Service_Provided_by_Facility__c !== undefined ? draft.Service_Provided_by_Facility__c : undefined
         }));
+
+        //for partial success
+        this.editedFieldKeys = new Set();
+        finalDrafts.forEach(draft => {
+        const recordId = draft.Id;
+            Object.keys(draft).forEach(field => {
+                if (field !== 'Id') {
+                 this.editedFieldKeys.add(`${recordId}.${field}`);
+                }
+            });
+        });
+
     
         saveDraftValues({ data: finalDrafts, recordDisplay: this.recordsToDisplay, recordType: 'Hospitalization' })
             .then(data => {
                 this.updateMessage = data.actionMessage;
-                this.recordsToDisplay = data.updatedRecords;
-                this.showSection = false;
-                this.draftValues = [];
-                          
-                if(this.updateMessage){
-                    this.updateMessage = this.updateMessage.replace(/\r\n/g, "<br />");
-                    this.showErrorMessage = true;
-                }
+                
+                if (data.passedResult === 'Passed') {
+                    this.draftValues = [];
+                    // Merge updated records into the existing table instead of replacing
+                    const updatedMap = new Map(data.updatedRecords.map(r => [r.Id, r]));
 
-                if(data.passedResult == 'Passed'){
-              
-                    this.dispatchEvent(
-                        new ShowToastEvent({
-                            title: 'Success',
-                            message: 'HealthCare Cost Hospitalization record(s) updated successfully',
-                            variant: 'success'
-                        })
-                    );    
-                                 
+                    this.recordsToDisplay = this.recordsToDisplay.map(existing => {
+                    const updated = updatedMap.get(existing.Id);
+                    return updated ? { ...existing, ...updated } : existing;
+                    });
+
+                    this.showSection = false;
+                    this.dispatchEvent(new ShowToastEvent({
+                        title: 'Success',
+                        message: 'HealthCare Cost for Hospitalization record(s) updated successfully',
+                        variant: 'success'
+                    }));
+                } else {
+                    this.showSection = true; // stay in edit mode  
                 }
-                else if(data.passedResult == 'Failed' || data.passedResult == null){
-                    
-                    this.dispatchEvent(
-                        new ShowToastEvent({
-                            title: 'Error',
-                            message: 'Please review the error message shown below and try again!',
-                            variant: 'error'
-                        })
-                    );   
+                
+    
+                if (this.updateMessage) {
+                    // Split by line breaks and remove duplicate lines
+                    let lines = this.updateMessage.split(/\r?\n/);
+                    // remove duplicates and empty lines
+                    let uniqueLines = [...new Set(lines)].filter(Boolean); 
+                    this.updateMessage = uniqueLines.join('<br />');
+                    this.showErrorMessage = true;
+                     //  Parse the error lines to extract row/field for highlighting
+                    this.errorFields = uniqueLines.map(line => {
+                    return null;
+                    }).filter(Boolean);
+                }
+                
+    
+                //  Handle result based on passedResult
+                if (data.passedResult === 'Passed') {
+                    this.showSection = false;
+                    this.dispatchEvent(new ShowToastEvent({
+                        title: 'Success',
+                        message: 'HealthCare Cost for Hospitalization record(s) updated successfully',
+                        variant: 'success'
+                    }));
                 } 
-                else if(data.passedResult == 'Partial Success'){
+                else if (data.passedResult === 'Failed' || data.passedResult == null) {
+                    this.showSection = true;
+                    this.dispatchEvent(new ShowToastEvent({
+                        title: 'Error',
+                        message: 'Please review the error message shown below and try again!',
+                        variant: 'error'
+                    }));
+                }
+                    // working
+                else if (data.passedResult === 'Partial Success') {
+                    // Merge updated records into the existing table instead of replacing
+                    const updatedMap = new Map(data.updatedRecords.map(r => [r.Id, r]));
+
+                    this.recordsToDisplay = this.recordsToDisplay.map(existing => {
+                    const updated = updatedMap.get(existing.Id);
+                    return updated ? { ...existing, ...updated } : existing;
+                    });
+                
+                    this.successfullyUpdatedFields = new Set();
+                
+                    // Reapply failed draft values to recordsToDisplay
+                    const failedDraftMap = new Map(this.draftValues.map(d => [d.Id, d]));
+                        this.recordsToDisplay = this.recordsToDisplay.map(existing => {
+                        if (failedDraftMap.has(existing.Id)) {
+                        return { ...existing, ...failedDraftMap.get(existing.Id) };
+                        }
+                    return existing;
+                    });
+                    this.draftValues = this.draftValues.filter(
+                        draft=>data.failedRecordIds.includes(draft.Id)
+                    );
+                
+                    // Important: Update lastSavedData so cancel works correctly
+                    this.lastSavedData = JSON.parse(JSON.stringify(this.recordsToDisplay));
                 
                     this.dispatchEvent(
                         new ShowToastEvent({
@@ -947,29 +1023,26 @@ export default class HospitalRecordsCase extends LightningElement {
                             variant: 'Warning'
                         })
                     );
-                }   
-                 else {
-                    this.dispatchEvent(new ShowToastEvent({
-                        title: 'Error',
-                        message: 'Please review the error message shown below and try again!',
-                        variant: 'error'
-                    }));
+                
+                    this.showSection = true; // stay in edit mode
+                    
                 }
-    
                 return this.refresh();
-            })
+                 
+          
+             })
             .catch(error => {
+                this.showSection = true;
                 this.dispatchEvent(new ShowToastEvent({
                     title: 'Error',
                     message: 'An issue occurred while saving. Please contact support.',
                     variant: 'error'
                 }));
+            })
+            .finally(() => {
+                this.showSpinner = false;
             });
     }
-    
-
-   
-    
 
     handleRefresh(){
         this.onLoad();

@@ -178,6 +178,9 @@ export default class AmbulanceRecordsCase extends LightningElement {
     privateChildren = {}; //used to get the datatable lookup as private childern of customDatatable
     wiredRecords;
     draftValues = [];
+    // for partial success
+    editedFieldKeys = new Set();
+    successfullyUpdatedFields = new Set();
     showErrorMessage = false;
     updateMessage='';
     selectedFilter= 'All Records';
@@ -193,6 +196,13 @@ export default class AmbulanceRecordsCase extends LightningElement {
         { label: 'Manual Records', value: 'Manual Records' },
         { label: 'Records Created Today', value: 'Records Created Today' }
     ];
+    errorFields = [];
+    
+    getCellClass(rowIndex, fieldName) {
+        const recordId = this.recordsToDisplay[rowIndex]?.Id;
+        const key = `${recordId}.${fieldName}`;
+        return this.editedFieldKeys.has(key) ? 'error-cell' : '';
+    }
 
     connectedCallback() {
         this.selectedFilter = 'All Records';
@@ -585,6 +595,9 @@ export default class AmbulanceRecordsCase extends LightningElement {
 
     handleCancel(event) {
         event.preventDefault();
+        //  Reset error message
+        this.updateMessage = '';
+        this.showErrorMessage = false;
         this.showSection = false;
     
         // Reset to last saved state
@@ -596,14 +609,17 @@ export default class AmbulanceRecordsCase extends LightningElement {
             record.Facility__c = this.lastSavedData.find(r => r.Id === record.Id)?.Facility__c || '';
         });
     
-        // Clear draft values
+        //Clear field highlights and success tracker
         this.draftValues = [];
+        this.editedFieldKeys = new Set();
+        this.successfullyUpdatedFields = new Set();
+
     
-        // Force UI refresh
         this.recordsToDisplay = [...this.recordsToDisplay];
     
         // Reset lookup UI interactions
         this.handleWindowOnclick('reset');
+        this.onLoad();
     }   
 
     handleEdit(event) {
@@ -744,65 +760,129 @@ export default class AmbulanceRecordsCase extends LightningElement {
             Facility__c: draft.Facility__c !== undefined ? draft.Facility__c : undefined, // Only update Facility__c when changed
             ...draft
         }));
+
+        //for partial success
+        this.editedFieldKeys = new Set();
+        finalDrafts.forEach(draft => {
+        const recordId = draft.Id;
+            Object.keys(draft).forEach(field => {
+                if (field !== 'Id') {
+                 this.editedFieldKeys.add(`${recordId}.${field}`);
+                }
+            });
+        });
     
-        saveDraftValues({ data: finalDrafts, recordDisplay: this.recordsToDisplay, recordType: 'Hospitalization' })
+        saveDraftValues({ data: finalDrafts, recordDisplay: this.recordsToDisplay, recordType: 'Ambulance' })
             .then(data => {
                 this.updateMessage = data.actionMessage;
-                this.showSection = false;
-                this.draftValues = [];
-                this.recordsToDisplay = data.updatedRecords;
-                
-                if(this.updateMessage){
-                    this.updateMessage = this.updateMessage.replace(/\r\n/g, "<br />");
-                    this.showErrorMessage = true;
-                }
                 if (data.passedResult === 'Passed') {
-                        this.dispatchEvent(new ShowToastEvent({
+                    this.draftValues = [];
+                    // Merge updated records into the existing table instead of replacing
+                    const updatedMap = new Map(data.updatedRecords.map(r => [r.Id, r]));
+
+                    this.recordsToDisplay = this.recordsToDisplay.map(existing => {
+                    const updated = updatedMap.get(existing.Id);
+                    return updated ? { ...existing, ...updated } : existing;
+                    });
+
+                    this.showSection = false;
+                    this.dispatchEvent(new ShowToastEvent({
+                        title: 'Success',
+                        message: 'HealthCare Cost for Ambulance record(s) updated successfully',
+                        variant: 'success'
+                    }));
+                } else {
+                    this.showSection = true; // stay in edit mode  
+                }
+                
+    
+                if (this.updateMessage) {
+                    // Split by line breaks and remove duplicate lines
+                    let lines = this.updateMessage.split(/\r?\n/);
+                    // remove duplicates and empty lines
+                    let uniqueLines = [...new Set(lines)].filter(Boolean); 
+                    this.updateMessage = uniqueLines.join('<br />');
+                    this.showErrorMessage = true;
+                     //  Parse the error lines to extract row/field for highlighting
+                    this.errorFields = uniqueLines.map(line => {
+                    return null;
+                    }).filter(Boolean);
+                }
+                
+    
+                //  Handle result based on passedResult
+                if (data.passedResult === 'Passed') {
+                    this.showSection = false;
+                    this.dispatchEvent(new ShowToastEvent({
                         title: 'Success',
                         message: 'HealthCare Cost Ambulance record(s) updated successfully',
                         variant: 'success'
                     }));
                 } 
-                else if(data.passedResult == 'Failed' || data.passedResult == null){
-                        this.dispatchEvent(
-                        new ShowToastEvent({
-                            title: 'Error',
-                            message: 'Please review the error message shown below and try again!',
-                            variant: 'error'
-                        })
-                    );   
-                }
-                else if(data.passedResult == 'Partial Success'){
-                        this.dispatchEvent(
-                        new ShowToastEvent({
-                            title: 'Warning',
-                            message: 'Few Healthcare Cost record(s) updated successfully. Errors on remaining shown below!',
-                            variant: 'Warning'
-                        })
-                    );
-                }
-                else {
-                        this.dispatchEvent(new ShowToastEvent({
+                else if (data.passedResult === 'Failed' || data.passedResult == null) {
+                    this.showSection = true;
+                    this.dispatchEvent(new ShowToastEvent({
                         title: 'Error',
                         message: 'Please review the error message shown below and try again!',
                         variant: 'error'
                     }));
                 }
-    
+                    // working
+                else if (data.passedResult === 'Partial Success') {
+                    // Merge updated records into the existing table instead of replacing
+                    const updatedMap = new Map(data.updatedRecords.map(r => [r.Id, r]));
+
+                    this.recordsToDisplay = this.recordsToDisplay.map(existing => {
+                    const updated = updatedMap.get(existing.Id);
+                    return updated ? { ...existing, ...updated } : existing;
+                    });
+                
+                    this.successfullyUpdatedFields = new Set();
+                
+                    // Reapply failed draft values to recordsToDisplay
+                    const failedDraftMap = new Map(this.draftValues.map(d => [d.Id, d]));
+                        this.recordsToDisplay = this.recordsToDisplay.map(existing => {
+                        if (failedDraftMap.has(existing.Id)) {
+                        return { ...existing, ...failedDraftMap.get(existing.Id) };
+                        }
+                    return existing;
+                    });
+                    this.draftValues = this.draftValues.filter(
+                        draft=>data.failedRecordIds.includes(draft.Id)
+                    );
+                
+                    // Important: Update lastSavedData so cancel works correctly
+                    this.lastSavedData = JSON.parse(JSON.stringify(this.recordsToDisplay));
+                
+                    this.dispatchEvent(
+                        new ShowToastEvent({
+                            title: 'Warning',
+                            message: 'Few Ambulance record(s) updated successfully. Errors on remaining shown below!',
+                            variant: 'Warning'
+                        })
+                    );
+                
+                    this.showSection = true; // stay in edit mode
+                    
+                }
                 return this.refresh();
-            })
+                 
+          
+             })
             .catch(error => {
+                this.showSection = true;
                 this.dispatchEvent(new ShowToastEvent({
                     title: 'Error',
                     message: 'An issue occurred while saving. Please contact support.',
                     variant: 'error'
                 }));
+            })
+            .finally(() => {
+                this.showSpinner = false;
             });
     }
-    
+
     handleRefresh(){
         this.onLoad();
-    }
- 
-    
+    }     
 }
