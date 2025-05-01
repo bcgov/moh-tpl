@@ -54,6 +54,7 @@ public with sharing class HCCCostController {
             Database.SaveResult[] srList = Database.update(listOfHealthcareCost, false);
             List<Integer> capturehccIds = new List<Integer>();
             List<Integer> capturedIndex = new List<Integer>();
+            List<String> failedRecordIds = new List<String>();
             for (Database.SaveResult sr : srList){
                 if (sr.isSuccess()) {
                     capturedIndex.add(rowCountMap.get(sr.getId()));
@@ -61,6 +62,7 @@ public with sharing class HCCCostController {
                 else{
                     for(Database.Error err : sr.getErrors()) {
                         result += 'Row ' + rowCountMap.get(sr.getId()) + ' ' + err.getMessage() + '\n';
+                        failedRecordIds.add(sr.getId());
                     }
                     
                 }
@@ -89,6 +91,7 @@ public with sharing class HCCCostController {
             
             caseListWrapper.actionMessage = result;
             caseListWrapper.indexNumbers = capturedIndex;
+            caseListWrapper.failedRecordIds = failedRecordIds;
             String query =  'SELECT ' + fields + ' FROM Healthcare_Cost__c WHERE ID IN:recordDisplay ';
             
             List<Healthcare_Cost__c> updatedRecords = database.query(query);
@@ -303,6 +306,7 @@ public with sharing class HCCCostController {
             List<Account> accList = [SELECT id,name,Site_Code__c 
                                      FROM Account 
                                      WHERE Site_Code__c IN:healthCareMap.keySet() LIMIT 1];
+
             return accList;
         } catch (Exception e) {
             System.debug(e.getMessage());
@@ -327,7 +331,7 @@ public with sharing class HCCCostController {
         List<Healthcare_Cost__c> hccList = [SELECT id,case2__c 
                                             FROM Healthcare_Cost__c 
                                             WHERE ID NOT IN:currentRecords AND case2__c  =: caseId 
-                                            AND RecordType.developerName =:recordType FOR UPDATE];
+                                            AND RecordType.DeveloperName =:recordType FOR UPDATE];
         for(Healthcare_Cost__c hcc : currentRecords){
             hcc.Cost_Include__c = costInclude;
             hcc.Cost_Review__c = costReview;
@@ -384,6 +388,7 @@ public with sharing class HCCCostController {
         @AuraEnabled public String passedResult {get;set;}
         @AuraEnabled public List<Integer> indexNumbers {get;set;}
         @AuraEnabled public List<Healthcare_Cost__c> updatedRecords{get;set;}
+        @AuraEnabled public List<String> failedRecordIds{get;set;}
     }
     
     /*
