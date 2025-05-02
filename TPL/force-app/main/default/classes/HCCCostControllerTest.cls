@@ -288,9 +288,7 @@ public class HCCCostControllerTest {
     @isTest
     static void testsaveDraftValuesHospitalization(){
         Account acc = TestDataFactory.individualAccount();
-        insert acc;
         Account facility = TestDataFactory.facilityAccount();
-        insert facility;
         Case c = TestDataFactory.newCase(acc.Id);
         insert c;
         
@@ -298,10 +296,10 @@ public class HCCCostControllerTest {
         String exceptionMessage = null;
         Product2 pr = TestDataFactory.newProduct(facility.Id);
         String serviceType = pr.Service_Type__c;
-        insert pr;
-        Healthcare_Cost__c hcc1 = TestDataFactory.hospitalizationCostRecord(acc.Id, c.Id, facility.Id, pr.Id, serviceType);
-        Healthcare_Cost__c hcc2 = TestDataFactory.hospitalizationCostRecord(acc.Id, c.Id, facility.Id, pr.Id, serviceType);
-        Healthcare_Cost__c hcc3 = TestDataFactory.hospitalizationCostRecord(acc.Id, c.Id, facility.Id, pr.Id, serviceType);
+        
+        Healthcare_Cost__c hcc1 = TestDataFactory.hospitalizationCostRecord(null, c.Id, null, null, serviceType); 
+        Healthcare_Cost__c hcc2 = TestDataFactory.hospitalizationCostRecord(null, c.Id, null, null, serviceType); 
+        Healthcare_Cost__c hcc3 = TestDataFactory.hospitalizationCostRecord(null, c.Id, null, null, serviceType);
         
         List<Healthcare_Cost__c> hccList1 = new List <Healthcare_Cost__c>();
         List<Healthcare_Cost__c> hccList2 = new List<Healthcare_Cost__c>();
