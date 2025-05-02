@@ -2,465 +2,599 @@
 * Company: CGI for BC Ministry of Health
 * Date: April 30, 2023
 * Author: Anudish Jinturkar
-* Description: public class HCCostCaseControllerTest : Test class written on the generic controller class HCCostCaseController covers the Case level-based functionality of Healthcare Cost
+* Description: public class HCCCostControllerTest : Test class written on the generic controller class HCCCostController
 *    Test Methods:
-*         testGetHealthcareCostsAmbulanceForCaseDescendingSort() : Test Method to test the Ambulance records fetched in the descending sort order on the case level based on case and related account selected for Healthcare cost records
-*         insertHCCFutureMethod() : Test Method to insert bulk records for processing mass healthcare cost records testing on case level 
-*         testHCCostCaseDAO() : Test Method to test the execution of case assignment to bulk healthcare cost records on case level
-*         testGetHealthcareCostsAmbulanceForCaseAscendingSort():Test Method to test the Ambulance records fetched in the ascending sort order on the case level based on case and related account selected for Healthcare cost records
-*         testGetHealthcareCostsHospitalForCaseDescendingSort(): Test Method to test the Hospitalization records fetched in the descending sort order on the case level based on case and related account selected for Healthcare cost records
-*         testGetHealthcareCostsHospitalForCaseAscendingSort(): Test Method to test the Hospitalization records fetched in the ascending sort order on the case level based on case and related account selected for Healthcare cost records
-*		  testGetHealthcareCostsMSPForCaseDescendingSort(): Test Method to test the MSP records fetched in the descending sort order on the case level based on case and related account selected for Healthcare cost records
-*		  testGetHealthcareCostsMSPForCaseAscendingSort(): Test Method to test the MSP records fetched in the ascending sort order on the case level based on case and related account selected for Healthcare cost records
-*		  testGetHealthcareCostsPharmacareForCaseDescendingSort():Test Method to test the Pharmacare records fetched in the descending sort order on the case level based on case and related account selected for Healthcare cost records
-*		  testGetHealthcareCostsPharmacareForCaseAscendingSort(): Test Method to test the Pharmacare records fetched in the ascending sort order on the case level based on case and related account selected for Healthcare cost records
-*		  testGetHealthcareCostsContinuingCareForCase(): Test Method to test the Continuing Care records fetched on the case level based on case and related account selected for Healthcare cost records
-*         testGetHealthcareCostsFutureCareForCase(): Test Method to test the Future Care records fetched on the case level based on case and related account selected for Healthcare cost records
+*         testsaveDraftValuesAmbulance() : Test Method to test the save draft values functionality part and related code base for Ambulance record type
+*         testsaveDraftValuesMSP() : Test Method to test the save draft values functionality part and related code base for MSP record type
+*         testsaveDraftValuesPharmacare() : Test Method to test the save draft values functionality part and related code base for Pharmacare record type
+*         testsaveDraftValuesContinuingCare():Test Method to test the save draft values functionality part and related code base for Continuing Care record type
+*         testsaveDraftValuesFutureCare(): Test Method to test the save draft values functionality part and related code base for Future Care record type
+*         testsaveDraftValuesHospitalization(): Test Method to test the save draft values functionality part and related code base for Hospitalization record type
+*		  testRecordsDeleteFunctionality(): Test Method to check the delete functionality of Healthcare Cost records
+*		  testgetFacilityBySiteCode(): Test Method to get the Facility record data by the site code value
+*		  testupdateAll():Test Method to update all the records of Healthcare cost associated with the particular account
+*		  testCaseNumber(): Test Method to fetch the case number of the respective case ID
+*		  testUpdatetoCaseValues(): Test Method to update the case value for the Healthcare Cost record
+*         testUpdatetoCaseValuesFailScenario(): Test Method to validate the updation of the case value for the Healthcare Cost when incorrect Healthcare Cost record is present
 * History:
 *     Initial version: March 30, 2023 - AJ
 *     Updates to codebase: May 10, 2023 - AJ
 *     Updates to codebase: July 4, 2023 - AJ
 */
+
 @isTest
-public with sharing class HCCostCaseControllerTest {
-    @isTest
-    static void testGetHealthcareCostsAmbulanceForCaseDescendingSort(){
-        Account acc = TestDataFactory.individualAccount();
-        insert acc;
-        Case c = TestDataFactory.newCase(acc.Id);
-        insert c;
-        List<Healthcare_Cost__c> hccList = new List<Healthcare_Cost__c>();
-        
-        for(Integer i = 0; i< 11; i++){
-            Healthcare_Cost__c hcc = TestDataFactory.ambulanceCostRecord(acc.Id, c.Id);
-            hccList.add(hcc);
-        }
-        
-        Test.startTest();
-        String filterAllRecords = Label.TPL_All_Records;
-        String filterManualRecords = Label.TPL_Manual_Records;
-        String filterRecordsToday = Label.TPL_Records_Created_Today;
-        Integer pageNumber = 2;
-        Integer pageSize = 5;
-        String sortOrder = Label.TPL_Descending;
-        String exceptionMessage = null;
-        HCCostCaseController.HCCostCaseDetailWrapper caseDetailWrapper1 = new HCCostCaseController.HCCostCaseDetailWrapper();
-        HCCostCaseController.HCCostCaseDetailWrapper caseDetailWrapper2 = new HCCostCaseController.HCCostCaseDetailWrapper();
-        HCCostCaseController.HCCostCaseDetailWrapper caseDetailWrapper3 = new HCCostCaseController.HCCostCaseDetailWrapper();
-        try{
-            insert hccList;                
-            caseDetailWrapper1 = HCCostCaseController.getHealthcareCostsAmbulanceForCase(c.Id,filterAllRecords,pageSize, pageNumber,sortOrder);
-            caseDetailWrapper2 = HCCostCaseController.getHealthcareCostsAmbulanceForCase(c.Id,filterManualRecords,pageSize, pageNumber,sortOrder);
-            caseDetailWrapper3 = HCCostCaseController.getHealthcareCostsAmbulanceForCase(c.Id,filterRecordsToday,pageSize, pageNumber,sortOrder);    
-        }
-        catch(DmlException dml){
-            exceptionMessage = dml.getMessage();
-        }
-        Test.stopTest();
-        if(exceptionMessage != null){
-            System.assertNotEquals(null, exceptionMessage);
-        }
-        else {
-            System.assertEquals(caseDetailWrapper2.hccList.size(),caseDetailWrapper3.hccList.size());            
-        }
-    }
-    @future
-    public static void insertHCCFutureMethod(){
-        Account acc = TestDataFactory.individualAccount();
-        insert acc;
-        Case c = TestDataFactory.newCase(acc.Id);
-        insert c;
-        List<Healthcare_Cost__c> hccListInsert = new List<Healthcare_Cost__c>();
-        for(Integer i=0;i<4000;i++){
-            Healthcare_Cost__c hcc2 = TestDataFactory.ambulanceCostRecord(acc.Id, c.Id);
-            hccListInsert.add(hcc2);
-        }
-        database.insert(hccListInsert,false);
-        HCCostCaseControllerTest.testHCCostCaseDAO();
-    }
+public class HCCCostControllerTest {
     
     @isTest
-    public static void testHCCostCaseDAO(){
+    static void testsaveDraftValuesAmbulance(){
         Account acc = TestDataFactory.individualAccount();
         insert acc;
         Case c = TestDataFactory.newCase(acc.Id);
         insert c;
-        Test.startTest();
-        String manualRecords = Label.TPL_Manual_Records;
-        String recordsCreatedToday = Label.TPL_Records_Created_Today;
-        String totalTecords = Label.TPL_All_Records;
-        Integer startNumber = 4000;
-        Integer pageSize = 10;
-        Id recordTypeId = Schema.SObjectType.Healthcare_Cost__c.getRecordTypeInfosByName().get('Ambulance').getRecordTypeId(); 
-        HCCostCaseDAO.getHCCostCaseRecords(c.Id,manualRecords,recordTypeId,startNumber,pageSize,Label.TPL_Ambulance_Fields,Label.TPL_Descending);
-        HCCostCaseDAO.getHCCostCaseRecords(c.Id,manualRecords,recordTypeId,startNumber,pageSize,Label.TPL_Ambulance_Fields,'');
-        HCCostCaseDAO.getHCCostCaseRecords(c.Id,recordsCreatedToday,recordTypeId,startNumber,pageSize,Label.TPL_Ambulance_Fields,Label.TPL_Descending);
-        HCCostCaseDAO.getHCCostCaseRecords(c.Id,recordsCreatedToday,recordTypeId,startNumber,pageSize,Label.TPL_Ambulance_Fields,'');
-        HCCostCaseDAO.getHCCostCaseRecords(c.Id,Label.TPL_All_Records,recordTypeId,startNumber,pageSize,Label.TPL_Ambulance_Fields,Label.TPL_Descending);
-        HCCostCaseDAO.getHCCostCaseRecords(c.Id,Label.TPL_All_Records,recordTypeId,startNumber,pageSize,Label.TPL_Ambulance_Fields,'');
-        Test.stopTest();
-    }
-    
-    @isTest
-    static void testGetHealthcareCostsAmbulanceForCaseAscendingSort(){
-        Account acc = TestDataFactory.individualAccount();
-        insert acc;
-        Case c = TestDataFactory.newCase(acc.Id);
-        insert c;
-        List<Healthcare_Cost__c> hccList = new List<Healthcare_Cost__c>();
-        for(Integer i=0; i<11;i++){
-            Healthcare_Cost__c hcc = TestDataFactory.ambulanceCostRecord(acc.Id, c.Id);            
-            hccList.add(hcc);
-        }
-        
-        Test.startTest();
-        String filterAllRecords = Label.TPL_All_Records;
-        String filterManualRecords = Label.TPL_Manual_Records;
-        String filterRecordsToday = Label.TPL_Records_Created_Today;
-        Integer pageNumber = 2;
-        Integer pageSize = 5;
-        String sortOrder = Label.TPL_Ascending;
-        String exceptionMessage = null;
-        HCCostCaseController.HCCostCaseDetailWrapper caseDetailWrapper1 = new HCCostCaseController.HCCostCaseDetailWrapper();
-        HCCostCaseController.HCCostCaseDetailWrapper caseDetailWrapper2 = new HCCostCaseController.HCCostCaseDetailWrapper();
-        HCCostCaseController.HCCostCaseDetailWrapper caseDetailWrapper3 = new HCCostCaseController.HCCostCaseDetailWrapper();
-        try{
-            insert hccList;
-            caseDetailWrapper1 = HCCostCaseController.getHealthcareCostsAmbulanceForCase(c.Id,filterAllRecords,pageSize, pageNumber,sortOrder);
-            caseDetailWrapper2 = HCCostCaseController.getHealthcareCostsAmbulanceForCase(c.Id,filterManualRecords,pageSize, pageNumber,sortOrder);
-            caseDetailWrapper3 = HCCostCaseController.getHealthcareCostsAmbulanceForCase(c.Id,filterRecordsToday,pageSize, pageNumber,sortOrder);    
-        }
-        catch(DmlException dml){
-            exceptionMessage = dml.getMessage();
-        }
-        Test.stopTest();
-        if(exceptionMessage != null){
-            System.assertNotEquals(null, exceptionMessage);
-        }
-        else {
-            System.assertEquals(caseDetailWrapper2.hccList.size(),caseDetailWrapper3.hccList.size());            
-        }
-    }
-    
-    @isTest
-    static void testGetHealthcareCostsHospitalForCaseDescendingSort(){
-        Account acc = TestDataFactory.individualAccount();
-        insert acc;
         Account facility = TestDataFactory.facilityAccount();
         insert facility;
-        Case c = TestDataFactory.newCase(acc.Id);
-        insert c;
-        Product2 pr = TestDataFactory.newProduct(facility.Id);
-        String serviceType = pr.Service_Type__c;
-        Test.startTest();
-        String filterAllRecords = Label.TPL_All_Records;
-        String filterManualRecords = Label.TPL_Manual_Records;
-        String filterRecordsToday = Label.TPL_Records_Created_Today;
-        Integer pageNumber = 1;
-        Integer pageSize = 5;
-        String sortOrder = Label.TPL_Descending;
-        String exceptionMessage = null;
-        HCCostCaseController.HCCostCaseDetailWrapper caseDetailWrapper1 = new HCCostCaseController.HCCostCaseDetailWrapper();
-        HCCostCaseController.HCCostCaseDetailWrapper caseDetailWrapper2 = new HCCostCaseController.HCCostCaseDetailWrapper();
-        HCCostCaseController.HCCostCaseDetailWrapper caseDetailWrapper3 = new HCCostCaseController.HCCostCaseDetailWrapper();
         
+        Healthcare_Cost__c hcc1 = TestDataFactory.ambulanceCostRecord(acc.Id, c.Id);
+        Healthcare_Cost__c hcc2 = TestDataFactory.ambulanceCostRecord(acc.Id, c.Id);
+        Healthcare_Cost__c hcc3 = TestDataFactory.ambulanceCostRecord(acc.Id, c.Id);
+        hcc3.Source_System_ID__c = 'abcd';
+        hcc1.Facility__c = facility.Id;
+        hcc2.Facility__c = facility.Id;
+        hcc3.Facility__c = facility.Id;
+        List<Healthcare_Cost__c> hccList1 = new List <Healthcare_Cost__c>();
+        List<Healthcare_Cost__c> hccList2 = new List<Healthcare_Cost__c>();
+        List<Healthcare_Cost__c> hccList3 = new List<Healthcare_Cost__c>(); 
+        hccList1.add(hcc1);
+        hccList1.add(hcc2);
+        hccList2.add(hcc3);
+        hccList3.add(hcc1);
+        hccList3.add(hcc2);
+        hccList3.add(hcc3);
+        
+        Test.startTest();
+        String exceptionMessage = null;
+        HCCCostController.tempClass tempClass = new HCCCostController.tempClass();
+        HCCCostController.CaseListWrapper caseWrapper1 = new HCCCostController.CaseListWrapper();
+        HCCCostController.CaseListWrapper caseWrapper2 = new HCCCostController.CaseListWrapper();
         try{
-            insert pr;
-            Healthcare_Cost__c hcc1 = TestDataFactory.hospitalizationCostRecord(acc.Id, c.Id, facility.Id, pr.Id, serviceType);
-            Healthcare_Cost__c hcc2 = TestDataFactory.hospitalizationCostRecord(acc.Id, c.Id, facility.Id, pr.Id, serviceType);
-            Healthcare_Cost__c hcc3 = TestDataFactory.hospitalizationCostRecord(acc.Id, c.Id, facility.Id, pr.Id, serviceType);
-            insert new Healthcare_Cost__c[] {hcc1, hcc2, hcc3};
-            caseDetailWrapper1 = HCCostCaseController.getHealthcareCostsHospitalForCase(c.Id,filterAllRecords,pageSize, pageNumber, sortOrder);
-            caseDetailWrapper2 = HCCostCaseController.getHealthcareCostsHospitalForCase(c.Id,filterManualRecords,pageSize, pageNumber, sortOrder);
-            caseDetailWrapper3 = HCCostCaseController.getHealthcareCostsHospitalForCase(c.Id,filterRecordsToday,pageSize, pageNumber, sortOrder);    
+            insert hccList1;
+            insert hccList2;
+            for(Healthcare_Cost__c hcc: hccList1){
+                hcc.Cost_Include__c = false;    
+            }for(Healthcare_Cost__c hcc: hccList2){
+                hcc.Cost_Review__c = false;
+                hcc.Date_of_Service__c = Date.newInstance(2015, 06, 08);
+            } 
+            caseWrapper1 = HCCCostController.saveDraftValues(hccList1, hccList3, 'Ambulance');
+            caseWrapper2 = HCCCostController.saveDraftValues(hccList2, hccList3, 'Ambulance');
+            
         }
         catch(DmlException dml){
-            exceptionMessage = dml.getMessage();
+            exceptionMessage = dml.getDmlMessage(0);
+        }
+        catch(Exception e){
+            exceptionMessage = e.getMessage();
         }
         Test.stopTest();
-        if(exceptionMessage != null){
+        
+        if(exceptionMessage !=null){
             System.assertNotEquals(null, exceptionMessage);
         }
-        else {
-            System.assertEquals(caseDetailWrapper2.hccList.size(),caseDetailWrapper3.hccList.size());            
+        else{        
+            System.assertEquals(caseWrapper1.passedResult, caseWrapper2.passedResult);
         }
     }
     
     @isTest
-    static void testGetHealthcareCostsHospitalForCaseAscendingSort(){
+    static void testsaveDraftValuesMSP(){
         Account acc = TestDataFactory.individualAccount();
         insert acc;
-        Account facility = TestDataFactory.facilityAccount();
-        insert facility;
         Case c = TestDataFactory.newCase(acc.Id);
         insert c;
-        Product2 pr = TestDataFactory.newProduct(facility.Id);
-        String serviceType = pr.Service_Type__c;
-        Test.startTest();
-        String filterAllRecords = Label.TPL_All_Records;
-        String filterManualRecords = Label.TPL_Manual_Records;
-        String filterRecordsToday = Label.TPL_Records_Created_Today;
-        Integer pageNumber = 1;
-        Integer pageSize = 5;
-        String sortOrder = Label.TPL_Ascending;
-        String exceptionMessage = null;
-        HCCostCaseController.HCCostCaseDetailWrapper caseDetailWrapper1 = new HCCostCaseController.HCCostCaseDetailWrapper();
-        HCCostCaseController.HCCostCaseDetailWrapper caseDetailWrapper2 = new HCCostCaseController.HCCostCaseDetailWrapper();
-        HCCostCaseController.HCCostCaseDetailWrapper caseDetailWrapper3 = new HCCostCaseController.HCCostCaseDetailWrapper();
         
-        try{
-            insert pr;
-            Healthcare_Cost__c hcc1 = TestDataFactory.hospitalizationCostRecord(acc.Id, c.Id, facility.Id, pr.Id, serviceType);
-            Healthcare_Cost__c hcc2 = TestDataFactory.hospitalizationCostRecord(acc.Id, c.Id, facility.Id, pr.Id, serviceType);
-            Healthcare_Cost__c hcc3 = TestDataFactory.hospitalizationCostRecord(acc.Id, c.Id, facility.Id, pr.Id, serviceType);
-            insert new Healthcare_Cost__c[] {hcc1, hcc2, hcc3};
-            caseDetailWrapper1 = HCCostCaseController.getHealthcareCostsHospitalForCase(c.Id,filterAllRecords,pageSize, pageNumber, sortOrder);
-            caseDetailWrapper2 = HCCostCaseController.getHealthcareCostsHospitalForCase(c.Id,filterManualRecords,pageSize, pageNumber, sortOrder);
-            caseDetailWrapper3 = HCCostCaseController.getHealthcareCostsHospitalForCase(c.Id,filterRecordsToday,pageSize, pageNumber, sortOrder);    
-        }
-        catch(DmlException dml){
-            exceptionMessage = dml.getMessage();
-        }
-        Test.stopTest();
-        if(exceptionMessage != null){
-            System.assertNotEquals(null, exceptionMessage);
-        }
-        else {
-            System.assertEquals(caseDetailWrapper2.hccList.size(),caseDetailWrapper3.hccList.size());            
-        }
-    }
-    
-    @isTest
-    static void testGetHealthcareCostsMSPForCaseDescendingSort(){
-        Account acc = TestDataFactory.individualAccount();
-        insert acc;
-        Case c = TestDataFactory.newCase(acc.Id);
-        insert c;
         Healthcare_Cost__c hcc1 = TestDataFactory.mspCostRecord(acc.Id, c.Id);
         Healthcare_Cost__c hcc2 = TestDataFactory.mspCostRecord(acc.Id, c.Id);
         Healthcare_Cost__c hcc3 = TestDataFactory.mspCostRecord(acc.Id, c.Id);
+        hcc3.Source_System_ID__c = 'abcd';
+        
+        List<Healthcare_Cost__c> hccList1 = new List <Healthcare_Cost__c>();
+        List<Healthcare_Cost__c> hccList2 = new List<Healthcare_Cost__c>();
+        List<Healthcare_Cost__c> hccList3 = new List<Healthcare_Cost__c>(); 
+        hccList1.add(hcc1);
+        hccList1.add(hcc2);
+        hccList2.add(hcc3);
+        hccList3.add(hcc1);
+        hccList3.add(hcc2);
+        hccList3.add(hcc3);
         
         Test.startTest();
-        String filterAllRecords = Label.TPL_All_Records;
-        String filterManualRecords = Label.TPL_Manual_Records;
-        String filterRecordsToday = Label.TPL_Records_Created_Today;
-        Integer pageNumber = 1;
-        Integer pageSize = 5;
-        String sortOrder = Label.TPL_Descending;
         String exceptionMessage = null;
-        HCCostCaseController.HCCostCaseDetailWrapper caseDetailWrapper1 = new HCCostCaseController.HCCostCaseDetailWrapper();
-        HCCostCaseController.HCCostCaseDetailWrapper caseDetailWrapper2 = new HCCostCaseController.HCCostCaseDetailWrapper();
-        HCCostCaseController.HCCostCaseDetailWrapper caseDetailWrapper3 = new HCCostCaseController.HCCostCaseDetailWrapper();
+        HCCCostController.CaseListWrapper caseWrapper1 = new HCCCostController.CaseListWrapper();
+        HCCCostController.CaseListWrapper caseWrapper2 = new HCCCostController.CaseListWrapper();
         try{
-            insert new Healthcare_Cost__c[] {hcc1, hcc2, hcc3};
-            caseDetailWrapper1 = HCCostCaseController.getHealthcareCostsMSPForCase(c.Id,filterAllRecords,pageSize, pageNumber, sortOrder);
-            caseDetailWrapper2 = HCCostCaseController.getHealthcareCostsMSPForCase(c.Id,filterManualRecords,pageSize, pageNumber, sortOrder);
-            caseDetailWrapper3 = HCCostCaseController.getHealthcareCostsMSPForCase(c.Id,filterRecordsToday,pageSize, pageNumber, sortOrder);    
+            insert hccList1;
+            insert hccList2;
+            for(Healthcare_Cost__c hcc: hccList1){
+                hcc.Cost_Include__c = false;    
+            }for(Healthcare_Cost__c hcc: hccList2){
+                hcc.Cost_Review__c = false;
+            }
+            caseWrapper1 = HCCCostController.saveDraftValues(hccList1, hccList3, 'MSP');
+            caseWrapper2 = HCCCostController.saveDraftValues(hccList2, hccList3, 'MSP');
         }
         catch(DmlException dml){
-            exceptionMessage = dml.getMessage();
+            exceptionMessage = dml.getDmlMessage(0);
         }
         Test.stopTest();
-        if(exceptionMessage != null){
+        
+        if(exceptionMessage !=null){
             System.assertNotEquals(null, exceptionMessage);
         }
-        else {
-            System.assertEquals(caseDetailWrapper2.hccList.size(),caseDetailWrapper3.hccList.size());            
+        else{        
+            System.assertEquals(caseWrapper1.passedResult, caseWrapper2.passedResult);
         }
     }
     
     @isTest
-    static void testGetHealthcareCostsMSPForCaseAscendingSort(){
+    static void testsaveDraftValuesPharmacare(){
         Account acc = TestDataFactory.individualAccount();
         insert acc;
         Case c = TestDataFactory.newCase(acc.Id);
         insert c;
-        Healthcare_Cost__c hcc1 = TestDataFactory.mspCostRecord(acc.Id, c.Id);
-        Healthcare_Cost__c hcc2 = TestDataFactory.mspCostRecord(acc.Id, c.Id);
-        Healthcare_Cost__c hcc3 = TestDataFactory.mspCostRecord(acc.Id, c.Id);
+        
+        Healthcare_Cost__c hcc1 = TestDataFactory.pharmacareCostRecord(acc.Id, c.Id);
+        Healthcare_Cost__c hcc2 = TestDataFactory.pharmacareCostRecord(acc.Id, c.Id);
+        Healthcare_Cost__c hcc3 = TestDataFactory.pharmacareCostRecord(acc.Id, c.Id);
+        hcc3.Source_System_ID__c = 'abcd';
+        
+        List<Healthcare_Cost__c> hccList1 = new List <Healthcare_Cost__c>();
+        List<Healthcare_Cost__c> hccList2 = new List<Healthcare_Cost__c>();
+        List<Healthcare_Cost__c> hccList3 = new List<Healthcare_Cost__c>(); 
+        hccList1.add(hcc1);
+        hccList1.add(hcc2);
+        hccList2.add(hcc3);
+        hccList3.add(hcc1);
+        hccList3.add(hcc2);
+        hccList3.add(hcc3);
         
         Test.startTest();
-        String filterAllRecords = Label.TPL_All_Records;
-        String filterManualRecords = Label.TPL_Manual_Records;
-        String filterRecordsToday = Label.TPL_Records_Created_Today;
-        Integer pageNumber = 1;
-        Integer pageSize = 5;
-        String sortOrder = Label.TPL_Ascending;
         String exceptionMessage = null;
-        HCCostCaseController.HCCostCaseDetailWrapper caseDetailWrapper1 = new HCCostCaseController.HCCostCaseDetailWrapper();
-        HCCostCaseController.HCCostCaseDetailWrapper caseDetailWrapper2 = new HCCostCaseController.HCCostCaseDetailWrapper();
-        HCCostCaseController.HCCostCaseDetailWrapper caseDetailWrapper3 = new HCCostCaseController.HCCostCaseDetailWrapper();
+        HCCCostController.CaseListWrapper caseWrapper1 = new HCCCostController.CaseListWrapper();
+        HCCCostController.CaseListWrapper caseWrapper2 = new HCCCostController.CaseListWrapper();
         try{
-            insert new Healthcare_Cost__c[] {hcc1, hcc2, hcc3};
-            caseDetailWrapper1 = HCCostCaseController.getHealthcareCostsMSPForCase(c.Id,filterAllRecords,pageSize, pageNumber, sortOrder);
-            caseDetailWrapper2 = HCCostCaseController.getHealthcareCostsMSPForCase(c.Id,filterManualRecords,pageSize, pageNumber, sortOrder);
-            caseDetailWrapper3 = HCCostCaseController.getHealthcareCostsMSPForCase(c.Id,filterRecordsToday,pageSize, pageNumber, sortOrder);    
+            insert hccList1;
+            insert hccList2;
+            for(Healthcare_Cost__c hcc: hccList1){
+                hcc.Cost_Include__c = false;    
+            }for(Healthcare_Cost__c hcc: hccList2){
+                hcc.Cost_Review__c = false;
+            }
+            caseWrapper1 = HCCCostController.saveDraftValues(hccList1, hccList3, 'Pharmacare');
+            caseWrapper2 = HCCCostController.saveDraftValues(hccList2, hccList3, 'Pharmacare');
         }
         catch(DmlException dml){
-            exceptionMessage = dml.getMessage();
+            exceptionMessage = dml.getDmlMessage(0);
         }
         Test.stopTest();
-        if(exceptionMessage != null){
+        
+        if(exceptionMessage !=null){
             System.assertNotEquals(null, exceptionMessage);
         }
-        else {
-            System.assertEquals(caseDetailWrapper2.hccList.size(),caseDetailWrapper3.hccList.size());            
+        else{        
+            System.assertEquals(caseWrapper1.passedResult, caseWrapper2.passedResult);
         }
     }
     
     @isTest
-    static void testGetHealthcareCostsPharmacareForCaseDescendingSort(){
+    static void testsaveDraftValuesContinuingCare(){
         Account acc = TestDataFactory.individualAccount();
         insert acc;
         Case c = TestDataFactory.newCase(acc.Id);
         insert c;
-        List<Healthcare_Cost__c> hccList = new List<Healthcare_Cost__c>();
-        for(Integer i=0;i<11;i++){
-            Healthcare_Cost__c hcc = TestDataFactory.pharmacareCostRecord(acc.Id, c.Id); 
-            hccList.add(hcc);
-        }
         
-        Test.startTest();
-        String filterAllRecords = Label.TPL_All_Records;
-        String filterManualRecords = Label.TPL_Manual_Records;
-        String filterRecordsToday = Label.TPL_Records_Created_Today;
-        Integer pageNumber = 1;
-        Integer pageSize = 5;
-        String sortOrder = Label.TPL_Descending;
-        String exceptionMessage = null;
-        HCCostCaseController.HCCostCaseDetailWrapper caseDetailWrapper1 = new HCCostCaseController.HCCostCaseDetailWrapper();
-        HCCostCaseController.HCCostCaseDetailWrapper caseDetailWrapper2 = new HCCostCaseController.HCCostCaseDetailWrapper();
-        HCCostCaseController.HCCostCaseDetailWrapper caseDetailWrapper3 = new HCCostCaseController.HCCostCaseDetailWrapper();
-        try{
-            insert hccList;
-            caseDetailWrapper1 = HCCostCaseController.getHealthcareCostsPharmacareForCase(c.Id,filterAllRecords,pageSize, pageNumber, sortOrder);
-            caseDetailWrapper2 = HCCostCaseController.getHealthcareCostsPharmacareForCase(c.Id,filterManualRecords,pageSize, pageNumber, sortOrder);
-            caseDetailWrapper3 = HCCostCaseController.getHealthcareCostsPharmacareForCase(c.Id,filterRecordsToday,pageSize, pageNumber, sortOrder);    
-        }
-        catch(DmlException dml){
-            exceptionMessage = dml.getMessage();
-        }
-        Test.stopTest();
-        if(exceptionMessage != null){
-            System.assertNotEquals(null, exceptionMessage);
-        }
-        else {
-            System.assertEquals(caseDetailWrapper2.hccList.size(),caseDetailWrapper3.hccList.size());            
-        }
-    }
-    
-    @isTest
-    static void testGetHealthcareCostsPharmacareForCaseAscendingSort(){
-        Account acc = TestDataFactory.individualAccount();
-        insert acc;
-        Case c = TestDataFactory.newCase(acc.Id);
-        insert c;
-        List<Healthcare_Cost__c> hccList = new List<Healthcare_Cost__c>();
-        for(Integer i=0;i<11;i++){
-            Healthcare_Cost__c hcc = TestDataFactory.pharmacareCostRecord(acc.Id, c.Id);  
-            hccList.add(hcc);          
-        }
-        
-        Test.startTest();
-        String filterAllRecords = Label.TPL_All_Records;
-        String filterManualRecords = Label.TPL_Manual_Records;
-        String filterRecordsToday = Label.TPL_Records_Created_Today;
-        Integer pageNumber = 1;
-        Integer pageSize = 5;
-        String sortOrder = Label.TPL_Ascending;
-        String exceptionMessage = null;
-        HCCostCaseController.HCCostCaseDetailWrapper caseDetailWrapper1 = new HCCostCaseController.HCCostCaseDetailWrapper();
-        HCCostCaseController.HCCostCaseDetailWrapper caseDetailWrapper2 = new HCCostCaseController.HCCostCaseDetailWrapper();
-        HCCostCaseController.HCCostCaseDetailWrapper caseDetailWrapper3 = new HCCostCaseController.HCCostCaseDetailWrapper();
-        try{
-            insert hccList;
-            caseDetailWrapper1 = HCCostCaseController.getHealthcareCostsPharmacareForCase(c.Id,filterAllRecords,pageSize, pageNumber, sortOrder);
-            caseDetailWrapper2 = HCCostCaseController.getHealthcareCostsPharmacareForCase(c.Id,filterManualRecords,pageSize, pageNumber, sortOrder);
-            caseDetailWrapper3 = HCCostCaseController.getHealthcareCostsPharmacareForCase(c.Id,filterRecordsToday,pageSize, pageNumber, sortOrder);    
-        }
-        catch(DmlException dml){
-            exceptionMessage = dml.getMessage();
-        }
-        Test.stopTest();
-        if(exceptionMessage != null){
-            System.assertNotEquals(null, exceptionMessage);
-        }
-        else {
-            System.assertEquals(caseDetailWrapper2.hccList.size(),caseDetailWrapper3.hccList.size());            
-        }
-    }
-    
-    @isTest
-    static void testGetHealthcareCostsContinuingCareForCase(){
-        Account acc = TestDataFactory.individualAccount();
-        insert acc;
-        Case c = TestDataFactory.newCase(acc.Id);
-        insert c;
         Healthcare_Cost__c hcc1 = TestDataFactory.continuingcareCostRecord(acc.Id, c.Id);
         Healthcare_Cost__c hcc2 = TestDataFactory.continuingcareCostRecord(acc.Id, c.Id);
         Healthcare_Cost__c hcc3 = TestDataFactory.continuingcareCostRecord(acc.Id, c.Id);
+        hcc3.Source_System_ID__c = 'abcd';
+        
+        List<Healthcare_Cost__c> hccList1 = new List <Healthcare_Cost__c>();
+        List<Healthcare_Cost__c> hccList2 = new List<Healthcare_Cost__c>();
+        List<Healthcare_Cost__c> hccList3 = new List<Healthcare_Cost__c>(); 
+        hccList1.add(hcc1);
+        hccList1.add(hcc2);
+        hccList2.add(hcc3);
+        hccList3.add(hcc1);
+        hccList3.add(hcc2);
+        hccList3.add(hcc3);
         
         Test.startTest();
-        String filterManualRecords = Label.TPL_Manual_Records;
-        String filterRecordsToday = Label.TPL_Records_Created_Today;
-        Integer pageNumber = 1;
-        String sortOrder = Label.TPL_Descending;
-        Integer pageSize = 5;
         String exceptionMessage = null;
-        HCCostCaseController.HCCostCaseDetailWrapper caseDetailWrapper1 = new HCCostCaseController.HCCostCaseDetailWrapper();
-        HCCostCaseController.HCCostCaseDetailWrapper caseDetailWrapper2 = new HCCostCaseController.HCCostCaseDetailWrapper();
+        HCCCostController.CaseListWrapper caseWrapper1 = new HCCCostController.CaseListWrapper();
+        HCCCostController.CaseListWrapper caseWrapper2 = new HCCCostController.CaseListWrapper();
         try{
-            insert new Healthcare_Cost__c[] {hcc1, hcc2, hcc3};
-                caseDetailWrapper1 = HCCostCaseController.getHealthcareCostsCCForCase(c.Id,filterManualRecords,pageSize, pageNumber, sortOrder);
-            caseDetailWrapper2 = HCCostCaseController.getHealthcareCostsCCForCase(c.Id,filterRecordsToday,pageSize, pageNumber, sortOrder);    
+            insert hccList1;
+            insert hccList2;
+            for(Healthcare_Cost__c hcc: hccList1){
+                hcc.Cost_Include__c = false;    
+            }for(Healthcare_Cost__c hcc: hccList2){
+                hcc.Cost_Review__c = false;
+            }
+            caseWrapper1 = HCCCostController.saveDraftValues(hccList1, hccList3, 'Continuing Care');
+            caseWrapper2 = HCCCostController.saveDraftValues(hccList2, hccList3, 'Continuing Care');
         }
         catch(DmlException dml){
-            exceptionMessage = dml.getMessage();
+            exceptionMessage = dml.getDmlMessage(0);
         }
         Test.stopTest();
-        if(exceptionMessage != null){
+        
+        if(exceptionMessage !=null){
             System.assertNotEquals(null, exceptionMessage);
         }
-        else {
-            System.assertEquals(caseDetailWrapper1.hccList.size(),caseDetailWrapper2.hccList.size());            
+        else{        
+            System.assertEquals(caseWrapper1.passedResult, caseWrapper2.passedResult);
         }
     }
     
     @isTest
-    static void testGetHealthcareCostsFutureCareForCase(){
+    static void testsaveDraftValuesFutureCare(){
         Account acc = TestDataFactory.individualAccount();
         insert acc;
         Case c = TestDataFactory.newCase(acc.Id);
         insert c;
+        
         Healthcare_Cost__c hcc1 = TestDataFactory.futurecareCostRecord(acc.Id, c.Id);
         Healthcare_Cost__c hcc2 = TestDataFactory.futurecareCostRecord(acc.Id, c.Id);
         Healthcare_Cost__c hcc3 = TestDataFactory.futurecareCostRecord(acc.Id, c.Id);
+        hcc3.Source_System_ID__c = 'abcd';
+        
+        List<Healthcare_Cost__c> hccList1 = new List <Healthcare_Cost__c>();
+        List<Healthcare_Cost__c> hccList2 = new List<Healthcare_Cost__c>();
+        List<Healthcare_Cost__c> hccList3 = new List<Healthcare_Cost__c>(); 
+        hccList1.add(hcc1);
+        hccList1.add(hcc2);
+        hccList2.add(hcc3);
+        hccList3.add(hcc1);
+        hccList3.add(hcc2);
+        hccList3.add(hcc3);
         
         Test.startTest();
-        String filterAllRecords = Label.TPL_All_Records;
-        String filterManualRecords = Label.TPL_Manual_Records;
-        String filterRecordsToday = Label.TPL_Records_Created_Today;
-        Integer pageNumber = 1;
-        String sortOrder = Label.TPL_Descending;
-        Integer pageSize = 5;
         String exceptionMessage = null;
-        HCCostCaseController.HCCostCaseDetailWrapper caseDetailWrapper1 = new HCCostCaseController.HCCostCaseDetailWrapper();
-        HCCostCaseController.HCCostCaseDetailWrapper caseDetailWrapper2 = new HCCostCaseController.HCCostCaseDetailWrapper();
-        
+        HCCCostController.CaseListWrapper caseWrapper1 = new HCCCostController.CaseListWrapper();
+        HCCCostController.CaseListWrapper caseWrapper2 = new HCCCostController.CaseListWrapper();
         try{
-            insert new Healthcare_Cost__c[] {hcc1, hcc2, hcc3};
-                caseDetailWrapper1 = HCCostCaseController.getHealthcareCostsFCForCase(c.Id,filterManualRecords,pageSize, pageNumber, sortOrder);
-            caseDetailWrapper2 = HCCostCaseController.getHealthcareCostsFCForCase(c.Id,filterRecordsToday,pageSize, pageNumber, sortOrder);    
+            insert hccList1;
+            insert hccList2;
+            for(Healthcare_Cost__c hcc: hccList1){
+                hcc.Cost_Include__c = false;    
+            }for(Healthcare_Cost__c hcc: hccList2){
+                hcc.Cost_Review__c = false;
+            }
+            caseWrapper1 = HCCCostController.saveDraftValues(hccList1, hccList3, 'Future Care');
+            caseWrapper2 = HCCCostController.saveDraftValues(hccList2, hccList3, 'Future Care');
+        }
+        catch(DmlException dml){
+            exceptionMessage = dml.getDmlMessage(0);
+        }
+        Test.stopTest();
+        
+        if(exceptionMessage !=null){
+            System.assertNotEquals(null, exceptionMessage);
+        }
+        else{        
+            System.assertEquals(caseWrapper1.passedResult, caseWrapper2.passedResult);
+        }
+    }
+    
+    @isTest
+    static void testsaveDraftValuesHospitalization(){
+        Account acc = TestDataFactory.individualAccount();
+        Account facility = TestDataFactory.facilityAccount();
+        Case c = TestDataFactory.newCase(acc.Id);
+        insert c;
+        
+        Test.startTest();
+        String exceptionMessage = null;
+        Product2 pr = TestDataFactory.newGenericProduct(acc.Id);
+        String serviceType = pr.Service_Type__c;
+                
+        Healthcare_Cost__c hcc1 = TestDataFactory.hospitalizationCostRecord(null, c.Id, null, null, serviceType); 
+        Healthcare_Cost__c hcc2 = TestDataFactory.hospitalizationCostRecord(null, c.Id, null, null, serviceType); 
+        Healthcare_Cost__c hcc3 = TestDataFactory.hospitalizationCostRecord(null, c.Id, null, null, serviceType); 
+        
+        List<Healthcare_Cost__c> hccList1 = new List <Healthcare_Cost__c>();
+        List<Healthcare_Cost__c> hccList2 = new List<Healthcare_Cost__c>();
+        List<Healthcare_Cost__c> hccList3 = new List<Healthcare_Cost__c>(); 
+        hccList1.add(hcc1);
+        hccList1.add(hcc2);
+        hccList2.add(hcc3);
+        hccList3.add(hcc1);
+        hccList3.add(hcc2);
+        hccList3.add(hcc3);
+        HCCCostController.CaseListWrapper caseWrapper1 = new HCCCostController.CaseListWrapper();
+        HCCCostController.CaseListWrapper caseWrapper2 = new HCCCostController.CaseListWrapper();
+        try{
+            insert hccList1;
+            insert hccList2;
+            for(Healthcare_Cost__c hcc: hccList1){
+                hcc.Cost_Include__c = false;    
+            }
+            
+            caseWrapper1 = HCCCostController.saveDraftValues(hccList1, hccList3, 'Hospitalization');
+            for(Healthcare_Cost__c hcc: hccList2){
+                hcc.Cost_Review__c = false;
+                hcc.Date_of_Admission__c = Date.today().addDays(2);
+            }
+            caseWrapper2 = HCCCostController.saveDraftValues(hccList2, hccList3, 'Hospitalization');
+            
+            hccList1[0].Cost_Include__c = false;
+            hccList1[0].Date_of_Admission__c = Date.today().addDays(2);
+            
+            HCCCostController.CaseListWrapper caseWrapper3 = HCCCostController.saveDraftValues(hccList1, hccList3, 'Hospitalization');
+            hccList1.clear();
+            HCCCostController.CaseListWrapper caseWrapper4 = HCCCostController.saveDraftValues(hccList1, hccList3, 'Hospitalization');
+        }
+        catch(DmlException dml){
+            exceptionMessage = dml.getDmlMessage(0);
+        }
+        Test.stopTest();
+        
+        if(exceptionMessage !=null){
+            System.assertNotEquals(null, exceptionMessage);
+        }
+        else{        
+            System.assertNotEquals(caseWrapper1.passedResult, caseWrapper2.passedResult);
+        }
+    }
+    
+    @isTest
+    static void testRecordsDeleteFunctionality(){
+        Account acc = TestDataFactory.individualAccount();
+        insert acc;
+        Case c = TestDataFactory.newCase(acc.Id);
+        insert c;
+        List<Healthcare_Cost__c> hccListtodelete1 = new List<Healthcare_Cost__c>();	
+        List<Healthcare_Cost__c> hccListtodelete2 = new List<Healthcare_Cost__c>();	
+        Healthcare_Cost__c hcc1 = TestDataFactory.ambulanceCostRecord(acc.Id, c.Id);
+        Healthcare_Cost__c hcc2 = TestDataFactory.ambulanceCostRecord(acc.Id, c.Id);
+        hcc2.Source_System_ID__c = 'akgkj-sfj';
+        hccListtodelete1.add(hcc1);
+        hccListtodelete2.add(hcc2);
+        Test.startTest();
+        String manualRecords = Label.TPL_Manual_Records;
+        String allRecords = Label.TPL_All_Records;
+        String recordsCreatedToday = Label.TPL_Records_Created_Today;
+        String exceptionMessage = null;
+        String result1, result2;
+        try{
+            insert hccListtodelete1;
+            insert hccListtodelete2;
+            result1 = HCCCostController.deleteHCCRecord(hccListtodelete1, recordsCreatedToday);
+            HCCCostController.deleteHCCRecord(hccListtodelete2, allRecords);
+            result2 = HCCCostController.deleteHCCRecord(hccListtodelete2, recordsCreatedToday);
         }
         catch(DmlException dml){
             exceptionMessage = dml.getMessage();
         }
         Test.stopTest();
+        if(exceptionMessage !=null){
+            System.assertNotEquals(null, exceptionMessage);
+        }
+        else{        
+            System.assertNotEquals(result1, result2);
+        }
+    }
+    
+    @isTest
+    static void testgetFacilityBySiteCode(){
+        Account acc = TestDataFactory.individualAccount();
+        insert acc;
+        Case c = TestDataFactory.newCase(acc.Id);
+        insert c;
+        Account facility = TestDataFactory.facilityAccount();
+        insert facility;
+        List<HCCCostController.tempClass> tempClassList = new List<HCCCostController.tempClass>();
+        List<HCCCostController.tempClass> tempClassList2 = new List<HCCCostController.tempClass>();
+        HCCCostController.tempClass temp = new HCCCostController.tempClass();
+        String exceptionMessage = null;
+        for(Integer i=0;i<2;i++){
+            temp.Id = facility.Id;
+            temp.siteCode = facility.Site_Code__c;
+            tempClassList.add(temp);
+        }
+        
+        Account facilityAccount = TestDataFactory.facilityAccount();
+        facilityAccount.Site_Code__c = '122';
+        facilityAccount.Name = 'Facility Account 2';
+        insert facilityAccount;
+        temp.Id = facilityAccount.Id;
+        temp.siteCode = facilityAccount.Site_Code__c;
+        tempClassList2.add(temp);   
+        Test.startTest();
+        HCCCostController.getFacilityBySiteCode(tempClassList);
+        HCCCostController.getFacilityBySiteCode(tempClassList2);
+        Test.stopTest();
         if(exceptionMessage != null){
             System.assertNotEquals(null, exceptionMessage);
         }
-        else {
-            System.assertEquals(caseDetailWrapper1.hccList.size(),caseDetailWrapper2.hccList.size());            
+        else{
+            System.assertEquals(tempClassList2[0].siteCode, facilityAccount.Site_Code__c);
         }
     }
+    
+    @isTest
+    static void testupdateAll(){
+        Test.startTest();
+        Account acc = TestDataFactory.individualAccount();
+        insert acc;
+        Case c = TestDataFactory.newCase(acc.Id);
+        insert c;
+        Account facility = TestDataFactory.facilityAccount();
+        insert facility;
+        List<Healthcare_Cost__c> hccList = new List <Healthcare_Cost__c>();
+        List<Healthcare_Cost__c> resultHCCList = new List <Healthcare_Cost__c>();
+        
+        for(Integer i= 0; i< 250; i++){
+            Healthcare_Cost__c hcc = TestDataFactory.ambulanceCostRecord(acc.Id,c.Id);
+            hcc.Cost_Review__c = true;
+            hcc.Cost_Include__c = true;
+            hccList.add(hcc);
+        }
+        Boolean costInclude = false;
+        Boolean costReview = false;
+        Boolean getStatus = false;
+        String recordType = 'Ambulance';
+        String exceptionMessage = null;
+        try{
+            insert hccList;
+            List<Healthcare_Cost__c> currentList = new List <Healthcare_Cost__c>();
+            for(Integer i = 0 ; i<5;i++){
+                currentList.add(hccList[i]);
+            }
+            resultHCCList = HCCCostController.updateAll(c.Id,costReview, costInclude, currentList, recordType);
+            Id userId = UserInfo.getUserId();
+            getStatus = HCCCostController.findIfUnderUpdate(userId);
+        }catch(DmlException dml){
+            exceptionMessage = dml.getMessage();
+        }
+        Test.stopTest(); 
+        if(exceptionMessage != null){
+            System.assertNotEquals(null, exceptionMessage);
+        }
+        else{
+            if(getStatus){
+                System.assertEquals(hccList[0].Cost_Include__c, resultHCCList[0].Cost_Include__c);
+            }
+            else{
+                System.assertNotEquals(hccList[0].Cost_Include__c, resultHCCList[0].Cost_Include__c);
+            }
+        }
+    }
+    
+    @isTest
+    static void testCaseNumber(){
+        Account acc = TestDataFactory.individualAccount();
+        insert acc;
+        Case c = TestDataFactory.newCase(acc.Id);
+        insert c;
+        Set<Id> caseId = new Set<Id>();
+        caseId.add(c.Id);
+        Test.startTest();
+        List<Case> caseList = HCCCostController.getCaseNumber(caseId);
+        caseId.clear();
+        caseId.add(acc.id);
+        List<Case> caseList1 = HCCCostController.getCaseNumber(caseId);
+        Test.stopTest();
+        System.assertEquals(1, caseList.size());
+    }
+    
+    @isTest
+    static void testUpdatetoCaseValues(){
+        Account acc = TestDataFactory.individualAccount();
+        insert acc;
+        Case c1 = TestDataFactory.newCase(acc.Id);
+        Case c2 = TestDataFactory.newCase(acc.Id);
+        insert  new Case[] {c1, c2};
+            
+        Healthcare_Cost__c hcc1 = TestDataFactory.ambulanceCostRecord(acc.Id, c1.Id);
+        Healthcare_Cost__c hcc2 = TestDataFactory.ambulanceCostRecord(acc.Id, c1.Id);
+        hcc2.Cost_Include__c = false;
+        hcc2.Cost_Review__c = false;
+        Healthcare_Cost__c hcc3 = TestDataFactory.ambulanceCostRecord(acc.Id, c1.Id);
+        
+        Test.startTest();
+        String filterAllRecords = Label.TPL_All_Records;
+        String filterUncheckedRecords = Label.TPL_Both_Unchecked;
+        Integer pageNumber = 1;
+        Integer pageSize = 5;
+        HCCostAccountController.HCCostAccountDetailWrapper accountDetailWrapper1 = new HCCostAccountController.HCCostAccountDetailWrapper();
+        HCCostAccountController.HCCostAccountDetailWrapper accountDetailWrapper2 = new HCCostAccountController.HCCostAccountDetailWrapper();
+        HCCCostController.HCCostAccountCaseWrapper accountCaseUpdateWrapper1 = new HCCCostController.HCCostAccountCaseWrapper(); 
+        HCCCostController.HCCostAccountCaseWrapper accountCaseUpdateWrapper2 = new HCCCostController.HCCostAccountCaseWrapper(); 
+        List<Healthcare_Cost__c> caseAssociation1 = new List<Healthcare_Cost__c>();
+        List<Healthcare_Cost__c> caseAssociation2 = new List<Healthcare_Cost__c>();
+        String caseId = c2.Id;
+        String exceptionMessage = null;   
+        String sortOrder = Label.TPL_Descending;
+        try{
+            insert new Healthcare_Cost__c[] {hcc1, hcc2, hcc3}; 
+            accountDetailWrapper1 = HCCostAccountController.getHealthcareCostsAmbulanceForAccount(acc.Id, filterAllRecords, pageNumber, pageSize, sortOrder);
+            accountDetailWrapper2 = HCCostAccountController.getHealthcareCostsAmbulanceForAccount(acc.Id, filterUncheckedRecords, pageNumber, pageSize, sortOrder);
+            caseAssociation1 = accountDetailWrapper1.hccList;
+            caseAssociation2 = accountDetailWrapper2.hccList;
+            accountCaseUpdateWrapper1 = HCCCostController.updateHCCCaseInformation(caseAssociation1, caseId, caseAssociation1);
+            accountCaseUpdateWrapper2 = HCCCostController.updateHCCCaseInformation(caseAssociation2, caseId, caseAssociation2);
+            HCCCostController.updateHCCCaseInformation(caseAssociation2, null, caseAssociation2);
+            
+        }
+        catch(DmlException dml){
+            exceptionMessage = dml.getMessage();
+        }
+        Test.stopTest(); 
+        if(exceptionMessage != null){
+            System.assertNotEquals(null, exceptionMessage);
+        }
+        else{
+            System.assertNotEquals(accountCaseUpdateWrapper1.passMessage, accountCaseUpdateWrapper2.passMessage);
+        }
+        
+    }
+    
+    @isTest
+    static void testUpdatetoCaseValuesFailScenario(){
+        Account acc = TestDataFactory.individualAccount();
+        insert acc;
+        Account accountFacility = TestDataFactory.facilityAccount();
+        insert accountFacility;
+        Case c1 = TestDataFactory.newCase(acc.Id);
+        Case c2 = TestDataFactory.newCase(acc.Id);
+        Case c3 = TestDataFactory.newClassActionCase(accountFacility.Id);
+        insert  new Case[] {c1, c2,c3};
+        List<Healthcare_Cost__c> hccList = new List<Healthcare_Cost__c>();
+        Healthcare_Cost__c hcc1 = TestDataFactory.ambulanceCostRecord(acc.Id, c1.Id);
+        Healthcare_Cost__c hcc2 = TestDataFactory.ambulanceCostRecord(acc.Id, c1.Id);
+        hcc2.Cost_Include__c = false;
+        hcc2.Cost_Review__c = false;
+        Healthcare_Cost__c hcc3 = TestDataFactory.ambulanceCostRecord(acc.Id, c1.Id);
+        hccList.add(hcc1);
+        hccList.add(hcc2);
+        hccList.add(hcc3);
+        
+        Test.startTest();
+        String filterAllRecords = Label.TPL_All_Records;
+        String filterUncheckedRecords = Label.TPL_Both_Unchecked;
+        Integer pageNumber = 1;
+        Integer pageSize = 5;
+        HCCostAccountController.HCCostAccountDetailWrapper accountDetailWrapper1 = new HCCostAccountController.HCCostAccountDetailWrapper();
+        HCCostAccountController.HCCostAccountDetailWrapper accountDetailWrapper2 = new HCCostAccountController.HCCostAccountDetailWrapper();
+        HCCCostController.HCCostAccountCaseWrapper accountCaseUpdateWrapper1 = new HCCCostController.HCCostAccountCaseWrapper(); 
+        HCCCostController.HCCostAccountCaseWrapper accountCaseUpdateWrapper2 = new HCCCostController.HCCostAccountCaseWrapper(); 
+        List<Healthcare_Cost__c> caseAssociation1 = new List<Healthcare_Cost__c>();
+        List<Healthcare_Cost__c> caseAssociation2 = new List<Healthcare_Cost__c>();
+        String caseId = c2.Id;
+        String exceptionMessage = null;   
+        String sortOrder = Label.TPL_Descending;
+        try{
+            insert hccList;
+            accountDetailWrapper1 = HCCostAccountController.getHealthcareCostsAmbulanceForAccount(acc.Id, filterAllRecords, pageNumber, pageSize, sortOrder);
+            accountDetailWrapper2 = HCCostAccountController.getHealthcareCostsAmbulanceForAccount(acc.Id, filterUncheckedRecords, pageNumber, pageSize, sortOrder);
+            caseAssociation1 = accountDetailWrapper1.hccList;
+            caseAssociation2 = accountDetailWrapper2.hccList;
+
+            accountCaseUpdateWrapper1 = HCCCostController.updateHCCCaseInformation(caseAssociation2, c3.id, caseAssociation2);
+            accountCaseUpdateWrapper2 = HCCCostController.updateHCCCaseInformation(caseAssociation2, caseId, caseAssociation2);
+            HCCCostController.updateHCCCaseInformation(caseAssociation2, null, caseAssociation2);
+            
+        }
+        catch(DmlException dml){
+            exceptionMessage = dml.getMessage();
+        }
+        Test.stopTest(); 
+        if(exceptionMessage != null){
+            System.assertNotEquals(null, exceptionMessage);
+        }
+        else{
+            System.assertNotEquals(accountCaseUpdateWrapper1.passMessage, accountCaseUpdateWrapper2.passMessage);
+        }
+        
+    }    
 }
