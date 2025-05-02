@@ -76,19 +76,31 @@ public with sharing class TestDataFactory {
 		Parameters: Account ID
 		Description: Test method used to return a case having an account associated for creating the record
 	*/
-    public static Product2 newProduct(String accountId){
-        Product2 pr = new Product2();
-        pr.Account__c = accountId;
-        pr.IsActive = true;
-        pr.Name = 'test';
-        pr.Family = 'Specific';
-        pr.Description = 'Product Description';
-        pr.Service_Type__c = 'Acute (Daily)';
-        pr.Effective_Start_Date__c = Date.newInstance(2023, 01, 01);
-        pr.Effective_End_Date__c = Date.newInstance(2100, 12, 12);
-        pr.Effective_year__c = '2023';
-        return pr;     
-    }
+         public static Product2 newProduct(String accountId){
+         Product2 pr = new Product2();
+         pr.Account__c = accountId;
+         pr.IsActive = true;
+         pr.Name = 'test';
+         pr.Family = 'Specific';
+         pr.Description = 'Product Description';
+         pr.Service_Type__c = 'Acute';
+         pr.Effective_Start_Date__c = Date.today();
+         pr.Effective_End_Date__c = Date.newInstance(2100, 12, 12);
+         pr.Effective_year__c = '2023';
+         return pr;     
+       }
+    public static Product2 newGenericProduct(String accountId){
+         Product2 pr = new Product2();
+         pr.IsActive = true;
+         pr.Name = 'test';
+         pr.Family = 'Generic';
+         pr.Description = 'Product Description';
+         pr.Service_Type__c = 'Extended Care';
+         pr.Effective_Start_Date__c = Date.today();
+         pr.Effective_End_Date__c = Date.newInstance(2100, 12, 31);
+         pr.Effective_year__c = '1900';
+         return pr;     
+       }
     /*
 		Method Name:ambulanceCostRecord
 		Parameters: Account ID, Case ID
