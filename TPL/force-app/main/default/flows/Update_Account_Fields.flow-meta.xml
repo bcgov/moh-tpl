@@ -37,6 +37,13 @@
                 <booleanValue>true</booleanValue>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>currentRecord.Name</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>NewFacilityName</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Update_Account_Fields</targetReference>
         </connector>
@@ -105,6 +112,13 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>currentRecord.Name</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>NewFacilityName</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Get_Products_related_to_Facility</targetReference>
         </connector>
@@ -127,6 +141,13 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>$Record.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>currentRecord.Name</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>NewFacilityName</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -276,6 +297,11 @@
         <expression>UPPER({!$Record.LastName})</expression>
     </formulas>
     <formulas>
+        <name>NewFacilityName</name>
+        <dataType>String</dataType>
+        <expression>{!$Record.Facility_Name__c} &amp; &apos; - (&apos; &amp; $Record.Site_Code__c &amp; &apos;)&apos;</expression>
+    </formulas>
+    <formulas>
         <name>SystemCurrentYear</name>
         <dataType>String</dataType>
         <expression>TEXT(Year(TODAY()))</expression>
@@ -393,6 +419,13 @@
         <name>Facility_Status</name>
         <dataType>Boolean</dataType>
         <isCollection>true</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>FacilityName</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>true</isOutput>
     </variables>

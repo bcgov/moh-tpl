@@ -4,8 +4,8 @@
     <assignments>
         <name>Assign_Cache_Values</name>
         <label>Assign Cache Values</label>
-        <locationX>578</locationX>
-        <locationY>998</locationY>
+        <locationX>440</locationX>
+        <locationY>782</locationY>
         <assignmentItems>
             <assignToReference>ErrorMessage</assignToReference>
             <operator>Assign</operator>
@@ -18,13 +18,6 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>ErrorMessageFormula</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>StoreFacility</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>StoreFacility2</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -33,82 +26,9 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Assign_Invalid_Facility_Screen_Values</name>
-        <label>Assign Invalid Facility Screen Values</label>
-        <locationX>50</locationX>
-        <locationY>998</locationY>
-        <assignmentItems>
-            <assignToReference>DateofAdmission</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Copy_1_of_Date_of_Admission</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>DateofDischarge</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Copy_1_of_Date_of_Discharge</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>LocationofIncident</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Copy_1_of_Location_of_Incident</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>DescriptionofIncident</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Copy_1_of_Description_of_Incident</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>DiagnosticTreatmentService</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Copy_1_of_Diagnostic_Treatment_Service</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>TotalCostOverride</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Copy_1_of_Total_Cost_Override</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>ErrorMessage</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>$Flow.FaultMessage</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>ErrorMessage1</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>ErrorMessageFormula</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>StoreFacility</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Copy_1_of_Facility_Code</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Get_Facility</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>Assign_Values</name>
         <label>Assign Values</label>
-        <locationX>182</locationX>
+        <locationX>176</locationX>
         <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>DateofAdmission</assignToReference>
@@ -166,22 +86,15 @@
                 <elementReference>ErrorMessageFormula</elementReference>
             </value>
         </assignmentItems>
-        <assignmentItems>
-            <assignToReference>StoreFacility</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Facility_Code</elementReference>
-            </value>
-        </assignmentItems>
         <connector>
-            <targetReference>Get_Facility</targetReference>
+            <targetReference>Create_Hospitalization_Record</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Copy_1_of_Assign_Cache_Values</name>
         <label>Copy 1 of Assign Cache Values</label>
-        <locationX>314</locationX>
-        <locationY>998</locationY>
+        <locationX>176</locationX>
+        <locationY>782</locationY>
         <assignmentItems>
             <assignToReference>DateofAdmission</assignToReference>
             <operator>Assign</operator>
@@ -231,38 +144,6 @@
             <targetReference>New_Hospitalization_Record</targetReference>
         </connector>
     </assignments>
-    <decisions>
-        <name>Facility_Record_Check</name>
-        <label>Facility Record Check</label>
-        <locationX>182</locationX>
-        <locationY>782</locationY>
-        <defaultConnector>
-            <targetReference>Create_Hospitalization_Record</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Invalid_Facility_Check</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Get_Facility</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Facility_Code</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <stringValue></stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Invalid_Facility_Screen</targetReference>
-            </connector>
-            <label>Invalid Facility Check</label>
-        </rules>
-    </decisions>
     <description>This flow is used to create Manual HCC - Hospitalization Record</description>
     <environments>Default</environments>
     <formulas>
@@ -299,8 +180,8 @@
     <recordCreates>
         <name>Create_Hospitalization_Record</name>
         <label>Create Hospitalization Record</label>
-        <locationX>314</locationX>
-        <locationY>890</locationY>
+        <locationX>176</locationX>
+        <locationY>674</locationY>
         <connector>
             <targetReference>Copy_1_of_Assign_Cache_Values</targetReference>
         </connector>
@@ -358,7 +239,7 @@
         <inputAssignments>
             <field>Facility__c</field>
             <value>
-                <elementReference>facilityrecordId</elementReference>
+                <elementReference>StoreFacility</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -386,12 +267,6 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Site_Code__c</field>
-            <value>
-                <elementReference>StoreFacility2</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
             <field>Total_Cost_Override__c</field>
             <value>
                 <elementReference>Total_Cost_Override</elementReference>
@@ -403,7 +278,7 @@
     <recordLookups>
         <name>Get_Case_Records</name>
         <label>Get Case Records</label>
-        <locationX>182</locationX>
+        <locationX>176</locationX>
         <locationY>134</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -422,43 +297,9 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
-        <name>Get_Facility</name>
-        <label>Get Facility</label>
-        <locationX>182</locationX>
-        <locationY>674</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Facility_Record_Check</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Site_Code__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>StoreFacility</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>RecordTypeId</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>Facility_recordTypeId</elementReference>
-            </value>
-        </filters>
-        <object>Account</object>
-        <outputAssignments>
-            <assignToReference>facilityrecordId</assignToReference>
-            <field>Id</field>
-        </outputAssignments>
-        <outputAssignments>
-            <assignToReference>StoreFacility2</assignToReference>
-            <field>Site_Code__c</field>
-        </outputAssignments>
-    </recordLookups>
-    <recordLookups>
         <name>Get_Facility_Record_Type</name>
         <label>Get Facility Record Type</label>
-        <locationX>182</locationX>
+        <locationX>176</locationX>
         <locationY>350</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -488,7 +329,7 @@
     <recordLookups>
         <name>Get_Hospitalization_Record_Type</name>
         <label>Get Hospitalization Record Type</label>
-        <locationX>182</locationX>
+        <locationX>176</locationX>
         <locationY>242</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -516,310 +357,9 @@
         </outputAssignments>
     </recordLookups>
     <screens>
-        <name>Invalid_Facility_Screen</name>
-        <label>Invalid Facility Screen</label>
-        <locationX>50</locationX>
-        <locationY>890</locationY>
-        <allowBack>false</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>false</allowPause>
-        <connector>
-            <targetReference>Assign_Invalid_Facility_Screen_Values</targetReference>
-        </connector>
-        <fields>
-            <name>Invalid_Facility_Screen_Section1</name>
-            <fieldType>RegionContainer</fieldType>
-            <fields>
-                <name>Invalid_Facility_Screen_Section1_Column1</name>
-                <fieldType>Region</fieldType>
-                <fields>
-                    <name>Copy_1_of_Location_of_Incident</name>
-                    <dataType>String</dataType>
-                    <defaultValue>
-                        <elementReference>LocationofIncident</elementReference>
-                    </defaultValue>
-                    <fieldText>Location of Incident</fieldText>
-                    <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-                    <isRequired>false</isRequired>
-                    <validationRule>
-                        <errorMessage>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 11.36px; font-family: Arial, Helvetica, sans-serif; color: rgb(255, 0, 0);&quot;&gt;Not more than 50 Characters are allowed.&lt;/span&gt;&lt;/p&gt;</errorMessage>
-                        <formulaExpression>LEN ( {!Location_of_Incident} ) &lt; 50</formulaExpression>
-                    </validationRule>
-                </fields>
-                <inputParameters>
-                    <name>width</name>
-                    <value>
-                        <stringValue>3</stringValue>
-                    </value>
-                </inputParameters>
-                <isRequired>false</isRequired>
-            </fields>
-            <fields>
-                <name>Invalid_Facility_Screen_Section1_Column2</name>
-                <fieldType>Region</fieldType>
-                <fields>
-                    <name>Copy_1_of_Description_of_Incident</name>
-                    <defaultValue>
-                        <stringValue>{!DescriptionofIncident}</stringValue>
-                    </defaultValue>
-                    <fieldText>Description of Incident</fieldText>
-                    <fieldType>LargeTextArea</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-                    <isRequired>false</isRequired>
-                    <validationRule>
-                        <errorMessage>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 11.36px; font-family: Arial, Helvetica, sans-serif; color: rgb(255, 0, 0);&quot;&gt;Not more than 100 Characters are allowed.&lt;/span&gt;&lt;/p&gt;</errorMessage>
-                        <formulaExpression>LEN ( {!Description_of_Incident} ) &lt; 100</formulaExpression>
-                    </validationRule>
-                </fields>
-                <inputParameters>
-                    <name>width</name>
-                    <value>
-                        <stringValue>3</stringValue>
-                    </value>
-                </inputParameters>
-                <isRequired>false</isRequired>
-            </fields>
-            <fields>
-                <name>Invalid_Facility_Screen_Section1_Column3</name>
-                <fieldType>Region</fieldType>
-                <fields>
-                    <name>Copy_1_of_Date_of_Admission</name>
-                    <dataType>Date</dataType>
-                    <defaultValue>
-                        <elementReference>DateofAdmission</elementReference>
-                    </defaultValue>
-                    <fieldText>Date of Admission</fieldText>
-                    <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-                    <isRequired>true</isRequired>
-                </fields>
-                <inputParameters>
-                    <name>width</name>
-                    <value>
-                        <stringValue>3</stringValue>
-                    </value>
-                </inputParameters>
-                <isRequired>false</isRequired>
-            </fields>
-            <fields>
-                <name>Invalid_Facility_Screen_Section1_Column4</name>
-                <fieldType>Region</fieldType>
-                <fields>
-                    <name>Copy_1_of_Date_of_Discharge</name>
-                    <dataType>Date</dataType>
-                    <defaultValue>
-                        <elementReference>DateofDischarge</elementReference>
-                    </defaultValue>
-                    <fieldText>Date of Discharge</fieldText>
-                    <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-                    <isRequired>false</isRequired>
-                </fields>
-                <inputParameters>
-                    <name>width</name>
-                    <value>
-                        <stringValue>3</stringValue>
-                    </value>
-                </inputParameters>
-                <isRequired>false</isRequired>
-            </fields>
-            <isRequired>false</isRequired>
-            <regionContainerType>SectionWithoutHeader</regionContainerType>
-        </fields>
-        <fields>
-            <name>Invalid_Facility_Screen_Section2</name>
-            <fieldType>RegionContainer</fieldType>
-            <fields>
-                <name>Invalid_Facility_Screen_Section2_Column1</name>
-                <fieldType>Region</fieldType>
-                <fields>
-                    <name>Copy_1_of_Facility_Code</name>
-                    <dataType>String</dataType>
-                    <defaultValue>
-                        <elementReference>StoreFacility2</elementReference>
-                    </defaultValue>
-                    <fieldText>Facility Code</fieldText>
-                    <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-                    <isRequired>false</isRequired>
-                </fields>
-                <inputParameters>
-                    <name>width</name>
-                    <value>
-                        <stringValue>3</stringValue>
-                    </value>
-                </inputParameters>
-                <isRequired>false</isRequired>
-            </fields>
-            <fields>
-                <name>Invalid_Facility_Screen_Section2_Column2</name>
-                <fieldType>Region</fieldType>
-                <fields>
-                    <name>Copy_1_of_Service_Provided_by_Facility</name>
-                    <extensionName>flowruntime:lookup</extensionName>
-                    <fieldType>ComponentInstance</fieldType>
-                    <inputParameters>
-                        <name>fieldApiName</name>
-                        <value>
-                            <stringValue>Service_Provided_by_Facility__c</stringValue>
-                        </value>
-                    </inputParameters>
-                    <inputParameters>
-                        <name>label</name>
-                        <value>
-                            <stringValue>Service Provided by Facility</stringValue>
-                        </value>
-                    </inputParameters>
-                    <inputParameters>
-                        <name>objectApiName</name>
-                        <value>
-                            <stringValue>Healthcare_Cost__c</stringValue>
-                        </value>
-                    </inputParameters>
-                    <inputParameters>
-                        <name>recordId</name>
-                        <value>
-                            <elementReference>StoreServiceProvidedbyFacility</elementReference>
-                        </value>
-                    </inputParameters>
-                    <inputsOnNextNavToAssocScrn>ResetValues</inputsOnNextNavToAssocScrn>
-                    <isRequired>true</isRequired>
-                    <outputParameters>
-                        <assignToReference>StoreServiceProvidedbyFacility</assignToReference>
-                        <name>recordId</name>
-                    </outputParameters>
-                    <outputParameters>
-                        <assignToReference>Hospitalization.Service_Provided_by_Facility__c</assignToReference>
-                        <name>recordName</name>
-                    </outputParameters>
-                </fields>
-                <inputParameters>
-                    <name>width</name>
-                    <value>
-                        <stringValue>3</stringValue>
-                    </value>
-                </inputParameters>
-                <isRequired>false</isRequired>
-            </fields>
-            <fields>
-                <name>Invalid_Facility_Screen_Section2_Column3</name>
-                <fieldType>Region</fieldType>
-                <fields>
-                    <name>Copy_1_of_Total_Cost_Override</name>
-                    <dataType>Currency</dataType>
-                    <defaultValue>
-                        <elementReference>TotalCostOverride</elementReference>
-                    </defaultValue>
-                    <fieldText>Total Cost Override</fieldText>
-                    <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-                    <isRequired>false</isRequired>
-                    <scale>2</scale>
-                    <validationRule>
-                        <errorMessage>&lt;p&gt;Not more than 14 digits with 2 decimals are allowed.&lt;/p&gt;</errorMessage>
-                        <formulaExpression>{!Total_Cost_Override} &gt; 0  &amp;&amp; {!Total_Cost_Override} &lt; 100000000000000</formulaExpression>
-                    </validationRule>
-                </fields>
-                <inputParameters>
-                    <name>width</name>
-                    <value>
-                        <stringValue>3</stringValue>
-                    </value>
-                </inputParameters>
-                <isRequired>false</isRequired>
-            </fields>
-            <fields>
-                <name>Invalid_Facility_Screen_Section2_Column4</name>
-                <fieldType>Region</fieldType>
-                <fields>
-                    <name>Copy_1_of_Diagnostic_Treatment_Service</name>
-                    <defaultValue>
-                        <stringValue>{!DiagnosticTreatmentService}</stringValue>
-                    </defaultValue>
-                    <fieldText>Diagnostic Treatment Service</fieldText>
-                    <fieldType>LargeTextArea</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-                    <isRequired>false</isRequired>
-                    <validationRule>
-                        <errorMessage>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 11.36px; font-family: Arial, Helvetica, sans-serif; color: rgb(255, 0, 0);&quot;&gt;Not more than 100 Characters are allowed.&lt;/span&gt;&lt;/p&gt;</errorMessage>
-                        <formulaExpression>LEN ( {!Diagnostic_Treatment_Service} ) &lt; 100</formulaExpression>
-                    </validationRule>
-                </fields>
-                <inputParameters>
-                    <name>width</name>
-                    <value>
-                        <stringValue>3</stringValue>
-                    </value>
-                </inputParameters>
-                <isRequired>false</isRequired>
-            </fields>
-            <isRequired>false</isRequired>
-            <regionContainerType>SectionWithoutHeader</regionContainerType>
-        </fields>
-        <fields>
-            <name>Invalid_Facility_Screen_Section3</name>
-            <fieldType>RegionContainer</fieldType>
-            <fields>
-                <name>Invalid_Facility_Screen_Section3_Column1</name>
-                <fieldType>Region</fieldType>
-                <inputParameters>
-                    <name>width</name>
-                    <value>
-                        <stringValue>3</stringValue>
-                    </value>
-                </inputParameters>
-                <isRequired>false</isRequired>
-            </fields>
-            <fields>
-                <name>Invalid_Facility_Screen_Section3_Column2</name>
-                <fieldType>Region</fieldType>
-                <inputParameters>
-                    <name>width</name>
-                    <value>
-                        <stringValue>3</stringValue>
-                    </value>
-                </inputParameters>
-                <isRequired>false</isRequired>
-            </fields>
-            <fields>
-                <name>Invalid_Facility_Screen_Section3_Column3</name>
-                <fieldType>Region</fieldType>
-                <inputParameters>
-                    <name>width</name>
-                    <value>
-                        <stringValue>3</stringValue>
-                    </value>
-                </inputParameters>
-                <isRequired>false</isRequired>
-            </fields>
-            <fields>
-                <name>Invalid_Facility_Screen_Section3_Column4</name>
-                <fieldType>Region</fieldType>
-                <inputParameters>
-                    <name>width</name>
-                    <value>
-                        <stringValue>3</stringValue>
-                    </value>
-                </inputParameters>
-                <isRequired>false</isRequired>
-            </fields>
-            <isRequired>false</isRequired>
-            <regionContainerType>SectionWithoutHeader</regionContainerType>
-        </fields>
-        <fields>
-            <name>Copy_1_of_ErrorMessage2</name>
-            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;strong style=&quot;color: rgb(255, 0, 0); background-color: rgb(255, 255, 255);&quot;&gt;Error: Facility Code not found.&lt;/strong&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <nextOrFinishButtonLabel>Next</nextOrFinishButtonLabel>
-        <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
-    </screens>
-    <screens>
         <name>New_Hospitalization_Record</name>
         <label>New Hospitalization Record</label>
-        <locationX>182</locationX>
+        <locationX>176</locationX>
         <locationY>458</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -935,15 +475,49 @@
                 <name>New_Hospitalization_Record_Section2_Column1</name>
                 <fieldType>Region</fieldType>
                 <fields>
-                    <name>Facility_Code</name>
-                    <dataType>String</dataType>
-                    <defaultValue>
-                        <elementReference>StoreFacility</elementReference>
-                    </defaultValue>
-                    <fieldText>Facility Code</fieldText>
-                    <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-                    <isRequired>false</isRequired>
+                    <name>Facility</name>
+                    <extensionName>flowruntime:lookup</extensionName>
+                    <fieldType>ComponentInstance</fieldType>
+                    <inputParameters>
+                        <name>fieldApiName</name>
+                        <value>
+                            <stringValue>Facility__c</stringValue>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>label</name>
+                        <value>
+                            <stringValue>Facility</stringValue>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>objectApiName</name>
+                        <value>
+                            <stringValue>Healthcare_Cost__c</stringValue>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>recordId</name>
+                        <value>
+                            <elementReference>StoreFacility</elementReference>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>disabled</name>
+                        <value>
+                            <booleanValue>false</booleanValue>
+                        </value>
+                    </inputParameters>
+                    <inputsOnNextNavToAssocScrn>ResetValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>true</isRequired>
+                    <outputParameters>
+                        <assignToReference>StoreFacility</assignToReference>
+                        <name>recordId</name>
+                    </outputParameters>
+                    <outputParameters>
+                        <assignToReference>Hospitalization.Facility__c</assignToReference>
+                        <name>recordName</name>
+                    </outputParameters>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -1118,7 +692,7 @@
         <showHeader>true</showHeader>
     </screens>
     <start>
-        <locationX>56</locationX>
+        <locationX>50</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Case_Records</targetReference>
@@ -1189,13 +763,6 @@
         <isOutput>false</isOutput>
     </variables>
     <variables>
-        <name>facilityrecordId</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
         <name>Hospitalization</name>
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
@@ -1219,13 +786,6 @@
     </variables>
     <variables>
         <name>StoreFacility</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>StoreFacility2</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
