@@ -39,6 +39,11 @@
     <description>Clerk &amp; Analyst</description>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Account.Facility_Name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Account.AccountNumber</field>
         <readable>true</readable>
     </fieldPermissions>
