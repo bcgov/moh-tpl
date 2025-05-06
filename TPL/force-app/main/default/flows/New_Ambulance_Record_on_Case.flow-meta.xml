@@ -127,7 +127,7 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Fixed_Wing_Helicopter2__c</field>
+            <field>Fixed_Wing_Helicopter__c</field>
             <value>
                 <elementReference>Fixed_Wing_Helicopter</elementReference>
             </value>
