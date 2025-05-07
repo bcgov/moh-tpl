@@ -639,6 +639,10 @@
         <recordType>Case.Individual</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Contact-TPL_Facility_Contact</layout>
+        <recordType>Contact.TPL_Facility_Contact</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Payment__c-Payment Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
