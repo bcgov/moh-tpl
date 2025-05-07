@@ -4,121 +4,9 @@
     <active>true</active>
     <label>TPL Facility Contact</label>
     <picklistValues>
-        <picklist>Gender</picklist>
-        <values>
-            <fullName>Female</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Male</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Other</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Unknown</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>GenderIdentity</picklist>
-        <values>
-            <fullName>Female</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Male</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Nonbinary</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Not Listed</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>LeadSource</picklist>
-        <values>
-            <fullName>Advertisement</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Customer Event</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Employee Referral</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>External Referral</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Google AdWords</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Other</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Partner</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Purchased List</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Trade Show</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Webinar</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Website</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>MaritalStatus</picklist>
-        <values>
-            <fullName>Divorced</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Married</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Separated</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Single</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Widowed</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>Name</picklist>
         <values>
             <fullName>Dr%2E</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Miss</fullName>
             <default>false</default>
         </values>
         <values>
@@ -135,33 +23,6 @@
         </values>
         <values>
             <fullName>Prof%2E</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>Pronouns</picklist>
-        <values>
-            <fullName>He%2FHim</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>He%2FThey</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Not Listed</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>She%2FHer</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>She%2FThey</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>They%2FThem</fullName>
             <default>false</default>
         </values>
     </picklistValues>
