@@ -1163,6 +1163,10 @@
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <recordTypeVisibilities>
+        <recordType>Contact.TPL_Facility_Contact</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
         <recordType>Healthcare_Cost__c.Ambulance</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
