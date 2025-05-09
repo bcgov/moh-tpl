@@ -211,7 +211,7 @@ const MANUAL_COLUMNS = [
         label: 'Facility Code',
         fieldName: 'Site_Code__c',
         type: 'text',
-        editable: true,
+        editable: false,
         sortable: false
     },
     {
@@ -324,7 +324,7 @@ const MANUAL_COLUMNS = [
         label: 'Source System ID',
         fieldName: 'Source_System_ID__c',
         type: 'text',
-        editable: true,
+        editable: false,
         sortable: true
     }
 ];
