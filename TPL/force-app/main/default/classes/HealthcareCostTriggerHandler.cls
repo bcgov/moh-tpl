@@ -19,33 +19,35 @@ public with sharing class HealthcareCostTriggerHandler {
 * 
 */
     public static void updateRollup(List<Healthcare_Cost__c> hccList){
-        set<Id> caseIds = new set<Id>();
+        Set<Id> caseIds = new set<Id>();
+        Map<Id,case> caseMap = new Map<Id,case>();
         for(Healthcare_Cost__c hcc : hccList){
             caseIds.add(hcc.Case2__c);
         }
+        for(Id caseId: caseIds){
+            Case c = new Case();
+            c.Id = caseId;
+            c.Pharmacare_Total2__c = 0.00;
+            c.Continuing_Care_Total2__c = 0.00;
+            c.Ambulance_Total2__c = 0.00;
+            c.Future_Care_Total2__c = 0.00;
+            c.Hospitalization_Total2__c = 0.00;
+            c.MSP_Total2__c = 0.00;
+            c.Ambulance_Total_ClassAction__c = 0.00;
+            c.Continuing_Care_Total_ClassAction__c = 0.00;
+            c.Future_Care_Total_ClassAction__c = 0.00;
+            c.Hospitalization_Total_ClassAction__c = 0.00;
+            c.MSP_Total_ClassAction__c = 0.00;
+            c.Pharmacare_Total_ClassAction__c = 0.00;
+            c.Related_Cases_Recovery_Amount__c = 0.00;
+            caseMap.put(caseId, c);
+        }
         List<AggregateResult> groupedResults = [SELECT SUM(Total_Cost_Override__c)tot,case2__c,RecordType.DeveloperName,sum(Cost__c)costSum FROM Healthcare_Cost__c WHERE Case2__c IN:caseIds AND ((Cost_Include__c = true AND Cost_Review__c = true) OR (RecordType.DeveloperName IN ('Continuing_Care','Future_Care'))) GROUP BY case2__c,RecordType.DeveloperName] ;
         List<Case> caseUpdateList = new List<Case>();
-        Map<Id,case> caseMap = new Map<Id,case>();
         for(AggregateResult agg : groupedResults){
             Case c = new Case();
             if(caseMap.containsKey((String)agg.get('case2__c'))){
                 c = caseMap.get((String)agg.get('case2__c'));
-            }else{
-                c.Id = (String)agg.get('case2__c');
-                c.Pharmacare_Total2__c = 0.00;
-                c.Continuing_Care_Total2__c = 0.00;
-                c.Ambulance_Total2__c = 0.00;
-                c.Future_Care_Total2__c = 0.00;
-                c.Hospitalization_Total2__c = 0.00;
-                c.MSP_Total2__c = 0.00;
-                c.Ambulance_Total_ClassAction__c = 0.00;
-                c.Continuing_Care_Total_ClassAction__c = 0.00;
-                c.Future_Care_Total_ClassAction__c = 0.00;
-                c.Hospitalization_Total_ClassAction__c = 0.00;
-                c.MSP_Total_ClassAction__c = 0.00;
-                c.Pharmacare_Total_ClassAction__c = 0.00;
-                c.Related_Cases_Recovery_Amount__c = 0.00;
-
             }
             if((String)agg.get('DeveloperName') == 'Pharmacare'){
                 c.Pharmacare_Total2__c = (Decimal)agg.get('tot');
