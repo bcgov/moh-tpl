@@ -3,6 +3,7 @@
     <description>OmniStudio Standard Designer Users Group</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>OmniStudio Standard Designer Users Group</label>
+    <permissionSets>DocGenInd_Design_All</permissionSets>
     <permissionSets>OmniStudio_Standard_Designer_Users</permissionSets>
     <permissionSets>force__DocGenDesigner</permissionSets>
     <permissionSets>force__OmniStudioAdmin</permissionSets>
