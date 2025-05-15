@@ -680,11 +680,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Healthcare_Cost__c.Fixed_Wing_Helicopter2__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Healthcare_Cost__c.Fixed_Wing_Helicopter__c</field>
         <readable>true</readable>
     </fieldPermissions>
