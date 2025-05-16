@@ -4,8 +4,8 @@
             "path": "force-app",
             "default": true,
             "package": "TPLpkg",
-            "versionName": "ver 0.4.0",
-            "versionNumber": "0.4.0.NEXT"
+            "versionName": "ver 0.4.1",
+            "versionNumber": "0.4.1.NEXT"
         }
     ],
     "namespace": "",
