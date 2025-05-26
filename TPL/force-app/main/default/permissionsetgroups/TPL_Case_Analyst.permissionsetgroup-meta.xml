@@ -3,6 +3,7 @@
     <description>Permission Sets for TPL Case Analyst/Clerk</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>TPL Case Analyst</label>
+    <permissionSets>DocGenInd_Design_All</permissionSets>
     <permissionSets>OmniStudio_Standard_User</permissionSets>
     <permissionSets>OmniStudio_Standard_User_Extras</permissionSets>
     <permissionSets>TPL_Standard_User</permissionSets>

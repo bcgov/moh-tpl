@@ -3,6 +3,7 @@
     <description>Permission Sets for TPL Finance Analyst</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>TPL Finance Analyst</label>
+    <permissionSets>DocGenInd_Design_All</permissionSets>
     <permissionSets>OmniStudio_Standard_User</permissionSets>
     <permissionSets>OmniStudio_Standard_User_Extras</permissionSets>
     <permissionSets>TPL_Finance</permissionSets>

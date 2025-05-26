@@ -3,6 +3,7 @@
     <description>Permission Sets for TPL System Admin</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>TPL_System_Admin</label>
+    <permissionSets>DocGenInd_Design_All</permissionSets>
     <permissionSets>Manage_ENCRYPTION</permissionSets>
     <permissionSets>OmniStudio_Standard_User</permissionSets>
     <permissionSets>OmniStudio_Standard_User_Extras</permissionSets>
