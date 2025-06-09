@@ -6,15 +6,38 @@ public with sharing class TestDataFactory {
 		Parameters: n/a
 		Description: Test method used to return an individual account for creating the record
 	*/
-    public static Account individualAccount(){
-        Account acc = new Account();
-        acc.RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Individual').getRecordTypeId();
-        acc.FirstName = 'David';
-        acc.LastName = 'Scott';
-        acc.Type = 'Hospital';
-        acc.Date_of_Birth__pc = Date.newInstance(1996, 11, 14);
-        return acc;
+    // public static Account individualAccount(){
+    //     Account acc = new Account();
+    //     acc.RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Individual').getRecordTypeId();
+    //     acc.FirstName = 'David';
+    //     acc.LastName = 'Scott';
+    //     acc.Type = 'Hospital';
+    //     acc.Date_of_Birth__pc = Date.newInstance(1996, 11, 14);
+    //     return acc;
+    // }
+    public static Account individualAccount() {
+    Account acc = new Account();
+    acc.RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Individual').getRecordTypeId();
+    acc.Type = 'Hospital';
+ 
+    if (Schema.SObjectType.Account.fields.getMap().containsKey('IsPersonAccount')) {
+        acc.put('IsPersonAccount', true);
     }
+ 
+    if (Schema.SObjectType.Account.fields.getMap().containsKey('FirstName')) {
+        acc.put('FirstName', 'David');
+    }
+ 
+    if (Schema.SObjectType.Account.fields.getMap().containsKey('LastName')) {
+        acc.put('LastName', 'Scott');
+    }
+ 
+    if (Schema.SObjectType.Account.fields.getMap().containsKey('Date_of_Birth__pc')) {
+        acc.put('Date_of_Birth__pc', Date.newInstance(1996, 11, 14));
+    }
+ 
+  return acc;
+}
     
      /*
 		Method Name:facilityAccount
