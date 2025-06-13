@@ -5,11 +5,16 @@
   "features": [
     "PersonAccounts",
     "ServiceCloud",
-    "LightningServiceConsole"
+    "LightningServiceConsole",
+    "PlatformEncryption",
+    "ContactsToMultipleAccounts"
   ],
   "settings": {
     "lightningExperienceSettings": {
       "enableS1DesktopEnabled": true
+    },
+    "accountSettings": {
+      "enablePersonAccounts": true
     },
     "nameSettings":{
       "enableMiddleName": true
