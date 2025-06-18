@@ -512,4 +512,72 @@ public with sharing class HCCostAccountControllerTest {
             System.assertNotEquals(null, exceptionMessage);
         }   
     }
+
+
+    @isTest
+    static void testGetHealthcareCostsAmbulanceForAccount_NullInput() {
+        Test.startTest();
+        HCCostAccountController.HCCostAccountDetailWrapper result = null;
+        try {
+            // Passing nulls to simulate NPE, catch block will execute
+            result = HCCostAccountController.getHealthcareCostsAmbulanceForAccount(null, null, 0, 0, null);
+        } catch (Exception e) {
+            System.assert(false, 'Method should handle exception and not throw');
+        }
+        Test.stopTest();
+        System.assertNotEquals(null, result, 'Expected a wrapper object even with null input');
+    }
+
+    @isTest
+    static void testAssignAll_WithNullCaseId() {
+        Account acc = TestDataFactory.individualAccount();
+        insert acc;
+        Case c = TestDataFactory.newCase(acc.Id);
+        insert c;
+
+        List<Healthcare_Cost__c> hccList = new List<Healthcare_Cost__c>();
+        for (Integer i = 0; i < 2; i++) {
+            Healthcare_Cost__c hcc = TestDataFactory.pharmacareCostRecord(acc.Id, c.Id);
+            hcc.Cost_Include__c = false;
+            hcc.Cost_Review__c = false;
+            hccList.add(hcc);
+        }
+        insert hccList;
+
+        Test.startTest();
+        List<Healthcare_Cost__c> result = HCCostAccountController.assignAll(acc.Id, null, hccList, 'Pharmacare');
+        Test.stopTest();
+
+        System.assertEquals(hccList.size(), result.size(), 'Returned list should match input list size');
+    }
+    
+    @isTest
+	static void testGetHealthcareCostsHospitalForAccount_QueryException() {
+    Account acc = TestDataFactory.individualAccount();
+    insert acc;
+    Case c = TestDataFactory.newCase(acc.Id);
+    insert c;
+
+    // Insert valid data so query is expected to run, but simulate invalid label
+    String invalidSortOrder = 'INVALID_SORT_FIELD';
+    String exceptionMessage;
+
+    Test.startTest();
+    try {
+        HCCostAccountController.getHealthcareCostsHospitalForAccount(
+            acc.Id,
+            Label.TPL_All_Records,
+            1,
+            5,
+            invalidSortOrder
+        );
+    } catch (Exception e) {
+        exceptionMessage = e.getMessage(); // Should not happen if controller catches it
+    }
+    Test.stopTest();
+
+    System.assertEquals(null, exceptionMessage, 'Method should catch QueryException internally');
+	}
+
+
 }
