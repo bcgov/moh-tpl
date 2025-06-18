@@ -463,4 +463,137 @@ public with sharing class HCCostCaseControllerTest {
             System.assertEquals(caseDetailWrapper1.hccList.size(),caseDetailWrapper2.hccList.size());            
         }
     }
+    
+      
+    @isTest
+	static void testUpdateAllMethod() {
+    // Arrange
+    Account acc = TestDataFactory.individualAccount();
+    insert acc;
+
+    Case c = TestDataFactory.newCase(acc.Id);
+    insert c;
+
+    Healthcare_Cost__c hcc = TestDataFactory.ambulanceCostRecord(acc.Id, c.Id);
+    insert hcc;
+
+    // Set the fields to be updated
+    hcc.Cost_Include__c = true;
+    hcc.Cost_Review__c = false;
+
+    List<Healthcare_Cost__c> hccList = new List<Healthcare_Cost__c>{ hcc };
+
+    Test.startTest();
+    HCCostCaseController.updateAll(c.Id, true, true, hccList, 'Ambulance');
+    Test.stopTest();
+
+    // Verify the updates
+    Healthcare_Cost__c updated = [SELECT Cost_Include__c, Cost_Review__c FROM Healthcare_Cost__c WHERE Id = :hcc.Id];
+    System.assertEquals(true, updated.Cost_Include__c);
+    System.assertEquals(false, updated.Cost_Review__c);
+	}
+  // Test
+     @isTest
+    static void testHCCostCountAllRecordsBranch() {
+        Account acc = TestDataFactory.individualAccount();
+        insert acc;
+
+        Case c = TestDataFactory.newCase(acc.Id);
+        insert c;
+
+        Healthcare_Cost__c hcc = TestDataFactory.ambulanceCostRecord(acc.Id, c.Id);
+        insert hcc;
+
+        String filterValue = Label.TPL_All_Records; // Triggers 'else' branch
+        Integer pageNumber = 1;
+        Integer pageSize = 5;
+        String sortOrder = Label.TPL_Ascending;
+
+        Test.startTest();
+        HCCostCaseController.HCCostCaseDetailWrapper wrapper = HCCostCaseController.getHealthcareCostsAmbulanceForCase(
+            c.Id, filterValue, pageSize, pageNumber, sortOrder
+        );
+        Test.stopTest();
+
+        System.assert(wrapper != null);
+    }
+
+    @isTest
+    static void testPaginationStartNumberElseBranch() {
+        Integer pageSize = 5;
+        Integer pageNumber = 3;
+        Integer totalCount = 20; // Triggers else
+
+        Account acc = TestDataFactory.individualAccount();
+        insert acc;
+        Case c = TestDataFactory.newCase(acc.Id);
+        insert c;
+
+        for (Integer i = 0; i < 20; i++) {
+            insert TestDataFactory.ambulanceCostRecord(acc.Id, c.Id);
+        }
+
+        Test.startTest();
+        HCCostCaseController.HCCostCaseDetailWrapper wrapper = HCCostCaseController.getHealthcareCostsAmbulanceForCase(
+            c.Id, Label.TPL_All_Records, pageSize, pageNumber, Label.TPL_Ascending
+        );
+        Test.stopTest();
+
+        System.assertNotEquals(null, wrapper);
+    }
+    
+    @isTest
+	static void testGetHealthcareCostsHospitalForCase_CoverageOnly() {
+    // Create a valid Person Account
+    Account acc = new Account(
+        FirstName = 'Test',
+        LastName = 'Account',
+        RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Individual').getRecordTypeId(),
+        PersonEmail = 'test@example.com'
+    );
+    insert acc;
+
+    // Create a related Case
+    Case c = new Case(
+        RecordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByName().get('Individual').getRecordTypeId(),
+        Status = 'Open',
+        Origin = 'Phone',
+        AccountId = acc.Id,
+        Subject = 'Test Case'
+    );
+    insert c;
+
+    // Get the hospitalization record type ID
+    Id hospitalRecordTypeId = Schema.SObjectType.Healthcare_Cost__c.getRecordTypeInfosByName().get('Hospitalization').getRecordTypeId();
+
+    // Create a Healthcare_Cost__c record
+    Healthcare_Cost__c hc = new Healthcare_Cost__c(
+        RecordTypeId = hospitalRecordTypeId,
+        Case2__c = c.Id,
+        Account__c = acc.Id
+    );
+    insert hc;
+
+    // Run the method
+    Test.startTest();
+    HCCostCaseController.HCCostCaseDetailWrapper wrapper = HCCostCaseController.getHealthcareCostsHospitalForCase(
+        c.Id,
+        Label.TPL_All_Records,
+        1,
+        5,
+        Label.TPL_Descending
+    );
+    Test.stopTest();
+
+    System.assertNotEquals(null, wrapper);
+	}
+    
+    // User Registration Exception class
+    @IsTest
+	static void test_UserRegistrationException_Raise() {
+    UserRegistrationException ex = new UserRegistrationException('Test error message');
+    Exception raised = ex.RaiseException();
+    System.assertEquals(ex, raised, 'RaiseException() should return the same exception instance');
+	}
+
 }
