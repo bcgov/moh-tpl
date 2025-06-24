@@ -1,6 +1,6 @@
 {
   "orgName": "TPL Scratch Org",
-  "edition": "Enterprise",
+  "edition": "Developer",
   "hasSampleData": false,
   "features": [
     "PersonAccounts",
