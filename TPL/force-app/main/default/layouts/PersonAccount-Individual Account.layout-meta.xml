@@ -27,10 +27,6 @@
                 <behavior>Edit</behavior>
                 <field>Date_of_Birth__pc</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>PersonGender</field>
-            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

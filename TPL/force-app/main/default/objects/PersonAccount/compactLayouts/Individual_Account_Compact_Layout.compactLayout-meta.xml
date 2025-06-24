@@ -6,6 +6,5 @@
     <fields>Type</fields>
     <fields>Date_of_Birth__pc</fields>
     <fields>RecordTypeId</fields>
-    <fields>PersonGender</fields>
     <label>Individual Account Compact Layout</label>
 </CompactLayout>
