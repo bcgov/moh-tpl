@@ -1,6 +1,6 @@
 {
   "orgName": "TPL Scratch Org",
-  "edition": "Developer",
+  "edition": "Enterprise",
   "hasSampleData": false,
   "features": [
     "PersonAccounts",
@@ -13,7 +13,9 @@
     },
     "nameSettings":{
       "enableMiddleName": true
+    },
+    "enhancedNotesSettings": {
+    "enableEnhancedNotes": true
     }
   }
-
 }
