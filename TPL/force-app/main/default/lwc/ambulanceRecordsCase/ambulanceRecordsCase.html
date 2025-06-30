@@ -54,7 +54,9 @@
                 onchange={changeCostInclude}
                 checked={costInclude}>
             </lightning-input>
-            <lightning-button label="Go" onclick={updateAll}></lightning-button>
+            <lightning-button label="Review" variant="brand" onclick={updateCostReviewOnly} class="slds-m-right_small"></lightning-button>
+                &nbsp;
+            <lightning-button label="Include" variant="brand" onclick={updateCostIncludeOnly}></lightning-button>
         </template>
         <template if:true = {updateHappening}>
             <p>Your updates are in progress. Please wait....</p>

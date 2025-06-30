@@ -414,8 +414,8 @@ export default class PharmacareRecordsCase extends LightningElement {
         .then(() => {
             this.onLoad();
             this.checkIfUnderUpdate();
-            this.costInclude = false;
-            this.costReview = false;
+            //this.costInclude = false;
+            //this.costReview = false;
 
             this.dispatchEvent(new ShowToastEvent({
                 title: 'Success',
@@ -433,6 +433,76 @@ export default class PharmacareRecordsCase extends LightningElement {
         });
      }
     }
+
+    // for the separate GO functionality:
+            updateCostReviewOnly() {
+            this.checkIfUnderUpdate();
+            if (!this.updateHappening && (this.costReview === true || this.costReview === false)) {
+                let updatedRecords = this.recordsToDisplay.map(record => ({
+                    Id: record.Id,
+                    Cost_Review__c: this.costReview
+                }));
+        
+                updateAll({
+                    caseId: this.recordId,
+                    costReview: this.costReview,
+                    costInclude: null,
+                    currentRecords: updatedRecords,
+                    recordType: 'Pharmacare'
+                })
+                .then(() => {
+                    this.onLoad();
+                    this.costReview = false;
+                    this.dispatchEvent(new ShowToastEvent({
+                        title: 'Success',
+                        message: 'Cost Review updated successfully.',
+                        variant: 'success'
+                    }));
+                })
+                .catch(() => {
+                    this.dispatchEvent(new ShowToastEvent({
+                        title: 'Error',
+                        message: 'Failed to update Cost Review.',
+                        variant: 'error'
+                    }));
+                });
+            }
+        }
+        
+        updateCostIncludeOnly() {
+            this.checkIfUnderUpdate();
+            if (!this.updateHappening && (this.costInclude === true || this.costInclude === false)) {
+                let updatedRecords = this.recordsToDisplay.map(record => ({
+                    Id: record.Id,
+                    Cost_Include__c: this.costInclude
+                }));
+        
+                updateAll({
+                    caseId: this.recordId,
+                    costReview: null,
+                    costInclude: this.costInclude,
+                    currentRecords: updatedRecords,
+                    recordType: 'Pharmacare'
+                })
+                .then(() => {
+                    this.onLoad();
+                    this.costInclude = false;
+                    this.dispatchEvent(new ShowToastEvent({
+                        title: 'Success',
+                        message: 'Cost Include updated successfully.',
+                        variant: 'success'
+                    }));
+                })
+                .catch(() => {
+                    this.dispatchEvent(new ShowToastEvent({
+                        title: 'Error',
+                        message: 'Failed to update Cost Include.',
+                        variant: 'error'
+                    }));
+                });
+            }
+        }
+
     handleSave(){
         var el = this.template.querySelector('c-custom-data-table');
         var selected = el.getSelectedRows();
