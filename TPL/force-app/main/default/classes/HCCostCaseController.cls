@@ -309,13 +309,12 @@ public static void updateAll(Id caseId, Boolean costReview, Boolean costInclude,
     for (Healthcare_Cost__c record : currentRecords) {
         Healthcare_Cost__c rec = new Healthcare_Cost__c(Id = record.Id);
 
-        if (record.Cost_Include__c != null) {
-            rec.Cost_Include__c = record.Cost_Include__c;
+        if (record.Cost_Include__c == true || record.Cost_Include__c == false) {
+        rec.Cost_Include__c = record.Cost_Include__c;
         }
-
-        if (record.Cost_Review__c != null) {
-            rec.Cost_Review__c = record.Cost_Review__c;
-        }
+        if (record.Cost_Review__c == true || record.Cost_Review__c == false) {
+        rec.Cost_Review__c = record.Cost_Review__c;
+    }
 
         toUpdate.add(rec);
     }

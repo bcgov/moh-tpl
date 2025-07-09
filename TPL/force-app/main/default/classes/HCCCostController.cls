@@ -332,10 +332,21 @@ public with sharing class HCCCostController {
                                             FROM Healthcare_Cost__c 
                                             WHERE ID NOT IN:currentRecords AND case2__c  =: caseId 
                                             AND RecordType.DeveloperName =:recordType FOR UPDATE];
-        for(Healthcare_Cost__c hcc : currentRecords){
+        // for(Healthcare_Cost__c hcc : currentRecords){
+        //     hcc.Cost_Include__c = costInclude;
+        //     hcc.Cost_Review__c = costReview;
+        // }
+        // for separate go buttons:
+        for (Healthcare_Cost__c hcc : currentRecords) {
+            if (costInclude == true || costInclude == false) {
             hcc.Cost_Include__c = costInclude;
+            }
+            if (costReview == true || costReview == false) {
             hcc.Cost_Review__c = costReview;
-        }
+            }
+
+        }// done
+
         try{
             Database.update(currentRecords,false);
         }catch(Exception e){
