@@ -415,7 +415,7 @@ export default class AmbulanceRecordsCase extends LightningElement {
         })
         .then(() => {
             this.onLoad();
-            this.costReview = false;
+            //this.costReview = false; // commenting to check the reload 
             this.dispatchEvent(new ShowToastEvent({
                 title: 'Success',
                 message: 'Cost Review updated successfully.',
@@ -449,7 +449,7 @@ updateCostIncludeOnly() {
         })
         .then(() => {
             this.onLoad();
-            this.costInclude = false;
+            //this.costInclude = false; // commenting to check the reload 
             this.dispatchEvent(new ShowToastEvent({
                 title: 'Success',
                 message: 'Cost Include updated successfully.',
