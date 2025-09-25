@@ -209,6 +209,19 @@ public static HCCostCaseDetailWrapper getHealthcareCostsHospitalForCase(String c
         totalCount = HCCostCaseController.getHCCostCountonCase(caseId, filterValue, recordTypeId);
         startItemNumber = HCCostCaseController.getStartNumber(pageSize, pageNumber, totalCount);
         hccCostList = HCCostCaseDAO.getHCCostCaseRecords(caseId, filterValue, recordTypeId, startItemNumber, pageSize, hospitalFields, sortOrder);
+        //Adding the sorting functionality on Date of Service field
+        String sortDir = (String.isBlank(sortOrder) || sortOrder.toUpperCase() != 'DESC') ? 'ASC' : 'DESC';
+        if (!hccCostList.isEmpty()) {
+            List<Id> pageIds = new List<Id>();
+            for (Healthcare_Cost__c r : hccCostList) pageIds.add(r.Id);
+            hccCostList = Database.query(
+                'SELECT ' + hospitalFields + ' ' +
+                'FROM Healthcare_Cost__c ' +
+                'WHERE Id IN :pageIds ' +
+                'ORDER BY Date_of_Service__c ' + sortDir + ' NULLS LAST'
+            );
+        }
+        
         caseDetailWrapper.hccList = hccCostList;
         caseDetailWrapper.totalCount = totalCount;
     } catch(NullPointerException nullpointer){
