@@ -621,7 +621,7 @@ export default class HospitalRecordsCase extends LightningElement {
 
     event.detail.draftValues.forEach((draft) => {
       // --- Date fields: normalize '' to null or drop if no real change
-      ["Date_of_Discharge__c", "Date_of_Admission__c"].forEach((fn) => {
+      ["Date_of_Discharge__c"].forEach((fn) => {
         if (draft.hasOwnProperty(fn)) {
           const cur = this.getCurrentFieldValue(draft.Id, fn);
           const v = draft[fn];
@@ -1104,7 +1104,7 @@ export default class HospitalRecordsCase extends LightningElement {
         }
 
         // Add date normalization here
-        ["Date_of_Discharge__c", "Date_of_Admission__c"].forEach((fn) => {
+        ["Date_of_Discharge__c"].forEach((fn) => {
           if (cleaned.hasOwnProperty(fn)) {
             const cur = current[fn];
             const v = cleaned[fn];
