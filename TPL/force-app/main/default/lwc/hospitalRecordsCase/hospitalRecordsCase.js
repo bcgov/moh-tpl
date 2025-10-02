@@ -335,6 +335,8 @@ export default class HospitalRecordsCase extends LightningElement {
     isFirstPage = true;
     isLastPage = false;
     sortSelection = 'asc';
+    sortBy = 'Date_of_Service__c';
+    sortDirection = 'asc';
     totalRecords = 0; //Total no.of records
     totalPages; //Total no.of pages
     pageNumber = 1; //Page number
@@ -415,45 +417,102 @@ export default class HospitalRecordsCase extends LightningElement {
         }
     }
 
-      onLoad(){
-        return getHealthcareCostsHospitalForCase({caseId: this.recordId, filterValue: this.selectedFilter, pageSize: this.pageSize, pageNumber: this.pageNumber, sortOrder: this.sortSelection})
+    //   onLoad(){
+    //     return getHealthcareCostsHospitalForCase({caseId: this.recordId, filterValue: this.selectedFilter, pageSize: this.pageSize, pageNumber: this.pageNumber, sortOrder: this.sortSelection})
+    //     .then(result=>{
+    //         this.wiredRecords = result.hccList;
+    //         this.recordsToDisplay = [];
+    //         if(result.hccList != null && result.hccList){
+               
+    //             this.records = JSON.parse(JSON.stringify(result.hccList));
+    //             this.records.forEach(record =>{
+    //                 record.accountNameClass = 'slds-cell-edit';
+    //             })
+    //             this.totalRecords = result.totalCount;
+    //             this.totalPages = Math.ceil(this.totalRecords / this.pageSize);
+    //             // set page number 
+    //             if (this.pageNumber <= 1) {
+    //                 this.pageNumber = 1;
+    //             } else if (this.pageNumber >= this.totalPages) {
+    //                 this.pageNumber = this.totalPages;
+    //             }
+    //              // set records to display on current page 
+    //             for(let i=0;i<this.records.length;i++){
+    //                 if(i=== this.totalRecords){
+    //                     break;
+    //                 }
+    //                 this.recordsToDisplay.push(this.records[i]);
+    //             }
+        
+    //             this.error = undefined;
+    //         }
+    //         else{
+    //             this.records = [];
+    //             this.totalRecords = result.totalCount;
+    //         }
+    //         this.lastSavedData = this.records;
+    //         this.showSpinner = false;
+    //     })
+    //     .catch(error =>{
+    //         this.records = []
+    //         this.totalRecords = 0;
+    //         this.dispatchEvent(
+    //             new ShowToastEvent({
+    //                 title: 'Error',
+    //                 message: 'Some issues occured while loading Hospitalization Records. Please contact Administrator',
+    //                 variant: 'error'
+    //             })
+    //         );    
+    //     });
+    // }
+    onLoad(){
+        // IMPORTANT: pass sortBy as well so Apex can perform global ORDER BY
+        return getHealthcareCostsHospitalForCase({
+            caseId: this.recordId,
+            filterValue: this.selectedFilter,
+            pageSize: this.pageSize,
+            pageNumber: this.pageNumber,
+            sortOrder: this.sortSelection,
+            sortBy: this.sortBy              // NEW
+        })
         .then(result=>{
             this.wiredRecords = result.hccList;
             this.recordsToDisplay = [];
-            if(result.hccList != null && result.hccList){
-               
+            if(result && result.hccList){
                 this.records = JSON.parse(JSON.stringify(result.hccList));
                 this.records.forEach(record =>{
                     record.accountNameClass = 'slds-cell-edit';
                 })
-                this.totalRecords = result.totalCount;
-                this.totalPages = Math.ceil(this.totalRecords / this.pageSize);
-                // set page number 
+                this.totalRecords = result.totalCount || 0;
+                this.totalPages = Math.ceil(this.totalRecords / this.pageSize) || 1;
+
+                // IMPORTANT: Server already returns the correct, globally-sorted page slice.
+                this.recordsToDisplay = this.records;
+
+                // page bounds guard (keep your behavior)
                 if (this.pageNumber <= 1) {
                     this.pageNumber = 1;
                 } else if (this.pageNumber >= this.totalPages) {
                     this.pageNumber = this.totalPages;
                 }
-                 // set records to display on current page 
-                for(let i=0;i<this.records.length;i++){
-                    if(i=== this.totalRecords){
-                        break;
-                    }
-                    this.recordsToDisplay.push(this.records[i]);
-                }
-        
+
                 this.error = undefined;
             }
             else{
                 this.records = [];
-                this.totalRecords = result.totalCount;
+                this.recordsToDisplay = [];
+                this.totalRecords = result ? (result.totalCount || 0) : 0;
+                this.totalPages = Math.ceil(this.totalRecords / this.pageSize) || 1;
             }
             this.lastSavedData = this.records;
             this.showSpinner = false;
         })
         .catch(error =>{
-            this.records = []
+            this.records = [];
+            this.recordsToDisplay = [];
             this.totalRecords = 0;
+            this.totalPages = 0;
+            this.error = error;
             this.dispatchEvent(
                 new ShowToastEvent({
                     title: 'Error',
@@ -462,6 +521,14 @@ export default class HospitalRecordsCase extends LightningElement {
                 })
             );    
         });
+    }
+
+    doSorting(event) {
+        this.sortBy = event.detail.fieldName;
+        this.sortDirection = event.detail.sortDirection;
+        this.sortSelection = this.sortDirection;
+        this.pageNumber = 1; // optional: reset to first page on new sort
+        this.onLoad();
     }
 
     get bDisableFirst() {

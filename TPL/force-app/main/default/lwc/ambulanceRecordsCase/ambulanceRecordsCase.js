@@ -206,6 +206,11 @@ export default class AmbulanceRecordsCase extends LightningElement {
         return this.editedFieldKeys.has(key) ? 'error-cell' : '';
     }
 
+    // Sorting
+    sortBy = 'Date_of_Service__c';
+    sortDirection = 'asc';
+    sortSelection = 'asc'; // server expects 'asc' | 'desc'
+
     connectedCallback() {
         this.selectedFilter = 'All Records';
         this.sortSelection = 'asc';
@@ -247,53 +252,76 @@ export default class AmbulanceRecordsCase extends LightningElement {
         }
     }
 
-    onLoad(){
-        return getHealthcareCostsAmbulanceForCase({caseId: this.recordId, filterValue: this.selectedFilter, pageSize: this.pageSize, pageNumber: this.pageNumber, sortOrder: this.sortSelection})
-        .then(result=>{
-            this.wiredRecords = result.hccList;
+    onLoad() {
+    this.showSpinner = true;
+
+    // IMPORTANT: send sortBy as well as sortOrder
+    return getHealthcareCostsAmbulanceForCase({
+        caseId: this.recordId,
+        filterValue: this.selectedFilter,
+        pageSize: this.pageSize,
+        pageNumber: this.pageNumber,
+        sortOrder: this.sortSelection,   // "asc" | "desc"
+        sortBy: this.sortBy              // e.g., "Date_of_Service__c"
+    })
+    .then(result => {
+        this.wiredRecords = result.hccList;
+        this.recordsToDisplay = [];
+
+        if (result && result.hccList) {
+            // Clone list and preserve your cell class behavior
+            this.records = JSON.parse(JSON.stringify(result.hccList));
+            this.records.forEach(record => {
+                record.accountNameClass = 'slds-cell-edit';
+            });
+
+            // Totals/pagination math
+            this.totalRecords = result.totalCount || 0;
+            this.totalPages = Math.ceil(this.totalRecords / this.pageSize) || 1;
+
+            // Keep your existing page bounds protection
+            if (this.pageNumber <= 1) {
+                this.pageNumber = 1;
+            } else if (this.pageNumber >= this.totalPages) {
+                this.pageNumber = this.totalPages;
+            }
+
+            // IMPORTANT: no client-side slicing here.
+            // Server already returned the correct page, globally sorted.
+            this.recordsToDisplay = this.records;
+
+            this.error = undefined;
+        } else {
+            this.records = [];
             this.recordsToDisplay = [];
-            if(result.hccList != null && result.hccList){
-                this.records = JSON.parse(JSON.stringify(result.hccList));
-                this.records.forEach(record =>{
-                    record.accountNameClass = 'slds-cell-edit';
-                })
-                this.totalRecords = result.totalCount;
-                this.totalPages = Math.ceil(this.totalRecords / this.pageSize);
-                // set page number 
-                if (this.pageNumber <= 1) {
-                    this.pageNumber = 1;
-                } else if (this.pageNumber >= this.totalPages) {
-                    this.pageNumber = this.totalPages;
-                }
-                 // set records to display on current page 
-                for(let i=0;i<this.records.length;i++){
-                    if(i=== this.totalRecords){
-                        break;
-                    }
-                    this.recordsToDisplay.push(this.records[i]);
-                }
-        
-                this.error = undefined;
-            }
-            else{
-                this.records = [];
-                this.totalRecords = result.totalCount;
-            }
-            this.lastSavedData = this.records;
-            this.showSpinner = false;
-        })
-        .catch(error =>{
-            this.records = []
-            this.totalRecords = 0;
-            this.dispatchEvent(
-                new ShowToastEvent({
-                    title: 'Error',
-                    message: 'Some issues occured while loading Ambulance Records. Please contact Administrator',
-                    variant: 'error'
-                })
-            );    
-        });
-    }
+            this.totalRecords = result ? (result.totalCount || 0) : 0;
+            this.totalPages = Math.ceil(this.totalRecords / this.pageSize) || 1;
+        }
+
+        this.lastSavedData = this.records;
+    })
+    .catch(error => {
+        this.records = [];
+        this.recordsToDisplay = [];
+        this.totalRecords = 0;
+        this.totalPages = 0;
+        this.error = error;
+
+        this.dispatchEvent(
+            new ShowToastEvent({
+                title: 'Error',
+                message: 'Some issues occured while loading Ambulance Records. Please contact Administrator',
+                variant: 'error'
+            })
+        );
+    })
+    .finally(() => {
+        this.showSpinner = false;
+    });
+}
+
+
+
     handleMassUpdate(){
        if(this.showMassUpdateSection){
             this.showMassUpdateSection = false;

@@ -85,7 +85,7 @@ private static Integer getStartNumber(Integer pageSize, Integer pageNumber, Inte
 *     HCCostCaseDetailWrapper: Returns the caseDetailWrapper that contains Healthcare Cost List and total count of Healthcare cost records
 * 
 */
-@AuraEnabled
+/*@AuraEnabled
 public static HCCostCaseDetailWrapper getHealthcareCostsAmbulanceForCase(String caseId, String filterValue, Integer pageSize, Integer pageNumber, String sortOrder){
     List<Healthcare_Cost__c> hccCostList = new List<Healthcare_Cost__c> ();
     HCCostCaseDetailWrapper caseDetailWrapper = new HCCostCaseDetailWrapper();
@@ -107,7 +107,41 @@ public static HCCostCaseDetailWrapper getHealthcareCostsAmbulanceForCase(String 
         System.debug(qe.getMessage());    
     }
     return caseDetailWrapper;
+}*/
+@AuraEnabled(cacheable=true)
+public static HCCostCaseDetailWrapper getHealthcareCostsAmbulanceForCase(
+    String caseId,
+    String filterValue,
+    Integer pageSize,
+    Integer pageNumber,
+    String sortOrder,   // "asc" | "desc"
+    String sortBy       // e.g., "Date_of_Service__c"
+){
+    List<Healthcare_Cost__c> hccCostList = new List<Healthcare_Cost__c>();
+    HCCostCaseDetailWrapper caseDetailWrapper = new HCCostCaseDetailWrapper();
+    Integer totalCount = 0;
+    Integer startItemNumber = 0;
+    String ambulanceFields = Label.TPL_Ambulance_Fields;
+
+    try{
+        Id recordTypeId = HCCostRecordTypeIds.getAmbulanceRecordId();
+        totalCount      = HCCostCaseController.getHCCostCountonCase(caseId, filterValue, recordTypeId);
+        startItemNumber = HCCostCaseController.getStartNumber(pageSize, pageNumber, totalCount);
+
+        // >>> IMPORTANT: call the NEW DAO method (legacy method remains untouched for other features)
+        hccCostList = HCCostCaseDAO.getHCCostCaseRecordsWithSortBy(
+            caseId, filterValue, recordTypeId, startItemNumber, pageSize, ambulanceFields, sortOrder, sortBy
+        );
+
+        caseDetailWrapper.hccList    = hccCostList;
+        caseDetailWrapper.totalCount = totalCount;
+    } catch (Exception e) {
+        System.debug(e.getMessage());
+    }
+    return caseDetailWrapper;
 }
+
+
 
         /*
 * Description: Method to get the list of Healthcare cost records for Pharmacare Record type at case level
@@ -196,39 +230,72 @@ public static HCCostCaseDetailWrapper getHealthcareCostsMSPForCase(String caseId
 * 
 */
 
-@AuraEnabled
-public static HCCostCaseDetailWrapper getHealthcareCostsHospitalForCase(String caseId, String filterValue, Integer pageNumber, Integer pageSize, String sortOrder){
-    List<Healthcare_Cost__c> hccCostList = new List<Healthcare_Cost__c> ();
+// @AuraEnabled
+// public static HCCostCaseDetailWrapper getHealthcareCostsHospitalForCase(String caseId, String filterValue, Integer pageNumber, Integer pageSize, String sortOrder){
+//     List<Healthcare_Cost__c> hccCostList = new List<Healthcare_Cost__c> ();
+//     HCCostCaseDetailWrapper caseDetailWrapper = new HCCostCaseDetailWrapper();
+//     String sourceSystemId = null;
+//     Integer totalCount = 0;
+//     Integer startItemNumber = 0;
+//     String hospitalFields = Label.TPL_Hospitalization_Fields;
+//     try{
+//         Id recordTypeId = HCCostRecordTypeIds.getHospitalRecordId();
+//         totalCount = HCCostCaseController.getHCCostCountonCase(caseId, filterValue, recordTypeId);
+//         startItemNumber = HCCostCaseController.getStartNumber(pageSize, pageNumber, totalCount);
+//         hccCostList = HCCostCaseDAO.getHCCostCaseRecords(caseId, filterValue, recordTypeId, startItemNumber, pageSize, hospitalFields, sortOrder);
+//         //Adding the sorting functionality on Date of Service field
+//         String sortDir = (String.isBlank(sortOrder) || sortOrder.toUpperCase() != 'DESC') ? 'ASC' : 'DESC';
+//         if (!hccCostList.isEmpty()) {
+//             List<Id> pageIds = new List<Id>();
+//             for (Healthcare_Cost__c r : hccCostList) pageIds.add(r.Id);
+//             hccCostList = Database.query(
+//                 'SELECT ' + hospitalFields + ' ' +
+//                 'FROM Healthcare_Cost__c ' +
+//                 'WHERE Id IN :pageIds ' +
+//                 'ORDER BY Date_of_Service__c ' + sortDir + ' NULLS LAST'
+//             );
+//         }
+        
+//         caseDetailWrapper.hccList = hccCostList;
+//         caseDetailWrapper.totalCount = totalCount;
+//     } catch(NullPointerException nullpointer){
+//         System.debug(nullpointer.getMessage());
+//     }
+//     catch(QueryException qe) {
+//         System.debug(qe.getMessage());    
+//     }
+//     return caseDetailWrapper;
+// }
+
+@AuraEnabled(cacheable=true)
+public static HCCostCaseDetailWrapper getHealthcareCostsHospitalForCase(
+    String caseId,
+    String filterValue,
+    Integer pageSize,
+    Integer pageNumber,
+    String sortOrder,   // "asc" | "desc"
+    String sortBy       // e.g., "Date_of_Service__c"
+){
+    List<Healthcare_Cost__c> hccCostList = new List<Healthcare_Cost__c>();
     HCCostCaseDetailWrapper caseDetailWrapper = new HCCostCaseDetailWrapper();
-    String sourceSystemId = null;
     Integer totalCount = 0;
     Integer startItemNumber = 0;
     String hospitalFields = Label.TPL_Hospitalization_Fields;
+
     try{
         Id recordTypeId = HCCostRecordTypeIds.getHospitalRecordId();
-        totalCount = HCCostCaseController.getHCCostCountonCase(caseId, filterValue, recordTypeId);
+        totalCount      = HCCostCaseController.getHCCostCountonCase(caseId, filterValue, recordTypeId);
         startItemNumber = HCCostCaseController.getStartNumber(pageSize, pageNumber, totalCount);
-        hccCostList = HCCostCaseDAO.getHCCostCaseRecords(caseId, filterValue, recordTypeId, startItemNumber, pageSize, hospitalFields, sortOrder);
-        //Adding the sorting functionality on Date of Service field
-        String sortDir = (String.isBlank(sortOrder) || sortOrder.toUpperCase() != 'DESC') ? 'ASC' : 'DESC';
-        if (!hccCostList.isEmpty()) {
-            List<Id> pageIds = new List<Id>();
-            for (Healthcare_Cost__c r : hccCostList) pageIds.add(r.Id);
-            hccCostList = Database.query(
-                'SELECT ' + hospitalFields + ' ' +
-                'FROM Healthcare_Cost__c ' +
-                'WHERE Id IN :pageIds ' +
-                'ORDER BY Date_of_Service__c ' + sortDir + ' NULLS LAST'
-            );
-        }
-        
-        caseDetailWrapper.hccList = hccCostList;
+
+        // IMPORTANT: Call the new DAO method that performs global ORDER BY + LIMIT/OFFSET
+        hccCostList = HCCostCaseDAO.getHCCostCaseRecordsWithSortBy(
+            caseId, filterValue, recordTypeId, startItemNumber, pageSize, hospitalFields, sortOrder, sortBy
+        );
+
+        caseDetailWrapper.hccList    = hccCostList;
         caseDetailWrapper.totalCount = totalCount;
-    } catch(NullPointerException nullpointer){
-        System.debug(nullpointer.getMessage());
-    }
-    catch(QueryException qe) {
-        System.debug(qe.getMessage());    
+    } catch (Exception e) {
+        System.debug(e.getMessage());
     }
     return caseDetailWrapper;
 }
