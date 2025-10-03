@@ -95,6 +95,7 @@ const INTEGRATION_COLUMNS = [
   {
     label: "Number of Days",
     fieldName: "Number_of_Days__c",
+    type: "number",
     editable: false,
   },
   {
@@ -264,7 +265,7 @@ const MANUAL_COLUMNS = [
   {
     label: "Number of Days",
     fieldName: "Number_of_Days__c",
-    type: "Number",
+    type: "number",
     editable: false,
     sortable: true,
   },
@@ -1175,10 +1176,28 @@ export default class HospitalRecordsCase extends LightningElement {
           // Merge updated records into the existing table instead of replacing
           const updatedMap = new Map(data.updatedRecords.map((r) => [r.Id, r]));
 
-          this.recordsToDisplay = this.recordsToDisplay.map((existing) => {
+        //   this.recordsToDisplay = this.recordsToDisplay.map((existing) => {
+        //     const updated = updatedMap.get(existing.Id);
+        //     return updated ? { ...existing, ...updated } : existing;
+        //   });
+
+        this.recordsToDisplay = this.recordsToDisplay.map((existing) => {
             const updated = updatedMap.get(existing.Id);
-            return updated ? { ...existing, ...updated } : existing;
-          });
+            if (!updated) return existing;
+
+            const merged = { ...existing, ...updated };
+
+            // If DoD was cleared on save, make sure Number_of_Days__c shows blank in the UI
+            if (
+            Object.prototype.hasOwnProperty.call(updated, "Date_of_Discharge__c") &&
+            (updated.Date_of_Discharge__c === null || updated.Date_of_Discharge__c === "")
+            ) {
+            merged.Number_of_Days__c = null;
+            }
+
+            return merged;
+     });
+
 
           this.showSection = false;
           this.dispatchEvent(
