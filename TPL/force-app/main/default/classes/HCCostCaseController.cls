@@ -289,6 +289,38 @@ public static HCCostCaseDetailWrapper getHealthcareCostsFCForCase(String caseId,
     }
     return caseDetailWrapper;
 }
+//Sorting for Hospitalization Record type
+@AuraEnabled
+public static HCCostCaseDetailWrapper getHealthcareCostsHospitalForCaseSorted(String caseId, String filterValue, Integer pageNumber, Integer pageSize, String sortOrder, String sortBy){
+    HCCostCaseDAO.sortBy = sortBy;
+    HCCostCaseDetailWrapper caseDetailWrapper = getHealthcareCostsHospitalForCase(caseId, filterValue, pageNumber, pageSize, sortOrder);
+    HCCostCaseDAO.sortBy = null;
+    return caseDetailWrapper;
+}
+//Sorting for Ambulance Record type
+@AuraEnabled
+public static HCCostCaseDetailWrapper getHealthcareCostsAmbulanceForCaseSorted(String caseId, String filterValue, Integer pageNumber, Integer pageSize, String sortOrder, String sortBy){
+    HCCostCaseDAO.sortBy = sortBy;
+    HCCostCaseDetailWrapper caseDetailWrapper = getHealthcareCostsAmbulanceForCase(caseId, filterValue, pageNumber, pageSize, sortOrder);
+    HCCostCaseDAO.sortBy = null;
+    return caseDetailWrapper;
+}
+//Sorting for Pharmacare Record type
+@AuraEnabled
+public static HCCostCaseDetailWrapper getHealthcareCostsPharmacareForCaseSorted(String caseId, String filterValue, Integer pageNumber, Integer pageSize, String sortOrder, String sortBy){
+    HCCostCaseDAO.sortBy = sortBy;
+    HCCostCaseDetailWrapper caseDetailWrapper = getHealthcareCostsPharmacareForCase(caseId, filterValue, pageNumber, pageSize, sortOrder);
+    HCCostCaseDAO.sortBy = null;
+    return caseDetailWrapper;
+}
+//Sorting for MSP Record type
+@AuraEnabled
+public static HCCostCaseDetailWrapper getHealthcareCostsMSPForCaseSorted(String caseId, String filterValue, Integer pageNumber, Integer pageSize, String sortOrder, String sortBy){
+    HCCostCaseDAO.sortBy = sortBy;
+    HCCostCaseDetailWrapper caseDetailWrapper = getHealthcareCostsMSPForCase(caseId, filterValue, pageNumber, pageSize, sortOrder);
+    HCCostCaseDAO.sortBy = null;
+    return caseDetailWrapper;
+}
 
 /*
 * Description: Wrapper class to perform transactions on case level in Healthcare cost.

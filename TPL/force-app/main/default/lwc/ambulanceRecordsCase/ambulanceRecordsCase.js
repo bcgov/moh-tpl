@@ -2,6 +2,7 @@ import { LightningElement, wire, api, track } from 'lwc';
 import { refreshApex } from '@salesforce/apex';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import getHealthcareCostsAmbulanceForCase from '@salesforce/apex/HCCostCaseController.getHealthcareCostsAmbulanceForCase';
+import getHealthcareCostsAmbulanceForCaseSorted from '@salesforce/apex/HCCostCaseController.getHealthcareCostsAmbulanceForCaseSorted';
 import saveDraftValues from '@salesforce/apex/HCCCostController.saveDraftValues'; 
 import deleteHCCRecord from '@salesforce/apex/HCCCostController.deleteHCCRecord';
 import getFacilityBySiteCode from '@salesforce/apex/HCCCostController.getFacilityBySiteCode';
@@ -248,7 +249,12 @@ export default class AmbulanceRecordsCase extends LightningElement {
     }
 
     onLoad(){
-        return getHealthcareCostsAmbulanceForCase({caseId: this.recordId, filterValue: this.selectedFilter, pageSize: this.pageSize, pageNumber: this.pageNumber, sortOrder: this.sortSelection})
+        return getHealthcareCostsAmbulanceForCase({
+            caseId: this.recordId, 
+            filterValue: this.selectedFilter, 
+            pageSize: this.pageSize, 
+            pageNumber: this.pageNumber, 
+            sortOrder: this.sortSelection})
         .then(result=>{
             this.wiredRecords = result.hccList;
             this.recordsToDisplay = [];
@@ -475,34 +481,34 @@ updateCostIncludeOnly() {
         } else if (this.pageNumber >= this.totalPages) {
             this.pageNumber = this.totalPages;
         }
-       this.onLoad();
+       this.onLoadSort();
     }
     previousPage() {
         this.pageNumber = this.pageNumber - 1;
         this.showSection = false;
         this.draftValues = [];
-        this.onLoad();
+        this.onLoadSort();
    
     }
     nextPage() {
         this.pageNumber = this.pageNumber + 1;
         this.showSection = false;
         this.draftValues = [];
-        this.onLoad();
+        this.onLoadSort();
     }
 
     firstPage() {
         this.pageNumber = 1;
         this.showSection = false;
         this.draftValues = [];
-        this.onLoad();
+        this.onLoadSort();
     }
 
     lastPage() {
         this.pageNumber = this.totalPages;
         this.showSection = false;
         this.draftValues = [];
-        this.onLoad();
+        this.onLoadSort();
     }
 
     handleFilterChange(event) {
@@ -523,7 +529,7 @@ updateCostIncludeOnly() {
         }
         
         this.pageNumber = 1;
-        this.onLoad();  
+        this.onLoadSort();  
        
     }
 
@@ -532,9 +538,65 @@ updateCostIncludeOnly() {
         this.sortBy = event.detail.fieldName;
         this.sortDirection = event.detail.sortDirection;
         this.sortSelection = this.sortDirection;
-        this.onLoad();
+        this.onLoadSort();
        // this.sortData(this.sortBy, this.sortDirection);
     }
+
+    //Adding onloadsort function to sort data
+    onLoadSort(){
+          return getHealthcareCostsAmbulanceForCaseSorted({
+          caseId: this.recordId,
+          filterValue: this.selectedFilter,
+          pageSize: this.pageSize,
+          pageNumber: this.pageNumber,
+          sortOrder: this.sortSelection,
+          sortBy: this.sortBy
+        })
+          .then((result) => {
+            this.wiredRecords = result.hccList;
+            this.recordsToDisplay = [];
+            if (result.hccList != null && result.hccList) {
+              this.records = JSON.parse(JSON.stringify(result.hccList));
+              this.records.forEach((record) => {
+                record.accountNameClass = "slds-cell-edit";
+              });
+              this.totalRecords = result.totalCount;
+              this.totalPages = Math.ceil(this.totalRecords / this.pageSize);
+              // set page number
+              if (this.pageNumber <= 1) {
+                this.pageNumber = 1;
+              } else if (this.pageNumber >= this.totalPages) {
+                this.pageNumber = this.totalPages;
+              }
+              // set records to display on current page
+              for (let i = 0; i < this.records.length; i++) {
+                if (i === this.totalRecords) {
+                  break;
+                }
+                this.recordsToDisplay.push(this.records[i]);
+              }
+    
+              this.error = undefined;
+            } else {
+              this.records = [];
+              this.totalRecords = result.totalCount;
+            }
+            this.lastSavedData = this.records;
+            this.showSpinner = false;
+          })
+          .catch((error) => {
+            this.records = [];
+            this.totalRecords = 0;
+            this.dispatchEvent(
+              new ShowToastEvent({
+                title: "Error",
+                message:
+                  "Some issues occured while loading Hospitalization Records. Please contact Administrator",
+                variant: "error",
+              })
+            );
+          });
+      }
 
     sortData(fieldname, direction) {
         let parseData = JSON.parse(JSON.stringify(this.recordsToDisplay));

@@ -27,19 +27,24 @@ public with sharing class HCCostCaseDAO {
 *     List<Healthcare_Cost__c>: Returns list of Healthcare Cost records as expected from the query
 * 
 */
+    public static String sortBy;
+
     public static List<Healthcare_Cost__c> getHCCostCaseRecords(String caseId, String filterValue, Id recordTypeId, Integer startItemNumber, Integer pageSize, String fields, String sortOrder){
         Integer itemsToRemove = startItemNumber - 2;
         
         list<Healthcare_Cost__c> hccList = new list<Healthcare_Cost__c>();
         String dateId = '';
         String query = '';
-        String sourceSystemId = null;
+        String sourceSystemId = '';
         Boolean costValue = false;
         try{
             if(sortOrder == null || sortOrder == ''){
                 sortOrder = 'asc';
             }
-            
+            Integer offsetVal = (startItemNumber != null && startItemNumber > 0) ? startItemNumber - 1 : 0;
+            System.debug('start idem number is'+startItemNumber);
+            String effectiveSortBy = (String.isNotBlank(sortBy)) ? sortBy : 'dateId__c';
+            System.debug('sortOrder is--->'+sortOrder);
             if(sortOrder == Label.TPL_Descending){
                 // Populate DateID to maximum value
                 dateId = '99999999zz';
@@ -75,8 +80,7 @@ public with sharing class HCCostCaseDAO {
                     }
                     
                     query = 'SELECT ' + fields + ' FROM Healthcare_Cost__c WHERE Case2__c = \'' + caseId + '\' AND RecordTypeId = \'' 
-                        + recordTypeId +'\' AND Source_System_ID__c = ' + sourceSystemId + ' AND dateId__c < \'' + dateId 
-                        + '\' ORDER BY dateId__c DESC LIMIT ' + pageSize;
+                        + recordTypeId +'\' AND Source_System_ID__c = ' + sourceSystemId + '\' ORDER BY  ' + effectiveSortBy + '  DESC LIMIT ' + pageSize + ' OFFSET ' + offsetVal;
                     
                     hccList = Database.query(query);
                     
@@ -112,8 +116,8 @@ public with sharing class HCCostCaseDAO {
                     }
                     
                     query = 'SELECT ' + fields + ' FROM Healthcare_Cost__c WHERE Case2__c = \''+ caseId + '\' AND RecordTypeId = \'' 
-                        + recordTypeId +'\' AND Source_System_ID__c = ' + sourceSystemId +' AND CreatedDate = TODAY AND dateId__c < \''+ dateId 
-                        +'\' ORDER BY dateId__c DESC LIMIT '+ pageSize;
+                        + recordTypeId +'\' AND Source_System_ID__c = ' + sourceSystemId +' AND CreatedDate = TODAY'
+                        +'\' ORDER BY  ' + effectiveSortBy + '  DESC LIMIT '+ pageSize + ' OFFSET ' + offsetVal;
                     
                     hccList = Database.query(query);
                     
@@ -145,7 +149,7 @@ public with sharing class HCCostCaseDAO {
                     }
                     
                     query = 'SELECT ' + fields + ' FROM Healthcare_Cost__c WHERE Case2__c = \'' + caseId + '\' AND RecordTypeId = \'' 
-                        + recordTypeId + '\' AND dateId__c < \'' + dateId +'\' ORDER BY dateId__c DESC LIMIT ' + pageSize;
+                        + recordTypeId + '\' ORDER BY  ' + effectiveSortBy + '  DESC LIMIT ' + pageSize + ' OFFSET ' + offsetVal;
                     
                     hccList = Database.query(query);
                 }
@@ -181,10 +185,15 @@ public with sharing class HCCostCaseDAO {
                                   ORDER BY dateId__c ASC LIMIT 1 OFFSET :itemsToRemove][0].dateId__c;
                         itemsToRemove = 0;
                     }
-                    
-                    query = 'SELECT ' + fields + ' FROM Healthcare_Cost__c WHERE Case2__c = \''+caseId + '\' AND RecordTypeId = \''
-                        + recordTypeId + '\' AND Source_System_ID__c = '+ sourceSystemId +' AND dateId__c > \'' + dateId + '\' ORDER BY dateId__c ASC LIMIT '+ pageSize;
-                    
+                                
+                        query = 'SELECT ' + fields +
+                                ' FROM Healthcare_Cost__c' +
+                                ' WHERE Case2__c = \'' + caseId + '\'' +
+                                ' AND RecordTypeId = \'' + recordTypeId + '\'' +
+                                ' AND Source_System_ID__c = \'' + sourceSystemId + '\'' +
+                                ' ORDER BY ' + effectiveSortBy + ' ASC' +
+                                ' LIMIT ' + pageSize +
+                                ' OFFSET ' + offsetVal;                  
                     hccList = Database.query(query);
                     
                 }
@@ -217,10 +226,20 @@ public with sharing class HCCostCaseDAO {
                                   ORDER BY dateId__c ASC LIMIT 1 OFFSET :itemsToRemove][0].dateId__c;
                         itemsToRemove = 0;
                     }
-                    
-                    query = 'SELECT ' + fields + ' FROM Healthcare_Cost__c WHERE Case2__c = \'' + caseId +'\' AND RecordTypeId = \'' 
-                        + recordTypeId +'\' AND Source_System_ID__c = ' + sourceSystemId + ' AND CreatedDate = TODAY AND dateId__c > \'' + dateId 
-                        +'\' ORDER BY dateId__c ASC LIMIT ' + pageSize;
+                    String sysFilter = (sourceSystemId == null)
+                    ? ' AND Source_System_ID__c = NULL'
+                    : ' AND Source_System_ID__c = \'' + String.escapeSingleQuotes(sourceSystemId) + '\'';
+
+                    query = 'SELECT ' + fields +
+                            ' FROM Healthcare_Cost__c' +
+                            ' WHERE Case2__c = \'' + caseId + '\'' +
+                            ' AND RecordTypeId = \'' + recordTypeId + '\'' +
+                            sysFilter +
+                            ' AND CreatedDate = TODAY' +
+                            ' ORDER BY ' + effectiveSortBy +
+                            ' ASC LIMIT ' + pageSize +
+                            ' OFFSET ' + offsetVal;
+
                     
                     hccList = Database.query(query);
                     
@@ -252,7 +271,7 @@ public with sharing class HCCostCaseDAO {
                     }
                     
                     query = 'SELECT ' + fields + ' FROM Healthcare_Cost__c WHERE Case2__c = \'' + caseId + '\' AND RecordTypeId = \''
-                        + recordTypeId + '\' AND dateId__c > \'' + dateId + '\' ORDER BY dateId__c ASC LIMIT ' + pageSize;
+                        + recordTypeId + '\' ORDER BY  ' + effectiveSortBy + '  ASC LIMIT ' + pageSize + ' OFFSET ' + offsetVal;
                     
                     hccList = Database.query(query);
                 }
