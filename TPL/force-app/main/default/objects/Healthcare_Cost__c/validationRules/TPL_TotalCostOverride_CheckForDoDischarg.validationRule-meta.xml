@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>TPL_TotalCostOverride_CheckForDoDischarg</fullName>
+    <active>true</active>
+    <description>For the Hospitalization cost ensures that users cannot populate Total Cost Override unless Date of Discharge is entered. This maintains data integrity by requiring key healthcare cost details before overriding total cost.</description>
+    <errorConditionFormula>$Setup.Data_Migration_Check__c.Bypass_Flow_Validations__c = FALSE &amp;&amp; ISBLANK(Source_System_ID__c) &amp;&amp;
+AND(
+RecordType.Name = &quot;Hospitalization&quot;,
+ISBLANK(  Date_of_Discharge__c ),
+NOT( ISNULL(Total_Cost_Override__c))
+)</errorConditionFormula>
+    <errorMessage>Enter Date of Discharge to populate Total Cost Override.</errorMessage>
+</ValidationRule>

@@ -40,6 +40,16 @@ public with sharing class HCCCostController {
         );
         
         CaseListWrapper caseListWrapper = new CaseListWrapper();
+        //New changes and Updates to handle no changes scenario
+        if (listOfHealthcareCost == null || listOfHealthcareCost.isEmpty()) {
+        System.debug(LoggingLevel.INFO, 'saveDraftValues: No changes detected, returning early.');
+        caseListWrapper.passedResult = Label.TPL_Passed;         // treat as a no-op success
+        caseListWrapper.indexNumbers = new List<Integer>();
+        caseListWrapper.failedRecordIds = new List<String>();
+        caseListWrapper.updatedRecords = recordDisplay;          // return current rows as-is
+        return caseListWrapper;
+        }
+        // 
         Map<Id, Integer> rowCountMap = new Map<Id,Integer>();
         Map<Id,Healthcare_Cost__c> healthCareMap = new Map<Id,Healthcare_Cost__c>();
         Integer index = 1;
