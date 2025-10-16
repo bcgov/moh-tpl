@@ -538,6 +538,9 @@ updateCostIncludeOnly() {
         this.sortBy = event.detail.fieldName;
         this.sortDirection = event.detail.sortDirection;
         this.sortSelection = this.sortDirection;
+        this.pageNumber = 1;            
+        this.draftValues = [];          
+        this.showSection = false;
         this.onLoadSort();
        // this.sortData(this.sortBy, this.sortDirection);
     }
