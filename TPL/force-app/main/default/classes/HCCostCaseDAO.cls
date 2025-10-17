@@ -13,7 +13,16 @@ This code contains the select operations based on various filters selected for t
 *     Update to codebase: July 06, 2023 - AJ
 */
 public with sharing class HCCostCaseDAO {
-        /*
+        
+    // === Helper to build Source_System_ID__c predicate (NULL or empty string) ===
+    private static String sourcePredicate(String sourceSystemId){
+        return (sourceSystemId == null || sourceSystemId == '')
+            ? ' AND (Source_System_ID__c = NULL OR Source_System_ID__c = \'\')'
+            : ' AND Source_System_ID__c = \'' + String.escapeSingleQuotes(sourceSystemId) + '\'';
+    }
+    // === End helper ===
+
+    /*
 * Description: List of Healthcare Cost method written to get the list of case records related to the given case ID, record type Id, and selected filter.
 * Parameters:
 *     String caseId: It consist of the caseID associated with the Healthcare Cost Records
@@ -32,107 +41,141 @@ public with sharing class HCCostCaseDAO {
     public static List<Healthcare_Cost__c> getHCCostCaseRecords(String caseId, String filterValue, Id recordTypeId, Integer startItemNumber, Integer pageSize, String fields, String sortOrder){
         Integer itemsToRemove = startItemNumber - 2;
         
-        list<Healthcare_Cost__c> hccList = new list<Healthcare_Cost__c>();
+        List<Healthcare_Cost__c> hccList = new List<Healthcare_Cost__c>();
         String dateId = '';
         String query = '';
         String sourceSystemId = '';
         Boolean costValue = false;
         try{
-            if(sortOrder == null || sortOrder == ''){
+            if (sortOrder == null || sortOrder == '') {
                 sortOrder = 'asc';
             }
             Integer offsetVal = (startItemNumber != null && startItemNumber > 0) ? startItemNumber - 1 : 0;
-            System.debug('start idem number is'+startItemNumber);
+            System.debug('start idem number is' + startItemNumber);
             String effectiveSortBy = (String.isNotBlank(sortBy)) ? sortBy : 'dateId__c';
-            System.debug('sortOrder is--->'+sortOrder);
-            if(sortOrder == Label.TPL_Descending){
+            System.debug('sortOrder is--->' + sortOrder);
+
+            if (sortOrder == Label.TPL_Descending) {
                 // Populate DateID to maximum value
                 dateId = '99999999zz';
-                if(filterValue == Label.TPL_Manual_Records){
-                    
-                    if(itemsToRemove > 2000)
-                    {
-                        dateId = [SELECT dateId__c 
-                                  FROM Healthcare_Cost__c 
-                                  WHERE Case2__c = :caseId AND RecordTypeId = :recordTypeId AND Source_System_ID__c = :sourceSystemId 
-                                  ORDER BY dateId__c DESC LIMIT 1 OFFSET 2000][0].dateId__c;
+
+                if (filterValue == Label.TPL_Manual_Records) {
+
+                    if (itemsToRemove > 2000) {
+                        String pivotQ = 'SELECT dateId__c FROM Healthcare_Cost__c' +
+                                        ' WHERE Case2__c = \'' + caseId + '\'' +
+                                        ' AND RecordTypeId = \'' + recordTypeId + '\'' +
+                                         sourcePredicate(sourceSystemId) +
+                                        ' ORDER BY dateId__c DESC LIMIT 1 OFFSET 2000';
+                        List<Healthcare_Cost__c> tmp = Database.query(pivotQ);
+                        dateId = tmp[0].dateId__c;
                         itemsToRemove -= 2001;
-                        while( itemsToRemove > 2000 )
-                        {
-                            dateId = [SELECT dateId__c 
-                                      FROM Healthcare_Cost__c 
-                                      WHERE Case2__c = :caseId AND RecordTypeId = :recordTypeId  
-                                      AND Source_System_ID__c = :sourceSystemId AND dateId__c < :dateId 
-                                      ORDER BY dateId__c DESC LIMIT 1 OFFSET 2000][0].dateId__c;
-                            itemsToRemove -= 2001;
-                        }
-                        
-                    }
-                    
-                    if(itemsToRemove > 0){
-                        
-                        dateId = [SELECT dateId__c 
-                                  FROM Healthcare_Cost__c 
-                                  WHERE Case2__c = :caseId AND RecordTypeId = :recordTypeId 
-                                  AND Source_System_ID__c = :sourceSystemId AND dateId__c < :dateId 
-                                  ORDER BY dateId__c DESC LIMIT 1 OFFSET :itemsToRemove][0].dateId__c;
-                        itemsToRemove = 0;
-                    }
-                    
-                    query = 'SELECT ' + fields + ' FROM Healthcare_Cost__c WHERE Case2__c = \'' + caseId + '\' AND RecordTypeId = \'' 
-                        + recordTypeId +'\' AND Source_System_ID__c = ' + sourceSystemId + '\' ORDER BY  ' + effectiveSortBy + '  DESC LIMIT ' + pageSize + ' OFFSET ' + offsetVal;
-                    
-                    hccList = Database.query(query);
-                    
-                }
-                
-                else if(filterValue == Label.TPL_Records_Created_Today) {
-                    if(itemsToRemove > 2000)
-                    {
-                        dateId = [SELECT dateId__c 
-                                  FROM Healthcare_Cost__c 
-                                  WHERE Case2__c = :caseId AND RecordTypeId = :recordTypeId 
-                                  AND Source_System_ID__c = :sourceSystemId AND CreatedDate = TODAY 
-                                  ORDER BY dateId__c DESC LIMIT 1 OFFSET 2000][0].dateId__c;
-                        itemsToRemove -= 2001;
-                        while( itemsToRemove > 2000 )
-                        {
-                            dateId = [SELECT dateId__c 
-                                      FROM Healthcare_Cost__c 
-                                      WHERE Case2__c = :caseId AND RecordTypeId = :recordTypeId 
-                                      AND Source_System_ID__c = :sourceSystemId AND CreatedDate = TODAY AND dateId__c < :dateId 
-                                      ORDER BY dateId__c DESC LIMIT 1 OFFSET 2000][0].dateId__c;
+
+                        while (itemsToRemove > 2000) {
+                            pivotQ = 'SELECT dateId__c FROM Healthcare_Cost__c' +
+                                     ' WHERE Case2__c = \'' + caseId + '\'' +
+                                     ' AND RecordTypeId = \'' + recordTypeId + '\'' +
+                                      sourcePredicate(sourceSystemId) +
+                                     ' AND dateId__c < ' + dateId +
+                                     ' ORDER BY dateId__c DESC LIMIT 1 OFFSET 2000';
+                            tmp = Database.query(pivotQ);
+                            dateId = tmp[0].dateId__c;
                             itemsToRemove -= 2001;
                         }
                     }
-                    
-                    if(itemsToRemove > 0){
-                        dateId = [SELECT dateId__c 
-                                  FROM Healthcare_Cost__c 
-                                  WHERE Case2__c = :caseId AND RecordTypeId = :recordTypeId 
-                                  AND Source_System_ID__c = :sourceSystemId AND CreatedDate = TODAY  AND dateId__c < :dateId 
-                                  ORDER BY dateId__c DESC LIMIT 1 OFFSET :itemsToRemove][0].dateId__c;
+
+                    if (itemsToRemove > 0) {
+                        String pivotQ = 'SELECT dateId__c FROM Healthcare_Cost__c' +
+                                        ' WHERE Case2__c = \'' + caseId + '\'' +
+                                        ' AND RecordTypeId = \'' + recordTypeId + '\'' +
+                                         sourcePredicate(sourceSystemId) +
+                                        ' AND dateId__c < ' + dateId +
+                                        ' ORDER BY dateId__c DESC LIMIT 1 OFFSET ' + itemsToRemove;
+                        List<Healthcare_Cost__c> tmp = Database.query(pivotQ);
+                        dateId = tmp[0].dateId__c;
                         itemsToRemove = 0;
                     }
-                    
-                    query = 'SELECT ' + fields + ' FROM Healthcare_Cost__c WHERE Case2__c = \''+ caseId + '\' AND RecordTypeId = \'' 
-                        + recordTypeId +'\' AND Source_System_ID__c = ' + sourceSystemId +' AND CreatedDate = TODAY'
-                        +'\' ORDER BY  ' + effectiveSortBy + '  DESC LIMIT '+ pageSize + ' OFFSET ' + offsetVal;
-                    
+
+                    // Build sysFilter and query for Manual
+                    String sysFilter = (sourceSystemId == null || sourceSystemId == '')
+                        ? ' AND (Source_System_ID__c = NULL OR Source_System_ID__c = \'\')'
+                        : ' AND Source_System_ID__c = \'' + String.escapeSingleQuotes(sourceSystemId) + '\'';
+
+                    query = 'SELECT ' + fields +
+                            ' FROM Healthcare_Cost__c' +
+                            ' WHERE Case2__c = \'' + caseId + '\'' +
+                            ' AND RecordTypeId = \'' + recordTypeId + '\'' +
+                             sysFilter +
+                            ' ORDER BY ' + effectiveSortBy + ' DESC' +
+                            ' LIMIT ' + pageSize +
+                            ' OFFSET ' + offsetVal;
+
                     hccList = Database.query(query);
-                    
                 }
-                
+                else if (filterValue == Label.TPL_Records_Created_Today) {
+                    if (itemsToRemove > 2000) {
+                        String pivotQ = 'SELECT dateId__c FROM Healthcare_Cost__c' +
+                                        ' WHERE Case2__c = \'' + caseId + '\'' +
+                                        ' AND RecordTypeId = \'' + recordTypeId + '\'' +
+                                         sourcePredicate(sourceSystemId) +
+                                        ' AND CreatedDate = TODAY' +
+                                        ' ORDER BY dateId__c DESC LIMIT 1 OFFSET 2000';
+                        List<Healthcare_Cost__c> tmp = Database.query(pivotQ);
+                        dateId = tmp[0].dateId__c;
+                        itemsToRemove -= 2001;
+
+                        while (itemsToRemove > 2000) {
+                            pivotQ = 'SELECT dateId__c FROM Healthcare_Cost__c' +
+                                     ' WHERE Case2__c = \'' + caseId + '\'' +
+                                     ' AND RecordTypeId = \'' + recordTypeId + '\'' +
+                                      sourcePredicate(sourceSystemId) +
+                                     ' AND CreatedDate = TODAY' +
+                                     ' AND dateId__c < ' + dateId +
+                                     ' ORDER BY dateId__c DESC LIMIT 1 OFFSET 2000';
+                            tmp = Database.query(pivotQ);
+                            dateId = tmp[0].dateId__c;
+                            itemsToRemove -= 2001;
+                        }
+                    }
+
+                    if (itemsToRemove > 0) {
+                        String pivotQ = 'SELECT dateId__c FROM Healthcare_Cost__c' +
+                                        ' WHERE Case2__c = \'' + caseId + '\'' +
+                                        ' AND RecordTypeId = \'' + recordTypeId + '\'' +
+                                         sourcePredicate(sourceSystemId) +
+                                        ' AND CreatedDate = TODAY' +
+                                        ' AND dateId__c < ' + dateId +
+                                        ' ORDER BY dateId__c DESC LIMIT 1 OFFSET ' + itemsToRemove;
+                        List<Healthcare_Cost__c> tmp = Database.query(pivotQ);
+                        dateId = tmp[0].dateId__c;
+                        itemsToRemove = 0;
+                    }
+
+                    String sysFilter = (sourceSystemId == null || sourceSystemId == '')
+                        ? ' AND (Source_System_ID__c = NULL OR Source_System_ID__c = \'\')'
+                        : ' AND Source_System_ID__c = \'' + String.escapeSingleQuotes(sourceSystemId) + '\'';
+
+                    query = 'SELECT ' + fields +
+                            ' FROM Healthcare_Cost__c' +
+                            ' WHERE Case2__c = \'' + caseId + '\'' +
+                            ' AND RecordTypeId = \'' + recordTypeId + '\'' +
+                             sysFilter +
+                            ' AND CreatedDate = TODAY' +
+                            ' ORDER BY ' + effectiveSortBy + ' DESC' +
+                            ' LIMIT ' + pageSize +
+                            ' OFFSET ' + offsetVal;
+
+                    hccList = Database.query(query);
+                }
                 else {
-                    if(itemsToRemove > 2000)
-                    {
+                    // All records (DESC)
+                    if (itemsToRemove > 2000) {
                         dateId = [SELECT dateId__c 
                                   FROM Healthcare_Cost__c 
                                   WHERE Case2__c = :caseId AND RecordTypeId = :recordTypeId 
                                   ORDER BY dateId__c DESC LIMIT 1 OFFSET 2000][0].dateId__c;
                         itemsToRemove -= 2001;
-                        while( itemsToRemove > 2000 )
-                        {
+                        while (itemsToRemove > 2000) {
                             dateId = [SELECT dateId__c 
                                       FROM Healthcare_Cost__c 
                                       WHERE Case2__c = :caseId AND RecordTypeId = :recordTypeId AND dateId__c < :dateId 
@@ -140,121 +183,142 @@ public with sharing class HCCostCaseDAO {
                             itemsToRemove -= 2001;
                         }
                     }
-                    if(itemsToRemove > 0){
+                    if (itemsToRemove > 0) {
                         dateId = [SELECT dateId__c 
                                   FROM Healthcare_Cost__c 
                                   WHERE Case2__c = :caseId AND RecordTypeId = :recordTypeId AND dateId__c < :dateId 
                                   ORDER BY dateId__c DESC LIMIT 1 OFFSET :itemsToRemove][0].dateId__c;
                         itemsToRemove = 0;
                     }
-                    
-                    query = 'SELECT ' + fields + ' FROM Healthcare_Cost__c WHERE Case2__c = \'' + caseId + '\' AND RecordTypeId = \'' 
-                        + recordTypeId + '\' ORDER BY  ' + effectiveSortBy + '  DESC LIMIT ' + pageSize + ' OFFSET ' + offsetVal;
-                    
-                    hccList = Database.query(query);
-                }
-                
-            }
-            
-            else
-            {
-                if(filterValue == Label.TPL_Manual_Records){
-                    if(itemsToRemove > 2000)
-                    {
-                        dateId = [SELECT dateId__c 
-                                  FROM Healthcare_Cost__c 
-                                  WHERE Case2__c = :caseId AND RecordTypeId = :recordTypeId 
-                                  AND Source_System_ID__c = :sourceSystemId 
-                                  ORDER BY dateId__c ASC LIMIT 1 OFFSET 2000][0].dateId__c;
-                        itemsToRemove -= 2001;
-                        while( itemsToRemove > 2000 )
-                        {
-                            dateId = [SELECT dateId__c 
-                                      FROM Healthcare_Cost__c 
-                                      WHERE Case2__c = :caseId AND RecordTypeId = :recordTypeId  
-                                      AND Source_System_ID__c = :sourceSystemId AND dateId__c > :dateId 
-                                      ORDER BY dateId__c ASC LIMIT 1 OFFSET 2000][0].dateId__c;
-                            itemsToRemove -= 2001;
-                        }
-                    }
-                    if(itemsToRemove > 0){
-                        dateId = [SELECT dateId__c 
-                                  FROM Healthcare_Cost__c 
-                                  WHERE Case2__c = :caseId AND RecordTypeId = :recordTypeId 
-                                  AND Source_System_ID__c = :sourceSystemId AND dateId__c > :dateId 
-                                  ORDER BY dateId__c ASC LIMIT 1 OFFSET :itemsToRemove][0].dateId__c;
-                        itemsToRemove = 0;
-                    }
-                                
-                        query = 'SELECT ' + fields +
-                                ' FROM Healthcare_Cost__c' +
-                                ' WHERE Case2__c = \'' + caseId + '\'' +
-                                ' AND RecordTypeId = \'' + recordTypeId + '\'' +
-                                ' AND Source_System_ID__c = \'' + sourceSystemId + '\'' +
-                                ' ORDER BY ' + effectiveSortBy + ' ASC' +
-                                ' LIMIT ' + pageSize +
-                                ' OFFSET ' + offsetVal;                  
-                    hccList = Database.query(query);
-                    
-                }
-                
-                else if(filterValue == Label.TPL_Records_Created_Today) {
-                    if(itemsToRemove > 2000)
-                    {
-                        dateId = [SELECT dateId__c 
-                                  FROM Healthcare_Cost__c 
-                                  WHERE Case2__c = :caseId AND RecordTypeId = :recordTypeId 
-                                  AND Source_System_ID__c = :sourceSystemId AND CreatedDate = TODAY 
-                                  ORDER BY dateId__c ASC LIMIT 1 OFFSET 2000][0].dateId__c;
-                        itemsToRemove -= 2001;
-                        while( itemsToRemove > 2000 )
-                        {
-                            dateId = [SELECT dateId__c 
-                                      FROM Healthcare_Cost__c 
-                                      WHERE Case2__c = :caseId AND RecordTypeId = :recordTypeId 
-                                      AND Source_System_ID__c = :sourceSystemId AND CreatedDate = TODAY  AND dateId__c > :dateId 
-                                      ORDER BY dateId__c ASC LIMIT 1 OFFSET 2000][0].dateId__c;
-                            itemsToRemove -= 2001;
-                        }
-                    }
-                    
-                    if(itemsToRemove > 0){
-                        dateId = [SELECT dateId__c 
-                                  FROM Healthcare_Cost__c
-                                  WHERE Case2__c = :caseId AND RecordTypeId = :recordTypeId 
-                                  AND Source_System_ID__c = :sourceSystemId AND CreatedDate = TODAY  AND dateId__c > :dateId 
-                                  ORDER BY dateId__c ASC LIMIT 1 OFFSET :itemsToRemove][0].dateId__c;
-                        itemsToRemove = 0;
-                    }
-                    String sysFilter = (sourceSystemId == null)
-                    ? ' AND Source_System_ID__c = NULL'
-                    : ' AND Source_System_ID__c = \'' + String.escapeSingleQuotes(sourceSystemId) + '\'';
 
                     query = 'SELECT ' + fields +
                             ' FROM Healthcare_Cost__c' +
                             ' WHERE Case2__c = \'' + caseId + '\'' +
                             ' AND RecordTypeId = \'' + recordTypeId + '\'' +
-                            sysFilter +
+                            ' ORDER BY ' + effectiveSortBy + ' DESC' +
+                            ' LIMIT ' + pageSize +
+                            ' OFFSET ' + offsetVal;
+
+                    hccList = Database.query(query);
+                }
+            }
+            else {
+                // ASC branch
+                if (filterValue == Label.TPL_Manual_Records) {
+                    if (itemsToRemove > 2000) {
+                        String pivotQ = 'SELECT dateId__c FROM Healthcare_Cost__c' +
+                                        ' WHERE Case2__c = \'' + caseId + '\'' +
+                                        ' AND RecordTypeId = \'' + recordTypeId + '\'' +
+                                         sourcePredicate(sourceSystemId) +
+                                        ' ORDER BY dateId__c ASC LIMIT 1 OFFSET 2000';
+                        List<Healthcare_Cost__c> tmp = Database.query(pivotQ);
+                        dateId = tmp[0].dateId__c;
+                        itemsToRemove -= 2001;
+
+                        while (itemsToRemove > 2000) {
+                            pivotQ = 'SELECT dateId__c FROM Healthcare_Cost__c' +
+                                     ' WHERE Case2__c = \'' + caseId + '\'' +
+                                     ' AND RecordTypeId = \'' + recordTypeId + '\'' +
+                                      sourcePredicate(sourceSystemId) +
+                                     ' AND dateId__c > ' + dateId +
+                                     ' ORDER BY dateId__c ASC LIMIT 1 OFFSET 2000';
+                            tmp = Database.query(pivotQ);
+                            dateId = tmp[0].dateId__c;
+                            itemsToRemove -= 2001;
+                        }
+                    }
+                    if (itemsToRemove > 0) {
+                        String pivotQ = 'SELECT dateId__c FROM Healthcare_Cost__c' +
+                                        ' WHERE Case2__c = \'' + caseId + '\'' +
+                                        ' AND RecordTypeId = \'' + recordTypeId + '\'' +
+                                         sourcePredicate(sourceSystemId) +
+                                        ' AND dateId__c > ' + dateId +
+                                        ' ORDER BY dateId__c ASC LIMIT 1 OFFSET ' + itemsToRemove;
+                        List<Healthcare_Cost__c> tmp = Database.query(pivotQ);
+                        dateId = tmp[0].dateId__c;
+                        itemsToRemove = 0;
+                    }
+
+                    // sysFilter for Manual
+                    String sysFilter = (sourceSystemId == null || sourceSystemId == '')
+                        ? ' AND (Source_System_ID__c = NULL OR Source_System_ID__c = \'\')'
+                        : ' AND Source_System_ID__c = \'' + String.escapeSingleQuotes(sourceSystemId) + '\'';
+
+                    query = 'SELECT ' + fields +
+                            ' FROM Healthcare_Cost__c' +
+                            ' WHERE Case2__c = \'' + caseId + '\'' +
+                            ' AND RecordTypeId = \'' + recordTypeId + '\'' +
+                             sysFilter +
+                            ' ORDER BY ' + effectiveSortBy + ' ASC' +
+                            ' LIMIT ' + pageSize +
+                            ' OFFSET ' + offsetVal;
+
+                    hccList = Database.query(query);
+                }
+                else if (filterValue == Label.TPL_Records_Created_Today) {
+                    if (itemsToRemove > 2000) {
+                        String pivotQ = 'SELECT dateId__c FROM Healthcare_Cost__c' +
+                                        ' WHERE Case2__c = \'' + caseId + '\'' +
+                                        ' AND RecordTypeId = \'' + recordTypeId + '\'' +
+                                         sourcePredicate(sourceSystemId) +
+                                        ' AND CreatedDate = TODAY' +
+                                        ' ORDER BY dateId__c ASC LIMIT 1 OFFSET 2000';
+                        List<Healthcare_Cost__c> tmp = Database.query(pivotQ);
+                        dateId = tmp[0].dateId__c;
+                        itemsToRemove -= 2001;
+
+                        while (itemsToRemove > 2000) {
+                            pivotQ = 'SELECT dateId__c FROM Healthcare_Cost__c' +
+                                     ' WHERE Case2__c = \'' + caseId + '\'' +
+                                     ' AND RecordTypeId = \'' + recordTypeId + '\'' +
+                                      sourcePredicate(sourceSystemId) +
+                                     ' AND CreatedDate = TODAY' +
+                                     ' AND dateId__c > ' + dateId +
+                                     ' ORDER BY dateId__c ASC LIMIT 1 OFFSET 2000';
+                            tmp = Database.query(pivotQ);
+                            dateId = tmp[0].dateId__c;
+                            itemsToRemove -= 2001;
+                        }
+                    }
+
+                    if (itemsToRemove > 0) {
+                        String pivotQ = 'SELECT dateId__c FROM Healthcare_Cost__c' +
+                                        ' WHERE Case2__c = \'' + caseId + '\'' +
+                                        ' AND RecordTypeId = \'' + recordTypeId + '\'' +
+                                         sourcePredicate(sourceSystemId) +
+                                        ' AND CreatedDate = TODAY' +
+                                        ' AND dateId__c > ' + dateId +
+                                        ' ORDER BY dateId__c ASC LIMIT 1 OFFSET ' + itemsToRemove;
+                        List<Healthcare_Cost__c> tmp = Database.query(pivotQ);
+                        dateId = tmp[0].dateId__c;
+                        itemsToRemove = 0;
+                    }
+
+                    String sysFilter = (sourceSystemId == null || sourceSystemId == '')
+                        ? ' AND (Source_System_ID__c = NULL OR Source_System_ID__c = \'\')'
+                        : ' AND Source_System_ID__c = \'' + String.escapeSingleQuotes(sourceSystemId) + '\'';
+
+                    query = 'SELECT ' + fields +
+                            ' FROM Healthcare_Cost__c' +
+                            ' WHERE Case2__c = \'' + caseId + '\'' +
+                            ' AND RecordTypeId = \'' + recordTypeId + '\'' +
+                             sysFilter +
                             ' AND CreatedDate = TODAY' +
-                            ' ORDER BY ' + effectiveSortBy +
+                            ' ORDER BY ' + effectiveSortBy + 
                             ' ASC LIMIT ' + pageSize +
                             ' OFFSET ' + offsetVal;
 
-                    
                     hccList = Database.query(query);
-                    
                 }
-                
                 else {
-                    if(itemsToRemove > 2000)
-                    {
+                    // All records (ASC)
+                    if (itemsToRemove > 2000) {
                         dateId = [SELECT dateId__c 
                                   FROM Healthcare_Cost__c 
                                   WHERE Case2__c = :caseId AND RecordTypeId = :recordTypeId 
                                   ORDER BY dateId__c ASC LIMIT 1 OFFSET 2000][0].dateId__c;
                         itemsToRemove -= 2001;
-                        while( itemsToRemove > 2000 )
-                        {
+                        while (itemsToRemove > 2000) {
                             dateId = [SELECT dateId__c 
                                       FROM Healthcare_Cost__c 
                                       WHERE Case2__c = :caseId AND RecordTypeId = :recordTypeId AND dateId__c > :dateId 
@@ -262,31 +326,34 @@ public with sharing class HCCostCaseDAO {
                             itemsToRemove -= 2001;
                         }
                     }
-                    if(itemsToRemove > 0){
+                    if (itemsToRemove > 0) {
                         dateId = [SELECT dateId__c 
                                   FROM Healthcare_Cost__c 
                                   WHERE Case2__c = :caseId AND RecordTypeId = :recordTypeId AND dateId__c > :dateId 
                                   ORDER BY dateId__c ASC LIMIT 1 OFFSET :itemsToRemove][0].dateId__c;
                         itemsToRemove = 0;
                     }
-                    
-                    query = 'SELECT ' + fields + ' FROM Healthcare_Cost__c WHERE Case2__c = \'' + caseId + '\' AND RecordTypeId = \''
-                        + recordTypeId + '\' ORDER BY  ' + effectiveSortBy + '  ASC LIMIT ' + pageSize + ' OFFSET ' + offsetVal;
-                    
+
+                    query = 'SELECT ' + fields +
+                            ' FROM Healthcare_Cost__c' +
+                            ' WHERE Case2__c = \'' + caseId + '\'' +
+                            ' AND RecordTypeId = \'' + recordTypeId + '\'' +
+                            ' ORDER BY ' + effectiveSortBy + ' ASC' +
+                            ' LIMIT ' + pageSize +
+                            ' OFFSET ' + offsetVal;
+
                     hccList = Database.query(query);
                 }
-                
             }
-            
-            
+
         }
-        catch(LimitException l){
+        catch (LimitException l) {
             System.debug(l.getMessage());
         }
-        catch(ListException listexception){
+        catch (ListException listexception) {
             System.debug(listexception.getMessage());
         }
-        catch(DmlException dml){
+        catch (DmlException dml) {
             System.debug(dml.getMessage());
         }
         

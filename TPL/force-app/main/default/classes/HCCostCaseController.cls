@@ -299,17 +299,17 @@ public static HCCostCaseDetailWrapper getHealthcareCostsHospitalForCaseSorted(St
 }
 //Sorting for Ambulance Record type
 @AuraEnabled
-public static HCCostCaseDetailWrapper getHealthcareCostsAmbulanceForCaseSorted(String caseId, String filterValue, Integer pageNumber, Integer pageSize, String sortOrder, String sortBy){
+public static HCCostCaseDetailWrapper getHealthcareCostsAmbulanceForCaseSorted(String caseId, String filterValue, Integer pageSize, Integer pageNumber, String sortOrder, String sortBy){
     HCCostCaseDAO.sortBy = sortBy;
-    HCCostCaseDetailWrapper caseDetailWrapper = getHealthcareCostsAmbulanceForCase(caseId, filterValue, pageNumber, pageSize, sortOrder);
+    HCCostCaseDetailWrapper caseDetailWrapper = getHealthcareCostsAmbulanceForCase(caseId, filterValue, pageSize, pageNumber, sortOrder);
     HCCostCaseDAO.sortBy = null;
     return caseDetailWrapper;
 }
 //Sorting for Pharmacare Record type
 @AuraEnabled
-public static HCCostCaseDetailWrapper getHealthcareCostsPharmacareForCaseSorted(String caseId, String filterValue, Integer pageNumber, Integer pageSize, String sortOrder, String sortBy){
+public static HCCostCaseDetailWrapper getHealthcareCostsPharmacareForCaseSorted(String caseId, String filterValue, Integer pageSize, Integer pageNumber, String sortOrder, String sortBy){
     HCCostCaseDAO.sortBy = sortBy;
-    HCCostCaseDetailWrapper caseDetailWrapper = getHealthcareCostsPharmacareForCase(caseId, filterValue, pageNumber, pageSize, sortOrder);
+    HCCostCaseDetailWrapper caseDetailWrapper = getHealthcareCostsPharmacareForCase(caseId, filterValue, pageSize, pageNumber, sortOrder);
     HCCostCaseDAO.sortBy = null;
     return caseDetailWrapper;
 }
