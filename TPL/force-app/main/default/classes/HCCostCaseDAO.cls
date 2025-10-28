@@ -13,14 +13,11 @@ This code contains the select operations based on various filters selected for t
 *     Update to codebase: July 06, 2023 - AJ
 */
 public with sharing class HCCostCaseDAO {
-        
-    // === Helper to build Source_System_ID__c predicate (NULL or empty string) ===
     private static String sourcePredicate(String sourceSystemId){
         return (sourceSystemId == null || sourceSystemId == '')
             ? ' AND (Source_System_ID__c = NULL OR Source_System_ID__c = \'\')'
             : ' AND Source_System_ID__c = \'' + String.escapeSingleQuotes(sourceSystemId) + '\'';
     }
-    // === End helper ===
 
     /*
 * Description: List of Healthcare Cost method written to get the list of case records related to the given case ID, record type Id, and selected filter.
@@ -51,9 +48,7 @@ public with sharing class HCCostCaseDAO {
                 sortOrder = 'asc';
             }
             Integer offsetVal = (startItemNumber != null && startItemNumber > 0) ? startItemNumber - 1 : 0;
-            System.debug('start idem number is' + startItemNumber);
             String effectiveSortBy = (String.isNotBlank(sortBy)) ? sortBy : 'dateId__c';
-            System.debug('sortOrder is--->' + sortOrder);
 
             if (sortOrder == Label.TPL_Descending) {
                 // Populate DateID to maximum value
