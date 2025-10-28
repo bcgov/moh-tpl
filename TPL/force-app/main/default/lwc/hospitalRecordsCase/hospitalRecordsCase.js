@@ -649,7 +649,6 @@ export default class HospitalRecordsCase extends LightningElement {
   handleValueChange(event) {
     event.stopPropagation();
     let dataReceived = event.detail.data;
-
     let updatedField =
       dataReceived.label === "Account"
         ? "Facility__c"
@@ -659,7 +658,6 @@ export default class HospitalRecordsCase extends LightningElement {
       Id: dataReceived.context,
       [updatedField]: dataReceived.value || "", // Ensure blank values are handled correctly
     };
-
     // Update recordsToDisplay
     this.recordsToDisplay = this.recordsToDisplay.map((record) =>
       record.Id === updatedItem.Id ? { ...record, ...updatedItem } : record
@@ -667,6 +665,16 @@ export default class HospitalRecordsCase extends LightningElement {
 
     // Ensure blank values get stored in draftValues
     this.updateDraftValues(updatedItem);
+    if(this.recordsToDisplay.length>0){
+      this.recordsToDisplay.forEach(ele=>{
+        if((ele.Service_Provided_by_Facility__c=='' || ele.Service_Provided_by_Facility__c==null)
+         //&& (ele.Source_System_ID__c=='' ||  ele.Source_System_ID__c==null || ele.Source_System_ID__c==undefined)
+         ){
+          ele.Service_Type2__c=null;
+          ele.Standard_Daily_Rate__c=null;
+        }
+      })
+    }
 
     // Force UI refresh
     this.recordsToDisplay = [...this.recordsToDisplay];
@@ -701,14 +709,14 @@ export default class HospitalRecordsCase extends LightningElement {
         let incoming = this.normalizeCurrencyDraft(
           draft.Total_Cost_Override__c
         );
-
-        if (incoming === "" || incoming === null) {
+        if (incoming === "" || incoming === null || incoming === undefined) {
           if (cur !== null && cur !== undefined && cur !== "") {
             // we cleared a previously populated value
             draft.Total_Cost_Override__c = null;
           } else {
             // it was empty already and we didn’t change anything
-            delete draft.Total_Cost_Override__c;
+            // delete draft.Total_Cost_Override__c;
+            draft.Total_Cost_Override__c = null;
           }
         } else {
           draft.Total_Cost_Override__c = incoming; // keep numeric or valid input
@@ -732,7 +740,8 @@ export default class HospitalRecordsCase extends LightningElement {
             this.draftValues[index][field] = draft[field];
           }
         });
-      } else {
+      } 
+      else {
         let newDraft = { ...draft };
         delete newDraft.Facility__c; // Prevent unwanted clearing
         delete newDraft.Service_Provided_by_Facility__c;
@@ -1120,7 +1129,6 @@ export default class HospitalRecordsCase extends LightningElement {
   handleSave(event) {
     event.preventDefault();
     this.showSpinner = true;
-
     let finalDrafts = this.draftValues.map((draft) => ({
       ...draft,
       Site_Code__c:
@@ -1146,20 +1154,20 @@ export default class HospitalRecordsCase extends LightningElement {
             cleaned.Total_Cost_Override__c
           );
           const cur = current.Total_Cost_Override__c;
-
-          if (incoming === "" || incoming === null) {
+          if (incoming === "" || incoming === null || incoming === undefined) {
             if (cur !== null && cur !== undefined && cur !== "") {
               // explicit clear
               cleaned.Total_Cost_Override__c = null;
             } else {
               // if it was already empty
-              delete cleaned.Total_Cost_Override__c;
+              // delete cleaned.Total_Cost_Override__c;
+              cleaned.Total_Cost_Override__c = null;
             }
           } else {
             cleaned.Total_Cost_Override__c = incoming;
           }
-        }
-
+        }   
+        
         // Add date normalization here
         ["Date_of_Discharge__c"].forEach((fn) => {
           if (cleaned.hasOwnProperty(fn)) {
@@ -1196,7 +1204,7 @@ export default class HospitalRecordsCase extends LightningElement {
         }
       });
     });
-    //
+
     if (!finalDrafts || finalDrafts.length === 0) {
       this.showSpinner = false;
       this.draftValues = [];
@@ -1207,8 +1215,6 @@ export default class HospitalRecordsCase extends LightningElement {
 
       // exit edit mode so Save/Cancel disappear and row styling resets
       this.showSection = false;
-
-      // show the same success signal users expect from a "save"
       this.dispatchEvent(
         new ShowToastEvent({
           title: "Saved",
@@ -1217,8 +1223,10 @@ export default class HospitalRecordsCase extends LightningElement {
           variant: "success",
         })
       );
+      this.showErrorMessage = false;
       return;
-    } //
+    } 
+
     saveDraftValues({
       data: finalDrafts,
       recordDisplay: this.recordsToDisplay,
@@ -1226,18 +1234,13 @@ export default class HospitalRecordsCase extends LightningElement {
     })
       .then((data) => {
         this.updateMessage = data.actionMessage;
+        
         // testing the error message
         if (data.passedResult === "Passed") {
           this.draftValues = [];
           // Merge updated records into the existing table instead of replacing
           const updatedMap = new Map(data.updatedRecords.map((r) => [r.Id, r]));
-
-        //   this.recordsToDisplay = this.recordsToDisplay.map((existing) => {
-        //     const updated = updatedMap.get(existing.Id);
-        //     return updated ? { ...existing, ...updated } : existing;
-        //   });
-
-        this.recordsToDisplay = this.recordsToDisplay.map((existing) => {
+          this.recordsToDisplay = this.recordsToDisplay.map((existing) => {
             const updated = updatedMap.get(existing.Id);
             if (!updated) return existing;
 
@@ -1280,6 +1283,8 @@ export default class HospitalRecordsCase extends LightningElement {
               return null;
             })
             .filter(Boolean);
+        }else{
+          this.showErrorMessage = false;
         }
 
         //  Handle result based on passedResult
