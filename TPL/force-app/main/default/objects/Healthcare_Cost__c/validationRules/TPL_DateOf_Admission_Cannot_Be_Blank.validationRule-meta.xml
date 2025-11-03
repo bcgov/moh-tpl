@@ -9,5 +9,5 @@ AND(
 RecordType.Name = &quot;Hospitalization&quot;,
 ISNULL( Date_of_Admission__c )
 )</errorConditionFormula>
-    <errorMessage>Please enter some valid input. Input is not optional.</errorMessage>
+    <errorMessage>Please enter Date of Admission.</errorMessage>
 </ValidationRule>
