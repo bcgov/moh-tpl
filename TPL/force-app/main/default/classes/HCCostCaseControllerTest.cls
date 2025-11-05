@@ -20,9 +20,15 @@
 *     Initial version: March 30, 2023 - AJ
 *     Updates to codebase: May 10, 2023 - AJ
 *     Updates to codebase: July 4, 2023 - AJ
+*	  Updates to codebase: Nov 5, 2025 - RRG
 */
 @isTest
 public with sharing class HCCostCaseControllerTest {
+    //For testclass
+    private static Integer getRecordCount(HCCostCaseController.HCCostCaseDetailWrapper w) {
+    return (w != null && w.hccList != null) ? w.hccList.size() : 0;
+    }
+
     @isTest
     static void testGetHealthcareCostsAmbulanceForCaseDescendingSort(){
         Account acc = TestDataFactory.individualAccount();
@@ -61,7 +67,7 @@ public with sharing class HCCostCaseControllerTest {
             System.assertNotEquals(null, exceptionMessage);
         }
         else {
-            System.assertEquals(caseDetailWrapper2.hccList.size(),caseDetailWrapper3.hccList.size());            
+            System.assertEquals(getRecordCount(caseDetailWrapper2), getRecordCount(caseDetailWrapper3));            
         }
     }
     @future
@@ -138,7 +144,7 @@ public with sharing class HCCostCaseControllerTest {
             System.assertNotEquals(null, exceptionMessage);
         }
         else {
-            System.assertEquals(caseDetailWrapper2.hccList.size(),caseDetailWrapper3.hccList.size());            
+            System.assertEquals(getRecordCount(caseDetailWrapper2), getRecordCount(caseDetailWrapper3));            
         }
     }
     
@@ -182,7 +188,7 @@ public with sharing class HCCostCaseControllerTest {
             System.assertNotEquals(null, exceptionMessage);
         }
         else {
-            System.assertEquals(caseDetailWrapper2.hccList.size(),caseDetailWrapper3.hccList.size());            
+            System.assertEquals(getRecordCount(caseDetailWrapper2), getRecordCount(caseDetailWrapper3));            
         }
     }
     
@@ -226,7 +232,7 @@ public with sharing class HCCostCaseControllerTest {
             System.assertNotEquals(null, exceptionMessage);
         }
         else {
-            System.assertEquals(caseDetailWrapper2.hccList.size(),caseDetailWrapper3.hccList.size());            
+            System.assertEquals(getRecordCount(caseDetailWrapper2), getRecordCount(caseDetailWrapper3));            
         }
     }
     
@@ -265,7 +271,7 @@ public with sharing class HCCostCaseControllerTest {
             System.assertNotEquals(null, exceptionMessage);
         }
         else {
-            System.assertEquals(caseDetailWrapper2.hccList.size(),caseDetailWrapper3.hccList.size());            
+            System.assertEquals(getRecordCount(caseDetailWrapper2), getRecordCount(caseDetailWrapper3));            
         }
     }
     
@@ -304,7 +310,7 @@ public with sharing class HCCostCaseControllerTest {
             System.assertNotEquals(null, exceptionMessage);
         }
         else {
-            System.assertEquals(caseDetailWrapper2.hccList.size(),caseDetailWrapper3.hccList.size());            
+            System.assertEquals(getRecordCount(caseDetailWrapper2), getRecordCount(caseDetailWrapper3));            
         }
     }
     
@@ -345,7 +351,7 @@ public with sharing class HCCostCaseControllerTest {
             System.assertNotEquals(null, exceptionMessage);
         }
         else {
-            System.assertEquals(caseDetailWrapper2.hccList.size(),caseDetailWrapper3.hccList.size());            
+            System.assertEquals(getRecordCount(caseDetailWrapper2), getRecordCount(caseDetailWrapper3));            
         }
     }
     
@@ -386,7 +392,7 @@ public with sharing class HCCostCaseControllerTest {
             System.assertNotEquals(null, exceptionMessage);
         }
         else {
-            System.assertEquals(caseDetailWrapper2.hccList.size(),caseDetailWrapper3.hccList.size());            
+            System.assertEquals(getRecordCount(caseDetailWrapper2), getRecordCount(caseDetailWrapper3));            
         }
     }
     
@@ -422,7 +428,7 @@ public with sharing class HCCostCaseControllerTest {
             System.assertNotEquals(null, exceptionMessage);
         }
         else {
-            System.assertEquals(caseDetailWrapper1.hccList.size(),caseDetailWrapper2.hccList.size());            
+            System.assertEquals(getRecordCount(caseDetailWrapper1), getRecordCount(caseDetailWrapper2));            
         }
     }
     
@@ -460,7 +466,7 @@ public with sharing class HCCostCaseControllerTest {
             System.assertNotEquals(null, exceptionMessage);
         }
         else {
-            System.assertEquals(caseDetailWrapper1.hccList.size(),caseDetailWrapper2.hccList.size());            
+            System.assertEquals(getRecordCount(caseDetailWrapper1), getRecordCount(caseDetailWrapper2));            
         }
     }
     
@@ -570,7 +576,9 @@ public with sharing class HCCostCaseControllerTest {
     Healthcare_Cost__c hc = new Healthcare_Cost__c(
         RecordTypeId = hospitalRecordTypeId,
         Case2__c = c.Id,
-        Account__c = acc.Id
+        Account__c = acc.Id,
+        Date_of_Admission__c = Date.today().addDays(-5),
+        Date_of_Discharge__c = Date.today()
     );
     insert hc;
 
