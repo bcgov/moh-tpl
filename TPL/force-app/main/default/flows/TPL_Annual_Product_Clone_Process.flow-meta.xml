@@ -91,7 +91,7 @@
             <assignToReference>NewProductSingle.Description</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>NewProductSingle.Description</elementReference>
+                <elementReference>Loop_through_prior_year_active_products.Description</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
