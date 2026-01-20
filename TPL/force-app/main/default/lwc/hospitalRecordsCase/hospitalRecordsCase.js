@@ -1238,6 +1238,13 @@ export default class HospitalRecordsCase extends LightningElement {
         // testing the error message
         if (data.passedResult === "Passed") {
           this.draftValues = [];
+
+          // Added this to make sure that the Total_Cost_Override__c value gets updated if any field values changes in the grid.
+          data.updatedRecords.forEach(ele=>{
+            if(ele.Total_Cost_Override__c==null || ele.Total_Cost_Override__c==undefined){
+              ele.Total_Cost_Override__c=null;
+            }
+          })
           // Merge updated records into the existing table instead of replacing
           const updatedMap = new Map(data.updatedRecords.map((r) => [r.Id, r]));
           this.recordsToDisplay = this.recordsToDisplay.map((existing) => {
