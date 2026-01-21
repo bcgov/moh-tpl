@@ -797,7 +797,7 @@ This flow performs the following actions:
     <formulas>
         <name>HospitalizationTotalCostOverride</name>
         <dataType>Currency</dataType>
-        <expression>IF ( OR ( ISBLANK ( {!$Record.Total_Cost_Override__c} ) , ISBLANK ( {!$Record.Number_of_Days__c}) ), ({!Loop_Pricebook_Entries.UnitPrice} * {!$Record.Number_of_Days__c}) , {!$Record.Total_Cost_Override__c})</expression>
+        <expression>IF (OR(OR( OR({!$Record.Number_of_Days__c}&lt;&gt;{!$Record__Prior.Number_of_Days__c} , {!$Record.Service_Provided_by_Facility__c} &lt;&gt; {!$Record__Prior.Service_Provided_by_Facility__c}), {!$Record.Standard_Daily_Rate__c}&lt;&gt;{!$Record__Prior.Standard_Daily_Rate__c}), {!$Record.Total_Costs_Standard__c}&lt;&gt;{!$Record__Prior.Total_Costs_Standard__c} ), null,  {!$Record.Total_Cost_Override__c})</expression>
         <scale>2</scale>
     </formulas>
     <formulas>
