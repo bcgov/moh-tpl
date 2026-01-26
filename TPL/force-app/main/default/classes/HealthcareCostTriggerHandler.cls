@@ -12,6 +12,27 @@
 public with sharing class HealthcareCostTriggerHandler {
     public static Boolean isFirstTime = true;
     
+    
+    public static void beforeUpdateRecord(List<Healthcare_Cost__c> hccList, Map<Id,Healthcare_Cost__c> oldHccMap){
+        Data_Migration_Check__c dmc = Data_Migration_Check__c.getInstance();
+        if (dmc == null || dmc.Bypass_Flow_Validations__c != true) {
+            for (Healthcare_Cost__c hccRecord : hccList) {
+                Healthcare_Cost__c oldRec = oldHccMap.get(hccRecord.Id);
+                if (
+                    hccRecord.Service_Provided_by_Facility__c != null &&
+                    hccRecord.RecordTypeName__c == 'Hospitalization' &&
+                    (
+                        hccRecord.Date_of_Admission__c        != oldRec.Date_of_Admission__c ||
+                        hccRecord.Date_of_Discharge__c        != oldRec.Date_of_Discharge__c ||
+                        hccRecord.Service_Provided_by_Facility__c != oldRec.Service_Provided_by_Facility__c
+                    )
+                ) {
+                    hccRecord.Total_Cost_Override__c = null;
+                }
+            }
+        }
+    }
+    
     /*
 * Description: Method to calculate the sum of cost parameter used in the object grouped by record types
 * Parameters:

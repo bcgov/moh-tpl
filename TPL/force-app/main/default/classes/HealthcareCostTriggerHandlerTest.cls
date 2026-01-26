@@ -42,6 +42,7 @@ public class HealthcareCostTriggerHandlerTest {
         costRecords.add(new Healthcare_Cost__c(
             Case2__c = testCase.Id,
             RecordTypeId = recordTypeMap.get('Ambulance'),
+            Date_of_Service__c = System.today(),
             Total_Cost_Override__c = 300.00,
             Cost_Include__c = true,
             Cost_Review__c = true
@@ -58,8 +59,8 @@ public class HealthcareCostTriggerHandlerTest {
         costRecords.add(new Healthcare_Cost__c(
             Case2__c = testCase.Id,
             RecordTypeId = recordTypeMap.get('Hospitalization'),
-            Date_of_Admission__c = Date.today(),
-            Date_of_Discharge__c = Date.today(),
+            Date_of_Admission__c = System.today(),
+            Date_of_Discharge__c = System.today(),
             Cost_Include__c = true,
             Cost_Review__c = true
         ));
