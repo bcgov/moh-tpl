@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AuthProvider xmlns="http://soap.sforce.com/2006/04/metadata">
+    <authorizeUrl>https://common-logon-test.hlth.gov.bc.ca/auth/realms/moh_applications/protocol/openid-connect/auth?idps_to_show=idir_aad</authorizeUrl>
+    <consumerKey>TPL</consumerKey>
+    <consumerSecret>Placeholder_Value</consumerSecret>
+    <executionUser>admin.user@gov.bc.ca.bcmohtpl.tpltrn</executionUser>
+    <friendlyName>Health BC IDIR</friendlyName>
+    <includeOrgIdInIdentifier>false</includeOrgIdInIdentifier>
+    <isPkceEnabled>true</isPkceEnabled>
+    <providerType>OpenIdConnect</providerType>
+    <registrationHandler>KeycloakRegistrationHandler</registrationHandler>
+    <requireMfa>false</requireMfa>
+    <sendAccessTokenInHeader>true</sendAccessTokenInHeader>
+    <sendClientCredentialsInHeader>false</sendClientCredentialsInHeader>
+    <sendSecretInApis>true</sendSecretInApis>
+    <tokenUrl>https://common-logon-test.hlth.gov.bc.ca/auth/realms/moh_applications/protocol/openid-connect/token</tokenUrl>
+    <userInfoUrl>https://common-logon-test.hlth.gov.bc.ca/auth/realms/moh_applications/protocol/openid-connect/userinfo</userInfoUrl>
+</AuthProvider>
