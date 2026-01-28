@@ -1,21 +1,23 @@
 {
-    "packageDirectories": [
-        {
-            "path": "force-app",
-            "default": true,
-            "package": "TPLpkg",
-            "versionName": "ver 0.1",
-            "versionNumber": "0.1.0.NEXT"
-        }
-    ],
-    "namespace": "",
-    "sfdcLoginUrl": "https://login.salesforce.com",
-    "sourceApiVersion": "62.0",
-    "packageAliases": {
-        "TPLpkg": "0Ho8c000000fyHCCAY",
-        "TPLpkg@0.1.0-1": "04t8c000001029oAAA",
-        "TPLpkg@0.1.0-2": "04t8c00000102IsAAI",
-        "TPLpkg@0.1.0-3": "04t8c00000102IxAAI",
-        "TPLpkg@0.1.0-5": "04t8c00000104CtAAI"
+  "packageDirectories": [
+    {
+      "path": "force-app",
+      "default": true,
+      "package": "TPLpkg",
+      "versionName": "ver 0.6",
+      "versionNumber": "0.6.4.NEXT"
     }
+  ],
+  "namespace": "",
+  "sfdcLoginUrl": "https://login.salesforce.com",
+  "sourceApiVersion": "62.0",
+  "packageAliases": {
+    "TPLpkg": "0Ho8c000000fyHCCAY",
+    "TPLpkg@0.6.1-1": "04tJQ000003AGrNYAW",
+    "TPLpkg@0.6.2-1": "04tJQ000003ecUfYAI",
+    "TPLpkg@0.6.3-1": "04tJQ000003wVXxYAM",
+    "TPLpkg@0.6.4-1": "04tJQ0000047xPFYAY",
+    "TPLpkg@0.6.4-2": "04tJQ0000047xU5YAI",
+    "TPLpkg@0.6.4-3": "04tJQ0000047xVhYAI"
+  }
 }

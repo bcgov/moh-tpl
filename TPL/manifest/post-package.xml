@@ -1,25 +1,69 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
-        <members>*</members>
-        <name>EntitlementProcess</name>
+        <members>Account</members>
+        <members>PersonAccount</members>
+        <members>Product2</members>
+        <members>DocumentTemplate</members>
+        <members>OmniDataPack</members>
+        <members>OmniDataTransform</members>
+        <members>OmniESignatureTemplate</members>
+        <members>OmniProcess</members>
+        <members>OmniProcessTransientData</members>
+        <members>OmniScriptSavedSession</members>
+        <members>OmniUiCard</members>
+        <name>CustomObject</name>
     </types>
     <types>
-        <members>CaseReason</members>
-        <members>CaseStatus</members>
-        <members>CaseType</members>
-        <members>TaskSubject</members>
-        <members>AccountType</members>
-        <members>Product2Family</members>
+        <members>PersonAccount-Individual Account</members>
+        <name>Layout</name>
+    </types>
+    <types>
+        <members>Individual_Account_Record_Page</members>
+        <members>Case_ClassAction_Lightning_Record_Page</members>
+        <members>Case_Individual_Lightning_Record_Page</members>
+        <name>FlexiPage</name>
+    </types>    
+    <types>
+        <members>standard__LightningService</members>
+        <members>Third_Party_Liability_TPL</members>
+        <name>CustomApplication</name>
+    </types>
+    <types>
+        <members>*</members>
+        <name>ReportType</name>
+    </types>
+    <types>
+        <members>*</members>
+        <name>Settings</name>
+    </types>
+    <types>
+        <members>*</members>
         <name>StandardValueSet</name>        
+    </types>
+    <types>
+        <members>*</members>
+        <name>MatchingRule</name>
+    </types>  
+    <types>
+        <members>*</members>
+        <name>DuplicateRule</name>
+    </types>
+    <types>
+        <members>*</members>
+        <name>Profile</name>
+    </types>
+    <types>
+        <members>*</members>
+        <name>PermissionSet</name>
     </types> 
     <types>
-        <members>Entitlement</members>
-        <members>MyDomain</members>
-        <members>UserInterface</members>
-        <members>Activities</members>
-        <members>PlatformEncryption</members>
-        <name>Settings</name>
-    </types>              
+        <members>*</members>
+        <name>PermissionSetGroup</name>
+    </types> 
+    <types>
+        <members>*</members>
+        <name>sharingRules</name>
+    </types>               
     <version>62.0</version>
 </Package>
