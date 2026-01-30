@@ -325,13 +325,6 @@ Pricebook</description>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>currentRecord.Standard_Daily_Rate__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Loop_Pricebook_Entries.UnitPrice</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
             <assignToReference>currentRecord.Pricebook__c</assignToReference>
             <operator>Assign</operator>
             <value>
@@ -755,7 +748,7 @@ Blank	        Blank
             <label>Facility will populate Code</label>
         </rules>
     </decisions>
-    <description>Updated the DateIdFormula for Hospitalization:
+    <description>Updated the DateIdFormula for Hospitalization: ,update Standard_Daily_Rate__c in before insert
 This flow performs the following actions:
 
 1- Populates &apos;Total Cost Override&apos;, PHN, and DateID for MSP, Ambulance, Pharmacare, Continuing Care, Future Care, and Hospitalization records.
