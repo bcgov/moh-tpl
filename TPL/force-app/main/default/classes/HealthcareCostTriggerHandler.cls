@@ -137,7 +137,7 @@ public with sharing class HealthcareCostTriggerHandler {
                 c.Future_Care_Total2__c = (Decimal)agg.get('costSum');
             }
             if((String)agg.get('DeveloperName') == 'Hospitalization'){
-                c.Hospitalization_Total2__c = (Decimal)agg.get('tot') + (caseVsStandardCostMap.containsKey((String)agg.get('case2__c')) ? caseVsStandardCostMap.get((String)agg.get('case2__c')) : 0);
+                c.Hospitalization_Total2__c = ((Decimal)agg.get('tot')!=null ? (Decimal)agg.get('tot') : 0.0 ) + (caseVsStandardCostMap.containsKey((String)agg.get('case2__c')) ? caseVsStandardCostMap.get((String)agg.get('case2__c')) : 0);
             }
             if((String)agg.get('DeveloperName') == 'MSP'){
                 c.MSP_Total2__c = (Decimal)agg.get('tot');
@@ -166,7 +166,7 @@ public with sharing class HealthcareCostTriggerHandler {
         try{
             update caseMap.values();
         }Catch(Exception e){
-            System.debug(e.getMessage());
+            System.debug('error message in updateRollup method '+e.getMessage()+ ' line:->>>'+e.getLineNumber());
         }
     }
 }
