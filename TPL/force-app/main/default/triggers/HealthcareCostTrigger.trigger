@@ -14,10 +14,11 @@ trigger HealthcareCostTrigger on Healthcare_Cost__c (before insert, after insert
     if(Trigger.isBefore){
         
         if(Trigger.isInsert){
-            HealthcareCostTriggerHandler.beforeInsertRecord(Trigger.new);
+            HealthcareCostTriggerHandler.beforeInsertUpdateRecord(Trigger.new);
         }
         if(Trigger.isUpdate){
             HealthcareCostTriggerHandler.beforeUpdateRecord(Trigger.new, Trigger.oldmap);
+            HealthcareCostTriggerHandler.beforeInsertUpdateRecord(Trigger.new);
         }
     }
     // AFTER logic: Handle insert, update, or delete of Healthcare_Cost__c

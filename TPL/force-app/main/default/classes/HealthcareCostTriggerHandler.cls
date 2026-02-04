@@ -13,7 +13,7 @@ public with sharing class HealthcareCostTriggerHandler {
     public static Boolean isFirstTime = true;
     
     
-    public static void beforeInsertRecord(List<Healthcare_Cost__c> hccList){
+    public static void beforeInsertUpdateRecord(List<Healthcare_Cost__c> hccList){
         Data_Migration_Check__c dmc = Data_Migration_Check__c.getInstance();
         if (dmc == null || dmc.Bypass_Flow_Validations__c != true) {
             Set<Id> productIds = new Set<Id>();
