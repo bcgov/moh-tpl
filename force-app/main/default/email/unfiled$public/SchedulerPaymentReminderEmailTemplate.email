@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style type="text/css">
+      body {
+       font-family: Segoe UI; 
+      }
+      .container {
+        padding: 30px;
+        height: fit-content;
+        border-radius: 5px 5px 0px 0px;
+      }
+      .container-success {
+        background: #B7F5D280;
+        border-top: 5px solid #4BCA81;
+      }
+      .container-warning {
+        background: #fcf3e0;
+        border-top: 5px solid #d79301;
+      }
+      .container-reminder {
+        background: #B7DFF5;
+        border-top: 5px solid #1178B1;
+      }
+      .content {
+        padding: 30px;
+        background: white;
+      }
+      .details-box {
+        border: 1px solid #C9C9C9;
+      }
+      .padding-left-right-small {
+        padding: 0px 20px;
+      }
+      .horizontal-bar {
+        height: 1px;
+        background: #C9C9C9;
+      }
+      .table-container td{
+        padding: 10px;
+        font-size: 12px;
+      }
+      .scheduled-time-cell {
+        display: flex;
+        align-items: center;
+      }
+      .margin-right-xx_small {
+        margin-right: 5px;
+      }
+    </style>
+  </head>
+  <body>
+            <div class="container container-reminder">
+                <div class="content">
+                    <p>
+                        Hello, [[RECIPIENT_NAME]],
+                    </p>
+                    <p>
+                        To finalize your service appointment and secure your slot, please pay for the appointment.
+                    </p>
+                <div class="details-box">
+                    <p class="padding-left-right-small">
+                        Appointment Details
+                    </p>
+                    <div class="horizontal-bar"></div>
+                    <div class="table-container">
+                        <table>
+                            <tr>
+                                <td>
+                                    Scheduled on:
+                                </td>
+                                <td class="scheduled-time-cell">
+                                    <img src="https://test.salesforce.com/img/icon/t4v35/utility/event_60.png" height="15" class="margin-right-xx_small">
+                                    <b>{!DATETIMEVALUE(ServiceAppointment.SchedStartTime)} - {!DATETIMEVALUE(ServiceAppointment.SchedEndTime)} {!User.TimeZoneSidKey}</b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Appointment topic:
+                                </td>
+                                <td>
+                                    <b>{!ServiceAppointment.WorkType}</b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Appointment with:
+                                </td>
+                                <td>
+                                    <b>{!ServiceResource.Name}</b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Visit Type:
+                                </td>
+                                <td>
+                                    <b>{!ServiceAppointment.AppointmentType}</b>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <p>
+                    <a target="_blank" href="{!PaymentLink.PaymentUrl}">Complete your payment</a> of <b>[[CURRENCY]] [[AMOUNT]]</b>.
+                </p>
+                    <p>
+                        Thank You!
+                    </p>
+                </div>
+            </div>
+          </body>
+</html>

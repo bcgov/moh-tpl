@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>TPL_Facility_status_validation</fullName>
+    <active>true</active>
+    <description>Date of Admission must be before facility deactivation date</description>
+    <errorConditionFormula>$Setup.Data_Migration_Check__c.Bypass_Flow_Validations__c = FALSE &amp;&amp; ISBLANK(Source_System_ID__c)  &amp;&amp;
+IF ( 
+(NOT(ISNULL(Facility__r.Deactivation_Date__c))), (Facility__r.Deactivation_Date__c &lt;  Date_of_Admission__c),
+(NOT(ISNULL(Facility__r.Deactivation_Date__c))))</errorConditionFormula>
+    <errorMessage>Please select the valid Facility.</errorMessage>
+</ValidationRule>

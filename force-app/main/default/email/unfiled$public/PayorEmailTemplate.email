@@ -1,0 +1,37 @@
+<html lang="en">
+            <body style="font-family: Arial, sans-serif; font-size: 14px; line-height: 1.6; color: rgb(51, 51, 51); margin: auto; padding: 20px; height: auto; min-height: auto; margin: 0px;">
+            <p>Hello {{Insurance_InsuranceProviderName}} Team,</p>
+
+            <p>
+            We’re writing to verify the benefits for one of our patients,
+            <strong>{{Patient_Name}}</strong>.<br /></p>
+            <p>Here's a summary of the patient's existing details:
+            </p>
+
+            <h3 style="font-size: 14px; margin-bottom: 0;">Insurance Details:</h3>
+
+            <ul style="margin-top: 0;">
+            <li><strong>Member Plan:</strong> {{Insurance_MemberPlanName}}</li>
+            <li><strong>Member Number:</strong> {{Insurance_MemberPlanMemberNumber}}</li>
+            <li><strong>Group Number:</strong> {{Insurance_MemberPlanGroupNumber}}</li>
+            <li><strong>Plan Type:</strong> {{Insurance_MemberPlanType}}</li>
+            <li><strong>Coverage Period:</strong> {{Insurance_MemberPlanEffectiveFromDate}} – {{Insurance_MemberPlanEffectiveToDate}}</li>
+            </ul>
+
+            <h3 style="font-size: 14px; margin-bottom: 0;">Prescriber & Medication Details:</h3>
+
+            <ul style="margin-top: 0;">
+            <li><strong>Prescriber:</strong> {{HealthcareProvider_Salutation}} {{HealthcareProvider_FirstName}} {{HealthcareProvider_LastName}}</li>
+            <li><strong>Medication:</strong> {{Prescription_Name}} ({{Prescription_Quantity}} {{Prescription_UnitOfMeasure}} in {{Prescription_SupplyDuration}} Days)</li>
+            <li><strong>Preferred Pharmacy:</strong> {{Pharmacy_Name}}</li>
+            </ul>
+
+            <p>
+            To make sure the patient stays in care without any problems, we need to update the patient's benefits details. These details include the patient's copay, coinsurance, deductible, prior authorization requirements, and any coverage limits. To provide the patient’s latest benefits details, complete the <a href="{{Assessment_Link}}">Pharmacy Benefits Verification Form</a> by <strong>{{AssessmentForm_Expiration_Date}}</strong>.
+            </p>
+            <p>
+            Sincerely,<br />
+            <strong>{{Organization_Name}}</strong>
+            </p>
+            </body>
+            </html>

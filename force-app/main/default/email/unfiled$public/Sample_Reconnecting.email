@@ -1,0 +1,16 @@
+<p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span id="docs-internal-guid-03fe1f4d-ac65-f270-3156-972850f0c261"><span style="font-size: 14.6666666666667px; font-family: Arial; color: rgb(0, 0, 0); vertical-align: baseline; white-space: pre-wrap; background-color: transparent;">Hi {!Lead.FirstName},</span></span></p>
+&nbsp;
+
+<p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span id="docs-internal-guid-03fe1f4d-ac65-f270-3156-972850f0c261"><span style="font-size: 14.6666666666667px; font-family: Arial; color: rgb(0, 0, 0); vertical-align: baseline; white-space: pre-wrap; background-color: transparent;">I hope you&rsquo;ve been well. &nbsp;As your {!User.Title} here at {!User.CompanyName}, I would love the opportunity to reconnect. &nbsp;I understand our timing was off when we last spoke and wanted to see if this is a better time to discuss your vision for the company.</span></span></p>
+&nbsp;
+
+<p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span id="docs-internal-guid-03fe1f4d-ac65-f270-3156-972850f0c261"><span style="font-size: 14.6666666666667px; font-family: Arial; color: rgb(0, 0, 0); vertical-align: baseline; white-space: pre-wrap; background-color: transparent;">Are you free tomorrow afternoon for 15 minutes?</span></span></p>
+&nbsp;
+
+<p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span id="docs-internal-guid-03fe1f4d-ac65-f270-3156-972850f0c261"><span style="font-size: 14.6666666666667px; font-family: Arial; color: rgb(0, 0, 0); vertical-align: baseline; white-space: pre-wrap; background-color: transparent;">Thanks and standing by,</span></span></p>
+
+<p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span id="docs-internal-guid-03fe1f4d-ac65-f270-3156-972850f0c261"><span style="font-size: 14.6666666666667px; font-family: Arial; color: rgb(0, 0, 0); vertical-align: baseline; white-space: pre-wrap; background-color: transparent;">{!User.FirstName}</span></span></p>
+
+<p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span id="docs-internal-guid-03fe1f4d-ac65-f270-3156-972850f0c261"><span style="font-size: 14.6666666666667px; font-family: Arial; color: rgb(0, 0, 0); vertical-align: baseline; white-space: pre-wrap; background-color: transparent;">{!User.Phone}</span></span></p>
+
+<div>&nbsp;</div>

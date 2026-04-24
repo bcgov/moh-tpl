@@ -1,0 +1,7 @@
+<p dir="" ltr=""><span docs-internal-guid-03fe1f4d-ac6b-153b-2413-d45c577174e4="" id=""><span 14.6666666666667px="" font-size:="" style="">Hi {!Contact.FirstName},</span></span><br />
+<br />
+<span docs-internal-guid-03fe1f4d-ac6b-153b-2413-d45c577174e4="" id=""><span 14.6666666666667px="" font-size:="" style="">It was great meeting you and I am very excited about the opportunity for us to work together. &nbsp;I would like to schedule time with you to better understand your needs. &nbsp;When would be a convenient time for you?</span></span><br />
+<br />
+<span docs-internal-guid-03fe1f4d-ac6b-153b-2413-d45c577174e4="" id=""><span 14.6666666666667px="" font-size:="" style="">Sincerely,</span></span><br />
+<span docs-internal-guid-03fe1f4d-ac6b-153b-2413-d45c577174e4="" id=""><span 14.6666666666667px="" font-size:="" style="">{!User.FirstName}</span></span><br />
+<span docs-internal-guid-03fe1f4d-ac6b-153b-2413-d45c577174e4="" id=""><span 14.6666666666667px="" font-size:="" style="">{!User.Phone}</span></span></p>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Wishing someone a happy birthday</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>SAMPLE: Happy Birthday</name>
+    <relatedEntityType>Contact</relatedEntityType>
+    <style>none</style>
+    <subject>Happy Birthday!</subject>
+    <type>custom</type>
+    <uiType>SFX_Sample</uiType>
+</EmailTemplate>

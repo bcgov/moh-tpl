@@ -1,0 +1,51 @@
+<html lang="en">
+            <body style="font-family: Arial, sans-serif; font-size: 14px; line-height: 1.6; color: #333; max-width: 700px; margin: auto; padding: 20px; margin: 0px;">
+            <p>Hello {{HealthcareProvider_Salutation}} {{HealthcareProvider_FirstName}} {{HealthcareProvider_LastName}},</p>
+
+            <p>We hope this message finds you well. As part of our patient services program, we are sharing the verified pharmacy benefits details for your patient, <strong>{{Patient_Name}}</strong>, to assist with treatment planning and access coordination.</p>
+
+            <h3 style="font-size: 14px; margin-bottom: 0;">Insurance Details:</h3>
+            <ul style="margin-top: 0;">
+            <li><strong>Member Plan:</strong> {{Insurance_MemberPlanName}}</li>
+            <li><strong>Member Number:</strong> {{Insurance_MemberPlanMemberNumber}}</li>
+            <li><strong>Group Number:</strong> {{Insurance_MemberPlanGroupNumber}}</li>
+            <li><strong>Plan Type:</strong> {{Insurance_MemberPlanType}}</li>
+            <li><strong>Coverage Period:</strong> {{Insurance_MemberPlanEffectiveFromDate}} – {{Insurance_MemberPlanEffectiveToDate}}</li>
+            </ul>
+
+            <h3 style="font-size: 14px; margin-bottom: 0;">Medication Details:</h3>
+            <ul style="margin-top: 0;">
+            <li><strong>Medication:</strong> {{Prescription_Name}} ({{Prescription_Quantity}} {{Prescription_UnitOfMeasure}} for {{Prescription_SupplyDuration}} Days)</li>
+            </ul>
+
+            <h3 style="font-size: 14px; margin-bottom: 0;">Benefits Details for {{Prescription_Name}}:</h3>
+            <ul style="margin-top: 0;">
+            <li><strong>Coverage Status:</strong> {{CoverageBenefit_Status}}</li>
+            <li><strong>Network Type:</strong> {{Network_Type}}</li>
+            <li><strong>Co-Pay Amount:</strong> {{CoPay}}</li>
+            <li><strong>Co-Insurance Amount:</strong> {{CoInsurance}}</li>
+            <li><strong>Infusion Co-Pay Amount:</strong> {{InfusionCoPay}}</li>
+            <li><strong>Infusion Co-Insurance Amount:</strong> {{InfusionCoInsurance}}</li>
+            <li><strong>Deductible Amount:</strong> {{Deductibles}}</li>
+            <li><strong>Deductible Applied Amount:</strong> {{DeductiblesApplied}}</li>
+            <li><strong>Deductible Met Amount:</strong> {{DeductiblesMet}}</li>
+            <li><strong>Out-of-Pocket Total Amount:</strong> {{Total}}</li>
+            <li><strong>Out-of-Pocket Applied Amount:</strong> {{OutOfPocketApplied}}</li>
+            <li><strong>Out-of-Pocket Maximum Amount:</strong> {{OopMax}}</li>
+            <li><strong>Out-of-Pocket Maximum Met Amount:</strong> {{OopMaxMet}}</li>
+            <li><strong>Lifetime Maximum Amount:</strong> {{Ltm}}</li>
+            <li><strong>Balance Lifetime Maximum Amount:</strong> {{RemainingLtm}}</li>
+            <li><strong>Prior Authorization Required:</strong> {{PriorAuthorization_Required}}</li>
+            <li><strong>Additional Details:</strong> {{CoverageBenefit_BenefitNotes}}</li>
+            </ul>
+
+            <p>
+            Please let us know if any further documentation is required or if we can assist with any support services. Thank you for your continued partnership in supporting {{Patient_Name}}’s care.
+            </p>
+
+            <p>
+            Thank you,<br>
+            <strong>{{Organization_Name}}</strong>
+            </p>
+            </body>
+            </html>

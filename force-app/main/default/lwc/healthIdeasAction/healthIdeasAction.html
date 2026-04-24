@@ -1,0 +1,44 @@
+<template>
+    <lightning-quick-action-panel header="Get Records">
+        <div class="slds-p-around_medium">
+            <lightning-input
+                type="date"
+                label="Select Date"
+                value={selectedDate}
+                onchange={handleDateChange}
+                required>
+            </lightning-input>
+
+            <div class="slds-m-top_medium">
+                <lightning-button
+                    label="Get Records"
+                    variant="brand"
+                    onclick={handleRun}
+                    disabled={isLoading}>
+                </lightning-button>
+            </div>
+
+            <template if:true={isLoading}>
+                <div class="slds-m-top_medium">
+                    Processing...
+                </div>
+            </template>
+
+            <template if:true={result}>
+                <div class="slds-m-top_medium">
+                    <lightning-card title="Result">
+                        <div class="slds-p-around_medium">
+                            <pre>{result}</pre>
+                        </div>
+                    </lightning-card>
+                </div>
+            </template>
+
+            <template if:true={error}>
+                <div class="slds-m-top_medium slds-box slds-theme_error">
+                    <strong>Error:</strong> {error}
+                </div>
+            </template>
+        </div>
+    </lightning-quick-action-panel>
+</template>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Confirming next steps with the customer</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>SAMPLE: Next Steps</name>
+    <relatedEntityType>Opportunity</relatedEntityType>
+    <style>none</style>
+    <subject>Next Steps</subject>
+    <type>custom</type>
+    <uiType>SFX_Sample</uiType>
+</EmailTemplate>

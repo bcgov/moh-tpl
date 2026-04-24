@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Case2__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <deprecated>false</deprecated>
+    <label>Case</label>
+    <lookupFilter>
+        <active>false</active>
+        <filterItems>
+            <field>Case.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Individual</value>
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
+    <referenceTo>Case</referenceTo>
+    <relationshipLabel>Healthcare Costs (Case)</relationshipLabel>
+    <relationshipName>Healthcare_Costs1</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

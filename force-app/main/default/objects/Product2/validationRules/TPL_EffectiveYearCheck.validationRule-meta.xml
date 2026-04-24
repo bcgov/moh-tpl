@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>TPL_EffectiveYearCheck</fullName>
+    <active>false</active>
+    <description>This validation rule will prevent future product creation.</description>
+    <errorConditionFormula>AND(
+    ISNUMBER(Effective_year__c), 
+    VALUE(Effective_year__c) &gt; YEAR(TODAY())
+)</errorConditionFormula>
+    <errorMessage>Future products can not be created. The Effective Year cannot be greater than the current year. Please enter a valid value.</errorMessage>
+</ValidationRule>

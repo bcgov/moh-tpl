@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Ambulance</fullName>
+    <active>true</active>
+    <compactLayoutAssignment>Ambulance</compactLayoutAssignment>
+    <label>Ambulance</label>
+    <picklistValues>
+        <picklist>CCI_Level__c</picklist>
+        <values>
+            <fullName>Tier 1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tier 2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tier 3</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Line_Type__c</picklist>
+        <values>
+            <fullName>Usage</fullName>
+            <default>true</default>
+        </values>
+    </picklistValues>
+</RecordType>
