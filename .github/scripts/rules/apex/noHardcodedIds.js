@@ -1,7 +1,7 @@
 // SF-APEX-005 — Hardcoded Salesforce IDs or org-specific URLs
 const ID_15 = /\b[a-zA-Z0-9]{15}\b/;
 const ID_18 = /\b[a-zA-Z0-9]{18}\b/;
-const SF_URL = /https?:\/\/[a-zA-Z0-9\-]+\.(my\.salesforce\.com|lightning\.force\.com|salesforce\.com|force\.com)/i;
+const SF_URL = /^https?:\/\/[a-zA-Z0-9\-]+\.(my\.salesforce\.com|lightning\.force\.com|salesforce\.com|force\.com)$/i;
 // Salesforce record ID prefixes suggest real IDs when they appear in string literals
 const APEX_STRING_ID = /['"]([a-zA-Z0-9]{15}|[a-zA-Z0-9]{18})['"]/;
 
