@@ -173,7 +173,7 @@ function buildReviewBody(all, bodyOnly) {
       const icon     = SEVERITY_ICON[f.severity] ?? '⚪';
       const file     = f.path ? `\`${f.path}\`` : '—';
       const line     = f.startLine ? `L${f.startLine}` : '—';
-      const msg      = f.message.replace(/\|/g, '\\|');
+      const msg      = f.message.replace(/\\/g, '\\\\').replace(/\|/g, '\\|');
       lines.push(`| ${icon} ${f.severity} | ${f.ruleId} | ${file} | ${line} | ${msg} |`);
     }
 
