@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OmniIntegrationProcedure xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customJavaScript>{
+    &quot;objectId&quot;: &quot;800R0000000HE3eIAG&quot;,
+    &quot;templateId&quot;: &quot;2dtR0000000023v&quot;,
+    &quot;tokenDataMap&quot;: &quot;{}&quot;,
+    &quot;title&quot;: &quot;default-token-ip&quot;,
+    &quot;returnAsPdf&quot;: &quot;false&quot;,
+    &quot;keepIntermediate&quot;: &quot;false&quot;
+}</customJavaScript>
+    <description>Server-side remote doc generation with dataJson parameter. DR extract is implicitly in OS and document template contains DR transform.</description>
+    <elementTypeComponentMapping>{&quot;ElementTypeToHTMLTemplateList&quot;:[]}</elementTypeComponentMapping>
+    <isActive>true</isActive>
+    <isIntegProcdSignatureAvl>false</isIntegProcdSignatureAvl>
+    <isIntegrationProcedure>true</isIntegrationProcedure>
+    <isManagedUsingStdDesigner>false</isManagedUsingStdDesigner>
+    <isMetadataCacheDisabled>false</isMetadataCacheDisabled>
+    <isOmniScriptEmbeddable>false</isOmniScriptEmbeddable>
+    <isTestProcedure>false</isTestProcedure>
+    <isWebCompEnabled>false</isWebCompEnabled>
+    <language>Procedure</language>
+    <name>DocumentServiceGateway_DocGenerationWithTokenData</name>
+    <omniProcessElements>
+        <isActive>true</isActive>
+        <isOmniScriptEmbeddable>false</isOmniScriptEmbeddable>
+        <level>0.0</level>
+        <name>generateDocumentWithTokenDataService</name>
+        <omniProcessVersionNumber>0.0</omniProcessVersionNumber>
+        <propertySetConfig>{
+  &quot;executionConditionalFormula&quot; : &quot;&quot;,
+  &quot;failureConditionalFormula&quot; : &quot;&quot;,
+  &quot;failOnStepError&quot; : true,
+  &quot;useFormulas&quot; : true,
+  &quot;additionalInput&quot; : {
+    &quot;objectId&quot; : &quot;%objectId%&quot;,
+    &quot;templateId&quot; : &quot;%templateId%&quot;,
+    &quot;tokenDataMap&quot; : &quot;%tokenDataMap%&quot;
+  },
+  &quot;additionalOutput&quot; : { },
+  &quot;failureResponse&quot; : { },
+  &quot;sendOnlyAdditionalInput&quot; : false,
+  &quot;returnOnlyAdditionalOutput&quot; : false,
+  &quot;returnOnlyFailureResponse&quot; : false,
+  &quot;responseJSONPath&quot; : &quot;&quot;,
+  &quot;responseJSONNode&quot; : &quot;&quot;,
+  &quot;sendJSONPath&quot; : &quot;&quot;,
+  &quot;sendJSONNode&quot; : &quot;&quot;,
+  &quot;remoteClass&quot; : &quot;DocumentServiceGateway&quot;,
+  &quot;remoteOptions&quot; : {
+    &quot;title&quot; : &quot;%setupServiceCallInputParams:title%&quot;,
+    &quot;returnAsPdf&quot; : &quot;%setupServiceCallInputParams:returnAsPdf%&quot;,
+    &quot;keepIntermediate&quot; : &quot;%setupServiceCallInputParams:keepIntermediate%&quot;
+  },
+  &quot;remoteMethod&quot; : &quot;generateDocumentWithTokenData&quot;,
+  &quot;chainOnStep&quot; : false,
+  &quot;actionMessage&quot; : &quot;&quot;,
+  &quot;additionalChainableResponse&quot; : { },
+  &quot;show&quot; : null,
+  &quot;label&quot; : &quot;RemoteAction1&quot;,
+  &quot;disOnTplt&quot; : false
+}</propertySetConfig>
+        <sequenceNumber>2.0</sequenceNumber>
+        <type>Remote Action</type>
+    </omniProcessElements>
+    <omniProcessElements>
+        <isActive>true</isActive>
+        <isOmniScriptEmbeddable>false</isOmniScriptEmbeddable>
+        <level>0.0</level>
+        <name>ipResponse</name>
+        <omniProcessVersionNumber>0.0</omniProcessVersionNumber>
+        <propertySetConfig>{
+  &quot;executionConditionalFormula&quot; : &quot;&quot;,
+  &quot;useFormulas&quot; : true,
+  &quot;additionalOutput&quot; : {
+    &quot;docContentVersionId&quot; : &quot;%generateDocumentWithTokenDataService:docContentVersionId%&quot;,
+    &quot;pdfContentVersionId&quot; : &quot;%generateDocumentWithTokenDataService:pdfContentVersionId%&quot;,
+    &quot;isSuccessfulTransaction&quot; : &quot;%generateDocumentWithTokenDataService:success%&quot;,
+    &quot;errorMessage&quot; : &quot;=IF(%generateDocumentWithTokenDataService:success%==true, &apos;&apos;, %generateDocumentWithTokenDataService:error%)&quot;,
+    &quot;jobId&quot; : &quot;=%generateDocumentWithTokenDataService:jobId%&quot;
+  },
+  &quot;returnOnlyAdditionalOutput&quot; : true,
+  &quot;returnFullDataJSON&quot; : false,
+  &quot;responseFormat&quot; : &quot;JSON&quot;,
+  &quot;responseJSONPath&quot; : &quot;&quot;,
+  &quot;responseJSONNode&quot; : &quot;&quot;,
+  &quot;sendJSONPath&quot; : &quot;&quot;,
+  &quot;sendJSONNode&quot; : &quot;&quot;,
+  &quot;responseDefaultData&quot; : { },
+  &quot;vlcResponseHeaders&quot; : { },
+  &quot;show&quot; : null,
+  &quot;label&quot; : &quot;ResponseAction1&quot;,
+  &quot;disOnTplt&quot; : false
+}</propertySetConfig>
+        <sequenceNumber>3.0</sequenceNumber>
+        <type>Response Action</type>
+    </omniProcessElements>
+    <omniProcessElements>
+        <isActive>true</isActive>
+        <isOmniScriptEmbeddable>false</isOmniScriptEmbeddable>
+        <level>0.0</level>
+        <name>setupServiceCallInputParams</name>
+        <omniProcessVersionNumber>0.0</omniProcessVersionNumber>
+        <propertySetConfig>{
+  &quot;executionConditionalFormula&quot; : &quot;&quot;,
+  &quot;failureConditionalFormula&quot; : &quot;&quot;,
+  &quot;failOnStepError&quot; : true,
+  &quot;elementValueMap&quot; : {
+    &quot;title&quot; : &quot;=IF(OR(%title%==null, %title%==&apos;&apos;), null, %title%)&quot;,
+    &quot;returnAsPdf&quot; : &quot;=IF(OR(%returnAsPdf%==null, %returnAsPdf%==&apos;&apos;), false, %returnAsPdf%)&quot;,
+    &quot;keepIntermediate&quot; : &quot;=IF(OR(%keepIntermediate%==null, %keepIntermediate%==&apos;&apos;), false, %keepIntermediate%)&quot;
+  },
+  &quot;responseJSONPath&quot; : &quot;&quot;,
+  &quot;responseJSONNode&quot; : &quot;&quot;,
+  &quot;chainOnStep&quot; : false,
+  &quot;actionMessage&quot; : &quot;&quot;,
+  &quot;show&quot; : null,
+  &quot;label&quot; : &quot;SetValues1&quot;,
+  &quot;disOnTplt&quot; : false
+}</propertySetConfig>
+        <sequenceNumber>1.0</sequenceNumber>
+        <type>Set Values</type>
+    </omniProcessElements>
+    <omniProcessKey>DocumentServiceGateway_DocGenerationWithTokenData</omniProcessKey>
+    <omniProcessType>Integration Procedure</omniProcessType>
+    <propertySetConfig>{
+  &quot;linkToExternalObject&quot; : &quot;&quot;,
+  &quot;trackingCustomData&quot; : { },
+  &quot;includeAllActionsInResponse&quot; : false,
+  &quot;columnsPropertyMap&quot; : [ ],
+  &quot;relationshipFieldsMap&quot; : [ ],
+  &quot;labelSingular&quot; : &quot;&quot;,
+  &quot;labelPlural&quot; : &quot;&quot;,
+  &quot;description&quot; : &quot;&quot;,
+  &quot;nameColumn&quot; : &quot;&quot;,
+  &quot;rollbackOnError&quot; : false,
+  &quot;chainableQueriesLimit&quot; : 50,
+  &quot;chainableDMLStatementsLimit&quot; : null,
+  &quot;chainableCpuLimit&quot; : 2000,
+  &quot;chainableHeapSizeLimit&quot; : null,
+  &quot;chainableDMLRowsLimit&quot; : null,
+  &quot;chainableQueryRowsLimit&quot; : null,
+  &quot;chainableSoslQueriesLimit&quot; : null,
+  &quot;chainableActualTimeLimit&quot; : null,
+  &quot;additionalChainableResponse&quot; : { },
+  &quot;queueableChainableQueriesLimit&quot; : 100,
+  &quot;queueableChainableCpuLimit&quot; : 30000,
+  &quot;queueableChainableHeapSizeLimit&quot; : 5,
+  &quot;ttlMinutes&quot; : 5,
+  &quot;mockResponseMap&quot; : { }
+}</propertySetConfig>
+    <subType>DocGenerationWithTokenData</subType>
+    <type>DocumentServiceGateway</type>
+    <uniqueName>DocumentServiceGateway_DocGenerationWithTokenData_Procedure_2</uniqueName>
+    <versionNumber>2.0</versionNumber>
+    <webComponentKey>9dc8b9ae-b958-8f9f-4d7c-d7d36374a46d</webComponentKey>
+</OmniIntegrationProcedure>

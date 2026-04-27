@@ -1,0 +1,404 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OmniDataTransform xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>false</active>
+    <assignmentRulesUsed>false</assignmentRulesUsed>
+    <deletedOnSuccess>false</deletedOnSuccess>
+    <description>TPL_DR_TransformWeather_ForecastCurrent Example of a DataRaptor Transform with concatenate formulas and mixed subnode and array output.</description>
+    <errorIgnored>false</errorIgnored>
+    <expectedInputJson>{
+  &quot;Current&quot; : [ {
+    &quot;app_temp&quot; : 73.7,
+    &quot;aqi&quot; : 37,
+    &quot;city_name&quot; : &quot;Schenectady&quot;,
+    &quot;clouds&quot; : 45,
+    &quot;country_code&quot; : &quot;US&quot;,
+    &quot;datetime&quot; : &quot;2019-09-10:22&quot;,
+    &quot;dewpt&quot; : 62.1,
+    &quot;dhi&quot; : 59.71,
+    &quot;dni&quot; : 535.73,
+    &quot;elev_angle&quot; : 12.66,
+    &quot;ghi&quot; : 169.35,
+    &quot;h_angle&quot; : 64.3,
+    &quot;last_ob_time&quot; : &quot;2019-09-10T22:29:00&quot;,
+    &quot;lat&quot; : 42.8142,
+    &quot;lon&quot; : -73.9396,
+    &quot;ob_time&quot; : &quot;2019-09-10 22:29&quot;,
+    &quot;pod&quot; : &quot;d&quot;,
+    &quot;precip&quot; : 0,
+    &quot;pres&quot; : 1009.5,
+    &quot;rh&quot; : 68,
+    &quot;slp&quot; : 1023,
+    &quot;snow&quot; : 0,
+    &quot;solar_rad&quot; : 160.4,
+    &quot;state_code&quot; : &quot;NY&quot;,
+    &quot;station&quot; : &quot;KSCH&quot;,
+    &quot;sunrise&quot; : &quot;10:30&quot;,
+    &quot;sunset&quot; : &quot;23:15&quot;,
+    &quot;temp&quot; : 73.4,
+    &quot;timezone&quot; : &quot;America/New_York&quot;,
+    &quot;ts&quot; : 1568154540,
+    &quot;uv&quot; : 2.17892,
+    &quot;vis&quot; : 3.1,
+    &quot;weather&quot; : {
+      &quot;code&quot; : &quot;802&quot;,
+      &quot;description&quot; : &quot;Scattered clouds&quot;,
+      &quot;icon&quot; : &quot;c02d&quot;
+    },
+    &quot;wind_cdir&quot; : &quot;S&quot;,
+    &quot;wind_cdir_full&quot; : &quot;south&quot;,
+    &quot;wind_dir&quot; : 170,
+    &quot;wind_spd&quot; : 6.9
+  } ],
+  &quot;Fcast&quot; : [ {
+    &quot;app_max_temp&quot; : 77.1,
+    &quot;app_min_temp&quot; : 69.3,
+    &quot;clouds&quot; : 43,
+    &quot;clouds_hi&quot; : 12,
+    &quot;clouds_low&quot; : 40,
+    &quot;clouds_mid&quot; : 0,
+    &quot;datetime&quot; : &quot;2019-09-10&quot;,
+    &quot;dewpt&quot; : 66.9,
+    &quot;max_dhi&quot; : null,
+    &quot;max_temp&quot; : 76.5,
+    &quot;min_temp&quot; : 68.3,
+    &quot;moon_phase&quot; : 0.970024,
+    &quot;moonrise_ts&quot; : 1568152279,
+    &quot;moonset_ts&quot; : 1568105730,
+    &quot;ozone&quot; : 276.197,
+    &quot;pop&quot; : 20,
+    &quot;precip&quot; : 0.005,
+    &quot;pres&quot; : 1024.82,
+    &quot;rh&quot; : 88,
+    &quot;slp&quot; : 1025.64,
+    &quot;snow&quot; : 0,
+    &quot;snow_depth&quot; : 0,
+    &quot;sunrise_ts&quot; : 1568111801,
+    &quot;sunset_ts&quot; : 1568157356,
+    &quot;temp&quot; : 71.1,
+    &quot;ts&quot; : 1568088060,
+    &quot;uv&quot; : 3.82131,
+    &quot;valid_date&quot; : &quot;2019-09-10&quot;,
+    &quot;vis&quot; : 15,
+    &quot;weather&quot; : {
+      &quot;code&quot; : 803,
+      &quot;description&quot; : &quot;Broken clouds&quot;,
+      &quot;icon&quot; : &quot;c03d&quot;
+    },
+    &quot;wind_cdir&quot; : &quot;SSE&quot;,
+    &quot;wind_cdir_full&quot; : &quot;south-southeast&quot;,
+    &quot;wind_dir&quot; : 153,
+    &quot;wind_gust_spd&quot; : 26.6,
+    &quot;wind_spd&quot; : 9
+  }, {
+    &quot;app_max_temp&quot; : 88.8,
+    &quot;app_min_temp&quot; : 68.1,
+    &quot;clouds&quot; : 59,
+    &quot;clouds_hi&quot; : 36,
+    &quot;clouds_low&quot; : 36,
+    &quot;clouds_mid&quot; : 17,
+    &quot;datetime&quot; : &quot;2019-09-11&quot;,
+    &quot;dewpt&quot; : 67.8,
+    &quot;max_dhi&quot; : null,
+    &quot;max_temp&quot; : 84.6,
+    &quot;min_temp&quot; : 66.9,
+    &quot;moon_phase&quot; : 0.993411,
+    &quot;moonrise_ts&quot; : 1568240745,
+    &quot;moonset_ts&quot; : 1568195609,
+    &quot;ozone&quot; : 276.717,
+    &quot;pop&quot; : 0,
+    &quot;precip&quot; : 0,
+    &quot;pres&quot; : 1018.9,
+    &quot;rh&quot; : 82,
+    &quot;slp&quot; : 1019.72,
+    &quot;snow&quot; : 0,
+    &quot;snow_depth&quot; : 0,
+    &quot;sunrise_ts&quot; : 1568198257,
+    &quot;sunset_ts&quot; : 1568243657,
+    &quot;temp&quot; : 74.5,
+    &quot;ts&quot; : 1568174460,
+    &quot;uv&quot; : 6.74066,
+    &quot;valid_date&quot; : &quot;2019-09-11&quot;,
+    &quot;vis&quot; : 15,
+    &quot;weather&quot; : {
+      &quot;code&quot; : 803,
+      &quot;description&quot; : &quot;Broken clouds&quot;,
+      &quot;icon&quot; : &quot;c03d&quot;
+    },
+    &quot;wind_cdir&quot; : &quot;SSW&quot;,
+    &quot;wind_cdir_full&quot; : &quot;south-southwest&quot;,
+    &quot;wind_dir&quot; : 198,
+    &quot;wind_gust_spd&quot; : 29.5,
+    &quot;wind_spd&quot; : 8.9
+  } ]
+}</expectedInputJson>
+    <expectedOutputJson>{
+  &quot;Current&quot; : {
+    &quot;CityState&quot; : &quot;Schenectady, New York&quot;,
+    &quot;Condition&quot; : &quot;Heavy Snow&quot;,
+    &quot;TempC&quot; : -2.5,
+    &quot;TempF&quot; : 27.5
+  },
+  &quot;CurrentIcon&quot; : &quot;www.weatherbit.io/static/img/icons/s03d.png&quot;,
+  &quot;Forecast&quot; : [ {
+    &quot;Condition&quot; : &quot;Heavy Snow&quot;,
+    &quot;Date&quot; : &quot;2019-01-26&quot;,
+    &quot;HiLoTempC&quot; : &quot;-0.8/-5.7&quot;,
+    &quot;HiLoTempF&quot; : &quot;30.5/21.7&quot;
+  }, {
+    &quot;Condition&quot; : &quot;Light Snow&quot;,
+    &quot;Date&quot; : &quot;2019-01-27&quot;,
+    &quot;HiLoTempC&quot; : &quot;-0.2/-5.1&quot;,
+    &quot;HiLoTempF&quot; : &quot;31.7/22.8&quot;
+  }, {
+    &quot;Condition&quot; : &quot;Flurries&quot;,
+    &quot;Date&quot; : &quot;2019-01-28&quot;,
+    &quot;HiLoTempC&quot; : &quot;-0.6/-7.8&quot;,
+    &quot;HiLoTempF&quot; : &quot;31.0/18.7&quot;
+  }, {
+    &quot;Condition&quot; : &quot;Clear sky&quot;,
+    &quot;Date&quot; : &quot;2019-01-29&quot;,
+    &quot;HiLoTempC&quot; : &quot;-3.7/-7.7&quot;,
+    &quot;HiLoTempF&quot; : &quot;25.3/18.1&quot;
+  }, {
+    &quot;Condition&quot; : &quot;Clear sky&quot;,
+    &quot;Date&quot; : &quot;2019-01-30&quot;,
+    &quot;HiLoTempC&quot; : &quot;-4.3/-6.8&quot;,
+    &quot;HiLoTempF&quot; : &quot;24.2/19.7&quot;
+  } ],
+  &quot;ForecastIcon&quot; : &quot;www.weatherbit.io/static/img/icons/s01d.png&quot;
+}</expectedOutputJson>
+    <fieldLevelSecurityEnabled>false</fieldLevelSecurityEnabled>
+    <inputType>JSON</inputType>
+    <isManagedUsingStdDesigner>false</isManagedUsingStdDesigner>
+    <name>TPLTransformAccountBCEHSCostHCCIntegration</name>
+    <nullInputsIncludedInOutput>false</nullInputsIncludedInOutput>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLTransformAccountBCEHSCostHCCIntegration7701766143246696</globalKey>
+        <inputFieldName>searchRequest:requester</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLTransformAccountBCEHSCostHCCIntegration</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>searchRequest:userName</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLTransformAccountBCEHSCostHCCIntegration4570236360720942</globalKey>
+        <inputFieldName>searchRequest:asOfDate</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLTransformAccountBCEHSCostHCCIntegration</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>searchRequest:RefDate</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLTransformAccountBCEHSCostHCCIntegration0175840380180744</globalKey>
+        <inputFieldName>searchRequest:personalHealthNumber</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLTransformAccountBCEHSCostHCCIntegration</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>searchRequest:PHN</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLTransformAccountBCEHSCostHCCIntegration7486997162246983</globalKey>
+        <inputFieldName>encounterDetails:totalServiceCost</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLTransformAccountBCEHSCostHCCIntegration</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>encounterDetails:AmbulanceBasicAmt</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLTransformAccountBCEHSCostHCCIntegration9155843412157383</globalKey>
+        <inputFieldName>encounterDetails:encounterId</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLTransformAccountBCEHSCostHCCIntegration</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>encounterDetails:SourceSystemId</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLTransformAccountBCEHSCostHCCIntegration6507764207766364</globalKey>
+        <inputFieldName>encounterDetails:ambulanceResponseTo</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLTransformAccountBCEHSCostHCCIntegration</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>encounterDetails:LocationRespondedto</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLTransformAccountBCEHSCostHCCIntegration4566838573206975</globalKey>
+        <inputFieldName>encounterDetails:hospitalTakenTo</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLTransformAccountBCEHSCostHCCIntegration</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>encounterDetails:Hospitalcodetakento</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLTransformAccountBCEHSCostHCCIntegration8947895919957396</globalKey>
+        <inputFieldName>encounterDetails:personalHealthNumber</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLTransformAccountBCEHSCostHCCIntegration</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>encounterDetails:PHN</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLTransformAccountBCEHSCostHCCIntegration037460177627145264</globalKey>
+        <inputFieldName>encounterDetails:dateOfService</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLTransformAccountBCEHSCostHCCIntegration</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>encounterDetails:DateofService</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLTransformAccountBCEHSCostHCCIntegration3411817061676713</globalKey>
+        <inputFieldName>RecordTypeId</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLTransformAccountBCEHSCostHCCIntegration</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>encounterDetails:RecordTypeId</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <formulaSequence>2.0</formulaSequence>
+        <globalKey>TPLTransformAccountBCEHSCostHCCIntegration32180049269452926</globalKey>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLTransformAccountBCEHSCostHCCIntegration</name>
+        <outputCreationSequence>0.0</outputCreationSequence>
+        <outputFieldName>Formula</outputFieldName>
+        <outputObjectName>Formula</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLTransformAccountBCEHSCostHCCIntegration5250122640765743</globalKey>
+        <inputFieldName>AccountId</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLTransformAccountBCEHSCostHCCIntegration</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>encounterDetails:AccountId</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <formulaSequence>4.0</formulaSequence>
+        <globalKey>TPLTransformAccountBCEHSCostHCCIntegration9855951215207827</globalKey>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLTransformAccountBCEHSCostHCCIntegration</name>
+        <outputCreationSequence>0.0</outputCreationSequence>
+        <outputFieldName>Formula</outputFieldName>
+        <outputObjectName>Formula</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <formulaSequence>3.0</formulaSequence>
+        <globalKey>TPLTransformAccountBCEHSCostHCCIntegration9213297714404544</globalKey>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLTransformAccountBCEHSCostHCCIntegration</name>
+        <outputCreationSequence>0.0</outputCreationSequence>
+        <outputFieldName>Formula</outputFieldName>
+        <outputObjectName>Formula</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <formulaSequence>1.0</formulaSequence>
+        <globalKey>TPLTransformAccountBCEHSCostHCCIntegration587023318666186</globalKey>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLTransformAccountBCEHSCostHCCIntegration</name>
+        <outputCreationSequence>0.0</outputCreationSequence>
+        <outputFieldName>Formula</outputFieldName>
+        <outputObjectName>Formula</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <outputType>JSON</outputType>
+    <previewJsonData>{
+  &quot;ambulanceResponseTo&quot; : &quot;1416 MANZANITA RD&quot;,
+  &quot;totalServiceCost&quot; : &quot;80.00&quot;,
+  &quot;encounterId&quot; : &quot;72e820c4-48b6-4739-9de4-2f05c05e0b76&quot;,
+  &quot;dateOfService&quot; : &quot;2022-04-22&quot;,
+  &quot;personalHealthNumber&quot; : &quot;9736786491&quot;,
+  &quot;hospitalTakenTo&quot; : &quot;201&quot;
+}</previewJsonData>
+    <processSuperBulk>false</processSuperBulk>
+    <responseCacheTtlMinutes>0.0</responseCacheTtlMinutes>
+    <rollbackOnError>false</rollbackOnError>
+    <sourceObject>json</sourceObject>
+    <sourceObjectDefault>false</sourceObjectDefault>
+    <synchronousProcessThreshold>-1.0</synchronousProcessThreshold>
+    <type>Transform</type>
+    <uniqueName>TPLTransformAccountBCEHSCostHCCIntegration_1</uniqueName>
+    <versionNumber>1.0</versionNumber>
+    <xmlDeclarationRemoved>false</xmlDeclarationRemoved>
+</OmniDataTransform>

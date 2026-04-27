@@ -1,0 +1,974 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OmniDataTransform xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>false</active>
+    <assignmentRulesUsed>false</assignmentRulesUsed>
+    <deletedOnSuccess>false</deletedOnSuccess>
+    <description>TPL_DR_TransformWeather_ForecastCurrent Example of a DataRaptor Transform with concatenate formulas and mixed subnode and array output.</description>
+    <errorIgnored>false</errorIgnored>
+    <expectedInputJson>{
+    &quot;HI&quot;: [
+        {
+      MSP fields
+        },
+        {
+      Hospital Fields
+        },
+        {
+            &quot;DIN&quot;: &quot;1234567&quot;,
+            &quot;NameofDrug&quot;: &quot;ABCD&quot;,
+            &quot;Amount of Drug&quot;: &quot;150&quot;,
+            &quot;DateodService&quot;: &quot;2022-06-10&quot;
+      &quot;RecordTypeIdPharm&quot;: &quot;0123J0000001SaEQAU&quot;
+        }
+    ],
+    &quot;CaseId&quot;: &quot;5003J000008nYamQAE&quot;
+}</expectedInputJson>
+    <expectedOutputJson>{
+  &quot;Current&quot; : {
+    &quot;CityState&quot; : &quot;Schenectady, New York&quot;,
+    &quot;Condition&quot; : &quot;Heavy Snow&quot;,
+    &quot;TempC&quot; : -2.5,
+    &quot;TempF&quot; : 27.5
+  },
+  &quot;CurrentIcon&quot; : &quot;www.weatherbit.io/static/img/icons/s03d.png&quot;,
+  &quot;Forecast&quot; : [ {
+    &quot;Condition&quot; : &quot;Heavy Snow&quot;,
+    &quot;Date&quot; : &quot;2019-01-26&quot;,
+    &quot;HiLoTempC&quot; : &quot;-0.8/-5.7&quot;,
+    &quot;HiLoTempF&quot; : &quot;30.5/21.7&quot;
+  }, {
+    &quot;Condition&quot; : &quot;Light Snow&quot;,
+    &quot;Date&quot; : &quot;2019-01-27&quot;,
+    &quot;HiLoTempC&quot; : &quot;-0.2/-5.1&quot;,
+    &quot;HiLoTempF&quot; : &quot;31.7/22.8&quot;
+  }, {
+    &quot;Condition&quot; : &quot;Flurries&quot;,
+    &quot;Date&quot; : &quot;2019-01-28&quot;,
+    &quot;HiLoTempC&quot; : &quot;-0.6/-7.8&quot;,
+    &quot;HiLoTempF&quot; : &quot;31.0/18.7&quot;
+  }, {
+    &quot;Condition&quot; : &quot;Clear sky&quot;,
+    &quot;Date&quot; : &quot;2019-01-29&quot;,
+    &quot;HiLoTempC&quot; : &quot;-3.7/-7.7&quot;,
+    &quot;HiLoTempF&quot; : &quot;25.3/18.1&quot;
+  }, {
+    &quot;Condition&quot; : &quot;Clear sky&quot;,
+    &quot;Date&quot; : &quot;2019-01-30&quot;,
+    &quot;HiLoTempC&quot; : &quot;-4.3/-6.8&quot;,
+    &quot;HiLoTempF&quot; : &quot;24.2/19.7&quot;
+  } ],
+  &quot;ForecastIcon&quot; : &quot;www.weatherbit.io/static/img/icons/s01d.png&quot;
+}</expectedOutputJson>
+    <fieldLevelSecurityEnabled>false</fieldLevelSecurityEnabled>
+    <inputType>JSON</inputType>
+    <isManagedUsingStdDesigner>false</isManagedUsingStdDesigner>
+    <name>TPLTransformAccountHICostIntegrationHI</name>
+    <nullInputsIncludedInOutput>false</nullInputsIncludedInOutput>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLTransformAccountHICostIntegrationHI36274965181031926</globalKey>
+        <inputFieldName>msp:MSPSiteCode</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLTransformAccountHICostIntegrationHI</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>HI:msp:MSPSiteCode</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>true</disabled>
+        <filterGroup>0.0</filterGroup>
+        <formulaConverted>| var:pharmacare:practitionerFirstName &quot;/\/\/&quot; var:pharmacare:practitionerLastName CONCAT</formulaConverted>
+        <formulaExpression>CONCAT(%pharmacare:practitionerFirstName%,&quot; &quot;,%pharmacare:practitionerLastName%)</formulaExpression>
+        <formulaResultPath>pharmacare:practitioner_name</formulaResultPath>
+        <formulaSequence>2.0</formulaSequence>
+        <globalKey>TPLTransformAccountHICostIntegrationHI9978728750734415</globalKey>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLTransformAccountHICostIntegrationHI</name>
+        <outputCreationSequence>0.0</outputCreationSequence>
+        <outputFieldName>Formula</outputFieldName>
+        <outputObjectName>Formula</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLTransformAccountHICostIntegrationHI40108994839381185</globalKey>
+        <inputFieldName>searchRequest:userName</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLTransformAccountHICostIntegrationHI</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>HI:searchRequest:userName</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLTransformAccountHICostIntegrationHI39243753106662826</globalKey>
+        <inputFieldName>msp:MSPFacilityType</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLTransformAccountHICostIntegrationHI</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>HI:msp:MSPFacilityType</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLTransformAccountHICostIntegrationHI15595947950770817</globalKey>
+        <inputFieldName>searchRequest:RefDate</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLTransformAccountHICostIntegrationHI</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>HI:searchRequest:RefDate</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLTransformAccountHICostIntegrationHI09687374875182542</globalKey>
+        <inputFieldName>searchRequest:PHN</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLTransformAccountHICostIntegrationHI</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>HI:searchRequest:PHN</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLTransformAccountHICostIntegrationHI06420243800997605</globalKey>
+        <inputFieldName>hospitalizations:HopitalDateofAdmission</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLTransformAccountHICostIntegrationHI</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>HI:hospitalizations:HopitalDateofAdmission</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLTransformAccountHICostIntegrationHI8456619277755222</globalKey>
+        <inputFieldName>hospitalizations:HospitalDateofDischarge</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLTransformAccountHICostIntegrationHI</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>HI:hospitalizations:HospitalDateofDischarge</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLTransformAccountHICostIntegrationHI631604543850044</globalKey>
+        <inputFieldName>hospitalizations:CostType</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLTransformAccountHICostIntegrationHI</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>HI:hospitalizations:CostType</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLTransformAccountHICostIntegrationHI7865973659367371</globalKey>
+        <inputFieldName>msp:MSPFacility</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLTransformAccountHICostIntegrationHI</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>HI:msp:MSPFacility</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLTransformAccountHICostIntegrationHI9074374245591077</globalKey>
+        <inputFieldName>hospitalizations:AccountId</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLTransformAccountHICostIntegrationHI</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>HI:hospitalizations:AccountId</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLTransformAccountHICostIntegrationHI6409684207330657</globalKey>
+        <inputFieldName>hospitalizations:HospitalServiceType2</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLTransformAccountHICostIntegrationHI</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>HI:hospitalizations:HospitalServiceType2</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLTransformAccountHICostIntegrationHI6179804724217147</globalKey>
+        <inputFieldName>pharmacare:PharmCostOfDrug</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLTransformAccountHICostIntegrationHI</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>HI:pharmacare:PharmCostOfDrug</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLTransformAccountHICostIntegrationHI6276372284123558</globalKey>
+        <inputFieldName>pharmacare:PractitionerName</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLTransformAccountHICostIntegrationHI</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>HI:pharmacare:PractitionerName</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLTransformAccountHICostIntegrationHI8656139487583799</globalKey>
+        <inputFieldName>pharmacare:PharmNameOfDrug</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLTransformAccountHICostIntegrationHI</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>HI:pharmacare:PharmNameOfDrug</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLTransformAccountHICostIntegrationHI8195808672181742</globalKey>
+        <inputFieldName>msp:PHN</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLTransformAccountHICostIntegrationHI</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>HI:msp:PHN</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLTransformAccountHICostIntegrationHI34058671660838713</globalKey>
+        <inputFieldName>pharmacare:PharmDIN</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLTransformAccountHICostIntegrationHI</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>HI:pharmacare:PharmDIN</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLTransformAccountHICostIntegrationHI5736125683037032</globalKey>
+        <inputFieldName>pharmacare:SourceSystemId</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLTransformAccountHICostIntegrationHI</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>HI:pharmacare:SourceSystemId</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLTransformAccountHICostIntegrationHI30600752298145095</globalKey>
+        <inputFieldName>msp:MSPServiceFinishDate</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLTransformAccountHICostIntegrationHI</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>HI:msp:MSPServiceFinishDate</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLTransformAccountHICostIntegrationHI24732881819984076</globalKey>
+        <inputFieldName>pharmacare:CostType</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLTransformAccountHICostIntegrationHI</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>HI:pharmacare:CostType</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLTransformAccountHICostIntegrationHI6380603037233001</globalKey>
+        <inputFieldName>pharmacare:PharmCostOfDrug</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLTransformAccountHICostIntegrationHI</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>HI:pharmacare:PharmCostOfDrug</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLTransformAccountHICostIntegrationHI112368369217421</globalKey>
+        <inputFieldName>pharmacare:DateofService</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLTransformAccountHICostIntegrationHI</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>HI:pharmacare:DateofService</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLTransformAccountHICostIntegrationHI9183566997979568</globalKey>
+        <inputFieldName>msp:AccountId</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLTransformAccountHICostIntegrationHI</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>HI:msp:AccountId</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLTransformAccountHICostIntegrationHI5503189496812404</globalKey>
+        <inputFieldName>pharmacare:AccountId</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLTransformAccountHICostIntegrationHI</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>HI:pharmacare:AccountId</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLTransformAccountHICostIntegrationHI15098230109656996</globalKey>
+        <inputFieldName>msp:CostType</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLTransformAccountHICostIntegrationHI</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>HI:msp:CostType</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLTransformAccountHICostIntegrationHI5875109567691428</globalKey>
+        <inputFieldName>msp:MSPDateofService</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLTransformAccountHICostIntegrationHI</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>HI:msp:MSPDateofService</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLTransformAccountHICostIntegrationHI6735707005520601</globalKey>
+        <inputFieldName>msp:MSPServiceStartDate</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLTransformAccountHICostIntegrationHI</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>HI:msp:MSPServiceStartDate</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>true</disabled>
+        <filterGroup>0.0</filterGroup>
+        <formulaConverted>| var:msp:diagnosticCode1 &quot;;/\/\//\/\/&quot; var:msp:diagnosticCode2 &quot;;/\/\//\/\/&quot; var:msp:diagnosticCode3 CONCAT</formulaConverted>
+        <formulaExpression>CONCAT( %msp:diagnosticCode1%,&quot;;  &quot;, %msp:diagnosticCode2%,&quot;;  &quot;, %msp:diagnosticCode3%)</formulaExpression>
+        <formulaResultPath>msp:diagnosticCode</formulaResultPath>
+        <formulaSequence>1.0</formulaSequence>
+        <globalKey>TPLTransformAccountHICostIntegrationHI7607766952916134</globalKey>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLTransformAccountHICostIntegrationHI</name>
+        <outputCreationSequence>0.0</outputCreationSequence>
+        <outputFieldName>Formula</outputFieldName>
+        <outputObjectName>Formula</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLTransformAccountHICostIntegrationHI879607946879095</globalKey>
+        <inputFieldName>msp:MSPPractitionerName</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLTransformAccountHICostIntegrationHI</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>HI:msp:MSPPractitionerName</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLTransformAccountHICostIntegrationHI8612037032237</globalKey>
+        <inputFieldName>msp:RecordTypeIdMSP</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLTransformAccountHICostIntegrationHI</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>HI:msp:RecordTypeIdMSP</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLTransformAccountHICostIntegrationHI4809486864045103</globalKey>
+        <inputFieldName>msp:MSPFeeItemTitle</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLTransformAccountHICostIntegrationHI</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>HI:msp:MSPFeeItemTitle</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLTransformAccountHICostIntegrationHI46475994291584977</globalKey>
+        <inputFieldName>msp:MSPAmountPaid</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLTransformAccountHICostIntegrationHI</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>HI:msp:MSPAmountPaid</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLTransformAccountHICostIntegrationHI360040469343501</globalKey>
+        <inputFieldName>msp:MSPDiagnosticCode</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLTransformAccountHICostIntegrationHI</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>HI:msp:MSPDiagnosticCode</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLTransformAccountHICostIntegrationHI5986183209914112</globalKey>
+        <inputFieldName>msp:MSPDiagnosticDescription</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLTransformAccountHICostIntegrationHI</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>HI:msp:MSPDiagnosticDescription</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLTransformAccountHICostIntegrationHI8461914154315459</globalKey>
+        <inputFieldName>msp:MSPDescriptionofService</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLTransformAccountHICostIntegrationHI</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>HI:msp:MSPDescriptionofService</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLTransformAccountHICostIntegrationHI5922767947820224</globalKey>
+        <inputFieldName>msp:MSPFeeItemCode</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLTransformAccountHICostIntegrationHI</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>HI:msp:MSPFeeItemCode</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLTransformAccountHICostIntegrationHI5902950718011482</globalKey>
+        <inputFieldName>msp:MSPPayeeNumber</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLTransformAccountHICostIntegrationHI</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>HI:msp:MSPPayeeNumber</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLTransformAccountHICostIntegrationHI5907651614015877</globalKey>
+        <inputFieldName>msp:MSPLocationTypeDescription</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLTransformAccountHICostIntegrationHI</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>HI:msp:MSPLocationTypeDescription</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLTransformAccountHICostIntegrationHI3812562722612518</globalKey>
+        <inputFieldName>msp:MSPLocationTypeCode</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLTransformAccountHICostIntegrationHI</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>HI:msp:MSPLocationTypeCode</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLTransformAccountHICostIntegrationHI09065999817996151</globalKey>
+        <inputFieldName>msp:MSPPayeeDescription</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLTransformAccountHICostIntegrationHI</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>HI:msp:MSPPayeeDescription</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLTransformAccountHICostIntegrationHI9913755412566986</globalKey>
+        <inputFieldName>msp:MSPPractitionerNumber</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLTransformAccountHICostIntegrationHI</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>HI:msp:MSPPractitionerNumber</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLTransformAccountHICostIntegrationHI3565744239022365</globalKey>
+        <inputFieldName>msp:MSPSpecialtyCode</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLTransformAccountHICostIntegrationHI</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>HI:msp:MSPSpecialtyCode</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLTransformAccountHICostIntegrationHI6129068920633169</globalKey>
+        <inputFieldName>msp:MSPSpecialtyDescription</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLTransformAccountHICostIntegrationHI</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>HI:msp:MSPSpecialtyDescription</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLTransformAccountHICostIntegrationHI56338953150242</globalKey>
+        <inputFieldName>msp:SourceSystemId</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLTransformAccountHICostIntegrationHI</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>HI:msp:SourceSystemId</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>true</disabled>
+        <filterGroup>0.0</filterGroup>
+        <formulaConverted>| var:msp:diagnosticDesc1 &quot;;/\/\//\/\/&quot; var:msp:diagnosticDesc2 &quot;;/\/\//\/\/&quot; var:msp:diagnosticDesc3 CONCAT</formulaConverted>
+        <formulaExpression>CONCAT( %msp:diagnosticDesc1%,&quot;;  &quot;, %msp:diagnosticDesc2%,&quot;;  &quot;, %msp:diagnosticDesc3%)</formulaExpression>
+        <formulaResultPath>msp:diagnosticDesc</formulaResultPath>
+        <formulaSequence>3.0</formulaSequence>
+        <globalKey>TPLTransformAccountHICostIntegrationHI3738760110957381</globalKey>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLTransformAccountHICostIntegrationHI</name>
+        <outputCreationSequence>0.0</outputCreationSequence>
+        <outputFieldName>Formula</outputFieldName>
+        <outputObjectName>Formula</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLTransformAccountHICostIntegrationHI1226913826528162</globalKey>
+        <inputFieldName>msp:MSPFeeItemDescription</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLTransformAccountHICostIntegrationHI</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>HI:msp:MSPFeeItemDescription</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <outputType>JSON</outputType>
+    <previewJsonData>{
+  &quot;hospitalizations&quot; : [ {
+    &quot;HospitalCCI&quot; : &quot;1IJ76LAXXQ,1KR58LA,1LZ37LAGB,1LZ37LAFP,1GZ31CAND,1GJ55CANG&quot;,
+    &quot;PHN&quot; : &quot;9111111111&quot;,
+    &quot;HospitalDateofDischarge&quot; : &quot;2009-07-21T00:00:00&quot;,
+    &quot;HospitalSiteCode&quot; : &quot;101&quot;,
+    &quot;HospitalDescriptionOfIncident&quot; : &quot;Not Applicable&quot;,
+    &quot;HospitalLocationOfIncident&quot; : &quot;Not Applicable&quot;,
+    &quot;CostType&quot; : &quot;Hospitalizations&quot;,
+    &quot;SourceSystemId&quot; : 2123869835,
+    &quot;HospitalServiceType2&quot; : &quot;Acute Care&quot;,
+    &quot;HospitalDiagnosticTreatmentService&quot; : &quot;Coronary Artery Bypass Graft (CABG) (031)&quot;,
+    &quot;AccountId&quot; : &quot;0013J00000RrhgwQAB&quot;,
+    &quot;HopitalDateofAdmission&quot; : &quot;2009-07-16T00:00:00&quot;,
+    &quot;RecordTypeIdHospital&quot; : &quot;0123J0000001SaHQAU&quot;
+  } ],
+  &quot;pharmacare&quot; : [ {
+    &quot;PharmCostOfDrug&quot; : &quot;20&quot;,
+    &quot;RecordTypeIdPharm&quot; : &quot;0123J0000001SaJQAU&quot;,
+    &quot;CostType&quot; : &quot;Pharmacare&quot;,
+    &quot;PractitionerName&quot; : &quot;Mary Don&quot;,
+    &quot;SourceSystemId&quot; : &quot;2199627823&quot;,
+    &quot;PharmNameOfDrug&quot; : &quot;IMOVANE TAB 17.5MG&quot;,
+    &quot;DateofService&quot; : &quot;2014-03-22T00:00:00&quot;,
+    &quot;PHN&quot; : &quot;9111111112&quot;,
+    &quot;AccountId&quot; : &quot;0013J00000RrhgwQAB&quot;,
+    &quot;PharmDIN&quot; : &quot;893706&quot;
+  } ],
+  &quot;msp&quot; : [ {
+    &quot;MSPFeeItemDescription&quot; : &quot;Tonometry\nNote:  Fee items 02015, 02018 and 02019 are\npayable to certified ophthalmologists only.&quot;,
+    &quot;MSPDescriptionofService&quot; : &quot;DIAGNOSTIC OPHTHALMOLOGY&quot;,
+    &quot;MSPDiagnosticDescription&quot; : &quot;Corneal Opacity And Other Disorders Of Cornea (371);  ;  &quot;,
+    &quot;MSPSpecialtyDescription&quot; : &quot;OPHTHALMOLOGY&quot;,
+    &quot;MSPFeeItemTitle&quot; : &quot;TONOMETRY&quot;,
+    &quot;MSPFacilityType&quot; : &quot;NOT APPLICABLE&quot;,
+    &quot;MSPLocationTypeCode&quot; : &quot;A&quot;,
+    &quot;MSPServiceStartDate&quot; : &quot;2016-08-22T00:00:00&quot;,
+    &quot;MSPSpecialtyCode&quot; : &quot;06&quot;,
+    &quot;MSPPayeeNumber&quot; : &quot;00001&quot;,
+    &quot;MSPDiagnosticCode&quot; : &quot;371;  ;  &quot;,
+    &quot;MSPFacility&quot; : &quot;Not Applicable&quot;,
+    &quot;PHN&quot; : &quot;9111111113&quot;,
+    &quot;MSPPractitionerName&quot; : &quot;Unknown&quot;,
+    &quot;MSPAmountPaid&quot; : 15.74,
+    &quot;MSPSiteCode&quot; : &quot;Not Applicable&quot;,
+    &quot;RecordTypeIdMSP&quot; : &quot;0123J0000001SaIQAU&quot;,
+    &quot;MSPLocationTypeDescription&quot; : &quot;PRACTITIONER&apos;S OFFICE - IN COMMUNITY&quot;,
+    &quot;CostType&quot; : &quot;MSP&quot;,
+    &quot;MSPDateofService&quot; : &quot;2016-08-22T00:00:00&quot;,
+    &quot;SourceSystemId&quot; : &quot;2318539968&quot;,
+    &quot;MSPPayeeDescription&quot; : &quot;Unknown&quot;,
+    &quot;MSPServiceFinishDate&quot; : &quot;2016-08-22T00:00:00&quot;,
+    &quot;MSPFeeItemCode&quot; : &quot;02019&quot;,
+    &quot;AccountId&quot; : &quot;0013J00000RrhgwQAB&quot;
+  }, {
+    &quot;MSPFeeItemDescription&quot; : &quot;Biomicroscopy\nNote:  Fee items 02015, 02018 and 02019 are\npayable to certified ophthalmologists only.&quot;,
+    &quot;MSPDescriptionofService&quot; : &quot;DIAGNOSTIC OPHTHALMOLOGY&quot;,
+    &quot;MSPDiagnosticDescription&quot; : &quot;Corneal Opacity And Other Disorders Of Cornea (371);  ;  &quot;,
+    &quot;MSPSpecialtyDescription&quot; : &quot;OPHTHALMOLOGY&quot;,
+    &quot;MSPFeeItemTitle&quot; : &quot;BIOMICROSCOPY&quot;,
+    &quot;MSPFacilityType&quot; : &quot;NOT APPLICABLE&quot;,
+    &quot;MSPLocationTypeCode&quot; : &quot;A&quot;,
+    &quot;MSPServiceStartDate&quot; : &quot;2016-08-22T00:00:00&quot;,
+    &quot;MSPSpecialtyCode&quot; : &quot;06&quot;,
+    &quot;MSPPayeeNumber&quot; : &quot;00001&quot;,
+    &quot;MSPDiagnosticCode&quot; : &quot;371;  ;  &quot;,
+    &quot;MSPFacility&quot; : &quot;Not Applicable&quot;,
+    &quot;PHN&quot; : &quot;9111111113&quot;,
+    &quot;MSPPractitionerName&quot; : &quot;Unknown&quot;,
+    &quot;MSPAmountPaid&quot; : 31.47,
+    &quot;MSPSiteCode&quot; : &quot;Not Applicable&quot;,
+    &quot;RecordTypeIdMSP&quot; : &quot;0123J0000001SaIQAU&quot;,
+    &quot;MSPLocationTypeDescription&quot; : &quot;PRACTITIONER&apos;S OFFICE - IN COMMUNITY&quot;,
+    &quot;CostType&quot; : &quot;MSP&quot;,
+    &quot;MSPDateofService&quot; : &quot;2016-08-22T00:00:00&quot;,
+    &quot;SourceSystemId&quot; : &quot;2318539967&quot;,
+    &quot;MSPPayeeDescription&quot; : &quot;Unknown&quot;,
+    &quot;MSPServiceFinishDate&quot; : &quot;2016-08-22T00:00:00&quot;,
+    &quot;MSPFeeItemCode&quot; : &quot;02018&quot;,
+    &quot;AccountId&quot; : &quot;0013J00000RrhgwQAB&quot;
+  }, {
+    &quot;MSPFeeItemDescription&quot; : &quot;Biomicroscopy\nNote:  Fee items 02015, 02018 and 02019 are\npayable to certified ophthalmologists only.&quot;,
+    &quot;MSPDescriptionofService&quot; : &quot;DIAGNOSTIC OPHTHALMOLOGY&quot;,
+    &quot;MSPDiagnosticDescription&quot; : &quot;Other Disorders Of Eye (379);  ;  &quot;,
+    &quot;MSPSpecialtyDescription&quot; : &quot;OPHTHALMOLOGY&quot;,
+    &quot;MSPFeeItemTitle&quot; : &quot;BIOMICROSCOPY&quot;,
+    &quot;MSPFacilityType&quot; : &quot;NOT APPLICABLE&quot;,
+    &quot;MSPLocationTypeCode&quot; : &quot;A&quot;,
+    &quot;MSPServiceStartDate&quot; : &quot;2016-08-23T00:00:00&quot;,
+    &quot;MSPSpecialtyCode&quot; : &quot;06&quot;,
+    &quot;MSPPayeeNumber&quot; : &quot;00001&quot;,
+    &quot;MSPDiagnosticCode&quot; : &quot;379;  ;  &quot;,
+    &quot;MSPFacility&quot; : &quot;Not Applicable&quot;,
+    &quot;PHN&quot; : &quot;9111111113&quot;,
+    &quot;MSPPractitionerName&quot; : &quot;Unknown&quot;,
+    &quot;MSPAmountPaid&quot; : 15.74,
+    &quot;MSPSiteCode&quot; : &quot;Not Applicable&quot;,
+    &quot;RecordTypeIdMSP&quot; : &quot;0123J0000001SaIQAU&quot;,
+    &quot;MSPLocationTypeDescription&quot; : &quot;PRACTITIONER&apos;S OFFICE - IN COMMUNITY&quot;,
+    &quot;CostType&quot; : &quot;MSP&quot;,
+    &quot;MSPDateofService&quot; : &quot;2016-08-23T00:00:00&quot;,
+    &quot;SourceSystemId&quot; : &quot;2318539972&quot;,
+    &quot;MSPPayeeDescription&quot; : &quot;Unknown&quot;,
+    &quot;MSPServiceFinishDate&quot; : &quot;2016-08-23T00:00:00&quot;,
+    &quot;MSPFeeItemCode&quot; : &quot;02018&quot;,
+    &quot;AccountId&quot; : &quot;0013J00000RrhgwQAB&quot;
+  }, {
+    &quot;MSPFeeItemDescription&quot; : &quot;COMPREHENSIVE QUANTITATIVE PERIMETRY\nEXAMINATION (OCULUS VISUAL FIELDS):\nMORE EXTENSIVE EXAMINATION THAN UNDER FEE ITEM 02042\n- COMPREHENSIVE AUTOMATED STATIC PERIMETRY\nWITH MULTILEVEL THRESHOLD TESTING (SUCH AS\nOCTOPUS PROGRAMS 31 AND 32, OR 31 AND 41,\nOR SQUID PROGRAMS 310, 311, 410, OR 411, OR\nPROGRAMS OF EQUIVALENT INFORMATION)\nNOTE:  I) 02043 INCLUDES 02042, 02041.\nII)  FEE INCLUDES EXAMINATION OF BOTH EYES WHETHER AT ONE TIME OR TWO SEPARATE\nVISITS.\nIII) RECOMMENDED FREQUENCY DEPENDS ON THE PATIENT&apos;S CLINICAL CIRCUMSTANCES BUT\nCANNOT BE BILLED AT INTERVALS LESS THAN 120 DAYS WITHOUT WRITTEN JUSTIFICATION.&quot;,
+    &quot;MSPDescriptionofService&quot; : &quot;DIAGNOSTIC OPHTHALMOLOGY&quot;,
+    &quot;MSPDiagnosticDescription&quot; : &quot;Other Disorders Of Eye (379);  ;  &quot;,
+    &quot;MSPSpecialtyDescription&quot; : &quot;OPHTHALMOLOGY&quot;,
+    &quot;MSPFeeItemTitle&quot; : &quot;COMPREHENSIVE QUANTITATIVE PERIMETRY EXAMINATION&quot;,
+    &quot;MSPFacilityType&quot; : &quot;NOT APPLICABLE&quot;,
+    &quot;MSPLocationTypeCode&quot; : &quot;A&quot;,
+    &quot;MSPServiceStartDate&quot; : &quot;2016-08-23T00:00:00&quot;,
+    &quot;MSPSpecialtyCode&quot; : &quot;06&quot;,
+    &quot;MSPPayeeNumber&quot; : &quot;00001&quot;,
+    &quot;MSPDiagnosticCode&quot; : &quot;379;  ;  &quot;,
+    &quot;MSPFacility&quot; : &quot;Not Applicable&quot;,
+    &quot;PHN&quot; : &quot;9111111113&quot;,
+    &quot;MSPPractitionerName&quot; : &quot;Unknown&quot;,
+    &quot;MSPAmountPaid&quot; : 62.38,
+    &quot;MSPSiteCode&quot; : &quot;Not Applicable&quot;,
+    &quot;RecordTypeIdMSP&quot; : &quot;0123J0000001SaIQAU&quot;,
+    &quot;MSPLocationTypeDescription&quot; : &quot;PRACTITIONER&apos;S OFFICE - IN COMMUNITY&quot;,
+    &quot;CostType&quot; : &quot;MSP&quot;,
+    &quot;MSPDateofService&quot; : &quot;2016-08-23T00:00:00&quot;,
+    &quot;SourceSystemId&quot; : &quot;2318539971&quot;,
+    &quot;MSPPayeeDescription&quot; : &quot;Unknown&quot;,
+    &quot;MSPServiceFinishDate&quot; : &quot;2016-08-23T00:00:00&quot;,
+    &quot;MSPFeeItemCode&quot; : &quot;02043&quot;,
+    &quot;AccountId&quot; : &quot;0013J00000RrhgwQAB&quot;
+  }, {
+    &quot;MSPFeeItemDescription&quot; : &quot;CONSULTATION: TO INCLUDE HISTORY, EYE EXAMINATION, REVIEW OF X-RAYS AND\nLABORATORY FINDINGS AND IN ADDITION WHERE INDICATED AN NECESSARY, ANY OR ALL\nOF MEASUREMENT FOR REFRACTIVE ERROR, OPHTHALMOSCOPY, BIOMICROSCOPY, TONOMETRY,\nEYE-BALANCE TEST AND KERATOMETRY, IN ORDER TO PREPARE AND RENDER A WRITTEN\nREPORT.&quot;,
+    &quot;MSPDescriptionofService&quot; : &quot;CONSULTATION (FULL MINOR REPEAT,SPECIALIST)&quot;,
+    &quot;MSPDiagnosticDescription&quot; : &quot;Other Retinal Disorders (362);  ;  &quot;,
+    &quot;MSPSpecialtyDescription&quot; : &quot;OPHTHALMOLOGY&quot;,
+    &quot;MSPFeeItemTitle&quot; : &quot;CONSULTATION - OPHTHALMOLOGY&quot;,
+    &quot;MSPFacilityType&quot; : &quot;NOT APPLICABLE&quot;,
+    &quot;MSPLocationTypeCode&quot; : &quot;A&quot;,
+    &quot;MSPServiceStartDate&quot; : &quot;2016-08-24T00:00:00&quot;,
+    &quot;MSPSpecialtyCode&quot; : &quot;06&quot;,
+    &quot;MSPPayeeNumber&quot; : &quot;00001&quot;,
+    &quot;MSPDiagnosticCode&quot; : &quot;362;  ;  &quot;,
+    &quot;MSPFacility&quot; : &quot;Not Applicable&quot;,
+    &quot;PHN&quot; : &quot;9111111113&quot;,
+    &quot;MSPPractitionerName&quot; : &quot;Unknown&quot;,
+    &quot;MSPAmountPaid&quot; : 94.38,
+    &quot;MSPSiteCode&quot; : &quot;Not Applicable&quot;,
+    &quot;RecordTypeIdMSP&quot; : &quot;0123J0000001SaIQAU&quot;,
+    &quot;MSPLocationTypeDescription&quot; : &quot;PRACTITIONER&apos;S OFFICE - IN COMMUNITY&quot;,
+    &quot;CostType&quot; : &quot;MSP&quot;,
+    &quot;MSPDateofService&quot; : &quot;2016-08-24T00:00:00&quot;,
+    &quot;SourceSystemId&quot; : &quot;2318539965&quot;,
+    &quot;MSPPayeeDescription&quot; : &quot;Unknown&quot;,
+    &quot;MSPServiceFinishDate&quot; : &quot;2016-08-24T00:00:00&quot;,
+    &quot;MSPFeeItemCode&quot; : &quot;02010&quot;,
+    &quot;AccountId&quot; : &quot;0013J00000RrhgwQAB&quot;
+  }, {
+    &quot;MSPFeeItemDescription&quot; : &quot;COMPUTERIZED RETINAL NERVE FIBRE LAYER PHOTOGRAPHY AND NEURO-RETINAL RIM\nASSESMENT (E.G.: HEIDEILBERG, GDX)\nNOTES:\nI)   REQUIRES BOTH QUALITATIVE AND QUANTITAVED ASSEMENTS.\nII)  INCLUDES EXAMINATION OF BOTH EYES WHETHER AT ONE TIME OR TWO SEPERATE VISI\nTS.\nIII) RECOMMENDED FREQUENCY DEPENDS ON THE PATIENT&apos;S CLINICAL CIRCUMSTANCES BUT\nCANNOT BE BILLED AT INTERVALS LESS THAN 180 DAYS WITHOUT WRITTEN JUSTIFICATION.\nIV) INCLUDES 02007, 02018, 02019&quot;,
+    &quot;MSPDescriptionofService&quot; : &quot;DIAGNOSTIC OPHTHALMOLOGY&quot;,
+    &quot;MSPDiagnosticDescription&quot; : &quot;Other Retinal Disorders (362);  ;  &quot;,
+    &quot;MSPSpecialtyDescription&quot; : &quot;OPHTHALMOLOGY&quot;,
+    &quot;MSPFeeItemTitle&quot; : &quot;COMPUTERIZED RETINAL NERVE FIBRE LAYER PHOTOGRAPHY&quot;,
+    &quot;MSPFacilityType&quot; : &quot;NOT APPLICABLE&quot;,
+    &quot;MSPLocationTypeCode&quot; : &quot;A&quot;,
+    &quot;MSPServiceStartDate&quot; : &quot;2016-08-24T00:00:00&quot;,
+    &quot;MSPSpecialtyCode&quot; : &quot;06&quot;,
+    &quot;MSPPayeeNumber&quot; : &quot;00001&quot;,
+    &quot;MSPDiagnosticCode&quot; : &quot;362;  ;  &quot;,
+    &quot;MSPFacility&quot; : &quot;Not Applicable&quot;,
+    &quot;PHN&quot; : &quot;9111111113&quot;,
+    &quot;MSPPractitionerName&quot; : &quot;Unknown&quot;,
+    &quot;MSPAmountPaid&quot; : 54.72,
+    &quot;MSPSiteCode&quot; : &quot;Not Applicable&quot;,
+    &quot;RecordTypeIdMSP&quot; : &quot;0123J0000001SaIQAU&quot;,
+    &quot;MSPLocationTypeDescription&quot; : &quot;PRACTITIONER&apos;S OFFICE - IN COMMUNITY&quot;,
+    &quot;CostType&quot; : &quot;MSP&quot;,
+    &quot;MSPDateofService&quot; : &quot;2016-08-24T00:00:00&quot;,
+    &quot;SourceSystemId&quot; : &quot;2318539966&quot;,
+    &quot;MSPPayeeDescription&quot; : &quot;Unknown&quot;,
+    &quot;MSPServiceFinishDate&quot; : &quot;2016-08-24T00:00:00&quot;,
+    &quot;MSPFeeItemCode&quot; : &quot;22067&quot;,
+    &quot;AccountId&quot; : &quot;0013J00000RrhgwQAB&quot;
+  }, {
+    &quot;MSPFeeItemDescription&quot; : &quot;Tonometry\nNote:  Fee items 02015, 02018 and 02019 are\npayable to certified ophthalmologists only.&quot;,
+    &quot;MSPDescriptionofService&quot; : &quot;DIAGNOSTIC OPHTHALMOLOGY&quot;,
+    &quot;MSPDiagnosticDescription&quot; : &quot;Corneal Opacity And Other Disorders Of Cornea (371);  ;  &quot;,
+    &quot;MSPSpecialtyDescription&quot; : &quot;OPHTHALMOLOGY&quot;,
+    &quot;MSPFeeItemTitle&quot; : &quot;TONOMETRY&quot;,
+    &quot;MSPFacilityType&quot; : &quot;NOT APPLICABLE&quot;,
+    &quot;MSPLocationTypeCode&quot; : &quot;A&quot;,
+    &quot;MSPServiceStartDate&quot; : &quot;2016-08-29T00:00:00&quot;,
+    &quot;MSPSpecialtyCode&quot; : &quot;06&quot;,
+    &quot;MSPPayeeNumber&quot; : &quot;00001&quot;,
+    &quot;MSPDiagnosticCode&quot; : &quot;371;  ;  &quot;,
+    &quot;MSPFacility&quot; : &quot;Not Applicable&quot;,
+    &quot;PHN&quot; : &quot;9111111113&quot;,
+    &quot;MSPPractitionerName&quot; : &quot;Unknown&quot;,
+    &quot;MSPAmountPaid&quot; : 15.74,
+    &quot;MSPSiteCode&quot; : &quot;Not Applicable&quot;,
+    &quot;RecordTypeIdMSP&quot; : &quot;0123J0000001SaIQAU&quot;,
+    &quot;MSPLocationTypeDescription&quot; : &quot;PRACTITIONER&apos;S OFFICE - IN COMMUNITY&quot;,
+    &quot;CostType&quot; : &quot;MSP&quot;,
+    &quot;MSPDateofService&quot; : &quot;2016-08-29T00:00:00&quot;,
+    &quot;SourceSystemId&quot; : &quot;2318539970&quot;,
+    &quot;MSPPayeeDescription&quot; : &quot;Unknown&quot;,
+    &quot;MSPServiceFinishDate&quot; : &quot;2016-08-29T00:00:00&quot;,
+    &quot;MSPFeeItemCode&quot; : &quot;02019&quot;,
+    &quot;AccountId&quot; : &quot;0013J00000RrhgwQAB&quot;
+  }, {
+    &quot;MSPFeeItemDescription&quot; : &quot;Biomicroscopy\nNote:  Fee items 02015, 02018 and 02019 are\npayable to certified ophthalmologists only.&quot;,
+    &quot;MSPDescriptionofService&quot; : &quot;DIAGNOSTIC OPHTHALMOLOGY&quot;,
+    &quot;MSPDiagnosticDescription&quot; : &quot;Corneal Opacity And Other Disorders Of Cornea (371);  ;  &quot;,
+    &quot;MSPSpecialtyDescription&quot; : &quot;OPHTHALMOLOGY&quot;,
+    &quot;MSPFeeItemTitle&quot; : &quot;BIOMICROSCOPY&quot;,
+    &quot;MSPFacilityType&quot; : &quot;NOT APPLICABLE&quot;,
+    &quot;MSPLocationTypeCode&quot; : &quot;A&quot;,
+    &quot;MSPServiceStartDate&quot; : &quot;2016-08-29T00:00:00&quot;,
+    &quot;MSPSpecialtyCode&quot; : &quot;06&quot;,
+    &quot;MSPPayeeNumber&quot; : &quot;00001&quot;,
+    &quot;MSPDiagnosticCode&quot; : &quot;371;  ;  &quot;,
+    &quot;MSPFacility&quot; : &quot;Not Applicable&quot;,
+    &quot;PHN&quot; : &quot;9111111113&quot;,
+    &quot;MSPPractitionerName&quot; : &quot;Unknown&quot;,
+    &quot;MSPAmountPaid&quot; : 31.47,
+    &quot;MSPSiteCode&quot; : &quot;Not Applicable&quot;,
+    &quot;RecordTypeIdMSP&quot; : &quot;0123J0000001SaIQAU&quot;,
+    &quot;MSPLocationTypeDescription&quot; : &quot;PRACTITIONER&apos;S OFFICE - IN COMMUNITY&quot;,
+    &quot;CostType&quot; : &quot;MSP&quot;,
+    &quot;MSPDateofService&quot; : &quot;2016-08-29T00:00:00&quot;,
+    &quot;SourceSystemId&quot; : &quot;2318539969&quot;,
+    &quot;MSPPayeeDescription&quot; : &quot;Unknown&quot;,
+    &quot;MSPServiceFinishDate&quot; : &quot;2016-08-29T00:00:00&quot;,
+    &quot;MSPFeeItemCode&quot; : &quot;02018&quot;,
+    &quot;AccountId&quot; : &quot;0013J00000RrhgwQAB&quot;
+  } ],
+  &quot;searchRequest&quot; : {
+    &quot;userName&quot; : &quot;Crystal&quot;,
+    &quot;PHN&quot; : &quot;9111111113&quot;,
+    &quot;RefDate&quot; : &quot;2016-08-22T00:00:00&quot;
+  }
+}</previewJsonData>
+    <processSuperBulk>false</processSuperBulk>
+    <responseCacheTtlMinutes>0.0</responseCacheTtlMinutes>
+    <rollbackOnError>false</rollbackOnError>
+    <sourceObject>json</sourceObject>
+    <sourceObjectDefault>false</sourceObjectDefault>
+    <synchronousProcessThreshold>-1.0</synchronousProcessThreshold>
+    <type>Transform</type>
+    <uniqueName>TPLTransformAccountHICostIntegrationHI_1</uniqueName>
+    <versionNumber>1.0</versionNumber>
+    <xmlDeclarationRemoved>false</xmlDeclarationRemoved>
+</OmniDataTransform>

@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OmniDataTransform xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>false</active>
+    <assignmentRulesUsed>false</assignmentRulesUsed>
+    <deletedOnSuccess>false</deletedOnSuccess>
+    <errorIgnored>false</errorIgnored>
+    <expectedInputJson>[ {
+  &quot;AccountId&quot; : &quot;0013J00000RrhgwQAB&quot;,
+  &quot;phn&quot; : &quot;9111111111&quot;,
+  &quot;HopitalDateofAdmission&quot; : &quot;2009-07-16&quot;,
+  &quot;HospitalDateofDischarge&quot; : &quot;2009-07-21T00:00:00&quot;,
+  &quot;HospitalSiteCode&quot; : &quot;101&quot;,
+  &quot;HospitalServiceType2&quot; : &quot;Acute Care&quot;,
+  &quot;HospitalLocationOfIncident&quot; : &quot;Not Applicable&quot;,
+  &quot;HospitalDescriptionOfIncident&quot; : &quot;Not Applicable&quot;,
+  &quot;HospitalDiagnosticTreatmentService&quot; : &quot;Coronary Artery Bypass Graft (CABG) (031)&quot;,
+  &quot;HospitalCCI&quot; : &quot;1IJ76LAXXQ,1KR58LA,1LZ37LAGB,1LZ37LAFP,1GZ31CAND,1GJ55CANG&quot;,
+  &quot;RecordTypeIdHospital&quot; : &quot;0123J0000001SaHQAU&quot;,
+  &quot;SourceSystemID&quot; : 2123869836
+}, {
+  &quot;AccountId&quot; : &quot;0013J00000RrhgwQAB&quot;,
+  &quot;phn&quot; : &quot;9111111111&quot;,
+  &quot;HopitalDateofAdmission&quot; : &quot;2009-07-23T00:00:00&quot;,
+  &quot;HospitalDateofDischarge&quot; : &quot;2009-07-30T00:00:00&quot;,
+  &quot;HospitalSiteCode&quot; : &quot;101&quot;,
+  &quot;HospitalServiceType2&quot; : &quot;Acute Care&quot;,
+  &quot;HospitalLocationOfIncident&quot; : &quot;Not Applicable&quot;,
+  &quot;HospitalDescriptionOfIncident&quot; : &quot;Not Applicable&quot;,
+  &quot;HospitalDiagnosticTreatmentService&quot; : &quot;Coronary Artery Bypass Graft (CABG) (032)&quot;,
+  &quot;HospitalCCI&quot; : &quot;1IJ76LAXXQ,1KR58LA,1LZ37LAGB,1LZ37LAFP,1GZ31CAND,1GJ55CANG&quot;,
+  &quot;RecordTypeIdHospital&quot; : &quot;0123J0000001SaHQAU&quot;,
+  &quot;SourceSystemID&quot; : 2123869837
+} ]</expectedInputJson>
+    <fieldLevelSecurityEnabled>false</fieldLevelSecurityEnabled>
+    <inputType>JSON</inputType>
+    <isManagedUsingStdDesigner>false</isManagedUsingStdDesigner>
+    <name>TPLCreateHIHCCRecordsHospital</name>
+    <nullInputsIncludedInOutput>false</nullInputsIncludedInOutput>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <formulaConverted>| var:HospitalServiceType2 &quot;Day/\/\/Surgery&quot; = &quot;Surgical/\/\/Day/\/\/Care&quot; var:HospitalServiceType2 IF</formulaConverted>
+        <formulaExpression>IF(HospitalServiceType2 = &quot;Day Surgery&quot;, &quot;Surgical Day Care&quot;, HospitalServiceType2)</formulaExpression>
+        <formulaResultPath>HospitalServiceType2</formulaResultPath>
+        <formulaSequence>1.0</formulaSequence>
+        <globalKey>TPLCreateHIHCCRecordsHospitalCustom5143</globalKey>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLCreateHIHCCRecordsHospital</name>
+        <outputCreationSequence>0.0</outputCreationSequence>
+        <outputFieldName>Formula</outputFieldName>
+        <outputObjectName>Formula</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLCreateHIHCCRecordsHospital8881396705570893</globalKey>
+        <inputFieldName>HospitalCCI</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLCreateHIHCCRecordsHospital</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>Intervention_Code_CCI__c</outputFieldName>
+        <outputObjectName>Healthcare_Cost__c</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLCreateHIHCCRecordsHospital7756405748255288</globalKey>
+        <inputFieldName>HospitalDiagnosticTreatmentService</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLCreateHIHCCRecordsHospital</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>Diagnostic_Treatment_Service2__c</outputFieldName>
+        <outputObjectName>Healthcare_Cost__c</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLCreateHIHCCRecordsHospital6812152335379746</globalKey>
+        <inputFieldName>HospitalDescriptionOfIncident</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLCreateHIHCCRecordsHospital</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>Description_of_Incident__c</outputFieldName>
+        <outputObjectName>Healthcare_Cost__c</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLCreateHIHCCRecordsHospital8275987707224726</globalKey>
+        <inputFieldName>HospitalSiteCode</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLCreateHIHCCRecordsHospital</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>Site_Code__c</outputFieldName>
+        <outputObjectName>Healthcare_Cost__c</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLCreateHIHCCRecordsHospital2468764237822434</globalKey>
+        <inputFieldName>HospitalLocationOfIncident</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLCreateHIHCCRecordsHospital</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>Location_of_Incident__c</outputFieldName>
+        <outputObjectName>Healthcare_Cost__c</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLCreateHIHCCRecordsHospital9509753535092552</globalKey>
+        <inputFieldName>HospitalServiceType2</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLCreateHIHCCRecordsHospital</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>Service_Type2__c</outputFieldName>
+        <outputObjectName>Healthcare_Cost__c</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLCreateHIHCCRecordsHospital5452516195770402</globalKey>
+        <inputFieldName>HospitalDateofDischarge</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLCreateHIHCCRecordsHospital</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>Date_of_Discharge__c</outputFieldName>
+        <outputObjectName>Healthcare_Cost__c</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLCreateHIHCCRecordsHospital053362450418014795</globalKey>
+        <inputFieldName>PHN</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLCreateHIHCCRecordsHospital</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>PHN__c</outputFieldName>
+        <outputObjectName>Healthcare_Cost__c</outputObjectName>
+        <requiredForUpsert>true</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>true</disabled>
+        <filterGroup>0.0</filterGroup>
+        <filterOperator>=</filterOperator>
+        <globalKey>TPLCreateHIHCCRecordsHospital6217450659387126</globalKey>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <migrationValue>FAKEMAPPING</migrationValue>
+        <name>TPLCreateHIHCCRecordsHospital</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>Id</outputFieldName>
+        <outputObjectName>Healthcare_Cost__c</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLCreateHIHCCRecordsHospital42091283261162316</globalKey>
+        <inputFieldName>RecordTypeIdHospital</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLCreateHIHCCRecordsHospital</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>RecordTypeId</outputFieldName>
+        <outputObjectName>Healthcare_Cost__c</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLCreateHIHCCRecordsHospital6869998814014671</globalKey>
+        <inputFieldName>AccountId</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLCreateHIHCCRecordsHospital</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>Account__c</outputFieldName>
+        <outputObjectName>Healthcare_Cost__c</outputObjectName>
+        <requiredForUpsert>true</requiredForUpsert>
+        <upsertKey>true</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLCreateHIHCCRecordsHospital020932435986706577</globalKey>
+        <inputFieldName>HopitalDateofAdmission</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLCreateHIHCCRecordsHospital</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>Date_of_Admission__c</outputFieldName>
+        <outputObjectName>Healthcare_Cost__c</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLCreateHIHCCRecordsHospital10144367637504648</globalKey>
+        <inputFieldName>SourceSystemId</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLCreateHIHCCRecordsHospital</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>Source_System_ID__c</outputFieldName>
+        <outputObjectName>Healthcare_Cost__c</outputObjectName>
+        <requiredForUpsert>true</requiredForUpsert>
+        <upsertKey>true</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <formulaConverted>| var:HospitalServiceType2 &quot;Acute/\/\/Care&quot; = &quot;Acute&quot; var:HospitalServiceType2 IF</formulaConverted>
+        <formulaExpression>IF(HospitalServiceType2 = &quot;Acute Care&quot;, &quot;Acute&quot;, HospitalServiceType2)</formulaExpression>
+        <formulaResultPath>HospitalServiceType2</formulaResultPath>
+        <formulaSequence>2.0</formulaSequence>
+        <globalKey>TPLCreateHIHCCRecordsHospitalCustom3580</globalKey>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLCreateHIHCCRecordsHospital</name>
+        <outputCreationSequence>0.0</outputCreationSequence>
+        <outputFieldName>Formula</outputFieldName>
+        <outputObjectName>Formula</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <outputType>SObject</outputType>
+    <previewJsonData>[ {
+  &quot;AccountId&quot; : &quot;001Aq00000AF4iJIAT&quot;,
+  &quot;PHN&quot; : &quot;987654321&quot;,
+  &quot;HopitalDateofAdmission&quot; : &quot;2009-07-16&quot;,
+  &quot;HospitalDateofDischarge&quot; : &quot;2009-07-21T00:00:00&quot;,
+  &quot;HospitalSiteCode&quot; : &quot;101&quot;,
+  &quot;HospitalServiceType2&quot; : &quot;Acute Care&quot;,
+  &quot;HospitalLocationOfIncident&quot; : &quot;Not Applicable&quot;,
+  &quot;HospitalDescriptionOfIncident&quot; : &quot;Not Applicable&quot;,
+  &quot;HospitalDiagnosticTreatmentService&quot; : &quot;Coronary Artery Bypass Graft (CABG) (031)&quot;,
+  &quot;HospitalCCI&quot; : &quot;1IJ76LAXXQ,1KR58LA,1LZ37LAGB,1LZ37LAFP,1GZ31CAND,1GJ55CANG&quot;,
+  &quot;RecordTypeIdHospital&quot; : &quot;012Aq000000IQdfIAG&quot;,
+  &quot;SourceSystemId&quot; : &quot;2199627302&quot;
+}, {
+  &quot;AccountId&quot; : &quot;001Aq00000AF4iJIAT&quot;,
+  &quot;PHN&quot; : &quot;987654321&quot;,
+  &quot;HopitalDateofAdmission&quot; : &quot;2009-07-23T00:00:00&quot;,
+  &quot;HospitalDateofDischarge&quot; : &quot;2009-07-30T00:00:00&quot;,
+  &quot;HospitalSiteCode&quot; : &quot;101&quot;,
+  &quot;HospitalServiceType2&quot; : &quot;Acute Care&quot;,
+  &quot;HospitalLocationOfIncident&quot; : &quot;Not Applicable&quot;,
+  &quot;HospitalDescriptionOfIncident&quot; : &quot;Not Applicable&quot;,
+  &quot;HospitalDiagnosticTreatmentService&quot; : &quot;Coronary Artery Bypass Graft (CABG) (032)&quot;,
+  &quot;HospitalCCI&quot; : &quot;1IJ76LAXXQ,1KR58LA,1LZ37LAGB,1LZ37LAFP,1GZ31CAND,1GJ55CANG&quot;,
+  &quot;RecordTypeIdHospital&quot; : &quot;012Aq000000IQdfIAG&quot;,
+  &quot;SourceSystemId&quot; : &quot;2199627830&quot;
+} ]</previewJsonData>
+    <processSuperBulk>false</processSuperBulk>
+    <responseCacheTtlMinutes>0.0</responseCacheTtlMinutes>
+    <rollbackOnError>false</rollbackOnError>
+    <sourceObject>json</sourceObject>
+    <sourceObjectDefault>false</sourceObjectDefault>
+    <synchronousProcessThreshold>0.0</synchronousProcessThreshold>
+    <type>Load</type>
+    <uniqueName>TPLCreateHIHCCRecordsHospital_1</uniqueName>
+    <versionNumber>1.0</versionNumber>
+    <xmlDeclarationRemoved>false</xmlDeclarationRemoved>
+</OmniDataTransform>
