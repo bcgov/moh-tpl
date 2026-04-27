@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QuickAction xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>This action will trigger yearly product deactivation and cloning process.</description>
+    <flowDefinition>TPL_Annual_Product_Clone_Process</flowDefinition>
+    <label>Clone Products for New Year</label>
+    <optionsCreateFeedItem>false</optionsCreateFeedItem>
+    <type>Flow</type>
+</QuickAction>
