@@ -1,2 +1,0 @@
-# moh-tpl
-omnistudio
