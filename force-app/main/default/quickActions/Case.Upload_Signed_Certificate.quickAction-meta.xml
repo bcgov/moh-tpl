@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QuickAction xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>This action will upload the document to the &apos;TPL Signed Certificate&apos; folder and associate it with the case.</description>
+    <flowDefinition>TPL_Upload_signed_certificate</flowDefinition>
+    <label>Upload Signed Certificate</label>
+    <optionsCreateFeedItem>false</optionsCreateFeedItem>
+    <type>Flow</type>
+</QuickAction>

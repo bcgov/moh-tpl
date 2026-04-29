@@ -1,0 +1,7 @@
+<p dir="" ltr=""><span docs-internal-guid-03fe1f4d-ac68-3803-20d7-2082bc8ce508="" id=""><span 14.6666666666667px="" font-size:="" style="">Happy Birthday {!Contact.FirstName}!</span></span><br />
+<br />
+<span docs-internal-guid-03fe1f4d-ac68-3803-20d7-2082bc8ce508="" id=""><span 14.6666666666667px="" font-size:="" style="">Wishing you a very Happy Birthday. I hope today is the beginning of a great year for you!</span></span><br />
+<br />
+<span docs-internal-guid-03fe1f4d-ac68-3803-20d7-2082bc8ce508="" id=""><span 14.6666666666667px="" font-size:="" style="">Sincerely,</span></span><br />
+<span docs-internal-guid-03fe1f4d-ac68-3803-20d7-2082bc8ce508="" id=""><span 14.6666666666667px="" font-size:="" style="">{!User.FirstName}</span></span><br />
+<span docs-internal-guid-03fe1f4d-ac68-3803-20d7-2082bc8ce508="" id=""><span 14.6666666666667px="" font-size:="" style="">{!User.Phone}</span></span></p>

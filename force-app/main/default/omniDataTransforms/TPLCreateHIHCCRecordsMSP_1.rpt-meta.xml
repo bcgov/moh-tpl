@@ -1,0 +1,672 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OmniDataTransform xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>false</active>
+    <assignmentRulesUsed>false</assignmentRulesUsed>
+    <deletedOnSuccess>false</deletedOnSuccess>
+    <errorIgnored>true</errorIgnored>
+    <expectedInputJson>[ {
+  &quot;AccountId&quot; : &quot;0013J00000RrhgwQAB&quot;,
+  &quot;phn&quot; : &quot;9111111111&quot;,
+  &quot;HopitalDateofAdmission&quot; : &quot;2009-07-16&quot;,
+  &quot;HospitalDateofDischarge&quot; : &quot;2009-07-21T00:00:00&quot;,
+  &quot;HospitalSiteCode&quot; : &quot;101&quot;,
+  &quot;HospitalServiceType2&quot; : &quot;Acute Care&quot;,
+  &quot;HospitalLocationOfIncident&quot; : &quot;Not Applicable&quot;,
+  &quot;HospitalDescriptionOfIncident&quot; : &quot;Not Applicable&quot;,
+  &quot;HospitalDiagnosticTreatmentService&quot; : &quot;Coronary Artery Bypass Graft (CABG) (031)&quot;,
+  &quot;HospitalCCI&quot; : &quot;1IJ76LAXXQ,1KR58LA,1LZ37LAGB,1LZ37LAFP,1GZ31CAND,1GJ55CANG&quot;,
+  &quot;RecordTypeIdHospital&quot; : &quot;0123J0000001SaHQAU&quot;,
+  &quot;SourceSystemID&quot; : 2123869836
+}, {
+  &quot;AccountId&quot; : &quot;0013J00000RrhgwQAB&quot;,
+  &quot;phn&quot; : &quot;9111111111&quot;,
+  &quot;HopitalDateofAdmission&quot; : &quot;2009-07-23T00:00:00&quot;,
+  &quot;HospitalDateofDischarge&quot; : &quot;2009-07-30T00:00:00&quot;,
+  &quot;HospitalSiteCode&quot; : &quot;101&quot;,
+  &quot;HospitalServiceType2&quot; : &quot;Acute Care&quot;,
+  &quot;HospitalLocationOfIncident&quot; : &quot;Not Applicable&quot;,
+  &quot;HospitalDescriptionOfIncident&quot; : &quot;Not Applicable&quot;,
+  &quot;HospitalDiagnosticTreatmentService&quot; : &quot;Coronary Artery Bypass Graft (CABG) (032)&quot;,
+  &quot;HospitalCCI&quot; : &quot;1IJ76LAXXQ,1KR58LA,1LZ37LAGB,1LZ37LAFP,1GZ31CAND,1GJ55CANG&quot;,
+  &quot;RecordTypeIdHospital&quot; : &quot;0123J0000001SaHQAU&quot;,
+  &quot;SourceSystemID&quot; : 2123869837
+} ]</expectedInputJson>
+    <fieldLevelSecurityEnabled>false</fieldLevelSecurityEnabled>
+    <inputType>JSON</inputType>
+    <isManagedUsingStdDesigner>false</isManagedUsingStdDesigner>
+    <name>TPLCreateHIHCCRecordsMSP</name>
+    <nullInputsIncludedInOutput>false</nullInputsIncludedInOutput>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLCreateHIHCCRecordsMSP5199687917948752</globalKey>
+        <inputFieldName>MSPDiagnosticCode</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLCreateHIHCCRecordsMSP</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>Diagnostic_Code__c</outputFieldName>
+        <outputObjectName>Healthcare_Cost__c</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLCreateHIHCCRecordsMSP28616485727900154</globalKey>
+        <inputFieldName>MSPSiteCode</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLCreateHIHCCRecordsMSP</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>Site_Code__c</outputFieldName>
+        <outputObjectName>Healthcare_Cost__c</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLCreateHIHCCRecordsMSP5684712189456744</globalKey>
+        <inputFieldName>MSPServiceStartDate</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLCreateHIHCCRecordsMSP</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>Service_Start_Date__c</outputFieldName>
+        <outputObjectName>Healthcare_Cost__c</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLCreateHIHCCRecordsMSP09140784747392106</globalKey>
+        <inputFieldName>MSPPayeeNumber</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLCreateHIHCCRecordsMSP</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>Payee_Number__c</outputFieldName>
+        <outputObjectName>Healthcare_Cost__c</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLCreateHIHCCRecordsMSP6949906287501477</globalKey>
+        <inputFieldName>MSPServiceFinishDate</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLCreateHIHCCRecordsMSP</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>Service_Finish_Date__c</outputFieldName>
+        <outputObjectName>Healthcare_Cost__c</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLCreateHIHCCRecordsMSP4847442795070801</globalKey>
+        <inputFieldName>MSPPractitionerName</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLCreateHIHCCRecordsMSP</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>Practitioner_Name__c</outputFieldName>
+        <outputObjectName>Healthcare_Cost__c</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLCreateHIHCCRecordsMSP7519098975857628</globalKey>
+        <inputFieldName>MSPLocationTypeDescription</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLCreateHIHCCRecordsMSP</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>Location_Type_Description2__c</outputFieldName>
+        <outputObjectName>Healthcare_Cost__c</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLCreateHIHCCRecordsMSP007180143955080376</globalKey>
+        <inputFieldName>SourceSystemId</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLCreateHIHCCRecordsMSP</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>Source_System_ID__c</outputFieldName>
+        <outputObjectName>Healthcare_Cost__c</outputObjectName>
+        <requiredForUpsert>true</requiredForUpsert>
+        <upsertKey>true</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLCreateHIHCCRecordsMSP6269264771476948</globalKey>
+        <inputFieldName>MSPPractitionerNumber</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLCreateHIHCCRecordsMSP</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>Practitioner_Number__c</outputFieldName>
+        <outputObjectName>Healthcare_Cost__c</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLCreateHIHCCRecordsMSP7815419192012192</globalKey>
+        <inputFieldName>MSPAmountPaid</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLCreateHIHCCRecordsMSP</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>Amount_Paid__c</outputFieldName>
+        <outputObjectName>Healthcare_Cost__c</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLCreateHIHCCRecordsMSP24688571846968843</globalKey>
+        <inputFieldName>MSPSpecialtyDescription</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLCreateHIHCCRecordsMSP</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>Specialty_Description2__c</outputFieldName>
+        <outputObjectName>Healthcare_Cost__c</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLCreateHIHCCRecordsMSP11818402293867591</globalKey>
+        <inputFieldName>MSPDiagnosticDescription</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLCreateHIHCCRecordsMSP</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>Diagnostic_Description__c</outputFieldName>
+        <outputObjectName>Healthcare_Cost__c</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLCreateHIHCCRecordsMSP1167660302683472</globalKey>
+        <inputFieldName>MSPLocationTypeCode</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLCreateHIHCCRecordsMSP</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>Location_Type_Code__c</outputFieldName>
+        <outputObjectName>Healthcare_Cost__c</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLCreateHIHCCRecordsMSP6691311303563676</globalKey>
+        <inputFieldName>AccountId</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLCreateHIHCCRecordsMSP</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>Account__c</outputFieldName>
+        <outputObjectName>Healthcare_Cost__c</outputObjectName>
+        <requiredForUpsert>true</requiredForUpsert>
+        <upsertKey>true</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLCreateHIHCCRecordsMSP42725195031923047</globalKey>
+        <inputFieldName>PHN</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLCreateHIHCCRecordsMSP</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>PHN__c</outputFieldName>
+        <outputObjectName>Healthcare_Cost__c</outputObjectName>
+        <requiredForUpsert>true</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>true</disabled>
+        <filterGroup>0.0</filterGroup>
+        <filterOperator>=</filterOperator>
+        <globalKey>TPLCreateHIHCCRecordsMSP02689593148530689</globalKey>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <migrationValue>FAKEMAPPING</migrationValue>
+        <name>TPLCreateHIHCCRecordsMSP</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>Id</outputFieldName>
+        <outputObjectName>Healthcare_Cost__c</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLCreateHIHCCRecordsMSP2944351275850493</globalKey>
+        <inputFieldName>RecordTypeIdMSP</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLCreateHIHCCRecordsMSP</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>RecordTypeId</outputFieldName>
+        <outputObjectName>Healthcare_Cost__c</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLCreateHIHCCRecordsMSP1271582589751522</globalKey>
+        <inputFieldName>MSPFacilityType</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLCreateHIHCCRecordsMSP</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>Facility_Type__c</outputFieldName>
+        <outputObjectName>Healthcare_Cost__c</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLCreateHIHCCRecordsMSP449496078476462</globalKey>
+        <inputFieldName>MSPFeeItemTitle</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLCreateHIHCCRecordsMSP</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>Fee_Item_Title__c</outputFieldName>
+        <outputObjectName>Healthcare_Cost__c</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLCreateHIHCCRecordsMSP71117586061668</globalKey>
+        <inputFieldName>MSPPayeeDescription</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLCreateHIHCCRecordsMSP</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>Payee_Description__c</outputFieldName>
+        <outputObjectName>Healthcare_Cost__c</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLCreateHIHCCRecordsMSP37246592809586077</globalKey>
+        <inputFieldName>MSPSpecialtyCode</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLCreateHIHCCRecordsMSP</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>Specialty_Code__c</outputFieldName>
+        <outputObjectName>Healthcare_Cost__c</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLCreateHIHCCRecordsMSP10282695288567567</globalKey>
+        <inputFieldName>MSPFeeItemCode</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLCreateHIHCCRecordsMSP</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>Fee_Item_Code__c</outputFieldName>
+        <outputObjectName>Healthcare_Cost__c</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLCreateHIHCCRecordsMSPCustom7293</globalKey>
+        <inputFieldName>MSPDiagnosticDescription3</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLCreateHIHCCRecordsMSP</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>Diagnostic_Description_3__c</outputFieldName>
+        <outputObjectName>Healthcare_Cost__c</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLCreateHIHCCRecordsMSPCustom5852</globalKey>
+        <inputFieldName>MSPDiagnosticDescription2</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLCreateHIHCCRecordsMSP</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>Diagnostic_Description_2__c</outputFieldName>
+        <outputObjectName>Healthcare_Cost__c</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLCreateHIHCCRecordsMSPCustom8260</globalKey>
+        <inputFieldName>MSPDiagnosticDescription1</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLCreateHIHCCRecordsMSP</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>Diagnostic_Description_1__c</outputFieldName>
+        <outputObjectName>Healthcare_Cost__c</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLCreateHIHCCRecordsMSPCustom4689</globalKey>
+        <inputFieldName>MSPDiagnosticCode3</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLCreateHIHCCRecordsMSP</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>Diagnostic_Code_3__c</outputFieldName>
+        <outputObjectName>Healthcare_Cost__c</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLCreateHIHCCRecordsMSPCustom9093</globalKey>
+        <inputFieldName>MSPDiagnosticCode2</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLCreateHIHCCRecordsMSP</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>Diagnostic_Code_2__c</outputFieldName>
+        <outputObjectName>Healthcare_Cost__c</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLCreateHIHCCRecordsMSPCustom2883</globalKey>
+        <inputFieldName>MSPDiagnosticCode1</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLCreateHIHCCRecordsMSP</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>Diagnostic_Code_1__c</outputFieldName>
+        <outputObjectName>Healthcare_Cost__c</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLCreateHIHCCRecordsMSP4172474668609252</globalKey>
+        <inputFieldName>MSPDateofService</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLCreateHIHCCRecordsMSP</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>Date_of_Service__c</outputFieldName>
+        <outputObjectName>Healthcare_Cost__c</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLCreateHIHCCRecordsMSP6232422980576583</globalKey>
+        <inputFieldName>MSPDescriptionofService</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLCreateHIHCCRecordsMSP</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>Description_of_Service2__c</outputFieldName>
+        <outputObjectName>Healthcare_Cost__c</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <outputType>SObject</outputType>
+    <previewJsonData>[ {
+  &quot;MSPFeeItemDescription&quot; : &quot;Tonometry\nNote:  Fee items 02015, 02018 and 02019 are\npayable to certified ophthalmologists only.&quot;,
+  &quot;MSPDescriptionofService&quot; : &quot;DIAGNOSTIC OPHTHALMOLOGY&quot;,
+  &quot;MSPDiagnosticCode&quot; : &quot;371;  ;  &quot;,
+  &quot;MSPDiagnosticDescription&quot; : &quot;Corneal Opacity And Other Disorders Of Cornea (371);  ;  &quot;,
+  &quot;MSPSpecialtyDescription&quot; : &quot;OPHTHALMOLOGY&quot;,
+  &quot;MSPFacilityType&quot; : &quot;Hospital&quot;,
+  &quot;MSPFeeItemTitle&quot; : &quot;TONOMETRY&quot;,
+  &quot;MSPFacility&quot; : &quot;&quot;,
+  &quot;PHN&quot; : &quot;9842956137&quot;,
+  &quot;MSPAmountPaid&quot; : &quot;15.74&quot;,
+  &quot;MSPPractitionerName&quot; : &quot;Unknown&quot;,
+  &quot;MSPSiteCode&quot; : &quot;101&quot;,
+  &quot;RecordTypeIdMSP&quot; : &quot;012Aq000000IQdgIAG&quot;,
+  &quot;MSPLocationTypeDescription&quot; : &quot;PRACTITIONER&apos;S OFFICE - IN COMMUNITY&quot;,
+  &quot;MSPLocationTypeCode&quot; : &quot;A&quot;,
+  &quot;SourceSystemId&quot; : &quot;2318539990&quot;,
+  &quot;MSPDateofService&quot; : &quot;2016-08-22T00:00:00&quot;,
+  &quot;MSPPayeeDescription&quot; : &quot;Unknown&quot;,
+  &quot;MSPServiceStartDate&quot; : &quot;2016-08-22T00:00:00&quot;,
+  &quot;MSPSpecialtyCode&quot; : &quot;06&quot;,
+  &quot;MSPServiceFinishDate&quot; : &quot;2016-08-22T00:00:00&quot;,
+  &quot;MSPPayeeNumber&quot; : &quot;00001&quot;,
+  &quot;MSPFeeItemCode&quot; : &quot;02019&quot;,
+  &quot;AccountId&quot; : &quot;001Aq00000AWdV7IAL&quot;
+}, {
+  &quot;MSPFeeItemDescription&quot; : &quot;Biomicroscopy\nNote:  Fee items 02015, 02018 and 02019 are\npayable to certified ophthalmologists only.&quot;,
+  &quot;MSPDescriptionofService&quot; : &quot;DIAGNOSTIC OPHTHALMOLOGY&quot;,
+  &quot;MSPDiagnosticCode&quot; : &quot;371;  ;  &quot;,
+  &quot;MSPDiagnosticDescription&quot; : &quot;Corneal Opacity And Other Disorders Of Cornea (371);  ;  &quot;,
+  &quot;MSPSpecialtyDescription&quot; : &quot;OPHTHALMOLOGY&quot;,
+  &quot;MSPFacilityType&quot; : &quot;Hospital&quot;,
+  &quot;MSPFeeItemTitle&quot; : &quot;BIOMICROSCOPY&quot;,
+  &quot;MSPFacility&quot; : &quot;&quot;,
+  &quot;PHN&quot; : &quot;9111111113&quot;,
+  &quot;MSPAmountPaid&quot; : &quot;31.47&quot;,
+  &quot;MSPPractitionerName&quot; : &quot;Unknown&quot;,
+  &quot;MSPSiteCode&quot; : &quot;102&quot;,
+  &quot;RecordTypeIdMSP&quot; : &quot;012Aq000000IQdgIAG&quot;,
+  &quot;MSPLocationTypeDescription&quot; : &quot;PRACTITIONER&apos;S OFFICE - IN COMMUNITY&quot;,
+  &quot;MSPLocationTypeCode&quot; : &quot;A&quot;,
+  &quot;SourceSystemId&quot; : &quot;2318539967&quot;,
+  &quot;MSPDateofService&quot; : &quot;2016-08-22T00:00:00&quot;,
+  &quot;MSPPayeeDescription&quot; : &quot;Unknown&quot;,
+  &quot;MSPServiceStartDate&quot; : &quot;2016-08-22T00:00:00&quot;,
+  &quot;MSPSpecialtyCode&quot; : &quot;06&quot;,
+  &quot;MSPServiceFinishDate&quot; : &quot;2016-08-22T00:00:00&quot;,
+  &quot;MSPPayeeNumber&quot; : &quot;00001&quot;,
+  &quot;MSPFeeItemCode&quot; : &quot;02018&quot;,
+  &quot;AccountId&quot; : &quot;001Aq00000AWdV7IAL&quot;
+}, {
+  &quot;MSPFeeItemDescription&quot; : &quot;Biomicroscopy\nNote:  Fee items 02015, 02018 and 02019 are\npayable to certified ophthalmologists only.&quot;,
+  &quot;MSPDescriptionofService&quot; : &quot;DIAGNOSTIC OPHTHALMOLOGY&quot;,
+  &quot;MSPDiagnosticCode&quot; : &quot;379;  ;  &quot;,
+  &quot;MSPDiagnosticDescription&quot; : &quot;Other Disorders Of Eye (379);  ;  &quot;,
+  &quot;MSPSpecialtyDescription&quot; : &quot;OPHTHALMOLOGY&quot;,
+  &quot;MSPFacilityType&quot; : &quot;Hospital&quot;,
+  &quot;MSPFeeItemTitle&quot; : &quot;BIOMICROSCOPY&quot;,
+  &quot;MSPFacility&quot; : &quot;&quot;,
+  &quot;PHN&quot; : &quot;9111111113&quot;,
+  &quot;MSPAmountPaid&quot; : &quot;15.74&quot;,
+  &quot;MSPPractitionerName&quot; : &quot;Unknown&quot;,
+  &quot;MSPSiteCode&quot; : &quot;101&quot;,
+  &quot;RecordTypeIdMSP&quot; : &quot;012Aq000000IQdgIAG&quot;,
+  &quot;MSPLocationTypeDescription&quot; : &quot;PRACTITIONER&apos;S OFFICE - IN COMMUNITY&quot;,
+  &quot;MSPLocationTypeCode&quot; : &quot;A&quot;,
+  &quot;SourceSystemId&quot; : &quot;2318539972&quot;,
+  &quot;MSPDateofService&quot; : &quot;2016-08-23T00:00:00&quot;,
+  &quot;MSPPayeeDescription&quot; : &quot;Unknown&quot;,
+  &quot;MSPServiceStartDate&quot; : &quot;2016-08-23T00:00:00&quot;,
+  &quot;MSPSpecialtyCode&quot; : &quot;06&quot;,
+  &quot;MSPServiceFinishDate&quot; : &quot;2016-08-23T00:00:00&quot;,
+  &quot;MSPPayeeNumber&quot; : &quot;00001&quot;,
+  &quot;MSPFeeItemCode&quot; : &quot;02018&quot;,
+  &quot;AccountId&quot; : &quot;001Aq00000AWdV7IAL&quot;
+}, {
+  &quot;MSPFeeItemDescription&quot; : &quot;COMPREHENSIVE QUANTITATIVE PERIMETRY\nEXAMINATION (OCULUS VISUAL FIELDS):\nMORE EXTENSIVE EXAMINATION THAN UNDER FEE ITEM 02042\n- COMPREHENSIVE AUTOMATED STATIC PERIMETRY\nWITH  .&quot;,
+  &quot;MSPDescriptionofService&quot; : &quot;DIAGNOSTIC OPHTHALMOLOGY&quot;,
+  &quot;MSPDiagnosticCode&quot; : &quot;379;  ;  &quot;,
+  &quot;MSPDiagnosticDescription&quot; : &quot;Other Disorders Of Eye (379);  ;  &quot;,
+  &quot;MSPSpecialtyDescription&quot; : &quot;OPHTHALMOLOGY&quot;,
+  &quot;MSPFacilityType&quot; : &quot;Hospital&quot;,
+  &quot;MSPFeeItemTitle&quot; : &quot;COMPREHENSIVE QUANTITATIVE PERIMETRY EXAMINATION&quot;,
+  &quot;MSPFacility&quot; : &quot;&quot;,
+  &quot;PHN&quot; : &quot;9111111113&quot;,
+  &quot;MSPAmountPaid&quot; : &quot;62.38&quot;,
+  &quot;MSPPractitionerName&quot; : &quot;Unknown&quot;,
+  &quot;MSPSiteCode&quot; : &quot;101&quot;,
+  &quot;RecordTypeIdMSP&quot; : &quot;012Aq000000IQdgIAG&quot;,
+  &quot;MSPLocationTypeDescription&quot; : &quot;PRACTITIONER&apos;S OFFICE - IN COMMUNITY&quot;,
+  &quot;MSPLocationTypeCode&quot; : &quot;A&quot;,
+  &quot;SourceSystemId&quot; : &quot;2318539971&quot;,
+  &quot;MSPDateofService&quot; : &quot;2016-08-23T00:00:00&quot;,
+  &quot;MSPPayeeDescription&quot; : &quot;Unknown&quot;,
+  &quot;MSPServiceStartDate&quot; : &quot;2016-08-23T00:00:00&quot;,
+  &quot;MSPSpecialtyCode&quot; : &quot;06&quot;,
+  &quot;MSPServiceFinishDate&quot; : &quot;2016-08-23T00:00:00&quot;,
+  &quot;MSPPayeeNumber&quot; : &quot;00001&quot;,
+  &quot;MSPFeeItemCode&quot; : &quot;02043&quot;,
+  &quot;AccountId&quot; : &quot;001Aq00000AWdV7IAL&quot;
+}, {
+  &quot;MSPFeeItemDescription&quot; : &quot;CONSULTATION: TO INCLUDE HISTORY, EYE EXAMINATION, REVIEW OF X-RAYS AND\nLABORATORY FINDINGS AND IN ADDITION WHERE INDICATED AN NECESSARY, ANY OR ALL\nOF MEASUREMENT FOR REFRACTIVE ERROR, T.&quot;,
+  &quot;MSPDescriptionofService&quot; : &quot;CONSULTATION (FULL MINOR REPEAT,SPECIALIST)&quot;,
+  &quot;MSPDiagnosticCode&quot; : &quot;362;  ;  &quot;,
+  &quot;MSPDiagnosticDescription&quot; : &quot;Other Retinal Disorders (362);  ;  &quot;,
+  &quot;MSPSpecialtyDescription&quot; : &quot;OPHTHALMOLOGY&quot;,
+  &quot;MSPFacilityType&quot; : &quot;Hospital&quot;,
+  &quot;MSPFeeItemTitle&quot; : &quot;CONSULTATION - OPHTHALMOLOGY&quot;,
+  &quot;MSPFacility&quot; : &quot;&quot;,
+  &quot;PHN&quot; : &quot;9111111113&quot;,
+  &quot;MSPAmountPaid&quot; : &quot;94.38&quot;,
+  &quot;MSPPractitionerName&quot; : &quot;Unknown&quot;,
+  &quot;MSPSiteCode&quot; : &quot;101&quot;,
+  &quot;RecordTypeIdMSP&quot; : &quot;012Aq000000IQdgIAG&quot;,
+  &quot;MSPLocationTypeDescription&quot; : &quot;PRACTITIONER&apos;S OFFICE - IN COMMUNITY&quot;,
+  &quot;MSPLocationTypeCode&quot; : &quot;A&quot;,
+  &quot;SourceSystemId&quot; : &quot;2318539965&quot;,
+  &quot;MSPDateofService&quot; : &quot;2016-08-24T00:00:00&quot;,
+  &quot;MSPPayeeDescription&quot; : &quot;Unknown&quot;,
+  &quot;MSPServiceStartDate&quot; : &quot;2016-08-24T00:00:00&quot;,
+  &quot;MSPSpecialtyCode&quot; : &quot;06&quot;,
+  &quot;MSPServiceFinishDate&quot; : &quot;2016-08-24T00:00:00&quot;,
+  &quot;MSPPayeeNumber&quot; : &quot;00001&quot;,
+  &quot;MSPFeeItemCode&quot; : &quot;02010&quot;,
+  &quot;AccountId&quot; : &quot;001Aq00000AWdV7IAL&quot;
+}, {
+  &quot;MSPFeeItemDescription&quot; : &quot;COMPUTERIZED RETINAL NERVE FIBRE LAYER PHOTOGRAPHY AND NEURO-RETINAL RIM\nASSESMENT (E.G.: HEIDEILBERG, GDX)\nNOTES:\nI)   REQUIRES BOTH QUALITATIVE AND QUANTITAVED ASSEMENTS.\nII)&quot;,
+  &quot;MSPDescriptionofService&quot; : &quot;DIAGNOSTIC OPHTHALMOLOGY&quot;,
+  &quot;MSPDiagnosticCode&quot; : &quot;362;  ;  &quot;,
+  &quot;MSPDiagnosticDescription&quot; : &quot;Other Retinal Disorders (362);  ;  &quot;,
+  &quot;MSPSpecialtyDescription&quot; : &quot;OPHTHALMOLOGY&quot;,
+  &quot;MSPFacilityType&quot; : &quot;Hospital&quot;,
+  &quot;MSPFeeItemTitle&quot; : &quot;COMPUTERIZED RETINAL NERVE FIBRE LAYER PHOTOGRAPHY&quot;,
+  &quot;MSPFacility&quot; : &quot;&quot;,
+  &quot;PHN&quot; : &quot;9111111113&quot;,
+  &quot;MSPAmountPaid&quot; : &quot;54.72&quot;,
+  &quot;MSPPractitionerName&quot; : &quot;Unknown&quot;,
+  &quot;MSPSiteCode&quot; : &quot;101&quot;,
+  &quot;RecordTypeIdMSP&quot; : &quot;012Aq000000IQdgIAG&quot;,
+  &quot;MSPLocationTypeDescription&quot; : &quot;PRACTITIONER&apos;S OFFICE - IN COMMUNITY&quot;,
+  &quot;MSPLocationTypeCode&quot; : &quot;A&quot;,
+  &quot;SourceSystemId&quot; : &quot;2318539966&quot;,
+  &quot;MSPDateofService&quot; : &quot;2016-08-24T00:00:00&quot;,
+  &quot;MSPPayeeDescription&quot; : &quot;Unknown&quot;,
+  &quot;MSPServiceStartDate&quot; : &quot;2016-08-24T00:00:00&quot;,
+  &quot;MSPSpecialtyCode&quot; : &quot;06&quot;,
+  &quot;MSPServiceFinishDate&quot; : &quot;2016-08-24T00:00:00&quot;,
+  &quot;MSPPayeeNumber&quot; : &quot;00001&quot;,
+  &quot;MSPFeeItemCode&quot; : &quot;22067&quot;,
+  &quot;AccountId&quot; : &quot;001Aq00000AWdV7IAL&quot;
+}, {
+  &quot;MSPFeeItemDescription&quot; : &quot;Tonometry\nNote:  Fee items 02015, 02018 and 02019 are\npayable to certified ophthalmologists only.&quot;,
+  &quot;MSPDescriptionofService&quot; : &quot;DIAGNOSTIC OPHTHALMOLOGY&quot;,
+  &quot;MSPDiagnosticCode&quot; : &quot;371;  ;  &quot;,
+  &quot;MSPDiagnosticDescription&quot; : &quot;Corneal Opacity And Other Disorders Of Cornea (371);  ;  &quot;,
+  &quot;MSPSpecialtyDescription&quot; : &quot;OPHTHALMOLOGY&quot;,
+  &quot;MSPFacilityType&quot; : &quot;Hospital&quot;,
+  &quot;MSPFeeItemTitle&quot; : &quot;TONOMETRY&quot;,
+  &quot;MSPFacility&quot; : &quot;&quot;,
+  &quot;PHN&quot; : &quot;9111111113&quot;,
+  &quot;MSPAmountPaid&quot; : &quot;15.74&quot;,
+  &quot;MSPPractitionerName&quot; : &quot;Unknown&quot;,
+  &quot;MSPSiteCode&quot; : &quot;101&quot;,
+  &quot;RecordTypeIdMSP&quot; : &quot;012Aq000000IQdgIAG&quot;,
+  &quot;MSPLocationTypeDescription&quot; : &quot;PRACTITIONER&apos;S OFFICE - IN COMMUNITY&quot;,
+  &quot;MSPLocationTypeCode&quot; : &quot;A&quot;,
+  &quot;SourceSystemId&quot; : &quot;2318539970&quot;,
+  &quot;MSPDateofService&quot; : &quot;2016-08-29T00:00:00&quot;,
+  &quot;MSPPayeeDescription&quot; : &quot;Unknown&quot;,
+  &quot;MSPServiceStartDate&quot; : &quot;2016-08-29T00:00:00&quot;,
+  &quot;MSPSpecialtyCode&quot; : &quot;06&quot;,
+  &quot;MSPServiceFinishDate&quot; : &quot;2016-08-29T00:00:00&quot;,
+  &quot;MSPPayeeNumber&quot; : &quot;00001&quot;,
+  &quot;MSPFeeItemCode&quot; : &quot;02019&quot;,
+  &quot;AccountId&quot; : &quot;001Aq00000AWdV7IAL&quot;
+}, {
+  &quot;MSPFeeItemDescription&quot; : &quot;Biomicroscopy\nNote:  Fee items 02015, 02018 and 02019 are\npayable to certified ophthalmologists only.&quot;,
+  &quot;MSPDescriptionofService&quot; : &quot;DIAGNOSTIC OPHTHALMOLOGY&quot;,
+  &quot;MSPDiagnosticCode&quot; : &quot;371;  ;  &quot;,
+  &quot;MSPDiagnosticDescription&quot; : &quot;Corneal Opacity And Other Disorders Of Cornea (371);  ;  &quot;,
+  &quot;MSPSpecialtyDescription&quot; : &quot;OPHTHALMOLOGY&quot;,
+  &quot;MSPFacilityType&quot; : &quot;Hospital&quot;,
+  &quot;MSPFeeItemTitle&quot; : &quot;BIOMICROSCOPY&quot;,
+  &quot;MSPFacility&quot; : &quot;&quot;,
+  &quot;PHN&quot; : &quot;9111111113&quot;,
+  &quot;MSPAmountPaid&quot; : &quot;31.47&quot;,
+  &quot;MSPPractitionerName&quot; : &quot;Unknown&quot;,
+  &quot;MSPSiteCode&quot; : &quot;101&quot;,
+  &quot;RecordTypeIdMSP&quot; : &quot;012Aq000000IQdgIAG&quot;,
+  &quot;MSPLocationTypeDescription&quot; : &quot;PRACTITIONER&apos;S OFFICE - IN COMMUNITY&quot;,
+  &quot;MSPLocationTypeCode&quot; : &quot;A&quot;,
+  &quot;SourceSystemId&quot; : &quot;2318539969&quot;,
+  &quot;MSPDateofService&quot; : &quot;2016-08-29T00:00:00&quot;,
+  &quot;MSPPayeeDescription&quot; : &quot;Unknown&quot;,
+  &quot;MSPServiceStartDate&quot; : &quot;2016-08-29T00:00:00&quot;,
+  &quot;MSPSpecialtyCode&quot; : &quot;06&quot;,
+  &quot;MSPServiceFinishDate&quot; : &quot;2016-08-29T00:00:00&quot;,
+  &quot;MSPPayeeNumber&quot; : &quot;00001&quot;,
+  &quot;MSPFeeItemCode&quot; : &quot;02018&quot;,
+  &quot;AccountId&quot; : &quot;001Aq00000AWdV7IAL&quot;
+} ]</previewJsonData>
+    <processSuperBulk>false</processSuperBulk>
+    <responseCacheTtlMinutes>0.0</responseCacheTtlMinutes>
+    <rollbackOnError>false</rollbackOnError>
+    <sourceObject>json</sourceObject>
+    <sourceObjectDefault>false</sourceObjectDefault>
+    <synchronousProcessThreshold>0.0</synchronousProcessThreshold>
+    <type>Load</type>
+    <uniqueName>TPLCreateHIHCCRecordsMSP_1</uniqueName>
+    <versionNumber>1.0</versionNumber>
+    <xmlDeclarationRemoved>false</xmlDeclarationRemoved>
+</OmniDataTransform>

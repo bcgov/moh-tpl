@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Email Template to confirm enrollment of an attendee to a Group service appointment.</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>Group Service Appointments Enrollment Confirmation Email</name>
+    <style>none</style>
+    <subject>You’re enrolled for the service appointment.</subject>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Healthcare Cost</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Healthcare Costs</value>
+    </caseValues>
+    <layouts>
+        <layout>Ambulance</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- HealthCare Cost Fields --></label>
+            <section>HealthCare Cost Fields</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Continuing Care</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- HealthCare Cost Fields --></label>
+            <section>HealthCare Cost Fields</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Future Care</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- HealthCare Cost Fields --></label>
+            <section>HealthCare Cost Fields</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Hospitalization</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- HealthCare Cost Fields --></label>
+            <section>HealthCare Cost Fields</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>MSP</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- HealthCare Cost Fields --></label>
+            <section>HealthCare Cost Fields</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Pharmacare</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- HealthCare Cost Fields --></label>
+            <section>HealthCare Cost Fields</section>
+        </sections>
+    </layouts>
+    <recordTypes>
+        <label><!-- Ambulance --></label>
+        <name>Ambulance</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Continuing Care --></label>
+        <name>Continuing_Care</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Future Care --></label>
+        <name>Future_Care</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Hospitalization --></label>
+        <name>Hospitalization</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- MSP --></label>
+        <name>MSP</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Pharmacare --></label>
+        <name>Pharmacare</name>
+    </recordTypes>
+    <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- Please enter Date of Admission. --></errorMessage>
+        <name>TPL_DateOf_Admission_Cannot_Be_Blank</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Date Of Admission Cannot Be In Future --></errorMessage>
+        <name>TPL_DateOf_Admission_Cannot_Be_In_Future</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Date Of Discharge Cannot Be In Future --></errorMessage>
+        <name>TPL_DateOf_Discharge_Cannot_Be_In_Future</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Date Of Admission Is Not Covered Under This Service Code, Please Contact Supervisor --></errorMessage>
+        <name>TPL_DoAIsGreater_than_Product_Start_Date</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Date Of Discharge Is Not Covered Under this Service Type Code - Please Contact Your Supervisor --></errorMessage>
+        <name>TPL_DoDIs_Less_than_Product_End_Date</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Date of Discharge should be greater than Date of Admission. --></errorMessage>
+        <name>TPL_DoD_should_be_Greater_Than_DoA</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Facility does not provide the selected Service. Please select the correct Facility or Service provided by Facility. --></errorMessage>
+        <name>TPL_Facility_Check_on_Products</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Please select the valid Facility. --></errorMessage>
+        <name>TPL_Facility_status_validation</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Service Finished Date should be after Service Start Date. --></errorMessage>
+        <name>TPL_SFD_should_be_Greater_Than_SSD</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Service Date Cannot Be in Future --></errorMessage>
+        <name>TPL_Service_Date_Cannot_Be_in_Future</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Service Type does not match with selected Service Provided by Facility. --></errorMessage>
+        <name>TPL_Service_Type_checks_for_Integration</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Enter Date of Discharge to populate Total Cost Override. --></errorMessage>
+        <name>TPL_TotalCostOverride_CheckForDoDischarg</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Select Service Provided by Facility to populate Total Cost Override. --></errorMessage>
+        <name>TPL_TotalCostOverride_CheckForSPF</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Record Created from External system can not be updated. --></errorMessage>
+        <name>TPL_UIRestriction_on_integration_records</name>
+    </validationRules>
+</CustomObjectTranslation>

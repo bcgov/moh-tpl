@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <label><!-- Source System ID2 --></label>
+    <name>Source_System_ID2__c</name>
+</CustomFieldTranslation>

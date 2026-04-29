@@ -1,0 +1,11 @@
+<p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span id="docs-internal-guid-03fe1f4d-ac62-a4e8-34ce-0f5c04d00fe3"><span style="font-size: 14.6666666666667px; font-family: Arial; color: rgb(0, 0, 0); vertical-align: baseline; white-space: pre-wrap; background-color: transparent;">Hi {!Lead.FirstName}!</span></span></p>
+&nbsp;
+
+<p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span id="docs-internal-guid-03fe1f4d-ac62-a4e8-34ce-0f5c04d00fe3"><span style="font-size: 14.6666666666667px; font-family: Arial; color: rgb(0, 0, 0); vertical-align: baseline; white-space: pre-wrap; background-color: transparent;">We are very excited to have an opportunity to do business with you. &nbsp;We at {!User.CompanyName} believe that establishing a strong customer relationship is key to your success. &nbsp;&nbsp;Do you have time to chat tomorrow so I can answer any questions you may have?</span></span></p>
+&nbsp;
+
+<p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span id="docs-internal-guid-03fe1f4d-ac62-a4e8-34ce-0f5c04d00fe3"><span style="font-size: 14.6666666666667px; font-family: Arial; color: rgb(0, 0, 0); vertical-align: baseline; white-space: pre-wrap; background-color: transparent;">Sincerely,</span></span></p>
+
+<p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span id="docs-internal-guid-03fe1f4d-ac62-a4e8-34ce-0f5c04d00fe3"><span style="font-size: 14.6666666666667px; font-family: Arial; color: rgb(0, 0, 0); vertical-align: baseline; white-space: pre-wrap; background-color: transparent;">{!User.FirstName}</span></span></p>
+
+<p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span id="docs-internal-guid-03fe1f4d-ac62-a4e8-34ce-0f5c04d00fe3"><span style="font-size: 14.6666666666667px; font-family: Arial; color: rgb(0, 0, 0); vertical-align: baseline; white-space: pre-wrap; background-color: transparent;">{!User.Phone}</span></span></p>

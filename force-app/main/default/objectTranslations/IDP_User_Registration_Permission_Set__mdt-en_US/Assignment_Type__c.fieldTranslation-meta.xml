@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <label><!-- Assignment Type --></label>
+    <name>Assignment_Type__c</name>
+    <picklistValues>
+        <masterLabel>Permission Set</masterLabel>
+        <translation><!-- Permission Set --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Permission Set Group</masterLabel>
+        <translation><!-- Permission Set Group --></translation>
+    </picklistValues>
+</CustomFieldTranslation>

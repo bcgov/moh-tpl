@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OmniStudioSettings xmlns="http://soap.sforce.com/2006/04/metadata">
+    <disableRollbackFlagsPref>false</disableRollbackFlagsPref>
+    <enableOaEventInternalWrites>false</enableOaEventInternalWrites>
+    <enableOaEventNotifications>false</enableOaEventNotifications>
+    <enableOaForCore>false</enableOaForCore>
+    <enableOmniGlobalAutoNumberPref>false</enableOmniGlobalAutoNumberPref>
+    <enableOmniStudioContentTest>false</enableOmniStudioContentTest>
+    <enableOmniStudioDrVersion>false</enableOmniStudioDrVersion>
+    <enableOmniStudioMetadata>true</enableOmniStudioMetadata>
+    <enableStandardOmniStudioRuntime>false</enableStandardOmniStudioRuntime>
+</OmniStudioSettings>

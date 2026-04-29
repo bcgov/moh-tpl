@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>All_Active_Products</fullName>
+    <columns>PRODUCT2.NAME</columns>
+    <columns>PRODUCT2.FAMILY</columns>
+    <columns>Service_Type__c</columns>
+    <columns>Account__c</columns>
+    <columns>Cost__c</columns>
+    <columns>PRODUCT2.ACTIVE</columns>
+    <columns>Effective_End_Date__c</columns>
+    <columns>Effective_Start_Date__c</columns>
+    <columns>Effective_year__c</columns>
+    <columns>Intervention_Code_CCI__c</columns>
+    <columns>CCI_Level__c</columns>
+    <columns>PRODUCT2.RECORD_TYPE</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>PRODUCT2.ACTIVE</field>
+        <operation>equals</operation>
+        <value>1</value>
+    </filters>
+    <filters>
+        <field>PRODUCT2.RECORD_TYPE</field>
+        <operation>equals</operation>
+        <value>Product2.TPL_Product</value>
+    </filters>
+    <label>All Active Products</label>
+</ListView>

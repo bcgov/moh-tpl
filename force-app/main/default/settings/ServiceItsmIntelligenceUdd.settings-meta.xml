@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ServiceItsmIntelligenceUddSettings xmlns="http://soap.sforce.com/2006/04/metadata">
+    <enableAsgnProbWEinstein>false</enableAsgnProbWEinstein>
+    <enableAsocSmlrProbToProb>false</enableAsocSmlrProbToProb>
+    <enableCheckIncAttrProactvAsst>false</enableCheckIncAttrProactvAsst>
+    <enableCheckProbmForAttr>false</enableCheckProbmForAttr>
+    <enableCreaProbmForRootCseSum>false</enableCreaProbmForRootCseSum>
+    <enableCreateChgReqWithEinstein>false</enableCreateChgReqWithEinstein>
+    <enableEinsteinAssignGrpInc>false</enableEinsteinAssignGrpInc>
+    <enableEinsteinProbmCreationInc>false</enableEinsteinProbmCreationInc>
+    <enableIncAsgntProactvAsst>false</enableIncAsgntProactvAsst>
+    <enableIncPrpsRsolSumProactvAsst>false</enableIncPrpsRsolSumProactvAsst>
+    <enableIncRootCseSumProactvAsst>false</enableIncRootCseSumProactvAsst>
+    <enableIncSmlrRecProactvAsst>false</enableIncSmlrRecProactvAsst>
+    <enableIncSrvcPlanProactvAsst>false</enableIncSrvcPlanProactvAsst>
+    <enableIncSummaryProactvAsst>false</enableIncSummaryProactvAsst>
+    <enableItSrvcsEmployeeAgent>false</enableItSrvcsEmployeeAgent>
+    <enableItSrvcsFulfillerAgent>false</enableItSrvcsFulfillerAgent>
+    <enableProactivAsstForProbm>false</enableProactivAsstForProbm>
+    <enableProactvAsstforItSrvcs>false</enableProactvAsstforItSrvcs>
+    <enableProposSumForProbm>false</enableProposSumForProbm>
+    <enableQuickActnForSvcPlan>false</enableQuickActnForSvcPlan>
+    <enableSumForProbm>false</enableSumForProbm>
+</ServiceItsmIntelligenceUddSettings>

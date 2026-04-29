@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentSettings xmlns="http://soap.sforce.com/2006/04/metadata">
+    <enableCMSC2CConnections>true</enableCMSC2CConnections>
+    <enableChatterFileLink>true</enableChatterFileLink>
+    <enableContent>true</enableContent>
+    <enableContentAutoAssign>true</enableContentAutoAssign>
+    <enableContentDistForPortalUsers>false</enableContentDistForPortalUsers>
+    <enableContentDistPwOptionsBit1>true</enableContentDistPwOptionsBit1>
+    <enableContentDistPwOptionsBit2>true</enableContentDistPwOptionsBit2>
+    <enableContentDistribution>true</enableContentDistribution>
+    <enableContentHubAWSS3Pref>false</enableContentHubAWSS3Pref>
+    <enableContentHubUploadAWSS3Pref>false</enableContentHubUploadAWSS3Pref>
+    <enableContentSupportMultiLanguage>true</enableContentSupportMultiLanguage>
+    <enableContentWorkspaceAccess>true</enableContentWorkspaceAccess>
+    <enableDeleteFileInContentPacks>true</enableDeleteFileInContentPacks>
+    <enableFileIngestToDataCloud>true</enableFileIngestToDataCloud>
+    <enableFileShareSetByRecord>false</enableFileShareSetByRecord>
+    <enableFilesUsrShareNetRestricted>false</enableFilesUsrShareNetRestricted>
+    <enableJPGPreviews>false</enableJPGPreviews>
+    <enableLWCFileUpload>true</enableLWCFileUpload>
+    <enableLWCFileUploadInFlows>false</enableLWCFileUploadInFlows>
+    <enableLibraryManagedFiles>true</enableLibraryManagedFiles>
+    <enableSiteGuestUserToUploadFiles>false</enableSiteGuestUserToUploadFiles>
+    <enableUploadFilesOnAttachments>false</enableUploadFilesOnAttachments>
+    <setValidContentTypeForAtchDocDownload>false</setValidContentTypeForAtchDocDownload>
+    <skipContentAssetTriggers>false</skipContentAssetTriggers>
+    <skipContentAssetTriggersOnDeploy>true</skipContentAssetTriggersOnDeploy>
+</ContentSettings>

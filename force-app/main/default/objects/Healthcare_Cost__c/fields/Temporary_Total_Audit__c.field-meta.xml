@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Temporary_Total_Audit__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF( and(Cost_Include__c, Cost_Review__c),
+  IF(ISBLANK(Total_Cost_Override__c),
+    Total_Costs_Standard__c,
+    Total_Cost_Override__c),
+  0)
+
++
+
+IF( OR(RecordTypeName__c = &apos;Continuing_Care&apos;, RecordTypeName__c = &apos;Future_Care&apos;),
+  Cost__c,
+  0)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Total Audit (Temporary Field)</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ReleaseMgmtSettings xmlns="http://soap.sforce.com/2006/04/metadata">
+    <enableITSMReleaseMgmt>false</enableITSMReleaseMgmt>
+    <enableReleaseEventCreation>false</enableReleaseEventCreation>
+    <enableReleaseValidations>false</enableReleaseValidations>
+</ReleaseMgmtSettings>
