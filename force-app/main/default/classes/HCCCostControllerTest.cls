@@ -10,11 +10,11 @@
 *         testsaveDraftValuesContinuingCare():Test Method to test the save draft values functionality part and related code base for Continuing Care record type
 *         testsaveDraftValuesFutureCare(): Test Method to test the save draft values functionality part and related code base for Future Care record type
 *         testsaveDraftValuesHospitalization(): Test Method to test the save draft values functionality part and related code base for Hospitalization record type
-*		  testRecordsDeleteFunctionality(): Test Method to check the delete functionality of Healthcare Cost records
-*		  testgetFacilityBySiteCode(): Test Method to get the Facility record data by the site code value
-*		  testupdateAll():Test Method to update all the records of Healthcare cost associated with the particular account
-*		  testCaseNumber(): Test Method to fetch the case number of the respective case ID
-*		  testUpdatetoCaseValues(): Test Method to update the case value for the Healthcare Cost record
+*      testRecordsDeleteFunctionality(): Test Method to check the delete functionality of Healthcare Cost records
+*      testgetFacilityBySiteCode(): Test Method to get the Facility record data by the site code value
+*      testupdateAll():Test Method to update all the records of Healthcare cost associated with the particular account
+*      testCaseNumber(): Test Method to fetch the case number of the respective case ID
+*      testUpdatetoCaseValues(): Test Method to update the case value for the Healthcare Cost record
 *         testUpdatetoCaseValuesFailScenario(): Test Method to validate the updation of the case value for the Healthcare Cost when incorrect Healthcare Cost record is present
 * History:
 *     Initial version: March 30, 2023 - AJ
@@ -352,8 +352,8 @@ public class HCCCostControllerTest {
         insert acc;
         Case c = TestDataFactory.newCase(acc.Id);
         insert c;
-        List<Healthcare_Cost__c> hccListtodelete1 = new List<Healthcare_Cost__c>();	
-        List<Healthcare_Cost__c> hccListtodelete2 = new List<Healthcare_Cost__c>();	
+        List<Healthcare_Cost__c> hccListtodelete1 = new List<Healthcare_Cost__c>();  
+        List<Healthcare_Cost__c> hccListtodelete2 = new List<Healthcare_Cost__c>();  
         Healthcare_Cost__c hcc1 = TestDataFactory.ambulanceCostRecord(acc.Id, c.Id);
         Healthcare_Cost__c hcc2 = TestDataFactory.ambulanceCostRecord(acc.Id, c.Id);
         hcc2.Source_System_ID__c = 'akgkj-sfj';
