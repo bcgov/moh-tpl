@@ -28,10 +28,11 @@ public with sharing class HealthIdeasApiIntegrationController {
 
         try {
             HealthIdeasApiIntegration.IntegrationResult result =
-                HealthIdeasApiIntegration.callGetCost(
+                HealthIdeasApiIntegration.fetchHealthcareCosts(
                     recordId,
                     selectedDate,
-                    'crystal.zhu@hi.com'
+                    'crystal.zhu@hi.com',
+                    true
                 );
 
             return 'Your transfer has been successful';
