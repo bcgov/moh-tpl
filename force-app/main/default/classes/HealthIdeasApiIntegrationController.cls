@@ -1,64 +1,263 @@
-/**
- * ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
- * Class Name      : HealthIdeasApiIntegrationController
- * Author          : Ranadheer Reddy Gundla
- * Created Date    : Apr 8, 2026
- * Last Modified By: Ranadheer Reddy Gundla
- * Last Modified On: Apr 8, 2026
- * Description     : This class implements for Get Records Action in HealthIdeasApiIntegration Lightning Web Component.
- *                   It calls the method in HealthIdeasApiIntegration class to make the callout to external system and returns the response back to LWC.
- *  
- * Change History  :
- *  Date          │   Author     │   Change
- * ――――――――――――――――――――――――――――――――――――――――――――――――――――――― ――――――――――― ――――
- *  Apr 8, 2026  │ Ranadheer Reddy Gundla │ Initial version
- * ――――――――――――――――――――――――――――――――――――――――――――――― ――――――――――――――――――――
- */
+@IsTest
+private class HealthIdeasApiIntegrationTest {
 
-public with sharing class HealthIdeasApiIntegrationController {
-    @AuraEnabled
-    public static String runGetCost(Id recordId, Date selectedDate) {
-        if (recordId == null) {
-            throw new AuraHandledException('Record Id is required.');
-        }
+    // Mock response generator for token and HealthIdeas API callouts.
+    private class MockHttpResponseGenerator implements HttpCalloutMock {
+        public HttpResponse respond(HttpRequest req) {
+            HttpResponse res = new HttpResponse();
+            res.setHeader('Content-Type', 'application/json');
 
-        if (selectedDate == null) {
-            throw new AuraHandledException('Date is required.');
-        }
+            String endpoint = req.getEndpoint() == null ? '' : req.getEndpoint().toLowerCase();
+            system.debug(endpoint);
+            String body = req.getBody() == null ? '' : req.getBody().toLowerCase();
 
-        try {
-            HealthIdeasApiIntegration.IntegrationResult result =
-                HealthIdeasApiIntegration.callGetCost(
-                    recordId,
-                    selectedDate,
-                    'crystal.zhu@hi.com'
-                );
+            // Detects token-related requests.
+            Boolean isTokenRequest =
+                endpoint.contains('token') ||
+                endpoint.contains('oauth') ||
+                endpoint.contains('jwt') ||
+                body.contains('grant_type') ||
+                body.contains('client_assertion') ||
+                body.contains('client_id');
 
-            return 'Your transfer has been successful';
-
-        } catch (System.CalloutException e) {
-            String msg = e.getMessage();
-
-            if (msg != null) {
-                String lowerMsg = msg.toLowerCase();
-
-                if (lowerMsg.contains('read timed out') ||
-                    lowerMsg.contains('timeout') ||
-                    lowerMsg.contains('timed out')) {
-                    throw new AuraHandledException(
-                        'Request failed because the integration timed out. Details: ' + msg
-                    );
-                }
+            // Returns mocked auth token response.
+            if (isTokenRequest) {
+                res.setStatusCode(200);
+                res.setBody('{"access_token":"fake-access-token","token_type":"Bearer","expires_in":3600}');
+                return res;
             }
 
-            throw new AuraHandledException(
-                'Integration callout failed. Details: ' + msg
-            );
+            // Returns mocked HealthIdeas response data.
+            if (endpoint.contains('health')) {
+                res.setStatusCode(200);
+                res.setBody(
+                    '{' +
+                        '"content":{' +
+                            '"msp":[{' +
+                                '"phn":"9872626777",' +
+                                '"dtSvcProvided":"2000-01-01T10:15:30Z",' +
+                                '"descOfSvc":"MSP service",' +
+                                '"feeItemCode":"F100",' +
+                                '"feeItemTitle":"Fee title",' +
+                                '"feeItemDesc":"Fee desc",' +
+                                '"practitionerNbr":"12345",' +
+                                '"practitionerName":"Dr Smith",' +
+                                '"diagnosticCode":"D1",' +
+                                '"diagnosticDesc":"Diag 1",' +
+                                '"amtPaid":"12.50",' +
+                                '"costType":"MSP",' +
+                                '"encounterId":"MSP-001"' +
+                            '}],' +
+                            '"hospitalizations":[{' +
+                                '"phn":"9872626777",' +
+                                '"dateOfAdmission":"2006-06-21T00:00:00",' +
+                                '"dateOfDischarge":"2006-06-21T00:00:00",' +
+                                '"noOfDays":"1",' +
+                                '"facility":"Mission Memorial Hospital",' +
+                                '"costType":"Hospitalizations",' +
+                                '"encounterId":"234152213098",' +
+                    			'"careLevel":"Acute Care"' +
+                            '}],' +
+                            '"pharmacare":[{' +
+                                '"phn":"9872626777",' +
+                                '"din":"DIN123",' +
+                                '"nameOfDrug":"Drug 1",' +
+                                '"dateOfService":"2000-01-08T00:00:00Z",' +
+                                '"costOfDrug":"45.67",' +
+                                '"costType":"Pharmacare",' +
+                                '"encounterId":"PHARMA-001",' +
+                    			'"practitionerFirstName":"David",' +
+                    			'"practitionerLastName":"Test"' +
+                            '}]' +
+                        '}' +
+                    '}'
+                );
+                return res;
+            }
 
-        } catch (Exception e) {
-            throw new AuraHandledException(
-                'Get Records failed. Details: ' + e.getMessage()
-            );
+            // Default empty response.
+            res.setStatusCode(200);
+            res.setBody('{"content":{"msp":[],"hospitalizations":[],"pharmacare":[]}}');
+            return res;
         }
     }
+
+    // Creates base Account and Healthcare Cost test data.
+    @testSetup
+    static void setupData() {
+        Id individualRtId = getRecordTypeId(Account.SObjectType, 'PersonAccount');
+
+        Account acc = new Account(
+            RecordTypeId = individualRtId,
+            FirstName = 'David',
+            LastName = 'Scott',
+            Type = 'Client',
+            Date_of_Birth__pc = Date.newInstance(1996, 11, 14),
+            PHN__pc = '9872626777'
+        );
+        insert acc;
+
+        Map<String, Id> costRtIds = getCostRecordTypeIds();
+
+        insert new List<Healthcare_Cost__c>{
+            new Healthcare_Cost__c(
+                Account__c = acc.Id,
+                RecordTypeId = costRtIds.get('Hospitalization'),
+                Date_of_Service__c = Date.newInstance(1999, 12, 31),
+                Cost_Review__c = false,
+                Cost_Include__c = false,
+                Date_of_Admission__c = Date.newInstance(2020, 12, 31)
+            ),
+            new Healthcare_Cost__c(
+                 Account__c = acc.Id,
+                RecordTypeId = costRtIds.get('MSP'),
+                Date_of_Service__c = Date.newInstance(1999, 12, 31),
+                Cost_Review__c = false,
+                Cost_Include__c = false,
+                Date_of_Admission__c = Date.newInstance(2020, 12, 31)
+            ),
+            new Healthcare_Cost__c(
+                Account__c = acc.Id,
+                RecordTypeId = costRtIds.get('Pharmacare'),
+                Date_of_Service__c = Date.newInstance(1999, 12, 31),
+                Cost_Review__c = false,
+                Cost_Include__c = false,
+                Date_of_Admission__c = Date.newInstance(2020, 12, 31)
+            )
+        };
+    }
+
+    // Returns record type Id by developer name.
+    private static Id getRecordTypeId(Schema.SObjectType sObjectType, String developerName) {
+        Map<String, Schema.RecordTypeInfo> infos =
+            sObjectType.getDescribe().getRecordTypeInfosByDeveloperName();
+
+        System.assert(
+            infos.containsKey(developerName),
+            'Missing record type "' + developerName + '" on ' +
+            sObjectType.getDescribe().getName() +
+            '. Available: ' + String.join(new List<String>(infos.keySet()), ', ')
+        );
+
+        return infos.get(developerName).getRecordTypeId();
+    }
+
+    // Returns Healthcare Cost record type Ids used by tests.
+    private static Map<String, Id> getCostRecordTypeIds() {
+        return new Map<String, Id>{
+            'MSP' => getRecordTypeId(Healthcare_Cost__c.SObjectType, 'MSP'),
+            'Pharmacare' => getRecordTypeId(Healthcare_Cost__c.SObjectType, 'Pharmacare'),
+            'Hospitalization' => getRecordTypeId(Healthcare_Cost__c.SObjectType, 'Hospitalization')
+        };
+    }
+
+    // Returns the test Person Account.
+    private static Account getTestAccount() {
+        return [
+            SELECT Id, PHN__pc
+            FROM Account
+            WHERE PHN__pc = '9872626777'
+            LIMIT 1
+        ];
+    }
+
+    // Covers successful API call and batch launch.
+    @IsTest
+    static void testCallGetCost_success() {
+        Account acc = getTestAccount();
+
+        Test.setMock(HttpCalloutMock.class, new MockHttpResponseGenerator());
+
+        Test.startTest();
+        HealthIdeasApiIntegration.IntegrationResult result = HealthIdeasApiIntegration.getHealthcareCostsForAccountandSetDate(acc.Id,Date.newInstance(1990, 1, 1), true);
+        Test.stopTest();
+
+        // Validate successful response.
+        System.assertNotEquals(null, result);
+        System.assertEquals(true, result.success);
+        System.assertEquals(null, result.errorMessage);
+        System.assertNotEquals(null, result.batchId);
+    }
+    
+    // Covers scenario where existing records may be deleted and refreshed.
+    @IsTest
+     static void testCallGetCost_DeletionScenario() {
+        Account acc = getTestAccount();
+
+        Test.setMock(HttpCalloutMock.class, new MockHttpResponseGenerator());
+
+        Test.startTest();
+        HealthIdeasApiIntegration.IntegrationResult result = HealthIdeasApiIntegration.getHealthcareCostsForAccountandSetDate(acc.Id,Date.newInstance(2025, 1, 1), false);
+        Test.stopTest();
+
+        // Validate delete and reload flow started.
+        System.assertNotEquals(null, result);
+        System.assertEquals(true, result.success);
+        System.assertEquals(null, result.errorMessage);
+        System.assertEquals(null, result.batchId);
+    }
+    
+     // Current failure-named test still executes the success path.
+     @IsTest
+     static void testCallGetCost_FailureScenario() {
+        Account acc = getTestAccount();
+
+        Test.setMock(HttpCalloutMock.class, new MockHttpResponseGenerator());
+
+        Test.startTest();
+        HealthIdeasApiIntegration.IntegrationResult result = HealthIdeasApiIntegration.getHealthcareCostsForAccountandSetDate(acc.Id,Date.newInstance(2025, 1, 1), true);
+        Test.stopTest();
+
+        // Current input still follows success path.
+        System.assertNotEquals(null, result);
+        System.assertEquals(true, result.success);
+        System.assertEquals(null, result.errorMessage);
+        System.assertNotEquals(null, result.batchId);
+    }
+    
+    // Covers batch status polling method.
+    @IsTest
+    static void testIsBatchInProgress() {
+        Account acc = getTestAccount();
+    
+        Test.setMock(HttpCalloutMock.class, new MockHttpResponseGenerator());
+    
+        Id batchId;
+    
+        Test.startTest();
+        HealthIdeasApiIntegration.IntegrationResult result =
+            HealthIdeasApiIntegration.getHealthcareCostsForAccountandSetDate(
+                acc.Id,
+                Date.newInstance(2025, 1, 1), true
+            );
+    
+        batchId = result.batchId;
+        Boolean inProgress = HealthIdeasApiIntegration.isBatchInProgress(batchId);
+        Test.stopTest();
+    
+        // Validate batch tracking response.
+        System.assertNotEquals(null, result);
+        System.assertEquals(true, result.success);
+        System.assertNotEquals(null, batchId);
+        System.assertEquals(true, inProgress);
+    }
+    
+    @IsTest
+	static void testCallGetCost_CatchBlock_NoAccountId() {
+        Test.setMock(HttpCalloutMock.class, new MockHttpResponseGenerator());
+    
+        Test.startTest();
+        HealthIdeasApiIntegration.IntegrationResult result =
+            HealthIdeasApiIntegration.getHealthcareCostsForAccountandSetDate(
+                null,
+                Date.newInstance(2025, 1, 1), true
+            );
+        Test.stopTest();
+    
+        // Validates catch block execution.
+        System.assertNotEquals(null, result);
+        System.assertEquals(false, result.success);
+        System.assertNotEquals(null, result.errorMessage);
+        System.assertEquals(null, result.batchId);
+	}
 }
