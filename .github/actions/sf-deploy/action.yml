@@ -20,6 +20,6 @@ runs:
           -x ./delta/package/package.xml \
           --post-destructive-changes ./delta/destructiveChanges/destructiveChanges.xml \
           --test-level RunLocalTests \
-          --no-track-source \
+          --ignore-conflicts \
           --verbose --json \
           --target-org $SF_INSTANCE_NAME
