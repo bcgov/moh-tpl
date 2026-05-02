@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Restrict_AcuteProduct_Facility_Mismatch</fullName>
+    <active>true</active>
+    <description>this validation rule is used to restrict the acute products to its related facility</description>
+    <errorConditionFormula>AND(
+    RecordType.Name = &apos;Hospitalization&apos;,
+    CONTAINS(Service_Type2__c , &quot;Acute&quot;),
+    Site_Code__c &lt;&gt; &quot;&quot;,
+    !ISBLANK(Service_Provided_by_Facility__c),
+    LEFT(Service_Provided_by_Facility__r.Name, LEN(Site_Code__c)) &lt;&gt; Site_Code__c
+    )</errorConditionFormula>
+    <errorMessage>The product must match the facility for Acute healthcare costs.</errorMessage>
+</ValidationRule>
