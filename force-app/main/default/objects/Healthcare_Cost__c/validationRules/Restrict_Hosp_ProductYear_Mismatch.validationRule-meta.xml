@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Restrict_Hosp_ProductYear_Mismatch</fullName>
+    <active>true</active>
+    <description>This validation rule is used to restrict hospitalization cost products to the matching product year.</description>
+    <errorConditionFormula>AND(
+    RecordType.Name = &apos;Hospitalization&apos;,
+    !ISBLANK(Service_Provided_by_Facility__c),
+    !ISBLANK(Date_of_Admission__c),
+    OR(
+      AND(
+        MONTH(Date_of_Admission__c) &lt; 4 ,
+        !CONTAINS(Service_Provided_by_Facility__r.Name, TEXT(YEAR(Date_of_Admission__c)))
+      ),
+      AND(
+        MONTH(Date_of_Admission__c) &gt; 3 ,
+        !CONTAINS(Service_Provided_by_Facility__r.Name, TEXT(YEAR(Date_of_Admission__c) + 1))
+      ) 
+    )
+)</errorConditionFormula>
+    <errorMessage>The product must match product year for hospitalization costs.</errorMessage>
+</ValidationRule>
