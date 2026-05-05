@@ -1,38 +1,44 @@
-public without sharing class HealthIdeasApiIntegration {
+/**
+ * Author: Nikhil Jeenru 
+ * Company : CGI
+ * Purpose:
+ * This class handles the HealthIdeas API integration, prepares the response data,
+ * and starts the batch process that refreshes Healthcare Cost records on the Person Accounts.
+ */
+
+public with sharing class HealthIdeasApiIntegration {
+
+    //Helper method for consistent logging throughout the class.
+    private static final Boolean ENABLE_DEBUG_LOGS = false;
+    private static void debugLog(String message) {
+        if (ENABLE_DEBUG_LOGS) {
+            System.debug(message);
+        }
+    }
+
+    /**
+     * Result returned to the UI or caller after attempting the integration call.
+     */
     public class IntegrationResult {
         @AuraEnabled public Boolean success = false;
-        @AuraEnabled public String rawResponse;
-        @AuraEnabled public List<String> messages = new List<String>();
-
-        @AuraEnabled public Boolean mspTransactionsComplete = false;
-        @AuraEnabled public Boolean hospitalTransactionsComplete = false;
-        @AuraEnabled public Boolean pharmacareTransactionsComplete = false;
-
-        @AuraEnabled public List<Id> deletedMspIds = new List<Id>();
-        @AuraEnabled public List<Id> deletedHospitalIds = new List<Id>();
-        @AuraEnabled public List<Id> deletedPharmacareIds = new List<Id>();
-
-        @AuraEnabled public List<Id> createdMspIds = new List<Id>();
-        @AuraEnabled public List<Id> createdHospitalIds = new List<Id>();
-        @AuraEnabled public List<Id> createdPharmacareIds = new List<Id>();
-
         @AuraEnabled public String errorMessage;
+        @AuraEnabled public Id batchId;
     }
 
-    public class HealthIdeasResponse {
-        public HealthIdeasContent content;
-        public String error;
-        public Boolean success;
-        public String responseDateTime;
+    /**
+     * Payload passed from delete batch to insert batch.
+     * Keeps API response data in typed lists instead of wrapping every record as Object.
+    */
+    public class HealthIdeasBatchPayload {
+        public List<MspHccRecord> msp;
+        public List<HospitalizationHccRecord> hospitalizations;
+        public List<PharmacareHccRecord> pharmacare;
     }
 
-    public class HealthIdeasContent {
-        public List<PharmacareItem> pharmacare;
-        public List<HospitalItem> hospitalizations;
-        public List<MspItem> msp;
-    }
-
-    public class MspItem {
+    /**
+     * Represents a single MSP record returned by the API.
+     */
+    public class MspHccRecord {
         public String phn;
         public String dtSvcProvided;
         public String descOfSvc;
@@ -61,311 +67,340 @@ public without sharing class HealthIdeasApiIntegration {
         public String facilityType;
         public String locationTypeCode;
         public String locationTypeDesc;
-        public String costType;
         public String encounterId;
     }
 
-    public class HospitalItem {
+    /**
+     * Represents a single hospitalization record returned by the API.
+     */
+    public class HospitalizationHccRecord {
         public String phn;
         public String dateOfAdmission;
         public String dateOfDischarge;
-        public String noOfDays;
         public String facilityCode;
-        public String facility;
-        public String careLevelGroup;
-        public String careLevelCode;
         public String careLevel;
         public String locationOfIncident;
         public String descOfIncident;
         public String diagTreatmentSvcs;
-        public String entryCode;
-        public String entryCodeDescription;
         public String interventionCodesCci;
-        public String costType;
         public String encounterId;
-	}
+    }
 
-    public class PharmacareItem {
+     /**
+     * Represents a single Pharmacare record returned by the API.
+     */
+    public class PharmacareHccRecord {
         public String phn;
         public String din;
         public String nameOfDrug;
         public String dateOfService;
-        public String practitionerId;
         public String practitionerFirstName;
         public String practitionerLastName;
         public String costOfDrug;
-        public String costType;
         public String encounterId;
+    }
+    
+     /**
+     * UI-friendly entry point.
+     * Uses the current logged-in user's email as the requester name.
+     */
+     @AuraEnabled
+	public static IntegrationResult  getHealthcareCostsForAccountandSetDate(Id accountId, Date asOfDate, Boolean isASyncCall) {
+        String requesterUserName = UserInfo.getUserEmail();
+        return fetchHealthcareCosts(accountId, asOfDate, requesterUserName, isASyncCall);
 	}
-    
-    
-    @AuraEnabled
-	public static IntegrationResult callGetCost(Id accountId, Date asOfDate, String requesterUserName) {
+       
+    /**
+     * Main integration method.
+     * - Gets the member PHN from Account
+     * - Calls HealthIdeas API
+     * - Combines returned datasets
+     * - Starts the delete/Insert batch job
+     */
+    public static IntegrationResult fetchHealthcareCosts(Id accountId, Date asOfDate, String requesterUserName, Boolean isASyncCall) {
+
         IntegrationResult result = new IntegrationResult();
-    
+
         try {
-            if (accountId == null) {
-                throw new AuraHandledException('accountId is required.');
+            Account acc = [SELECT Id, PHN__pc FROM Account WHERE Id = :accountId LIMIT 1];
+    
+            HttpResponse res = sendHealthIdeasRequest(requesterUserName, acc.PHN__pc, asOfDate);
+
+            debugLog('Response Status Code: ' + res.getStatusCode());
+            debugLog('Response Status: ' + res.getStatus());
+
+            if (res.getStatusCode() != 200) {
+                result.success = false;
+                result.errorMessage = 'HealthIdeas API Call failed: ' + res.getStatus();
+                return result;
             }
-            if (asOfDate == null) {
-                throw new AuraHandledException('asOfDate is required.');
-            }
-            if (String.isBlank(requesterUserName)) {
-                throw new AuraHandledException('requesterUserName is required.');
-            }
-    
-            Account acc = [
-                SELECT Id, PHN__pc
-                FROM Account
-                WHERE Id = :accountId
-                LIMIT 1
-            ];
-    
-            String personalHealthNumber = acc.PHN__pc;
-            if (String.isBlank(personalHealthNumber)) {
-                throw new AuraHandledException('Account.PHN__pc is blank.');
-            }
-    
-            Map<String, Id> recordTypeIds = resolveRecordTypeIds();
-    
-          //  Date windowStart = asOfDate;
-           // Date todayDate = Date.today();
-    
-            if (result.createdPharmacareIds == null) result.createdPharmacareIds = new List<Id>();
-            if (result.createdHospitalIds == null) result.createdHospitalIds = new List<Id>();
-            if (result.createdMspIds == null) result.createdMspIds = new List<Id>();
-    
-               // Date windowEnd = getFiveYearWindowEnd(windowStart, todayDate);
-    
-                HttpResponse mainRes = doHealthIdeasCallout(
-                    requesterUserName,
-                    personalHealthNumber,
-                    asOfDate
+
+            String responseBody = res.getBody();
+
+          //  debugLog(
+           //     'Response Body Length: ' +
+           //     String.valueOf(responseBody != null ? responseBody.length() : 0)
+          //  );
+
+            Map<String, Id> hccrecordTypeIds = getHealthcareCostRecordTypeIds();
+
+            HealthIdeasBatchPayload payload = parseHealthIdeasPayload(responseBody);
+
+            String jsonData = JSON.serialize(payload);
+
+            if (isASyncCall) {
+                Id batchId = Database.executeBatch(
+                    new HealthIdeasHCCRecordsDeleteBatch(
+                        accountId,
+                        asOfDate,
+                        jsonData,
+                        hccrecordTypeIds
+                    ),
+                    200
                 );
-    
-                result.rawResponse = mainRes.getBody();
-    
-                if (mainRes.getStatusCode() < 200 || mainRes.getStatusCode() > 299) {
-                    throw new AuraHandledException(
-                        'HealthIdeas callout failed. Status=' + mainRes.getStatusCode() +
-                        ', Body=' + mainRes.getBody()
-                    );
-                }
-    
-                System.debug(mainRes.getBody());
-    
-                HealthIdeasResponse apiResponse =
-                    (HealthIdeasResponse) JSON.deserialize(mainRes.getBody(), HealthIdeasResponse.class);
-                System.debug(apiResponse);
-    
-                HealthIdeasContent content = apiResponse.content;
-            
-            
-             result.deletedPharmacareIds = deleteExistingCosts(
-                accountId,
-                recordTypeIds.get('Pharmacare'),
-                asOfDate,
-                result.messages
-            );
-            result.deletedHospitalIds = deleteExistingCosts(
-                accountId,
-                recordTypeIds.get('Hospitalization'),
-                asOfDate,
-                result.messages
-            );
-            result.deletedMspIds = deleteExistingCosts(
-                accountId,
-                recordTypeIds.get('MSP'),
-                asOfDate,
-                result.messages
-            );
-    
-             system.debug(content.pharmacare);
-                if (content.pharmacare != null && !content.pharmacare.isEmpty()) {
-                    List<Healthcare_Cost__c> pharmRecords = buildPharmacareRecords(
-                        content.pharmacare,
-                        accountId,
-                        recordTypeIds.get('Pharmacare')
-                    );
-                    result.createdPharmacareIds.addAll(saveCosts(pharmRecords, result.messages));
-                }
-                result.pharmacareTransactionsComplete = true;
-    
-             system.debug(content.hospitalizations);
-                if (content.hospitalizations != null && !content.hospitalizations.isEmpty()) {
-                    List<Healthcare_Cost__c> hospitalRecords = buildHospitalRecords(
-                        content.hospitalizations,
-                        accountId,
-                        recordTypeIds.get('Hospitalization')
-                    );
-                    result.createdHospitalIds.addAll(saveCosts(hospitalRecords, result.messages));
-                }
-                result.hospitalTransactionsComplete = true;
-            
-            system.debug(content.msp);
-    
-                if (content.msp != null && !content.msp.isEmpty()) {
-                    List<Healthcare_Cost__c> mspRecords = buildMspRecords(
-                        content.msp,
-                        accountId,
-                        recordTypeIds.get('MSP')
-                    );
-                    result.createdMspIds.addAll(saveCosts(mspRecords, result.messages));
-                }
-                result.mspTransactionsComplete = true;
-    
+
+                result.batchId = batchId; 
+            } else {
+                refreshHealthcareCostRecords(
+                    accountId,
+                    asOfDate,
+                    jsonData,
+                    hccrecordTypeIds
+                );
+            }
             result.success = true;
             return result;
-        
-    
         } 
         catch (Exception e) {
             result.success = false;
             result.errorMessage = e.getMessage();
-            result.messages.add(e.getMessage());
-            system.debug(e.getMessage());
             return result;
         }
-	}
-
-
-    private static HttpResponse doHealthIdeasCallout( String requesterUserName,
-                                                        String personalHealthNumber,
-                                                        Date asOfDate
-                                                     ) 
-    {
-        JWTGenerateAuth auth = new JWTGenerateAuth();
-        JWTGenerateAuth.TokenResponse tokenRes = auth.getClientCredentialsToken();
-
-        if (tokenRes == null || String.isBlank(tokenRes.access_token)) {
-            throw new AuraHandledException('No access token returned from JWTGenerateAuth.');
-        }
-
-        HttpRequest req = new HttpRequest();
-        req.setEndpoint('https://moh-dms-m-prd-api.azure-api.net/api/tplprd/getCost/');
-        req.setMethod('POST');
-        req.setHeader('Content-Type', 'application/json');
-        req.setHeader('Authorization', 'Bearer ' + tokenRes.access_token);
-        req.setTimeout(120000);
-
-        Map<String, Object> requestBody = new Map<String, Object>{
-            'requester' => requesterUserName,
-            'personalHealthNumber' => personalHealthNumber,
-            'asOfDate' => String.valueOf(asOfDate)
-        };
-
-        req.setBody(JSON.serialize(requestBody));
-
-        Http http = new Http();
-        return http.send(req);
     }
 
-    private static Map<String, Id> resolveRecordTypeIds() {
-        Map<String, Schema.RecordTypeInfo> byDevName =
-            Healthcare_Cost__c.SObjectType.getDescribe().getRecordTypeInfosByDeveloperName();
-
-        return new Map<String, Id>{
-            'MSP' => byDevName.get('MSP').getRecordTypeId(),
-            'Pharmacare' => byDevName.get('Pharmacare').getRecordTypeId(),
-            'Hospitalization' => byDevName.get('Hospitalization').getRecordTypeId()
-        };
-    }
-
-    private static List<Id> deleteExistingCosts(Id accountId, Id recordTypeId, Date asOfDate, List<String> messages) {
-        List<Id> idsToDelete = new List<Id>();
-
-        List<Healthcare_Cost__c> existingRows = [
+    /**
+     * Deletes eligible Healthcare Cost records and inserts refreshed HealthIdeas data synchronously.
+     * Sync process
+     */
+    public static void refreshHealthcareCostRecords(
+        Id accountId,
+        Date asOfDate,
+        String jsonData,
+        Map<String, Id> recordTypeIds
+    ) {
+        List<Healthcare_Cost__c> recordsToDelete = [
             SELECT Id
             FROM Healthcare_Cost__c
             WHERE Account__c = :accountId
-              AND RecordTypeId = :recordTypeId
-              AND Date_of_Service__c < :asOfDate
-              AND Cost_Review__c = false
-              AND Cost_Include__c = false
-              AND (Case2__c = null OR Case2__c = '')
+            AND RecordTypeId IN :new List<Id>{
+                recordTypeIds.get('Pharmacare'),
+                recordTypeIds.get('Hospitalization'),
+                recordTypeIds.get('MSP')
+            }
+            AND Date_of_Service__c < :asOfDate
+            AND Cost_Review__c = false
+            AND Cost_Include__c = false
+            AND (Case2__c = null OR Case2__c = '')
         ];
 
-        for (Healthcare_Cost__c row : existingRows) {
-            idsToDelete.add(row.Id);
+        if ( !recordsToDelete.isEmpty() ) {
+            Database.delete(recordsToDelete, false);
         }
 
-        if (!idsToDelete.isEmpty()) {
-            Database.DeleteResult[] deleteResults = Database.delete(idsToDelete, false);
-            for (Integer i = 0; i < deleteResults.size(); i++) {
-                if (!deleteResults[i].isSuccess()) {
-                    for (Database.Error err : deleteResults[i].getErrors()) {
-                        messages.add('Delete failed for Healthcare_Cost__c Id ' + String.valueOf(idsToDelete[i]) + ': ' + err.getMessage());
+        HealthIdeasApiIntegration.HealthIdeasBatchPayload payload =
+            (HealthIdeasApiIntegration.HealthIdeasBatchPayload)
+            JSON.deserialize(jsonData, HealthIdeasApiIntegration.HealthIdeasBatchPayload.class);
+
+        List<HealthIdeasApiIntegration.MspHccRecord> mspList =
+            payload.msp == null
+                ? new List<HealthIdeasApiIntegration.MspHccRecord>()
+                : payload.msp;
+
+        List<HealthIdeasApiIntegration.HospitalizationHccRecord> hospList =
+            payload.hospitalizations == null
+                ? new List<HealthIdeasApiIntegration.HospitalizationHccRecord>()
+                : payload.hospitalizations;
+
+        List<HealthIdeasApiIntegration.PharmacareHccRecord> pharmaList =
+            payload.pharmacare == null
+                ? new List<HealthIdeasApiIntegration.PharmacareHccRecord>()
+                : payload.pharmacare;
+
+        List<Healthcare_Cost__c> recordsToInsert = new List<Healthcare_Cost__c>();
+
+        if ( !mspList.isEmpty() ) {
+            recordsToInsert.addAll(
+                HealthIdeasApiIntegration.buildMspHealthcareCostRecords(
+                    mspList,
+                    accountId,
+                    recordTypeIds.get('MSP')
+                )
+            );
+        }
+
+        if ( !hospList.isEmpty() ) {
+            recordsToInsert.addAll(
+                HealthIdeasApiIntegration.buildHospitalizationHealthcareCostRecords(
+                    hospList,
+                    accountId,
+                    recordTypeIds.get('Hospitalization')
+                )
+            );
+        }
+
+        if ( !pharmaList.isEmpty() ) {
+            recordsToInsert.addAll(
+                HealthIdeasApiIntegration.buildPharmacareHealthcareCostRecords(
+                    pharmaList,
+                    accountId,
+                    recordTypeIds.get('Pharmacare')
+                )
+            );
+        }
+
+        if ( !recordsToInsert.isEmpty() ) {
+            Database.insert(recordsToInsert, false);
+        }
+    }
+    
+     /**
+     * Resolves Healthcare Cost record type Ids by developer name.
+     */
+    public static Map<String, Id> getHealthcareCostRecordTypeIds() {
+        Map<String, Schema.RecordTypeInfo> rtMap =
+            Healthcare_Cost__c.SObjectType.getDescribe().getRecordTypeInfosByDeveloperName();
+
+        return new Map<String, Id>{
+            'MSP' => rtMap.get('MSP').getRecordTypeId(),
+            'Pharmacare' => rtMap.get('Pharmacare').getRecordTypeId(),
+            'Hospitalization' => rtMap.get('Hospitalization').getRecordTypeId()
+        };
+    }
+
+    private static HealthIdeasBatchPayload parseHealthIdeasPayload(String responseBody) {
+    HealthIdeasBatchPayload payload = new HealthIdeasBatchPayload();
+
+    if (String.isBlank(responseBody)) {
+        return payload;
+    }
+
+    JSONParser parser = JSON.createParser(responseBody);
+
+    while (parser.nextToken() != null) {
+        if (
+            parser.getCurrentToken() == JSONToken.FIELD_NAME &&
+            parser.getText() == 'content'
+        ) {
+            parser.nextToken();
+
+            if (parser.getCurrentToken() == JSONToken.START_OBJECT) {
+                parseHealthIdeasContent(parser, payload);
+            } else {
+                parser.skipChildren();
+            }
+        }
+    }
+
+    return payload;
+}
+
+    private static void parseHealthIdeasContent(
+            JSONParser parser,
+            HealthIdeasBatchPayload payload
+        ) {
+            while (parser.nextToken() != null) {
+                JSONToken token = parser.getCurrentToken();
+
+                if (token == JSONToken.END_OBJECT) {
+                    return;
+                }
+
+                if (token == JSONToken.FIELD_NAME) {
+                    String fieldName = parser.getText();
+
+                    parser.nextToken();
+
+                    if (fieldName == 'msp') {
+                        payload.msp =
+                            (List<MspHccRecord>) parser.readValueAs(
+                                List<MspHccRecord>.class
+                            );
+
+                    } else if (fieldName == 'hospitalizations') {
+                        payload.hospitalizations =
+                            (List<HospitalizationHccRecord>) parser.readValueAs(
+                                List<HospitalizationHccRecord>.class
+                            );
+
+                    } else if (fieldName == 'pharmacare') {
+                        payload.pharmacare =
+                            (List<PharmacareHccRecord>) parser.readValueAs(
+                                List<PharmacareHccRecord>.class
+                            );
+
+                    } else {
+                        parser.skipChildren();
                     }
                 }
             }
         }
+    
+     /**
+     * Makes the outbound call to HealthIdeas using the named credential and bearer token.
+     */
+    public static HttpResponse sendHealthIdeasRequest(String requesterUserName, String phn, Date asOfDate) {
 
-        return idsToDelete;
+        HttpRequest req = new HttpRequest();
+       	req.setEndpoint('callout:HealthIdeas');
+        req.setMethod('POST');
+        req.setHeader('Content-Type', 'application/json');
+        req.setTimeout(120000);
+
+        req.setBody(JSON.serialize(new Map<String, Object>{
+            'requester' => requesterUserName,
+            'personalHealthNumber' => phn,
+            'asOfDate' => String.valueOf(asOfDate)
+        }));
+
+        return new Http().send(req);
     }
 
-    private static List<Id> saveCosts(List<Healthcare_Cost__c> rows, List<String> messages) {
-        List<Id> savedIds = new List<Id>();
-        if (rows == null || rows.isEmpty()) {
-            return savedIds;
-        }
 
-        Database.SaveResult[] results = Database.insert(rows, false);
-        for (Integer i = 0; i < results.size(); i++) {
-            if (results[i].isSuccess()) {
-                savedIds.add(results[i].getId());
-            } else {
-                for (Database.Error err : results[i].getErrors()) {
-                    messages.add('Save failed for Healthcare_Cost__c row ' + i + ': ' + err.getMessage());
-                }
-            }
-        }
-
-        return savedIds;
-    }
-
-    private static List<Healthcare_Cost__c> buildMspRecords(List<MspItem> items, Id accountId, Id recordTypeId) {
+    /**
+     * Builds Healthcare Cost records for MSP data.
+     */
+    public static List<Healthcare_Cost__c> buildMspHealthcareCostRecords(List<MspHccRecord> items, Id accountId, Id recordTypeId) {
         List<Healthcare_Cost__c> rows = new List<Healthcare_Cost__c>();
-
-        for (MspItem item : items) {
+         for (MspHccRecord item : items) {
             Healthcare_Cost__c row = new Healthcare_Cost__c();
             row.Account__c = accountId;
             row.RecordTypeId = recordTypeId;
-
             row.PHN__c = item.phn;
             row.Source_System_ID__c = item.encounterId;
-
             row.Date_of_Service__c = parseDate(item.dtSvcProvided);
             row.Service_Start_Date__c = parseDate(item.svcStartDt);
             row.Service_Finish_Date__c = parseDate(item.svcFinishDt);
-
             row.Diagnostic_Code__c = item.diagnosticCode;
             row.Diagnostic_Code_1__c = item.diagnosticCode1;
             row.Diagnostic_Code_2__c = item.diagnosticCode2;
             row.Diagnostic_Code_3__c = item.diagnosticCode3;
-
             row.Diagnostic_Description__c = item.diagnosticDesc;
             row.Diagnostic_Description_1__c = item.diagnosticDesc1;
             row.Diagnostic_Description_2__c = item.diagnosticDesc2;
             row.Diagnostic_Description_3__c = item.diagnosticDesc3;
-
             row.Description_of_Service2__c = item.descOfSvc;
             row.Fee_Item_Code__c = item.feeItemCode;
             row.Fee_Item_Title__c = item.feeItemTitle;
             row.Fee_Item_Description__c = item.feeItemDesc;
-
             row.Practitioner_Name__c = item.practitionerName;
             row.Practitioner_Number__c = item.practitionerNbr;
             row.Payee_Number__c = item.payeeNbr;
             row.Payee_Description__c = item.payeeDesc;
-
             row.Location_Type_Code__c = item.locationTypeCode;
             row.Location_Type_Description2__c = item.locationTypeDesc;
-
             row.Amount_Paid__c = parseDecimal(item.amtPaid);
             row.Specialty_Code__c = item.specialtyCode;
             row.Specialty_Description2__c = item.specialtyDesc;
-
-           // row.Facility__c = item.facility;
             row.Site_Code__c = item.facilityCode;
             row.Facility_Type__c = item.facilityType;
 
@@ -374,21 +409,19 @@ public without sharing class HealthIdeasApiIntegration {
 
         return rows;
     }
-
-    private static List<Healthcare_Cost__c> buildHospitalRecords(List<HospitalItem> items, Id accountId, Id recordTypeId) {
+    
+	  /**
+     * Builds Healthcare Cost records for hospitalization data.
+     */
+    public static List<Healthcare_Cost__c> buildHospitalizationHealthcareCostRecords(List<HospitalizationHccRecord> items, Id accountId, Id recordTypeId) {
         List<Healthcare_Cost__c> rows = new List<Healthcare_Cost__c>();
-
-        for (HospitalItem item : items) {
-            System.debug('Hospital item = ' + JSON.serialize(item));
-        
+          for (HospitalizationHccRecord item : items) {        
             Healthcare_Cost__c row = new Healthcare_Cost__c();
             row.Account__c = accountId;
             row.RecordTypeId = recordTypeId;
-        
             row.PHN__c = item.phn;
             row.Date_of_Admission__c = parseDate(item.dateOfAdmission);
             row.Date_of_Discharge__c = parseDate(item.dateOfDischarge);
-        
             row.Site_Code__c = item.facilityCode;
             row.Service_Type2__c = normalizeDatedHospitalServiceType(item.careLevel, row.Date_of_Admission__c);
             row.Service_Type__c = returnServiceTypeProduct(item.careLevel, row.Date_of_Admission__c, row.Site_Code__c);
@@ -396,8 +429,6 @@ public without sharing class HealthIdeasApiIntegration {
             row.Description_of_Incident__c = item.descOfIncident;
             row.Diagnostic_Treatment_Service2__c = item.diagTreatmentSvcs;
             row.Intervention_Code_CCI__c = item.interventionCodesCci;
-        
-            // Only set this if your target field is supposed to store encounter id
             row.Source_System_ID__c = item.encounterId;
         
             rows.add(row);
@@ -405,59 +436,47 @@ public without sharing class HealthIdeasApiIntegration {
         return rows;
     }
 
-    private static List<Healthcare_Cost__c> buildPharmacareRecords(List<PharmacareItem> items, Id accountId, Id recordTypeId) {
+    /**
+     * Builds Healthcare Cost records for Pharmacare data.
+     */
+    public static List<Healthcare_Cost__c> buildPharmacareHealthcareCostRecords(List<PharmacareHccRecord> items, Id accountId, Id recordTypeId) {
         List<Healthcare_Cost__c> rows = new List<Healthcare_Cost__c>();
-
-          for (PharmacareItem item : items) {
-                System.debug('Pharmacare item = ' + JSON.serialize(item));
-        
-                Healthcare_Cost__c row = new Healthcare_Cost__c();
-                row.Account__c = accountId;
-                row.RecordTypeId = recordTypeId;
-        
-                row.PHN__c = item.phn;
-                row.Source_System_ID__c = item.encounterId;
-        
-                row.Date_of_Service__c = parseDate(item.dateOfService);
-                row.Name_of_Drug__c = item.nameOfDrug;
-                row.Cost_of_Drug__c = parseDecimal(item.costOfDrug);
-                row.DIN__c = item.din;
-        
-                String fullName = '';
-        
-                if (!String.isBlank(item.practitionerFirstName)) {
-                    fullName += item.practitionerFirstName;
-                }
-                if (!String.isBlank(item.practitionerLastName)) {
-                    if (!String.isBlank(fullName)) {
-                        fullName += ' ';
-                    }
-                    fullName += item.practitionerLastName;
-                }
-        
-                row.Practitioner_Name__c = fullName;
-        
-                row.Practitioner_First_Name__c = item.practitionerFirstName;
-                row.Practitioner_Last_Name__c = item.practitionerLastName;
-        
-                rows.add(row);
+         for (PharmacareHccRecord item : items) {        
+             Healthcare_Cost__c row = new Healthcare_Cost__c();
+             row.Account__c = accountId;
+             row.RecordTypeId = recordTypeId;
+             row.PHN__c = item.phn;
+             row.Source_System_ID__c = item.encounterId;
+             row.Date_of_Service__c = parseDate(item.dateOfService);
+             row.Name_of_Drug__c = item.nameOfDrug;
+             row.Cost_of_Drug__c = parseDecimal(item.costOfDrug);
+             row.DIN__c = item.din;
+             
+             String fullName = '';
+             
+             if (!String.isBlank(item.practitionerFirstName)) {
+                 fullName += item.practitionerFirstName;
+             }
+             if (!String.isBlank(item.practitionerLastName)) {
+                 if (!String.isBlank(fullName)) {
+                     fullName += ' ';
+                 }
+                 fullName += item.practitionerLastName;
+             }
+             
+             row.Practitioner_Name__c = fullName;
+             row.Practitioner_First_Name__c = item.practitionerFirstName;
+             row.Practitioner_Last_Name__c = item.practitionerLastName;
+             
+             rows.add(row);
             }
-
     	return rows;
     }
-
-    private static String normalizeHospitalServiceType(String value) {
-          
-        if (value == 'Day Surgery') {
-            return 'Surgical Day Care';
-        }
-        if (value == 'Acute Care') {
-            return 'Acute';
-        }
-        return value;
-    }
-
-    private static String normalizeDatedHospitalServiceType(String value, Date admissionDate) {
+    
+     /**
+     * Normalizes hospital service type and appends the financial year.
+     */
+	 private static String normalizeDatedHospitalServiceType(String value, Date admissionDate) {
         String yearSTR = String.valueOf(admissionDate.year());
         
         If(admissionDate.month() > 3){
@@ -473,6 +492,9 @@ public without sharing class HealthIdeasApiIntegration {
         return value + '-' + yearSTR;
     }
 
+     /**
+     * Builds the service type product value based on care level, year, and site code.
+     */
     private static String returnServiceTypeProduct(String value, Date admissionDate, String siteCode) {
         String yearSTR = String.valueOf(admissionDate.year());
         If(admissionDate.month() > 3){
@@ -487,22 +509,40 @@ public without sharing class HealthIdeasApiIntegration {
         }
         return value + '-' + yearSTR;
     }
-
+    
+	/**
+     * Safely converts a string date into an Apex Date.
+     * Handles values that include a time portion.
+     */
     private static Date parseDate(String value) {
-        if (String.isBlank(value)) {
-            return null;
-        }
-        String s = value;
-        if (s.contains('T')) {
-            s = s.substring(0, 10);
-        }
-        return Date.valueOf(s);
+        if (String.isBlank(value)) return null;
+        if (value.contains('T')) value = value.substring(0, 10);
+        return Date.valueOf(value);
     }
-
+    
+     /**
+     * Safely converts a string into a Decimal.
+     */
     private static Decimal parseDecimal(String value) {
-        if (String.isBlank(value)) {
-            return null;
-        }
+        if (String.isBlank(value)) return null;
         return Decimal.valueOf(value);
+    }
+    
+    
+    /**
+     * Checks whether the batch job is still running.
+     */
+    @AuraEnabled(cacheable=false)
+    public static Boolean isBatchInProgress(Id batchId) {
+        AsyncApexJob job = [
+            SELECT Status
+            FROM AsyncApexJob
+            WHERE Id = :batchId
+            LIMIT 1
+        ];
+    
+        return job.Status == 'Queued'
+            || job.Status == 'Preparing'
+            || job.Status == 'Processing';
     }
 }

@@ -140,10 +140,6 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>HealthIdeasApiIntegrationController</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>HealthIdeasApiIntegrationTest</apexClass>
         <enabled>false</enabled>
     </classAccesses>

@@ -10,11 +10,11 @@
 *         testsaveDraftValuesContinuingCare():Test Method to test the save draft values functionality part and related code base for Continuing Care record type
 *         testsaveDraftValuesFutureCare(): Test Method to test the save draft values functionality part and related code base for Future Care record type
 *         testsaveDraftValuesHospitalization(): Test Method to test the save draft values functionality part and related code base for Hospitalization record type
-*		  testRecordsDeleteFunctionality(): Test Method to check the delete functionality of Healthcare Cost records
-*		  testgetFacilityBySiteCode(): Test Method to get the Facility record data by the site code value
-*		  testupdateAll():Test Method to update all the records of Healthcare cost associated with the particular account
-*		  testCaseNumber(): Test Method to fetch the case number of the respective case ID
-*		  testUpdatetoCaseValues(): Test Method to update the case value for the Healthcare Cost record
+*      testRecordsDeleteFunctionality(): Test Method to check the delete functionality of Healthcare Cost records
+*      testgetFacilityBySiteCode(): Test Method to get the Facility record data by the site code value
+*      testupdateAll():Test Method to update all the records of Healthcare cost associated with the particular account
+*      testCaseNumber(): Test Method to fetch the case number of the respective case ID
+*      testUpdatetoCaseValues(): Test Method to update the case value for the Healthcare Cost record
 *         testUpdatetoCaseValuesFailScenario(): Test Method to validate the updation of the case value for the Healthcare Cost when incorrect Healthcare Cost record is present
 * History:
 *     Initial version: March 30, 2023 - AJ
@@ -352,8 +352,8 @@ public class HCCCostControllerTest {
         insert acc;
         Case c = TestDataFactory.newCase(acc.Id);
         insert c;
-        List<Healthcare_Cost__c> hccListtodelete1 = new List<Healthcare_Cost__c>();	
-        List<Healthcare_Cost__c> hccListtodelete2 = new List<Healthcare_Cost__c>();	
+        List<Healthcare_Cost__c> hccListtodelete1 = new List<Healthcare_Cost__c>();  
+        List<Healthcare_Cost__c> hccListtodelete2 = new List<Healthcare_Cost__c>();  
         Healthcare_Cost__c hcc1 = TestDataFactory.ambulanceCostRecord(acc.Id, c.Id);
         Healthcare_Cost__c hcc2 = TestDataFactory.ambulanceCostRecord(acc.Id, c.Id);
         hcc2.Source_System_ID__c = 'akgkj-sfj';
@@ -494,15 +494,12 @@ public class HCCCostControllerTest {
         Case c1 = TestDataFactory.newCase(acc.Id);
         Case c2 = TestDataFactory.newCase(acc.Id);
         insert  new Case[] {c1, c2};
-
+            
         Healthcare_Cost__c hcc1 = TestDataFactory.ambulanceCostRecord(acc.Id, c1.Id);
         Healthcare_Cost__c hcc2 = TestDataFactory.ambulanceCostRecord(acc.Id, c1.Id);
         hcc2.Cost_Include__c = false;
         hcc2.Cost_Review__c = false;
         Healthcare_Cost__c hcc3 = TestDataFactory.ambulanceCostRecord(acc.Id, c1.Id);
-        hcc1.dateId__c = '19950608001';
-        hcc2.dateId__c = '19950608002';
-        hcc3.dateId__c = '19950608003';
         
         Test.startTest();
         String filterAllRecords = Label.TPL_All_Records;
@@ -519,7 +516,7 @@ public class HCCCostControllerTest {
         String exceptionMessage = null;   
         String sortOrder = Label.TPL_Descending;
         try{
-            insert new Healthcare_Cost__c[] {hcc1, hcc2, hcc3};
+            insert new Healthcare_Cost__c[] {hcc1, hcc2, hcc3}; 
             accountDetailWrapper1 = HCCostAccountController.getHealthcareCostsAmbulanceForAccount(acc.Id, filterAllRecords, pageNumber, pageSize, sortOrder);
             accountDetailWrapper2 = HCCostAccountController.getHealthcareCostsAmbulanceForAccount(acc.Id, filterUncheckedRecords, pageNumber, pageSize, sortOrder);
             caseAssociation1 = accountDetailWrapper1.hccList;
@@ -527,7 +524,7 @@ public class HCCCostControllerTest {
             accountCaseUpdateWrapper1 = HCCCostController.updateHCCCaseInformation(caseAssociation1, caseId, caseAssociation1);
             accountCaseUpdateWrapper2 = HCCCostController.updateHCCCaseInformation(caseAssociation2, caseId, caseAssociation2);
             HCCCostController.updateHCCCaseInformation(caseAssociation2, null, caseAssociation2);
-
+            
         }
         catch(DmlException dml){
             exceptionMessage = dml.getMessage();
@@ -558,9 +555,6 @@ public class HCCCostControllerTest {
         hcc2.Cost_Include__c = false;
         hcc2.Cost_Review__c = false;
         Healthcare_Cost__c hcc3 = TestDataFactory.ambulanceCostRecord(acc.Id, c1.Id);
-        hcc1.dateId__c = '19950608001';
-        hcc2.dateId__c = '19950608002';
-        hcc3.dateId__c = '19950608003';
         hccList.add(hcc1);
         hccList.add(hcc2);
         hccList.add(hcc3);
