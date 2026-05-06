@@ -5,5 +5,15 @@
         <sharedTo>admin.user@gov.bc.ca.bcmohtpl</sharedTo>
         <sharedToType>User</sharedToType>
     </folderShares>
+    <folderShares>
+        <accessLevel>View</accessLevel>
+        <sharedTo>TPL_Analyst</sharedTo>
+        <sharedToType>Role</sharedToType>
+    </folderShares>
+    <folderShares>
+        <accessLevel>View</accessLevel>
+        <sharedTo>TPL_Manager</sharedTo>
+        <sharedToType>Role</sharedToType>
+    </folderShares>
     <name>TPL Reports</name>
 </ReportFolder>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Restrict_ManHospHC_WithProductNoFacility</fullName>
+    <active>true</active>
+    <description>this validation rule is used to restrict manual HCC Hospitalization records from being created without a facility.</description>
+    <errorConditionFormula>$Setup.Data_Migration_Check__c.Bypass_Flow_Validations__c = FALSE &amp;&amp;
+AND(
+ISBLANK(Source_System_ID__c),
+NOT(ISBLANK(Service_Provided_by_Facility__c)),
+ISBLANK(Facility__c),
+RecordType.Name = &apos;Hospitalization&apos;
+)</errorConditionFormula>
+    <errorMessage>Product cannot be selected without a facility on hospitalization record.</errorMessage>
+</ValidationRule>
