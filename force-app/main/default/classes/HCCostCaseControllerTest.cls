@@ -20,7 +20,7 @@
 *     Initial version: March 30, 2023 - AJ
 *     Updates to codebase: May 10, 2023 - AJ
 *     Updates to codebase: July 4, 2023 - AJ
-*	  Updates to codebase: Nov 5, 2025 - RRG 
+*	  Updates to codebase: Nov 5, 2025 - RRG
 */
 @isTest
 public with sharing class HCCostCaseControllerTest {
