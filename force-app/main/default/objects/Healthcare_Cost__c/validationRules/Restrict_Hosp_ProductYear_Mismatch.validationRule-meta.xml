@@ -4,6 +4,7 @@
     <active>true</active>
     <description>This validation rule is used to restrict hospitalization cost products to the matching product year.</description>
     <errorConditionFormula>AND(
+    $Setup.Data_Migration_Check__c.Bypass_Flow_Validations__c = FALSE,
     RecordType.Name = &apos;Hospitalization&apos;,
     !ISBLANK(Service_Provided_by_Facility__c),
     !ISBLANK(Date_of_Admission__c),
