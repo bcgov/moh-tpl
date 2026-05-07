@@ -595,6 +595,6 @@ public class HCCCostControllerTest {
         else{
             System.assertEquals(accountCaseUpdateWrapper1.passMessage, accountCaseUpdateWrapper2.passMessage);
         }
-        
+         
     }    
 }
