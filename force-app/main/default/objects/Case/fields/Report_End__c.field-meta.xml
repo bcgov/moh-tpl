@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Report_End__c</fullName>
+    <description>This field is used to track the end date of the generated document.</description>
     <encryptionScheme>None</encryptionScheme>
     <label>Report End</label>
     <required>false</required>
