@@ -5,8 +5,10 @@
  */
 global without sharing class TPL_CaseOmniService implements Callable{
     
-    global Object call(String action, Map<String, Object> args) {
-        
+    public Object call(String action, Map<String, Object> args) {
+        if(args == null || args.isEmpty()){
+            return null;
+        }       
         Map<String, Object> input = (Map<String, Object>) args.get('input');
         Map<String, Object> output = (Map<String, Object>) args.get('output');
         Map<String, Object> options = (Map<String, Object>) args.get('options');
@@ -14,7 +16,7 @@ global without sharing class TPL_CaseOmniService implements Callable{
         return invokeMethod(action, input, output, options);
     }
     
-    global Boolean invokeMethod(String methodName, Map<String,Object> inputMap, Map<String,Object> outMap, Map<String,Object> options) {
+    public Boolean invokeMethod(String methodName, Map<String,Object> inputMap, Map<String,Object> outMap, Map<String,Object> options) {
         Boolean result = true;
         
         try{
@@ -36,16 +38,28 @@ global without sharing class TPL_CaseOmniService implements Callable{
             throw new ExtensionMalformedCallException(e.getMessage());
         }
     }
+    /*
+      @Purpose: To check the count of Healthcare cost records based on account's birthday,
+                  date of service and date of admission.
+      @Parameters : This is called from remote action within an omniscript.
+                    inputMap holds the params passed from omniscript,
+                    outMap holds the values to be passed to omniscript.  
+    */
    
     public void getHealthCareCostRecords(Map<String,Object> inputMap, Map<String,Object> outMap){
+        if(inputMap == null || inputMap.isEmpty()){
+            return;
+        }
+        if(inputMap.get('caseId') == null || inputMap.get('birthDate') == null){
+            return;
+        }
         List<Id> hcIdList  = new List<Id>();
-        
-        String caseId = String.valueOf(inputMap.get('caseId'));
+        String  caseId  = String.valueOf(inputMap.get('caseId'));
         String birthDateStr = String.valueOf(inputMap.get('birthDate'));
-        
         Date birthDate = birthDateStr.contains('T') 
             ? DateTime.valueOf(birthDateStr).date() 
             : Date.valueOf(birthDateStr);
+
         
         for(Healthcare_Cost__c hc : [
             Select Id,
@@ -58,8 +72,10 @@ global without sharing class TPL_CaseOmniService implements Callable{
             AND ((Date_of_Service__c >= :birthDate
             AND Date_of_Service__c <= TODAY) OR (Date_of_Admission__c >= :birthDate AND Date_of_Admission__c <= TODAY))
         ]){
-            if(hc.RecordType.DeveloperName == 'Future_Care' || 
-               hc.RecordType.DeveloperName == 'Continuing_Care'){
+            if((hc.RecordType.DeveloperName == 'Future_Care' || 
+               hc.RecordType.DeveloperName == 'Continuing_Care') &&
+               hc.Case2__c != null
+               ){
                 
                 if(hc.Cost_Include__c == hc.Case2__r.Include_Future_Care__c || 
                    hc.Cost_Review__c == hc.Case2__r.Include_Future_Care__c){
@@ -74,7 +90,20 @@ global without sharing class TPL_CaseOmniService implements Callable{
         outMap.put('hcCount', hcIdList.size());
     }
     
+    /*
+      @Purpose: To check the count of Healthcare cost records based on the 
+                 date input fields from omniscript
+      @Parameters : This is called from remote action within an omniscript.
+                    inputMap holds the params passed from omniscript,
+                    outMap holds the values to be passed to omniscript.  
+    */ 
     public void getHealthCareCostRecordsInDateRange(Map<String,Object> inputMap, Map<String,Object> outMap){
+       if(inputMap == null || inputMap.isEmpty()){
+            return;
+        }
+        if(inputMap.get('ContextId') == null && inputMap.get('startDate') == null && inputMap.get('endStr') == null && inputMap.get('includeFuture') == null){
+            return;
+        }
         List<Id> hcIdList  = new List<Id>();
         
         String caseId = String.valueOf(inputMap.get('ContextId'));
