@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Report_Include__c</fullName>
+    <formula>OR(
+And(RecordType.Name =&apos;Ambulance&apos;,Date_of_Service__c &gt;= Case2__r.Report_Start__c, Date_of_Service__c &lt;= Case2__r.Report_End__c),
+And(RecordType.Name =&apos;MSP&apos;,Date_of_Service__c &gt;= Case2__r.Report_Start__c, Date_of_Service__c &lt;= Case2__r.Report_End__c),
+And(RecordType.Name =&apos;Pharmacare&apos;,Date_of_Service__c &gt;= Case2__r.Report_Start__c, Date_of_Service__c &lt;= Case2__r.Report_End__c),
+And(RecordType.Name =&apos;Hospitalization&apos;, Date_of_Admission__c &gt;= Case2__r.Report_Start__c, Date_of_Admission__c &lt;= Case2__r.Report_End__c),
+And(RecordType.Name =&apos;Continuing Care&apos;, Case2__r.Include_Future_Care__c ),
+And(RecordType.Name =&apos;Future Care&apos;,Case2__r.Include_Future_Care__c)
+)</formula>
+    <label>Report Include</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>
