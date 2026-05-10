@@ -140,6 +140,14 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <classAccesses>
+        <apexClass>TPL_CaseOmniService</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>TPL_CaseOmniServiceTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
         <apexClass>HealthIdeasApiIntegrationTest</apexClass>
         <enabled>false</enabled>
     </classAccesses>
