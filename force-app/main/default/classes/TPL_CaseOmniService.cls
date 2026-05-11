@@ -47,12 +47,15 @@ global without sharing class TPL_CaseOmniService implements Callable{
     */
    
     public void getHealthCareCostRecords(Map<String,Object> inputMap, Map<String,Object> outMap){
-        if(inputMap == null || inputMap.isEmpty()){
+        /*if(inputMap == null || inputMap.isEmpty()){
             return;
-        }
-        if(inputMap.get('caseId') == null || inputMap.get('birthDate') == null){
+        }*/
+        if(!inputMap.containsKey('caseId') || !inputMap.containsKey('birthDate')) {
             return;
-        }
+            }
+        /*if(inputMap.get('caseId') == null || inputMap.get('birthDate') == null){
+            return;
+        }*/
         List<Id> hcIdList  = new List<Id>();
         String  caseId  = String.valueOf(inputMap.get('caseId'));
         String birthDateStr = String.valueOf(inputMap.get('birthDate'));
