@@ -61,7 +61,9 @@ global without sharing class TPL_CaseOmniService implements Callable{
         Date birthDate = birthDateStr.contains('T') 
             ? DateTime.valueOf(birthDateStr).date() 
             : Date.valueOf(birthDateStr);
-
+       if(String.isBlank(birthDateStr) || birthDateStr == 'null'){
+            return;
+       }
         
         for(Healthcare_Cost__c hc : [
             Select Id,
@@ -103,7 +105,8 @@ global without sharing class TPL_CaseOmniService implements Callable{
        if(inputMap == null || inputMap.isEmpty()){
             return;
         }
-        if(inputMap.get('ContextId') == null && inputMap.get('startDate') == null && inputMap.get('endStr') == null && inputMap.get('includeFuture') == null){
+        //if(inputMap.get('ContextId') == null && inputMap.get('startDate') == null && inputMap.get('endStr') == null && inputMap.get('includeFuture') == null)
+            if(!inputMap.containsKey('ContextId') && !inputMap.containsKey('startDate') && !inputMap.containsKey('endStr') && !inputMap.containsKey('includeFuture')){
             return;
         }
         List<Id> hcIdList  = new List<Id>();
@@ -112,7 +115,13 @@ global without sharing class TPL_CaseOmniService implements Callable{
         String startStr = String.valueOf(inputMap.get('startDate'));
         String endStr = String.valueOf(inputMap.get('endDate'));
         Boolean isFutureCare = Boolean.valueOf(inputMap.get('includeFuture'));
-        
+        if(String.isBlank(startStr) || startStr == 'null'){
+            return;
+            }
+
+        if(String.isBlank(endStr) || endStr == 'null'){
+            return;
+        }
         Date startDate = startStr.contains('T') 
             ? DateTime.valueOf(startStr).date() 
             : Date.valueOf(startStr);
