@@ -58,13 +58,14 @@ global without sharing class TPL_CaseOmniService implements Callable{
         List<Id> hcIdList  = new List<Id>();
         String  caseId  = String.valueOf(inputMap.get('caseId'));
         String birthDateStr = String.valueOf(inputMap.get('birthDate'));
-        Date birthDate = birthDateStr.contains('T') 
-            ? DateTime.valueOf(birthDateStr).date() 
-            : Date.valueOf(birthDateStr);
-       if(String.isBlank(birthDateStr) || birthDateStr == 'null'){
+        if(String.isBlank(birthDateStr)){
             return;
        }
         
+        Date birthDate = birthDateStr.contains('T') 
+            ? DateTime.valueOf(birthDateStr).date() 
+            : Date.valueOf(birthDateStr);
+       
         for(Healthcare_Cost__c hc : [
             Select Id,
                    Cost_Include__c,
@@ -102,12 +103,8 @@ global without sharing class TPL_CaseOmniService implements Callable{
                     outMap holds the values to be passed to omniscript.  
     */ 
     public void getHealthCareCostRecordsInDateRange(Map<String,Object> inputMap, Map<String,Object> outMap){
-       if(inputMap == null || inputMap.isEmpty()){
-            return;
-        }
-        //if(inputMap.get('ContextId') == null && inputMap.get('startDate') == null && inputMap.get('endStr') == null && inputMap.get('includeFuture') == null)
-            if(!inputMap.containsKey('ContextId') && !inputMap.containsKey('startDate') && !inputMap.containsKey('endStr') && !inputMap.containsKey('includeFuture')){
-            return;
+       if (inputMap == null || inputMap.isEmpty() ||(!inputMap.containsKey('ContextId') && !inputMap.containsKey('startDate') && !inputMap.containsKey('endStr') && !inputMap.containsKey('includeFuture'))){
+        return;
         }
         List<Id> hcIdList  = new List<Id>();
         
@@ -115,11 +112,7 @@ global without sharing class TPL_CaseOmniService implements Callable{
         String startStr = String.valueOf(inputMap.get('startDate'));
         String endStr = String.valueOf(inputMap.get('endDate'));
         Boolean isFutureCare = Boolean.valueOf(inputMap.get('includeFuture'));
-        if(String.isBlank(startStr) || startStr == 'null'){
-            return;
-            }
-
-        if(String.isBlank(endStr) || endStr == 'null'){
+        if(String.isBlank(startStr) || String.isBlank(endStr)){
             return;
         }
         Date startDate = startStr.contains('T') 
