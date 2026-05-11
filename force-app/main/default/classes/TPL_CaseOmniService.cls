@@ -1,7 +1,11 @@
 /**
- * @purpose
- * This class provides Callable Apex methods for OmniStudio to retrieve and filter 
- * Healthcare Cost records related to a Case based on date range and Future Care criteria.
+ * @description  TPL_CaseOmniService provides Callable Apex methods for OmniStudio
+ *               to retrieve and filter Healthcare Cost records related to a Case
+ *               based on date range and Future Care criteria.
+ *
+ * @author       Sunny
+ * @developer    Sunny
+ * @created      2026-05-05
  */
 global without sharing class TPL_CaseOmniService implements Callable{
     
@@ -47,15 +51,10 @@ global without sharing class TPL_CaseOmniService implements Callable{
     */
    
     public void getHealthCareCostRecords(Map<String,Object> inputMap, Map<String,Object> outMap){
-        /*if(inputMap == null || inputMap.isEmpty()){
-            return;
-        }*/
+
         if(!inputMap.containsKey('caseId') || !inputMap.containsKey('birthDate')) {
             return;
             }
-        /*if(inputMap.get('caseId') == null || inputMap.get('birthDate') == null){
-            return;
-        }*/
         List<Id> hcIdList  = new List<Id>();
         String  caseId  = String.valueOf(inputMap.get('caseId'));
         String birthDateStr = String.valueOf(inputMap.get('birthDate'));
