@@ -2,6 +2,11 @@ import { LightningElement, api } from 'lwc';
 import runGetCost from '@salesforce/apex/HealthIdeasApiIntegration.getHealthcareCostsForAccountandSetDate';
 import isBatchInProgress from '@salesforce/apex/HealthIdeasApiIntegration.isBatchInProgress';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import dateSelectionMessage from '@salesforce/label/c.TPL_HI_Date_Selection_Message';
+import partialSuccessText from '@salesforce/label/c.TPL_HI_Partial_Success_Text';
+import toastSuccessMessage from '@salesforce/label/c.TPL_HI_Toast_SuccessMessage';
+import transferSuccessMessage from '@salesforce/label/c.TPL_HI_Transfer_SuccessMessage';
+import unexpectedErrorMessage from '@salesforce/label/c.TPL_HI_Unexpected_Error_Message';
 
 // Interval used to poll batch job status.
 const POLL_INTERVAL_MS = 3000;
@@ -16,6 +21,7 @@ export default class HealthIdeasAction extends LightningElement
     isLoading = false;
     batchId;
     poller;
+    messages = [];
 
     connectedCallback ()
     {
@@ -25,6 +31,11 @@ export default class HealthIdeasAction extends LightningElement
     disconnectedCallback ()
     {
         this.clearBatchTimer();
+    }
+
+    get hasMessages ()
+    {
+        return this.messages && this.messages.length > 0;
     }
 
     handleDateChange ( event )
@@ -43,7 +54,7 @@ export default class HealthIdeasAction extends LightningElement
 
         if ( !this.selectedDate )
         {
-            this.showError( 'Please select a date.' );
+            this.showError( dateSelectionMessage );
             return;
         }
 
@@ -57,9 +68,17 @@ export default class HealthIdeasAction extends LightningElement
                 isASyncCall: this.isASyncCall
             } );
 
+            this.messages = response?.messages || [];
+
             if ( !response?.success )
             {
-                this.showError( response?.errorMessage || 'Unexpected error occurred.' );
+                this.showError( response?.errorMessage || unexpectedErrorMessage );
+                return;
+            }
+
+            if ( this.messages.length > 0 )
+            {
+                this.showCompletedWithNotedErrors();
                 return;
             }
 
@@ -81,7 +100,7 @@ export default class HealthIdeasAction extends LightningElement
         }
         catch ( error )
         {
-            this.showError( error?.body?.message || 'Unexpected error occurred.' );
+            this.showError( error?.body?.message || unexpectedErrorMessage );
         }
     }
 
@@ -101,12 +120,18 @@ export default class HealthIdeasAction extends LightningElement
 
             if ( !inProgress )
             {
+                if ( this.messages.length > 0 )
+                {
+                    this.showCompletedWithNotedErrors();
+                    return;
+                }
+
                 this.showSuccess();
             }
         }
         catch ( error )
         {
-            this.showError( error?.body?.message || 'Unexpected error occurred.' );
+            this.showError( error?.body?.message || unexpectedErrorMessage );
         }
     }
 
@@ -120,17 +145,34 @@ export default class HealthIdeasAction extends LightningElement
         }
     }
 
-    // Shows a success toast and stops loading.
+    // Shows success message and stops loading.
     showSuccess ()
     {
         this.clearBatchTimer();
         this.isLoading = false;
-        this.result = 'Your transfer has been successful';
+        this.result = transferSuccessMessage;
+        this.error = undefined;
+        this.dispatchEvent(
+            new ShowToastEvent( {
+                title: 'Success',
+                message: toastSuccessMessage,
+                variant: 'success'
+            } )
+        );
+    }
+
+    // Shows completed message and keeps noted errors visible in the panel.
+    showCompletedWithNotedErrors ()
+    {
+        this.clearBatchTimer();
+        this.isLoading = false;
+        this.result = transferSuccessMessage;
+        this.error = undefined;
 
         this.dispatchEvent(
             new ShowToastEvent( {
                 title: 'Success',
-                message: 'Get Records executed successfully.',
+                message: toastSuccessMessage,
                 variant: 'success'
             } )
         );
@@ -141,6 +183,7 @@ export default class HealthIdeasAction extends LightningElement
     {
         this.clearBatchTimer();
         this.isLoading = false;
+        this.result = undefined;
         this.error = message;
 
         this.dispatchEvent(
@@ -160,6 +203,7 @@ export default class HealthIdeasAction extends LightningElement
         this.result = undefined;
         this.error = undefined;
         this.batchId = undefined;
+        this.messages = [];
     }
 
     // Returns today's date in YYYY-MM-DD format for local time.
