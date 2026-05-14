@@ -3,6 +3,16 @@ private class HealthIdeasApiIntegrationTest {
 
     // Mock response generator for token and HealthIdeas API callouts.
     private class MockHttpResponseGenerator implements HttpCalloutMock {
+        private Boolean forceHospitalizationDmlFailure;
+
+        MockHttpResponseGenerator() {
+            this.forceHospitalizationDmlFailure = false;
+        }
+
+        MockHttpResponseGenerator(Boolean forceHospitalizationDmlFailure) {
+            this.forceHospitalizationDmlFailure = forceHospitalizationDmlFailure;
+        }
+
         public HttpResponse respond(HttpRequest req) {
             HttpResponse res = new HttpResponse();
             res.setHeader('Content-Type', 'application/json');
@@ -26,6 +36,10 @@ private class HealthIdeasApiIntegrationTest {
                 res.setBody('{"access_token":"fake-access-token","token_type":"Bearer","expires_in":3600}');
                 return res;
             }
+
+            String interventionCodesCci = forceHospitalizationDmlFailure
+                ? 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+                : 'CCI123';
 
             // Returns mocked HealthIdeas response data.
             if (endpoint.contains('health')) {
@@ -56,7 +70,8 @@ private class HealthIdeasApiIntegrationTest {
                                 '"facility":"Mission Memorial Hospital",' +
                                 '"costType":"Hospitalizations",' +
                                 '"encounterId":"234152213098",' +
-                    			'"careLevel":"Acute Care"' +
+                                '"careLevel":"Acute Care",' +
+                                '"interventionCodesCci":"' + interventionCodesCci + '"' +
                             '}],' +
                             '"pharmacare":[{' +
                                 '"phn":"9872626777",' +
@@ -259,5 +274,37 @@ private class HealthIdeasApiIntegrationTest {
         System.assertEquals(false, result.success);
         System.assertNotEquals(null, result.errorMessage);
         System.assertEquals(null, result.batchId);
-	}
+    }
+
+    @IsTest
+    static void testRefreshHealthcareCostRecords_InsertDmlFailure_AddsMessage() {
+        Account acc = getTestAccount();
+
+        Test.setMock(HttpCalloutMock.class, new MockHttpResponseGenerator(true));
+
+        Test.startTest();
+        HealthIdeasApiIntegration.IntegrationResult result =
+            HealthIdeasApiIntegration.getHealthcareCostsForAccountandSetDate(
+                acc.Id,
+                Date.newInstance(2025, 1, 1),
+                false
+            );
+        Test.stopTest();
+
+        System.assertNotEquals(null, result, 'Expected integration result.');
+
+        System.assertEquals(true, result.success, 'Expected integration call to complete successfully even when one insert row fails.');
+
+        System.assertEquals(null, result.errorMessage, 'Expected no top-level integration error.');
+
+        System.assertEquals(null, result.batchId, 'Expected no batch Id for synchronous refresh.');
+
+        System.assertNotEquals(null, result.messages, 'Expected messages list to be initialized.');
+
+        System.assertEquals(1, result.messages.size(), 'Expected one user-facing message for the failed hospitalization insert.');
+
+        System.assert(result.messages[0].contains(Label.TPL_HI_Record_ErrorMessage), 'Expected configured HealthIdeas record error label in the message.');
+
+        System.assert(result.messages[0].contains('June 21, 2006'), 'Expected failed admission date to be included in the message.');
+    }
 }
