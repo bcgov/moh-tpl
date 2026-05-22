@@ -14,7 +14,7 @@ public with sharing class LogService {
         }
         
         String rootBatchJobIdString = String.valueOf(rootBatchJobId);
-        Id runningUserId = UserInfo.getUserId();
+        Id runningUserId = getRunningUserId();
         
         List<Log__c> existingLogs = [
             SELECT Id
@@ -141,7 +141,7 @@ public with sharing class LogService {
     // Gets the status log and locks it so chunk updates do not overwrite each other.
     private static Log__c getStatusLogForUpdate(Id rootBatchJobId) {
         String rootBatchJobIdString = String.valueOf(rootBatchJobId);
-        Id runningUserId = UserInfo.getUserId();
+        Id runningUserId = getRunningUserId();
         
         List<Log__c> logs = [
             SELECT Id,
@@ -224,7 +224,7 @@ public with sharing class LogService {
         logRecord.Error_Message__c = errorMessage;
         logRecord.Record_Id__c = recordId == null ? null : String.valueOf(recordId);
         logRecord.Line_Number__c = lineNumber;
-        logRecord.Running_User__c = UserInfo.getUserId();
+        logRecord.Running_User__c = getRunningUserId();
         
         return logRecord;
     }
@@ -315,7 +315,7 @@ public with sharing class LogService {
         }
         
         String rootBatchJobIdString = String.valueOf(rootBatchJobId);
-        Id runningUserId = UserInfo.getUserId();
+        Id runningUserId = getRunningUserId();
         
         List<Log__c> logs = [
             SELECT Status__c
@@ -326,5 +326,12 @@ public with sharing class LogService {
         ];
         
         return !logs.isEmpty() && logs[0].Status__c == TPL_Constants.STATUS_FAILED;
+    }
+
+    /**
+     *Helper to get the running user ID.
+    */ 
+    public static Id getRunningUserId() {
+        return  UserInfo.getUserId();
     }
 }
