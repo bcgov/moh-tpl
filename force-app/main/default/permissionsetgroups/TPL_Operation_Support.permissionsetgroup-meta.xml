@@ -4,6 +4,7 @@
     <hasActivationRequired>false</hasActivationRequired>
     <label>TPL_Operation_Support</label>
     <permissionSets>DocGenInd_Design_All</permissionSets>
+    <permissionSets>LogObject_ReadWrite_Permissions</permissionSets>
     <permissionSets>Manage_ENCRYPTION</permissionSets>
     <permissionSets>OmniStudio_Standard_Designer_Users</permissionSets>
     <permissionSets>TPL_Finance</permissionSets>

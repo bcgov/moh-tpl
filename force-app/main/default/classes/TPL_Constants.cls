@@ -40,5 +40,5 @@ public with sharing class TPL_Constants {
     
     public static final String ERROR_DELETE_FAILED_HEALTHCARE_COST = 'Delete failed for Healthcare_Cost__c Id ';
     public static final String HI_BATCH_CONFIGURATION_RECORD_NAME = 'BatchSize';
-    public static final Integer MAX_TRUNCATE_LENGTH = 255;
+    public static final String TPL_HI_RECORDS_FOR_SUFFIX = ' records for ';
 }

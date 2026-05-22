@@ -23,7 +23,7 @@ public with sharing class LogInsertBatch implements Database.Batchable<Log__c> {
         }
 
         try {
-            Database.SaveResult[] results = Database.insert(scope, false);
+             Database.SaveResult[] results =  LogService.upsertLogsInSystemModeWithReturnValue(scope);
 
             for (Integer i = 0; i < results.size(); i++) {
                 if (!results[i].isSuccess()) {

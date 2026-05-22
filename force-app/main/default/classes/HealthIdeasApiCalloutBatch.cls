@@ -42,7 +42,10 @@ implements Database.Batchable<SObject>, Database.AllowsCallouts {
                 LogService.markChunkFailed(
                     rootBatchJobId,
                     bc.getJobId(),
-                    TPL_Constants.ERROR_NO_ACCOUNT_FOUND_HEALTH_IDEAS
+                    TPL_Constants.ERROR_NO_ACCOUNT_FOUND_HEALTH_IDEAS,
+                    null,
+                    'HealthIdeasApiCalloutBatch',
+                    'execute'
                 );
                 return;
             }
@@ -61,7 +64,10 @@ implements Database.Batchable<SObject>, Database.AllowsCallouts {
                 LogService.markChunkFailed(
                     rootBatchJobId,
                     bc.getJobId(),
-                    TPL_Constants.ERROR_HEALTH_IDEAS_API_CALLOUT_FAILED + res.getStatus()
+                    TPL_Constants.ERROR_HEALTH_IDEAS_API_CALLOUT_FAILED + res.getStatus(),
+                    null,
+                    'HealthIdeasApiCalloutBatch',
+                    'execute'
                 );
                 return;
             }
@@ -71,13 +77,15 @@ implements Database.Batchable<SObject>, Database.AllowsCallouts {
             
             Map<String, Id> recordTypeIds =
                 HealthIdeasApiIntegration.getHealthcareCostRecordTypeIds();
+            Boolean hasPayloadData =
+                payload != null &&
+                (
+                    (payload.msp != null && !payload.msp.isEmpty()) ||
+                    (payload.hospitalizations != null && !payload.hospitalizations.isEmpty()) ||
+                    (payload.pharmacare != null && !payload.pharmacare.isEmpty())
+                );
             
-            if (
-                (payload.msp != null || !payload.msp.isEmpty()) &&
-                (payload.hospitalizations != null || !payload.hospitalizations.isEmpty()) &&
-                (payload.pharmacare != null || !payload.pharmacare.isEmpty())        
-            ) { 
-                
+            if (hasPayloadData) {
                 System.enqueueJob(
                     new HealthIdeasMspQueueable(
                         accountId,
@@ -93,16 +101,34 @@ implements Database.Batchable<SObject>, Database.AllowsCallouts {
                         currentEndDate
                     )
                 );
+            } else {
+                // If no payload data, still need to enqueue the next chunk to move the process forward
+                System.enqueueJob(
+                    new HealthIdeasPharmacareQueueable(
+                        accountId,
+                        null,
+                        recordTypeIds.get(TPL_Constants.HCC_PHARMA_RECORDTYPE_NAME),
+                        rootBatchJobId,
+                        null,
+                        requesterUserName,
+                        currentEndDate
+                    )
+                );
             }
         } catch (Exception e) {
             LogService.markChunkFailed(
                 rootBatchJobId,
                 bc.getJobId(),
-                e.getMessage()
-            );
+                e.getMessage(),
+                e.getStackTraceString(),
+                'HealthIdeasApiCalloutBatch',
+                'execute'
+            ); 
         }
     }
     
     public void finish(Database.BatchableContext bc) {
+
+        LogService.logExtendedStatus(bc.getJobId(), rootBatchJobId);
     }
 }

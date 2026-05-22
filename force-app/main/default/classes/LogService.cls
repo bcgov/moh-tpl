@@ -3,12 +3,12 @@
 * Company: CGI
 * Purpose: Simple logging helper for async healthcare cost refresh jobs.
 */
-public with sharing class LogService {
+public without sharing class LogService {
     
     private static final Integer MAX_ERROR_LENGTH =  32767;
     
     // Creates or resets the main async status log for a batch run.
-    public static void initializeAsyncStatus(Id rootBatchJobId, Integer totalChunks) {
+    public static void initializeAsyncStatus(Id rootBatchJobId, Integer totalChunks, string className, string methodName) {
         if (rootBatchJobId == null) {
             return;
         }
@@ -30,8 +30,8 @@ public with sharing class LogService {
             logRecord = new Log__c();
             logRecord.JobId__c = rootBatchJobIdString;
             logRecord.Running_User__c = runningUserId;
-            logRecord.Class_Name__c = TPL_Constants.CLASS_HEALTH_IDEAS_API_INTEGRATION;
-            logRecord.Method_Name__c = TPL_Constants.METHOD_ASYNC_HEALTHCARE_COST_REFRESH;
+            logRecord.Class_Name__c = className;
+            logRecord.Method_Name__c = methodName;
         } else {
             logRecord = existingLogs[0];
         }
@@ -42,7 +42,7 @@ public with sharing class LogService {
         logRecord.Failed_Chunks__c = 0;
         logRecord.Error_Message__c = null;
         
-        upsert logRecord;
+        upsertLogsInSystemMode(new List<Log__c>{ logRecord });
     }
     
     // Updates the overall async status.
@@ -53,7 +53,7 @@ public with sharing class LogService {
         
         Log__c logRecord = getStatusLogForUpdate(rootBatchJobId);
         logRecord.Status__c = status;
-        update logRecord;
+        updateLogsInSystemMode(new List<SObject>{logRecord});
     }
     
     // Adds an error message to the main async log.
@@ -64,7 +64,8 @@ public with sharing class LogService {
         
         Log__c logRecord = getStatusLogForUpdate(rootBatchJobId);
         logRecord.Error_Message__c = appendMessage(logRecord.Error_Message__c, errorMessage);
-        update logRecord;
+        
+        updateLogsInSystemMode(new List<SObject>{logRecord});
     }
     
     // Marks one queueable chunk as finished and updates final status if all chunks are done.
@@ -108,14 +109,17 @@ public with sharing class LogService {
             logRecord.Status__c = TPL_Constants.STATUS_PROCESSING;
         }
         
-        update logRecord;
+         updateLogsInSystemMode(new List<SObject>{logRecord});
     }
     
     // Marks the async process as failed.
     public static void markChunkFailed(
         Id rootBatchJobId,
         Id queueableJobId,
-        String errorMessage
+        String errorMessage,
+        String stackTrace,
+        String className,
+        String methodName
     ) {
         if (rootBatchJobId == null) {
             return;
@@ -135,9 +139,12 @@ public with sharing class LogService {
         
         logRecord.Status__c = TPL_Constants.STATUS_FAILED;
         logRecord.Error_Message__c = errorMessage;
+        logRecord.Stack_Trace__c = stackTrace;
+        logRecord.Class_Name__c = className;
+        logRecord.Method_Name__c = methodName;
+        updateLogsInSystemMode(new List<SObject>{logRecord});
         
-        update logRecord;
-    }
+     }
     // Gets the status log and locks it so chunk updates do not overwrite each other.
     private static Log__c getStatusLogForUpdate(Id rootBatchJobId) {
         String rootBatchJobIdString = String.valueOf(rootBatchJobId);
@@ -170,7 +177,8 @@ public with sharing class LogService {
         logRecord.Class_Name__c = TPL_Constants.CLASS_HEALTH_IDEAS_API_INTEGRATION;
         logRecord.Method_Name__c = TPL_Constants.METHOD_ASYNC_HEALTHCARE_COST_REFRESH;
         logRecord.Status__c = TPL_Constants.STATUS_PROCESSING;
-        insert logRecord;
+
+         insertLogsInSystemMode(new List<SObject>{logRecord});
         
         return [
             SELECT Id,
@@ -215,15 +223,12 @@ public with sharing class LogService {
         String className,
         String methodName,
         String errorMessage,
-        Id recordId,
-        Integer lineNumber
-    ) {
+        Id recordId) {
         Log__c logRecord = new Log__c();
         logRecord.Class_Name__c = className;
         logRecord.Method_Name__c = methodName;
         logRecord.Error_Message__c = errorMessage;
         logRecord.Record_Id__c = recordId == null ? null : String.valueOf(recordId);
-        logRecord.Line_Number__c = lineNumber;
         logRecord.Running_User__c = getRunningUserId();
         
         return logRecord;
@@ -246,7 +251,8 @@ public with sharing class LogService {
     public static String appendHealthcareCostInsertMessages(
         String existingMessage,
         Database.SaveResult[] insertResults,
-        List<Healthcare_Cost__c> recordsToInsert
+        List<Healthcare_Cost__c> recordsToInsert,
+        string hccType
     ) {
         if (insertResults == null || recordsToInsert == null) {
             return existingMessage;
@@ -261,15 +267,8 @@ public with sharing class LogService {
                 
                 for (Database.Error err : insertResults[i].getErrors()) {
                     if (err.getStatusCode() != StatusCode.DUPLICATE_VALUE) {
-                        if (failedRecord.Date_of_Admission__c != null) {
-                            String admissionDate = DateTime.newInstance(
-                                failedRecord.Date_of_Admission__c,
-                                Time.newInstance(0, 0, 0, 0)
-                            ).format('MMMM d, yyyy');
-                            
-                            affectedDates.add(admissionDate);
-                        }
-                        
+                        Date affectedDate = failedRecord.Date_of_Admission__c != null ? failedRecord.Date_of_Admission__c : failedRecord.Date_of_Service__c;
+                        affectedDates.add(HealthIdeasApiIntegration.formatDateForDisplay(affectedDate));
                         logsToInsert.add(
                             buildLog(
                                 TPL_Constants.CLASS_LOG_SERVICE,
@@ -278,8 +277,7 @@ public with sharing class LogService {
                                 String.valueOf(err.getStatusCode()) +
                                 TPL_Constants.ERROR_MESSAGE_PREFIX +
                                 err.getMessage(),
-                                failedRecord.Id,
-                                null
+                                failedRecord.Id
                             )
                         );
                     }
@@ -297,10 +295,10 @@ public with sharing class LogService {
         
         String updatedMessage = existingMessage;
         
-        for (String admissionDate : affectedDates) {
+        for (String affectedDate : affectedDates) {
             updatedMessage = appendMessage(
                 updatedMessage,
-                Label.TPL_HI_Record_ErrorMessage + ' ' + admissionDate
+              Label.TPL_HI_Record_ErrorMessage + ' ' + hccType + TPL_Constants.TPL_HI_RECORDS_FOR_SUFFIX + affectedDate
             );
         }
         
@@ -334,4 +332,79 @@ public with sharing class LogService {
     public static Id getRunningUserId() {
         return  UserInfo.getUserId();
     }
+
+    /**
+     * Upserts records in system mode and returns the results.
+     */
+    public static Database.SaveResult[] upsertLogsInSystemModeWithReturnValue(List<SObject> recordsToInsert) {
+        if (recordsToInsert == null || recordsToInsert.isEmpty()) {
+            return new List<Database.SaveResult>();
+        }
+
+        return Database.insert(
+            recordsToInsert,
+            false,
+            AccessLevel.SYSTEM_MODE
+        );
+    }
+
+    /**
+     * Inserts records in system mode.
+     */
+   public static void insertLogsInSystemMode(List<SObject> recordsToInsert) {
+        if (recordsToInsert == null || recordsToInsert.isEmpty()) {
+            return;
+        }
+
+        Database.insert(
+            recordsToInsert,
+            AccessLevel.SYSTEM_MODE
+        );
+    }
+     
+    /**
+     * Updates log records in system mode.
+     */
+    public static void updateLogsInSystemMode(List<SObject> recordsToUpdate) {
+        if (recordsToUpdate == null || recordsToUpdate.isEmpty()) {
+            return;
+        }
+
+        Database.update(
+            recordsToUpdate,
+            AccessLevel.SYSTEM_MODE
+        );
+    }
+
+    /**
+     * Upserts log records in system mode.
+     */
+    public static void upsertLogsInSystemMode(List<SObject> recordsToUpsert) {
+        if (recordsToUpsert == null || recordsToUpsert.isEmpty()) {
+            return;
+        }
+
+        Database.upsert(recordsToUpsert, false, AccessLevel.SYSTEM_MODE);
+    }
+
+    public static void logExtendedStatus(Id batchId, Id rootBatchJobId) {
+        AsyncApexJob job = [
+            SELECT Status, ExtendedStatus
+            FROM AsyncApexJob
+            WHERE Id = :batchId
+            LIMIT 1
+        ];
+
+        if (job.Status ==  TPL_Constants.STATUS_COMPLETED && !String.isBlank(job.ExtendedStatus)) {
+            LogService.markChunkFailed(
+                rootBatchJobId,
+                batchId,
+                job.ExtendedStatus,
+                null,
+                'HealthIdeasApiCalloutBatch',
+                'execute'
+            );
+        }
+    }
+
 }

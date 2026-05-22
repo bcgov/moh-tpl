@@ -69,8 +69,9 @@ public with sharing class HealthIdeasHospitalizationQueueable implements Queueab
                     errorMessage = LogService.appendHealthcareCostInsertMessages(
                         errorMessage,
                         insertResults,
-                        recordsToInsert
-                    );
+                        recordsToInsert,
+                        TPL_Constants.HCC_HOSP_RECORDTYPE_NAME
+                    ); 
                 }
             }
             
@@ -91,8 +92,11 @@ public with sharing class HealthIdeasHospitalizationQueueable implements Queueab
             LogService.markChunkFailed(
                 rootBatchJobId,
                 context.getJobId(),
-                e.getMessage()
-            );
+                e.getMessage(),
+                e.getStackTraceString(),
+                'HealthIdeasHospitalizationQueueable',
+                'execute'
+            ); 
         }
     }
 }
