@@ -140,6 +140,14 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>TPL_CaseOmniService</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>TPL_CaseOmniServiceTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HealthIdeasApiIntegrationTest</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -463,6 +471,21 @@
         <editable>false</editable>
         <field>Case.Ambulance_Total_ClassAction__c</field>
         <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.Report_End__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.Report_Start__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.Include_Future_Care__c</field>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -3571,6 +3594,10 @@
         <recordType>Product2.TPL_Product</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
+    <tabVisibilities>
+    <tab>standard-Report</tab>
+    <visibility>DefaultOn</visibility>
+    </tabVisibilities>
     <tabVisibilities>
         <tab>standard-Account</tab>
         <visibility>DefaultOn</visibility>
