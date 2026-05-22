@@ -1,7 +1,17 @@
+/**
+ * Author: Nikhil Jeenru
+ * Company: CGI
+ * Purpose:
+ * Test coverage for the HealthIdeas API integration, sync refresh flow,
+ * async batch/queueable flow, job status polling, and healthcare cost insert handling.
+ */
 @IsTest
 private class HealthIdeasApiIntegrationTest {
     
+    // Mock callout response for HealthIdeas API test scenarios.
     private class MockHttpResponseGenerator implements HttpCalloutMock {
+        
+        // Used to return a long hospitalization field value for failure/truncation scenarios.
         private Boolean forceHospitalizationDmlFailure;
         
         MockHttpResponseGenerator() {
@@ -12,6 +22,7 @@ private class HealthIdeasApiIntegrationTest {
             this.forceHospitalizationDmlFailure = forceHospitalizationDmlFailure;
         }
         
+        // Returns mock token and HealthIdeas API responses based on the request.
         public HttpResponse respond(HttpRequest req) {
             HttpResponse res = new HttpResponse();
             res.setHeader('Content-Type', 'application/json');
@@ -91,6 +102,7 @@ private class HealthIdeasApiIntegrationTest {
         }
     }
     
+    // Creates reusable Person Account and Healthcare Cost records for all tests.
     @testSetup
     static void setupData() {
         Id individualRtId = getRecordTypeId(Account.SObjectType, 'PersonAccount');
@@ -135,6 +147,7 @@ private class HealthIdeasApiIntegrationTest {
                 };
                     }
     
+    // Returns the record type Id for the given object and developer name.
     private static Id getRecordTypeId(Schema.SObjectType sObjectType, String developerName) {
         Map<String, Schema.RecordTypeInfo> infos =
             sObjectType.getDescribe().getRecordTypeInfosByDeveloperName();
@@ -149,6 +162,7 @@ private class HealthIdeasApiIntegrationTest {
         return infos.get(developerName).getRecordTypeId();
     }
     
+    // Returns Healthcare Cost record type Ids used by the tests.
     private static Map<String, Id> getCostRecordTypeIds() {
         return new Map<String, Id>{
             'MSP' => getRecordTypeId(Healthcare_Cost__c.SObjectType, 'MSP'),
@@ -157,6 +171,7 @@ private class HealthIdeasApiIntegrationTest {
                 };
                     }
     
+    // Returns the test Person Account created in test setup.
     private static Account getTestAccount() {
         return [
             SELECT Id, PHN__pc
@@ -166,6 +181,7 @@ private class HealthIdeasApiIntegrationTest {
         ];
     }
     
+    // Covers successful async request creation and async tracking log initialization.
     @IsTest
     static void testCallGetCost_success() {
         Account acc = getTestAccount();
@@ -202,6 +218,7 @@ private class HealthIdeasApiIntegrationTest {
         System.assert(logs[0].Total_Chunks__c > 0);
     }
     
+    // Covers synchronous refresh flow with delete and insert processing.
     @IsTest
     static void testCallGetCost_DeletionScenario() {
         Account acc = getTestAccount();
@@ -223,6 +240,7 @@ private class HealthIdeasApiIntegrationTest {
         System.assertEquals(null, result.batchId);
     }
     
+    // Covers async request path with queueable chaining disabled for test control.
     @IsTest
     static void testCallGetCost_FailureScenario() {
         Account acc = getTestAccount();
@@ -248,6 +266,7 @@ private class HealthIdeasApiIntegrationTest {
         System.assertNotEquals(null, result.batchId);
     }
     
+    // Covers exception handling when no Account Id is provided.
     @IsTest
     static void testCallGetCost_CatchBlock_NoAccountId() {
         Test.setMock(HttpCalloutMock.class, new MockHttpResponseGenerator());
@@ -267,6 +286,7 @@ private class HealthIdeasApiIntegrationTest {
         System.assertEquals(null, result.batchId);
     }
     
+    // Covers synchronous insert handling when an individual Healthcare Cost row fails.
     @IsTest
     static void testRefreshHealthcareCostRecords_InsertDmlFailure_AddsMessage() {
         Account acc = getTestAccount();
@@ -301,6 +321,7 @@ private class HealthIdeasApiIntegrationTest {
         }
     }
     
+    // Covers job status polling response for an async HealthIdeas run.
     @IsTest
     static void testJobStatusController() {
         Account acc = getTestAccount();
@@ -330,6 +351,7 @@ private class HealthIdeasApiIntegrationTest {
         System.assertNotEquals(null, statusResponse.status);
     }
     
+    // Covers HealthIdeas date chunk count calculation.
     @IsTest
     static void testCalculateFiveYearChunkCount() {
         Integer chunks = HealthIdeasApiIntegration.calculateFiveYearChunkCount(
@@ -347,6 +369,7 @@ private class HealthIdeasApiIntegrationTest {
         System.assertEquals(2, chunksTwo);
     }
     
+    // Covers user-facing insert failure messages and technical log creation.
     @IsTest
     static void testAppendHealthcareCostInsertMessagesCreatesLogs() {
         Healthcare_Cost__c failedRecord = new Healthcare_Cost__c(
@@ -390,6 +413,7 @@ private class HealthIdeasApiIntegrationTest {
         }
     }
     
+    // Covers direct MSP queueable execution and MSP Healthcare Cost insert.
     @IsTest
     static void testHealthIdeasMspQueueable_DirectExecution() {
         Account acc = getTestAccount();
@@ -452,6 +476,7 @@ private class HealthIdeasApiIntegrationTest {
         System.assertEquals(1, costs.size());
     }
     
+    // Covers direct Hospitalization queueable execution and Hospitalization Healthcare Cost insert.
     @IsTest
     static void testHealthIdeasHospitalizationQueueable_DirectExecution() {
         Account acc = getTestAccount();
@@ -510,6 +535,7 @@ private class HealthIdeasApiIntegrationTest {
         System.assertEquals(1, costs.size());
     }
     
+    // Covers direct Pharmacare queueable execution and Pharmacare Healthcare Cost insert.
     @IsTest
     static void testHealthIdeasPharmacareQueueable_DirectExecution() {
         Account acc = getTestAccount();
@@ -562,5 +588,67 @@ private class HealthIdeasApiIntegrationTest {
         ];
         
         System.assertEquals(1, costs.size());
+    }
+    
+    // Covers individual Healthcare Cost insert failure handling in the sync refresh method.
+    @IsTest
+    static void testRefreshHealthcareCostRecords_IndividualRecordInsertFailureAddsMessage() {
+        Account acc = getTestAccount();
+        Map<String, Id> recordTypeIds = getCostRecordTypeIds();
+        
+        recordTypeIds.put(
+            TPL_Constants.HCC_HOSP_RECORDTYPE_NAME,
+            getRecordTypeId(Account.SObjectType, 'PersonAccount')
+        );
+        
+        HealthIdeasApiIntegration.HealthIdeasBatchPayload payload =
+            new HealthIdeasApiIntegration.HealthIdeasBatchPayload();
+        
+        payload.msp = new List<HealthIdeasApiIntegration.MspHccRecord>();
+        payload.pharmacare = new List<HealthIdeasApiIntegration.PharmacareHccRecord>();
+        
+        HealthIdeasApiIntegration.HospitalizationHccRecord hosp =
+            new HealthIdeasApiIntegration.HospitalizationHccRecord();
+        
+        hosp.phn = '9872626777';
+        hosp.dateOfAdmission = '2006-06-21T00:00:00';
+        hosp.dateOfDischarge = '2006-06-21T00:00:00';
+        hosp.facilityCode = 'FAC001';
+        hosp.careLevel = TPL_Constants.SERVICE_TYPE_ACUTE_CARE;
+        hosp.interventionCodesCci = 'CCI123';
+        hosp.encounterId = 'HOSP-FAIL-001';
+        
+        payload.hospitalizations =
+            new List<HealthIdeasApiIntegration.HospitalizationHccRecord>{
+                hosp
+            };
+        
+        List<String> messages = new List<String>();
+        
+        Test.startTest();
+        HealthIdeasApiIntegration.refreshHealthcareCostRecords(
+            acc.Id,
+            Date.newInstance(2025, 1, 1),
+            payload,
+            recordTypeIds,
+            messages
+        );
+        Test.stopTest();
+        
+        System.assertEquals(
+            1,
+            messages.size(),
+            'Expected one user-facing message for the failed Healthcare_Cost__c insert.'
+        );
+        
+        System.assert(
+            messages[0].contains(Label.TPL_HI_Record_ErrorMessage),
+            'Expected configured HealthIdeas record error label.'
+        );
+        
+        System.assert(
+            messages[0].contains('June 21, 2006'),
+            'Expected failed admission date to be included in the message.'
+        );
     }
 }
