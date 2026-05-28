@@ -175,4 +175,46 @@
         <shortDescription>TPL_SignedCertDeletion</shortDescription>
         <value>Signed Certificates could not be deleted.</value>
     </labels>
+    <labels>
+        <fullName>TPL_HI_Date_Selection_Message</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>TPL_HI_Date_Selection_Message</shortDescription>
+        <value>Please select a date.</value>
+    </labels>
+    <labels>
+        <fullName>TPL_HI_Partial_Success_Text</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>TPL_HI_Partial_Success_Text</shortDescription>
+        <value>Below are the noted errors:</value>
+    </labels>
+    <labels>
+        <fullName>TPL_HI_Toast_SuccessMessage</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>TPL_HI_Toast_SuccessMessage</shortDescription>
+        <value>Get Records executed successfully.</value>
+    </labels>
+    <labels>
+        <fullName>TPL_HI_Transfer_SuccessMessage</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>TPL_HI_Transfer_SuccessMessage</shortDescription>
+        <value>Your transfer has been successful</value>
+    </labels>
+    <labels>
+        <fullName>TPL_HI_Unexpected_Error_Message</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>TPL_HI_UnExpected_Error_Message</shortDescription>
+        <value>Unexpected error occurred.</value>
+    </labels>
+    <labels>
+        <fullName>TPL_HI_Record_ErrorMessage</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>TPL_HI_Record_Error_Message</shortDescription>
+        <value>Errors occurred while receiving records for</value>
+    </labels>
 </CustomLabels>
