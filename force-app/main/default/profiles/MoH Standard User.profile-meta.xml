@@ -140,7 +140,6 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
-        <classAccesses>
         <apexClass>TPL_CaseOmniService</apexClass>
         <enabled>true</enabled>
     </classAccesses>
