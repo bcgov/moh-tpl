@@ -284,9 +284,10 @@ public with sharing class HealthIdeasApiIntegration {
                     Healthcare_Cost__c failedRecord = recordsToInsert[i];
                     for (Database.Error err : insertResults[i].getErrors()) {
                         if (err.getStatusCode() != StatusCode.DUPLICATE_VALUE) {
-                            if (failedRecord.Date_of_Admission__c != null) {
+                            Date affectedDate = failedRecord.Date_of_Admission__c != null ? failedRecord.Date_of_Admission__c : failedRecord.Date_of_Service__c;
+                            if (affectedDate != null) {
                                 String admissionDate = DateTime.newInstance(
-                                    failedRecord.Date_of_Admission__c,
+                                    affectedDate,
                                     Time.newInstance(0, 0, 0, 0)
                                 ).format('MMMM d, yyyy');
 
@@ -422,29 +423,29 @@ public with sharing class HealthIdeasApiIntegration {
             row.Date_of_Service__c = parseDate(item.dtSvcProvided);
             row.Service_Start_Date__c = parseDate(item.svcStartDt);
             row.Service_Finish_Date__c = parseDate(item.svcFinishDt);
-            row.Diagnostic_Code__c = item.diagnosticCode;
-            row.Diagnostic_Code_1__c = item.diagnosticCode1;
-            row.Diagnostic_Code_2__c = item.diagnosticCode2;
-            row.Diagnostic_Code_3__c = item.diagnosticCode3;
-            row.Diagnostic_Description__c = item.diagnosticDesc;
-            row.Diagnostic_Description_1__c = item.diagnosticDesc1;
-            row.Diagnostic_Description_2__c = item.diagnosticDesc2;
-            row.Diagnostic_Description_3__c = item.diagnosticDesc3;
-            row.Description_of_Service2__c = item.descOfSvc;
-            row.Fee_Item_Code__c = item.feeItemCode;
-            row.Fee_Item_Title__c = item.feeItemTitle;
-            row.Fee_Item_Description__c = item.feeItemDesc;
-            row.Practitioner_Name__c = item.practitionerName;
-            row.Practitioner_Number__c = item.practitionerNbr;
-            row.Payee_Number__c = item.payeeNbr;
-            row.Payee_Description__c = item.payeeDesc;
-            row.Location_Type_Code__c = item.locationTypeCode;
-            row.Location_Type_Description2__c = item.locationTypeDesc;
+            row.Diagnostic_Code__c =  truncateIncomingFieldValueToMax(item.diagnosticCode, 50);
+            row.Diagnostic_Code_1__c =  truncateIncomingFieldValueToMax(item.diagnosticCode1, 50);
+            row.Diagnostic_Code_2__c =  truncateIncomingFieldValueToMax(item.diagnosticCode2, 50);
+            row.Diagnostic_Code_3__c =  truncateIncomingFieldValueToMax(item.diagnosticCode3, 50);
+            row.Diagnostic_Description__c = truncateIncomingFieldValueToMax(item.diagnosticDesc, 255);
+            row.Diagnostic_Description_1__c = truncateIncomingFieldValueToMax(item.diagnosticDesc1, 255);
+            row.Diagnostic_Description_2__c = truncateIncomingFieldValueToMax(item.diagnosticDesc2, 255);
+            row.Diagnostic_Description_3__c = truncateIncomingFieldValueToMax(item.diagnosticDesc3, 255);
+            row.Description_of_Service2__c = truncateIncomingFieldValueToMax(item.descOfSvc, 255);
+            row.Fee_Item_Code__c =  truncateIncomingFieldValueToMax(item.feeItemCode, 20);
+            row.Fee_Item_Title__c =  truncateIncomingFieldValueToMax(item.feeItemTitle, 80);
+            row.Fee_Item_Description__c = truncateIncomingFieldValueToMax(item.feeItemDesc, 255);
+            row.Practitioner_Name__c =  truncateIncomingFieldValueToMax(item.practitionerName, 120);
+            row.Practitioner_Number__c =  truncateIncomingFieldValueToMax(item.practitionerNbr, 40);
+            row.Payee_Number__c =  truncateIncomingFieldValueToMax(item.payeeNbr, 40);
+            row.Payee_Description__c = truncateIncomingFieldValueToMax(item.payeeDesc, 255);
+            row.Location_Type_Code__c = truncateIncomingFieldValueToMax(item.locationTypeCode, 100);
+            row.Location_Type_Description2__c = truncateIncomingFieldValueToMax(item.locationTypeDesc, 100);
             row.Amount_Paid__c = parseDecimal(item.amtPaid);
-            row.Specialty_Code__c = item.specialtyCode;
-            row.Specialty_Description2__c = item.specialtyDesc;
+            row.Specialty_Code__c = truncateIncomingFieldValueToMax(item.specialtyCode, 40);
+            row.Specialty_Description2__c = truncateIncomingFieldValueToMax(item.specialtyDesc, 50);
             row.Site_Code__c = item.facilityCode;
-            row.Facility_Type__c = item.facilityType;
+            row.Facility_Type__c = truncateIncomingFieldValueToMax(item.facilityType, 30);
 
             rows.add(row);
         }
@@ -465,12 +466,12 @@ public with sharing class HealthIdeasApiIntegration {
             row.Date_of_Admission__c = parseDate(item.dateOfAdmission);
             row.Date_of_Discharge__c = parseDate(item.dateOfDischarge);
             row.Site_Code__c = item.facilityCode;
-            row.Service_Type2__c = normalizeDatedHospitalServiceType(item.careLevel, row.Date_of_Admission__c);
-            row.Service_Type__c = returnServiceTypeProduct(item.careLevel, row.Date_of_Admission__c, row.Site_Code__c);
-            row.Location_of_Incident__c = item.locationOfIncident;
-            row.Description_of_Incident__c = item.descOfIncident;
-            row.Diagnostic_Treatment_Service2__c = item.diagTreatmentSvcs;
-            row.Intervention_Code_CCI__c = item.interventionCodesCci;
+            row.Service_Type2__c = truncateIncomingFieldValueToMax(normalizeDatedHospitalServiceType(item.careLevel, row.Date_of_Admission__c), 40);
+            row.Service_Type__c = truncateIncomingFieldValueToMax(returnServiceTypeProduct(item.careLevel, row.Date_of_Admission__c, row.Site_Code__c), 40);
+            row.Location_of_Incident__c = truncateIncomingFieldValueToMax(item.locationOfIncident, 50);
+            row.Description_of_Incident__c = truncateIncomingFieldValueToMax(item.descOfIncident, 100);
+            row.Diagnostic_Treatment_Service2__c = truncateIncomingFieldValueToMax(item.diagTreatmentSvcs, 100);
+            row.Intervention_Code_CCI__c = truncateIncomingFieldValueToMax(item.interventionCodesCci, 255);
             row.Source_System_ID__c = item.encounterId;
         
             rows.add(row);
@@ -490,9 +491,9 @@ public with sharing class HealthIdeasApiIntegration {
              row.PHN__c = item.phn;
              row.Source_System_ID__c = item.encounterId;
              row.Date_of_Service__c = parseDate(item.dateOfService);
-             row.Name_of_Drug__c = item.nameOfDrug;
+             row.Name_of_Drug__c = truncateIncomingFieldValueToMax(item.nameOfDrug, 80);
              row.Cost_of_Drug__c = parseDecimal(item.costOfDrug);
-             row.DIN__c = item.din;
+             row.DIN__c = truncateIncomingFieldValueToMax(item.din, 80);
              
              String fullName = '';
              
@@ -506,9 +507,9 @@ public with sharing class HealthIdeasApiIntegration {
                  fullName += item.practitionerLastName;
              }
              
-             row.Practitioner_Name__c = fullName;
-             row.Practitioner_First_Name__c = item.practitionerFirstName;
-             row.Practitioner_Last_Name__c = item.practitionerLastName;
+             row.Practitioner_Name__c = truncateIncomingFieldValueToMax(fullName, 120);
+             row.Practitioner_First_Name__c = truncateIncomingFieldValueToMax(item.practitionerFirstName, 120);
+             row.Practitioner_Last_Name__c = truncateIncomingFieldValueToMax(item.practitionerLastName, 120);
              
              rows.add(row);
             }
@@ -586,5 +587,18 @@ public with sharing class HealthIdeasApiIntegration {
         return job.Status == 'Queued'
             || job.Status == 'Preparing'
             || job.Status == 'Processing';
+    }
+
+    // Truncates incoming string values to the specified max length to prevent insert errors.
+    private static String truncateIncomingFieldValueToMax(String value, Integer maxLength) {
+        if (value == null) {
+            return null;
+        }
+        if (value.length() <= maxLength) {
+            return value;
+        }
+        String truncatedValue = value.left(maxLength);
+        
+        return truncatedValue;
     }
 }
