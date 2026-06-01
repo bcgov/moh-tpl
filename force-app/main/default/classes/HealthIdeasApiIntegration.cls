@@ -284,9 +284,10 @@ public with sharing class HealthIdeasApiIntegration {
                     Healthcare_Cost__c failedRecord = recordsToInsert[i];
                     for (Database.Error err : insertResults[i].getErrors()) {
                         if (err.getStatusCode() != StatusCode.DUPLICATE_VALUE) {
-                            if (failedRecord.Date_of_Admission__c != null) {
+                            Date affectedDate = failedRecord.Date_of_Admission__c != null ? failedRecord.Date_of_Admission__c : failedRecord.Date_of_Service__c;
+                            if (affectedDate != null) {
                                 String admissionDate = DateTime.newInstance(
-                                    failedRecord.Date_of_Admission__c,
+                                    affectedDate,
                                     Time.newInstance(0, 0, 0, 0)
                                 ).format('MMMM d, yyyy');
 
@@ -433,7 +434,7 @@ public with sharing class HealthIdeasApiIntegration {
             row.Description_of_Service2__c = item.descOfSvc;
             row.Fee_Item_Code__c = item.feeItemCode;
             row.Fee_Item_Title__c = item.feeItemTitle;
-            row.Fee_Item_Description__c = item.feeItemDesc;
+            row.Fee_Item_Description__c = truncateIncomingFieldValueToMax(item.feeItemDesc, 255);
             row.Practitioner_Name__c = item.practitionerName;
             row.Practitioner_Number__c = item.practitionerNbr;
             row.Payee_Number__c = item.payeeNbr;
@@ -586,5 +587,18 @@ public with sharing class HealthIdeasApiIntegration {
         return job.Status == 'Queued'
             || job.Status == 'Preparing'
             || job.Status == 'Processing';
+    }
+
+    // Truncates incoming string values to the specified max length to prevent insert errors.
+    private static String truncateIncomingFieldValueToMax(String value, Integer maxLength) {
+        if (value == null) {
+            return null;
+        }
+        if (value.length() <= maxLength) {
+            return value;
+        }
+        String truncatedValue = value.left(maxLength);
+        
+        return truncatedValue;
     }
 }
