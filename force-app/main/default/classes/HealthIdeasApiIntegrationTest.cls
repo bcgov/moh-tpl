@@ -102,6 +102,35 @@ private class HealthIdeasApiIntegrationTest {
         }
     }
     
+    // Mock callout response with empty payload for no-data async batch scenario.
+    private class EmptyPayloadMockHttpResponseGenerator implements HttpCalloutMock {
+        public HttpResponse respond(HttpRequest req) {
+            HttpResponse res = new HttpResponse();
+            res.setHeader('Content-Type', 'application/json');
+            
+            String endpoint = req.getEndpoint() == null ? '' : req.getEndpoint().toLowerCase();
+            String body = req.getBody() == null ? '' : req.getBody().toLowerCase();
+            
+            Boolean isTokenRequest =
+                endpoint.contains('token') ||
+                endpoint.contains('oauth') ||
+                endpoint.contains('jwt') ||
+                body.contains('grant_type') ||
+                body.contains('client_assertion') ||
+                body.contains('client_id');
+            
+            if (isTokenRequest) {
+                res.setStatusCode(200);
+                res.setBody('{"access_token":"fake-access-token","token_type":"Bearer","expires_in":3600}');
+                return res;
+            }
+            
+            res.setStatusCode(200);
+            res.setBody('{"content":{"msp":[],"hospitalizations":[],"pharmacare":[]}}');
+            return res;
+        }
+    }
+    
     // Creates reusable Person Account and Healthcare Cost records for all tests.
     @testSetup
     static void setupData() {
@@ -575,7 +604,7 @@ private class HealthIdeasApiIntegrationTest {
                 rootBatchJobId,
                 null,
                 UserInfo.getUserEmail(),
-                Date.newInstance(2026, 04, 31)
+                Date.newInstance(2026, 05, 31)
             )
         );
         Test.stopTest();
@@ -650,5 +679,49 @@ private class HealthIdeasApiIntegrationTest {
             messages[0].contains('June 21, 2006'),
             'Expected failed admission date to be included in the message.'
         );
+    }
+    
+   // Covers async batch no-data payload path where Pharmacare queueable is launched with null values.
+    @IsTest
+    static void testHealthIdeasApiCalloutBatch_EmptyPayload_LaunchesPharmacareQueueable() {
+        Account acc = getTestAccount();
+        
+        Test.setMock(HttpCalloutMock.class, new EmptyPayloadMockHttpResponseGenerator());
+        
+        HealthIdeasMspQueueable.allowQueueableChaining = true;
+        HealthIdeasHospitalizationQueueable.allowQueueableChaining = true;
+        HealthIdeasPharmacareQueueable.allowNextBatchChaining = false;
+        
+        Test.startTest();
+        HealthIdeasApiIntegration.IntegrationResult result =
+            HealthIdeasApiIntegration.getHealthcareCostsForAccountandSetDate(
+                acc.Id,
+                Date.today(),
+                true
+            );
+        Test.stopTest();
+        
+        System.assertNotEquals(null, result);
+        System.assertEquals(true, result.success);
+        System.assertEquals(null, result.errorMessage);
+        System.assertNotEquals(null, result.batchId);
+        
+        Log__c logRecord = [
+            SELECT Status__c,
+                   Total_Chunks__c,
+                   Completed_Chunks__c,
+                   Failed_Chunks__c,
+                   Queueable_JobId__c,
+                   Error_Message__c
+            FROM Log__c
+            WHERE JobId__c = :String.valueOf(result.batchId)
+            LIMIT 1
+        ];
+        
+        System.assertEquals(1, logRecord.Completed_Chunks__c);
+        System.assertEquals(0, logRecord.Failed_Chunks__c);
+        System.assertEquals(TPL_Constants.STATUS_COMPLETED, logRecord.Status__c);
+        System.assertNotEquals(null, logRecord.Queueable_JobId__c);
+        System.assertEquals(null, logRecord.Error_Message__c);
     }
 }

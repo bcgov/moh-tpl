@@ -75,8 +75,9 @@ public with sharing class HealthIdeasMspQueueable implements Queueable {
                     errorMessage = LogService.appendHealthcareCostInsertMessages(
                         errorMessage,
                         insertResults,
-                        recordsToInsert
-                    );
+                        recordsToInsert,
+                        TPL_Constants.HCC_MSP_RECORDTYPE_NAME
+                    ); 
                 }
             }
             
@@ -99,8 +100,11 @@ public with sharing class HealthIdeasMspQueueable implements Queueable {
             LogService.markChunkFailed(
                 rootBatchJobId,
                 context.getJobId(),
-                e.getMessage()
-            );
+                e.getMessage(),
+                e.getStackTraceString(),
+                'HealthIdeasMspQueueable',
+                'execute'
+            ); 
         } 
     }
 }

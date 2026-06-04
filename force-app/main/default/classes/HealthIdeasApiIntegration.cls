@@ -129,8 +129,10 @@ public with sharing class HealthIdeasApiIntegration {
             
             LogService.initializeAsyncStatus(
                 batchId,
-                calculateFiveYearChunkCount(asOfDate, endDate)
-            );
+                calculateFiveYearChunkCount(asOfDate, endDate),
+                'HealthIdeasApiIntegration',
+                'getHealthcareCostsForAccountandSetDate'
+            );  
             
             result.batchId = batchId;
             result.success = true; 
@@ -246,66 +248,77 @@ public with sharing class HealthIdeasApiIntegration {
             ? new List<HealthIdeasApiIntegration.PharmacareHccRecord>()
             : payload.pharmacare;
         
-        List<Healthcare_Cost__c> recordsToInsert = new List<Healthcare_Cost__c>();
+            Map<String, List<Healthcare_Cost__c>> recordsToInsertByType = new Map<String, List<Healthcare_Cost__c>>();
 
-        if ( !mspList.isEmpty() ) {
-            recordsToInsert.addAll(
-                HealthIdeasApiIntegration.buildMspHealthcareCostRecords(
-                    mspList,
-                    accountId,
-                    recordTypeIds.get(TPL_Constants.HCC_MSP_RECORDTYPE_NAME)
-                )
-            );
-        }
+            if (!mspList.isEmpty()) {
+                recordsToInsertByType.put(
+                    TPL_Constants.HCC_MSP_RECORDTYPE_NAME,
+                    HealthIdeasApiIntegration.buildMspHealthcareCostRecords(
+                        mspList,
+                        accountId,
+                        recordTypeIds.get(TPL_Constants.HCC_MSP_RECORDTYPE_NAME)
+                    )
+                );
+            }
 
-        if ( !hospList.isEmpty() ) {
-            recordsToInsert.addAll(
-                HealthIdeasApiIntegration.buildHospitalizationHealthcareCostRecords(
-                    hospList,
-                    accountId,
-                    recordTypeIds.get(TPL_Constants.HCC_HOSP_RECORDTYPE_NAME)
-                )
-            );
-        }
+            if (!hospList.isEmpty()) {
+                recordsToInsertByType.put(
+                    TPL_Constants.HCC_HOSP_RECORDTYPE_NAME,
+                    HealthIdeasApiIntegration.buildHospitalizationHealthcareCostRecords(
+                        hospList,
+                        accountId,
+                        recordTypeIds.get(TPL_Constants.HCC_HOSP_RECORDTYPE_NAME)
+                    )
+                );
+            }
 
-        if ( !pharmaList.isEmpty() ) {
-            recordsToInsert.addAll(
-                HealthIdeasApiIntegration.buildPharmacareHealthcareCostRecords(
-                    pharmaList,
-                    accountId,
-                    recordTypeIds.get(TPL_Constants.HCC_PHARMA_RECORDTYPE_NAME)
-                )
-            );
-        }
+            if (!pharmaList.isEmpty()) {
+                recordsToInsertByType.put(
+                    TPL_Constants.HCC_PHARMA_RECORDTYPE_NAME,
+                    HealthIdeasApiIntegration.buildPharmacareHealthcareCostRecords(
+                        pharmaList,
+                        accountId,
+                        recordTypeIds.get(TPL_Constants.HCC_PHARMA_RECORDTYPE_NAME)
+                    )
+                );
+            }
 
-        if (!recordsToInsert.isEmpty()) {
-            Database.SaveResult[] insertResults = Database.insert(recordsToInsert, false);
-            Set<String> affectedDates = new Set<String>();
+            for (String hccType : recordsToInsertByType.keySet()) {
+                List<Healthcare_Cost__c> recordsToInsert = recordsToInsertByType.get(hccType);
 
-            for (Integer i = 0; i < insertResults.size(); i++) {
-                if (!insertResults[i].isSuccess()) {
-                    Healthcare_Cost__c failedRecord = recordsToInsert[i];
-                    for (Database.Error err : insertResults[i].getErrors()) {
-                        if (err.getStatusCode() != StatusCode.DUPLICATE_VALUE) {
-                            if (failedRecord.Date_of_Admission__c != null) {
-                                String admissionDate = DateTime.newInstance(
-                                    failedRecord.Date_of_Admission__c,
-                                    Time.newInstance(0, 0, 0, 0)
-                                ).format('MMMM d, yyyy');
+                if (recordsToInsert == null || recordsToInsert.isEmpty()) {
+                    continue;
+                }
 
-                                affectedDates.add(admissionDate);
+                Database.SaveResult[] insertResults = Database.insert(recordsToInsert, false);
+                Set<String> affectedDates = new Set<String>();
+
+                for (Integer i = 0; i < insertResults.size(); i++) {
+                    if (!insertResults[i].isSuccess()) {
+                        Healthcare_Cost__c failedRecord = recordsToInsert[i];
+
+                        for (Database.Error err : insertResults[i].getErrors()) {
+                            if (err.getStatusCode() != StatusCode.DUPLICATE_VALUE) {
+                                Date affectedDate = failedRecord.Date_of_Admission__c != null
+                                    ? failedRecord.Date_of_Admission__c
+                                    : failedRecord.Date_of_Service__c;
+
+                                String formattedDate = HealthIdeasApiIntegration.formatDateForDisplay(affectedDate);
+                                if (formattedDate != null) {
+                                    affectedDates.add(formattedDate);
+                                }
                             }
                         }
                     }
                 }
+
+                for (String affectedDate : affectedDates) {
+                    messages.add(
+                        Label.TPL_HI_Record_ErrorMessage + ' ' + hccType + ' records for ' + affectedDate
+                    );
+                }
             }
 
-            for (String admissionDate : affectedDates) {
-                messages.add(
-                     Label.TPL_HI_Record_ErrorMessage + ' ' + admissionDate
-                );
-            }
-        }
     }
     
     /**
@@ -417,6 +430,7 @@ public with sharing class HealthIdeasApiIntegration {
     public static List<Healthcare_Cost__c> buildMspHealthcareCostRecords(List<MspHccRecord> items, Id accountId, Id recordTypeId) {
         List<Log__c> logsToInsert = new List<Log__c>();
         List<Healthcare_Cost__c> rows = new List<Healthcare_Cost__c>();
+
         for (MspHccRecord item : items) {
             Healthcare_Cost__c row = new Healthcare_Cost__c();
             row.Account__c = accountId;
@@ -426,32 +440,39 @@ public with sharing class HealthIdeasApiIntegration {
             row.Date_of_Service__c = parseDate(item.dtSvcProvided);
             row.Service_Start_Date__c = parseDate(item.svcStartDt);
             row.Service_Finish_Date__c = parseDate(item.svcFinishDt);
-            row.Diagnostic_Code__c = item.diagnosticCode;
-            row.Diagnostic_Code_1__c = item.diagnosticCode1;
-            row.Diagnostic_Code_2__c = item.diagnosticCode2;
-            row.Diagnostic_Code_3__c = item.diagnosticCode3;
-            row.Diagnostic_Description__c = truncateIncomingFieldValueToMax(item.diagnosticDesc, 'Diagnostic_Description__c', item.encounterId, logsToInsert);
-            row.Diagnostic_Description_1__c = truncateIncomingFieldValueToMax(item.diagnosticDesc1, 'Diagnostic_Description_1__c', item.encounterId, logsToInsert);
-            row.Diagnostic_Description_2__c = truncateIncomingFieldValueToMax(item.diagnosticDesc2, 'Diagnostic_Description_2__c', item.encounterId, logsToInsert);
-            row.Diagnostic_Description_3__c = truncateIncomingFieldValueToMax(item.diagnosticDesc3, 'Diagnostic_Description_3__c', item.encounterId, logsToInsert);
-            row.Description_of_Service2__c = truncateIncomingFieldValueToMax(item.descOfSvc, 'Description_of_Service2__c', item.encounterId, logsToInsert);
-            row.Fee_Item_Code__c = item.feeItemCode;
-            row.Fee_Item_Title__c = item.feeItemTitle;
-            row.Fee_Item_Description__c = truncateIncomingFieldValueToMax(item.feeItemDesc, 'Fee_Item_Description__c', item.encounterId, logsToInsert);
-            row.Practitioner_Name__c = item.practitionerName;
-            row.Practitioner_Number__c = item.practitionerNbr;
-            row.Payee_Number__c = item.payeeNbr;
-            row.Payee_Description__c = truncateIncomingFieldValueToMax(item.payeeDesc, 'Payee_Description__c', item.encounterId, logsToInsert);
-            row.Location_Type_Code__c = item.locationTypeCode;
-            row.Location_Type_Description2__c = truncateIncomingFieldValueToMax(item.locationTypeDesc, 'Location_Type_Description2__c', item.encounterId, logsToInsert);
+
+            row.Diagnostic_Code__c = truncateIncomingFieldValueToMax(item.diagnosticCode, 50, 'Diagnostic_Code__c', item.encounterId, logsToInsert);
+            row.Diagnostic_Code_1__c = truncateIncomingFieldValueToMax(item.diagnosticCode1, 50, 'Diagnostic_Code_1__c', item.encounterId, logsToInsert);
+            row.Diagnostic_Code_2__c = truncateIncomingFieldValueToMax(item.diagnosticCode2, 50, 'Diagnostic_Code_2__c', item.encounterId, logsToInsert);
+            row.Diagnostic_Code_3__c = truncateIncomingFieldValueToMax(item.diagnosticCode3, 50, 'Diagnostic_Code_3__c', item.encounterId, logsToInsert);
+
+            row.Diagnostic_Description__c = truncateIncomingFieldValueToMax(item.diagnosticDesc, 255, 'Diagnostic_Description__c', item.encounterId, logsToInsert);
+            row.Diagnostic_Description_1__c = truncateIncomingFieldValueToMax(item.diagnosticDesc1, 255, 'Diagnostic_Description_1__c', item.encounterId, logsToInsert);
+            row.Diagnostic_Description_2__c = truncateIncomingFieldValueToMax(item.diagnosticDesc2, 255, 'Diagnostic_Description_2__c', item.encounterId, logsToInsert);
+            row.Diagnostic_Description_3__c = truncateIncomingFieldValueToMax(item.diagnosticDesc3, 255, 'Diagnostic_Description_3__c', item.encounterId, logsToInsert);
+
+            row.Description_of_Service2__c = truncateIncomingFieldValueToMax(item.descOfSvc, 255, 'Description_of_Service2__c', item.encounterId, logsToInsert);
+            row.Fee_Item_Code__c = truncateIncomingFieldValueToMax(item.feeItemCode, 20, 'Fee_Item_Code__c', item.encounterId, logsToInsert);
+            row.Fee_Item_Title__c = truncateIncomingFieldValueToMax(item.feeItemTitle, 80, 'Fee_Item_Title__c', item.encounterId, logsToInsert);
+            row.Fee_Item_Description__c = truncateIncomingFieldValueToMax(item.feeItemDesc, 255, 'Fee_Item_Description__c', item.encounterId, logsToInsert);
+
+            row.Practitioner_Name__c = truncateIncomingFieldValueToMax(item.practitionerName, 120, 'Practitioner_Name__c', item.encounterId, logsToInsert);
+            row.Practitioner_Number__c = truncateIncomingFieldValueToMax(item.practitionerNbr, 40, 'Practitioner_Number__c', item.encounterId, logsToInsert);
+            row.Payee_Number__c = truncateIncomingFieldValueToMax(item.payeeNbr, 40, 'Payee_Number__c', item.encounterId, logsToInsert);
+            row.Payee_Description__c = truncateIncomingFieldValueToMax(item.payeeDesc, 255, 'Payee_Description__c', item.encounterId, logsToInsert);
+
+            row.Location_Type_Code__c = truncateIncomingFieldValueToMax(item.locationTypeCode, 100, 'Location_Type_Code__c', item.encounterId, logsToInsert);
+            row.Location_Type_Description2__c = truncateIncomingFieldValueToMax(item.locationTypeDesc, 100, 'Location_Type_Description2__c', item.encounterId, logsToInsert);
+
             row.Amount_Paid__c = parseDecimal(item.amtPaid);
-            row.Specialty_Code__c = item.specialtyCode;
-            row.Specialty_Description2__c = truncateIncomingFieldValueToMax(item.specialtyDesc, 'Specialty_Description2__c', item.encounterId, logsToInsert);
+            row.Specialty_Code__c = truncateIncomingFieldValueToMax(item.specialtyCode, 40, 'Specialty_Code__c', item.encounterId, logsToInsert);
+            row.Specialty_Description2__c = truncateIncomingFieldValueToMax(item.specialtyDesc, 50, 'Specialty_Description2__c', item.encounterId, logsToInsert);
             row.Site_Code__c = item.facilityCode;
-            row.Facility_Type__c = item.facilityType;
+            row.Facility_Type__c = truncateIncomingFieldValueToMax(item.facilityType, 30, 'Facility_Type__c', item.encounterId, logsToInsert);
 
             rows.add(row);
         }
+
         LogService.logErrors(logsToInsert);
         return rows;
     }
@@ -462,7 +483,8 @@ public with sharing class HealthIdeasApiIntegration {
     public static List<Healthcare_Cost__c> buildHospitalizationHealthcareCostRecords(List<HospitalizationHccRecord> items, Id accountId, Id recordTypeId) {
         List<Healthcare_Cost__c> rows = new List<Healthcare_Cost__c>();
         List<Log__c> logsToInsert = new List<Log__c>();
-        for (HospitalizationHccRecord item : items) {        
+
+        for (HospitalizationHccRecord item : items) {
             Healthcare_Cost__c row = new Healthcare_Cost__c();
             row.Account__c = accountId;
             row.RecordTypeId = recordTypeId;
@@ -470,16 +492,32 @@ public with sharing class HealthIdeasApiIntegration {
             row.Date_of_Admission__c = parseDate(item.dateOfAdmission);
             row.Date_of_Discharge__c = parseDate(item.dateOfDischarge);
             row.Site_Code__c = item.facilityCode;
-            row.Service_Type2__c = normalizeDatedHospitalServiceType(item.careLevel, row.Date_of_Admission__c);
-            row.Service_Type__c = returnServiceTypeProduct(item.careLevel, row.Date_of_Admission__c, row.Site_Code__c);
-            row.Location_of_Incident__c = truncateIncomingFieldValueToMax(item.locationOfIncident, 'Location_of_Incident__c', item.encounterId, logsToInsert);
-            row.Description_of_Incident__c = truncateIncomingFieldValueToMax(item.descOfIncident, 'Description_of_Incident__c', item.encounterId, logsToInsert);
-            row.Diagnostic_Treatment_Service2__c = truncateIncomingFieldValueToMax(item.diagTreatmentSvcs, 'Diagnostic_Treatment_Service2__c', item.encounterId, logsToInsert);
-            row.Intervention_Code_CCI__c = truncateIncomingFieldValueToMax(item.interventionCodesCci, 'Intervention_Code_CCI__c', item.encounterId, logsToInsert);
+
+            row.Service_Type2__c = truncateIncomingFieldValueToMax(
+                normalizeDatedHospitalServiceType(item.careLevel, row.Date_of_Admission__c),
+                40,
+                'Service_Type2__c',
+                item.encounterId,
+                logsToInsert
+            );
+
+            row.Service_Type__c = truncateIncomingFieldValueToMax(
+                returnServiceTypeProduct(item.careLevel, row.Date_of_Admission__c, row.Site_Code__c),
+                40,
+                'Service_Type__c',
+                item.encounterId,
+                logsToInsert
+            );
+
+            row.Location_of_Incident__c = truncateIncomingFieldValueToMax(item.locationOfIncident, 50, 'Location_of_Incident__c', item.encounterId, logsToInsert);
+            row.Description_of_Incident__c = truncateIncomingFieldValueToMax(item.descOfIncident, 100, 'Description_of_Incident__c', item.encounterId, logsToInsert);
+            row.Diagnostic_Treatment_Service2__c = truncateIncomingFieldValueToMax(item.diagTreatmentSvcs, 100, 'Diagnostic_Treatment_Service2__c', item.encounterId, logsToInsert);
+            row.Intervention_Code_CCI__c = truncateIncomingFieldValueToMax(item.interventionCodesCci, 255, 'Intervention_Code_CCI__c', item.encounterId, logsToInsert);
             row.Source_System_ID__c = item.encounterId;
         
             rows.add(row);
         }
+
         LogService.logErrors(logsToInsert);
         return rows;
     }
@@ -489,17 +527,19 @@ public with sharing class HealthIdeasApiIntegration {
 */
     public static List<Healthcare_Cost__c> buildPharmacareHealthcareCostRecords(List<PharmacareHccRecord> items, Id accountId, Id recordTypeId) {
         List<Healthcare_Cost__c> rows = new List<Healthcare_Cost__c>();
-        for (PharmacareHccRecord item : items) {        
+        List<Log__c> logsToInsert = new List<Log__c>();
+
+        for (PharmacareHccRecord item : items) {
             Healthcare_Cost__c row = new Healthcare_Cost__c();
             row.Account__c = accountId;
             row.RecordTypeId = recordTypeId;
             row.PHN__c = item.phn;
             row.Source_System_ID__c = item.encounterId;
             row.Date_of_Service__c = parseDate(item.dateOfService);
-            row.Name_of_Drug__c = item.nameOfDrug;
+            row.Name_of_Drug__c = truncateIncomingFieldValueToMax(item.nameOfDrug, 80, 'Name_of_Drug__c', item.encounterId, logsToInsert);
             row.Cost_of_Drug__c = parseDecimal(item.costOfDrug);
-            row.DIN__c = item.din;
-            
+            row.DIN__c = truncateIncomingFieldValueToMax(item.din, 80, 'DIN__c', item.encounterId, logsToInsert);
+
             String fullName = '';
             
             if (!String.isBlank(item.practitionerFirstName)) {
@@ -511,13 +551,15 @@ public with sharing class HealthIdeasApiIntegration {
                 }
                 fullName += item.practitionerLastName;
             }
-            
-            row.Practitioner_Name__c = fullName;
-            row.Practitioner_First_Name__c = item.practitionerFirstName;
-            row.Practitioner_Last_Name__c = item.practitionerLastName;
-            
+
+            row.Practitioner_Name__c = truncateIncomingFieldValueToMax(fullName, 120, 'Practitioner_Name__c', item.encounterId, logsToInsert);
+            row.Practitioner_First_Name__c = truncateIncomingFieldValueToMax(item.practitionerFirstName, 120, 'Practitioner_First_Name__c', item.encounterId, logsToInsert);
+            row.Practitioner_Last_Name__c = truncateIncomingFieldValueToMax(item.practitionerLastName, 120, 'Practitioner_Last_Name__c', item.encounterId, logsToInsert);
+
             rows.add(row);
         }
+
+        LogService.logErrors(logsToInsert);
         return rows;
     }
     
@@ -647,6 +689,7 @@ public with sharing class HealthIdeasApiIntegration {
     
     private static String truncateIncomingFieldValueToMax(
         String value,
+        Integer maxLength,
         String fieldName,
         String sourceSystemId,
         List<Log__c> logsToInsert
@@ -654,9 +697,7 @@ public with sharing class HealthIdeasApiIntegration {
         if (value == null) {
             return null;
         }
-        
-        Integer maxLength = TPL_Constants.MAX_TRUNCATE_LENGTH;
-        
+
         if (value.length() <= maxLength) {
             return value;
         }
@@ -671,11 +712,20 @@ public with sharing class HealthIdeasApiIntegration {
                 ' for Source_System_ID__c=' + sourceSystemId +
                 ' from ' + value.length() +
                 ' to ' + maxLength + ' characters.',
-                null,
                 null
             )
         );
         
         return truncatedValue;
     }
+
+    // Format date for UI Display
+    public  static String formatDateForDisplay(Date affectedDate) {
+        if (affectedDate == null) {
+            return null;
+        }
+
+        return DateTime.newInstance(affectedDate, Time.newInstance(0, 0, 0, 0))
+            .format('MMMM d, yyyy');
+   }
 }
