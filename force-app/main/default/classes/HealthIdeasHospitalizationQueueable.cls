@@ -89,11 +89,12 @@ public with sharing class HealthIdeasHospitalizationQueueable implements Queueab
                 ); 
             }
         } catch (Exception e) {
+            string stackTrace = e.getStackTraceString();
             LogService.markChunkFailed(
                 rootBatchJobId,
                 context.getJobId(),
                 e.getMessage(),
-                e.getStackTraceString(),
+                stackTrace,
                 'HealthIdeasHospitalizationQueueable',
                 'execute'
             ); 
