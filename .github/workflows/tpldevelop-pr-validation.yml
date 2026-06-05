@@ -1,4 +1,4 @@
-name: tpldevelop
+name: tpldevelop-pr-validation
 
 on:
   pull_request:
