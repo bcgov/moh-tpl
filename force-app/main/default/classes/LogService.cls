@@ -17,7 +17,7 @@ public without sharing class LogService {
         Id runningUserId = getRunningUserId();
         
         List<Log__c> existingLogs = [
-            SELECT Id
+            SELECT Id, JobId__c
             FROM Log__c
             WHERE JobId__c = :rootBatchJobIdString
             AND Running_User__c = :runningUserId
