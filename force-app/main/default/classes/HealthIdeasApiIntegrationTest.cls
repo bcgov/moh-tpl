@@ -418,7 +418,8 @@ private class HealthIdeasApiIntegrationTest {
         String message = LogService.appendHealthcareCostInsertMessages(
             null,
             insertResults,
-            recordsToInsert
+            recordsToInsert,
+            'MSP'
         );
         Test.stopTest();
         
