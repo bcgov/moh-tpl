@@ -66,14 +66,68 @@
     <omniDataTransformItem>
         <disabled>false</disabled>
         <filterGroup>0.0</filterGroup>
+        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom595</globalKey>
+        <inputFieldName>Case:Include_Future_Care__c</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>getDocGenCaseDetailsCopy1775078436803</name>
+        <omniDataTransformation>0kdbZ00000142p3</omniDataTransformation>
+        <omniDataTransformationId>0kdbZ00000142p3</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>IncludeFuture</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
         <filterOperator>=</filterOperator>
-        <filterValue>&apos;MSP&apos;</filterValue>
-        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem16</globalKey>
-        <inputFieldName>RecordTypeName__c</inputFieldName>
+        <filterValue>&apos;true&apos;</filterValue>
+        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom7656</globalKey>
+        <inputFieldName>Report_Include__c</inputFieldName>
+        <inputObjectName>Healthcare_Cost__c</inputObjectName>
+        <inputObjectQuerySequence>3.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>getDocGenCaseDetailsCopy1775078436803</name>
+        <omniDataTransformation>0kdbZ00000142gz</omniDataTransformation>
+        <omniDataTransformationId>0kdbZ00000142gz</omniDataTransformationId>
+        <outputCreationSequence>0.0</outputCreationSequence>
+        <outputFieldName>Case:AmbulanceHealthcare_Cost</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem42</globalKey>
+        <inputFieldName>Case:AmbulanceHealthcare_Cost:Date_of_Service__c</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>getDocGenCaseDetailsCopy1775078436803</name>
+        <omniDataTransformation>0kdbZ0000013yKb</omniDataTransformation>
+        <omniDataTransformationId>0kdbZ0000013yKb</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldFormat>Date(yyyy-MM-dd)</outputFieldFormat>
+        <outputFieldName>AmbulanceRecord:ServiceDate</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <filterOperator>=</filterOperator>
+        <filterValue>&apos;true&apos;</filterValue>
+        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem23</globalKey>
+        <inputFieldName>Cost_Review__c</inputFieldName>
         <inputObjectName>Healthcare_Cost__c</inputObjectName>
         <inputObjectQuerySequence>5.0</inputObjectQuerySequence>
         <linkedObjectSequence>0.0</linkedObjectSequence>
         <name>getDocGenCaseDetailsCopy1775078436803</name>
+        <omniDataTransformation>0kdbZ0000013yLC</omniDataTransformation>
+        <omniDataTransformationId>0kdbZ0000013yLC</omniDataTransformationId>
         <outputCreationSequence>0.0</outputCreationSequence>
         <outputFieldName>Case:MSPHealthcare_Cost</outputFieldName>
         <outputObjectName>json</outputObjectName>
@@ -83,14 +137,90 @@
     <omniDataTransformItem>
         <disabled>false</disabled>
         <filterGroup>0.0</filterGroup>
+        <formulaConverted>| var:Case:DiscountFutureCare 0.00 = 0.00 0.00 IF</formulaConverted>
+        <formulaExpression>IF(var:Case:DiscountFutureCare = 0.00, 0.00, 0.00)</formulaExpression>
+        <formulaResultPath>Case:DiscountFutureCare</formulaResultPath>
+        <formulaSequence>3.0</formulaSequence>
+        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem1</globalKey>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>getDocGenCaseDetailsCopy1775078436803</name>
+        <omniDataTransformation>0kdbZ0000013yKa</omniDataTransformation>
+        <omniDataTransformationId>0kdbZ0000013yKa</omniDataTransformationId>
+        <outputCreationSequence>0.0</outputCreationSequence>
+        <outputFieldName>Formula</outputFieldName>
+        <outputObjectName>Formula</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <formulaConverted>var:Case:Total_Case_Value__c var:Case:Future_Care_Total2__c -</formulaConverted>
+        <formulaExpression>Case:Total_Case_Value__c - Case:Future_Care_Total2__c</formulaExpression>
+        <formulaResultPath>Case:PastServicesTotal</formulaResultPath>
+        <formulaSequence>1.0</formulaSequence>
+        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem24</globalKey>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>getDocGenCaseDetailsCopy1775078436803</name>
+        <omniDataTransformation>0kdbZ0000013yLB</omniDataTransformation>
+        <omniDataTransformationId>0kdbZ0000013yLB</omniDataTransformationId>
+        <outputCreationSequence>0.0</outputCreationSequence>
+        <outputFieldName>Formula</outputFieldName>
+        <outputObjectName>Formula</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem63</globalKey>
+        <inputFieldName>Case:MSPHealthcare_Cost:Date_of_Service__c</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>getDocGenCaseDetailsCopy1775078436803</name>
+        <omniDataTransformation>0kdbZ0000013yLA</omniDataTransformation>
+        <omniDataTransformationId>0kdbZ0000013yLA</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldFormat>Date(yyyy-MM-dd)</outputFieldFormat>
+        <outputFieldName>MSPRecord:ServiceDate</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
         <filterOperator>=</filterOperator>
-        <filterValue>&apos;Hospitalization&apos;</filterValue>
-        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem15</globalKey>
-        <inputFieldName>RecordTypeName__c</inputFieldName>
+        <filterValue>&apos;true&apos;</filterValue>
+        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom7667</globalKey>
+        <inputFieldName>Report_Include__c</inputFieldName>
+        <inputObjectName>Healthcare_Cost__c</inputObjectName>
+        <inputObjectQuerySequence>6.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>getDocGenCaseDetailsCopy1775078436803</name>
+        <omniDataTransformation>0kdbZ00000142ic</omniDataTransformation>
+        <omniDataTransformationId>0kdbZ00000142ic</omniDataTransformationId>
+        <outputCreationSequence>0.0</outputCreationSequence>
+        <outputFieldName>Case:PharmaHealthcare_Cost</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <filterOperator>=</filterOperator>
+        <filterValue>&apos;true&apos;</filterValue>
+        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom6182</globalKey>
+        <inputFieldName>Report_Include__c</inputFieldName>
         <inputObjectName>Healthcare_Cost__c</inputObjectName>
         <inputObjectQuerySequence>4.0</inputObjectQuerySequence>
         <linkedObjectSequence>0.0</linkedObjectSequence>
         <name>getDocGenCaseDetailsCopy1775078436803</name>
+        <omniDataTransformation>0kdbZ00000142ib</omniDataTransformation>
+        <omniDataTransformationId>0kdbZ00000142ib</omniDataTransformationId>
         <outputCreationSequence>0.0</outputCreationSequence>
         <outputFieldName>Case:HospitalizationHealthcare_Cost</outputFieldName>
         <outputObjectName>json</outputObjectName>
@@ -100,14 +230,218 @@
     <omniDataTransformItem>
         <disabled>false</disabled>
         <filterGroup>0.0</filterGroup>
+        <formulaConverted>| var:Case:MSPHealthcare_Cost:Location_Type_Code__c &quot;/\/\/&quot; var:Case:MSPHealthcare_Cost:Location_Type_Description2__c CONCAT</formulaConverted>
+        <formulaExpression>CONCAT(Case:MSPHealthcare_Cost:Location_Type_Code__c, &quot; &quot;,Case:MSPHealthcare_Cost:Location_Type_Description2__c)</formulaExpression>
+        <formulaResultPath>Case:MSPHealthcare_Cost:Location_Type</formulaResultPath>
+        <formulaSequence>2.0</formulaSequence>
+        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem2</globalKey>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>getDocGenCaseDetailsCopy1775078436803</name>
+        <omniDataTransformation>0kdbZ0000013yKZ</omniDataTransformation>
+        <omniDataTransformationId>0kdbZ0000013yKZ</omniDataTransformationId>
+        <outputCreationSequence>0.0</outputCreationSequence>
+        <outputFieldName>Formula</outputFieldName>
+        <outputObjectName>Formula</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <filterOperator>=</filterOperator>
+        <filterValue>&apos;Future_Care&apos;</filterValue>
+        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem3</globalKey>
+        <inputFieldName>RecordTypeName__c</inputFieldName>
+        <inputObjectName>Healthcare_Cost__c</inputObjectName>
+        <inputObjectQuerySequence>8.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>getDocGenCaseDetailsCopy1775078436803</name>
+        <omniDataTransformation>0kdbZ0000013yKY</omniDataTransformation>
+        <omniDataTransformationId>0kdbZ0000013yKY</omniDataTransformationId>
+        <outputCreationSequence>0.0</outputCreationSequence>
+        <outputFieldName>Case:FCHealthcare_Cost</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
         <filterOperator>=</filterOperator>
         <filterValue>&apos;true&apos;</filterValue>
-        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem14</globalKey>
+        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem4</globalKey>
         <inputFieldName>Cost_Include__c</inputFieldName>
+        <inputObjectName>Healthcare_Cost__c</inputObjectName>
+        <inputObjectQuerySequence>6.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>getDocGenCaseDetailsCopy1775078436803</name>
+        <omniDataTransformation>0kdbZ0000013yKX</omniDataTransformation>
+        <omniDataTransformationId>0kdbZ0000013yKX</omniDataTransformationId>
+        <outputCreationSequence>0.0</outputCreationSequence>
+        <outputFieldName>Case:PharmaHealthcare_Cost</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <filterOperator>=</filterOperator>
+        <filterValue>&apos;Pharmacare&apos;</filterValue>
+        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem25</globalKey>
+        <inputFieldName>RecordTypeName__c</inputFieldName>
+        <inputObjectName>Healthcare_Cost__c</inputObjectName>
+        <inputObjectQuerySequence>6.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>getDocGenCaseDetailsCopy1775078436803</name>
+        <omniDataTransformation>0kdbZ0000013yL9</omniDataTransformation>
+        <omniDataTransformationId>0kdbZ0000013yL9</omniDataTransformationId>
+        <outputCreationSequence>0.0</outputCreationSequence>
+        <outputFieldName>Case:PharmaHealthcare_Cost</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <filterOperator>=</filterOperator>
+        <filterValue>&apos;true&apos;</filterValue>
+        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem5</globalKey>
+        <inputFieldName>Cost_Review__c</inputFieldName>
+        <inputObjectName>Healthcare_Cost__c</inputObjectName>
+        <inputObjectQuerySequence>3.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>getDocGenCaseDetailsCopy1775078436803</name>
+        <omniDataTransformation>0kdbZ0000013yKW</omniDataTransformation>
+        <omniDataTransformationId>0kdbZ0000013yKW</omniDataTransformationId>
+        <outputCreationSequence>0.0</outputCreationSequence>
+        <outputFieldName>Case:AmbulanceHealthcare_Cost</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem64</globalKey>
+        <inputFieldName>Case:Pharmacare_Total2__c</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>getDocGenCaseDetailsCopy1775078436803</name>
+        <omniDataTransformation>0kdbZ0000013yL8</omniDataTransformation>
+        <omniDataTransformationId>0kdbZ0000013yL8</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldFormat>Currency</outputFieldFormat>
+        <outputFieldName>PharmacyTotal</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom7762</globalKey>
+        <inputFieldName>Case:Report_End__c</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>getDocGenCaseDetailsCopy1775078436803</name>
+        <omniDataTransformation>0kdbZ00000142qf</omniDataTransformation>
+        <omniDataTransformationId>0kdbZ00000142qf</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>ReportEndDate</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <filterOperator>=</filterOperator>
+        <filterValue>&apos;Ambulance&apos;</filterValue>
+        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem6</globalKey>
+        <inputFieldName>RecordTypeName__c</inputFieldName>
+        <inputObjectName>Healthcare_Cost__c</inputObjectName>
+        <inputObjectQuerySequence>3.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>getDocGenCaseDetailsCopy1775078436803</name>
+        <omniDataTransformation>0kdbZ0000013yKV</omniDataTransformation>
+        <omniDataTransformationId>0kdbZ0000013yKV</omniDataTransformationId>
+        <outputCreationSequence>0.0</outputCreationSequence>
+        <outputFieldName>Case:AmbulanceHealthcare_Cost</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <formulaConverted>| var:Case:HospitalizationHealthcare_Cost:Total_Cost_Override__c $Vlocity.NULL = var:Case:HospitalizationHealthcare_Cost:Total_Costs_Standard__c var:Case:HospitalizationHealthcare_Cost:Total_Cost_Override__c IF</formulaConverted>
+        <formulaExpression>IF(var:Case:HospitalizationHealthcare_Cost:Total_Cost_Override__c = $Vlocity.NULL, Case:HospitalizationHealthcare_Cost:Total_Costs_Standard__c, Case:HospitalizationHealthcare_Cost:Total_Cost_Override__c)</formulaExpression>
+        <formulaResultPath>Case:HospitalizationHealthcare_Cost:SingleHospitalCost</formulaResultPath>
+        <formulaSequence>4.0</formulaSequence>
+        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem26</globalKey>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>getDocGenCaseDetailsCopy1775078436803</name>
+        <omniDataTransformation>0kdbZ0000013yL7</omniDataTransformation>
+        <omniDataTransformationId>0kdbZ0000013yL7</omniDataTransformationId>
+        <outputCreationSequence>0.0</outputCreationSequence>
+        <outputFieldName>Formula</outputFieldName>
+        <outputObjectName>Formula</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <filterOperator>=</filterOperator>
+        <filterValue>&apos;true&apos;</filterValue>
+        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem7</globalKey>
+        <inputFieldName>Cost_Review__c</inputFieldName>
+        <inputObjectName>Healthcare_Cost__c</inputObjectName>
+        <inputObjectQuerySequence>6.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>getDocGenCaseDetailsCopy1775078436803</name>
+        <omniDataTransformation>0kdbZ0000013yKU</omniDataTransformation>
+        <omniDataTransformationId>0kdbZ0000013yKU</omniDataTransformationId>
+        <outputCreationSequence>0.0</outputCreationSequence>
+        <outputFieldName>Case:PharmaHealthcare_Cost</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem65</globalKey>
+        <inputFieldName>Case:Continuing_Care_Total2__c</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>getDocGenCaseDetailsCopy1775078436803</name>
+        <omniDataTransformation>0kdbZ0000013yL6</omniDataTransformation>
+        <omniDataTransformationId>0kdbZ0000013yL6</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldFormat>Currency</outputFieldFormat>
+        <outputFieldName>ContinuingCareTotal</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <filterOperator>=</filterOperator>
+        <filterValue>Case:Id</filterValue>
+        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem8</globalKey>
+        <inputFieldName>Case2__c</inputFieldName>
         <inputObjectName>Healthcare_Cost__c</inputObjectName>
         <inputObjectQuerySequence>5.0</inputObjectQuerySequence>
         <linkedObjectSequence>0.0</linkedObjectSequence>
         <name>getDocGenCaseDetailsCopy1775078436803</name>
+        <omniDataTransformation>0kdbZ0000013yKT</omniDataTransformation>
+        <omniDataTransformationId>0kdbZ0000013yKT</omniDataTransformationId>
         <outputCreationSequence>0.0</outputCreationSequence>
         <outputFieldName>Case:MSPHealthcare_Cost</outputFieldName>
         <outputObjectName>json</outputObjectName>
@@ -117,16 +451,17 @@
     <omniDataTransformItem>
         <disabled>false</disabled>
         <filterGroup>0.0</filterGroup>
-        <filterOperator>=</filterOperator>
-        <filterValue>&apos;Continuing_Care&apos;</filterValue>
-        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem13</globalKey>
-        <inputFieldName>RecordTypeName__c</inputFieldName>
+        <filterOperator>ORDER BY</filterOperator>
+        <filterValue>date_of_service__c</filterValue>
+        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem27</globalKey>
         <inputObjectName>Healthcare_Cost__c</inputObjectName>
-        <inputObjectQuerySequence>7.0</inputObjectQuerySequence>
+        <inputObjectQuerySequence>3.0</inputObjectQuerySequence>
         <linkedObjectSequence>0.0</linkedObjectSequence>
         <name>getDocGenCaseDetailsCopy1775078436803</name>
+        <omniDataTransformation>0kdbZ0000013yL5</omniDataTransformation>
+        <omniDataTransformationId>0kdbZ0000013yL5</omniDataTransformationId>
         <outputCreationSequence>0.0</outputCreationSequence>
-        <outputFieldName>Case:CCHealthcare_Cost</outputFieldName>
+        <outputFieldName>Case:AmbulanceHealthcare_Cost</outputFieldName>
         <outputObjectName>json</outputObjectName>
         <requiredForUpsert>false</requiredForUpsert>
         <upsertKey>false</upsertKey>
@@ -136,12 +471,68 @@
         <filterGroup>0.0</filterGroup>
         <filterOperator>=</filterOperator>
         <filterValue>&apos;true&apos;</filterValue>
-        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem12</globalKey>
-        <inputFieldName>Cost_Include__c</inputFieldName>
+        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem9</globalKey>
+        <inputFieldName>Cost_Review__c</inputFieldName>
         <inputObjectName>Healthcare_Cost__c</inputObjectName>
         <inputObjectQuerySequence>4.0</inputObjectQuerySequence>
         <linkedObjectSequence>0.0</linkedObjectSequence>
         <name>getDocGenCaseDetailsCopy1775078436803</name>
+        <omniDataTransformation>0kdbZ0000013yKS</omniDataTransformation>
+        <omniDataTransformationId>0kdbZ0000013yKS</omniDataTransformationId>
+        <outputCreationSequence>0.0</outputCreationSequence>
+        <outputFieldName>Case:HospitalizationHealthcare_Cost</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem66</globalKey>
+        <inputFieldName>Case:MSPHealthcare_Cost:Total_Cost_Override__c</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>getDocGenCaseDetailsCopy1775078436803</name>
+        <omniDataTransformation>0kdbZ0000013yL4</omniDataTransformation>
+        <omniDataTransformationId>0kdbZ0000013yL4</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldFormat>Currency</outputFieldFormat>
+        <outputFieldName>MSPRecord:Cost</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <filterOperator>=</filterOperator>
+        <filterValue>Case:Id</filterValue>
+        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem10</globalKey>
+        <inputFieldName>Case2__c</inputFieldName>
+        <inputObjectName>Healthcare_Cost__c</inputObjectName>
+        <inputObjectQuerySequence>8.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>getDocGenCaseDetailsCopy1775078436803</name>
+        <omniDataTransformation>0kdbZ0000013yKR</omniDataTransformation>
+        <omniDataTransformationId>0kdbZ0000013yKR</omniDataTransformationId>
+        <outputCreationSequence>0.0</outputCreationSequence>
+        <outputFieldName>Case:FCHealthcare_Cost</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <filterOperator>ORDER BY</filterOperator>
+        <filterValue>date_of_admission__c</filterValue>
+        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem28</globalKey>
+        <inputObjectName>Healthcare_Cost__c</inputObjectName>
+        <inputObjectQuerySequence>4.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>getDocGenCaseDetailsCopy1775078436803</name>
+        <omniDataTransformation>0kdbZ0000013yL3</omniDataTransformation>
+        <omniDataTransformationId>0kdbZ0000013yL3</omniDataTransformationId>
         <outputCreationSequence>0.0</outputCreationSequence>
         <outputFieldName>Case:HospitalizationHealthcare_Cost</outputFieldName>
         <outputObjectName>json</outputObjectName>
@@ -159,6 +550,8 @@
         <inputObjectQuerySequence>3.0</inputObjectQuerySequence>
         <linkedObjectSequence>0.0</linkedObjectSequence>
         <name>getDocGenCaseDetailsCopy1775078436803</name>
+        <omniDataTransformation>0kdbZ0000013yKQ</omniDataTransformation>
+        <omniDataTransformationId>0kdbZ0000013yKQ</omniDataTransformationId>
         <outputCreationSequence>0.0</outputCreationSequence>
         <outputFieldName>Case:AmbulanceHealthcare_Cost</outputFieldName>
         <outputObjectName>json</outputObjectName>
@@ -168,16 +561,15 @@
     <omniDataTransformItem>
         <disabled>false</disabled>
         <filterGroup>0.0</filterGroup>
-        <filterOperator>=</filterOperator>
-        <filterValue>Case:Id</filterValue>
-        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem10</globalKey>
-        <inputFieldName>Case2__c</inputFieldName>
-        <inputObjectName>Healthcare_Cost__c</inputObjectName>
-        <inputObjectQuerySequence>8.0</inputObjectQuerySequence>
+        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem67</globalKey>
+        <inputFieldName>Case:PharmaHealthcare_Cost:RecordTypeName__c</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
         <linkedObjectSequence>0.0</linkedObjectSequence>
         <name>getDocGenCaseDetailsCopy1775078436803</name>
-        <outputCreationSequence>0.0</outputCreationSequence>
-        <outputFieldName>Case:FCHealthcare_Cost</outputFieldName>
+        <omniDataTransformation>0kdbZ0000013yL2</omniDataTransformation>
+        <omniDataTransformationId>0kdbZ0000013yL2</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>PharmaRecord:RecordTypeName</outputFieldName>
         <outputObjectName>json</outputObjectName>
         <requiredForUpsert>false</requiredForUpsert>
         <upsertKey>false</upsertKey>
@@ -187,12 +579,106 @@
         <filterGroup>0.0</filterGroup>
         <filterOperator>=</filterOperator>
         <filterValue>&apos;true&apos;</filterValue>
-        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem9</globalKey>
-        <inputFieldName>Cost_Review__c</inputFieldName>
+        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem12</globalKey>
+        <inputFieldName>Cost_Include__c</inputFieldName>
         <inputObjectName>Healthcare_Cost__c</inputObjectName>
         <inputObjectQuerySequence>4.0</inputObjectQuerySequence>
         <linkedObjectSequence>0.0</linkedObjectSequence>
         <name>getDocGenCaseDetailsCopy1775078436803</name>
+        <omniDataTransformation>0kdbZ0000013yKP</omniDataTransformation>
+        <omniDataTransformationId>0kdbZ0000013yKP</omniDataTransformationId>
+        <outputCreationSequence>0.0</outputCreationSequence>
+        <outputFieldName>Case:HospitalizationHealthcare_Cost</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <filterOperator>ORDER BY</filterOperator>
+        <filterValue>date_of_service__c</filterValue>
+        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem29</globalKey>
+        <inputObjectName>Healthcare_Cost__c</inputObjectName>
+        <inputObjectQuerySequence>5.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>getDocGenCaseDetailsCopy1775078436803</name>
+        <omniDataTransformation>0kdbZ0000013yL1</omniDataTransformation>
+        <omniDataTransformationId>0kdbZ0000013yL1</omniDataTransformationId>
+        <outputCreationSequence>0.0</outputCreationSequence>
+        <outputFieldName>Case:MSPHealthcare_Cost</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <filterOperator>=</filterOperator>
+        <filterValue>&apos;Continuing_Care&apos;</filterValue>
+        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem13</globalKey>
+        <inputFieldName>RecordTypeName__c</inputFieldName>
+        <inputObjectName>Healthcare_Cost__c</inputObjectName>
+        <inputObjectQuerySequence>7.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>getDocGenCaseDetailsCopy1775078436803</name>
+        <omniDataTransformation>0kdbZ0000013yKO</omniDataTransformation>
+        <omniDataTransformationId>0kdbZ0000013yKO</omniDataTransformationId>
+        <outputCreationSequence>0.0</outputCreationSequence>
+        <outputFieldName>Case:CCHealthcare_Cost</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem68</globalKey>
+        <inputFieldName>Case:Date_of_Birth__c</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>getDocGenCaseDetailsCopy1775078436803</name>
+        <omniDataTransformation>0kdbZ0000013yL0</omniDataTransformation>
+        <omniDataTransformationId>0kdbZ0000013yL0</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldFormat>Date(yyyy-MM-dd)</outputFieldFormat>
+        <outputFieldName>BirthDate</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <filterOperator>=</filterOperator>
+        <filterValue>&apos;true&apos;</filterValue>
+        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem14</globalKey>
+        <inputFieldName>Cost_Include__c</inputFieldName>
+        <inputObjectName>Healthcare_Cost__c</inputObjectName>
+        <inputObjectQuerySequence>5.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>getDocGenCaseDetailsCopy1775078436803</name>
+        <omniDataTransformation>0kdbZ0000013yKN</omniDataTransformation>
+        <omniDataTransformationId>0kdbZ0000013yKN</omniDataTransformationId>
+        <outputCreationSequence>0.0</outputCreationSequence>
+        <outputFieldName>Case:MSPHealthcare_Cost</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <filterOperator>=</filterOperator>
+        <filterValue>&apos;Hospitalization&apos;</filterValue>
+        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem15</globalKey>
+        <inputFieldName>RecordTypeName__c</inputFieldName>
+        <inputObjectName>Healthcare_Cost__c</inputObjectName>
+        <inputObjectQuerySequence>4.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>getDocGenCaseDetailsCopy1775078436803</name>
+        <omniDataTransformation>0kdbZ0000013yKM</omniDataTransformation>
+        <omniDataTransformationId>0kdbZ0000013yKM</omniDataTransformationId>
         <outputCreationSequence>0.0</outputCreationSequence>
         <outputFieldName>Case:HospitalizationHealthcare_Cost</outputFieldName>
         <outputObjectName>json</outputObjectName>
@@ -203,13 +689,15 @@
         <disabled>false</disabled>
         <filterGroup>0.0</filterGroup>
         <filterOperator>=</filterOperator>
-        <filterValue>Case:Id</filterValue>
-        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem8</globalKey>
-        <inputFieldName>Case2__c</inputFieldName>
+        <filterValue>&apos;MSP&apos;</filterValue>
+        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem16</globalKey>
+        <inputFieldName>RecordTypeName__c</inputFieldName>
         <inputObjectName>Healthcare_Cost__c</inputObjectName>
         <inputObjectQuerySequence>5.0</inputObjectQuerySequence>
         <linkedObjectSequence>0.0</linkedObjectSequence>
         <name>getDocGenCaseDetailsCopy1775078436803</name>
+        <omniDataTransformation>0kdbZ0000013yKL</omniDataTransformation>
+        <omniDataTransformationId>0kdbZ0000013yKL</omniDataTransformationId>
         <outputCreationSequence>0.0</outputCreationSequence>
         <outputFieldName>Case:MSPHealthcare_Cost</outputFieldName>
         <outputObjectName>json</outputObjectName>
@@ -221,14 +709,16 @@
         <filterGroup>0.0</filterGroup>
         <filterOperator>=</filterOperator>
         <filterValue>&apos;true&apos;</filterValue>
-        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem7</globalKey>
-        <inputFieldName>Cost_Review__c</inputFieldName>
+        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom9111</globalKey>
+        <inputFieldName>Report_Include__c</inputFieldName>
         <inputObjectName>Healthcare_Cost__c</inputObjectName>
-        <inputObjectQuerySequence>6.0</inputObjectQuerySequence>
+        <inputObjectQuerySequence>7.0</inputObjectQuerySequence>
         <linkedObjectSequence>0.0</linkedObjectSequence>
         <name>getDocGenCaseDetailsCopy1775078436803</name>
+        <omniDataTransformation>0kdbZ00000142lp</omniDataTransformation>
+        <omniDataTransformationId>0kdbZ00000142lp</omniDataTransformationId>
         <outputCreationSequence>0.0</outputCreationSequence>
-        <outputFieldName>Case:PharmaHealthcare_Cost</outputFieldName>
+        <outputFieldName>Case:CCHealthcare_Cost</outputFieldName>
         <outputObjectName>json</outputObjectName>
         <requiredForUpsert>false</requiredForUpsert>
         <upsertKey>false</upsertKey>
@@ -236,16 +726,64 @@
     <omniDataTransformItem>
         <disabled>false</disabled>
         <filterGroup>0.0</filterGroup>
-        <filterOperator>=</filterOperator>
-        <filterValue>&apos;Ambulance&apos;</filterValue>
-        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem6</globalKey>
-        <inputFieldName>RecordTypeName__c</inputFieldName>
-        <inputObjectName>Healthcare_Cost__c</inputObjectName>
-        <inputObjectQuerySequence>3.0</inputObjectQuerySequence>
+        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom6343</globalKey>
+        <inputFieldName>Case:Report_Start__c</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
         <linkedObjectSequence>0.0</linkedObjectSequence>
         <name>getDocGenCaseDetailsCopy1775078436803</name>
-        <outputCreationSequence>0.0</outputCreationSequence>
-        <outputFieldName>Case:AmbulanceHealthcare_Cost</outputFieldName>
+        <omniDataTransformation>0kdbZ00000142tt</omniDataTransformation>
+        <omniDataTransformationId>0kdbZ00000142tt</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>ReportStartDate</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem43</globalKey>
+        <inputFieldName>Case:AmbulanceHealthcare_Cost:Location_Responded__c</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>getDocGenCaseDetailsCopy1775078436803</name>
+        <omniDataTransformation>0kdbZ0000013yLc</omniDataTransformation>
+        <omniDataTransformationId>0kdbZ0000013yLc</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldFormat>String</outputFieldFormat>
+        <outputFieldName>AmbulanceRecord:OriginatingPoint</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem44</globalKey>
+        <inputFieldName>Case:CCHealthcare_Cost:Description__c</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>getDocGenCaseDetailsCopy1775078436803</name>
+        <omniDataTransformation>0kdbZ0000013yLb</omniDataTransformation>
+        <omniDataTransformationId>0kdbZ0000013yLb</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>ContinuingCareRecords:Description</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem45</globalKey>
+        <inputFieldName>Case:MSPHealthcare_Cost:Diagnostic_Description__c</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>getDocGenCaseDetailsCopy1775078436803</name>
+        <omniDataTransformation>0kdbZ0000013yLa</omniDataTransformation>
+        <omniDataTransformationId>0kdbZ0000013yLa</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>MSPRecord:DiagnosticDescription</outputFieldName>
         <outputObjectName>json</outputObjectName>
         <requiredForUpsert>false</requiredForUpsert>
         <upsertKey>false</upsertKey>
@@ -255,14 +793,16 @@
         <filterGroup>0.0</filterGroup>
         <filterOperator>=</filterOperator>
         <filterValue>&apos;true&apos;</filterValue>
-        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem5</globalKey>
-        <inputFieldName>Cost_Review__c</inputFieldName>
+        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom6444</globalKey>
+        <inputFieldName>Report_Include__c</inputFieldName>
         <inputObjectName>Healthcare_Cost__c</inputObjectName>
-        <inputObjectQuerySequence>3.0</inputObjectQuerySequence>
+        <inputObjectQuerySequence>5.0</inputObjectQuerySequence>
         <linkedObjectSequence>0.0</linkedObjectSequence>
         <name>getDocGenCaseDetailsCopy1775078436803</name>
+        <omniDataTransformation>0kdbZ00000142kD</omniDataTransformation>
+        <omniDataTransformationId>0kdbZ00000142kD</omniDataTransformationId>
         <outputCreationSequence>0.0</outputCreationSequence>
-        <outputFieldName>Case:AmbulanceHealthcare_Cost</outputFieldName>
+        <outputFieldName>Case:MSPHealthcare_Cost</outputFieldName>
         <outputObjectName>json</outputObjectName>
         <requiredForUpsert>false</requiredForUpsert>
         <upsertKey>false</upsertKey>
@@ -270,14 +810,15 @@
     <omniDataTransformItem>
         <disabled>false</disabled>
         <filterGroup>0.0</filterGroup>
-        <filterOperator>=</filterOperator>
-        <filterValue>&apos;true&apos;</filterValue>
-        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem4</globalKey>
-        <inputFieldName>Cost_Include__c</inputFieldName>
+        <filterOperator>ORDER BY</filterOperator>
+        <filterValue>date_of_service__c</filterValue>
+        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem30</globalKey>
         <inputObjectName>Healthcare_Cost__c</inputObjectName>
         <inputObjectQuerySequence>6.0</inputObjectQuerySequence>
         <linkedObjectSequence>0.0</linkedObjectSequence>
         <name>getDocGenCaseDetailsCopy1775078436803</name>
+        <omniDataTransformation>0kdbZ0000013yKz</omniDataTransformation>
+        <omniDataTransformationId>0kdbZ0000013yKz</omniDataTransformationId>
         <outputCreationSequence>0.0</outputCreationSequence>
         <outputFieldName>Case:PharmaHealthcare_Cost</outputFieldName>
         <outputObjectName>json</outputObjectName>
@@ -287,16 +828,16 @@
     <omniDataTransformItem>
         <disabled>false</disabled>
         <filterGroup>0.0</filterGroup>
-        <filterOperator>=</filterOperator>
-        <filterValue>&apos;Future_Care&apos;</filterValue>
-        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem3</globalKey>
-        <inputFieldName>RecordTypeName__c</inputFieldName>
-        <inputObjectName>Healthcare_Cost__c</inputObjectName>
-        <inputObjectQuerySequence>8.0</inputObjectQuerySequence>
+        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem69</globalKey>
+        <inputFieldName>Case:CCHealthcare_Cost:RecordTypeName__c</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
         <linkedObjectSequence>0.0</linkedObjectSequence>
         <name>getDocGenCaseDetailsCopy1775078436803</name>
-        <outputCreationSequence>0.0</outputCreationSequence>
-        <outputFieldName>Case:FCHealthcare_Cost</outputFieldName>
+        <omniDataTransformation>0kdbZ0000013yKy</omniDataTransformation>
+        <omniDataTransformationId>0kdbZ0000013yKy</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldFormat>String</outputFieldFormat>
+        <outputFieldName>ContinuingCareRecords:RecordTypeName</outputFieldName>
         <outputObjectName>json</outputObjectName>
         <requiredForUpsert>false</requiredForUpsert>
         <upsertKey>false</upsertKey>
@@ -304,48 +845,117 @@
     <omniDataTransformItem>
         <disabled>false</disabled>
         <filterGroup>0.0</filterGroup>
-        <formulaConverted>| var:Case:MSPHealthcare_Cost:Location_Type_Code__c &quot;/\/\/&quot; var:Case:MSPHealthcare_Cost:Location_Type_Description2__c CONCAT</formulaConverted>
-        <formulaExpression>CONCAT(Case:MSPHealthcare_Cost:Location_Type_Code__c, &quot; &quot;,Case:MSPHealthcare_Cost:Location_Type_Description2__c)</formulaExpression>
-        <formulaResultPath>Case:MSPHealthcare_Cost:Location_Type</formulaResultPath>
-        <formulaSequence>2.0</formulaSequence>
-        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem2</globalKey>
+        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem46</globalKey>
+        <inputFieldName>SigningAuthority:Name__c</inputFieldName>
         <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
         <linkedObjectSequence>0.0</linkedObjectSequence>
         <name>getDocGenCaseDetailsCopy1775078436803</name>
-        <outputCreationSequence>0.0</outputCreationSequence>
-        <outputFieldName>Formula</outputFieldName>
-        <outputObjectName>Formula</outputObjectName>
+        <omniDataTransformation>0kdbZ0000013yLZ</omniDataTransformation>
+        <omniDataTransformationId>0kdbZ0000013yLZ</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>SigningAuthority:Name</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <defaultValue>0.00</defaultValue>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem31</globalKey>
+        <inputFieldName>Case:DiscountFutureCare</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>getDocGenCaseDetailsCopy1775078436803</name>
+        <omniDataTransformation>0kdbZ0000013yKx</omniDataTransformation>
+        <omniDataTransformationId>0kdbZ0000013yKx</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldFormat>Currency</outputFieldFormat>
+        <outputFieldName>DiscountFutureCare</outputFieldName>
+        <outputObjectName>json</outputObjectName>
         <requiredForUpsert>false</requiredForUpsert>
         <upsertKey>false</upsertKey>
     </omniDataTransformItem>
     <omniDataTransformItem>
         <disabled>false</disabled>
         <filterGroup>0.0</filterGroup>
-        <formulaConverted>| var:Case:DiscountFutureCare 0.00 = 0.00 0.00 IF</formulaConverted>
-        <formulaExpression>IF(var:Case:DiscountFutureCare = 0.00, 0.00, 0.00)</formulaExpression>
-        <formulaResultPath>Case:DiscountFutureCare</formulaResultPath>
-        <formulaSequence>3.0</formulaSequence>
-        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem1</globalKey>
+        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem47</globalKey>
+        <inputFieldName>SigningAuthority:Title__c</inputFieldName>
         <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
         <linkedObjectSequence>0.0</linkedObjectSequence>
         <name>getDocGenCaseDetailsCopy1775078436803</name>
-        <outputCreationSequence>0.0</outputCreationSequence>
-        <outputFieldName>Formula</outputFieldName>
-        <outputObjectName>Formula</outputObjectName>
+        <omniDataTransformation>0kdbZ0000013yLY</omniDataTransformation>
+        <omniDataTransformationId>0kdbZ0000013yLY</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>SigningAuthority:Title</outputFieldName>
+        <outputObjectName>json</outputObjectName>
         <requiredForUpsert>false</requiredForUpsert>
         <upsertKey>false</upsertKey>
     </omniDataTransformItem>
     <omniDataTransformItem>
         <disabled>false</disabled>
         <filterGroup>0.0</filterGroup>
-        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem42</globalKey>
-        <inputFieldName>Case:AmbulanceHealthcare_Cost:Date_of_Service__c</inputFieldName>
+        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem70</globalKey>
+        <inputFieldName>Case:HospitalizationHealthcare_Cost:SingleHospitalCost</inputFieldName>
         <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
         <linkedObjectSequence>0.0</linkedObjectSequence>
         <name>getDocGenCaseDetailsCopy1775078436803</name>
+        <omniDataTransformation>0kdbZ0000013yKw</omniDataTransformation>
+        <omniDataTransformationId>0kdbZ0000013yKw</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldFormat>Currency</outputFieldFormat>
+        <outputFieldName>HospitalRecord:SingleHospitalCost</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem48</globalKey>
+        <inputFieldName>Case:FCHealthcare_Cost:RecordTypeName__c</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>getDocGenCaseDetailsCopy1775078436803</name>
+        <omniDataTransformation>0kdbZ0000013yLX</omniDataTransformation>
+        <omniDataTransformationId>0kdbZ0000013yLX</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldFormat>String</outputFieldFormat>
+        <outputFieldName>FutureCareRecords:RecordTypeName</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem32</globalKey>
+        <inputFieldName>Case:Total_Case_Value__c</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>getDocGenCaseDetailsCopy1775078436803</name>
+        <omniDataTransformation>0kdbZ0000013yKv</omniDataTransformation>
+        <omniDataTransformationId>0kdbZ0000013yKv</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldFormat>Currency</outputFieldFormat>
+        <outputFieldName>TotalCost</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem49</globalKey>
+        <inputFieldName>Case:PharmaHealthcare_Cost:Date_of_Service__c</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>getDocGenCaseDetailsCopy1775078436803</name>
+        <omniDataTransformation>0kdbZ0000013yLW</omniDataTransformation>
+        <omniDataTransformationId>0kdbZ0000013yLW</omniDataTransformationId>
         <outputCreationSequence>1.0</outputCreationSequence>
         <outputFieldFormat>Date(yyyy-MM-dd)</outputFieldFormat>
-        <outputFieldName>AmbulanceRecord:ServiceDate</outputFieldName>
+        <outputFieldName>PharmaRecord:ServiceDate</outputFieldName>
         <outputObjectName>json</outputObjectName>
         <requiredForUpsert>false</requiredForUpsert>
         <upsertKey>false</upsertKey>
@@ -353,29 +963,16 @@
     <omniDataTransformItem>
         <disabled>false</disabled>
         <filterGroup>0.0</filterGroup>
-        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem79</globalKey>
-        <inputFieldName>Case:AmbulanceHealthcare_Cost:RecordTypeName__c</inputFieldName>
+        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem71</globalKey>
+        <inputFieldName>Case:CCHealthcare_Cost:Cost__c</inputFieldName>
         <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
         <linkedObjectSequence>0.0</linkedObjectSequence>
         <name>getDocGenCaseDetailsCopy1775078436803</name>
-        <outputCreationSequence>1.0</outputCreationSequence>
-        <outputFieldFormat>String</outputFieldFormat>
-        <outputFieldName>AmbulanceRecord:RecordTypeName</outputFieldName>
-        <outputObjectName>json</outputObjectName>
-        <requiredForUpsert>false</requiredForUpsert>
-        <upsertKey>false</upsertKey>
-    </omniDataTransformItem>
-    <omniDataTransformItem>
-        <disabled>false</disabled>
-        <filterGroup>0.0</filterGroup>
-        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem41</globalKey>
-        <inputFieldName>Case:MSP_Total2__c</inputFieldName>
-        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
-        <linkedObjectSequence>0.0</linkedObjectSequence>
-        <name>getDocGenCaseDetailsCopy1775078436803</name>
+        <omniDataTransformation>0kdbZ0000013yKu</omniDataTransformation>
+        <omniDataTransformationId>0kdbZ0000013yKu</omniDataTransformationId>
         <outputCreationSequence>1.0</outputCreationSequence>
         <outputFieldFormat>Currency</outputFieldFormat>
-        <outputFieldName>MedicalTotal</outputFieldName>
+        <outputFieldName>ContinuingCareRecords:ContinuingCareCost</outputFieldName>
         <outputObjectName>json</outputObjectName>
         <requiredForUpsert>false</requiredForUpsert>
         <upsertKey>false</upsertKey>
@@ -383,100 +980,16 @@
     <omniDataTransformItem>
         <disabled>false</disabled>
         <filterGroup>0.0</filterGroup>
-        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem78</globalKey>
-        <inputFieldName>Case:PharmaHealthcare_Cost:Name_of_Drug__c</inputFieldName>
+        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem50</globalKey>
+        <inputFieldName>Case:Hospitalization_Total2__c</inputFieldName>
         <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
         <linkedObjectSequence>0.0</linkedObjectSequence>
         <name>getDocGenCaseDetailsCopy1775078436803</name>
-        <outputCreationSequence>1.0</outputCreationSequence>
-        <outputFieldName>PharmaRecord:Description</outputFieldName>
-        <outputObjectName>json</outputObjectName>
-        <requiredForUpsert>false</requiredForUpsert>
-        <upsertKey>false</upsertKey>
-    </omniDataTransformItem>
-    <omniDataTransformItem>
-        <disabled>false</disabled>
-        <filterGroup>0.0</filterGroup>
-        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem40</globalKey>
-        <inputFieldName>Case:Claim_Number__c</inputFieldName>
-        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
-        <linkedObjectSequence>0.0</linkedObjectSequence>
-        <name>getDocGenCaseDetailsCopy1775078436803</name>
-        <outputCreationSequence>1.0</outputCreationSequence>
-        <outputFieldFormat>String</outputFieldFormat>
-        <outputFieldName>MVClaimNumber</outputFieldName>
-        <outputObjectName>json</outputObjectName>
-        <requiredForUpsert>false</requiredForUpsert>
-        <upsertKey>false</upsertKey>
-    </omniDataTransformItem>
-    <omniDataTransformItem>
-        <disabled>false</disabled>
-        <filterGroup>0.0</filterGroup>
-        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem77</globalKey>
-        <inputFieldName>Case:PHN__c</inputFieldName>
-        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
-        <linkedObjectSequence>0.0</linkedObjectSequence>
-        <name>getDocGenCaseDetailsCopy1775078436803</name>
-        <outputCreationSequence>1.0</outputCreationSequence>
-        <outputFieldName>PHN</outputFieldName>
-        <outputObjectName>json</outputObjectName>
-        <requiredForUpsert>false</requiredForUpsert>
-        <upsertKey>false</upsertKey>
-    </omniDataTransformItem>
-    <omniDataTransformItem>
-        <disabled>false</disabled>
-        <filterGroup>0.0</filterGroup>
-        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem39</globalKey>
-        <inputFieldName>Case:MSPHealthcare_Cost:Fee_Item_Title__c</inputFieldName>
-        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
-        <linkedObjectSequence>0.0</linkedObjectSequence>
-        <name>getDocGenCaseDetailsCopy1775078436803</name>
-        <outputCreationSequence>1.0</outputCreationSequence>
-        <outputFieldName>MSPRecord:FeeItem</outputFieldName>
-        <outputObjectName>json</outputObjectName>
-        <requiredForUpsert>false</requiredForUpsert>
-        <upsertKey>false</upsertKey>
-    </omniDataTransformItem>
-    <omniDataTransformItem>
-        <disabled>false</disabled>
-        <filterGroup>0.0</filterGroup>
-        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem76</globalKey>
-        <inputFieldName>Case:MSPHealthcare_Cost:Location_Type_Description2__c</inputFieldName>
-        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
-        <linkedObjectSequence>0.0</linkedObjectSequence>
-        <name>getDocGenCaseDetailsCopy1775078436803</name>
-        <outputCreationSequence>1.0</outputCreationSequence>
-        <outputFieldName>MSPRecord:LocationType</outputFieldName>
-        <outputObjectName>json</outputObjectName>
-        <requiredForUpsert>false</requiredForUpsert>
-        <upsertKey>false</upsertKey>
-    </omniDataTransformItem>
-    <omniDataTransformItem>
-        <disabled>false</disabled>
-        <filterGroup>0.0</filterGroup>
-        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem38</globalKey>
-        <inputFieldName>Case:CaseNumber</inputFieldName>
-        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
-        <linkedObjectSequence>0.0</linkedObjectSequence>
-        <name>getDocGenCaseDetailsCopy1775078436803</name>
-        <outputCreationSequence>1.0</outputCreationSequence>
-        <outputFieldFormat>String</outputFieldFormat>
-        <outputFieldName>CaseNumber</outputFieldName>
-        <outputObjectName>json</outputObjectName>
-        <requiredForUpsert>false</requiredForUpsert>
-        <upsertKey>false</upsertKey>
-    </omniDataTransformItem>
-    <omniDataTransformItem>
-        <disabled>false</disabled>
-        <filterGroup>0.0</filterGroup>
-        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem75</globalKey>
-        <inputFieldName>Case:PastServicesTotal</inputFieldName>
-        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
-        <linkedObjectSequence>0.0</linkedObjectSequence>
-        <name>getDocGenCaseDetailsCopy1775078436803</name>
+        <omniDataTransformation>0kdbZ0000013yLV</omniDataTransformation>
+        <omniDataTransformationId>0kdbZ0000013yLV</omniDataTransformationId>
         <outputCreationSequence>1.0</outputCreationSequence>
         <outputFieldFormat>Currency</outputFieldFormat>
-        <outputFieldName>PastServicesTotal</outputFieldName>
+        <outputFieldName>HospitalTotal</outputFieldName>
         <outputObjectName>json</outputObjectName>
         <requiredForUpsert>false</requiredForUpsert>
         <upsertKey>false</upsertKey>
@@ -484,28 +997,16 @@
     <omniDataTransformItem>
         <disabled>false</disabled>
         <filterGroup>0.0</filterGroup>
-        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem37</globalKey>
-        <inputFieldName>Case:FCHealthcare_Cost:Description__c</inputFieldName>
+        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem33</globalKey>
+        <inputFieldName>Case:Account:Name</inputFieldName>
         <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
         <linkedObjectSequence>0.0</linkedObjectSequence>
         <name>getDocGenCaseDetailsCopy1775078436803</name>
-        <outputCreationSequence>1.0</outputCreationSequence>
-        <outputFieldName>FutureCareRecords:Description</outputFieldName>
-        <outputObjectName>json</outputObjectName>
-        <requiredForUpsert>false</requiredForUpsert>
-        <upsertKey>false</upsertKey>
-    </omniDataTransformItem>
-    <omniDataTransformItem>
-        <disabled>false</disabled>
-        <filterGroup>0.0</filterGroup>
-        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem74</globalKey>
-        <inputFieldName>Case:HospitalizationHealthcare_Cost:RecordTypeName__c</inputFieldName>
-        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
-        <linkedObjectSequence>0.0</linkedObjectSequence>
-        <name>getDocGenCaseDetailsCopy1775078436803</name>
+        <omniDataTransformation>0kdbZ0000013yKt</omniDataTransformation>
+        <omniDataTransformationId>0kdbZ0000013yKt</omniDataTransformationId>
         <outputCreationSequence>1.0</outputCreationSequence>
         <outputFieldFormat>String</outputFieldFormat>
-        <outputFieldName>HospitalRecord:RecordTypeName</outputFieldName>
+        <outputFieldName>ContactName</outputFieldName>
         <outputObjectName>json</outputObjectName>
         <requiredForUpsert>false</requiredForUpsert>
         <upsertKey>false</upsertKey>
@@ -513,14 +1014,150 @@
     <omniDataTransformItem>
         <disabled>false</disabled>
         <filterGroup>0.0</filterGroup>
-        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem73</globalKey>
-        <inputFieldName>Case:HospitalizationHealthcare_Cost:Service_Type2__c</inputFieldName>
+        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem51</globalKey>
+        <inputFieldName>Case:AmbulanceHealthcare_Cost:FacilityName__c</inputFieldName>
         <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
         <linkedObjectSequence>0.0</linkedObjectSequence>
         <name>getDocGenCaseDetailsCopy1775078436803</name>
+        <omniDataTransformation>0kdbZ0000013yLU</omniDataTransformation>
+        <omniDataTransformationId>0kdbZ0000013yLU</omniDataTransformationId>
         <outputCreationSequence>1.0</outputCreationSequence>
         <outputFieldFormat>String</outputFieldFormat>
-        <outputFieldName>HospitalRecord:ServiceType</outputFieldName>
+        <outputFieldName>AmbulanceRecord:Destination</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem72</globalKey>
+        <inputFieldName>Case:Ambulance_Total2__c</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>getDocGenCaseDetailsCopy1775078436803</name>
+        <omniDataTransformation>0kdbZ0000013yKs</omniDataTransformation>
+        <omniDataTransformationId>0kdbZ0000013yKs</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldFormat>Currency</outputFieldFormat>
+        <outputFieldName>AmbulanceTotal</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem52</globalKey>
+        <inputFieldName>Case:HospitalizationHealthcare_Cost:Date_of_Admission__c</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>getDocGenCaseDetailsCopy1775078436803</name>
+        <omniDataTransformation>0kdbZ0000013yLT</omniDataTransformation>
+        <omniDataTransformationId>0kdbZ0000013yLT</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldFormat>Date(yyyy-MM-dd)</outputFieldFormat>
+        <outputFieldName>HospitalRecord:DateOfAdmission</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem34</globalKey>
+        <inputFieldName>Case:MSPHealthcare_Cost:Practitioner_Name__c</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>getDocGenCaseDetailsCopy1775078436803</name>
+        <omniDataTransformation>0kdbZ0000013yKr</omniDataTransformation>
+        <omniDataTransformationId>0kdbZ0000013yKr</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>MSPRecord:PractitonerName</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem53</globalKey>
+        <inputFieldName>Case:HospitalizationHealthcare_Cost:FacilityName__c</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>getDocGenCaseDetailsCopy1775078436803</name>
+        <omniDataTransformation>0kdbZ0000013yLS</omniDataTransformation>
+        <omniDataTransformationId>0kdbZ0000013yLS</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldFormat>String</outputFieldFormat>
+        <outputFieldName>HospitalRecord:Facility</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem35</globalKey>
+        <inputFieldName>Case:MSPHealthcare_Cost:RecordTypeName__c</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>getDocGenCaseDetailsCopy1775078436803</name>
+        <omniDataTransformation>0kdbZ0000013yKq</omniDataTransformation>
+        <omniDataTransformationId>0kdbZ0000013yKq</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>MSPRecord:RecordTypeName</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem54</globalKey>
+        <inputFieldName>Case:HospitalizationHealthcare_Cost:Number_of_Days__c</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>getDocGenCaseDetailsCopy1775078436803</name>
+        <omniDataTransformation>0kdbZ0000013yLR</omniDataTransformation>
+        <omniDataTransformationId>0kdbZ0000013yLR</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldFormat>Number</outputFieldFormat>
+        <outputFieldName>HospitalRecord:NumberOfDays</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem36</globalKey>
+        <inputFieldName>Case:Incident_Date__c</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>getDocGenCaseDetailsCopy1775078436803</name>
+        <omniDataTransformation>0kdbZ0000013yKp</omniDataTransformation>
+        <omniDataTransformationId>0kdbZ0000013yKp</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldFormat>Date(yyyy-MM-dd)</outputFieldFormat>
+        <outputFieldName>IncidentDate</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem55</globalKey>
+        <inputFieldName>Case:HospitalizationHealthcare_Cost:Date_of_Discharge__c</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>getDocGenCaseDetailsCopy1775078436803</name>
+        <omniDataTransformation>0kdbZ0000013yLQ</omniDataTransformation>
+        <omniDataTransformationId>0kdbZ0000013yLQ</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldFormat>Date(yyyy-MM-dd)</outputFieldFormat>
+        <outputFieldName>HospitalRecord:DateOfDischarge</outputFieldName>
         <outputObjectName>json</outputObjectName>
         <requiredForUpsert>false</requiredForUpsert>
         <upsertKey>false</upsertKey>
@@ -536,6 +1173,8 @@
         <inputObjectQuerySequence>7.0</inputObjectQuerySequence>
         <linkedObjectSequence>0.0</linkedObjectSequence>
         <name>getDocGenCaseDetailsCopy1775078436803</name>
+        <omniDataTransformation>0kdbZ0000013yKo</omniDataTransformation>
+        <omniDataTransformationId>0kdbZ0000013yKo</omniDataTransformationId>
         <outputCreationSequence>0.0</outputCreationSequence>
         <outputFieldName>Case:CCHealthcare_Cost</outputFieldName>
         <outputObjectName>json</outputObjectName>
@@ -545,57 +1184,16 @@
     <omniDataTransformItem>
         <disabled>false</disabled>
         <filterGroup>0.0</filterGroup>
-        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem36</globalKey>
-        <inputFieldName>Case:Incident_Date__c</inputFieldName>
+        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem56</globalKey>
+        <inputFieldName>Case:Future_Care_Total2__c</inputFieldName>
         <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
         <linkedObjectSequence>0.0</linkedObjectSequence>
         <name>getDocGenCaseDetailsCopy1775078436803</name>
-        <outputCreationSequence>1.0</outputCreationSequence>
-        <outputFieldFormat>Date(yyyy-MM-dd)</outputFieldFormat>
-        <outputFieldName>IncidentDate</outputFieldName>
-        <outputObjectName>json</outputObjectName>
-        <requiredForUpsert>false</requiredForUpsert>
-        <upsertKey>false</upsertKey>
-    </omniDataTransformItem>
-    <omniDataTransformItem>
-        <disabled>false</disabled>
-        <filterGroup>0.0</filterGroup>
-        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem35</globalKey>
-        <inputFieldName>Case:MSPHealthcare_Cost:RecordTypeName__c</inputFieldName>
-        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
-        <linkedObjectSequence>0.0</linkedObjectSequence>
-        <name>getDocGenCaseDetailsCopy1775078436803</name>
-        <outputCreationSequence>1.0</outputCreationSequence>
-        <outputFieldName>MSPRecord:RecordTypeName</outputFieldName>
-        <outputObjectName>json</outputObjectName>
-        <requiredForUpsert>false</requiredForUpsert>
-        <upsertKey>false</upsertKey>
-    </omniDataTransformItem>
-    <omniDataTransformItem>
-        <disabled>false</disabled>
-        <filterGroup>0.0</filterGroup>
-        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem34</globalKey>
-        <inputFieldName>Case:MSPHealthcare_Cost:Practitioner_Name__c</inputFieldName>
-        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
-        <linkedObjectSequence>0.0</linkedObjectSequence>
-        <name>getDocGenCaseDetailsCopy1775078436803</name>
-        <outputCreationSequence>1.0</outputCreationSequence>
-        <outputFieldName>MSPRecord:PractitonerName</outputFieldName>
-        <outputObjectName>json</outputObjectName>
-        <requiredForUpsert>false</requiredForUpsert>
-        <upsertKey>false</upsertKey>
-    </omniDataTransformItem>
-    <omniDataTransformItem>
-        <disabled>false</disabled>
-        <filterGroup>0.0</filterGroup>
-        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem72</globalKey>
-        <inputFieldName>Case:Ambulance_Total2__c</inputFieldName>
-        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
-        <linkedObjectSequence>0.0</linkedObjectSequence>
-        <name>getDocGenCaseDetailsCopy1775078436803</name>
+        <omniDataTransformation>0kdbZ0000013yLP</omniDataTransformation>
+        <omniDataTransformationId>0kdbZ0000013yLP</omniDataTransformationId>
         <outputCreationSequence>1.0</outputCreationSequence>
         <outputFieldFormat>Currency</outputFieldFormat>
-        <outputFieldName>AmbulanceTotal</outputFieldName>
+        <outputFieldName>FutureServicesTotal</outputFieldName>
         <outputObjectName>json</outputObjectName>
         <requiredForUpsert>false</requiredForUpsert>
         <upsertKey>false</upsertKey>
@@ -603,14 +1201,16 @@
     <omniDataTransformItem>
         <disabled>false</disabled>
         <filterGroup>0.0</filterGroup>
-        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem33</globalKey>
-        <inputFieldName>Case:Account:Name</inputFieldName>
+        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem73</globalKey>
+        <inputFieldName>Case:HospitalizationHealthcare_Cost:Service_Type2__c</inputFieldName>
         <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
         <linkedObjectSequence>0.0</linkedObjectSequence>
         <name>getDocGenCaseDetailsCopy1775078436803</name>
+        <omniDataTransformation>0kdbZ0000013yKn</omniDataTransformation>
+        <omniDataTransformationId>0kdbZ0000013yKn</omniDataTransformationId>
         <outputCreationSequence>1.0</outputCreationSequence>
         <outputFieldFormat>String</outputFieldFormat>
-        <outputFieldName>ContactName</outputFieldName>
+        <outputFieldName>HospitalRecord:ServiceType</outputFieldName>
         <outputObjectName>json</outputObjectName>
         <requiredForUpsert>false</requiredForUpsert>
         <upsertKey>false</upsertKey>
@@ -618,14 +1218,15 @@
     <omniDataTransformItem>
         <disabled>false</disabled>
         <filterGroup>0.0</filterGroup>
-        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem71</globalKey>
-        <inputFieldName>Case:CCHealthcare_Cost:Cost__c</inputFieldName>
+        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem57</globalKey>
+        <inputFieldName>Case:PharmaHealthcare_Cost:Practitioner_Name__c</inputFieldName>
         <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
         <linkedObjectSequence>0.0</linkedObjectSequence>
         <name>getDocGenCaseDetailsCopy1775078436803</name>
+        <omniDataTransformation>0kdbZ0000013yLO</omniDataTransformation>
+        <omniDataTransformationId>0kdbZ0000013yLO</omniDataTransformationId>
         <outputCreationSequence>1.0</outputCreationSequence>
-        <outputFieldFormat>Currency</outputFieldFormat>
-        <outputFieldName>ContinuingCareRecords:ContinuingCareCost</outputFieldName>
+        <outputFieldName>PharmaRecord:PrescribingPractitoner</outputFieldName>
         <outputObjectName>json</outputObjectName>
         <requiredForUpsert>false</requiredForUpsert>
         <upsertKey>false</upsertKey>
@@ -633,60 +1234,16 @@
     <omniDataTransformItem>
         <disabled>false</disabled>
         <filterGroup>0.0</filterGroup>
-        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem32</globalKey>
-        <inputFieldName>Case:Total_Case_Value__c</inputFieldName>
+        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem74</globalKey>
+        <inputFieldName>Case:HospitalizationHealthcare_Cost:RecordTypeName__c</inputFieldName>
         <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
         <linkedObjectSequence>0.0</linkedObjectSequence>
         <name>getDocGenCaseDetailsCopy1775078436803</name>
-        <outputCreationSequence>1.0</outputCreationSequence>
-        <outputFieldFormat>Currency</outputFieldFormat>
-        <outputFieldName>TotalCost</outputFieldName>
-        <outputObjectName>json</outputObjectName>
-        <requiredForUpsert>false</requiredForUpsert>
-        <upsertKey>false</upsertKey>
-    </omniDataTransformItem>
-    <omniDataTransformItem>
-        <disabled>false</disabled>
-        <filterGroup>0.0</filterGroup>
-        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem70</globalKey>
-        <inputFieldName>Case:HospitalizationHealthcare_Cost:SingleHospitalCost</inputFieldName>
-        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
-        <linkedObjectSequence>0.0</linkedObjectSequence>
-        <name>getDocGenCaseDetailsCopy1775078436803</name>
-        <outputCreationSequence>1.0</outputCreationSequence>
-        <outputFieldFormat>Currency</outputFieldFormat>
-        <outputFieldName>HospitalRecord:SingleHospitalCost</outputFieldName>
-        <outputObjectName>json</outputObjectName>
-        <requiredForUpsert>false</requiredForUpsert>
-        <upsertKey>false</upsertKey>
-    </omniDataTransformItem>
-    <omniDataTransformItem>
-        <defaultValue>0.00</defaultValue>
-        <disabled>false</disabled>
-        <filterGroup>0.0</filterGroup>
-        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem31</globalKey>
-        <inputFieldName>Case:DiscountFutureCare</inputFieldName>
-        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
-        <linkedObjectSequence>0.0</linkedObjectSequence>
-        <name>getDocGenCaseDetailsCopy1775078436803</name>
-        <outputCreationSequence>1.0</outputCreationSequence>
-        <outputFieldFormat>Currency</outputFieldFormat>
-        <outputFieldName>DiscountFutureCare</outputFieldName>
-        <outputObjectName>json</outputObjectName>
-        <requiredForUpsert>false</requiredForUpsert>
-        <upsertKey>false</upsertKey>
-    </omniDataTransformItem>
-    <omniDataTransformItem>
-        <disabled>false</disabled>
-        <filterGroup>0.0</filterGroup>
-        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem69</globalKey>
-        <inputFieldName>Case:CCHealthcare_Cost:RecordTypeName__c</inputFieldName>
-        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
-        <linkedObjectSequence>0.0</linkedObjectSequence>
-        <name>getDocGenCaseDetailsCopy1775078436803</name>
+        <omniDataTransformation>0kdbZ0000013yKm</omniDataTransformation>
+        <omniDataTransformationId>0kdbZ0000013yKm</omniDataTransformationId>
         <outputCreationSequence>1.0</outputCreationSequence>
         <outputFieldFormat>String</outputFieldFormat>
-        <outputFieldName>ContinuingCareRecords:RecordTypeName</outputFieldName>
+        <outputFieldName>HospitalRecord:RecordTypeName</outputFieldName>
         <outputObjectName>json</outputObjectName>
         <requiredForUpsert>false</requiredForUpsert>
         <upsertKey>false</upsertKey>
@@ -694,91 +1251,16 @@
     <omniDataTransformItem>
         <disabled>false</disabled>
         <filterGroup>0.0</filterGroup>
-        <filterOperator>ORDER BY</filterOperator>
-        <filterValue>date_of_service__c</filterValue>
-        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem30</globalKey>
-        <inputObjectName>Healthcare_Cost__c</inputObjectName>
-        <inputObjectQuerySequence>6.0</inputObjectQuerySequence>
-        <linkedObjectSequence>0.0</linkedObjectSequence>
-        <name>getDocGenCaseDetailsCopy1775078436803</name>
-        <outputCreationSequence>0.0</outputCreationSequence>
-        <outputFieldName>Case:PharmaHealthcare_Cost</outputFieldName>
-        <outputObjectName>json</outputObjectName>
-        <requiredForUpsert>false</requiredForUpsert>
-        <upsertKey>false</upsertKey>
-    </omniDataTransformItem>
-    <omniDataTransformItem>
-        <disabled>false</disabled>
-        <filterGroup>0.0</filterGroup>
-        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem68</globalKey>
-        <inputFieldName>Case:Date_of_Birth__c</inputFieldName>
+        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem58</globalKey>
+        <inputFieldName>Case:FCHealthcare_Cost:Cost__c</inputFieldName>
         <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
         <linkedObjectSequence>0.0</linkedObjectSequence>
         <name>getDocGenCaseDetailsCopy1775078436803</name>
-        <outputCreationSequence>1.0</outputCreationSequence>
-        <outputFieldFormat>Date(yyyy-MM-dd)</outputFieldFormat>
-        <outputFieldName>BirthDate</outputFieldName>
-        <outputObjectName>json</outputObjectName>
-        <requiredForUpsert>false</requiredForUpsert>
-        <upsertKey>false</upsertKey>
-    </omniDataTransformItem>
-    <omniDataTransformItem>
-        <disabled>false</disabled>
-        <filterGroup>0.0</filterGroup>
-        <filterOperator>ORDER BY</filterOperator>
-        <filterValue>date_of_service__c</filterValue>
-        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem29</globalKey>
-        <inputObjectName>Healthcare_Cost__c</inputObjectName>
-        <inputObjectQuerySequence>5.0</inputObjectQuerySequence>
-        <linkedObjectSequence>0.0</linkedObjectSequence>
-        <name>getDocGenCaseDetailsCopy1775078436803</name>
-        <outputCreationSequence>0.0</outputCreationSequence>
-        <outputFieldName>Case:MSPHealthcare_Cost</outputFieldName>
-        <outputObjectName>json</outputObjectName>
-        <requiredForUpsert>false</requiredForUpsert>
-        <upsertKey>false</upsertKey>
-    </omniDataTransformItem>
-    <omniDataTransformItem>
-        <disabled>false</disabled>
-        <filterGroup>0.0</filterGroup>
-        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem67</globalKey>
-        <inputFieldName>Case:PharmaHealthcare_Cost:RecordTypeName__c</inputFieldName>
-        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
-        <linkedObjectSequence>0.0</linkedObjectSequence>
-        <name>getDocGenCaseDetailsCopy1775078436803</name>
-        <outputCreationSequence>1.0</outputCreationSequence>
-        <outputFieldName>PharmaRecord:RecordTypeName</outputFieldName>
-        <outputObjectName>json</outputObjectName>
-        <requiredForUpsert>false</requiredForUpsert>
-        <upsertKey>false</upsertKey>
-    </omniDataTransformItem>
-    <omniDataTransformItem>
-        <disabled>false</disabled>
-        <filterGroup>0.0</filterGroup>
-        <filterOperator>ORDER BY</filterOperator>
-        <filterValue>date_of_admission__c</filterValue>
-        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem28</globalKey>
-        <inputObjectName>Healthcare_Cost__c</inputObjectName>
-        <inputObjectQuerySequence>4.0</inputObjectQuerySequence>
-        <linkedObjectSequence>0.0</linkedObjectSequence>
-        <name>getDocGenCaseDetailsCopy1775078436803</name>
-        <outputCreationSequence>0.0</outputCreationSequence>
-        <outputFieldName>Case:HospitalizationHealthcare_Cost</outputFieldName>
-        <outputObjectName>json</outputObjectName>
-        <requiredForUpsert>false</requiredForUpsert>
-        <upsertKey>false</upsertKey>
-    </omniDataTransformItem>
-    <omniDataTransformItem>
-        <disabled>false</disabled>
-        <filterGroup>0.0</filterGroup>
-        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem66</globalKey>
-        <inputFieldName>Case:MSPHealthcare_Cost:Total_Cost_Override__c</inputFieldName>
-        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
-        <linkedObjectSequence>0.0</linkedObjectSequence>
-        <name>getDocGenCaseDetailsCopy1775078436803</name>
+        <omniDataTransformation>0kdbZ0000013yLN</omniDataTransformation>
+        <omniDataTransformationId>0kdbZ0000013yLN</omniDataTransformationId>
         <outputCreationSequence>1.0</outputCreationSequence>
         <outputFieldFormat>Currency</outputFieldFormat>
-        <outputFieldName>MSPRecord:Cost</outputFieldName>
+        <outputFieldName>FutureCareRecords:FutureCareCost</outputFieldName>
         <outputObjectName>json</outputObjectName>
         <requiredForUpsert>false</requiredForUpsert>
         <upsertKey>false</upsertKey>
@@ -786,30 +1268,32 @@
     <omniDataTransformItem>
         <disabled>false</disabled>
         <filterGroup>0.0</filterGroup>
-        <filterOperator>ORDER BY</filterOperator>
-        <filterValue>date_of_service__c</filterValue>
-        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem27</globalKey>
-        <inputObjectName>Healthcare_Cost__c</inputObjectName>
-        <inputObjectQuerySequence>3.0</inputObjectQuerySequence>
-        <linkedObjectSequence>0.0</linkedObjectSequence>
-        <name>getDocGenCaseDetailsCopy1775078436803</name>
-        <outputCreationSequence>0.0</outputCreationSequence>
-        <outputFieldName>Case:AmbulanceHealthcare_Cost</outputFieldName>
-        <outputObjectName>json</outputObjectName>
-        <requiredForUpsert>false</requiredForUpsert>
-        <upsertKey>false</upsertKey>
-    </omniDataTransformItem>
-    <omniDataTransformItem>
-        <disabled>false</disabled>
-        <filterGroup>0.0</filterGroup>
-        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem65</globalKey>
-        <inputFieldName>Case:Continuing_Care_Total2__c</inputFieldName>
+        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem37</globalKey>
+        <inputFieldName>Case:FCHealthcare_Cost:Description__c</inputFieldName>
         <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
         <linkedObjectSequence>0.0</linkedObjectSequence>
         <name>getDocGenCaseDetailsCopy1775078436803</name>
+        <omniDataTransformation>0kdbZ0000013yKl</omniDataTransformation>
+        <omniDataTransformationId>0kdbZ0000013yKl</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>FutureCareRecords:Description</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem59</globalKey>
+        <inputFieldName>Case:PharmaHealthcare_Cost:Total_Cost_Override__c</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>getDocGenCaseDetailsCopy1775078436803</name>
+        <omniDataTransformation>0kdbZ0000013yLM</omniDataTransformation>
+        <omniDataTransformationId>0kdbZ0000013yLM</omniDataTransformationId>
         <outputCreationSequence>1.0</outputCreationSequence>
         <outputFieldFormat>Currency</outputFieldFormat>
-        <outputFieldName>ContinuingCareTotal</outputFieldName>
+        <outputFieldName>PharmaRecord:CostPharmacareSingle</outputFieldName>
         <outputObjectName>json</outputObjectName>
         <requiredForUpsert>false</requiredForUpsert>
         <upsertKey>false</upsertKey>
@@ -817,31 +1301,16 @@
     <omniDataTransformItem>
         <disabled>false</disabled>
         <filterGroup>0.0</filterGroup>
-        <formulaConverted>| var:Case:HospitalizationHealthcare_Cost:Total_Cost_Override__c $Vlocity.NULL = var:Case:HospitalizationHealthcare_Cost:Total_Costs_Standard__c var:Case:HospitalizationHealthcare_Cost:Total_Cost_Override__c IF</formulaConverted>
-        <formulaExpression>IF(var:Case:HospitalizationHealthcare_Cost:Total_Cost_Override__c = $Vlocity.NULL, Case:HospitalizationHealthcare_Cost:Total_Costs_Standard__c, Case:HospitalizationHealthcare_Cost:Total_Cost_Override__c)</formulaExpression>
-        <formulaResultPath>Case:HospitalizationHealthcare_Cost:SingleHospitalCost</formulaResultPath>
-        <formulaSequence>4.0</formulaSequence>
-        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem26</globalKey>
+        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem75</globalKey>
+        <inputFieldName>Case:PastServicesTotal</inputFieldName>
         <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
         <linkedObjectSequence>0.0</linkedObjectSequence>
         <name>getDocGenCaseDetailsCopy1775078436803</name>
-        <outputCreationSequence>0.0</outputCreationSequence>
-        <outputFieldName>Formula</outputFieldName>
-        <outputObjectName>Formula</outputObjectName>
-        <requiredForUpsert>false</requiredForUpsert>
-        <upsertKey>false</upsertKey>
-    </omniDataTransformItem>
-    <omniDataTransformItem>
-        <disabled>false</disabled>
-        <filterGroup>0.0</filterGroup>
-        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem64</globalKey>
-        <inputFieldName>Case:Pharmacare_Total2__c</inputFieldName>
-        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
-        <linkedObjectSequence>0.0</linkedObjectSequence>
-        <name>getDocGenCaseDetailsCopy1775078436803</name>
+        <omniDataTransformation>0kdbZ0000013yKk</omniDataTransformation>
+        <omniDataTransformationId>0kdbZ0000013yKk</omniDataTransformationId>
         <outputCreationSequence>1.0</outputCreationSequence>
         <outputFieldFormat>Currency</outputFieldFormat>
-        <outputFieldName>PharmacyTotal</outputFieldName>
+        <outputFieldName>PastServicesTotal</outputFieldName>
         <outputObjectName>json</outputObjectName>
         <requiredForUpsert>false</requiredForUpsert>
         <upsertKey>false</upsertKey>
@@ -849,31 +1318,15 @@
     <omniDataTransformItem>
         <disabled>false</disabled>
         <filterGroup>0.0</filterGroup>
-        <filterOperator>=</filterOperator>
-        <filterValue>&apos;Pharmacare&apos;</filterValue>
-        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem25</globalKey>
-        <inputFieldName>RecordTypeName__c</inputFieldName>
-        <inputObjectName>Healthcare_Cost__c</inputObjectName>
-        <inputObjectQuerySequence>6.0</inputObjectQuerySequence>
-        <linkedObjectSequence>0.0</linkedObjectSequence>
-        <name>getDocGenCaseDetailsCopy1775078436803</name>
-        <outputCreationSequence>0.0</outputCreationSequence>
-        <outputFieldName>Case:PharmaHealthcare_Cost</outputFieldName>
-        <outputObjectName>json</outputObjectName>
-        <requiredForUpsert>false</requiredForUpsert>
-        <upsertKey>false</upsertKey>
-    </omniDataTransformItem>
-    <omniDataTransformItem>
-        <disabled>false</disabled>
-        <filterGroup>0.0</filterGroup>
-        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem63</globalKey>
-        <inputFieldName>Case:MSPHealthcare_Cost:Date_of_Service__c</inputFieldName>
+        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem60</globalKey>
+        <inputFieldName>Case:MSPHealthcare_Cost:Description_of_Service2__c</inputFieldName>
         <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
         <linkedObjectSequence>0.0</linkedObjectSequence>
         <name>getDocGenCaseDetailsCopy1775078436803</name>
+        <omniDataTransformation>0kdbZ0000013yLL</omniDataTransformation>
+        <omniDataTransformationId>0kdbZ0000013yLL</omniDataTransformationId>
         <outputCreationSequence>1.0</outputCreationSequence>
-        <outputFieldFormat>Date(yyyy-MM-dd)</outputFieldFormat>
-        <outputFieldName>MSPRecord:ServiceDate</outputFieldName>
+        <outputFieldName>MSPRecord:ServiceDescription</outputFieldName>
         <outputObjectName>json</outputObjectName>
         <requiredForUpsert>false</requiredForUpsert>
         <upsertKey>false</upsertKey>
@@ -881,33 +1334,16 @@
     <omniDataTransformItem>
         <disabled>false</disabled>
         <filterGroup>0.0</filterGroup>
-        <formulaConverted>var:Case:Total_Case_Value__c var:Case:Future_Care_Total2__c -</formulaConverted>
-        <formulaExpression>Case:Total_Case_Value__c - Case:Future_Care_Total2__c</formulaExpression>
-        <formulaResultPath>Case:PastServicesTotal</formulaResultPath>
-        <formulaSequence>1.0</formulaSequence>
-        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem24</globalKey>
+        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem38</globalKey>
+        <inputFieldName>Case:CaseNumber</inputFieldName>
         <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
         <linkedObjectSequence>0.0</linkedObjectSequence>
         <name>getDocGenCaseDetailsCopy1775078436803</name>
-        <outputCreationSequence>0.0</outputCreationSequence>
-        <outputFieldName>Formula</outputFieldName>
-        <outputObjectName>Formula</outputObjectName>
-        <requiredForUpsert>false</requiredForUpsert>
-        <upsertKey>false</upsertKey>
-    </omniDataTransformItem>
-    <omniDataTransformItem>
-        <disabled>false</disabled>
-        <filterGroup>0.0</filterGroup>
-        <filterOperator>=</filterOperator>
-        <filterValue>&apos;true&apos;</filterValue>
-        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem23</globalKey>
-        <inputFieldName>Cost_Review__c</inputFieldName>
-        <inputObjectName>Healthcare_Cost__c</inputObjectName>
-        <inputObjectQuerySequence>5.0</inputObjectQuerySequence>
-        <linkedObjectSequence>0.0</linkedObjectSequence>
-        <name>getDocGenCaseDetailsCopy1775078436803</name>
-        <outputCreationSequence>0.0</outputCreationSequence>
-        <outputFieldName>Case:MSPHealthcare_Cost</outputFieldName>
+        <omniDataTransformation>0kdbZ0000013yKj</omniDataTransformation>
+        <omniDataTransformationId>0kdbZ0000013yKj</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldFormat>String</outputFieldFormat>
+        <outputFieldName>CaseNumber</outputFieldName>
         <outputObjectName>json</outputObjectName>
         <requiredForUpsert>false</requiredForUpsert>
         <upsertKey>false</upsertKey>
@@ -915,16 +1351,16 @@
     <omniDataTransformItem>
         <disabled>false</disabled>
         <filterGroup>0.0</filterGroup>
-        <filterOperator>=</filterOperator>
-        <filterValue>&apos;TPL DocGen Signature (Profile)&apos;</filterValue>
-        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem22</globalKey>
-        <inputFieldName>Name</inputFieldName>
-        <inputObjectName>TPL_DocGen_Signature__c</inputObjectName>
-        <inputObjectQuerySequence>9.0</inputObjectQuerySequence>
+        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem61</globalKey>
+        <inputFieldName>Case:AmbulanceHealthcare_Cost:Total_Cost_Override__c</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
         <linkedObjectSequence>0.0</linkedObjectSequence>
         <name>getDocGenCaseDetailsCopy1775078436803</name>
-        <outputCreationSequence>0.0</outputCreationSequence>
-        <outputFieldName>SigningAuthority</outputFieldName>
+        <omniDataTransformation>0kdbZ0000013yLK</omniDataTransformation>
+        <omniDataTransformationId>0kdbZ0000013yLK</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldFormat>Currency</outputFieldFormat>
+        <outputFieldName>AmbulanceRecord:SingleAmbulanceCost</outputFieldName>
         <outputObjectName>json</outputObjectName>
         <requiredForUpsert>false</requiredForUpsert>
         <upsertKey>false</upsertKey>
@@ -932,16 +1368,15 @@
     <omniDataTransformItem>
         <disabled>false</disabled>
         <filterGroup>0.0</filterGroup>
-        <filterOperator>=</filterOperator>
-        <filterValue>Case:Id</filterValue>
-        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem21</globalKey>
-        <inputFieldName>Case2__c</inputFieldName>
-        <inputObjectName>Healthcare_Cost__c</inputObjectName>
-        <inputObjectQuerySequence>3.0</inputObjectQuerySequence>
+        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem76</globalKey>
+        <inputFieldName>Case:MSPHealthcare_Cost:Location_Type_Description2__c</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
         <linkedObjectSequence>0.0</linkedObjectSequence>
         <name>getDocGenCaseDetailsCopy1775078436803</name>
-        <outputCreationSequence>0.0</outputCreationSequence>
-        <outputFieldName>Case:AmbulanceHealthcare_Cost</outputFieldName>
+        <omniDataTransformation>0kdbZ0000013yKi</omniDataTransformation>
+        <omniDataTransformationId>0kdbZ0000013yKi</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>MSPRecord:LocationType</outputFieldName>
         <outputObjectName>json</outputObjectName>
         <requiredForUpsert>false</requiredForUpsert>
         <upsertKey>false</upsertKey>
@@ -949,16 +1384,16 @@
     <omniDataTransformItem>
         <disabled>false</disabled>
         <filterGroup>0.0</filterGroup>
-        <filterOperator>=</filterOperator>
-        <filterValue>Case:Id</filterValue>
-        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem20</globalKey>
-        <inputFieldName>Case2__c</inputFieldName>
-        <inputObjectName>Healthcare_Cost__c</inputObjectName>
-        <inputObjectQuerySequence>6.0</inputObjectQuerySequence>
+        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem62</globalKey>
+        <inputFieldName>Case:Future_Care_Total2__c</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
         <linkedObjectSequence>0.0</linkedObjectSequence>
         <name>getDocGenCaseDetailsCopy1775078436803</name>
-        <outputCreationSequence>0.0</outputCreationSequence>
-        <outputFieldName>Case:PharmaHealthcare_Cost</outputFieldName>
+        <omniDataTransformation>0kdbZ0000013yLJ</omniDataTransformation>
+        <omniDataTransformationId>0kdbZ0000013yLJ</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldFormat>Currency</outputFieldFormat>
+        <outputFieldName>FutureCareTotal</outputFieldName>
         <outputObjectName>json</outputObjectName>
         <requiredForUpsert>false</requiredForUpsert>
         <upsertKey>false</upsertKey>
@@ -966,33 +1401,15 @@
     <omniDataTransformItem>
         <disabled>false</disabled>
         <filterGroup>0.0</filterGroup>
-        <filterOperator>=</filterOperator>
-        <filterValue>Id</filterValue>
-        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem19</globalKey>
-        <inputFieldName>Id</inputFieldName>
-        <inputObjectName>Case</inputObjectName>
-        <inputObjectQuerySequence>1.0</inputObjectQuerySequence>
+        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem39</globalKey>
+        <inputFieldName>Case:MSPHealthcare_Cost:Fee_Item_Title__c</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
         <linkedObjectSequence>0.0</linkedObjectSequence>
         <name>getDocGenCaseDetailsCopy1775078436803</name>
-        <outputCreationSequence>0.0</outputCreationSequence>
-        <outputFieldName>Case</outputFieldName>
-        <outputObjectName>json</outputObjectName>
-        <requiredForUpsert>false</requiredForUpsert>
-        <upsertKey>false</upsertKey>
-    </omniDataTransformItem>
-    <omniDataTransformItem>
-        <disabled>false</disabled>
-        <filterGroup>0.0</filterGroup>
-        <filterOperator>=</filterOperator>
-        <filterValue>Case:Id</filterValue>
-        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem18</globalKey>
-        <inputFieldName>Case2__c</inputFieldName>
-        <inputObjectName>Healthcare_Cost__c</inputObjectName>
-        <inputObjectQuerySequence>4.0</inputObjectQuerySequence>
-        <linkedObjectSequence>0.0</linkedObjectSequence>
-        <name>getDocGenCaseDetailsCopy1775078436803</name>
-        <outputCreationSequence>0.0</outputCreationSequence>
-        <outputFieldName>Case:HospitalizationHealthcare_Cost</outputFieldName>
+        <omniDataTransformation>0kdbZ0000013yKh</omniDataTransformation>
+        <omniDataTransformationId>0kdbZ0000013yKh</omniDataTransformationId>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>MSPRecord:FeeItem</outputFieldName>
         <outputObjectName>json</outputObjectName>
         <requiredForUpsert>false</requiredForUpsert>
         <upsertKey>false</upsertKey>
@@ -1008,6 +1425,8 @@
         <inputObjectQuerySequence>2.0</inputObjectQuerySequence>
         <linkedObjectSequence>0.0</linkedObjectSequence>
         <name>getDocGenCaseDetailsCopy1775078436803</name>
+        <omniDataTransformation>0kdbZ0000013yLI</omniDataTransformation>
+        <omniDataTransformationId>0kdbZ0000013yLI</omniDataTransformationId>
         <outputCreationSequence>0.0</outputCreationSequence>
         <outputFieldName>Case:Account</outputFieldName>
         <outputObjectName>json</outputObjectName>
@@ -1017,14 +1436,18 @@
     <omniDataTransformItem>
         <disabled>false</disabled>
         <filterGroup>0.0</filterGroup>
-        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem62</globalKey>
-        <inputFieldName>Case:Future_Care_Total2__c</inputFieldName>
-        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <filterOperator>=</filterOperator>
+        <filterValue>&apos;true&apos;</filterValue>
+        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom3107</globalKey>
+        <inputFieldName>Report_Include__c</inputFieldName>
+        <inputObjectName>Healthcare_Cost__c</inputObjectName>
+        <inputObjectQuerySequence>8.0</inputObjectQuerySequence>
         <linkedObjectSequence>0.0</linkedObjectSequence>
         <name>getDocGenCaseDetailsCopy1775078436803</name>
-        <outputCreationSequence>1.0</outputCreationSequence>
-        <outputFieldFormat>Currency</outputFieldFormat>
-        <outputFieldName>FutureCareTotal</outputFieldName>
+        <omniDataTransformation>0kdbZ00000142nR</omniDataTransformation>
+        <omniDataTransformationId>0kdbZ00000142nR</omniDataTransformationId>
+        <outputCreationSequence>0.0</outputCreationSequence>
+        <outputFieldName>Case:FCHealthcare_Cost</outputFieldName>
         <outputObjectName>json</outputObjectName>
         <requiredForUpsert>false</requiredForUpsert>
         <upsertKey>false</upsertKey>
@@ -1032,14 +1455,15 @@
     <omniDataTransformItem>
         <disabled>false</disabled>
         <filterGroup>0.0</filterGroup>
-        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem61</globalKey>
-        <inputFieldName>Case:AmbulanceHealthcare_Cost:Total_Cost_Override__c</inputFieldName>
+        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem77</globalKey>
+        <inputFieldName>Case:PHN__c</inputFieldName>
         <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
         <linkedObjectSequence>0.0</linkedObjectSequence>
         <name>getDocGenCaseDetailsCopy1775078436803</name>
+        <omniDataTransformation>0kdbZ0000013yKg</omniDataTransformation>
+        <omniDataTransformationId>0kdbZ0000013yKg</omniDataTransformationId>
         <outputCreationSequence>1.0</outputCreationSequence>
-        <outputFieldFormat>Currency</outputFieldFormat>
-        <outputFieldName>AmbulanceRecord:SingleAmbulanceCost</outputFieldName>
+        <outputFieldName>PHN</outputFieldName>
         <outputObjectName>json</outputObjectName>
         <requiredForUpsert>false</requiredForUpsert>
         <upsertKey>false</upsertKey>
@@ -1047,13 +1471,18 @@
     <omniDataTransformItem>
         <disabled>false</disabled>
         <filterGroup>0.0</filterGroup>
-        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem60</globalKey>
-        <inputFieldName>Case:MSPHealthcare_Cost:Description_of_Service2__c</inputFieldName>
-        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <filterOperator>=</filterOperator>
+        <filterValue>Case:Id</filterValue>
+        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem18</globalKey>
+        <inputFieldName>Case2__c</inputFieldName>
+        <inputObjectName>Healthcare_Cost__c</inputObjectName>
+        <inputObjectQuerySequence>4.0</inputObjectQuerySequence>
         <linkedObjectSequence>0.0</linkedObjectSequence>
         <name>getDocGenCaseDetailsCopy1775078436803</name>
-        <outputCreationSequence>1.0</outputCreationSequence>
-        <outputFieldName>MSPRecord:ServiceDescription</outputFieldName>
+        <omniDataTransformation>0kdbZ0000013yLH</omniDataTransformation>
+        <omniDataTransformationId>0kdbZ0000013yLH</omniDataTransformationId>
+        <outputCreationSequence>0.0</outputCreationSequence>
+        <outputFieldName>Case:HospitalizationHealthcare_Cost</outputFieldName>
         <outputObjectName>json</outputObjectName>
         <requiredForUpsert>false</requiredForUpsert>
         <upsertKey>false</upsertKey>
@@ -1061,103 +1490,16 @@
     <omniDataTransformItem>
         <disabled>false</disabled>
         <filterGroup>0.0</filterGroup>
-        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem59</globalKey>
-        <inputFieldName>Case:PharmaHealthcare_Cost:Total_Cost_Override__c</inputFieldName>
+        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem40</globalKey>
+        <inputFieldName>Case:Claim_Number__c</inputFieldName>
         <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
         <linkedObjectSequence>0.0</linkedObjectSequence>
         <name>getDocGenCaseDetailsCopy1775078436803</name>
-        <outputCreationSequence>1.0</outputCreationSequence>
-        <outputFieldFormat>Currency</outputFieldFormat>
-        <outputFieldName>PharmaRecord:CostPharmacareSingle</outputFieldName>
-        <outputObjectName>json</outputObjectName>
-        <requiredForUpsert>false</requiredForUpsert>
-        <upsertKey>false</upsertKey>
-    </omniDataTransformItem>
-    <omniDataTransformItem>
-        <disabled>false</disabled>
-        <filterGroup>0.0</filterGroup>
-        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem58</globalKey>
-        <inputFieldName>Case:FCHealthcare_Cost:Cost__c</inputFieldName>
-        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
-        <linkedObjectSequence>0.0</linkedObjectSequence>
-        <name>getDocGenCaseDetailsCopy1775078436803</name>
-        <outputCreationSequence>1.0</outputCreationSequence>
-        <outputFieldFormat>Currency</outputFieldFormat>
-        <outputFieldName>FutureCareRecords:FutureCareCost</outputFieldName>
-        <outputObjectName>json</outputObjectName>
-        <requiredForUpsert>false</requiredForUpsert>
-        <upsertKey>false</upsertKey>
-    </omniDataTransformItem>
-    <omniDataTransformItem>
-        <disabled>false</disabled>
-        <filterGroup>0.0</filterGroup>
-        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem57</globalKey>
-        <inputFieldName>Case:PharmaHealthcare_Cost:Practitioner_Name__c</inputFieldName>
-        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
-        <linkedObjectSequence>0.0</linkedObjectSequence>
-        <name>getDocGenCaseDetailsCopy1775078436803</name>
-        <outputCreationSequence>1.0</outputCreationSequence>
-        <outputFieldName>PharmaRecord:PrescribingPractitoner</outputFieldName>
-        <outputObjectName>json</outputObjectName>
-        <requiredForUpsert>false</requiredForUpsert>
-        <upsertKey>false</upsertKey>
-    </omniDataTransformItem>
-    <omniDataTransformItem>
-        <disabled>false</disabled>
-        <filterGroup>0.0</filterGroup>
-        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem56</globalKey>
-        <inputFieldName>Case:Future_Care_Total2__c</inputFieldName>
-        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
-        <linkedObjectSequence>0.0</linkedObjectSequence>
-        <name>getDocGenCaseDetailsCopy1775078436803</name>
-        <outputCreationSequence>1.0</outputCreationSequence>
-        <outputFieldFormat>Currency</outputFieldFormat>
-        <outputFieldName>FutureServicesTotal</outputFieldName>
-        <outputObjectName>json</outputObjectName>
-        <requiredForUpsert>false</requiredForUpsert>
-        <upsertKey>false</upsertKey>
-    </omniDataTransformItem>
-    <omniDataTransformItem>
-        <disabled>false</disabled>
-        <filterGroup>0.0</filterGroup>
-        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem55</globalKey>
-        <inputFieldName>Case:HospitalizationHealthcare_Cost:Date_of_Discharge__c</inputFieldName>
-        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
-        <linkedObjectSequence>0.0</linkedObjectSequence>
-        <name>getDocGenCaseDetailsCopy1775078436803</name>
-        <outputCreationSequence>1.0</outputCreationSequence>
-        <outputFieldFormat>Date(yyyy-MM-dd)</outputFieldFormat>
-        <outputFieldName>HospitalRecord:DateOfDischarge</outputFieldName>
-        <outputObjectName>json</outputObjectName>
-        <requiredForUpsert>false</requiredForUpsert>
-        <upsertKey>false</upsertKey>
-    </omniDataTransformItem>
-    <omniDataTransformItem>
-        <disabled>false</disabled>
-        <filterGroup>0.0</filterGroup>
-        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem54</globalKey>
-        <inputFieldName>Case:HospitalizationHealthcare_Cost:Number_of_Days__c</inputFieldName>
-        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
-        <linkedObjectSequence>0.0</linkedObjectSequence>
-        <name>getDocGenCaseDetailsCopy1775078436803</name>
-        <outputCreationSequence>1.0</outputCreationSequence>
-        <outputFieldFormat>Number</outputFieldFormat>
-        <outputFieldName>HospitalRecord:NumberOfDays</outputFieldName>
-        <outputObjectName>json</outputObjectName>
-        <requiredForUpsert>false</requiredForUpsert>
-        <upsertKey>false</upsertKey>
-    </omniDataTransformItem>
-    <omniDataTransformItem>
-        <disabled>false</disabled>
-        <filterGroup>0.0</filterGroup>
-        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem53</globalKey>
-        <inputFieldName>Case:HospitalizationHealthcare_Cost:FacilityName__c</inputFieldName>
-        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
-        <linkedObjectSequence>0.0</linkedObjectSequence>
-        <name>getDocGenCaseDetailsCopy1775078436803</name>
+        <omniDataTransformation>0kdbZ0000013yKf</omniDataTransformation>
+        <omniDataTransformationId>0kdbZ0000013yKf</omniDataTransformationId>
         <outputCreationSequence>1.0</outputCreationSequence>
         <outputFieldFormat>String</outputFieldFormat>
-        <outputFieldName>HospitalRecord:Facility</outputFieldName>
+        <outputFieldName>MVClaimNumber</outputFieldName>
         <outputObjectName>json</outputObjectName>
         <requiredForUpsert>false</requiredForUpsert>
         <upsertKey>false</upsertKey>
@@ -1165,14 +1507,34 @@
     <omniDataTransformItem>
         <disabled>false</disabled>
         <filterGroup>0.0</filterGroup>
-        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem52</globalKey>
-        <inputFieldName>Case:HospitalizationHealthcare_Cost:Date_of_Admission__c</inputFieldName>
+        <filterOperator>=</filterOperator>
+        <filterValue>Id</filterValue>
+        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem19</globalKey>
+        <inputFieldName>Id</inputFieldName>
+        <inputObjectName>Case</inputObjectName>
+        <inputObjectQuerySequence>1.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>getDocGenCaseDetailsCopy1775078436803</name>
+        <omniDataTransformation>0kdbZ0000013yLG</omniDataTransformation>
+        <omniDataTransformationId>0kdbZ0000013yLG</omniDataTransformationId>
+        <outputCreationSequence>0.0</outputCreationSequence>
+        <outputFieldName>Case</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem78</globalKey>
+        <inputFieldName>Case:PharmaHealthcare_Cost:Name_of_Drug__c</inputFieldName>
         <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
         <linkedObjectSequence>0.0</linkedObjectSequence>
         <name>getDocGenCaseDetailsCopy1775078436803</name>
+        <omniDataTransformation>0kdbZ0000013yKe</omniDataTransformation>
+        <omniDataTransformationId>0kdbZ0000013yKe</omniDataTransformationId>
         <outputCreationSequence>1.0</outputCreationSequence>
-        <outputFieldFormat>Date(yyyy-MM-dd)</outputFieldFormat>
-        <outputFieldName>HospitalRecord:DateOfAdmission</outputFieldName>
+        <outputFieldName>PharmaRecord:Description</outputFieldName>
         <outputObjectName>json</outputObjectName>
         <requiredForUpsert>false</requiredForUpsert>
         <upsertKey>false</upsertKey>
@@ -1180,14 +1542,18 @@
     <omniDataTransformItem>
         <disabled>false</disabled>
         <filterGroup>0.0</filterGroup>
-        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem51</globalKey>
-        <inputFieldName>Case:AmbulanceHealthcare_Cost:FacilityName__c</inputFieldName>
-        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <filterOperator>=</filterOperator>
+        <filterValue>Case:Id</filterValue>
+        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem20</globalKey>
+        <inputFieldName>Case2__c</inputFieldName>
+        <inputObjectName>Healthcare_Cost__c</inputObjectName>
+        <inputObjectQuerySequence>6.0</inputObjectQuerySequence>
         <linkedObjectSequence>0.0</linkedObjectSequence>
         <name>getDocGenCaseDetailsCopy1775078436803</name>
-        <outputCreationSequence>1.0</outputCreationSequence>
-        <outputFieldFormat>String</outputFieldFormat>
-        <outputFieldName>AmbulanceRecord:Destination</outputFieldName>
+        <omniDataTransformation>0kdbZ0000013yLF</omniDataTransformation>
+        <omniDataTransformationId>0kdbZ0000013yLF</omniDataTransformationId>
+        <outputCreationSequence>0.0</outputCreationSequence>
+        <outputFieldName>Case:PharmaHealthcare_Cost</outputFieldName>
         <outputObjectName>json</outputObjectName>
         <requiredForUpsert>false</requiredForUpsert>
         <upsertKey>false</upsertKey>
@@ -1195,14 +1561,16 @@
     <omniDataTransformItem>
         <disabled>false</disabled>
         <filterGroup>0.0</filterGroup>
-        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem50</globalKey>
-        <inputFieldName>Case:Hospitalization_Total2__c</inputFieldName>
+        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem41</globalKey>
+        <inputFieldName>Case:MSP_Total2__c</inputFieldName>
         <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
         <linkedObjectSequence>0.0</linkedObjectSequence>
         <name>getDocGenCaseDetailsCopy1775078436803</name>
+        <omniDataTransformation>0kdbZ0000013yKd</omniDataTransformation>
+        <omniDataTransformationId>0kdbZ0000013yKd</omniDataTransformationId>
         <outputCreationSequence>1.0</outputCreationSequence>
         <outputFieldFormat>Currency</outputFieldFormat>
-        <outputFieldName>HospitalTotal</outputFieldName>
+        <outputFieldName>MedicalTotal</outputFieldName>
         <outputObjectName>json</outputObjectName>
         <requiredForUpsert>false</requiredForUpsert>
         <upsertKey>false</upsertKey>
@@ -1210,14 +1578,18 @@
     <omniDataTransformItem>
         <disabled>false</disabled>
         <filterGroup>0.0</filterGroup>
-        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem49</globalKey>
-        <inputFieldName>Case:PharmaHealthcare_Cost:Date_of_Service__c</inputFieldName>
-        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <filterOperator>=</filterOperator>
+        <filterValue>Case:Id</filterValue>
+        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem21</globalKey>
+        <inputFieldName>Case2__c</inputFieldName>
+        <inputObjectName>Healthcare_Cost__c</inputObjectName>
+        <inputObjectQuerySequence>3.0</inputObjectQuerySequence>
         <linkedObjectSequence>0.0</linkedObjectSequence>
         <name>getDocGenCaseDetailsCopy1775078436803</name>
-        <outputCreationSequence>1.0</outputCreationSequence>
-        <outputFieldFormat>Date(yyyy-MM-dd)</outputFieldFormat>
-        <outputFieldName>PharmaRecord:ServiceDate</outputFieldName>
+        <omniDataTransformation>0kdbZ0000013yLE</omniDataTransformation>
+        <omniDataTransformationId>0kdbZ0000013yLE</omniDataTransformationId>
+        <outputCreationSequence>0.0</outputCreationSequence>
+        <outputFieldName>Case:AmbulanceHealthcare_Cost</outputFieldName>
         <outputObjectName>json</outputObjectName>
         <requiredForUpsert>false</requiredForUpsert>
         <upsertKey>false</upsertKey>
@@ -1225,85 +1597,35 @@
     <omniDataTransformItem>
         <disabled>false</disabled>
         <filterGroup>0.0</filterGroup>
-        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem48</globalKey>
-        <inputFieldName>Case:FCHealthcare_Cost:RecordTypeName__c</inputFieldName>
+        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem79</globalKey>
+        <inputFieldName>Case:AmbulanceHealthcare_Cost:RecordTypeName__c</inputFieldName>
         <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
         <linkedObjectSequence>0.0</linkedObjectSequence>
         <name>getDocGenCaseDetailsCopy1775078436803</name>
-        <outputCreationSequence>1.0</outputCreationSequence>
-        <outputFieldFormat>String</outputFieldFormat>
-        <outputFieldName>FutureCareRecords:RecordTypeName</outputFieldName>
-        <outputObjectName>json</outputObjectName>
-        <requiredForUpsert>false</requiredForUpsert>
-        <upsertKey>false</upsertKey>
-    </omniDataTransformItem>
-    <omniDataTransformItem>
-        <disabled>false</disabled>
-        <filterGroup>0.0</filterGroup>
-        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem47</globalKey>
-        <inputFieldName>SigningAuthority:Title__c</inputFieldName>
-        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
-        <linkedObjectSequence>0.0</linkedObjectSequence>
-        <name>getDocGenCaseDetailsCopy1775078436803</name>
-        <outputCreationSequence>1.0</outputCreationSequence>
-        <outputFieldName>SigningAuthority:Title</outputFieldName>
-        <outputObjectName>json</outputObjectName>
-        <requiredForUpsert>false</requiredForUpsert>
-        <upsertKey>false</upsertKey>
-    </omniDataTransformItem>
-    <omniDataTransformItem>
-        <disabled>false</disabled>
-        <filterGroup>0.0</filterGroup>
-        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem46</globalKey>
-        <inputFieldName>SigningAuthority:Name__c</inputFieldName>
-        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
-        <linkedObjectSequence>0.0</linkedObjectSequence>
-        <name>getDocGenCaseDetailsCopy1775078436803</name>
-        <outputCreationSequence>1.0</outputCreationSequence>
-        <outputFieldName>SigningAuthority:Name</outputFieldName>
-        <outputObjectName>json</outputObjectName>
-        <requiredForUpsert>false</requiredForUpsert>
-        <upsertKey>false</upsertKey>
-    </omniDataTransformItem>
-    <omniDataTransformItem>
-        <disabled>false</disabled>
-        <filterGroup>0.0</filterGroup>
-        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem45</globalKey>
-        <inputFieldName>Case:MSPHealthcare_Cost:Diagnostic_Description__c</inputFieldName>
-        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
-        <linkedObjectSequence>0.0</linkedObjectSequence>
-        <name>getDocGenCaseDetailsCopy1775078436803</name>
-        <outputCreationSequence>1.0</outputCreationSequence>
-        <outputFieldName>MSPRecord:DiagnosticDescription</outputFieldName>
-        <outputObjectName>json</outputObjectName>
-        <requiredForUpsert>false</requiredForUpsert>
-        <upsertKey>false</upsertKey>
-    </omniDataTransformItem>
-    <omniDataTransformItem>
-        <disabled>false</disabled>
-        <filterGroup>0.0</filterGroup>
-        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem44</globalKey>
-        <inputFieldName>Case:CCHealthcare_Cost:Description__c</inputFieldName>
-        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
-        <linkedObjectSequence>0.0</linkedObjectSequence>
-        <name>getDocGenCaseDetailsCopy1775078436803</name>
-        <outputCreationSequence>1.0</outputCreationSequence>
-        <outputFieldName>ContinuingCareRecords:Description</outputFieldName>
-        <outputObjectName>json</outputObjectName>
-        <requiredForUpsert>false</requiredForUpsert>
-        <upsertKey>false</upsertKey>
-    </omniDataTransformItem>
-    <omniDataTransformItem>
-        <disabled>false</disabled>
-        <filterGroup>0.0</filterGroup>
-        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem43</globalKey>
-        <inputFieldName>Case:AmbulanceHealthcare_Cost:Location_Responded__c</inputFieldName>
-        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
-        <linkedObjectSequence>0.0</linkedObjectSequence>
-        <name>getDocGenCaseDetailsCopy1775078436803</name>
+        <omniDataTransformation>0kdbZ0000013yKc</omniDataTransformation>
+        <omniDataTransformationId>0kdbZ0000013yKc</omniDataTransformationId>
         <outputCreationSequence>1.0</outputCreationSequence>
         <outputFieldFormat>String</outputFieldFormat>
-        <outputFieldName>AmbulanceRecord:OriginatingPoint</outputFieldName>
+        <outputFieldName>AmbulanceRecord:RecordTypeName</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <filterOperator>=</filterOperator>
+        <filterValue>&apos;TPL DocGen Signature (Profile)&apos;</filterValue>
+        <globalKey>getDocGenCaseDetailsCopy1775078436803Custom0jIJQ0000000RUr2AMItem22</globalKey>
+        <inputFieldName>Name</inputFieldName>
+        <inputObjectName>TPL_DocGen_Signature__c</inputObjectName>
+        <inputObjectQuerySequence>9.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>getDocGenCaseDetailsCopy1775078436803</name>
+        <omniDataTransformation>0kdbZ0000013yLD</omniDataTransformation>
+        <omniDataTransformationId>0kdbZ0000013yLD</omniDataTransformationId>
+        <outputCreationSequence>0.0</outputCreationSequence>
+        <outputFieldName>SigningAuthority</outputFieldName>
         <outputObjectName>json</outputObjectName>
         <requiredForUpsert>false</requiredForUpsert>
         <upsertKey>false</upsertKey>
