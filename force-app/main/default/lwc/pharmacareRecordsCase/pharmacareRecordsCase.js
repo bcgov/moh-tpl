@@ -31,18 +31,6 @@ const INTEGRATION_COLUMNS = [
             year: "numeric"},
         sortable: true,
         editable: false
-    }, 
-    {
-        label: 'Practitioner Name',
-        fieldName: 'Practitioner_Name__c',
-        type: 'text',
-        editable: false
-    },
-    {
-        label: 'DIN',
-        fieldName: 'DIN__c',
-        type: 'text',
-        editable: false
     },
     {
         label: 'Name of Drug',
@@ -60,6 +48,18 @@ const INTEGRATION_COLUMNS = [
         label: 'Total Cost Override',
         fieldName: 'Total_Cost_Override__c',
         type: 'currency',
+        editable: false
+    },
+    {
+        label: 'Practitioner Name',
+        fieldName: 'Practitioner_Name__c',
+        type: 'text',
+        editable: false
+    },
+    {
+        label: 'DIN',
+        fieldName: 'DIN__c',
+        type: 'text',
         editable: false
     },
     {

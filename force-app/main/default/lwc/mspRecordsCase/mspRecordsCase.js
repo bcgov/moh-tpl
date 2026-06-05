@@ -35,10 +35,41 @@ const INTEGRATION_COLUMNS = [
         sortable: true
     },
     {
+        label: 'Diagnostic Description',
+        fieldName: 'Diagnostic_Description__c',
+        type: 'text',
+        editable: true
+    },
+    {
+        label: 'Amount Paid',
+        fieldName: 'Amount_Paid__c',
+        type: 'text',
+        editable: true
+    },
+    {
+        label: 'Location Type Description',
+        fieldName: 'Location_Type_Description2__c',
+        type: 'text',
+        editable: true
+    },
+    {
+        label: 'Fee Item Description',
+        fieldName: 'Fee_Item_Description__c',
+        type: 'text',
+        editable: false
+    },
+    {
         label: 'Facility',
         fieldName: 'FacilityName__c',
         type: 'text',
         editable: false
+    },
+    {
+        label: "Facility Code",
+        fieldName: "Site_Code__c",
+        type: "text",
+        editable: false,
+        sortable: false,
     },
     {
         label: 'Facility Type',
@@ -61,12 +92,6 @@ const INTEGRATION_COLUMNS = [
     {
         label: 'Fee Item Title',
         fieldName: 'Fee_Item_Title__c',
-        type: 'text',
-        editable: false
-    },
-    {
-        label: 'Fee Item Description',
-        fieldName: 'Fee_Item_Description__c',
         type: 'text',
         editable: false
     },
@@ -196,6 +221,30 @@ const MANUAL_COLUMNS =
         sortable: true
     },
     {
+    label: 'Diagnostic Description',
+    fieldName: 'Diagnostic_Description__c',
+    type: 'text',
+    editable: true
+    },
+    {
+        label: 'Amount Paid',
+        fieldName: 'Amount_Paid__c',
+        type: 'text',
+        editable: true
+    },
+    {
+        label: 'Location Type Description',
+        fieldName: 'Location_Type_Description2__c',
+        type: 'text',
+        editable: true
+    },
+    {
+        label: 'Fee Item Description',
+        fieldName: 'Fee_Item_Description__c',
+        type: 'text',
+        editable: true
+    },
+    {
         label: 'Facility',
         fieldName: 'Facility__c',
         type:'lookup',
@@ -214,6 +263,13 @@ const MANUAL_COLUMNS =
         cellAttributes:{
             class: { fieldName: 'accountNameClass'}
         }
+    },
+    {
+        label: "Facility Code",
+        fieldName: "Site_Code__c",
+        type: "text",
+        editable: false,
+        sortable: false,
     },
     {
         label: 'Facility Type',
@@ -240,12 +296,6 @@ const MANUAL_COLUMNS =
         editable: true
     },
     {
-        label: 'Fee Item Description',
-        fieldName: 'Fee_Item_Description__c',
-        type: 'text',
-        editable: true
-    },
-    {
         label: 'Practitioner Number',
         fieldName: 'Practitioner_Number__c',
         type: 'false',
@@ -260,18 +310,6 @@ const MANUAL_COLUMNS =
     {
         label: 'Diagnostic Code',
         fieldName: 'Diagnostic_Code__c',
-        type: 'text',
-        editable: true
-    },
-    {
-        label: 'Diagnostic Description',
-        fieldName: 'Diagnostic_Description__c',
-        type: 'text',
-        editable: true
-    },
-    {
-        label: 'Amount Paid',
-        fieldName: 'Amount_Paid__c',
         type: 'text',
         editable: true
     },
@@ -328,12 +366,6 @@ const MANUAL_COLUMNS =
     {
         label: 'Location Type Code',
         fieldName: 'Location_Type_Code__c',
-        type: 'text',
-        editable: true
-    },
-    {
-        label: 'Location Type Description',
-        fieldName: 'Location_Type_Description2__c',
         type: 'text',
         editable: true
     },

@@ -1,55 +1,82 @@
 /**
- * Author: Nikhil Jeenru
- * Company : CGI
- * Deletes eligible Healthcare Cost records, then starts the insert batch
- * to reload refreshed HealthIdeas data.
- */
-global class HealthIdeasHCCRecordsDeleteBatch implements Database.Batchable<SObject>, Database.Stateful {
+* Author: Nikhil Jeenru
+* Company: CGI
+* Purpose:
+* This batch deletes eligible Healthcare Cost records before starting the
+* HealthIdeas API callout batch for refreshed Healthcare Cost data.
+*/
+public with sharing class HealthIdeasHCCRecordsDeleteBatch
+    implements Database.Batchable<SObject> {
 
     private Id accountId;
     private Date asOfDate;
-    private String jsonData;
-    private Map<String, Id> recordTypeIds;
+    private String requesterUserName;
 
-    // Initializes values needed for delete and insert processing.
-    global HealthIdeasHCCRecordsDeleteBatch(Id accountId, Date asOfDate,
-                                  String jsonData,
-                                  Map<String, Id> recordTypeIds) {
+    public HealthIdeasHCCRecordsDeleteBatch(
+        Id accountId,
+        Date asOfDate,
+        String requesterUserName
+    ) {
         this.accountId = accountId;
         this.asOfDate = asOfDate;
-        this.jsonData = jsonData;
-        this.recordTypeIds = recordTypeIds;
+        this.requesterUserName = requesterUserName;
     }
 
-    // Selects Healthcare Cost records that should be deleted.
-    global Database.QueryLocator start(Database.BatchableContext bc) {
-         return Database.getQueryLocator([
+    public Database.QueryLocator start(Database.BatchableContext bc) {
+        Map<String, Id> recordTypeIds =
+            HealthIdeasApiIntegration.getHealthcareCostRecordTypeIds();
+
+        return Database.getQueryLocator([
             SELECT Id
             FROM Healthcare_Cost__c
             WHERE Account__c = :accountId
-              AND RecordTypeId IN :new List<Id>{
-                  recordTypeIds.get('Pharmacare'),
-                  recordTypeIds.get('Hospitalization'),
-                  recordTypeIds.get('MSP')
-              }
-              AND Date_of_Service__c < :asOfDate
-              AND Cost_Review__c = false
-              AND Cost_Include__c = false
-              AND (Case2__c = null OR Case2__c = '')
+            AND RecordTypeId IN :recordTypeIds.values()
+            AND (
+                Date_of_Service__c < :asOfDate
+                OR Date_of_Admission__c < :asOfDate
+            )
+            AND Cost_Review__c = false
+            AND Cost_Include__c = false
+            AND (Case2__c = null OR Case2__c = '')
         ]);
     }
 
-    // Deletes the current batch of records.
-    global void execute(Database.BatchableContext bc, List<SObject> scope) {
-        delete scope;
+    public void execute(
+        Database.BatchableContext bc,
+        List<Healthcare_Cost__c> scope
+    ) {
+        Database.DeleteResult[] deleteResults =
+            Database.delete(scope, false);
+
+        for (Integer i = 0; i < deleteResults.size(); i++) {
+            if (!deleteResults[i].isSuccess()) {
+                for (Database.Error err : deleteResults[i].getErrors()) {
+                    LogService.appendAsyncError(
+                        bc.getJobId(),
+                        TPL_Constants.ERROR_DELETE_FAILED_HEALTHCARE_COST +
+                        String.valueOf(scope[i].Id) +
+                        ': ' +
+                        err.getMessage()
+                    );
+                }
+            }
+        }
     }
 
-    // Starts the insert batch after deletion completes.
-    global void finish(Database.BatchableContext bc) {
+    public void finish(Database.BatchableContext bc) {
+        LogService.updateAsyncStatus(
+            bc.getJobId(),
+            TPL_Constants.STATUS_PROCESSING
+        );
 
         Database.executeBatch(
-            new HealthIdeasInsertHCCRecordsBatch(jsonData, accountId, recordTypeIds),
-            200
+            new HealthIdeasApiCalloutBatch(
+                accountId,
+                asOfDate,
+                requesterUserName,
+                bc.getJobId()
+            ),
+            1
         );
     }
 }

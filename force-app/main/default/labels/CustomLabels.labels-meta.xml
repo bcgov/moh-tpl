@@ -215,6 +215,13 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>TPL_HI_Record_Error_Message</shortDescription>
-        <value>Errors occurred while receiving records for</value>
+        <value>Errors occurred while receiving</value>
+    </labels>
+    <labels>
+        <fullName>TPL_HI_Processing_Message</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>TPL HI Processing Message</shortDescription>
+        <value>Processing...</value>
     </labels>
 </CustomLabels>
