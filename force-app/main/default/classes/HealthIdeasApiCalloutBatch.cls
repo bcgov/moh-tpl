@@ -116,11 +116,12 @@ implements Database.Batchable<SObject>, Database.AllowsCallouts {
                 );
             }
         } catch (Exception e) {
+            string stackTrace = e.getStackTraceString();
             LogService.markChunkFailed(
                 rootBatchJobId,
                 bc.getJobId(),
                 e.getMessage(),
-                e.getStackTraceString(),
+                stackTrace,
                 'HealthIdeasApiCalloutBatch',
                 'execute'
             ); 

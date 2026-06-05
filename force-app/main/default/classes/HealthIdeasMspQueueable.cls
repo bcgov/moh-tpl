@@ -97,11 +97,12 @@ public with sharing class HealthIdeasMspQueueable implements Queueable {
                 );
             }
         } catch (Exception e) {
+            string stackTrace = e.getStackTraceString();
             LogService.markChunkFailed(
                 rootBatchJobId,
                 context.getJobId(),
                 e.getMessage(),
-                e.getStackTraceString(),
+                stackTrace,
                 'HealthIdeasMspQueueable',
                 'execute'
             ); 

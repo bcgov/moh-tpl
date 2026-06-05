@@ -91,11 +91,12 @@ public with sharing class HealthIdeasPharmacareQueueable implements Queueable {
                 );
             }
         } catch (Exception e) {
+            string stackTrace = e.getStackTraceString();
             LogService.markChunkFailed(
                 rootBatchJobId,
                 context.getJobId(),
                 e.getMessage(),
-                e.getStackTraceString(),
+                stackTrace,
                 'HealthIdeasPharmacareQueueable',
                 'execute'
             ); 
