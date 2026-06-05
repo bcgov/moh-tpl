@@ -489,6 +489,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Healthcare_Cost__c.Report_Include__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Case.AssetId</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -3594,10 +3599,6 @@
         <recordType>Product2.TPL_Product</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
-    <tabVisibilities>
-    <tab>standard-Report</tab>
-    <visibility>DefaultOn</visibility>
-    </tabVisibilities>
     <tabVisibilities>
         <tab>standard-Account</tab>
         <visibility>DefaultOn</visibility>

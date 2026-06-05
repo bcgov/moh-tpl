@@ -62,8 +62,9 @@ public with sharing class HealthIdeasPharmacareQueueable implements Queueable {
                     errorMessage = LogService.appendHealthcareCostInsertMessages(
                         errorMessage,
                         insertResults,
-                        recordsToInsert
-                    );
+                        recordsToInsert,
+                        TPL_Constants.HCC_PHARMA_RECORDTYPE_NAME
+                    ); 
                 }
             }
             
@@ -90,11 +91,15 @@ public with sharing class HealthIdeasPharmacareQueueable implements Queueable {
                 );
             }
         } catch (Exception e) {
+            string stackTrace = e.getStackTraceString();
             LogService.markChunkFailed(
                 rootBatchJobId,
                 context.getJobId(),
-                e.getMessage()
-            );
+                e.getMessage(),
+                stackTrace,
+                'HealthIdeasPharmacareQueueable',
+                'execute'
+            ); 
         }
     }
 }

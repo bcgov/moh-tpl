@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Ambulance_Costs_base</fullName>
+    <columns>Case_Number__c</columns>
+    <columns>Cost_Include__c</columns>
+    <columns>Cost_Review__c</columns>
+    <columns>Date_of_Service__c</columns>
+    <columns>Location_of_Incident__c</columns>
+    <columns>Service_Provider_Facility__c</columns>
+    <columns>Service_Provided_by_Facility__c</columns>
+    <columns>Basic_Amount__c</columns>
+    <columns>Total_Cost_Override__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Case_Number__c</field>
+        <operation>equals</operation>
+        <value>00001037</value>
+    </filters>
+    <filters>
+        <field>RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>Healthcare_Cost__c.Ambulance</value>
+    </filters>
+    <label>Ambulance Costs (base)</label>
+</ListView>
