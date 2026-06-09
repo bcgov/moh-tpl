@@ -132,7 +132,7 @@ global without sharing class TPL_CaseOmniService implements Callable{
             FROM Healthcare_Cost__c
             WHERE Case2__c = :caseId
             AND ((Date_of_Service__c >= :startDate
-            AND Date_of_Service__c <= :endDate) OR (Date_of_Admission__c >= :startDate AND Date_of_Admission__c <= TODAY)) AND Cost_Include__c = true and Cost_Review__c = true and Report_Include__c = true
+            AND Date_of_Service__c <= :endDate) OR (Date_of_Admission__c >= :startDate AND Date_of_Admission__c <= TODAY)) AND Cost_Include__c = true and Cost_Review__c = true
         ]){
             if(hc.RecordType.DeveloperName == 'Future_Care' || 
                hc.RecordType.DeveloperName == 'Continuing_Care'){
