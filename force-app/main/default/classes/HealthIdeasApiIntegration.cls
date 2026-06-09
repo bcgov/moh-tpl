@@ -587,6 +587,10 @@ public with sharing class HealthIdeasApiIntegration {
 * Builds the service type product value based on care level, year, and site code.
 */
     private static String returnServiceTypeProduct(String value, Date admissionDate, String siteCode) {
+
+         if (admissionDate == null) {
+            return null;
+        }
         String yearSTR = String.valueOf(admissionDate.year());
         
         If(admissionDate.month() > 3){
