@@ -68,6 +68,33 @@ private class TPL_CaseOmniServiceTest {
     }
 
     @IsTest
+    static void testGetHealthCareCostRecords_WithDateTimeInput() {
+        Case c = [SELECT Id FROM Case LIMIT 1];
+
+        String birthDateTime = String.valueOf(
+            Datetime.newInstance(Date.today().addDays(-10), Time.newInstance(0, 0, 0, 0))
+        ); // "yyyy-MM-dd HH:mm:ss"
+
+        Map<String, Object> inputMap = new Map<String, Object>{
+            'caseId' => c.Id,
+            'birthDate' => birthDateTime
+        };
+        Map<String, Object> outMap = new Map<String, Object>();
+
+        Test.startTest();
+        Boolean result = new TPL_CaseOmniService().invokeMethod(
+            'getHealthCareCostRecords',
+            inputMap,
+            outMap,
+            new Map<String, Object>()
+        );
+        Test.stopTest();
+
+        System.assertEquals(true, result);
+        System.assertEquals(2, (Integer)outMap.get('hcCount'));
+    }
+
+    @IsTest
     static void testGetHealthCareCostRecordsInDateRange() {
         Case c = [SELECT Id FROM Case LIMIT 1];
 
@@ -90,6 +117,56 @@ private class TPL_CaseOmniServiceTest {
 
         System.assertEquals(true, result);
         System.assertEquals(0, (Integer)outMap.get('hcFilterCount'));
+    }
+
+    @IsTest
+    static void testGetHealthCareCostRecordsInDateRange_WithDateTimeInput_AndFutureCare() {
+        Case c = [SELECT Id FROM Case LIMIT 1];
+
+        String startDateTime = String.valueOf(
+            Datetime.newInstance(Date.today().addDays(-1), Time.newInstance(0, 0, 0, 0))
+        ); // "yyyy-MM-dd HH:mm:ss"
+
+        String endDateTime = String.valueOf(
+            Datetime.newInstance(Date.today().addDays(1), Time.newInstance(23, 59, 59, 0))
+        ); // "yyyy-MM-dd HH:mm:ss"
+
+        Map<String, Object> inputMap = new Map<String, Object>{
+            'ContextId' => c.Id,
+            'startDate' => startDateTime,
+            'endDate' => endDateTime,
+            'includeFuture' => true
+        };
+        Map<String, Object> outMap = new Map<String, Object>();
+
+        Test.startTest();
+        Boolean result = new TPL_CaseOmniService().invokeMethod(
+            'getHealthCareCostRecordsInDateRange',
+            inputMap,
+            outMap,
+            new Map<String, Object>()
+        );
+        Test.stopTest();
+
+        System.assertEquals(true, result);
+        System.assertEquals(1, (Integer)outMap.get('hcFilterCount'));
+    }
+
+    @IsTest
+    static void testGetHealthCareCostRecordsInDateRange_EmptyInput() {
+        Map<String, Object> outMap = new Map<String, Object>();
+
+        Test.startTest();
+        Boolean result = new TPL_CaseOmniService().invokeMethod(
+            'getHealthCareCostRecordsInDateRange',
+            new Map<String, Object>(),
+            outMap,
+            new Map<String, Object>()
+        );
+        Test.stopTest();
+
+        System.assertEquals(true, result);
+        System.assertEquals(0, outMap.size());
     }
 
     @IsTest
