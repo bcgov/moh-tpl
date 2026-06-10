@@ -44,6 +44,7 @@ public with sharing class HealthIdeasJobStatusController {
             FROM Log__c
             WHERE JobId__c = :batchIdString
             AND Running_User__c = :runningUserId
+            WITH SYSTEM_MODE
             LIMIT 1
         ];
         

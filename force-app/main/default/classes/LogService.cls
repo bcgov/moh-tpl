@@ -21,7 +21,8 @@ public without sharing class LogService {
             FROM Log__c
             WHERE JobId__c = :rootBatchJobIdString
             AND Running_User__c = :runningUserId
-            LIMIT 1
+            WITH SYSTEM_MODE
+             LIMIT 1 
         ];
         
         Log__c logRecord;
@@ -163,6 +164,7 @@ public without sharing class LogService {
             FROM Log__c
             WHERE JobId__c = :rootBatchJobIdString
             AND Running_User__c = :runningUserId
+            WITH SYSTEM_MODE
             LIMIT 1
             FOR UPDATE
         ];
@@ -192,6 +194,7 @@ public without sharing class LogService {
             Error_Message__c
             FROM Log__c
             WHERE Id = :logRecord.Id
+            WITH SYSTEM_MODE
             LIMIT 1
             FOR UPDATE
         ];
@@ -320,6 +323,7 @@ public without sharing class LogService {
             FROM Log__c
             WHERE JobId__c = :rootBatchJobIdString
             AND Running_User__c = :runningUserId
+            WITH SYSTEM_MODE
             LIMIT 1
         ];
         
