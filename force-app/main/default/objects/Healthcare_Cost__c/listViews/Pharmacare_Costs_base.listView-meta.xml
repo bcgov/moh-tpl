@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ListView xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Pharmacare_Costs_base</fullName>
-    <columns>Case_Number__c</columns>
+    <columns>NAME</columns>
+    <columns>Case2__c</columns>
     <columns>Cost_Include__c</columns>
     <columns>Cost_Review__c</columns>
     <columns>DIN__c</columns>
@@ -11,14 +12,14 @@
     <columns>Total_Cost_Override__c</columns>
     <filterScope>Everything</filterScope>
     <filters>
-        <field>Case_Number__c</field>
-        <operation>equals</operation>
-        <value>00001037</value>
-    </filters>
-    <filters>
         <field>RECORDTYPE</field>
         <operation>equals</operation>
         <value>Healthcare_Cost__c.Pharmacare</value>
+    </filters>
+    <filters>
+        <field>Case2__c</field>
+        <operation>equals</operation>
+        <value>00000001</value>
     </filters>
     <label>Pharmacare Costs (base)</label>
 </ListView>
