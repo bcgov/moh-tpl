@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ListView xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Hospitalization_Costs_base</fullName>
-    <columns>Case_Number__c</columns>
+    <columns>NAME</columns>
+    <columns>Case2__c</columns>
     <columns>Cost_Include__c</columns>
     <columns>Cost_Review__c</columns>
     <columns>Facility__c</columns>
@@ -12,14 +13,14 @@
     <columns>Site_Code__c</columns>
     <filterScope>Everything</filterScope>
     <filters>
-        <field>Case_Number__c</field>
-        <operation>equals</operation>
-        <value>00001037</value>
-    </filters>
-    <filters>
         <field>RECORDTYPE</field>
         <operation>equals</operation>
         <value>Healthcare_Cost__c.Hospitalization</value>
+    </filters>
+    <filters>
+        <field>Case2__c</field>
+        <operation>equals</operation>
+        <value>00000001</value>
     </filters>
     <label>Hospitalization Costs (base)</label>
 </ListView>
