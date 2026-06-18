@@ -210,11 +210,11 @@
         <visibility>Visible</visibility>
     </tabSettings>
     <tabSettings>
-        <tab>standard-Task</tab>
+        <tab>standard-report</tab>
         <visibility>Visible</visibility>
     </tabSettings>
     <tabSettings>
-        <tab>standard-report</tab>
+        <tab>standard-Task</tab>
         <visibility>Visible</visibility>
     </tabSettings>
 </PermissionSet>
