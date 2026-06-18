@@ -17,14 +17,35 @@
 
             <template if:true={isLoading}>
                 <div class="slds-m-top_medium">
-                    Processing...
-                </div>
-            </template>
+                    <div class="slds-is-relative slds-p-around_medium">
+                        <lightning-spinner alternative-text="Processing" size="medium">
+                        </lightning-spinner>
+                    </div>
 
-            <template if:true={isLoading}>
-                <div class="slds-m-top_medium slds-is-relative">
-                    <lightning-spinner alternative-text="Loading" size="medium">
-                    </lightning-spinner>
+                    <div class="slds-m-top_medium">
+                        <template if:false={isASyncCall}>
+                            <div class="slds-text-body_regular slds-m-bottom_x-small">
+                                {processingMessage}
+                            </div>
+                        </template>
+
+                        <template if:true={isASyncCall}>
+                            <template if:true={progressStatusLabel}>
+                                <div class="slds-text-body_regular slds-m-bottom_x-small">
+                                    {progressStatusLabel}
+                                </div>
+                            </template>
+
+                            <template if:true={showProgressDetails}>
+                                <lightning-progress-bar value={progressValue} size="medium">
+                                </lightning-progress-bar>
+
+                                <div class="slds-m-top_x-small slds-text-body_small">
+                                    {progressLabel}
+                                </div>
+                            </template>
+                        </template>
+                    </div>
                 </div>
             </template>
 

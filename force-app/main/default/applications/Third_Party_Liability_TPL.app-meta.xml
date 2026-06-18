@@ -74,6 +74,7 @@
     </actionOverrides>
     <brand>
         <headerColor>#0070D2</headerColor>
+        <logo>bcps</logo>
         <logoVersion>1</logoVersion>
         <shouldOverrideOrgTheme>false</shouldOverrideOrgTheme>
     </brand>
@@ -404,6 +405,7 @@
     </profileActionOverrides>
     <tabs>standard-Account</tabs>
     <tabs>standard-Case</tabs>
+    <tabs>Healthcare_Cost__c</tabs>
     <tabs>Batch__c</tabs>
     <tabs>Payment__c</tabs>
     <tabs>standard-Product2</tabs>

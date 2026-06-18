@@ -37,6 +37,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HealthIdeasApiCalloutBatch</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HealthIdeasApiIntegration</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -45,9 +49,37 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>HealthIdeasInsertHCCRecordsBatch</apexClass>
+        <apexClass>HealthIdeasHospitalizationQueueable</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+    <classAccesses>
+        <apexClass>HealthIdeasJobStatusController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HealthIdeasMspQueueable</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HealthIdeasPharmacareQueueable</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>LogInsertBatch</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>LogService</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>TPL_Constants</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
+        <name>HealthIdeas_Batch_Configuration__mdt</name>
+    </customMetadataTypeAccesses>
     <description>Clerk &amp; Analyst</description>
     <fieldPermissions>
         <editable>true</editable>
