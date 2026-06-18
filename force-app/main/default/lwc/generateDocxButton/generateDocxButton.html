@@ -1,0 +1,38 @@
+<template>
+    <lightning-card title="Document Generation" icon-name="doctype:word">
+        <div class="slds-card__body slds-card__body_inner">
+
+            <template lwc:if={isGenerating}>
+                <div class="slds-align_absolute-center slds-p-vertical_medium">
+                    <lightning-spinner alternative-text="Generating..." size="medium">
+                    </lightning-spinner>
+                    <p class="slds-text-body_regular slds-m-top_medium">{statusMessage}</p>
+                </div>
+            </template>
+
+            <template lwc:else>
+                <p class="slds-text-body_regular slds-m-bottom_small">
+                    Generate the Minister&#39;s Certificate for this case.
+                </p>
+                <lightning-button
+                    label="Generate Minister's Certificate"
+                    icon-name="utility:download"
+                    variant="brand"
+                    onclick={handleGenerate}>
+                </lightning-button>
+            </template>
+
+            <template lwc:if={downloadUrl}>
+                <div class="slds-m-top_medium">
+                    <lightning-icon icon-name="utility:check" alternative-text="Done"
+                        variant="success" size="small" class="slds-m-right_x-small">
+                    </lightning-icon>
+                    <a href={downloadUrl} target="_blank" class="slds-m-left_x-small">
+                        Download generated document
+                    </a>
+                </div>
+            </template>
+
+        </div>
+    </lightning-card>
+</template>
