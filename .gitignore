@@ -24,6 +24,11 @@ yarn-error.log*
 # Dependency directories
 node_modules/
 
+# Exception: keep the vendored sfdx-git-delta plugin (committed on purpose so the
+# pipeline runs a repo-owned copy instead of downloading it from npm each run)
+!/.github/plugins/sfdx-git-delta/node_modules/
+!/.github/plugins/sfdx-git-delta/node_modules/**
+
 # ApexPMD cache
 .pmdCache
 
