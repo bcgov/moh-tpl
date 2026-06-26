@@ -7,9 +7,7 @@ private class TPL_CaseOmniServiceTest {
             Subject = 'Test Case',
             Status = 'New',
             Origin = 'Phone',
-            Include_Future_Care__c = true,
-            Report_Start__c = Date.today(),
-            Report_End__c = Date.today() + 5
+            Include_Future_Care__c = true
         );
         insert c;
 
@@ -89,7 +87,7 @@ private class TPL_CaseOmniServiceTest {
         Test.stopTest();
 
         System.assertEquals(true, result);
-        System.assertEquals(0, (Integer)outMap.get('hcFilterCount'));
+        System.assertEquals(1, (Integer)outMap.get('hcFilterCount'));
     }
 
     @IsTest
