@@ -1,9 +1,10 @@
 name: tplreleasevalidation
 
 on:
-  push:
+  pull_request:
     branches:
-      - pre-prod-validation
+      - main
+    types: [opened, synchronize, reopened]
   workflow_dispatch:
     inputs:
       commit_hash:
@@ -48,16 +49,51 @@ jobs:
           fi
           echo "COMMIT_HASH=$commitHash" >> $GITHUB_ENV
 
-      - name: Get last successful commit
-        uses: ./.github/actions/get-last-successful-commit
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Get last successful tplproduction commit on main
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if [ -n "$COMMIT_HASH" ]; then
+            echo "COMMIT_HASH already set to $COMMIT_HASH, skipping."
+            exit 0
+          fi
+
+          echo "Fetching last successful tplproduction.yml run on main branch..."
+
+          LAST_COMMIT=$(gh run list \
+            --repo "$GITHUB_REPOSITORY" \
+            --workflow "tplproduction.yml" \
+            --branch "main" \
+            --status success \
+            --limit 1 \
+            --json headSha \
+            --jq '.[0].headSha')
+
+          if [ -z "$LAST_COMMIT" ] || [ "$LAST_COMMIT" = "null" ]; then
+            echo "No previous successful tplproduction run found, checking first-run-baseline.yml on main..."
+            LAST_COMMIT=$(gh run list \
+              --repo "$GITHUB_REPOSITORY" \
+              --workflow "first-run-baseline.yml" \
+              --branch "main" \
+              --status success \
+              --limit 1 \
+              --json headSha \
+              --jq '.[0].headSha')
+          fi
+
+          if [ -z "$LAST_COMMIT" ] || [ "$LAST_COMMIT" = "null" ]; then
+            echo "::error::No baseline commit found on main. Cannot generate delta for PR validation."
+            exit 1
+          fi
+
+          echo "Baseline commit (last successful tplproduction on main): $LAST_COMMIT"
+          echo "COMMIT_HASH=$LAST_COMMIT" >> $GITHUB_ENV
 
       - name: Install plugins
         uses: ./.github/actions/install-plugin
 
       - name: Generate delta package
-        uses: ./.github/actions/generate-delta
+        uses: ./.github/actions/generate-delta-pr-validation
         with:
           commit_hash: ${{ env.COMMIT_HASH }}
 
@@ -103,5 +139,3 @@ jobs:
         with:
           run_all_tests: 'true'
           display_name: 'Run all tests'
-
-  
