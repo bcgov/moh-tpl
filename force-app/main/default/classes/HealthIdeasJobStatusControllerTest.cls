@@ -153,4 +153,3 @@ private class HealthIdeasJobStatusControllerTest {
         System.assertEquals('7073i000000XXXAAAA', response.queueableJobId);
     }
 }
-
