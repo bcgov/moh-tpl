@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Stores the signing authority name and title for the Minister&apos;s Certificate. Replaces the TPL_DocGen_Signature__c SOQL lookup (Query 9 in the DataRaptor spec) with a zero-query metadata read.</description>
+    <label>Certificate Signing Authority</label>
+    <pluralLabel>Certificate Signing Authorities</pluralLabel>
+    <visibility>Public</visibility>
+    <fields>
+        <fullName>Signing_Name__c</fullName>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <label>Signing Name</label>
+        <length>255</length>
+        <type>Text</type>
+    </fields>
+    <fields>
+        <fullName>Signing_Title__c</fullName>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <label>Signing Title</label>
+        <length>255</length>
+        <type>Text</type>
+    </fields>
+</CustomObject>

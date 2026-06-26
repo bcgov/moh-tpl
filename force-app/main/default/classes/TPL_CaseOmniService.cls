@@ -71,23 +71,16 @@ global without sharing class TPL_CaseOmniService implements Callable{
                    Cost_Include__c,
                    Cost_Review__c,
                    RecordType.DeveloperName,
-                   Case2__r.Include_Future_Care__c
+                   Case2__r.Include_Future_Care__c,
+                   Date_of_Service__c,
+                   Date_of_Admission__c 
             FROM Healthcare_Cost__c
             WHERE Case2__c = :caseId
-            AND ((Date_of_Service__c >= :birthDate
-            AND Date_of_Service__c <= TODAY) OR (Date_of_Admission__c >= :birthDate AND Date_of_Admission__c <= TODAY))
+
         ]){
-            if((hc.RecordType.DeveloperName == 'Future_Care' || 
-               hc.RecordType.DeveloperName == 'Continuing_Care') &&
-               hc.Case2__c != null
-               ){
-                
-                if(hc.Cost_Include__c == hc.Case2__r.Include_Future_Care__c || 
-                   hc.Cost_Review__c == hc.Case2__r.Include_Future_Care__c){
-                    
-                    hcIdList.add(hc.Id);
-                }
-            }else{
+            if(hc.RecordType.DeveloperName == 'Future_Care' || hc.RecordType.DeveloperName == 'Continuing_Care'){
+                hcIdList.add(hc.Id);
+            }else if((hc.Date_of_Service__c >= birthDate && hc.Date_of_Service__c <= date.TODAY()) || (hc.Date_of_Admission__c >= birthDate && hc.Date_of_Admission__c <= date.TODAY())){
                 hcIdList.add(hc.Id);
             }
         }
@@ -128,23 +121,21 @@ global without sharing class TPL_CaseOmniService implements Callable{
                    Cost_Include__c,
                    Cost_Review__c,
                    RecordType.DeveloperName,
-                   Case2__r.Include_Future_Care__c
+                   Case2__r.Include_Future_Care__c,
+                   Date_of_Admission__c ,
+                   Date_of_Service__c 
             FROM Healthcare_Cost__c
-            WHERE Case2__c = :caseId
-            AND ((Date_of_Service__c >= :startDate
-            AND Date_of_Service__c <= :endDate) OR (Date_of_Admission__c >= :startDate AND Date_of_Admission__c <= TODAY)) AND Cost_Include__c = true and Cost_Review__c = true
-        ]){
+            WHERE Case2__c = :caseId]){
+
             if(hc.RecordType.DeveloperName == 'Future_Care' || 
                hc.RecordType.DeveloperName == 'Continuing_Care'){
-                
-                if(hc.Cost_Include__c == isFutureCare || 
-                   hc.Cost_Review__c == isFutureCare){
-                    
-                    hcIdList.add(hc.Id);
-                }
-            }else{
-                hcIdList.add(hc.Id);
-            }
+                   if(isFutureCare){
+                       hcIdList.add(hc.Id);
+                   }
+               }else if(hc.Cost_Include__c == true && hc.Cost_Review__c == true && ((hc.Date_of_Service__c >= startDate && hc.Date_of_Service__c <= endDate) 
+                           || (hc.Date_of_Admission__c >= startDate && hc.Date_of_Admission__c <= endDate))){
+                   hcIdList.add(hc.Id);
+               }
         }
         
         outMap.put('hcFilterCount', hcIdList.size());
