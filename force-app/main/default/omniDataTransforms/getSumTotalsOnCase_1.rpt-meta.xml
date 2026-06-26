@@ -13,50 +13,6 @@
         <defaultValue>0</defaultValue>
         <disabled>false</disabled>
         <filterGroup>0.0</filterGroup>
-        <globalKey>getSumTotalsOnCaseCustom949</globalKey>
-        <inputFieldName>Case:MSP_Total2__c</inputFieldName>
-        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
-        <linkedObjectSequence>0.0</linkedObjectSequence>
-        <name>getSumTotalsOnCase</name>
-        <outputCreationSequence>1.0</outputCreationSequence>
-        <outputFieldFormat>Currency</outputFieldFormat>
-        <outputFieldName>MSPTotal</outputFieldName>
-        <outputObjectName>json</outputObjectName>
-        <requiredForUpsert>false</requiredForUpsert>
-        <upsertKey>false</upsertKey>
-    </omniDataTransformItem>
-    <omniDataTransformItem>
-        <disabled>false</disabled>
-        <filterGroup>0.0</filterGroup>
-        <globalKey>getSumTotalsOnCaseCustom4496</globalKey>
-        <inputFieldName>Account:Date_of_Birth__pc</inputFieldName>
-        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
-        <linkedObjectSequence>0.0</linkedObjectSequence>
-        <name>getSumTotalsOnCase</name>
-        <outputCreationSequence>1.0</outputCreationSequence>
-        <outputFieldName>Birthdate</outputFieldName>
-        <outputObjectName>json</outputObjectName>
-        <requiredForUpsert>false</requiredForUpsert>
-        <upsertKey>false</upsertKey>
-    </omniDataTransformItem>
-    <omniDataTransformItem>
-        <disabled>false</disabled>
-        <filterGroup>0.0</filterGroup>
-        <globalKey>getSumTotalsOnCaseCustom7262</globalKey>
-        <inputFieldName>Case:Include_Future_Care__c</inputFieldName>
-        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
-        <linkedObjectSequence>0.0</linkedObjectSequence>
-        <name>getSumTotalsOnCase</name>
-        <outputCreationSequence>1.0</outputCreationSequence>
-        <outputFieldName>IncludeFuture</outputFieldName>
-        <outputObjectName>json</outputObjectName>
-        <requiredForUpsert>false</requiredForUpsert>
-        <upsertKey>false</upsertKey>
-    </omniDataTransformItem>
-    <omniDataTransformItem>
-        <defaultValue>0</defaultValue>
-        <disabled>false</disabled>
-        <filterGroup>0.0</filterGroup>
         <globalKey>getSumTotalsOnCaseCustom869</globalKey>
         <inputFieldName>Case:Ambulance_Total2__c</inputFieldName>
         <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
@@ -70,46 +26,17 @@
         <upsertKey>false</upsertKey>
     </omniDataTransformItem>
     <omniDataTransformItem>
+        <defaultValue>0</defaultValue>
         <disabled>false</disabled>
         <filterGroup>0.0</filterGroup>
-        <filterOperator>=</filterOperator>
-        <filterValue>Case:AccountId</filterValue>
-        <globalKey>getSumTotalsOnCaseCustom8653</globalKey>
-        <inputFieldName>Id</inputFieldName>
-        <inputObjectName>Account</inputObjectName>
-        <inputObjectQuerySequence>2.0</inputObjectQuerySequence>
-        <linkedObjectSequence>0.0</linkedObjectSequence>
-        <name>getSumTotalsOnCase</name>
-        <outputCreationSequence>0.0</outputCreationSequence>
-        <outputFieldName>Account</outputFieldName>
-        <outputObjectName>json</outputObjectName>
-        <requiredForUpsert>false</requiredForUpsert>
-        <upsertKey>false</upsertKey>
-    </omniDataTransformItem>
-    <omniDataTransformItem>
-        <disabled>false</disabled>
-        <filterGroup>0.0</filterGroup>
-        <globalKey>getSumTotalsOnCaseCustom4000</globalKey>
-        <inputFieldName>Case:Report_End__c</inputFieldName>
+        <globalKey>getSumTotalsOnCaseCustom949</globalKey>
+        <inputFieldName>Case:MSP_Total2__c</inputFieldName>
         <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
         <linkedObjectSequence>0.0</linkedObjectSequence>
         <name>getSumTotalsOnCase</name>
         <outputCreationSequence>1.0</outputCreationSequence>
-        <outputFieldName>ReportEnd</outputFieldName>
-        <outputObjectName>json</outputObjectName>
-        <requiredForUpsert>false</requiredForUpsert>
-        <upsertKey>false</upsertKey>
-    </omniDataTransformItem>
-    <omniDataTransformItem>
-        <disabled>false</disabled>
-        <filterGroup>0.0</filterGroup>
-        <globalKey>getSumTotalsOnCaseCustom618</globalKey>
-        <inputFieldName>Case:Report_Start__c</inputFieldName>
-        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
-        <linkedObjectSequence>0.0</linkedObjectSequence>
-        <name>getSumTotalsOnCase</name>
-        <outputCreationSequence>1.0</outputCreationSequence>
-        <outputFieldName>ReportStart</outputFieldName>
+        <outputFieldFormat>Currency</outputFieldFormat>
+        <outputFieldName>MSPTotal</outputFieldName>
         <outputObjectName>json</outputObjectName>
         <requiredForUpsert>false</requiredForUpsert>
         <upsertKey>false</upsertKey>
@@ -118,14 +45,46 @@
         <defaultValue>0</defaultValue>
         <disabled>false</disabled>
         <filterGroup>0.0</filterGroup>
-        <globalKey>getSumTotalsOnCaseCustom1510</globalKey>
-        <inputFieldName>Case:Continuing_Care_Total2__c</inputFieldName>
+        <globalKey>getSumTotalsOnCaseCustom4565</globalKey>
+        <inputFieldName>Case:Future_Care_Total2__c</inputFieldName>
         <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
         <linkedObjectSequence>0.0</linkedObjectSequence>
         <name>getSumTotalsOnCase</name>
         <outputCreationSequence>1.0</outputCreationSequence>
         <outputFieldFormat>Currency</outputFieldFormat>
-        <outputFieldName>ContinuingCareTotal</outputFieldName>
+        <outputFieldName>FutureCareTotal</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <defaultValue>0</defaultValue>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>getSumTotalsOnCaseCustom4439</globalKey>
+        <inputFieldName>Case:Hospitalization_Total2__c</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>getSumTotalsOnCase</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldFormat>Currency</outputFieldFormat>
+        <outputFieldName>HospitalizationTotal</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <defaultValue>0</defaultValue>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>getSumTotalsOnCaseCustom1396</globalKey>
+        <inputFieldName>Case:Pharmacare_Total2__c</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>getSumTotalsOnCase</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldFormat>Currency</outputFieldFormat>
+        <outputFieldName>PharmacareTotal</outputFieldName>
         <outputObjectName>json</outputObjectName>
         <requiredForUpsert>false</requiredForUpsert>
         <upsertKey>false</upsertKey>
@@ -151,46 +110,14 @@
         <defaultValue>0</defaultValue>
         <disabled>false</disabled>
         <filterGroup>0.0</filterGroup>
-        <globalKey>getSumTotalsOnCaseCustom1396</globalKey>
-        <inputFieldName>Case:Pharmacare_Total2__c</inputFieldName>
+        <globalKey>getSumTotalsOnCaseCustom1510</globalKey>
+        <inputFieldName>Case:Continuing_Care_Total2__c</inputFieldName>
         <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
         <linkedObjectSequence>0.0</linkedObjectSequence>
         <name>getSumTotalsOnCase</name>
         <outputCreationSequence>1.0</outputCreationSequence>
         <outputFieldFormat>Currency</outputFieldFormat>
-        <outputFieldName>PharmacareTotal</outputFieldName>
-        <outputObjectName>json</outputObjectName>
-        <requiredForUpsert>false</requiredForUpsert>
-        <upsertKey>false</upsertKey>
-    </omniDataTransformItem>
-    <omniDataTransformItem>
-        <defaultValue>0</defaultValue>
-        <disabled>false</disabled>
-        <filterGroup>0.0</filterGroup>
-        <globalKey>getSumTotalsOnCaseCustom4439</globalKey>
-        <inputFieldName>Case:Hospitalization_Total2__c</inputFieldName>
-        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
-        <linkedObjectSequence>0.0</linkedObjectSequence>
-        <name>getSumTotalsOnCase</name>
-        <outputCreationSequence>1.0</outputCreationSequence>
-        <outputFieldFormat>Currency</outputFieldFormat>
-        <outputFieldName>HospitalizationTotal</outputFieldName>
-        <outputObjectName>json</outputObjectName>
-        <requiredForUpsert>false</requiredForUpsert>
-        <upsertKey>false</upsertKey>
-    </omniDataTransformItem>
-    <omniDataTransformItem>
-        <defaultValue>0</defaultValue>
-        <disabled>false</disabled>
-        <filterGroup>0.0</filterGroup>
-        <globalKey>getSumTotalsOnCaseCustom4565</globalKey>
-        <inputFieldName>Case:Future_Care_Total2__c</inputFieldName>
-        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
-        <linkedObjectSequence>0.0</linkedObjectSequence>
-        <name>getSumTotalsOnCase</name>
-        <outputCreationSequence>1.0</outputCreationSequence>
-        <outputFieldFormat>Currency</outputFieldFormat>
-        <outputFieldName>FutureCareTotal</outputFieldName>
+        <outputFieldName>ContinuingCareTotal</outputFieldName>
         <outputObjectName>json</outputObjectName>
         <requiredForUpsert>false</requiredForUpsert>
         <upsertKey>false</upsertKey>
