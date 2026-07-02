@@ -114,18 +114,6 @@ const INTEGRATION_COLUMNS = [
         editable: false
     },
     {
-        label: 'Diagnostic Description',
-        fieldName: 'Diagnostic_Description__c',
-        type: 'text',
-        editable: false
-    },
-    {
-        label: 'Amount Paid',
-        fieldName: 'Amount_Paid__c',
-        type: 'text',
-        editable: false
-    },
-    {
         label: 'Total Cost Override',
         fieldName: 'Total_Cost_Override__c',
         type: 'currency',
