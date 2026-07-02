@@ -43,7 +43,7 @@ const INTEGRATION_COLUMNS = [
     {
         label: 'Amount Paid',
         fieldName: 'Amount_Paid__c',
-        type: 'text',
+        type: 'currency',
         editable: true
     },
     {
@@ -217,7 +217,7 @@ const MANUAL_COLUMNS =
     {
         label: 'Amount Paid',
         fieldName: 'Amount_Paid__c',
-        type: 'text',
+        type: 'currency',
         editable: true
     },
     {
