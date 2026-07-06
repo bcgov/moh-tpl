@@ -14,7 +14,7 @@ private class DocxGenerationAsyncQueueableTest {
         return [SELECT Id FROM Case LIMIT 1];
     }
     
-    // Creates a generation log record used by DocxSyncQueueable.
+    // Creates a generation log record used by DocxGenerationAsyncQueueable.
     private static Log__c createGenerationLog(Id caseId) {
         Log__c logRecord = new Log__c();
         logRecord.Record_Id__c = String.valueOf(caseId);
@@ -75,7 +75,7 @@ private class DocxGenerationAsyncQueueableTest {
         
         System.assertNotEquals(null, refreshedLog.JobId__c, 'Failed queueable execution should still save the job id on the log.');
         System.assertNotEquals(null, refreshedLog.Error_Message__c, 'Catch block should save the exception message on the log.');
-        System.assertEquals('DocxSyncQueueable', refreshedLog.Class_Name__c, 'Catch block should save the queueable class name.');
+        System.assertEquals('DocxGenerationAsyncQueueable', refreshedLog.Class_Name__c, 'Catch block should save the queueable class name.');
         System.assertEquals('execute', refreshedLog.Method_Name__c, 'Catch block should save the failed method name.');
     }
 }

@@ -53,6 +53,7 @@ import TPL_DocGen_Word_File_Alt from '@salesforce/label/c.TPL_DocGen_Word_File_A
 const POLL_INTERVAL_MS = 3000;
 const MAX_POLLS = 80;
 const ASYNC_PREFIX = 'ASYNC:';
+const MISSING_RECORD_ID_MESSAGE = 'Case record Id is missing. Please refresh the Case record page and try again.';
 
 const STEP = Object.freeze({
     INSTRUCTIONS: 'instructions',
@@ -190,19 +191,11 @@ export default class GenerateDocxButton extends LightningElement {
     }
 
     handleStart() {
-        console.log('[GenerateDocxButton] Start clicked', {
-            recordId: this.recordId,
-            currentStep: this.currentStep,
-            showModal: this.showModal
-        });
+      //  console.log('[GenerateDocxButton] Start clicked', {recordId: this.recordId,currentStep: this.currentStep,showModal: this.showModal});
         this.showModal = true;
         this.currentStep = STEP.PICK_TEMPLATE;
         this.validationMessage = '';
-        console.log('[GenerateDocxButton] Modal opened and step changed', {
-            recordId: this.recordId,
-            currentStep: this.currentStep,
-            showModal: this.showModal
-        });
+       // console.log('[GenerateDocxButton] Modal opened and step changed', {recordId: this.recordId,currentStep: this.currentStep,showModal: this.showModal});
     }
 
     handleCloseModal() {
@@ -217,20 +210,11 @@ export default class GenerateDocxButton extends LightningElement {
         this.selectedTemplateName = selected ? selected.name : '';
         this.documentTitle = this.buildDefaultDocumentTitle(this.selectedTemplateName);
         this.validationMessage = '';
-        console.log('[GenerateDocxButton] Template selected', {
-            recordId: this.recordId,
-            selectedTemplate: this.selectedTemplate,
-            selectedTemplateName: this.selectedTemplateName,
-            documentTitle: this.documentTitle
-        });
+       // console.log('[GenerateDocxButton] Template selected', {recordId: this.recordId,selectedTemplate: this.selectedTemplate,selectedTemplateName: this.selectedTemplateName,documentTitle: this.documentTitle});
     }
 
     handlePickNext() {
-        console.log('[GenerateDocxButton] Pick Template Next clicked', {
-            recordId: this.recordId,
-            selectedTemplate: this.selectedTemplate,
-            selectedTemplateName: this.selectedTemplateName
-        });
+        //console.log('[GenerateDocxButton] Pick Template Next clicked', { recordId: this.recordId,selectedTemplate: this.selectedTemplate, selectedTemplateName: this.selectedTemplateName});
         if (!this.selectedTemplate) {
             this.validationMessage = TPL_DocGen_Validation_Select_Template;
             console.warn('[GenerateDocxButton] Pick Template validation failed - no template selected', {
@@ -243,12 +227,7 @@ export default class GenerateDocxButton extends LightningElement {
         if (!this.documentTitle) {
             this.documentTitle = this.buildDefaultDocumentTitle(this.selectedTemplateName);
         }
-        console.log('[GenerateDocxButton] Moved to Generation Options', {
-            recordId: this.recordId,
-            currentStep: this.currentStep,
-            selectedTemplateName: this.selectedTemplateName,
-            documentTitle: this.documentTitle
-        });
+       // console.log('[GenerateDocxButton] Moved to Generation Options', {recordId: this.recordId, currentStep: this.currentStep, selectedTemplateName: this.selectedTemplateName, documentTitle: this.documentTitle});
     }
 
     handlePreviousToPick() {
@@ -265,31 +244,16 @@ export default class GenerateDocxButton extends LightningElement {
     }
 
     async handleGenerate() {
-        console.log('[GenerateDocxButton] Generate clicked - before Apex call', {
-            recordId: this.recordId,
-            selectedTemplate: this.selectedTemplate,
-            selectedTemplateName: this.selectedTemplateName,
-            documentTitle: this.documentTitle,
-            outputFileFormat: this.outputFileFormat,
-            currentStep: this.currentStep,
-            showModal: this.showModal
-        });
+       // console.log('[GenerateDocxButton] Generate clicked - before Apex call', {recordId: this.recordId,selectedTemplate: this.selectedTemplate, selectedTemplateName: this.selectedTemplateName,documentTitle: this.documentTitle,outputFileFormat: this.outputFileFormat,currentStep: this.currentStep,showModal: this.showModal});
 
         if (!this.recordId) {
-            console.error('[GenerateDocxButton] Missing recordId. Apex generateDocument was not called.', {
-                recordId: this.recordId,
-                selectedTemplateName: this.selectedTemplateName
-            });
-            this.validationMessage = 'Case record Id is missing. Please refresh the Case record page and try again.';
+           // console.error('[GenerateDocxButton] Missing recordId. Apex generateDocument was not called.', {recordId: this.recordId,selectedTemplateName: this.selectedTemplateName});
+            this.validationMessage =  MISSING_RECORD_ID_MESSAGE;
             return;
         }
 
         if (!this.selectedTemplateName) {
-            console.error('[GenerateDocxButton] Missing selectedTemplateName. Apex generateDocument was not called.', {
-                recordId: this.recordId,
-                selectedTemplate: this.selectedTemplate,
-                selectedTemplateName: this.selectedTemplateName
-            });
+           // console.error('[GenerateDocxButton] Missing selectedTemplateName. Apex generateDocument was not called.', {recordId: this.recordId,selectedTemplate: this.selectedTemplate,selectedTemplateName: this.selectedTemplateName});
             this.validationMessage = TPL_DocGen_Validation_Select_Template;
             return;
         }
@@ -309,13 +273,11 @@ export default class GenerateDocxButton extends LightningElement {
                 caseId: this.recordId,
                 selectedTemplate: this.selectedTemplateName
             };
-            console.log('[GenerateDocxButton] Calling generateDocument Apex', requestPayload);
+           // console.log('[GenerateDocxButton] Calling generateDocument Apex', requestPayload);
 
             const result = await generateDocument(requestPayload);
 
-            console.log('[GenerateDocxButton] generateDocument Apex returned', {
-                result
-            });
+           // console.log('[GenerateDocxButton] generateDocument Apex returned', {result});
 
             if (typeof result === 'string' && result.startsWith(ASYNC_PREFIX)) {
                 const jobId = result.substring(ASYNC_PREFIX.length);
@@ -331,32 +293,20 @@ export default class GenerateDocxButton extends LightningElement {
     }
 
     startPolling(jobId) {
-        console.log('[GenerateDocxButton] Starting polling', {
-            recordId: this.recordId,
-            jobId
-        });
+      //  console.log('[GenerateDocxButton] Starting polling', {recordId: this.recordId,jobId });
         this.pollTimer = window.setInterval(async () => {
             this.pollCount += 1;
 
             try {
                 const pollPayload = { caseId: this.recordId, jobId };
-                console.log('[GenerateDocxButton] Calling pollDocument Apex', {
-                    ...pollPayload,
-                    pollCount: this.pollCount
-                });
+               // console.log('[GenerateDocxButton] Calling pollDocument Apex', {...pollPayload,pollCount: this.pollCount });
 
                 const result = await pollDocument(pollPayload);
 
-                console.log('[GenerateDocxButton] pollDocument Apex returned', {
-                    result,
-                    pollCount: this.pollCount
-                });
+               // console.log('[GenerateDocxButton] pollDocument Apex returned', {result,pollCount: this.pollCount });
 
                 if (this.isFailedPollResult(result)) {
-                    console.error('[GenerateDocxButton] pollDocument returned failed status', {
-                        result,
-                        pollCount: this.pollCount
-                    });
+                    //console.error('[GenerateDocxButton] pollDocument returned failed status', {result,pollCount: this.pollCount});
                     this.statusMessage = this.getPollResultMessage(result) || TPL_DocGen_Status_Failed;
                     this.isGenerating = false;
                     this.stopPolling();
@@ -398,11 +348,7 @@ export default class GenerateDocxButton extends LightningElement {
 
     completeGenerationFromResult(result, source) {
         const generatedFileIds = this.getGeneratedFileIds(result);
-        console.log('[GenerateDocxButton] Completing generation from result', {
-            source,
-            result,
-            generatedFileIds
-        });
+       // console.log('[GenerateDocxButton] Completing generation from result', {source, result,generatedFileIds});
 
         this.downloadLinks = this.buildLinks(generatedFileIds);
         this.statusMessage = this.downloadLinks.length > 1 ? TPL_DocGen_Status_Success_Multipart : TPL_DocGen_Status_Success;
@@ -536,15 +482,7 @@ export default class GenerateDocxButton extends LightningElement {
     }
 
     handleError(error) {
-        console.error('[GenerateDocxButton] DocGen error', {
-            recordId: this.recordId,
-            selectedTemplate: this.selectedTemplate,
-            selectedTemplateName: this.selectedTemplateName,
-            currentStep: this.currentStep,
-            errorBody: error && error.body ? error.body : undefined,
-            errorMessage: error && error.message ? error.message : undefined,
-            fullError: error
-        });
+       // console.error('[GenerateDocxButton] DocGen error', {recordId: this.recordId,selectedTemplate: this.selectedTemplate,selectedTemplateName: this.selectedTemplateName,currentStep: this.currentStep,errorBody: error && error.body ? error.body : undefined, errorMessage: error && error.message ? error.message : undefined,fullError: error});
         this.stopPolling();
         this.isGenerating = false;
         this.currentStep = STEP.RESPONSE;

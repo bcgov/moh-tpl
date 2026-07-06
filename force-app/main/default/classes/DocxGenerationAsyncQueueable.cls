@@ -47,7 +47,7 @@ Params: QueueableContext context
                 String.valueOf(context.getJobId()),
                 String.valueOf(e.getMessage()),
                 stackTrace,
-                'DocxSyncQueueable',
+                'DocxGenerationAsyncQueueable',
                 'execute'
             );
         }

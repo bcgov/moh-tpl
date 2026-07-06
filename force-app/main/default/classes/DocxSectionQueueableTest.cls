@@ -17,16 +17,7 @@ private class DocxSectionQueueableTest {
     private static List<ContentDocumentLink> findGeneratedDocxLinks(Id caseId, String titleContains) {
         String titleFilter = '%' + titleContains + '%';
         
-        return [
-            SELECT ContentDocumentId,
-            ContentDocument.Title,
-            ContentDocument.FileExtension
-            FROM ContentDocumentLink
-            WHERE LinkedEntityId = :caseId
-            AND ContentDocument.FileExtension = 'docx'
-            AND ContentDocument.Title LIKE :titleFilter
-            ORDER BY ContentDocument.Title
-        ];
+        return [ SELECT ContentDocumentId, ContentDocument.Title, ContentDocument.FileExtension FROM ContentDocumentLink WHERE LinkedEntityId = :caseId AND ContentDocument.FileExtension = 'docx' AND ContentDocument.Title LIKE :titleFilter ORDER BY ContentDocument.Title ];
     }
     
     /**
@@ -35,12 +26,7 @@ private class DocxSectionQueueableTest {
 * file was created for empty healthcare sections.
 */
     private static Integer docxCountForCase(Id caseId) {
-        return [
-            SELECT COUNT()
-            FROM ContentDocumentLink
-            WHERE LinkedEntityId = :caseId
-            AND ContentDocument.FileExtension = 'docx'
-        ];
+        return [ SELECT COUNT() FROM ContentDocumentLink WHERE LinkedEntityId = :caseId AND ContentDocument.FileExtension = 'docx' ];
     }
     
     /**
@@ -49,12 +35,7 @@ private class DocxSectionQueueableTest {
 * existing section documents to DocxAssemblerQueueable.
 */
     private static Integer zipCountForCase(Id caseId) {
-        return [
-            SELECT COUNT()
-            FROM ContentDocumentLink
-            WHERE LinkedEntityId = :caseId
-            AND ContentDocument.FileExtension = 'zip'
-        ];
+        return [ SELECT COUNT() FROM ContentDocumentLink WHERE LinkedEntityId = :caseId AND ContentDocument.FileExtension = 'zip' ];
     }
     
     /**
@@ -62,25 +43,8 @@ private class DocxSectionQueueableTest {
 * Covers consistent setup for most tests so each scenario only changes the
 * section index, selected template, or existing section document ids.
 */
-    private static DocxSectionQueueable newSelectedTemplateJob(
-        Case c,
-        Integer sectionIndex,
-        String lastProcessedDateId,
-        Integer chunkWithinSection,
-        String selectedTemplate,
-        List<Id> sectionDocIds
-    ) {
-        return new DocxSectionQueueable(
-            c.Id,
-            sectionIndex,
-            lastProcessedDateId,
-            chunkWithinSection,
-            c.CaseNumber,
-            'Test Signer',
-            'Test Title',
-            selectedTemplate,
-            sectionDocIds
-        );
+    private static DocxSectionQueueable newSelectedTemplateJob( Case c, Integer sectionIndex, String lastProcessedDateId, Integer chunkWithinSection, String selectedTemplate, List<Id> sectionDocIds ) {
+        return new DocxSectionQueueable( c.Id, sectionIndex, lastProcessedDateId, chunkWithinSection, c.CaseNumber, 'Test Signer', 'Test Title', selectedTemplate, sectionDocIds );
     }
     
     /**
@@ -92,14 +56,7 @@ private class DocxSectionQueueableTest {
     static void certificateSummarySectionCreatesTemporaryDocx() {
         Case c = DocxTestDataFactory.createCaseRecord();
         
-        DocxSectionQueueable job = newSelectedTemplateJob(
-            c,
-            DocgenConstants.CERTIFICATE_SECTION_INDEX,
-            null,
-            1,
-            TPL_Constants.DOCGEN_TEMPLATE_MINISTERS_CERTIFICATE,
-            new List<Id>()
-        );
+        DocxSectionQueueable job = newSelectedTemplateJob( c, DocgenConstants.CERTIFICATE_SECTION_INDEX, null, 1, TPL_Constants.DOCGEN_TEMPLATE_MINISTERS_CERTIFICATE, new List<Id>() );
         
         Test.startTest();
         job.execute(null);
@@ -123,14 +80,7 @@ private class DocxSectionQueueableTest {
     static void caseHistoryTemplateSkipsCertificateAndCreatesTotalsOnly() {
         Case c = DocxTestDataFactory.createCaseRecord();
         
-        DocxSectionQueueable job = newSelectedTemplateJob(
-            c,
-            DocgenConstants.CERTIFICATE_SECTION_INDEX,
-            null,
-            1,
-            TPL_Constants.DOCGEN_TEMPLATE_CASE_HISTORY,
-            new List<Id>()
-        );
+        DocxSectionQueueable job = newSelectedTemplateJob( c, DocgenConstants.CERTIFICATE_SECTION_INDEX, null, 1, TPL_Constants.DOCGEN_TEMPLATE_CASE_HISTORY, new List<Id>() );
         
         Test.startTest();
         job.execute(null);
@@ -152,14 +102,7 @@ private class DocxSectionQueueableTest {
     static void nullSelectedTemplateDefaultsToMinistersCertificate() {
         Case c = DocxTestDataFactory.createCaseRecord();
         
-        DocxSectionQueueable job = newSelectedTemplateJob(
-            c,
-            DocgenConstants.CERTIFICATE_SECTION_INDEX,
-            null,
-            1,
-            null,
-            null
-        );
+        DocxSectionQueueable job = newSelectedTemplateJob( c, DocgenConstants.CERTIFICATE_SECTION_INDEX, null, 1, null, null );
         
         Test.startTest();
         job.execute(null);
@@ -181,30 +124,7 @@ private class DocxSectionQueueableTest {
     static void legacyConstructorWithoutSelectedTemplateCreatesCertificateFiles() {
         Case c = DocxTestDataFactory.createCaseRecord();
         
-        DocxSectionQueueable job = new DocxSectionQueueable(
-            c.Id,
-            DocgenConstants.CERTIFICATE_SECTION_INDEX,
-            null,
-            1,
-            c.CaseNumber,
-            'Test Contact',
-            '1234567890',
-            'CLAIM-1',
-            String.valueOf(Date.today()),
-            String.valueOf(Date.today().addYears(-40)),
-            'Test Signer',
-            'Test Title',
-            '$10',
-            '$20',
-            '$30',
-            '$40',
-            '$50',
-            '$60',
-            '$100',
-            '$200',
-            '$300',
-            new List<Id>()
-        );
+        DocxSectionQueueable job = new DocxSectionQueueable( c.Id, DocgenConstants.CERTIFICATE_SECTION_INDEX, null, 1, c.CaseNumber, 'Test Contact', '1234567890', 'CLAIM-1', String.valueOf(Date.today()), String.valueOf(Date.today().addYears(-40)), 'Test Signer', 'Test Title', '$10', '$20', '$30', '$40', '$50', '$60', '$100', '$200', '$300', new List<Id>() );
         
         Test.startTest();
         job.execute(null);
@@ -223,31 +143,7 @@ private class DocxSectionQueueableTest {
     static void legacyConstructorWithSelectedTemplateHonorsCaseHistoryBehavior() {
         Case c = DocxTestDataFactory.createCaseRecord();
         
-        DocxSectionQueueable job = new DocxSectionQueueable(
-            c.Id,
-            DocgenConstants.CERTIFICATE_SECTION_INDEX,
-            null,
-            1,
-            c.CaseNumber,
-            'Test Contact',
-            '1234567890',
-            'CLAIM-2',
-            String.valueOf(Date.today()),
-            String.valueOf(Date.today().addYears(-40)),
-            'Test Signer',
-            'Test Title',
-            '$10',
-            '$20',
-            '$30',
-            '$40',
-            '$50',
-            '$60',
-            '$100',
-            '$200',
-            '$300',
-            TPL_Constants.DOCGEN_TEMPLATE_CASE_HISTORY,
-            new List<Id>()
-        );
+        DocxSectionQueueable job = new DocxSectionQueueable( c.Id, DocgenConstants.CERTIFICATE_SECTION_INDEX, null, 1, c.CaseNumber, 'Test Contact', '1234567890', 'CLAIM-2', String.valueOf(Date.today()), String.valueOf(Date.today().addYears(-40)), 'Test Signer', 'Test Title', '$10', '$20', '$30', '$40', '$50', '$60', '$100', '$200', '$300', TPL_Constants.DOCGEN_TEMPLATE_CASE_HISTORY, new List<Id>() );
         
         Test.startTest();
         job.execute(null);
@@ -268,14 +164,7 @@ private class DocxSectionQueueableTest {
         
         Integer beforeCount = docxCountForCase(c.Id);
         
-        DocxSectionQueueable job = newSelectedTemplateJob(
-            c,
-            DocgenConstants.AMBULANCE_SECTION_INDEX,
-            null,
-            1,
-            TPL_Constants.DOCGEN_TEMPLATE_MINISTERS_CERTIFICATE,
-            new List<Id>()
-        );
+        DocxSectionQueueable job = newSelectedTemplateJob( c, DocgenConstants.AMBULANCE_SECTION_INDEX, null, 1, TPL_Constants.DOCGEN_TEMPLATE_MINISTERS_CERTIFICATE, new List<Id>() );
         
         Test.startTest();
         job.execute(null);
@@ -296,14 +185,7 @@ private class DocxSectionQueueableTest {
         
         Integer beforeCount = docxCountForCase(c.Id);
         
-        DocxSectionQueueable job = newSelectedTemplateJob(
-            c,
-            DocgenConstants.HOSPITAL_SECTION_INDEX,
-            null,
-            1,
-            TPL_Constants.DOCGEN_TEMPLATE_MINISTERS_CERTIFICATE,
-            new List<Id>()
-        );
+        DocxSectionQueueable job = newSelectedTemplateJob( c, DocgenConstants.HOSPITAL_SECTION_INDEX, null, 1, TPL_Constants.DOCGEN_TEMPLATE_MINISTERS_CERTIFICATE, new List<Id>() );
         
         Test.startTest();
         job.execute(null);
@@ -324,14 +206,7 @@ private class DocxSectionQueueableTest {
         
         Integer beforeCount = docxCountForCase(c.Id);
         
-        DocxSectionQueueable job = newSelectedTemplateJob(
-            c,
-            DocgenConstants.MSP_SECTION_INDEX,
-            null,
-            1,
-            TPL_Constants.DOCGEN_TEMPLATE_MINISTERS_CERTIFICATE,
-            new List<Id>()
-        );
+        DocxSectionQueueable job = newSelectedTemplateJob( c, DocgenConstants.MSP_SECTION_INDEX, null, 1, TPL_Constants.DOCGEN_TEMPLATE_MINISTERS_CERTIFICATE, new List<Id>() );
         
         Test.startTest();
         job.execute(null);
@@ -352,14 +227,7 @@ private class DocxSectionQueueableTest {
         
         Integer beforeCount = docxCountForCase(c.Id);
         
-        DocxSectionQueueable job = newSelectedTemplateJob(
-            c,
-            DocgenConstants.PHARMACARE_SECTION_INDEX,
-            null,
-            1,
-            TPL_Constants.DOCGEN_TEMPLATE_MINISTERS_CERTIFICATE,
-            new List<Id>()
-        );
+        DocxSectionQueueable job = newSelectedTemplateJob( c, DocgenConstants.PHARMACARE_SECTION_INDEX, null, 1, TPL_Constants.DOCGEN_TEMPLATE_MINISTERS_CERTIFICATE, new List<Id>() );
         
         Test.startTest();
         job.execute(null);
@@ -381,14 +249,7 @@ private class DocxSectionQueueableTest {
         
         Integer beforeCount = docxCountForCase(c.Id);
         
-        DocxSectionQueueable job = newSelectedTemplateJob(
-            c,
-            DocgenConstants.CONTINUING_CARE_SECTION_INDEX,
-            null,
-            1,
-            TPL_Constants.DOCGEN_TEMPLATE_MINISTERS_CERTIFICATE,
-            new List<Id>()
-        );
+        DocxSectionQueueable job = newSelectedTemplateJob( c, DocgenConstants.CONTINUING_CARE_SECTION_INDEX, null, 1, TPL_Constants.DOCGEN_TEMPLATE_MINISTERS_CERTIFICATE, new List<Id>() );
         
         Test.startTest();
         job.execute(null);
@@ -410,14 +271,7 @@ private class DocxSectionQueueableTest {
         
         Integer beforeCount = docxCountForCase(c.Id);
         
-        DocxSectionQueueable job = newSelectedTemplateJob(
-            c,
-            DocgenConstants.FUTURE_CARE_SECTION_INDEX,
-            null,
-            1,
-            TPL_Constants.DOCGEN_TEMPLATE_MINISTERS_CERTIFICATE,
-            new List<Id>()
-        );
+        DocxSectionQueueable job = newSelectedTemplateJob( c, DocgenConstants.FUTURE_CARE_SECTION_INDEX, null, 1, TPL_Constants.DOCGEN_TEMPLATE_MINISTERS_CERTIFICATE, new List<Id>() );
         
         Test.startTest();
         job.execute(null);
@@ -438,20 +292,9 @@ private class DocxSectionQueueableTest {
     static void completedSectionHandsOffToAssemblerWithoutThrowing() {
         Case c = DocxTestDataFactory.createCaseRecord();
         
-        Id existingSectionDocId = DocxTestDataFactory.createLinkedFile(
-            c.Id,
-            '99_Existing_Section_' + c.CaseNumber + '.docx',
-            'existing section body'
-        );
+        Id existingSectionDocId = DocxTestDataFactory.createLinkedFile( c.Id, '99_Existing_Section_' + c.CaseNumber + '.docx', 'existing section body' );
         
-        DocxSectionQueueable job = newSelectedTemplateJob(
-            c,
-            DocgenConstants.COMPLETED_SECTION_INDEX,
-            null,
-            1,
-            TPL_Constants.DOCGEN_TEMPLATE_MINISTERS_CERTIFICATE,
-            new List<Id>{ existingSectionDocId }
-        );
+        DocxSectionQueueable job = newSelectedTemplateJob( c, DocgenConstants.COMPLETED_SECTION_INDEX, null, 1, TPL_Constants.DOCGEN_TEMPLATE_MINISTERS_CERTIFICATE, new List<Id>{ existingSectionDocId } );
         
         Test.startTest();
         job.execute(null);
@@ -470,38 +313,76 @@ private class DocxSectionQueueableTest {
     static void executeCatchesFailureAndWritesFailureLog() {
         Id invalidCaseId = (Id)'500000000000001AAA';
         
-        DocxSectionQueueable job = new DocxSectionQueueable(
-            invalidCaseId,
-            DocgenConstants.CERTIFICATE_SECTION_INDEX,
-            null,
-            1,
-            'BAD-CASE',
-            'Test Signer',
-            'Test Title',
-            TPL_Constants.DOCGEN_TEMPLATE_MINISTERS_CERTIFICATE,
-            new List<Id>()
-        );
+        DocxSectionQueueable job = new DocxSectionQueueable( invalidCaseId, DocgenConstants.CERTIFICATE_SECTION_INDEX, null, 1, 'BAD-CASE', 'Test Signer', 'Test Title', TPL_Constants.DOCGEN_TEMPLATE_MINISTERS_CERTIFICATE, new List<Id>() );
         
         Test.startTest();
         System.enqueueJob(job);
         Test.stopTest();
         
-        List<Log__c> logs = [
-            SELECT Id,
-            Record_Id__c,
-            Status__c,
-            Error_Message__c,
-            Class_Name__c,
-            Method_Name__c
-            FROM Log__c
-            WHERE Record_Id__c = :String.valueOf(invalidCaseId)
-            AND Class_Name__c = 'DocxSectionQueueable'
-            AND Method_Name__c = 'execute'
-            LIMIT 1
-        ];
+        List<Log__c> logs = [ SELECT Id, Record_Id__c, Status__c, Error_Message__c, Class_Name__c, Method_Name__c FROM Log__c WHERE Record_Id__c = :String.valueOf(invalidCaseId) AND Class_Name__c = 'DocxSectionQueueable' AND Method_Name__c = 'execute' LIMIT 1 ];
         
         System.assertEquals(1, logs.size(), 'Failure path should write a DocxSectionQueueable log.');
         System.assertEquals(TPL_Constants.STATUS_FAILED, logs[0].Status__c, 'Failure log should be marked failed.');
         System.assert(!String.isBlank(logs[0].Error_Message__c), 'Failure log should include the caught exception message.');
     }
+    
+    // -------------------------------------------------------------------------
+    // Forced detail DOCX coverage for all healthcare sections.
+    // These tests intentionally use chunkWithinSection = 2. In production, this
+    // means the queueable is already inside a section chunk, so executeSection()
+    // must call buildSectionDoc(...) even when the queried row list is empty.
+    // This covers buildSectionDoc, applyRowsToBuilder, sectionFileLabel,
+    // saveSection, baseBuilder, and the lastProcessedDateId != null query branch
+    // for every supported Healthcare Cost section.
+    // -------------------------------------------------------------------------
+    @IsTest
+    static void ambulanceSecondChunkBuildsDetailDocx() {
+        assertForcedDetailSectionCreatesDocx(DocgenConstants.AMBULANCE_SECTION_INDEX, 'Ambulance forced second chunk should create detail DOCX.');
+    }
+    
+    @IsTest
+    static void hospitalSecondChunkBuildsDetailDocx() {
+        assertForcedDetailSectionCreatesDocx(DocgenConstants.HOSPITAL_SECTION_INDEX, 'Hospital forced second chunk should create detail DOCX.');
+    }
+    
+    @IsTest
+    static void mspSecondChunkBuildsDetailDocx() {
+        assertForcedDetailSectionCreatesDocx(DocgenConstants.MSP_SECTION_INDEX, 'MSP forced second chunk should create detail DOCX.');
+    }
+    
+    @IsTest
+    static void pharmacareSecondChunkBuildsDetailDocx() {
+        assertForcedDetailSectionCreatesDocx(DocgenConstants.PHARMACARE_SECTION_INDEX, 'PharmaCare forced second chunk should create detail DOCX.');
+    }
+    
+    @IsTest
+    static void continuingCareSecondChunkBuildsDetailDocx() {
+        assertForcedDetailSectionCreatesDocx(DocgenConstants.CONTINUING_CARE_SECTION_INDEX, 'Continuing Care forced second chunk should create detail DOCX.');
+    }
+    
+    @IsTest
+    static void futureCareSecondChunkBuildsDetailDocx() {
+        assertForcedDetailSectionCreatesDocx(DocgenConstants.FUTURE_CARE_SECTION_INDEX, 'Future Care forced second chunk should create detail DOCX.');
+    }
+    
+    // Covers fallback/default SectionConfig behavior for unknown section indexes:
+    // rowsPerDocForSection() uses the max default, sectionHcType() falls back to
+    // Future Care, and sectionFileLabel() falls back to the Future Care label.
+    @IsTest
+    static void unknownSectionIndexUsesFallbackFutureCareDetailDocx() {
+        assertForcedDetailSectionCreatesDocx(999, 'Unknown section index should use fallback Future Care detail DOCX behavior.');
+    }
+    
+    private static void assertForcedDetailSectionCreatesDocx(Integer sectionIndex, String assertionMessage) {
+        Case c = DocxTestDataFactory.createCaseRecord();
+        Integer beforeCount = docxCountForCase(c.Id);
+        
+        Test.startTest();
+        System.enqueueJob(newSelectedTemplateJob( c, sectionIndex, '000000000000000000', 2, TPL_Constants.DOCGEN_TEMPLATE_MINISTERS_CERTIFICATE, new List<Id>() ));
+        Test.stopTest();
+        
+        Integer afterCount = docxCountForCase(c.Id);
+        System.assert(afterCount > beforeCount, assertionMessage);
+    }
+
 }

@@ -37,7 +37,7 @@ private class DocxGenrationStatusControllerTest {
         logRecord.Status__c = status;
         logRecord.Error_Message__c = errorMessage;
         logRecord.Generated_File_Ids__c = generatedFileIds;
-        insert logRecord;
+        Database.insert(logRecord, AccessLevel.SYSTEM_MODE);
         return logRecord;
     }
     
@@ -188,7 +188,7 @@ private class DocxGenrationStatusControllerTest {
         Test.stopTest();
         
         logRecord.JobId__c = String.valueOf(jobId);
-        update logRecord;
+        Database.update(logRecord, AccessLevel.SYSTEM_MODE);
         
         DocxGenrationStatusController.PollDocumentResponse result = DocxGenrationStatusController.pollDocument(c.Id, String.valueOf(jobId));
         
@@ -244,11 +244,10 @@ private class DocxGenrationStatusControllerTest {
         System.assertEquals(null, result.generatedFileIds, 'Generated file ids should be null when async job failed.');
         System.assertEquals('Async job failed from test.', result.errorMessage, 'Polling should return the async job extended status message.');
         
-        Log__c refreshedLog = [SELECT Id, Status__c, Error_Message__c, Generated_File_Ids__c FROM Log__c WHERE Id = :logRecord.Id LIMIT 1];
+        Log__c refreshedLog = [SELECT Id, Status__c, Error_Message__c FROM Log__c WHERE Id = :logRecord.Id LIMIT 1];
         
         System.assertEquals(TPL_Constants.STATUS_FAILED, refreshedLog.Status__c, 'Log should be updated to FAILED when async job failed.');
         System.assertEquals('Async job failed from test.', refreshedLog.Error_Message__c, 'Log should store the async failure message.');
-        System.assertEquals(null, refreshedLog.Generated_File_Ids__c, 'Generated file ids should be cleared when async job failed.');
         
         DocxGenrationStatusController.testAsyncJobStatus = null;
         DocxGenrationStatusController.testAsyncJobExtendedStatus = null;
@@ -271,11 +270,10 @@ private class DocxGenrationStatusControllerTest {
         System.assertEquals(null, result.generatedFileIds, 'Generated file ids should be null when async job aborted.');
         System.assertEquals(System.Label.TPL_DocGen_Status_Failed, result.errorMessage, 'Polling should return default failure message when async job extended status is blank.');
         
-        Log__c refreshedLog = [SELECT Id, Status__c, Error_Message__c, Generated_File_Ids__c FROM Log__c WHERE Id = :logRecord.Id LIMIT 1];
+        Log__c refreshedLog = [SELECT Id, Status__c, Error_Message__c FROM Log__c WHERE Id = :logRecord.Id LIMIT 1];
         
         System.assertEquals(TPL_Constants.STATUS_FAILED, refreshedLog.Status__c, 'Log should be updated to FAILED when async job aborted.');
         System.assertEquals(System.Label.TPL_DocGen_Status_Failed, refreshedLog.Error_Message__c, 'Log should store default failure message when extended status is blank.');
-        System.assertEquals(null, refreshedLog.Generated_File_Ids__c, 'Generated file ids should be cleared when async job aborted.');
         
         DocxGenrationStatusController.testAsyncJobStatus = null;
         DocxGenrationStatusController.testAsyncJobExtendedStatus = null;

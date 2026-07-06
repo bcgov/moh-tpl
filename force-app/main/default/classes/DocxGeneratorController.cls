@@ -2,7 +2,7 @@
 * Author: Nikhil Jeenru
 * Company: CGI
 * Purpose:
-* Routes document generation requests between synchronous, asynchronous, and section ZIP flows.
+* Routes Certificate document generation requests between synchronous, asynchronous, and section ZIP flows.
 */
 public with sharing class DocxGeneratorController {
     @TestVisible
@@ -36,7 +36,7 @@ Params: Id caseId, String selectedTemplate
             }
             
         } catch (Exception e) {
-            throw new AuraHandledException('Certificate generation failed: ' + e.getMessage());
+            throw new AuraHandledException(e.getMessage());
         }
     }
     

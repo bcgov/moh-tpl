@@ -32,13 +32,14 @@ public with sharing class DocxGenrationStatusController {
         try {
             List<Log__c> logs;
             String caseIdString = String.valueOf(caseId);
+             Id runningUserId = UserInfo.getUserId();
             
             if (String.isNotBlank(jobId)) {
                 logs = [
                     SELECT Id, Status__c, Error_Message__c, Generated_File_Ids__c
                     FROM Log__c
                     WHERE JobId__c = :jobId
-                    AND Running_User__c = :UserInfo.getUserId()
+                    AND Running_User__c = :runningUserId
                     WITH SYSTEM_MODE
                     LIMIT 1
                 ];
@@ -48,7 +49,7 @@ public with sharing class DocxGenrationStatusController {
                         SELECT Id, Status__c, Error_Message__c, Generated_File_Ids__c
                         FROM Log__c
                         WHERE Record_Id__c = :caseIdString
-                        AND Running_User__c = :UserInfo.getUserId()
+                        AND Running_User__c = :runningUserId
                         AND Class_Name__c = :TPL_Constants.CLASS_DOCX_GENERATOR_CONTROLLER
                         AND Method_Name__c = :TPL_Constants.METHOD_GENERATE_DOCUMENT
                         WITH SYSTEM_MODE
@@ -61,7 +62,7 @@ public with sharing class DocxGenrationStatusController {
                     SELECT Id, Status__c, Error_Message__c, Generated_File_Ids__c
                     FROM Log__c
                     WHERE Record_Id__c = :caseIdString
-                    AND Running_User__c = :UserInfo.getUserId()
+                    AND Running_User__c = :runningUserId
                     AND Class_Name__c = :TPL_Constants.CLASS_DOCX_GENERATOR_CONTROLLER
                     AND Method_Name__c = :TPL_Constants.METHOD_GENERATE_DOCUMENT
                     WITH SYSTEM_MODE

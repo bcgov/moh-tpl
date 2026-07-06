@@ -9,19 +9,11 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>DocxFileHelper</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>DocxFormatHelper</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>DocxGenerationAsyncQueueable</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>DocxGenerationLogHelper</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -124,10 +116,6 @@
         <apexClass>TPL_Constants</apexClass>
         <enabled>true</enabled>
     </classAccesses>
-    <customMetadataTypeAccesses>
-        <enabled>true</enabled>
-        <name>Certificate_Signing_Authority__mdt</name>
-    </customMetadataTypeAccesses>
     <customMetadataTypeAccesses>
         <enabled>true</enabled>
         <name>Document_Generation_Configuration__mdt</name>

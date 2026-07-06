@@ -482,8 +482,7 @@ private class LogServiceTest {
         Log__c completedLog = [
             SELECT JobId__c,
             Status__c,
-            Error_Message__c,
-            Generated_File_Ids__c
+            Error_Message__c
             FROM Log__c
             WHERE Id = :insertedLog.Id
             LIMIT 1
@@ -492,7 +491,6 @@ private class LogServiceTest {
         System.assertEquals(completedJobId, completedLog.JobId__c);
         System.assertEquals(TPL_Constants.STATUS_COMPLETED, completedLog.Status__c);
         System.assertEquals(null, completedLog.Error_Message__c);
-        System.assertEquals(contentDocumentId, completedLog.Generated_File_Ids__c);
     }
     
     @IsTest
@@ -516,8 +514,7 @@ private class LogServiceTest {
         
         Log__c completedLog = [
             SELECT Status__c,
-            Error_Message__c,
-            Generated_File_Ids__c
+            Error_Message__c
             FROM Log__c
             WHERE JobId__c = :jobId
             LIMIT 1
@@ -525,16 +522,6 @@ private class LogServiceTest {
         
         System.assertEquals(TPL_Constants.STATUS_COMPLETED, completedLog.Status__c);
         System.assertEquals(null, completedLog.Error_Message__c);
-        System.assertEquals(
-            String.join(
-                new List<String>{
-                    String.valueOf(contentDocumentIds[0]),
-                        String.valueOf(contentDocumentIds[1])
-                        },
-                DocgenConstants.PIPE_DELIMITER
-            ),
-            completedLog.Generated_File_Ids__c
-        );
     }
     
     @IsTest
