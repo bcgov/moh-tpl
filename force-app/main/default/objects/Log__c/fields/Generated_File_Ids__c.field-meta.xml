@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Generated_File_Ids__c</fullName>
+    <description>Pipe-delimited ContentDocumentId values for generated certificate file outputs used by LWC polling.</description>
+    <externalId>false</externalId>
+    <label>Generated File Ids</label>
+    <length>32768</length>
+    <trackHistory>false</trackHistory>
+    <type>LongTextArea</type>
+    <visibleLines>3</visibleLines>
+</CustomField>
