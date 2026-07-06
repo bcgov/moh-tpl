@@ -51,6 +51,10 @@ const RULES = [
 const SEVERITY_ICON = { failure: '🔴', warning: '🟡', notice: '🔵' };
 const SEVERITY_ORDER = { failure: 0, warning: 1, notice: 2 };
 
+// Only review Salesforce source. Pipeline/tooling changes (.github, vendored
+// plugins, docs, config) are out of scope for these best-practice rules.
+const REVIEW_PATH_PREFIX = 'force-app/';
+
 const { GITHUB_TOKEN, PR_NUMBER, REPO_OWNER, REPO_NAME, HEAD_SHA } = process.env;
 
 const octokit = new Octokit({ auth: GITHUB_TOKEN });
@@ -207,10 +211,11 @@ async function main() {
   console.log(`Reviewing PR #${PR_NUMBER} in ${REPO_OWNER}/${REPO_NAME}`);
 
   const rawFiles = await getChangedFiles();
-  console.log(`Changed files: ${rawFiles.length}`);
+  const files = rawFiles.filter(f => f.filename.startsWith(REVIEW_PATH_PREFIX));
+  console.log(`Changed files: ${rawFiles.length} (in scope, ${REVIEW_PATH_PREFIX}: ${files.length})`);
 
   const enrichedFiles = await Promise.all(
-    rawFiles.map(async f => ({
+    files.map(async f => ({
       ...f,
       content: f.status !== 'removed' ? await getFileContent(f.filename) : null,
     }))
