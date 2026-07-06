@@ -1,0 +1,201 @@
+<template>
+    <lightning-card>
+        <div class="slds-card__body slds-card__body_inner docgen-container">
+
+            <template lwc:if={isInstructionsStep}>
+                <div class="instructions-panel">
+                    <p class="slds-m-bottom_x-small">{label.ministryCertificateTitle}</p>
+                    <ul class="slds-list_dotted slds-m-left_large slds-m-bottom_medium">
+                        <li>{label.ministryCertificateSelectTemplate}</li>
+                        <li>{label.ministryCertificateDocumentName}</li>
+                        <li>{label.ministryCertificateAttachedFileFormat}</li>
+                        <li>{label.ministryCertificateDownloadDocument}</li>
+                        <li>{label.ministryCertificateSignCertificate}</li>
+                        <li>{label.ministryCertificateGoToFilesTab}</li>
+                        <li>{label.ministryCertificateUploadSignedCertificate}</li>
+                        <li>{label.ministryCertificateUploadFromLibrary}</li>
+                        <li>{label.ministryCertificateDeletePermission}</li>
+                    </ul>
+
+                    <p class="slds-m-bottom_x-small">{label.caseHistoryTitle}</p>
+                    <ul class="slds-list_dotted slds-m-left_large slds-m-bottom_medium">
+                        <li>{label.caseHistorySelectTemplate}</li>
+                        <li>{label.caseHistoryDocumentName}</li>
+                        <li>{label.caseHistoryAttachedFileFormat}</li>
+                        <li>{label.caseHistoryDownloadDocument}</li>
+                    </ul>
+
+                    <lightning-button label={label.startButton} variant="brand"
+                        onclick={handleStart}></lightning-button>
+                </div>
+            </template>
+
+            <template lwc:if={showModal}>
+                <section role="dialog" tabindex="-1" aria-modal="true" class="slds-modal slds-fade-in-open docgen-modal">
+                    <div class="slds-modal__container docgen-modal-container">
+                        <header class="slds-modal__header">
+                            <lightning-button-icon icon-name="utility:close" alternative-text="Close" title="Close"
+                                onclick={handleCloseModal} class="slds-modal__close">
+                            </lightning-button-icon>
+                        </header>
+
+                        <div class="slds-modal__content slds-p-around_medium docgen-modal-content">
+
+            <template lwc:if={isPickTemplateStep}>
+                <div class="wizard-layout">
+                    <div class="wizard-main">
+                        <h2 class="step-title">{label.pickTemplateTitle}</h2>
+                        <div class="title-underline"></div>
+                        <template lwc:if={validationMessage}>
+                            <div class="slds-text-color_error slds-m-bottom_small">{validationMessage}</div>
+                        </template>
+
+                        <table class="slds-table slds-table_cell-buffer slds-table_bordered template-table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">{label.tableSelectHeader}</th>
+                                    <th scope="col">{label.tableNameHeader}</th>
+                                    <th scope="col">{label.tableVersionNumberHeader}</th>
+                                    <th scope="col">{label.tableTemplateTypeHeader}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <template for:each={filteredTemplates} for:item="template">
+                                    <tr key={template.id}>
+                                        <td>
+                                            <lightning-input type="radio" name="templateSelection" value={template.id}
+                                                checked={template.checked} variant="label-hidden"
+                                                onchange={handleTemplateSelect}>
+                                            </lightning-input>
+                                        </td>
+                                        <td>{template.name}</td>
+                                        <td>{template.versionNumber}</td>
+                                        <td>{template.templateType}</td>
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+
+                        <div class="wizard-footer">
+                            <lightning-button label={label.nextButton} variant="brand"
+                                onclick={handlePickNext}></lightning-button>
+                        </div>
+                    </div>
+
+                    <div class="wizard-side">
+                        <p class="steps-title">{label.stepsTitle}</p>
+                        <div class="steps-list">
+                            <div class={pickTemplateStepClass}><span></span><strong>{label.pickTemplateTitle}</strong>
+                            </div>
+                            <div class={generationOptionsStepClass}>
+                                <span></span><strong>{label.generationOptionsTitle}</strong></div>
+                            <div class={responseStepClass}><span></span><strong>{label.responseMessageTitle}</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </template>
+
+            <template lwc:if={isGenerationOptionsStep}>
+                <div class="wizard-layout">
+                    <div class="wizard-main">
+                        <h2 class="step-title">{label.generationOptionsTitle}</h2>
+                        <div class="title-underline"></div>
+
+                        <lightning-combobox name="outputFileFormat" label={label.outputFileFormatLabel}
+                            value={outputFileFormat} options={outputFileOptions} onchange={handleOutputFormatChange}>
+                        </lightning-combobox>
+
+                        <lightning-input class="slds-m-top_small" type="text" label={label.documentTitleLabel}
+                            value={documentTitle} onchange={handleDocumentTitleChange}>
+                        </lightning-input>
+
+                        <div class="wizard-footer footer-split">
+                            <lightning-button label={label.previousButton}
+                                onclick={handlePreviousToPick}></lightning-button>
+                            <lightning-button label={label.nextButton} variant="brand"
+                                onclick={handleGenerate}></lightning-button>
+                        </div>
+                    </div>
+
+                    <div class="wizard-side">
+                        <p class="steps-title">{label.stepsTitle}</p>
+                        <div class="steps-list">
+                            <div class={pickTemplateStepClass}><span></span><strong>{label.pickTemplateTitle}</strong>
+                            </div>
+                            <div class={generationOptionsStepClass}>
+                                <span></span><strong>{label.generationOptionsTitle}</strong></div>
+                            <div class={responseStepClass}><span></span><strong>{label.responseMessageTitle}</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </template>
+
+            <template lwc:if={isResponseStep}>
+                <div class="wizard-layout">
+                    <div class="wizard-main response-panel">
+                        <h2 class="step-title">{label.responseMessageTitle}</h2>
+                        <div class="title-underline"></div>
+
+                        <template lwc:if={isGenerating}>
+                            <div class="spinner-panel">
+                                <lightning-spinner alternative-text={label.generatingDocumentAlt}
+                                    size="medium"></lightning-spinner>
+                                <p class="slds-text-body_regular slds-m-top_large">{statusMessage}</p>
+                            </div>
+                        </template>
+
+                        <template lwc:else>
+                            <template lwc:if={hasDownloads}>
+                                <template for:each={downloadLinks} for:item="link">
+                                    <div key={link.id} class="generated-document-card slds-m-bottom_small">
+                                        <div class="generated-document-header">
+                                            <p class="slds-text-body_regular generated-document-title">{link.fileName}
+                                            </p>
+                                            <lightning-button-icon icon-name="utility:delete"
+                                                alternative-text={label.removeButton} title={label.removeButton}
+                                                data-id={link.id} onclick={handleRemoveDownload}>
+                                            </lightning-button-icon>
+                                        </div>
+
+                                        <div class="generated-document-body">
+                                            <lightning-icon icon-name={link.iconName}
+                                                alternative-text={link.iconAlternativeText} size="large"
+                                                class="generated-file-icon">
+                                            </lightning-icon>
+                                            <a href={link.url} target="_blank"
+                                                class="slds-button slds-button_neutral download-button">{link.label}</a>
+                                        </div>
+                                    </div>
+                                </template>
+                            </template>
+                            <template lwc:else>
+                                <p class="slds-text-body_regular slds-m-bottom_medium">{statusMessage}</p>
+                            </template>
+                        </template>
+                    </div>
+
+                    <div class="wizard-side">
+                        <p class="steps-title">{label.stepsTitle}</p>
+                        <div class="steps-list">
+                            <div class={pickTemplateStepClass}><span></span><strong>{label.pickTemplateTitle}</strong>
+                            </div>
+                            <div class={generationOptionsStepClass}>
+                                <span></span><strong>{label.generationOptionsTitle}</strong></div>
+                            <div class={responseStepClass}><span></span><strong>{label.responseMessageTitle}</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </template>
+
+                        </div>
+                    </div>
+                </section>
+                <div class="slds-backdrop slds-backdrop_open"></div>
+            </template>
+
+        </div>
+    </lightning-card>
+</template>
