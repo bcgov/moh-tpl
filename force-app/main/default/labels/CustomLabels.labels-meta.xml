@@ -250,8 +250,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>TPL_DocGen_MC_Attached_File_Format</shortDescription>
-        <value>Attached File Format (defaulted to PDF), tells a PDF will be automatically attached
-            in the related tab Files section of the case record on document generation.</value>
+        <value>The file is available in the Files section of the Attachments and Document Generation tabs of the case record.</value>
     </labels>
     <labels>
         <fullName>TPL_DocGen_MC_Download_Document</fullName>

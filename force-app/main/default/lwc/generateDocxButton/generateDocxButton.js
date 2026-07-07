@@ -452,10 +452,6 @@ export default class GenerateDocxButton extends LightningElement {
         return this.isZipFlow ? TPL_DocGen_Zip_File_Alt : TPL_DocGen_Word_File_Alt;
     }
 
-    handleRemoveDownload(event) {
-        const id = event.currentTarget.dataset.id;
-        this.downloadLinks = this.downloadLinks.filter((link) => link.id !== id);
-    }
 
     buildDefaultDocumentTitle(templateName) {
         if (!templateName) {
