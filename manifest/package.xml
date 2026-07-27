@@ -41,7 +41,7 @@
         <name>Profile</name>
     </types>
 
-<!-- BCMOHAM-32750 -->
+<!-- BCMOHAM-32750  -->
 	<types>
         <members>HealthIdeas_Batch_Configuration__mdt</members>
         <members>Log__c</members>

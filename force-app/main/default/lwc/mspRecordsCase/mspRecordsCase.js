@@ -43,7 +43,7 @@ const INTEGRATION_COLUMNS = [
     {
         label: 'Amount Paid',
         fieldName: 'Amount_Paid__c',
-        type: 'text',
+        type: 'currency',
         editable: true
     },
     {
@@ -110,18 +110,6 @@ const INTEGRATION_COLUMNS = [
     {
         label: 'Diagnostic Code',
         fieldName: 'Diagnostic_Code__c',
-        type: 'text',
-        editable: false
-    },
-    {
-        label: 'Diagnostic Description',
-        fieldName: 'Diagnostic_Description__c',
-        type: 'text',
-        editable: false
-    },
-    {
-        label: 'Amount Paid',
-        fieldName: 'Amount_Paid__c',
         type: 'text',
         editable: false
     },
@@ -229,7 +217,7 @@ const MANUAL_COLUMNS =
     {
         label: 'Amount Paid',
         fieldName: 'Amount_Paid__c',
-        type: 'text',
+        type: 'currency',
         editable: true
     },
     {
