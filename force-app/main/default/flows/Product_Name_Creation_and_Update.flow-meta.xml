@@ -269,7 +269,7 @@
     <formulas>
         <name>SurgicalDay_Product_Name</name>
         <dataType>String</dataType>
-        <expression>{!$Record.Intervention_Code_CCI__c}+&apos;-&apos;+ {!ServiceTypeRecord} + &apos;-&apos;+ {!EffectiveYear}</expression>
+        <expression>{!$Record.Intervention_Code_CCI__c}+&apos;-&apos;+ {!ServiceTypeRecord} + &apos;-&apos;+CASE(TEXT({!$Record.CCI_Level__c}),&apos;Tier 1&apos;, &apos;Low&apos;,&apos;Tier 2&apos;, &apos;Med&apos;,&apos;Tier 3&apos;, &apos;High&apos;,&apos;&apos;)+ &apos;-&apos;+ {!EffectiveYear}</expression>
     </formulas>
     <interviewLabel>Product Name Creation and Update {!$Flow.CurrentDateTime}</interviewLabel>
     <label>TPL_Product Name Creation and Update</label>
