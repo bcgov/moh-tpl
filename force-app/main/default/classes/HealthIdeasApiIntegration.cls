@@ -152,42 +152,57 @@ public with sharing class HealthIdeasApiIntegration {
     public static IntegrationResult fetchHealthcareCosts(Id accountId, Date asOfDate, Date endDate, String requesterUserName) {
         
         IntegrationResult result = new IntegrationResult();
+        Integer retryCount = 0;
 
-        try {
-            Account acc = [SELECT Id, PHN__pc FROM Account WHERE Id = :accountId LIMIT 1];
-            
-            HttpResponse res = sendHealthIdeasRequest(requesterUserName, acc.PHN__pc, asOfDate, endDate);
-            
-            debugLog('Response Status Code: ' + res.getStatusCode());
-            debugLog('Response Status: ' + res.getStatus());
+        /*
+        Retry Mechanism for handling timeouts exceptions. 
+        If the callout fails due to a timeout, it will retry up to MAX_ATTEMPTS times.
+        */
+        while (retryCount < TPL_Constants.MAX_ATTEMPTS) {
+            try {
+                Account acc = [SELECT Id, PHN__pc FROM Account WHERE Id = :accountId LIMIT 1];
+                
+                HttpResponse res = sendHealthIdeasRequest(requesterUserName, acc.PHN__pc, asOfDate, endDate);
+                
+                debugLog('Response Status Code: ' + res.getStatusCode());
+                debugLog('Response Status: ' + res.getStatus());
 
-            if (res.getStatusCode() != 200) {
-                result.success = false;
-                result.errorMessage = TPL_Constants.ERROR_HEALTH_IDEAS_API_CALLOUT_FAILED + res.getStatus();
+                if (res.getStatusCode() != 200) {
+                    result.success = false;
+                    result.errorMessage = TPL_Constants.ERROR_HEALTH_IDEAS_API_CALLOUT_FAILED + res.getStatus();
+                    return result;
+                }
+
+                String responseBody = res.getBody();
+                
+                Map<String, Id> hccrecordTypeIds = getHealthcareCostRecordTypeIds();
+
+                HealthIdeasBatchPayload payload = parseHealthIdeasPayload(responseBody);
+                
+                refreshHealthcareCostRecords(
+                    accountId,
+                    asOfDate,
+                    payload,
+                    hccrecordTypeIds,
+                    result.messages
+                );
+                result.success = true;
                 return result;
+            } 
+            catch (Exception e) {
+                retryCount++;
+                if (!e.getMessage().contains(TPL_Constants.TIMEOUT_ERROR_MESSAGE) || retryCount >= TPL_Constants.MAX_ATTEMPTS) {
+                    result.success = false;
+                    result.errorMessage = e.getMessage();
+                    return result;
+                }
             }
-
-            String responseBody = res.getBody();
-            
-            Map<String, Id> hccrecordTypeIds = getHealthcareCostRecordTypeIds();
-
-            HealthIdeasBatchPayload payload = parseHealthIdeasPayload(responseBody);
-            
-            refreshHealthcareCostRecords(
-                accountId,
-                asOfDate,
-                payload,
-                hccrecordTypeIds,
-                result.messages
-            );
-            result.success = true;
-            return result;
-        } 
-        catch (Exception e) {
-            result.success = false;
-            result.errorMessage = e.getMessage();
-            return result;
         }
+
+        // Fallback return in case the retry loop exits without returning.
+        result.success = false;
+        result.errorMessage =  TPL_Constants.TIMEOUT_ERROR_MESSAGE;
+        return result;
     }
 
     /**
@@ -408,11 +423,13 @@ public with sharing class HealthIdeasApiIntegration {
 */
     public static HttpResponse sendHealthIdeasRequest(String requesterUserName, String phn, Date asOfDate, Date endDate) {
         
+        Integer timeValue = getTimeOutInteger(TPL_Constants.HI_BATCH_CONFIGURATION_RECORD_NAME, TPL_Constants.TIMEOUT_FIELD_NAME);
         HttpRequest req = new HttpRequest();
         req.setEndpoint('callout:HealthIdeas');
         req.setMethod('POST');
         req.setHeader('Content-Type', 'application/json');
-        req.setTimeout(120000);
+        req.setTimeout(timeValue);
+        system.debug(timeValue);
         req.setBody(JSON.serialize(new Map<String, Object>{
             'requester' => requesterUserName,
                 'personalHealthNumber' => phn,
@@ -721,6 +738,18 @@ public with sharing class HealthIdeasApiIntegration {
         );
         
         return truncatedValue;
+    }
+
+
+    // Get max timeout value set from the custom metadata records.
+    private static Integer getTimeOutInteger(String metadataRecordName, String fieldName) 
+    {
+        HealthIdeas_Batch_Configuration__mdt config =
+            HealthIdeas_Batch_Configuration__mdt.getInstance(metadataRecordName);
+
+        return config != null && config.get(fieldName) != null
+            ? Integer.valueOf(String.valueOf(config.get(fieldName)))
+            : TPL_Constants.DEFAULT_TIMEOUT_VALUE;
     }
 
     // Format date for UI Display

@@ -6,4 +6,8 @@
         <field>Batch_Size__c</field>
         <value xsi:type="xsd:double">5.0</value>
     </values>
+    <values>
+        <field>Time_Out_Value_MilliSeconds__c</field>
+        <value xsi:type="xsd:string">120000</value>
+    </values>
 </CustomMetadata>

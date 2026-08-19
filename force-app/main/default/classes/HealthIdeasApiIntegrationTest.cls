@@ -8,18 +8,29 @@
 @IsTest
 private class HealthIdeasApiIntegrationTest {
     
+    private static Integer callCount = 0;
+    private class MockTimeoutException extends Exception {}
+    
     // Mock callout response for HealthIdeas API test scenarios.
     private class MockHttpResponseGenerator implements HttpCalloutMock {
         
         // Used to return a long hospitalization field value for failure/truncation scenarios.
         private Boolean forceHospitalizationDmlFailure;
+        private Boolean forceTimeout;
         
         MockHttpResponseGenerator() {
             this.forceHospitalizationDmlFailure = false;
+            this.forceTimeout = false;
         }
         
         MockHttpResponseGenerator(Boolean forceHospitalizationDmlFailure) {
             this.forceHospitalizationDmlFailure = forceHospitalizationDmlFailure;
+            this.forceTimeout = false;
+        }
+        
+        MockHttpResponseGenerator(Boolean forceTimeout, String timeoutFlag) {
+            this.forceTimeout = forceTimeout;
+            this.forceHospitalizationDmlFailure = false;
         }
         
         // Returns mock token and HealthIdeas API responses based on the request.
@@ -43,6 +54,11 @@ private class HealthIdeasApiIntegrationTest {
                 res.setBody('{"access_token":"fake-access-token","token_type":"Bearer","expires_in":3600}');
                 return res;
             }
+            
+            if (forceTimeout) {
+                callCount++;
+        		throw new MockTimeoutException(TPL_Constants.TIMEOUT_ERROR_MESSAGE);
+    		}
             
             String interventionCodesCci = forceHospitalizationDmlFailure
                 ? 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
@@ -724,5 +740,22 @@ private class HealthIdeasApiIntegrationTest {
         System.assertEquals(TPL_Constants.STATUS_COMPLETED, logRecord.Status__c);
         System.assertNotEquals(null, logRecord.Queueable_JobId__c);
         System.assertEquals(null, logRecord.Error_Message__c);
+    }
+    
+    // Covers retry mechanism for HealthIdeas API callouts that fail due to timeout exceptions.
+    @IsTest
+    static void testCallGetCost_MaxRetryTimeout() {
+        Account testAccount = getTestAccount();
+        callCount = 0;
+    
+        Test.setMock(HttpCalloutMock.class, new MockHttpResponseGenerator(true, 'timeout'));
+    
+        Test.startTest();
+        HealthIdeasApiIntegration.IntegrationResult result = HealthIdeasApiIntegration.getHealthcareCostsForAccountandSetDate(testAccount.Id, Date.newInstance(2025, 1, 1), false);
+        Test.stopTest();
+    
+        System.assertEquals(false, result.success);
+        System.assertEquals(TPL_Constants.MAX_ATTEMPTS,callCount, 'Expected the Health Ideas callout to be attempted MAX_ATTEMPTS times.');
+        System.assert(result.errorMessage.contains(TPL_Constants.TIMEOUT_ERROR_MESSAGE), 'Expected timeout error after maximum retry attempts.');
     }
 }
