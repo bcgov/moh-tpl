@@ -1023,4 +1023,11 @@
         <shortDescription>TPL_HIApi_Records_Failure_Message</shortDescription>
         <value>Errors occurred while receiving records for</value>
     </labels>
+    <labels>
+        <fullName>TPL_Invalid_Account_Error_Message</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Used to display an error message when the Account is invalid or cannot be found.</shortDescription>
+        <value>There is an issue with the Account. Please verify the Account details and try again.</value>
+    </labels>
 </CustomLabels>

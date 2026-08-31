@@ -25,6 +25,7 @@ public with sharing class HealthIdeasApiIntegration {
         @AuraEnabled public String errorMessage;
         @AuraEnabled public Id batchId;
         @AuraEnabled public List<String> messages = new List<String>();
+        public String responseBody;
     }
 
     /**
@@ -152,59 +153,33 @@ public with sharing class HealthIdeasApiIntegration {
     public static IntegrationResult fetchHealthcareCosts(Id accountId, Date asOfDate, Date endDate, String requesterUserName) {
         
         IntegrationResult result = new IntegrationResult();
-        Integer retryCount = 0;
 
-        /*
-        Retry Mechanism for handling timeouts exceptions. 
-        If the callout fails due to a timeout, it will retry up to MAX_ATTEMPTS times.
-        */
-        while (retryCount < TPL_Constants.MAX_ATTEMPTS) {
-            try {
-                Account acc = [SELECT Id, PHN__pc FROM Account WHERE Id = :accountId LIMIT 1];
-                
-                HttpResponse res = sendHealthIdeasRequest(requesterUserName, acc.PHN__pc, asOfDate, endDate);
-                
-                debugLog('Response Status Code: ' + res.getStatusCode());
-                debugLog('Response Status: ' + res.getStatus());
-
-                if (res.getStatusCode() != 200) {
-                    result.success = false;
-                    result.errorMessage = TPL_Constants.ERROR_HEALTH_IDEAS_API_CALLOUT_FAILED + res.getStatus();
-                    return result;
-                }
-
-                String responseBody = res.getBody();
-                
-                Map<String, Id> hccrecordTypeIds = getHealthcareCostRecordTypeIds();
-
-                HealthIdeasBatchPayload payload = parseHealthIdeasPayload(responseBody);
-                
-                refreshHealthcareCostRecords(
-                    accountId,
-                    asOfDate,
-                    payload,
-                    hccrecordTypeIds,
-                    result.messages
-                );
-                result.success = true;
+        try {
+            Account acc = getValidAccountUsingAccId(accountId);
+            if (acc == null) {
+                result.success = false;
+                result.errorMessage = Label.TPL_Invalid_Account_Error_Message;
                 return result;
-            } 
-            catch (Exception e) {
-                retryCount++;
-                if (!e.getMessage().contains(TPL_Constants.TIMEOUT_ERROR_MESSAGE) || retryCount >= TPL_Constants.MAX_ATTEMPTS) {
-                    result.success = false;
-                    result.errorMessage = e.getMessage();
-                    return result;
-                }
             }
+
+            IntegrationResult calloutResult = sendHealthIdeasRequest(requesterUserName, acc, asOfDate, endDate);
+            if (!calloutResult.success) {
+                return calloutResult;
+            }
+
+            Map<String, Id> hccrecordTypeIds = getHealthcareCostRecordTypeIds();
+            HealthIdeasBatchPayload payload = parseHealthIdeasPayload(calloutResult.responseBody);
+            refreshHealthcareCostRecords(accountId, asOfDate, payload, hccrecordTypeIds, calloutResult.messages);
+
+            calloutResult.success = true;
+            return calloutResult;
+
+        } catch (Exception e) {
+            result.success = false;
+            result.errorMessage = e.getMessage();
+            return result;
         }
-
-        // Fallback return in case the retry loop exits without returning.
-        result.success = false;
-        result.errorMessage =  TPL_Constants.TIMEOUT_ERROR_MESSAGE;
-        return result;
     }
-
     /**
 * Deletes eligible Healthcare Cost records and inserts refreshed HealthIdeas data synchronously.
 * Sync process
@@ -418,26 +393,59 @@ public with sharing class HealthIdeasApiIntegration {
         }
     }
     
-    /**
+
+/**
 * Makes the outbound call to HealthIdeas using the named credential and bearer token.
+* Retries automatically on timeout, up to TPL_Constants.MAX_ATTEMPTS.
+* Returns an IntegrationResult with success/responseBody on success,
+* or success=false/errorMessage populated on failure.
 */
-    public static HttpResponse sendHealthIdeasRequest(String requesterUserName, String phn, Date asOfDate, Date endDate) {
-        
-        Integer timeValue = getTimeOutInteger(TPL_Constants.HI_BATCH_CONFIGURATION_RECORD_NAME, TPL_Constants.TIMEOUT_FIELD_NAME);
-        HttpRequest req = new HttpRequest();
-        req.setEndpoint('callout:HealthIdeas');
-        req.setMethod('POST');
-        req.setHeader('Content-Type', 'application/json');
-        req.setTimeout(timeValue);
-        system.debug(timeValue);
-        req.setBody(JSON.serialize(new Map<String, Object>{
-            'requester' => requesterUserName,
-                'personalHealthNumber' => phn,
+    public static IntegrationResult sendHealthIdeasRequest(String requesterUserName, Account acc, Date asOfDate, Date endDate) {
+        IntegrationResult result = new IntegrationResult();
+
+        try {
+
+            Integer timeValue = getTimeOutInteger(TPL_Constants.HI_BATCH_CONFIGURATION_RECORD_NAME, TPL_Constants.TIMEOUT_FIELD_NAME);
+            HttpRequest req = new HttpRequest();
+            req.setEndpoint('callout:HealthIdeas');
+            req.setMethod('POST');
+            req.setHeader('Content-Type', 'application/json');
+            req.setTimeout(timeValue);
+            req.setBody(JSON.serialize(new Map<String, Object>{
+                'requester' => requesterUserName,
+                'personalHealthNumber' => acc.PHN__pc,
                 'asOfDate' => String.valueOf(asOfDate),
                 'endDate' => String.valueOf(endDate)
-                }));
-        
-        return new Http().send(req);
+            }));
+
+            Integer retryCount = TPL_Constants.MAX_ATTEMPTS;
+
+            // Retry mechanism for handling timeouts, up to MAX_ATTEMPTS.
+            while (retryCount > 0) {
+                try {
+                    HttpResponse res = new Http().send(req);
+
+                    if (res.getStatusCode() == TPL_Constants.HTTP_STATUS_OK) {
+                        result.success = true;
+                        result.responseBody = res.getBody();
+                        return result;
+                    }
+                    if (res.getStatusCode() != TPL_Constants.HTTP_STATUS_REQUEST_TIMEOUT) {
+                        return buildFailure(result, TPL_Constants.ERROR_HEALTH_IDEAS_API_CALLOUT_FAILED + res.getStatus());
+                    }
+                    retryCount--;
+                } catch (CalloutException e) {
+                    if (!e.getMessage().contains(TPL_Constants.TIMEOUT_ERROR_MESSAGE)) {
+                        return buildFailure(result, e.getMessage());
+                    }
+                    retryCount--;
+                } 
+            }
+            return buildFailure(result, TPL_Constants.TIMEOUT_ERROR_MESSAGE);
+        }
+        catch (Exception e) {
+            return buildFailure(result, e.getMessage());
+        }
     }
 
 
@@ -761,4 +769,21 @@ public with sharing class HealthIdeasApiIntegration {
         return DateTime.newInstance(affectedDate, Time.newInstance(0, 0, 0, 0))
             .format('MMMM d, yyyy');
    }
+
+    // Helper method to retrieve a valid Account record using the provided accountId.
+    private static Account getValidAccountUsingAccId(Id accountId) {
+        List<Account> accountsList = [SELECT Id, PHN__pc FROM Account WHERE Id = :accountId LIMIT 1];
+
+        if (!accountsList.isEmpty() && String.isNotBlank(accountsList[0].PHN__pc)) {
+            return accountsList[0];
+        }
+        return null;
+    }
+
+    // Builds a failure integration result with the specified error message.
+    private static IntegrationResult buildFailure(IntegrationResult result, String message) {
+        result.success = false;
+        result.errorMessage = message;
+        return result;
+    }
 }
