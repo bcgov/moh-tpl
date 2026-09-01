@@ -621,4 +621,25 @@ public without sharing class LogService {
         }
     }
 
+    /**
+        * Builds and inserts an error log records.
+    */
+    public static void buildAndInsertErrorLog(
+        String className,
+        String methodName,
+        String errorMessage,
+        String stackTrace,
+        Id recordId
+    ) {
+        Log__c logRecord = new Log__c();
+        logRecord.Class_Name__c = className;
+        logRecord.Method_Name__c = methodName;
+        logRecord.Error_Message__c = String.isBlank(errorMessage) ? null : errorMessage;
+        logRecord.Stack_Trace__c = String.isBlank(stackTrace) ? null : stackTrace;
+        logRecord.Record_Id__c = recordId == null ? null : String.valueOf(recordId);
+        logRecord.Running_User__c = getRunningUserId();
+
+        insertLogsInSystemMode(new List<SObject>{ logRecord });
+    }
+
 }

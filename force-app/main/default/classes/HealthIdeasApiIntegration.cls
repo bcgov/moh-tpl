@@ -402,6 +402,7 @@ public with sharing class HealthIdeasApiIntegration {
 */
     public static IntegrationResult sendHealthIdeasRequest(String requesterUserName, Account acc, Date asOfDate, Date endDate) {
         IntegrationResult result = new IntegrationResult();
+        HttpResponse res;
 
         try {
 
@@ -423,7 +424,7 @@ public with sharing class HealthIdeasApiIntegration {
             // Retry mechanism for handling timeouts, up to MAX_ATTEMPTS.
             while (retryCount > 0) {
                 try {
-                    HttpResponse res = new Http().send(req);
+                    res = new Http().send(req);
 
                     if (res.getStatusCode() == TPL_Constants.HTTP_STATUS_OK) {
                         result.success = true;
@@ -431,19 +432,25 @@ public with sharing class HealthIdeasApiIntegration {
                         return result;
                     }
                     if (res.getStatusCode() != TPL_Constants.HTTP_STATUS_REQUEST_TIMEOUT) {
+                        string errorMessage = 'Status Code: ' + res.getStatusCode() + ', Status: ' + res.getStatus() + ', Response Body: ' + res.getBody();
+                        LogService.buildAndInsertErrorLog( 'HealthIdeasApiIntegration', 'sendHealthIdeasRequest', errorMessage, '' , acc.Id);
                         return buildFailure(result, TPL_Constants.ERROR_HEALTH_IDEAS_API_CALLOUT_FAILED + res.getStatus());
                     }
                     retryCount--;
                 } catch (CalloutException e) {
                     if (!e.getMessage().contains(TPL_Constants.TIMEOUT_ERROR_MESSAGE)) {
+                        LogService.buildAndInsertErrorLog('HealthIdeasApiIntegration', 'sendHealthIdeasRequest', String.valueOf(e.getMessage()), String.valueOf(e.getStackTraceString()), acc.Id);
                         return buildFailure(result, e.getMessage());
                     }
                     retryCount--;
                 } 
             }
+            String errorMessage = res != null ? 'Status Code: ' + res.getStatusCode() + ', Status: ' + res.getStatus() + ', Response Body: ' + res.getBody() : '';
+            LogService.buildAndInsertErrorLog('HealthIdeasApiIntegration', 'sendHealthIdeasRequest', errorMessage, '' , acc.Id);
             return buildFailure(result, TPL_Constants.TIMEOUT_ERROR_MESSAGE);
         }
         catch (Exception e) {
+            LogService.buildAndInsertErrorLog('HealthIdeasApiIntegration', 'sendHealthIdeasRequest', String.valueOf(e.getMessage()), String.valueOf(e.getStackTraceString()), acc.Id);
             return buildFailure(result, e.getMessage());
         }
     }
