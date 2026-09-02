@@ -22,6 +22,7 @@ private class HealthIdeasApiCalloutBatchTest {
         }
     }
 
+    // Looks up the Person Account record type Id for Account.
     private static Id getIndividualRtId() {
         return [
             SELECT Id
@@ -32,6 +33,7 @@ private class HealthIdeasApiCalloutBatchTest {
         ].Id;
     }
 
+    // Creates a reusable test Person Account.
     private static Account createAccount() {
         Id individualRtId = getIndividualRtId();
 
@@ -47,6 +49,7 @@ private class HealthIdeasApiCalloutBatchTest {
         return acc;
     }
 
+    // Retrieves the batch-level Log__c record for the given root batch job Id.
     private static Log__c getLog(Id rootBatchJobId) {
         return [
             SELECT Status__c, Failed_Chunks__c, Error_Message__c, Stack_Trace__c
@@ -57,6 +60,22 @@ private class HealthIdeasApiCalloutBatchTest {
         ];
     }
 
+    // Retrieves the most recent Log__c record created inside sendHealthIdeasRequest itself,
+    // which holds the real HTTP status/response detail (the batch-level log only gets the
+    // generic UI message that sendHealthIdeasRequest already sanitized before returning).
+    private static Log__c getSendRequestLog() {
+        return [
+            SELECT Error_Message__c
+            FROM Log__c
+            WHERE Method_Name__c = 'sendHealthIdeasRequest'
+            ORDER BY CreatedDate DESC
+            LIMIT 1
+        ];
+    }
+
+    // Covers an HTTP 500 failure from the callout: confirms the batch-level log records
+    // STATUS_FAILED with 1 failed chunk and the generic UI message, while the deeper log
+    // created inside sendHealthIdeasRequest still holds the real "Internal Server Error" detail.
     @IsTest
     static void testExecuteHttpFailure() {
         Account acc = createAccount();
@@ -70,9 +89,14 @@ private class HealthIdeasApiCalloutBatchTest {
         Log__c logRec = getLog(acc.Id);
         System.assertEquals(TPL_Constants.STATUS_FAILED, logRec.Status__c);
         System.assertEquals(1, logRec.Failed_Chunks__c);
-        System.assert(logRec.Error_Message__c.contains('Internal Server Error'));
+        System.assertEquals(Label.TPL_HI_Callout_Failure_Message, logRec.Error_Message__c);
+
+        Log__c detailedLog = getSendRequestLog();
+        System.assert(detailedLog.Error_Message__c.contains('Internal Server Error'));
     }
 
+    // Covers the callout returning HTTP 200 with unparseable JSON: confirms the batch-level
+    // log records STATUS_FAILED with 1 failed chunk and a populated stack trace.
     @IsTest
     static void testExecuteBadJson() {
         Account acc = createAccount();
@@ -89,6 +113,9 @@ private class HealthIdeasApiCalloutBatchTest {
         System.assert(!String.isBlank(logRec.Stack_Trace__c));
     }
 
+    // Covers the callout returning HTTP 200 with an empty payload (no msp/hospitalization/
+    // pharmacare records): confirms the batch job completes successfully and exactly one
+    // Log__c record was created for it.
     @IsTest
     static void testExecuteEmptyPayload() {
         Account acc = createAccount();
