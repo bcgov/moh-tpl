@@ -10,6 +10,12 @@ public with sharing class TPL_Constants {
     public static final String STATUS_COMPLETED = 'Completed';
     public static final String STATUS_COMPLETED_WITH_ERRORS = 'Completed With Errors';
     public static final String STATUS_FAILED = 'Failed';
+    public static final Integer MAX_ATTEMPTS = 3;
+    public static final String TIMEOUT_ERROR_MESSAGE = 'Read timed out';
+    public static final String TIMEOUT_FIELD_NAME = 'Time_Out_Value_MilliSeconds__c';
+    public static final Integer DEFAULT_TIMEOUT_VALUE = 120000;
+    public static final Integer HTTP_STATUS_OK = 200;
+    public static final Integer HTTP_STATUS_REQUEST_TIMEOUT = 408;
 
     public static final String CLASS_DOCX_GENERATOR_CONTROLLER = 'DocxGeneratorController';
     public static final String METHOD_GENERATE_DOCUMENT = 'generateDocument';
