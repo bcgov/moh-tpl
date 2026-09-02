@@ -3,6 +3,15 @@
     <fullName>Case_Number__c</fullName>
     <deprecated>false</deprecated>
     <label>Case Number</label>
+    <lookupFilter>
+        <active>true</active>
+        <filterItems>
+            <field>Case.Account.Id</field>
+            <operation>equals</operation>
+            <valueField>$Source.Name__c</valueField>
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
     <referenceTo>Case</referenceTo>
     <relationshipLabel>Payments</relationshipLabel>
     <relationshipName>Payments</relationshipName>
