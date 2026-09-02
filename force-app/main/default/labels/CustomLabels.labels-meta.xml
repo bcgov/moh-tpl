@@ -1030,4 +1030,11 @@
         <shortDescription>Used to display an error message when the Account is invalid or cannot be found.</shortDescription>
         <value>There is an issue with the Account. Please verify the Account details and try again.</value>
     </labels>
+    <labels>
+        <fullName>TPL_HI_Callout_Failure_Message</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Used to display an error message when the HealthIdeas callout fails.</shortDescription>
+        <value>Unable to retrieve Health Ideas data right now. Please try again in a few minutes. If it still doesn't work, contact support.</value>
+    </labels>
 </CustomLabels>

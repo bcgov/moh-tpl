@@ -432,26 +432,26 @@ public with sharing class HealthIdeasApiIntegration {
                         return result;
                     }
                     if (res.getStatusCode() != TPL_Constants.HTTP_STATUS_REQUEST_TIMEOUT) {
-                        string errorMessage = 'Status Code: ' + res.getStatusCode() + ', Status: ' + res.getStatus() + ', Response Body: ' + res.getBody();
+                        string errorMessage = res != null ? 'Status Code: ' + res.getStatusCode() + ', Status: ' + res.getStatus() + ', Response Body: ' + res.getBody() : '';
                         LogService.buildAndInsertErrorLog( 'HealthIdeasApiIntegration', 'sendHealthIdeasRequest', errorMessage, '' , acc.Id);
-                        return buildFailure(result, TPL_Constants.ERROR_HEALTH_IDEAS_API_CALLOUT_FAILED + res.getStatus());
+                        return buildFailure(result,  Label.TPL_HI_Callout_Failure_Message);
                     }
                     retryCount--;
-                } catch (CalloutException e) {
-                    if (!e.getMessage().contains(TPL_Constants.TIMEOUT_ERROR_MESSAGE)) {
+                } catch (Exception e) {
+                    if (!e.getMessage().contains(TPL_Constants.TIMEOUT_ERROR_MESSAGE) || retryCount == 1) {
                         LogService.buildAndInsertErrorLog('HealthIdeasApiIntegration', 'sendHealthIdeasRequest', String.valueOf(e.getMessage()), String.valueOf(e.getStackTraceString()), acc.Id);
-                        return buildFailure(result, e.getMessage());
+                        return buildFailure(result, label.TPL_HI_Callout_Failure_Message);
                     }
                     retryCount--;
                 } 
             }
             String errorMessage = res != null ? 'Status Code: ' + res.getStatusCode() + ', Status: ' + res.getStatus() + ', Response Body: ' + res.getBody() : '';
             LogService.buildAndInsertErrorLog('HealthIdeasApiIntegration', 'sendHealthIdeasRequest', errorMessage, '' , acc.Id);
-            return buildFailure(result, TPL_Constants.TIMEOUT_ERROR_MESSAGE);
+            return buildFailure(result, label.TPL_HI_Callout_Failure_Message);
         }
         catch (Exception e) {
             LogService.buildAndInsertErrorLog('HealthIdeasApiIntegration', 'sendHealthIdeasRequest', String.valueOf(e.getMessage()), String.valueOf(e.getStackTraceString()), acc.Id);
-            return buildFailure(result, e.getMessage());
+            return buildFailure(result, label.TPL_HI_Callout_Failure_Message);
         }
     }
 

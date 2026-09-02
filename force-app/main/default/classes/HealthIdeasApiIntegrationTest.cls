@@ -7,22 +7,19 @@
  */
 @IsTest
 private class HealthIdeasApiIntegrationTest {
-    
-    private static Integer callCount = 0;
 
-    // Exceeds Intervention_Code_CCI__c max length.
+    private static Integer callCount = 0;
     private static final String LONG_CCI = 'x'.repeat(1200);
 
-    // ---------------------------------------------------------------
-    // Shared mock-response helpers
-    // ---------------------------------------------------------------
+    // Detects whether the outgoing HttpRequest is the OAuth/token request.
     private static Boolean isTokenRequest(HttpRequest req) {
         String endpoint = req.getEndpoint() == null ? '' : req.getEndpoint().toLowerCase();
         String body = req.getBody() == null ? '' : req.getBody().toLowerCase();
         return endpoint.contains('token') || endpoint.contains('oauth') || endpoint.contains('jwt') ||
             body.contains('grant_type') || body.contains('client_assertion') || body.contains('client_id');
     }
-    
+
+    // Builds a generic JSON HttpResponse with the given status code, status text, and body.
     private static HttpResponse jsonResponse(Integer statusCode, String statusText, String body) {
         HttpResponse res = new HttpResponse();
         res.setHeader('Content-Type', 'application/json');
@@ -32,7 +29,7 @@ private class HealthIdeasApiIntegrationTest {
         return res;
     }
 
-    // HTTP reason phrase for the status codes covered by these tests.
+    // Maps each HTTP status code covered by these tests to its reason phrase.
     private static String reasonPhraseFor(Integer statusCode) {
         Map<Integer, String> reasonPhrases = new Map<Integer, String>{
             400 => 'Bad Request',
@@ -46,14 +43,17 @@ private class HealthIdeasApiIntegrationTest {
         return reasonPhrases.containsKey(statusCode) ? reasonPhrases.get(statusCode) : 'HTTP ' + statusCode;
     }
 
+    // Builds the mock OAuth token response.
     private static HttpResponse tokenHttpResponse() {
         return jsonResponse(200, null, '{"access_token":"fake-access-token","token_type":"Bearer","expires_in":3600}');
     }
-    
+
+    // Builds a successful HTTP 200 response with an empty content payload.
     private static HttpResponse emptyContentResponse() {
         return jsonResponse(200, null, '{"content":{"msp":[],"hospitalizations":[],"pharmacare":[]}}');
     }
-    
+
+    // Builds a successful HTTP 200 response containing one MSP, hospitalization, and pharmacare record.
     private static HttpResponse healthContentResponse(String interventionCodesCci) {
         return jsonResponse(200, null,
             '{"content":{' +
@@ -72,13 +72,8 @@ private class HealthIdeasApiIntegrationTest {
         );
     }
 
-    // Body shape for the DML-failure and empty-payload tests.
-    // Field is named "kind", not "contentMode": Apex is case-insensitive, so a field name matching
-    // its type by casing alone (e.g. ContentKind/contentKind) collides with the type itself.
     private enum ContentKind { DML_FAILURE, EMPTY }
 
-    // Single configurable HttpCalloutMock. Pass the raw HTTP status code or exception message to
-    // return/throw; the production retry loop decides what happens with it.
     private class ConfigurableMock implements HttpCalloutMock {
         private ContentKind kind;
         private Integer statusCode;
@@ -88,10 +83,10 @@ private class HealthIdeasApiIntegrationTest {
         // HTTP 200, body shaped by kind.
         ConfigurableMock(ContentKind kind) { this.kind = kind; }
 
-        // Returns this status code on every call. 200 always returns real success data.
+        // Returns this status code on every call.
         ConfigurableMock(Integer statusCode) { this.statusCode = statusCode; }
 
-        // Returns this status code for the first N calls, then succeeds with real data.
+        // Returns this status code for the first N calls, then succeeds.
         ConfigurableMock(Integer statusCode, Integer timesBeforeSuccess) {
             this.statusCode = statusCode;
             this.timesBeforeSuccess = timesBeforeSuccess;
@@ -100,12 +95,13 @@ private class HealthIdeasApiIntegrationTest {
         // Throws a CalloutException with this message on every call.
         ConfigurableMock(String exceptionMessage) { this.exceptionMessage = exceptionMessage; }
 
-        // Throws a CalloutException with this message for the first N calls, then succeeds with real data.
+        // Throws a CalloutException with this message for the first N calls, then succeeds.
         ConfigurableMock(String exceptionMessage, Integer timesBeforeSuccess) {
             this.exceptionMessage = exceptionMessage;
             this.timesBeforeSuccess = timesBeforeSuccess;
         }
 
+        // Routes each callout to a token response, a configured failure, or a real success.
         public HttpResponse respond(HttpRequest req) {
             if (isTokenRequest(req)) return tokenHttpResponse();
 
@@ -132,9 +128,7 @@ private class HealthIdeasApiIntegrationTest {
         }
     }
 
-    // ---------------------------------------------------------------
-    // Shared test-data / assertion helpers
-    // ---------------------------------------------------------------
+    // Inserts a Log__c record in "Processing" status for the given batch job Id.
     private static void insertProcessingLog(Id jobId) {
         insert new Log__c(
             JobId__c = String.valueOf(jobId),
@@ -146,6 +140,7 @@ private class HealthIdeasApiIntegrationTest {
         );
     }
 
+    // Confirms exactly one Healthcare_Cost__c record was inserted for the given account and source system Id.
     private static void assertHealthcareCostInserted(Id accountId, String sourceSystemId) {
         List<Healthcare_Cost__c> costs = [
             SELECT Id FROM Healthcare_Cost__c
@@ -154,22 +149,27 @@ private class HealthIdeasApiIntegrationTest {
         System.assertEquals(1, costs.size(), 'Expected exactly one Healthcare_Cost__c record for ' + sourceSystemId);
     }
 
+    // Confirms a hospitalization insert-failure message contains the error label and admission date.
     private static void assertHospitalizationFailureMessage(String message) {
         System.assert(message.contains(Label.TPL_HI_Record_ErrorMessage), 'Expected configured HealthIdeas record error label.');
         System.assert(message.contains('June 21, 2006'), 'Expected failed admission date to be included in the message.');
     }
 
+    // Toggles the static queueable-chaining flags for MSP, hospitalization, and pharmacare.
     private static void setQueueableChaining(Boolean msp, Boolean hospitalization, Boolean pharmacare) {
         HealthIdeasMspQueueable.allowQueueableChaining = msp;
         HealthIdeasHospitalizationQueueable.allowQueueableChaining = hospitalization;
         HealthIdeasPharmacareQueueable.allowNextBatchChaining = pharmacare;
     }
 
-    // Asserts the standard "no retry happened" outcome: immediate failure on the very first call.
+    // Asserts immediate failure with no retry, the generic UI message, and the log containing the expected detail.
     private static void assertFailedImmediatelyNoRetry(HealthIdeasApiIntegration.IntegrationResult result, String expectedMessageFragment) {
         System.assertEquals(false, result.success, 'Expected failure.');
         System.assertEquals(1, callCount, 'Expected exactly 1 call — no retry should have occurred.');
-        System.assert(result.errorMessage.contains(expectedMessageFragment), 'Expected error message to contain: ' + expectedMessageFragment);
+        System.assertEquals(Label.TPL_HI_Callout_Failure_Message, result.errorMessage, 'Expected the generic UI failure message.');
+        List<Log__c> logs = [SELECT Error_Message__c FROM Log__c WHERE Method_Name__c = 'sendHealthIdeasRequest' ORDER BY CreatedDate DESC LIMIT 1];
+        System.assertEquals(1, logs.size(), 'Expected a log to be created.');
+        System.assert(logs[0].Error_Message__c.contains(expectedMessageFragment), 'Expected error message to contain: ' + expectedMessageFragment);
     }
 
     // Creates reusable Person Account and Healthcare Cost records for all tests.
@@ -202,12 +202,14 @@ private class HealthIdeasApiIntegrationTest {
         insert seedRecords;
     }
 
+    // Looks up the record type Id for the given SObject type and developer name.
     private static Id getRecordTypeId(Schema.SObjectType sObjectType, String developerName) {
         Map<String, Schema.RecordTypeInfo> infos = sObjectType.getDescribe().getRecordTypeInfosByDeveloperName();
         System.assert(infos.containsKey(developerName), 'Missing record type "' + developerName + '" on ' + sObjectType.getDescribe().getName());
         return infos.get(developerName).getRecordTypeId();
     }
 
+    // Returns the MSP, Pharmacare, and Hospitalization record type Ids for Healthcare_Cost__c.
     private static Map<String, Id> getCostRecordTypeIds() {
         return new Map<String, Id>{
             'MSP' => getRecordTypeId(Healthcare_Cost__c.SObjectType, 'MSP'),
@@ -216,15 +218,12 @@ private class HealthIdeasApiIntegrationTest {
         };
     }
 
+    // Retrieves the shared test Person Account created in setupData by its PHN.
     private static Account getTestAccount() {
         return [SELECT Id, PHN__pc FROM Account WHERE PHN__pc = '9872626777' LIMIT 1];
     }
 
-    // ---------------------------------------------------------------
-    // Business-logic tests (not retry-related) — all use a plain HTTP 200 mock
-    // ---------------------------------------------------------------
-
-    // Covers successful async request creation and async tracking log initialization.
+    // Covers a successful async HealthIdeas request creation and tracking log initialization.
     @IsTest
     static void testCallGetCost_success() {
         Account acc = getTestAccount();
@@ -247,7 +246,7 @@ private class HealthIdeasApiIntegrationTest {
         System.assert(logs[0].Total_Chunks__c > 0);
     }
 
-    // Covers synchronous refresh flow with delete and insert processing.
+    // Covers the synchronous refresh flow with delete and insert processing.
     @IsTest
     static void testCallGetCost_DeletionScenario() {
         Account acc = getTestAccount();
@@ -264,7 +263,7 @@ private class HealthIdeasApiIntegrationTest {
         System.assertEquals(null, result.batchId);
     }
 
-    // Covers async request path with queueable chaining disabled for test control.
+    // Covers the async request path with queueable chaining disabled for test control.
     @IsTest
     static void testCallGetCost_FailureScenario() {
         Account acc = getTestAccount();
@@ -513,15 +512,7 @@ private class HealthIdeasApiIntegrationTest {
         System.assertEquals(null, logRecord.Error_Message__c);
     }
 
-    // ---------------------------------------------------------------
-    // Retry matrix (sendHealthIdeasRequest)
-    // Retry only happens on an HTTP 408 status or a CalloutException containing
-    // TPL_Constants.TIMEOUT_ERROR_MESSAGE. Everything else fails immediately, no retry.
-    // ---------------------------------------------------------------
-
-    // Retry happens: CalloutException with the timeout message.
-
-    // All attempts throw the timeout exception; exhausts MAX_ATTEMPTS, fails with timeout message.
+    // Covers all retry attempts throwing the timeout exception, exhausting MAX_ATTEMPTS.
     @IsTest
     static void testRetry_TimeoutException_ExhaustsAllAttempts() {
         Account testAccount = getTestAccount();
@@ -535,10 +526,13 @@ private class HealthIdeasApiIntegrationTest {
 
         System.assertEquals(false, result.success);
         System.assertEquals(TPL_Constants.MAX_ATTEMPTS, callCount, 'Expected the callout to be attempted MAX_ATTEMPTS times.');
-        System.assert(result.errorMessage.contains(TPL_Constants.TIMEOUT_ERROR_MESSAGE), 'Expected timeout error after maximum retry attempts.');
+        System.assertEquals(Label.TPL_HI_Callout_Failure_Message, result.errorMessage, 'Expected the generic UI failure message.');
+        List<Log__c> logs = [SELECT Error_Message__c FROM Log__c WHERE Method_Name__c = 'sendHealthIdeasRequest' ORDER BY CreatedDate DESC LIMIT 1];
+        System.assertEquals(1, logs.size(), 'Expected a log to be created.');
+        System.assert(logs[0].Error_Message__c.contains(TPL_Constants.TIMEOUT_ERROR_MESSAGE), 'Expected timeout error after maximum retry attempts.');
     }
 
-    // Throws the timeout exception once, succeeds on the 2nd attempt.
+    // Covers the timeout exception thrown once, then a real success on the 2nd attempt.
     @IsTest
     static void testRetry_TimeoutException_SucceedsOnSecondAttempt() {
         Account testAccount = getTestAccount();
@@ -554,9 +548,7 @@ private class HealthIdeasApiIntegrationTest {
         System.assertEquals(2, callCount, 'Expected exactly 2 calls: one timeout, then one success.');
     }
 
-    // Retry happens: real HTTP 408 status, no exception thrown.
-
-    // All attempts return HTTP 408; exhausts MAX_ATTEMPTS, same timeout failure via the status-code path.
+    // Covers all retry attempts returning a real HTTP 408 response, exhausting MAX_ATTEMPTS.
     @IsTest
     static void testRetry_Http408Status_ExhaustsAllAttempts() {
         Account testAccount = getTestAccount();
@@ -570,10 +562,13 @@ private class HealthIdeasApiIntegrationTest {
 
         System.assertEquals(false, result.success, 'Expected failure once all MAX_ATTEMPTS return HTTP 408.');
         System.assertEquals(TPL_Constants.MAX_ATTEMPTS, callCount, 'Expected the callout to be attempted MAX_ATTEMPTS times.');
-        System.assert(result.errorMessage.contains(TPL_Constants.TIMEOUT_ERROR_MESSAGE), 'Expected timeout error via HTTP 408 responses.');
+        System.assertEquals(Label.TPL_HI_Callout_Failure_Message, result.errorMessage, 'Expected the generic UI failure message.');
+        List<Log__c> logs = [SELECT Error_Message__c FROM Log__c WHERE Method_Name__c = 'sendHealthIdeasRequest' ORDER BY CreatedDate DESC LIMIT 1];
+        System.assertEquals(1, logs.size(), 'Expected a log to be created.');
+        System.assert(logs[0].Error_Message__c.contains(String.valueOf(TPL_Constants.HTTP_STATUS_REQUEST_TIMEOUT)), 'Expected timeout error via HTTP 408 responses.');
     }
 
-    // Returns HTTP 408 once, succeeds on the 2nd attempt.
+    // Covers a real HTTP 408 response returned once, then a real success on the 2nd attempt.
     @IsTest
     static void testRetry_Http408Status_SucceedsOnSecondAttempt() {
         Account testAccount = getTestAccount();
@@ -589,8 +584,7 @@ private class HealthIdeasApiIntegrationTest {
         System.assertEquals(2, callCount, 'Expected exactly 2 calls: one 408, then one success.');
     }
 
-    // Retry does not happen: any HTTP status other than 408 or 200.
-
+    // Covers an immediate HTTP 400 response failing without any retry.
     @IsTest
     static void testNoRetry_Http400Status_FailsImmediately() {
         Account testAccount = getTestAccount();
@@ -605,6 +599,7 @@ private class HealthIdeasApiIntegrationTest {
         assertFailedImmediatelyNoRetry(result, 'Bad Request');
     }
 
+    // Covers an immediate HTTP 401 response failing without any retry.
     @IsTest
     static void testNoRetry_Http401Status_FailsImmediately() {
         Account testAccount = getTestAccount();
@@ -619,6 +614,7 @@ private class HealthIdeasApiIntegrationTest {
         assertFailedImmediatelyNoRetry(result, 'Unauthorized');
     }
 
+    // Covers an immediate HTTP 403 response failing without any retry.
     @IsTest
     static void testNoRetry_Http403Status_FailsImmediately() {
         Account testAccount = getTestAccount();
@@ -633,6 +629,7 @@ private class HealthIdeasApiIntegrationTest {
         assertFailedImmediatelyNoRetry(result, 'Forbidden');
     }
 
+    // Covers an immediate HTTP 404 response failing without any retry.
     @IsTest
     static void testNoRetry_Http404Status_FailsImmediately() {
         Account testAccount = getTestAccount();
@@ -647,6 +644,7 @@ private class HealthIdeasApiIntegrationTest {
         assertFailedImmediatelyNoRetry(result, 'Not Found');
     }
 
+    // Covers an immediate HTTP 500 response failing without any retry.
     @IsTest
     static void testNoRetry_Http500Status_FailsImmediately() {
         Account testAccount = getTestAccount();
@@ -659,9 +657,9 @@ private class HealthIdeasApiIntegrationTest {
         Test.stopTest();
 
         assertFailedImmediatelyNoRetry(result, 'Internal Server Error');
-        System.assert(result.errorMessage.contains(TPL_Constants.ERROR_HEALTH_IDEAS_API_CALLOUT_FAILED), 'Expected the callout-failed error message to be present.');
     }
 
+    // Covers an immediate HTTP 503 response failing without any retry.
     @IsTest
     static void testNoRetry_Http503Status_FailsImmediately() {
         Account testAccount = getTestAccount();
@@ -676,8 +674,7 @@ private class HealthIdeasApiIntegrationTest {
         assertFailedImmediatelyNoRetry(result, 'Service Unavailable');
     }
 
-    // Retry does not happen: CalloutException with a non-timeout message.
-
+    // Covers a non-timeout CalloutException failing immediately without any retry.
     @IsTest
     static void testNoRetry_NonTimeoutCalloutException_FailsImmediately() {
         Account testAccount = getTestAccount();
