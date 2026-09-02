@@ -10,6 +10,27 @@ public with sharing class TPL_Constants {
     public static final String STATUS_COMPLETED = 'Completed';
     public static final String STATUS_COMPLETED_WITH_ERRORS = 'Completed With Errors';
     public static final String STATUS_FAILED = 'Failed';
+    public static final Integer MAX_ATTEMPTS = 3;
+    public static final String TIMEOUT_ERROR_MESSAGE = 'Read timed out';
+    public static final String TIMEOUT_FIELD_NAME = 'Time_Out_Value_MilliSeconds__c';
+    public static final Integer DEFAULT_TIMEOUT_VALUE = 120000;
+    public static final Integer HTTP_STATUS_OK = 200;
+    public static final Integer HTTP_STATUS_REQUEST_TIMEOUT = 408;
+
+    public static final String CLASS_DOCX_GENERATOR_CONTROLLER = 'DocxGeneratorController';
+    public static final String METHOD_GENERATE_DOCUMENT = 'generateDocument';
+    public static final String TPL_DOCGEN_SIGNATURE_PROFILE_NAME = 'TPL DocGen Signature (Profile)';
+    public static final String DOCGEN_TEMPLATE_MINISTERS_CERTIFICATE = 'Minister\'s Certificate';
+    public static final String DOCGEN_TEMPLATE_CASE_HISTORY = 'Case History';
+    public static final String DOCGEN_FILE_PREFIX_MINISTERS_CERTIFICATE = 'Minister\'s Certificate';
+    public static final String DOCGEN_FILE_PREFIX_CASE_HISTORY = 'Case_History_';
+    public static final String OUTPUT_FORMAT_PDF = 'pdf';
+    public static final String OUTPUT_FORMAT_DOCX = 'docx';
+    public static final String ASYNC_JOB_STATUS_FAILED = 'Failed';
+    public static final String ASYNC_JOB_STATUS_ABORTED = 'Aborted';
+    public static final String HCC_AMB_RECORDTYPE_NAME = 'Ambulance';
+    public static final String HCC_CC_RECORDTYPE_NAME = 'Continuing_Care';
+    public static final String HCC_FC_RECORDTYPE_NAME = 'Future_Care';
     
     public static final String CLASS_HEALTH_IDEAS_API_INTEGRATION = 'HealthIdeasApiIntegration';
     public static final String CLASS_LOG_SERVICE = 'LogService';
