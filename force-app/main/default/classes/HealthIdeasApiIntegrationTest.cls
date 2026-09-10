@@ -644,19 +644,24 @@ private class HealthIdeasApiIntegrationTest {
         assertFailedImmediatelyNoRetry(result, 'Not Found');
     }
 
-    // Covers an immediate HTTP 500 response failing without any retry.
-    @IsTest
-    static void testNoRetry_Http500Status_FailsImmediately() {
+    // Covers an immediate HTTP 500 response failing with retry.
+     @IsTest
+    static void testRetry_Http500Status_ExhaustsAllAttempts() {
         Account testAccount = getTestAccount();
         callCount = 0;
-        Test.setMock(HttpCalloutMock.class, new ConfigurableMock(500));
+        Test.setMock(HttpCalloutMock.class, new ConfigurableMock(TPL_Constants.HTTP_STATUS_INTERNAL_SERVER_ERROR));
 
         Test.startTest();
         HealthIdeasApiIntegration.IntegrationResult result =
             HealthIdeasApiIntegration.getHealthcareCostsForAccountandSetDate(testAccount.Id, Date.newInstance(2025, 1, 1), false);
         Test.stopTest();
 
-        assertFailedImmediatelyNoRetry(result, 'Internal Server Error');
+        System.assertEquals(false, result.success, 'Expected failure once all MAX_ATTEMPTS return HTTP 500.');
+        System.assertEquals(TPL_Constants.MAX_ATTEMPTS, callCount, 'Expected the callout to be attempted MAX_ATTEMPTS times.');
+        System.assertEquals(Label.TPL_HI_Callout_Failure_Message, result.errorMessage, 'Expected the generic UI failure message.');
+        List<Log__c> logs = [SELECT Error_Message__c FROM Log__c WHERE Method_Name__c = 'sendHealthIdeasRequest' ORDER BY CreatedDate DESC LIMIT 1];
+        System.assertEquals(1, logs.size(), 'Expected a log to be created.');
+        System.assert(logs[0].Error_Message__c.contains(String.valueOf(TPL_Constants.HTTP_STATUS_INTERNAL_SERVER_ERROR)), 'Expected internal server error via HTTP 500 responses.');
     }
 
     // Covers an immediate HTTP 503 response failing without any retry.
