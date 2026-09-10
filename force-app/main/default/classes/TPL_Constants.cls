@@ -16,6 +16,7 @@ public with sharing class TPL_Constants {
     public static final Integer DEFAULT_TIMEOUT_VALUE = 120000;
     public static final Integer HTTP_STATUS_OK = 200;
     public static final Integer HTTP_STATUS_REQUEST_TIMEOUT = 408;
+    public static final Integer HTTP_STATUS_INTERNAL_SERVER_ERROR = 500;
 
     public static final String CLASS_DOCX_GENERATOR_CONTROLLER = 'DocxGeneratorController';
     public static final String METHOD_GENERATE_DOCUMENT = 'generateDocument';
