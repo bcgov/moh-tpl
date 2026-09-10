@@ -431,7 +431,7 @@ public with sharing class HealthIdeasApiIntegration {
                         result.responseBody = res.getBody();
                         return result;
                     }
-                    if (res.getStatusCode() != TPL_Constants.HTTP_STATUS_REQUEST_TIMEOUT) {
+                    if (res.getStatusCode() != TPL_Constants.HTTP_STATUS_REQUEST_TIMEOUT && res.getStatusCode() != TPL_Constants.HTTP_STATUS_INTERNAL_SERVER_ERROR) {
                         string errorMessage = res != null ? 'Status Code: ' + res.getStatusCode() + ', Status: ' + res.getStatus() + ', Response Body: ' + res.getBody() : '';
                         LogService.buildAndInsertErrorLog( 'HealthIdeasApiIntegration', 'sendHealthIdeasRequest', errorMessage, '' , acc.Id);
                         return buildFailure(result,  Label.TPL_HI_Callout_Failure_Message);
