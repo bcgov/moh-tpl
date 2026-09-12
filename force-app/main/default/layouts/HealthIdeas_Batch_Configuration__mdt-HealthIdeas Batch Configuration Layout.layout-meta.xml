@@ -18,6 +18,10 @@
                 <behavior>Edit</behavior>
                 <field>Batch_Size__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Time_Out_Value_MilliSeconds__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
