@@ -53,18 +53,18 @@ implements Database.Batchable<SObject>, Database.AllowsCallouts {
             Date currentEndDate =
                 HealthIdeasApiIntegration.getHealthIdeasChunkEndDate(asOfDate);
             
-            HttpResponse res = HealthIdeasApiIntegration.sendHealthIdeasRequest(
+            HealthIdeasApiIntegration.IntegrationResult result = HealthIdeasApiIntegration.sendHealthIdeasRequest(
                 requesterUserName,
-                scope[0].PHN__pc,
+                scope[0],
                 asOfDate,
                 currentEndDate
             );
-            
-            if (res.getStatusCode() != 200) {
+
+            if (!result.success) {
                 LogService.markChunkFailed(
                     rootBatchJobId,
                     bc.getJobId(),
-                    TPL_Constants.ERROR_HEALTH_IDEAS_API_CALLOUT_FAILED + res.getStatus(),
+                    result.errorMessage,
                     null,
                     'HealthIdeasApiCalloutBatch',
                     'execute'
@@ -73,7 +73,7 @@ implements Database.Batchable<SObject>, Database.AllowsCallouts {
             }
             
             HealthIdeasApiIntegration.HealthIdeasBatchPayload payload =
-                HealthIdeasApiIntegration.parseHealthIdeasPayload(res.getBody());
+                HealthIdeasApiIntegration.parseHealthIdeasPayload(result.responseBody);
             
             Map<String, Id> recordTypeIds =
                 HealthIdeasApiIntegration.getHealthcareCostRecordTypeIds();
@@ -114,8 +114,9 @@ implements Database.Batchable<SObject>, Database.AllowsCallouts {
                         currentEndDate
                     )
                 );
-            }
-        } catch (Exception e) {
+            } 
+        } 
+             catch (Exception e) {
             string stackTrace = e.getStackTraceString();
             LogService.markChunkFailed(
                 rootBatchJobId,
