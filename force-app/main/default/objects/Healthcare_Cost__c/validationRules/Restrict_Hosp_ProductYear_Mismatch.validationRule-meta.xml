@@ -9,11 +9,19 @@
     !ISBLANK(Service_Provided_by_Facility__c),
     !ISBLANK(Date_of_Admission__c),
     OR(
+       /*BCMOHAM-35966: Historical consolidated products (start 1998-04-01) are
+           allowed for admissions within their range; block only when the
+           admission is on or after the product&apos;s end date  */
+       Service_Provided_by_Facility__r.Effective_Start_Date__c = DATE(1998, 4, 1)
+&amp;&amp; Date_of_Admission__c &gt;= Service_Provided_by_Facility__r.Effective_End_Date__c,
+
       AND(
+          NOT(Service_Provided_by_Facility__r.Effective_Start_Date__c = DATE(1998, 4, 1)),
         MONTH(Date_of_Admission__c) &lt; 4 ,
         !CONTAINS(Service_Provided_by_Facility__r.Name, TEXT(YEAR(Date_of_Admission__c)))
       ),
       AND(
+        NOT(Service_Provided_by_Facility__r.Effective_Start_Date__c = DATE(1998, 4, 1)),
         MONTH(Date_of_Admission__c) &gt; 3 ,
         !CONTAINS(Service_Provided_by_Facility__r.Name, TEXT(YEAR(Date_of_Admission__c) + 1))
       ) 
