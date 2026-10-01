@@ -27,6 +27,7 @@ public with sharing class TPL_Constants {
     public static final String DOCGEN_FILE_PREFIX_CASE_HISTORY = 'Case_History_';
     public static final String OUTPUT_FORMAT_PDF = 'pdf';
     public static final String OUTPUT_FORMAT_DOCX = 'docx';
+    public static final String OUTPUT_FORMAT_XLSX = 'xlsx';
     public static final String ASYNC_JOB_STATUS_FAILED = 'Failed';
     public static final String ASYNC_JOB_STATUS_ABORTED = 'Aborted';
     public static final String HCC_AMB_RECORDTYPE_NAME = 'Ambulance';
@@ -61,6 +62,7 @@ public with sharing class TPL_Constants {
     public static final String ASYNC_STATUS_STARTING = 'Starting';
     
     public static final String ERROR_DELETE_FAILED_HEALTHCARE_COST = 'Delete failed for Healthcare_Cost__c Id ';
+    public static final String ERROR_RECORD_LOCKED_FOR_APPROVAL = 'Record is locked for approval.';
     public static final String HI_BATCH_CONFIGURATION_RECORD_NAME = 'BatchSize';
     public static final String TPL_HI_RECORDS_FOR_SUFFIX = ' records for ';
 }

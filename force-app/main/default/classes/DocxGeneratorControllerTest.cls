@@ -133,15 +133,11 @@ private class DocxGeneratorControllerTest {
     @IsTest
     static void testGetPrintableRowLimitsReturnValues() {
         Test.startTest();
-        Integer syncLimitValue = DocxGeneratorController.getSyncPrintableHccRowLimit();
         Integer asyncLimitValue = DocxGeneratorController.getAsyncSingleDocPrintableHccRowLimit();
         Test.stopTest();
         
-        System.assertNotEquals(null, syncLimitValue, 'Sync row limit should not be null.');
         System.assertNotEquals(null, asyncLimitValue, 'Async row limit should not be null.');
-        System.assert(syncLimitValue > 0, 'Sync row limit should be greater than zero.');
         System.assert(asyncLimitValue > 0, 'Async row limit should be greater than zero.');
-        System.assert(asyncLimitValue >= syncLimitValue, 'Async single document row limit should normally be greater than or equal to sync limit.');
     }
     
     /**
@@ -156,7 +152,7 @@ private class DocxGeneratorControllerTest {
         DocxGeneratorController.testTotalPrintableRows = 0;
         
         Test.startTest();
-        String result = DocxGeneratorController.generateDocument(caseId, TEMPLATE_NAME);
+        String result = DocxGeneratorController.generateDocument(caseId, TEMPLATE_NAME, TPL_Constants.OUTPUT_FORMAT_DOCX);
         Test.stopTest();
         
         System.assertNotEquals(null, result, 'Sync generation should return a ContentDocumentId.');
@@ -203,11 +199,11 @@ private class DocxGeneratorControllerTest {
         Id caseId = getCaseId();
         
         // Get configured sync limit and force row count above it.
-        Integer syncLimitValue = DocxGeneratorController.getSyncPrintableHccRowLimit();
-        DocxGeneratorController.testTotalPrintableRows = syncLimitValue + 1;
+        Integer AsyncLimitValue = DocxGeneratorController.getaSyncSingleDocPrintableHccRowLimit();
+        DocxGeneratorController.testTotalPrintableRows = AsyncLimitValue + 1;
         
         Test.startTest();
-        String result = DocxGeneratorController.generateDocument(caseId, TEMPLATE_NAME);
+        String result = DocxGeneratorController.generateDocument(caseId, TEMPLATE_NAME, TPL_Constants.OUTPUT_FORMAT_DOCX);
         Test.stopTest();
         
         System.assertNotEquals(null, result, 'Async single DOCX path should return an async response.');
@@ -231,63 +227,102 @@ private class DocxGeneratorControllerTest {
         
     }
     
+        /**
+    * Covers exception handling in generateDocument().
+    * Invalid Case Id causes the sync path query to fail and the method wraps it in AuraHandledException.
+    */
+    @IsTest
+static void testGenerateDocumentHandlesInvalidCaseId() {
+    Id fakeCaseId = '500000000000000AAA';
+
+    // Force sync path so loadCaseForDocgen() attempts to query invalid/missing Case.
+    DocxGeneratorController.testTotalPrintableRows = 0;
+
+    Test.startTest();
+
+    String result = DocxGeneratorController.generateDocument(
+        fakeCaseId,
+        TEMPLATE_NAME,
+        TPL_Constants.OUTPUT_FORMAT_DOCX
+    );
+
+    Test.stopTest();
+
+    System.assertEquals(
+        '',
+        result,
+        'Failed synchronous document generation should return an empty response.'
+    );
+}
+    
     /**
-* Covers generateDocument() ZIP section async branch.
-* totalPrintableRows is greater than async single document limit.
+* Covers generateDocument() XLSX sync branch.
+* When the row count is below XLSX_ASYNC_ROW_THRESHOLD, outputFormat=xlsx should
+* return a ContentDocumentId directly rather than an async response.
 */
     @IsTest
-    static void testGenerateDocumentZipSectionsAsyncPath() {
+    static void testGenerateDocumentXlsxPathReturnsContentDocumentId() {
         Id caseId = getCaseId();
-        
-        // Force ZIP section branch.
-        Integer asyncLimitValue = DocxGeneratorController.getAsyncSingleDocPrintableHccRowLimit();
-        DocxGeneratorController.testTotalPrintableRows = asyncLimitValue + 1;
-        
+
+        DocxGeneratorController.testTotalPrintableRows = DocxGeneratorController.getAsyncSingleDocPrintableHccRowLimit() - 1;
+
         Test.startTest();
-        String result = DocxGeneratorController.generateDocument(caseId, TEMPLATE_NAME);
+        String result = DocxGeneratorController.generateDocument(caseId, TEMPLATE_NAME, TPL_Constants.OUTPUT_FORMAT_XLSX);
         Test.stopTest();
-        
-        System.assertNotEquals(null, result, 'ZIP section async path should return an async response.');
-        System.assert(result.startsWith(DocgenConstants.ASYNC_RESPONSE_PREFIX), 'ZIP section async path should return the async response prefix plus job id.');
-        
-        // Verify ZIP section branch writes processing log using writeGenerationLog().
-        List<Log__c> logs = [SELECT Id, JobId__c, Record_Id__c, Status__c, Error_Message__c FROM Log__c WHERE Record_Id__c = :String.valueOf(caseId) AND Status__c = :TPL_Constants.STATUS_PROCESSING];
-        
-        System.assert(logs.size() > 0, 'ZIP section async path should write a processing generation log.');
-        
-        // Confirm at least one processing log has a job id and no error message.
-        Boolean foundZipLog = false;
-        for (Log__c logRecord : logs) {
-            if (String.isNotBlank(logRecord.JobId__c)) {
-                foundZipLog = true;
-                System.assertEquals(null, logRecord.Error_Message__c, 'ZIP section processing log should not contain an error message.');
-            }
-        }
-        
-        System.assert(foundZipLog, 'Expected a ZIP section log with a JobId.');
+
+        System.assertNotEquals(null, result, 'XLSX generation should return a ContentDocumentId.');
+        System.assert(result.startsWith('069'), 'XLSX path below the async threshold should return a ContentDocumentId, not an async response.');
     }
-    
+
     /**
-* Covers exception handling in generateDocument().
-* Invalid Case Id causes the sync path query to fail and the method wraps it in AuraHandledException.
+* Covers generateDocument() XLSX async branch.
+* At or above XLSX_ASYNC_ROW_THRESHOLD, outputFormat=xlsx should enqueue
+* XlsxGenerationAsyncQueueable and return an async response, mirroring the DOCX
+* sync/async split but on its own, much higher, row-count threshold.
 */
     @IsTest
-    static void testGenerateDocumentWrapsExceptionInAuraHandledException() {
-        Id fakeCaseId = '500000000000000AAA';
-        
-        // Force sync path so loadCaseForDocgen() attempts to query invalid/missing Case.
-        DocxGeneratorController.testTotalPrintableRows = 0;
-        
+    static void testGenerateDocumentXlsxAsyncPathAtOrAboveThreshold() {
+        Id caseId = getCaseId();
+
+        DocxGeneratorController.testTotalPrintableRows = DocxGeneratorController.getXlsxAsyncPrintableHccRowLimit();
+
         Test.startTest();
-        try {
-            DocxGeneratorController.generateDocument(fakeCaseId, TEMPLATE_NAME);
-            System.assert(false, 'Expected AuraHandledException for invalid Case Id.');
-        } catch (AuraHandledException e) {
-            System.assertNotEquals(null, e.getMessage(), 'Exception message should be available.');
-        }
+        String result = DocxGeneratorController.generateDocument(caseId, TEMPLATE_NAME, TPL_Constants.OUTPUT_FORMAT_XLSX);
         Test.stopTest();
+
+        System.assertNotEquals(null, result, 'XLSX async path should return an async response.');
+        System.assert(result.startsWith(DocgenConstants.ASYNC_RESPONSE_PREFIX), 'XLSX async path should return the async response prefix plus job id.');
+
+        List<Log__c> logs = [SELECT Id, JobId__c, Record_Id__c, Status__c, Class_Name__c, Method_Name__c, Generated_File_Ids__c FROM Log__c WHERE Record_Id__c = :String.valueOf(caseId)];
+        System.assert(logs.size() > 0, 'XLSX async path should create/update a generation log.');
+
+        Boolean foundCompletedLog = false;
+        for (Log__c logRecord : logs) {
+            if (logRecord.Status__c == TPL_Constants.STATUS_COMPLETED) {
+                foundCompletedLog = true;
+                System.assertNotEquals(null, logRecord.Generated_File_Ids__c, 'Completed XLSX async log should store the generated ContentDocumentId.');
+            }
+            System.assertEquals(TPL_Constants.CLASS_DOCX_GENERATOR_CONTROLLER, logRecord.Class_Name__c, 'Log class name should be populated by buildGenerationLog.');
+            System.assertEquals(TPL_Constants.METHOD_GENERATE_DOCUMENT, logRecord.Method_Name__c, 'Log method name should be populated by buildGenerationLog.');
+        }
+        System.assert(foundCompletedLog, 'Queueable runs synchronously in test context, so the log should reach Completed status.');
     }
-    
+
+    /**
+* Covers generateSingleXlsxSyncProcess() directly.
+*/
+    @IsTest
+    static void testGenerateSingleXlsxSyncProcessDirectly() {
+        Id caseId = getCaseId();
+
+        Test.startTest();
+        String result = DocxGeneratorController.generateSingleXlsxSyncProcess(caseId, TEMPLATE_NAME);
+        Test.stopTest();
+
+        System.assertNotEquals(null, result, 'Direct XLSX sync process should return a ContentDocumentId.');
+        System.assert(result.startsWith('069'), 'Direct XLSX sync method should create and return a ContentDocumentId.');
+    }
+
     /**
 * Covers generateDocument() path where testTotalPrintableRows is null.
 * This forces the method to call getEligibleHccCountForPrint(caseId).
@@ -300,7 +335,7 @@ private class DocxGeneratorControllerTest {
         DocxGeneratorController.testTotalPrintableRows = null;
         
         Test.startTest();
-        String result = DocxGeneratorController.generateDocument(caseId, TEMPLATE_NAME);
+        String result = DocxGeneratorController.generateDocument(caseId, TEMPLATE_NAME, TPL_Constants.OUTPUT_FORMAT_DOCX);
         Test.stopTest();
         
         System.assertNotEquals(null, result, 'generateDocument should work when row count is calculated from Healthcare_Cost__c records.');

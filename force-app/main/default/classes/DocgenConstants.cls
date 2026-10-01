@@ -74,23 +74,6 @@ public class DocgenConstants {
     public static final String DEFAULT_LOGO_STATIC_RESOURCE = 'BC_MInistry_LOGO';
     public static final String LANDSCAPE_WATERMARK_HEADER_REL_ID = 'rId4';
     public static final String EMPTY_HEADER_REL_ID = 'rId5';
-    public static final Integer ZIP_BATCH_BYTES = 3500000;
-    public static final Integer ASYNC_HEAP_SOFT_LIMIT_BYTES = 9000000;
-    public static final Integer TARGET_DOCX_SECTION_XML_SIZE_PER_FILE_BYTES = 2000000;
-    public static final Integer MIN_ROWS_PER_DOCX_SECTION_FILE = 200;
-    public static final Integer MAX_ROWS_PER_DOCX_SECTION_FILE = 1000;
-    public static final Integer AMBULANCE_ROW_XML_SIZE_BYTES = 2000;
-    public static final Integer HOSPITAL_ROW_XML_SIZE_BYTES = 2500;
-    public static final Integer MSP_ROW_XML_SIZE_BYTES = 3000;
-    public static final Integer PHARMACARE_ROW_XML_SIZE_BYTES = 2000;
-    public static final Integer CONTINUING_AND_FUTURE_CARE_ROW_XML_SIZE_BYTES = 1000;
-    public static final Integer CERTIFICATE_SECTION_INDEX = 0;
-    public static final Integer AMBULANCE_SECTION_INDEX = 1;
-    public static final Integer HOSPITAL_SECTION_INDEX = 2;
-    public static final Integer MSP_SECTION_INDEX = 3;
-    public static final Integer PHARMACARE_SECTION_INDEX = 4;
-    public static final Integer CONTINUING_CARE_SECTION_INDEX = 5;
-    public static final Integer FUTURE_CARE_SECTION_INDEX = 6;
-    public static final Integer COMPLETED_SECTION_INDEX = 7;
+    public static final Integer MAX_ROWS_PER_DOCX_SECTION_FILE = 2000;
 
 }
