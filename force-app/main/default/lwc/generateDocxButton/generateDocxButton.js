@@ -1,7 +1,7 @@
 import { LightningElement, api, wire } from 'lwc';
-import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
-import FILE_EXTENSION_FIELD from '@salesforce/schema/ContentDocument.FileExtension';
+import {ShowToastEvent} from 'lightning/platformShowToastEvent';
 import generateDocument from '@salesforce/apex/DocxGeneratorController.generateDocument';
+import getEligibleHccCountForPrint from '@salesforce/apex/DocxGeneratorController.getEligibleHccCountForPrint';
 import pollDocument from '@salesforce/apex/DocxGenrationStatusController.pollDocument';
 import TPL_DocGen_Ministry_Certificate_Title from '@salesforce/label/c.TPL_DocGen_Ministry_Certificate_Title';
 import TPL_DocGen_MC_Select_Template from '@salesforce/label/c.TPL_DocGen_MC_Select_Template';
@@ -37,23 +37,26 @@ import TPL_DocGen_Template_Ministers_Cert from '@salesforce/label/c.TPL_DocGen_T
 import TPL_DocGen_Template_Case_History from '@salesforce/label/c.TPL_DocGen_Template_Case_History';
 import TPL_DocGen_Template_Type_Word from '@salesforce/label/c.TPL_DocGen_Template_Type_Word';
 import TPL_DocGen_Output_Label_Word from '@salesforce/label/c.TPL_DocGen_Output_Label_Word';
+import TPL_DocGen_Output_Label_Word_Disabled from '@salesforce/label/c.TPL_DocGen_Output_Label_Word_Disabled';
 import TPL_DocGen_Status_Generating from '@salesforce/label/c.TPL_DocGen_Status_Generating';
 import TPL_DocGen_Status_Async_Progress from '@salesforce/label/c.TPL_DocGen_Status_Async_Progress';
 import TPL_DocGen_Status_Success from '@salesforce/label/c.TPL_DocGen_Status_Success';
-import TPL_DocGen_Status_Success_Multipart from '@salesforce/label/c.TPL_DocGen_Status_Success_Multipart';
 import TPL_DocGen_Status_Timeout from '@salesforce/label/c.TPL_DocGen_Status_Timeout';
 import TPL_DocGen_Status_Failed from '@salesforce/label/c.TPL_DocGen_Status_Failed';
 import TPL_DocGen_Validation_Select_Template from '@salesforce/label/c.TPL_DocGen_Validation_Select_Template';
 import TPL_DocGen_Download_Word from '@salesforce/label/c.TPL_DocGen_Download_Word';
-import TPL_DocGen_Download_Zip from '@salesforce/label/c.TPL_DocGen_Download_Zip';
+import TPL_DocGen_Download_Excel from '@salesforce/label/c.TPL_DocGen_Download_Excel';
 import TPL_DocGen_Generated_Document from '@salesforce/label/c.TPL_DocGen_Generated_Document';
-import TPL_DocGen_Zip_File_Alt from '@salesforce/label/c.TPL_DocGen_Zip_File_Alt';
 import TPL_DocGen_Word_File_Alt from '@salesforce/label/c.TPL_DocGen_Word_File_Alt';
+import TPL_DocGen_Excel_File_Alt from '@salesforce/label/c.TPL_DocGen_Excel_File_Alt';
+import TPL_DocGen_Output_Label_Excel from '@salesforce/label/c.TPL_DocGen_Output_Label_Excel';
 
 const POLL_INTERVAL_MS = 3000;
 const MAX_POLLS = 80;
 const ASYNC_PREFIX = 'ASYNC:';
 const MISSING_RECORD_ID_MESSAGE = 'Case record Id is missing. Please refresh the Case record page and try again.';
+// Mirrors DocxGeneratorController.WORD_UNAVAILABLE_ROW_THRESHOLD — keep the two in sync.
+const WORD_UNAVAILABLE_ROW_THRESHOLD = 2500;
 
 const STEP = Object.freeze({
     INSTRUCTIONS: 'instructions',
@@ -63,7 +66,8 @@ const STEP = Object.freeze({
 });
 
 const OUTPUT_FORMAT = Object.freeze({
-    DOCX: 'docx'
+    DOCX: 'docx',
+    XLSX: 'xlsx'
 });
 
 const TEMPLATE = Object.freeze({
@@ -102,6 +106,7 @@ export default class GenerateDocxButton extends LightningElement {
         generationOptionsTitle: TPL_DocGen_Generation_Options_Title,
         responseMessageTitle: TPL_DocGen_Response_Message_Title,
         outputFileFormatLabel: TPL_DocGen_Output_File_Format_Label,
+        outputLabelExcel: TPL_DocGen_Output_Label_Excel,
         documentTitleLabel: TPL_DocGen_Document_Title_Label,
         generatingDocumentAlt: TPL_DocGen_Generating_Document_Alt,
         removeButton: TPL_DocGen_Remove_Button
@@ -118,18 +123,43 @@ export default class GenerateDocxButton extends LightningElement {
     validationMessage = '';
     pollCount = 0;
     pollTimer;
-    isZipFlow = false;
-    primaryContentDocumentId;
     showModal = false;
+    eligibleRecordCount;
 
     templates = [
         { id: TEMPLATE.MINISTERS_CERTIFICATE_ID, name: TPL_DocGen_Template_Ministers_Cert, versionNumber: '1', templateType: TPL_DocGen_Template_Type_Word },
         { id: TEMPLATE.CASE_HISTORY_ID, name: TPL_DocGen_Template_Case_History, versionNumber: '3', templateType: TPL_DocGen_Template_Type_Word }
     ];
 
-    outputFileOptions = [
-        { label: TPL_DocGen_Output_Label_Word, value: OUTPUT_FORMAT.DOCX }
-    ];
+    @wire(getEligibleHccCountForPrint, { caseId: '$recordId' })
+    wiredEligibleRecordCount({ data }) {
+        if (data === undefined || data === null) {
+            return;
+        }
+        this.eligibleRecordCount = data;
+        // If Word was selected (the default) before the count came back and the case
+        // turns out to be over the threshold, fall back to Excel automatically rather
+        // than leaving a now-disabled option selected.
+        if (this.isWordDisabled && this.outputFileFormat === OUTPUT_FORMAT.DOCX) {
+            this.outputFileFormat = OUTPUT_FORMAT.XLSX;
+        }
+    }
+
+    get isWordDisabled() {
+        return this.eligibleRecordCount != null && this.eligibleRecordCount > WORD_UNAVAILABLE_ROW_THRESHOLD;
+    }
+
+    get wordOptionLabel() {
+        return this.isWordDisabled ? TPL_DocGen_Output_Label_Word_Disabled : TPL_DocGen_Output_Label_Word;
+    }
+
+    get isWordSelected() {
+        return this.outputFileFormat === OUTPUT_FORMAT.DOCX;
+    }
+
+    get isExcelSelected() {
+        return this.outputFileFormat === OUTPUT_FORMAT.XLSX;
+    }
 
     get isInstructionsStep() {
         return this.currentStep === STEP.INSTRUCTIONS;
@@ -171,19 +201,6 @@ export default class GenerateDocxButton extends LightningElement {
             return 'step-item active complete';
         }
         return this.stepClass(STEP.RESPONSE);
-    }
-
-    @wire(getRecord, { recordId: '$primaryContentDocumentId', fields: [FILE_EXTENSION_FIELD] })
-    wiredPrimaryDocument({ data }) {
-        if (!data) {
-            return;
-        }
-
-        const fileExtension = getFieldValue(data, FILE_EXTENSION_FIELD);
-        if (fileExtension && fileExtension.toLowerCase() === 'zip') {
-            this.isZipFlow = true;
-            this.refreshDownloadLabels();
-        }
     }
 
     disconnectedCallback() {
@@ -236,7 +253,7 @@ export default class GenerateDocxButton extends LightningElement {
     }
 
     handleOutputFormatChange(event) {
-        this.outputFileFormat = event.detail.value;
+        this.outputFileFormat = event.target.value;
     }
 
     handleDocumentTitleChange(event) {
@@ -245,6 +262,12 @@ export default class GenerateDocxButton extends LightningElement {
 
     async handleGenerate() {
        // console.log('[GenerateDocxButton] Generate clicked - before Apex call', {recordId: this.recordId,selectedTemplate: this.selectedTemplate, selectedTemplateName: this.selectedTemplateName,documentTitle: this.documentTitle,outputFileFormat: this.outputFileFormat,currentStep: this.currentStep,showModal: this.showModal});
+
+        // Word may have been selected before the eligible-record-count wire resolved;
+        // don't submit a request for a format the UI has since disabled.
+        if (this.isWordDisabled && this.outputFileFormat === OUTPUT_FORMAT.DOCX) {
+            this.outputFileFormat = OUTPUT_FORMAT.XLSX;
+        }
 
         if (!this.recordId) {
            // console.error('[GenerateDocxButton] Missing recordId. Apex generateDocument was not called.', {recordId: this.recordId,selectedTemplateName: this.selectedTemplateName});
@@ -260,8 +283,6 @@ export default class GenerateDocxButton extends LightningElement {
 
         this.stopPolling();
         this.downloadLinks = [];
-        this.isZipFlow = false;
-        this.primaryContentDocumentId = undefined;
         this.isGenerating = true;
         this.currentStep = STEP.RESPONSE;
         this.statusMessage = TPL_DocGen_Status_Generating;
@@ -271,13 +292,19 @@ export default class GenerateDocxButton extends LightningElement {
         try {
             const requestPayload = {
                 caseId: this.recordId,
-                selectedTemplate: this.selectedTemplateName
+                selectedTemplate: this.selectedTemplateName,
+                outputFormat: this.outputFileFormat
             };
            // console.log('[GenerateDocxButton] Calling generateDocument Apex', requestPayload);
 
             const result = await generateDocument(requestPayload);
 
-           // console.log('[GenerateDocxButton] generateDocument Apex returned', {result});
+            if (result === '')
+            {
+                throw new Error(TPL_DocGen_Status_Failed);
+            }
+
+            // console.log('[GenerateDocxButton] generateDocument Apex returned', {result});
 
             if (typeof result === 'string' && result.startsWith(ASYNC_PREFIX)) {
                 const jobId = result.substring(ASYNC_PREFIX.length);
@@ -305,11 +332,13 @@ export default class GenerateDocxButton extends LightningElement {
 
                // console.log('[GenerateDocxButton] pollDocument Apex returned', {result,pollCount: this.pollCount });
 
-                if (this.isFailedPollResult(result)) {
-                    //console.error('[GenerateDocxButton] pollDocument returned failed status', {result,pollCount: this.pollCount});
-                    this.statusMessage = this.getPollResultMessage(result) || TPL_DocGen_Status_Failed;
+                // What it needs to be:
+                if ( this.isFailedPollResult( result ) ){
+                    const errorMessage = this.getPollResultMessage( result ) || TPL_DocGen_Status_Failed;
+                    this.statusMessage = errorMessage;
                     this.isGenerating = false;
                     this.stopPolling();
+                    this.showErrorToast( errorMessage );   // <-- add this line
                     return;
                 }
 
@@ -340,9 +369,6 @@ export default class GenerateDocxButton extends LightningElement {
     buildLinks(contentDocumentIds) {
         const ids = this.parseContentDocumentIds(contentDocumentIds);
 
-        this.isZipFlow = ids.length > 1;
-        this.primaryContentDocumentId = ids.length > 0 ? ids[0] : undefined;
-
         return ids.map((id) => this.buildDownloadLink(id));
     }
 
@@ -351,8 +377,9 @@ export default class GenerateDocxButton extends LightningElement {
        // console.log('[GenerateDocxButton] Completing generation from result', {source, result,generatedFileIds});
 
         this.downloadLinks = this.buildLinks(generatedFileIds);
-        this.statusMessage = this.downloadLinks.length > 1 ? TPL_DocGen_Status_Success_Multipart : TPL_DocGen_Status_Success;
+        this.statusMessage = TPL_DocGen_Status_Success;
         this.isGenerating = false;
+        this.showSuccessToast(this.statusMessage);
     }
 
     hasGeneratedFileIds(result) {
@@ -414,16 +441,6 @@ export default class GenerateDocxButton extends LightningElement {
             .filter((id) => id);
     }
 
-    refreshDownloadLabels() {
-        this.downloadLinks = this.downloadLinks.map((link) => ({
-            ...link,
-            label: this.downloadLabel(),
-            fileName: this.downloadFileName(),
-            iconName: this.downloadIconName(),
-            iconAlternativeText: this.downloadIconAlternativeText()
-        }));
-    }
-
     buildDownloadLink(id) {
         return {
             id,
@@ -435,21 +452,25 @@ export default class GenerateDocxButton extends LightningElement {
         };
     }
 
+    get isExcelFormat() {
+        return this.outputFileFormat === OUTPUT_FORMAT.XLSX;
+    }
+
     downloadLabel() {
-        return this.isZipFlow ? TPL_DocGen_Download_Zip : TPL_DocGen_Download_Word;
+        return this.isExcelFormat ? TPL_DocGen_Download_Excel : TPL_DocGen_Download_Word;
     }
 
     downloadFileName() {
         const title = this.documentTitle || this.selectedTemplateName || TPL_DocGen_Generated_Document;
-        return `${title}.${this.isZipFlow ? 'zip' : 'docx'}`;
+        return `${title}.${this.outputFileFormat}`;
     }
 
     downloadIconName() {
-        return this.isZipFlow ? 'doctype:zip' : 'doctype:word';
+        return this.isExcelFormat ? 'doctype:excel' : 'doctype:word';
     }
 
     downloadIconAlternativeText() {
-        return this.isZipFlow ? TPL_DocGen_Zip_File_Alt : TPL_DocGen_Word_File_Alt;
+        return this.isExcelFormat ? TPL_DocGen_Excel_File_Alt : TPL_DocGen_Word_File_Alt;
     }
 
 
@@ -478,7 +499,7 @@ export default class GenerateDocxButton extends LightningElement {
     }
 
     handleError(error) {
-       // console.error('[GenerateDocxButton] DocGen error', {recordId: this.recordId,selectedTemplate: this.selectedTemplate,selectedTemplateName: this.selectedTemplateName,currentStep: this.currentStep,errorBody: error && error.body ? error.body : undefined, errorMessage: error && error.message ? error.message : undefined,fullError: error});
+        console.error('[GenerateDocxButton] DocGen error', {recordId: this.recordId,selectedTemplate: this.selectedTemplate,selectedTemplateName: this.selectedTemplateName,currentStep: this.currentStep,errorBody: error && error.body ? error.body : undefined, errorMessage: error && error.message ? error.message : undefined,fullError: error});
         this.stopPolling();
         this.isGenerating = false;
         this.currentStep = STEP.RESPONSE;
@@ -486,5 +507,29 @@ export default class GenerateDocxButton extends LightningElement {
             ? error.body.message
             : TPL_DocGen_Status_Failed;
         this.statusMessage = message;
+        this.showErrorToast(message);
+    }
+
+    showErrorToast (message)
+    {
+        this.dispatchEvent(
+            new ShowToastEvent( {
+                title: TPL_DocGen_Status_Failed,
+                message: message,
+                variant: 'error',
+                mode: 'sticky'
+            } )
+        );
+    }
+
+    showSuccessToast(message)
+    {
+        this.dispatchEvent(
+            new ShowToastEvent( {
+                title: TPL_DocGen_Status_Success,
+                variant: 'success',
+                mode: 'dismissable'
+            } )
+        );
     }
 }
