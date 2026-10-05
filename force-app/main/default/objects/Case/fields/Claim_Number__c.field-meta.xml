@@ -5,7 +5,7 @@
     <encryptionScheme>None</encryptionScheme>
     <externalId>false</externalId>
     <label>Claim Number</label>
-    <length>10</length>
+    <length>20</length>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
