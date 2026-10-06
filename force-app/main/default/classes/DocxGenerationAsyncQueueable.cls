@@ -39,17 +39,10 @@ Params: QueueableContext context
             String contentDocumentId = DocxGeneratorController.generateSingleDocxFileSyncProcess(caseId, selectedTemplate);
             
             LogService.markDocxGenerationCompletedById(logId, context.getJobId(), contentDocumentId);
-        } catch (Exception e) {
+        } 
+        catch (Exception e) {
             String stackTrace = e.getStackTraceString();
-            LogService.markDocxGenerationFailed(
-                Id.valueOf(logId),
-                Id.valueOf(caseId),
-                String.valueOf(context.getJobId()),
-                String.valueOf(e.getMessage()),
-                stackTrace,
-                'DocxGenerationAsyncQueueable',
-                'execute'
-            );
+            LogService.markDocxGenerationFailed(Id.valueOf(logId),Id.valueOf(caseId),String.valueOf(context.getJobId()),DocxFormatHelper.friendlyErrorMessage(e),stackTrace,'DocxGenerationAsyncQueueable','execute');
         }
     }
 }

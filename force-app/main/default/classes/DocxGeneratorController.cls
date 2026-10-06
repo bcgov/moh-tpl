@@ -2,7 +2,7 @@
 * Author: Nikhil Jeenru
 * Company: CGI
 * Purpose:
-* Routes Certificate document generation requests between synchronous, asynchronous, and section ZIP flows.
+* Routes Certificate document generation requests to the appropriate synchronous or asynchronous process based on row count and output format.
 */
 public with sharing class DocxGeneratorController {
     @TestVisible
@@ -10,51 +10,154 @@ public with sharing class DocxGeneratorController {
     private static Document_Generation_Configuration__mdt cachedDocumentGenerationConfiguration;
     
     /**
-Params: Id caseId, String selectedTemplate
+    * Row count at/above which XLSX generation is routed to XlsxGenerationAsyncQueueable
+    * instead of running synchronously. The SpreadsheetML row footprint is a fraction of
+    * the WordprocessingML equivalent (see XlsxPackageService), so this threshold is far
+    * higher than the DOCX sync limit below it — but the async heap ceiling (12MB) is
+    * still double the synchronous one (6MB), which matters once a case's combined
+    * healthcare cost rows approach the low thousands.
+    */
+
+    /**
+    * Row count above which the Word output option is hidden from the generation UI
+    * (Excel remains available at any size). This is a UI-availability threshold, not a
+    * hard generation limit — Word can technically still be generated above this count
+    * generateDocxButton mirrors this value; keep the two in sync if it ever changes.
+    */
+
+    /**
+Params: Id caseId, String selectedTemplate, String outputFormat
 * Generates the selected document and returns a ContentDocumentId or async job response.
 */
     @AuraEnabled
-    public static String generateDocument(Id caseId, String selectedTemplate) {
+    public static String generateDocument(Id caseId, String selectedTemplate, String outputFormat) {
         try {
-            Integer totalPrintableRows;
-            
-            if (Test.isRunningTest() && testTotalPrintableRows != null) {
-                totalPrintableRows = testTotalPrintableRows;
-            } else {
-                totalPrintableRows = getEligibleHccCountForPrint(caseId);
-            }
-            
-            if (totalPrintableRows <=  getSyncPrintableHccRowLimit()) {
-                return generateSingleDocxFileSyncProcess(caseId, selectedTemplate);
-            } else if (totalPrintableRows <= getAsyncSingleDocPrintableHccRowLimit()) {
-                String jobId = enqueueSingleDocxGenerationAsyncProcess(caseId, selectedTemplate);
-                return asyncResponse(jobId);
-            } else {
-                String jobId = enqueueSectionsForZipFileGenerationAsync(caseId, selectedTemplate);
-                writeGenerationLog(caseId, jobId, TPL_Constants.STATUS_PROCESSING, null);
-                return asyncResponse(jobId);
-            }
-            
+            if (TPL_Constants.OUTPUT_FORMAT_XLSX.equalsIgnoreCase(outputFormat)) {
+                Integer totalXlsxRows = (Test.isRunningTest() && testTotalPrintableRows != null)
+                    ? testTotalPrintableRows
+                    : getEligibleHccCountForPrint(caseId);
+
+                if (totalXlsxRows < getXlsxAsyncPrintableHccRowLimit()) {
+                    try {
+                        return generateSingleXlsxSyncProcess(caseId, selectedTemplate);
+                    }
+                     catch (Exception e) {
+                        LogService.markDocxGenerationFailed(null, caseId, null, String.valueOf(e.getMessage()), e.getStackTraceString(), TPL_Constants.CLASS_DOCX_GENERATOR_CONTROLLER, TPL_Constants.METHOD_GENERATE_DOCUMENT);
+                        return failedGenerationResponse();
+                    }
+                }
+
+                String xlsxJobId = enqueueSingleXlsxGenerationAsyncProcess(caseId, selectedTemplate);
+                return asyncResponse(xlsxJobId);
+            } 
+
+
+            Integer totalPrintableRows = (Test.isRunningTest() && testTotalPrintableRows != null)
+                                ? testTotalPrintableRows
+                                : getEligibleHccCountForPrint(caseId);
+
+            if (totalPrintableRows <=  getAsyncSingleDocPrintableHccRowLimit()) {
+                try {
+                    return generateSingleDocxFileSyncProcess(caseId, selectedTemplate);
+                } catch (Exception e) {
+                    LogService.markDocxGenerationFailed(null, caseId, null, String.valueOf(e.getMessage()), e.getStackTraceString(), TPL_Constants.CLASS_DOCX_GENERATOR_CONTROLLER, TPL_Constants.METHOD_GENERATE_DOCUMENT);
+                    return failedGenerationResponse();
+                }
+            } 
+             
+            String docxJobId = enqueueSingleDocxGenerationAsyncProcess(caseId, selectedTemplate);
+            return asyncResponse(docxJobId);
+
         } catch (Exception e) {
-            throw new AuraHandledException(e.getMessage());
+            throw new AuraHandledException(DocxFormatHelper.friendlyErrorMessage(e));
         }
+    }
+
+    /**
+    Params: Id recordId, String selectedTemplate
+    * Generates an XLSX healthcare cost export synchronously. Returns the created ContentDocumentId as text.
+    */
+    public static String generateSingleXlsxSyncProcess(Id recordId, String selectedTemplate) {
+        Case caseRecord = loadCaseForDocgen(recordId);
+
+        XlsxBuilder builder = new XlsxBuilder().setCaseData(caseRecord);
+        populateHealthcareCostSectionsXlsx(builder, recordId);
+
+        Blob xlsxBlob = builder.build();
+        String fileName = DocxFormatHelper.generatedFileName(selectedTemplate, 'xlsx');
+        return String.valueOf(DocxFormatHelper.createContentDocument(recordId, fileName, xlsxBlob, null));
+    }
+
+    /**
+    Params: XlsxBuilder builder, Id recordId
+    * Loads Healthcare Cost records into the matching XLSX sections.
+    */
+    private static void populateHealthcareCostSectionsXlsx(XlsxBuilder builder, Id recordId) {
+        builder.setAmbulanceRecords([
+            SELECT Date_of_Service__c, Location_Responded__c,
+            FacilityName__c, Facility_Name__c, Total_Cost_Override__c
+            FROM Healthcare_Cost__c
+            WHERE Case2__c = :recordId AND RecordTypeName__c = :TPL_Constants.HCC_AMB_RECORDTYPE_NAME
+            AND Cost_Include__c = true AND Cost_Review__c = true
+            ORDER BY Date_of_Service__c ASC
+        ]);
+
+        builder.setHospitalRecords([
+            SELECT Date_of_Admission__c, Date_of_Discharge__c,
+            FacilityName__c, Facility_Name__c, Service_Type2__c,
+            Number_of_Days__c, Total_Cost_Override__c, Total_Costs_Standard__c
+            FROM Healthcare_Cost__c
+            WHERE Case2__c = :recordId AND RecordTypeName__c = :TPL_Constants.HCC_HOSP_RECORDTYPE_NAME
+            AND Cost_Include__c = true AND Cost_Review__c = true
+            ORDER BY Date_of_Admission__c ASC
+        ]);
+
+        builder.setMSPRecords([
+            SELECT Date_of_Service__c, Location_Type_Code__c,
+            Location_Type_Description2__c, Description_of_Service2__c,
+            Fee_Item_Title__c, Diagnostic_Description__c,
+            Total_Cost_Override__c, Practitioner_Name__c
+            FROM Healthcare_Cost__c
+            WHERE Case2__c = :recordId AND RecordTypeName__c = :TPL_Constants.HCC_MSP_RECORDTYPE_NAME
+            AND Cost_Include__c = true AND Cost_Review__c = true
+            ORDER BY Date_of_Service__c ASC
+        ]);
+
+        builder.setPharmaRecords([
+            SELECT Date_of_Service__c, Name_of_Drug__c,
+            Total_Cost_Override__c, Practitioner_Name__c
+            FROM Healthcare_Cost__c
+            WHERE Case2__c = :recordId AND RecordTypeName__c = :TPL_Constants.HCC_PHARMA_RECORDTYPE_NAME
+            AND Cost_Include__c = true AND Cost_Review__c = true
+            ORDER BY Date_of_Service__c ASC
+        ]);
+
+        builder.setContinuingCareRecords([
+            SELECT Description__c, Cost__c FROM Healthcare_Cost__c
+            WHERE Case2__c = :recordId AND RecordTypeName__c = :TPL_Constants.HCC_CC_RECORDTYPE_NAME
+        ]);
+
+        builder.setFutureCareRecords([
+            SELECT Description__c, Cost__c FROM Healthcare_Cost__c
+            WHERE Case2__c = :recordId AND RecordTypeName__c = :TPL_Constants.HCC_FC_RECORDTYPE_NAME
+        ]);
     }
     
     
     /**
 * Reads the sync printable row limit from document generation configuration. Returns 1000 when the configuration value is not available.
 */
-    public static Integer getSyncPrintableHccRowLimit() {
+    public static Integer getXlsxAsyncPrintableHccRowLimit() {
         Document_Generation_Configuration__mdt config = getDocumentGenerationConfiguration();
-        return config == null || config.Sync_Printable_Row_Limit__c == null ? 1000 : Integer.valueOf(config.Sync_Printable_Row_Limit__c);
+        return config == null || config.Xlsx_Async_Printable_Row_Limit__c == null ? 1000 : Integer.valueOf(config.Xlsx_Async_Printable_Row_Limit__c);
     }
     
     /**
-* Reads the async printable row limit from document generation configuration. Returns 40000 when the configuration value is not available.
+* Reads the async printable row limit from document generation configuration. Returns 1000 when the configuration value is not available.
 */
     public static Integer getAsyncSingleDocPrintableHccRowLimit() {
         Document_Generation_Configuration__mdt config = getDocumentGenerationConfiguration();
-        return config == null || config.Async_Printable_Row_Limit__c == null ? 40000 : Integer.valueOf(config.Async_Printable_Row_Limit__c);
+        return config == null || config.Async_Printable_Row_Limit__c == null ? 1000 : Integer.valueOf(config.Async_Printable_Row_Limit__c);
     }
     
     /**
@@ -205,73 +308,54 @@ Params: Id caseId, String selectedTemplate
     }
     
     /**
-Params: Id caseId, String selectedTemplate
-* Enqueues async section DOCX generation for ZIP output. Returns the serialized async job response.
+Params: Id caseId
+* Enqueues async single XLSX generation. Returns the serialized async job response.
 */
-    private static String enqueueSectionsForZipFileGenerationAsync(Id caseId, String selectedTemplate) {
-        Case c = [SELECT CaseNumber FROM Case WHERE Id = :caseId LIMIT 1];
-        List<TPL_DocGen_Signature__c> sigs = [
-            SELECT Name__c, Title__c FROM TPL_DocGen_Signature__c
-            WHERE Name = :TPL_Constants.TPL_DOCGEN_SIGNATURE_PROFILE_NAME LIMIT 1
-        ];
-        String sigName  = sigs.isEmpty() ? '' : sigs[0].Name__c;
-        String sigTitle = sigs.isEmpty() ? '' : sigs[0].Title__c;
-        
-        Id jobId = System.enqueueJob(new DocxSectionQueueable(
-            caseId,
-            0,      // sectionIndex = 0 (Certificate summary)
-            null,   // lastProcessedDateId
-            1,      // chunkWithinSection
-            DocxFormatHelper.stringValue(c.CaseNumber),
-            sigName,
-            sigTitle,
-            selectedTemplate,
-            new List<Id>()
-        ));
-        
+    private static String enqueueSingleXlsxGenerationAsyncProcess(Id caseId, String selectedTemplate) {
+        Log__c logRecord = buildGenerationLog(caseId, null, TPL_Constants.STATUS_PROCESSING, null);
+        LogService.upsertLogsInSystemMode(new List<SObject>{ logRecord });
+
+        Id jobId = System.enqueueJob(new XlsxGenerationAsyncQueueable(caseId, selectedTemplate, logRecord.Id));
+
+        logRecord.JobId__c = String.valueOf(jobId);
+        LogService.upsertLogsInSystemMode(new List<SObject>{ logRecord });
+
         return String.valueOf(jobId);
-    }
+    } 
+
     
     /**
 Params: Id caseId
 * Counts eligible Healthcare Cost records for printing. Returns the eligible row count.
 */
+    @AuraEnabled(cacheable=true)
     public static Integer getEligibleHccCountForPrint(Id caseId) {
         Set<String> includedReviewedRecordTypes = new Set<String>{
             TPL_Constants.HCC_AMB_RECORDTYPE_NAME,
-                TPL_Constants.HCC_HOSP_RECORDTYPE_NAME,
-                TPL_Constants.HCC_MSP_RECORDTYPE_NAME,
-                TPL_Constants.HCC_PHARMA_RECORDTYPE_NAME
-                };
-                    Set<String> careRecordTypes = new Set<String>{
-                        TPL_Constants.HCC_CC_RECORDTYPE_NAME,
-                            TPL_Constants.HCC_FC_RECORDTYPE_NAME
-                            };
-                                return [
-                                    SELECT COUNT()
-                                    FROM Healthcare_Cost__c
-                                    WHERE Case2__c = :caseId
-                                    AND (
-                                        (
-                                            RecordTypeName__c IN :includedReviewedRecordTypes
-                                            AND Cost_Include__c = true
-                                            AND Cost_Review__c = true
-                                        )
-                                        OR
-                                        RecordTypeName__c IN :careRecordTypes
-                                    )
-                                ];
+            TPL_Constants.HCC_HOSP_RECORDTYPE_NAME,
+            TPL_Constants.HCC_MSP_RECORDTYPE_NAME,
+            TPL_Constants.HCC_PHARMA_RECORDTYPE_NAME
+        };
+        Set<String> careRecordTypes = new Set<String>{
+            TPL_Constants.HCC_CC_RECORDTYPE_NAME,
+            TPL_Constants.HCC_FC_RECORDTYPE_NAME
+        };
+        return [
+            SELECT COUNT()
+            FROM Healthcare_Cost__c
+            WHERE Case2__c = :caseId
+            AND (
+                (
+                    RecordTypeName__c IN :includedReviewedRecordTypes
+                    AND Cost_Include__c = true
+                    AND Cost_Review__c = true
+                )
+                OR
+                RecordTypeName__c IN :careRecordTypes
+            )
+        ];
     }
     
-    @TestVisible
-    /**
-Params: Id caseId, String jobId, String status, String fileIdsOrMessage
-* Writes the document generation status log.
-*/
-    private static void writeGenerationLog(Id caseId, String jobId, String status, String fileIdsOrMessage) {
-        Log__c logRecord = buildGenerationLog(caseId, jobId, status, fileIdsOrMessage);
-        LogService.upsertLogsInSystemMode(new List<SObject>{ logRecord });
-    }
     
     /**
 Params: Id caseId, String jobId, String status, String fileIdsOrMessage
@@ -294,7 +378,14 @@ Params: String jobId
 * Builds the async response payload. Returns the serialized JSON response.
 */
     private static String asyncResponse(String jobId) {
+        if (String.isBlank(jobId)) {
+            return '';
+        }
         return DocgenConstants.ASYNC_RESPONSE_PREFIX + jobId;
+    }
+
+    private static String failedGenerationResponse() {
+        return asyncResponse('');
     }
     
 }

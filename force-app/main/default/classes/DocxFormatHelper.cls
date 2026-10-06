@@ -17,6 +17,20 @@ Params: Object value
     public static String stringValue(Object value) {
         return value == null ? '' : String.valueOf(value);
     }
+
+    /**
+    Params: Exception e
+    * Translates known DML failure signatures into a plain-language message safe to show
+    * end users (e.g. a record locked by an active approval process, which surfaces as
+    * INSUFFICIENT_ACCESS_OR_READONLY). Falls back to the original exception message.
+    */
+    public static String friendlyErrorMessage(Exception e) {
+        String message = e == null ? null : e.getMessage();
+        if (message != null && message.contains('INSUFFICIENT_ACCESS_OR_READONLY')) {
+            return TPL_Constants.ERROR_RECORD_LOCKED_FOR_APPROVAL;
+        }
+        return  system.label.TPL_DocGen_Status_Failed + message;
+    }
     
     /**
 Params: Decimal value
@@ -64,7 +78,7 @@ Params: String selectedTemplate, String fileExtension
 * Builds the generated file name. Returns the selected template name plus the formatted timestamp and file extension.
 */
     public static String generatedFileName(String selectedTemplate, String fileExtension) {
-        String filePrefix = String.isNotBlank(selectedTemplate) && selectedTemplate.contains(TPL_Constants.DOCGEN_TEMPLATE_CASE_HISTORY) ? TPL_Constants.DOCGEN_FILE_PREFIX_CASE_HISTORY : TPL_Constants.DOCGEN_FILE_PREFIX_MINISTERS_CERTIFICATE;
+        String filePrefix = String.isNotBlank(selectedTemplate) && selectedTemplate.contains(TPL_Constants.DOCGEN_TEMPLATE_CASE_HISTORY) ? TPL_Constants.DOCGEN_TEMPLATE_CASE_HISTORY : TPL_Constants.DOCGEN_FILE_PREFIX_MINISTERS_CERTIFICATE;
         return filePrefix + ' ' + Datetime.now().format('MMMM dd, yyyy') + '.' + fileExtension;
     }
     
