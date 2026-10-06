@@ -4,10 +4,10 @@
     <protected>false</protected>
     <values>
         <field>Async_Printable_Row_Limit__c</field>
-        <value xsi:type="xsd:double">4000.0</value>
+        <value xsi:type="xsd:double">1500.0</value>
     </values>
     <values>
-        <field>Sync_Printable_Row_Limit__c</field>
-        <value xsi:type="xsd:double">1000.0</value>
+        <field>Xlsx_Async_Printable_Row_Limit__c</field>
+        <value xsi:type="xsd:double">9000.0</value>
     </values>
 </CustomMetadata>

@@ -102,9 +102,23 @@
                         <h2 class="step-title">{label.generationOptionsTitle}</h2>
                         <div class="title-underline"></div>
 
-                        <lightning-combobox name="outputFileFormat" label={label.outputFileFormatLabel}
-                            value={outputFileFormat} options={outputFileOptions} onchange={handleOutputFormatChange}>
-                        </lightning-combobox>
+                        <fieldset class="slds-form-element output-format-fieldset">
+                            <legend class="slds-form-element__label">{label.outputFileFormatLabel}</legend>
+                            <div class="slds-form-element__control">
+                                <div class="slds-radio">
+                                    <lightning-input type="radio" name="outputFileFormat" label={wordOptionLabel}
+                                        value="docx" checked={isWordSelected} disabled={isWordDisabled}
+                                        onchange={handleOutputFormatChange}>
+                                    </lightning-input>
+                                </div>
+                                <div class="slds-radio">
+                                    <lightning-input type="radio" name="outputFileFormat" label={label.outputLabelExcel}
+                                        value="xlsx" checked={isExcelSelected}
+                                        onchange={handleOutputFormatChange}>
+                                    </lightning-input>
+                                </div>
+                            </div>
+                        </fieldset>
 
                         <lightning-input class="slds-m-top_small" type="text" label={label.documentTitleLabel}
                             value={documentTitle} onchange={handleDocumentTitleChange}>

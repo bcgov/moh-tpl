@@ -8,8 +8,23 @@ public with sharing class DocxGenrationStatusController {
     
     @TestVisible private static String testAsyncJobStatus;
     @TestVisible private static String testAsyncJobExtendedStatus;
-    
-    
+
+    // The fallback lookup (used when the JobId__c match misses) has to recognize every
+    // Class_Name__c/Method_Name__c stamp a Log__c can carry over its lifecycle - not just
+    // the one it was created with. LogService overwrites these fields to the ASYNC
+    // queueable's own class/method when it marks a job Processing/Completed/Failed, so a
+    // filter that only matched the original DocxGeneratorController.generateDocument stamp
+    // was structurally blind to every async DOCX/XLSX outcome. Keep this list in sync with
+    // whatever (class, method) pairs LogService.markDocxGeneration*(...) is ever called with.
+    private static final Set<String> TRACKED_CLASS_NAMES = new Set<String>{
+        TPL_Constants.CLASS_DOCX_GENERATOR_CONTROLLER,   // 'DocxGeneratorController' - sync path / initial log creation
+        'DocxGenerationAsyncQueueable',                  // async DOCX job
+        'XlsxGenerationAsyncQueueable'                   // async XLSX job
+    };
+    private static final Set<String> TRACKED_METHOD_NAMES = new Set<String>{
+        TPL_Constants.METHOD_GENERATE_DOCUMENT,          // 'generateDocument' - sync path / initial log creation
+        'execute'                                        // Queueable.execute(), shared by both async classes
+    };
     
     /**
 * Response returned to LWC while polling document generation status.
@@ -32,43 +47,23 @@ public with sharing class DocxGenrationStatusController {
         try {
             List<Log__c> logs;
             String caseIdString = String.valueOf(caseId);
-             Id runningUserId = UserInfo.getUserId();
+            String normalizedJobId = normalizeJobId(jobId);
             
-            if (String.isNotBlank(jobId)) {
+            if (String.isNotBlank(normalizedJobId)) {
                 logs = [
                     SELECT Id, Status__c, Error_Message__c, Generated_File_Ids__c
                     FROM Log__c
-                    WHERE JobId__c = :jobId
-                    AND Running_User__c = :runningUserId
+                    WHERE JobId__c = :normalizedJobId
+                    AND Running_User__c = :UserInfo.getUserId()
                     WITH SYSTEM_MODE
                     LIMIT 1
                 ];
                 
                 if (logs.isEmpty()) {
-                    logs = [
-                        SELECT Id, Status__c, Error_Message__c, Generated_File_Ids__c
-                        FROM Log__c
-                        WHERE Record_Id__c = :caseIdString
-                        AND Running_User__c = :runningUserId
-                        AND Class_Name__c = :TPL_Constants.CLASS_DOCX_GENERATOR_CONTROLLER
-                        AND Method_Name__c = :TPL_Constants.METHOD_GENERATE_DOCUMENT
-                        WITH SYSTEM_MODE
-                        ORDER BY CreatedDate DESC
-                        LIMIT 1
-                    ];
+                    logs = queryLatestLogFallback(caseIdString);
                 }
             } else {
-                logs = [
-                    SELECT Id, Status__c, Error_Message__c, Generated_File_Ids__c
-                    FROM Log__c
-                    WHERE Record_Id__c = :caseIdString
-                    AND Running_User__c = :runningUserId
-                    AND Class_Name__c = :TPL_Constants.CLASS_DOCX_GENERATOR_CONTROLLER
-                    AND Method_Name__c = :TPL_Constants.METHOD_GENERATE_DOCUMENT
-                    WITH SYSTEM_MODE
-                    ORDER BY CreatedDate DESC
-                    LIMIT 1
-                ];
+                logs = queryLatestLogFallback(caseIdString);
             }
             
             if (logs.isEmpty()) {
@@ -90,7 +85,7 @@ public with sharing class DocxGenrationStatusController {
                 return buildResponse(TPL_Constants.STATUS_COMPLETED, generatedFileIds, null);
             }
             
-            if (String.isNotBlank(jobId)) {
+            if (String.isNotBlank(normalizedJobId)) {
                 String asyncJobStatus;
                 String asyncJobExtendedStatus;
                 
@@ -101,7 +96,7 @@ public with sharing class DocxGenrationStatusController {
                     List<AsyncApexJob> jobs = [
                         SELECT Id, Status, ExtendedStatus
                         FROM AsyncApexJob
-                        WHERE Id = :jobId
+                        WHERE Id = :normalizedJobId
                         LIMIT 1
                     ];
                     
@@ -126,6 +121,49 @@ public with sharing class DocxGenrationStatusController {
             return buildResponse(TPL_Constants.STATUS_PROCESSING, null, null);
         } catch (Exception e) {
             return buildResponse(TPL_Constants.STATUS_FAILED, null, 'Poll failed: ' + e.getMessage());
+        }
+    }
+
+    /**
+    Params: String caseIdString
+    * Fallback lookup used when there's no jobId, or the JobId__c match missed.
+    * Matches on every Class_Name__c/Method_Name__c stamp a Log__c can carry - the
+    * original DocxGeneratorController.generateDocument stamp it's created with, AND
+    * the DocxGenerationAsyncQueueable/XlsxGenerationAsyncQueueable.execute stamp
+    * LogService overwrites it with once the async job starts updating it. Without the
+    * IN-set match here, this query was structurally unable to find any async job that
+    * had reached Processing/Completed/Failed, and would silently fall back to an older,
+    * unrelated log instead.
+    * Returns the most recently created matching Log__c, if any.
+    */
+    private static List<Log__c> queryLatestLogFallback(String caseIdString) {
+        return [
+            SELECT Id, Status__c, Error_Message__c, Generated_File_Ids__c
+            FROM Log__c
+            WHERE Record_Id__c = :caseIdString
+            AND Running_User__c = :UserInfo.getUserId()
+            AND Class_Name__c IN :TRACKED_CLASS_NAMES
+            AND Method_Name__c IN :TRACKED_METHOD_NAMES
+            WITH SYSTEM_MODE
+            ORDER BY CreatedDate DESC
+            LIMIT 1
+        ];
+    }
+
+    /**
+    Params: String jobId
+    * Normalizes a job id to its 18-character case-safe form so JobId__c comparisons
+    * can't miss on a 15-vs-18-character mismatch. Returns null for blank/invalid input
+    * instead of throwing, so callers can treat it the same as "no jobId supplied".
+    */
+    private static String normalizeJobId(String jobId) {
+        if (String.isBlank(jobId)) {
+            return null;
+        }
+        try {
+            return String.valueOf((Id) jobId);
+        } catch (Exception e) {
+            return jobId;
         }
     }
     

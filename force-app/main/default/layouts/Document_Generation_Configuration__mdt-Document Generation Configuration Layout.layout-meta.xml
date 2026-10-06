@@ -16,11 +16,11 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Sync_Printable_Row_Limit__c</field>
+                <field>Async_Printable_Row_Limit__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Async_Printable_Row_Limit__c</field>
+                <field>Xlsx_Async_Printable_Row_Limit__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
