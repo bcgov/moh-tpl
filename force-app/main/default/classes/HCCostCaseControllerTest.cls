@@ -106,7 +106,49 @@ public with sharing class HCCostCaseControllerTest {
         HCCostCaseDAO.getHCCostCaseRecords(c.Id,Label.TPL_All_Records,recordTypeId,startNumber,pageSize,Label.TPL_Ambulance_Fields,'');
         Test.stopTest();
     }
-    
+
+    @isTest
+    static void testHCCostCaseDAOPagingLoops(){
+        Account acc = TestDataFactory.individualAccount();
+        insert acc;
+        Case c = TestDataFactory.newCase(acc.Id);
+        insert c;
+        // Bypass trigger rollup and flow validations so the bulk insert stays within CPU limits
+        insert new Data_Migration_Check__c(SetupOwnerId = UserInfo.getOrganizationId(), Bypass_Flow_Validations__c = true);
+        HealthcareCostTriggerHandler.isFirstTime = false;
+
+        // 4010 records with sortable dateIds D0001..D4010; no Source System ID and created today, so they match all three filters
+        List<Healthcare_Cost__c> hccList = new List<Healthcare_Cost__c>();
+        for(Integer i=1; i<=4010; i++){
+            Healthcare_Cost__c hcc = TestDataFactory.ambulanceCostRecord(acc.Id, c.Id);
+            hcc.dateId__c = 'D' + String.valueOf(i).leftPad(4, '0');
+            hccList.add(hcc);
+        }
+        insert hccList;
+
+        String fields = Label.TPL_Ambulance_Fields;
+        Id recordTypeId = Schema.SObjectType.Healthcare_Cost__c.getRecordTypeInfosByName().get('Ambulance').getRecordTypeId();
+        // itemsToRemove = 4006: first OFFSET 2000 chunk and one while-loop chunk skip 2001 each, the final OFFSET 4 lands on the pivot
+        Integer startNumber = 4008;
+        Integer pageSize = 10;
+        List<String> filters = new List<String>{ Label.TPL_Manual_Records, Label.TPL_Records_Created_Today, Label.TPL_All_Records };
+
+        Map<String, List<Healthcare_Cost__c>> descResults = new Map<String, List<Healthcare_Cost__c>>();
+        Map<String, List<Healthcare_Cost__c>> ascResults = new Map<String, List<Healthcare_Cost__c>>();
+        Test.startTest();
+        for(String filter : filters){
+            descResults.put(filter, HCCostCaseDAO.getHCCostCaseRecords(c.Id, filter, recordTypeId, startNumber, pageSize, fields, Label.TPL_Descending));
+            ascResults.put(filter, HCCostCaseDAO.getHCCostCaseRecords(c.Id, filter, recordTypeId, startNumber, pageSize, fields, Label.TPL_Ascending));
+        }
+        Test.stopTest();
+
+        // Seek clause is inclusive of the pivot: D0004..D0001 (desc) or D4007..D4010 (asc)
+        for(String filter : filters){
+            System.assertEquals(4, descResults.get(filter).size(), 'Descending ' + filter + ' should return the 4 records from the pivot');
+            System.assertEquals(4, ascResults.get(filter).size(), 'Ascending ' + filter + ' should return the 4 records from the pivot');
+        }
+    }
+
     @isTest
     static void testGetHealthcareCostsAmbulanceForCaseAscendingSort(){
         Account acc = TestDataFactory.individualAccount();

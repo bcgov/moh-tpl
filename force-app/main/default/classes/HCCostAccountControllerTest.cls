@@ -99,6 +99,46 @@ public with sharing class HCCostAccountControllerTest {
         HCCostAccountDAO.getHCCostAccountRecords(acc.Id, checkedRecords, recordTypeId, startItemNumber, pageSize, fields,'');
         Test.stopTest();
     }
+    @isTest
+    static void testHCCostAccountDAOPagingLoops(){
+        Account acc = TestDataFactory.individualAccount();
+        insert acc;
+        Case c = TestDataFactory.newCase(acc.Id);
+        insert c;
+        // Bypass trigger rollup and flow validations so the bulk insert stays within CPU limits
+        insert new Data_Migration_Check__c(SetupOwnerId = UserInfo.getOrganizationId(), Bypass_Flow_Validations__c = true);
+        HealthcareCostTriggerHandler.isFirstTime = false;
+
+        // 4010 records with sortable dateIds D0001..D4010, matching both the All Records and Both Unchecked filters
+        List<Healthcare_Cost__c> hccList = new List<Healthcare_Cost__c>();
+        for(Integer i=1; i<=4010; i++){
+            Healthcare_Cost__c hcc = TestDataFactory.ambulanceCostRecord(acc.Id, c.Id);
+            hcc.Cost_Include__c = false;
+            hcc.Cost_Review__c = false;
+            hcc.dateId__c = 'D' + String.valueOf(i).leftPad(4, '0');
+            hccList.add(hcc);
+        }
+        insert hccList;
+
+        String fields = Label.TPL_Ambulance_Fields;
+        Id recordTypeId = Schema.SObjectType.Healthcare_Cost__c.getRecordTypeInfosByName().get('Ambulance').getRecordTypeId();
+        // itemsToRemove = 4006: first OFFSET 2000 chunk and one while-loop chunk skip 2001 each, the final OFFSET 4 skips 5 more
+        Integer startItemNumber = 4008;
+        Integer pageSize = 10;
+
+        Test.startTest();
+        List<Healthcare_Cost__c> allDesc = HCCostAccountDAO.getHCCostAccountRecords(acc.Id, Label.TPL_All_Records, recordTypeId, startItemNumber, pageSize, fields, Label.TPL_Descending);
+        List<Healthcare_Cost__c> uncheckedDesc = HCCostAccountDAO.getHCCostAccountRecords(acc.Id, Label.TPL_Both_Unchecked, recordTypeId, startItemNumber, pageSize, fields, Label.TPL_Descending);
+        List<Healthcare_Cost__c> allAsc = HCCostAccountDAO.getHCCostAccountRecords(acc.Id, Label.TPL_All_Records, recordTypeId, startItemNumber, pageSize, fields, Label.TPL_Ascending);
+        List<Healthcare_Cost__c> uncheckedAsc = HCCostAccountDAO.getHCCostAccountRecords(acc.Id, Label.TPL_Both_Unchecked, recordTypeId, startItemNumber, pageSize, fields, Label.TPL_Ascending);
+        Test.stopTest();
+
+        // After skipping D4010..D0004 (desc) or D0001..D4007 (asc), 3 records remain
+        System.assertEquals(3, allDesc.size(), 'Descending All Records should return the remaining 3 records');
+        System.assertEquals(3, uncheckedDesc.size(), 'Descending Both Unchecked should return the remaining 3 records');
+        System.assertEquals(3, allAsc.size(), 'Ascending All Records should return the remaining 3 records');
+        System.assertEquals(3, uncheckedAsc.size(), 'Ascending Both Unchecked should return the remaining 3 records');
+    }
     
     @isTest
     static void testGetHealthcareCostsAmbulanceForAccountAscendingSort(){

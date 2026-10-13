@@ -226,6 +226,10 @@ public with sharing class TestDataFactory {
         payment.Payment_Amount__c = paymentAmt;
         payment.Payment_Method__c = paymentMethod;
         payment.Batch_Number__c = batchId;
+        // 1. Query the AccountId from the parent Case
+    	Case parentCase = [SELECT AccountId FROM Case WHERE Id = :caseId LIMIT 1];
+       // 2. Map the Account ID to the custom Name__c lookup field to satisfy the filter
+    	payment.Name__c = parentCase.AccountId;
         return payment;
     }
 }

@@ -15,6 +15,7 @@ public class TPL_BatchTriggerHandlerTest {
         
         // Create a related Payment record referencing the Batch
         Payment__c payment = TestDataFactory.newPayments(c.Id, 1000, 'Wire Transfer', batchRec.Id);
+        payment.Name__c = acc.Id;
         insert payment;
     }
     
