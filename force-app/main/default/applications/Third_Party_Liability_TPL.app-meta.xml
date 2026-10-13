@@ -74,7 +74,6 @@
     </actionOverrides>
     <brand>
         <headerColor>#0070D2</headerColor>
-        <logo>bcps</logo>
         <logoVersion>1</logoVersion>
         <shouldOverrideOrgTheme>false</shouldOverrideOrgTheme>
     </brand>
@@ -402,6 +401,38 @@
         <pageOrSobjectType>Product2</pageOrSobjectType>
         <type>Flexipage</type>
         <profile>Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Payment_Record_Page6</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Payment__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Payment_Record_Page6</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Payment__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Payment_Record_Page6</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Payment__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>MoH Standard User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Payment_Record_Page6</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Payment__c</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>MoH Standard User</profile>
     </profileActionOverrides>
     <tabs>standard-Account</tabs>
     <tabs>standard-Case</tabs>
