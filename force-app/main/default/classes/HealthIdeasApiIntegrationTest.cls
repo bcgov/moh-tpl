@@ -516,6 +516,7 @@ private class HealthIdeasApiIntegrationTest {
     @IsTest
     static void testRetry_TimeoutException_ExhaustsAllAttempts() {
         Account testAccount = getTestAccount();
+        HealthIdeasApiIntegration.timeoutValues.clear();
         callCount = 0;
         Test.setMock(HttpCalloutMock.class, new ConfigurableMock(TPL_Constants.TIMEOUT_ERROR_MESSAGE));
 
@@ -530,12 +531,16 @@ private class HealthIdeasApiIntegrationTest {
         List<Log__c> logs = [SELECT Error_Message__c FROM Log__c WHERE Method_Name__c = 'sendHealthIdeasRequest' ORDER BY CreatedDate DESC LIMIT 1];
         System.assertEquals(1, logs.size(), 'Expected a log to be created.');
         System.assert(logs[0].Error_Message__c.contains(TPL_Constants.TIMEOUT_ERROR_MESSAGE), 'Expected timeout error after maximum retry attempts.');
+        System.assertEquals(40000, HealthIdeasApiIntegration.timeoutValues[0]);
+        System.assertEquals(80000, HealthIdeasApiIntegration.timeoutValues[1]);
+        System.assertEquals(120000, HealthIdeasApiIntegration.timeoutValues[2]);
     }
 
     // Covers the timeout exception thrown once, then a real success on the 2nd attempt.
     @IsTest
     static void testRetry_TimeoutException_SucceedsOnSecondAttempt() {
         Account testAccount = getTestAccount();
+        HealthIdeasApiIntegration.timeoutValues.clear();
         callCount = 0;
         Test.setMock(HttpCalloutMock.class, new ConfigurableMock(TPL_Constants.TIMEOUT_ERROR_MESSAGE, 1));
 
@@ -546,6 +551,8 @@ private class HealthIdeasApiIntegrationTest {
 
         System.assertEquals(true, result.success, 'Expected success on the second attempt after a single timeout.');
         System.assertEquals(2, callCount, 'Expected exactly 2 calls: one timeout, then one success.');
+        System.assertEquals(40000, HealthIdeasApiIntegration.timeoutValues[0]);
+        System.assertEquals(80000, HealthIdeasApiIntegration.timeoutValues[1]);
     }
 
     // Covers all retry attempts returning a real HTTP 408 response, exhausting MAX_ATTEMPTS.
