@@ -193,7 +193,7 @@ public class XlsxBuilder {
             // Total row: label in A, value in C.
             pkg.addSheet(buildTypeSheet('Ambulance',
                 new List<String>{ 'Date of Service', 'Location Responded', 'Destination', 'Cost' },
-                ambulanceRecords, 3, new List<Decimal>{ 16, 4.2, 22, 8, 22, 20, 12.65 }, 'Ambulance',
+                ambulanceRecords, 3, new List<Decimal>{ 16, 4.2, 22, 8, 15, 20, 18.50 }, 'Ambulance',
                 new List<Integer>{ 0, 1, 3, 6 }, 'A', 8, null, 'G',
                 new Map<Integer, Integer>{ 1 => 43, 2 => 42, 3 => 43, 4 => 44, 5 => 42 },
                 new Map<Integer, Integer>{ 1 => 41, 2 => 42, 3 => 41, 4 => 45, 5 => 42 },
@@ -229,7 +229,7 @@ public class XlsxBuilder {
             // their spacer columns are E, F:G:H.
             pkg.addSheet(buildTypeSheet('Pharmacare',
                 new List<String>{ 'Date of Service', 'Name of Drug', 'Cost', 'Practitioner Name' },
-                pharmaRecords, 2, new List<Decimal>{ 15.75, 8, 18.4, 24.5, 14, 0.75, 12, 24.5 }, 'Pharmacy',
+                pharmaRecords, 2, new List<Decimal>{ 15.75, 8, 18.4, 24.5, 14, 0.75, 12, 28 }, 'Pharmacy',
                 new List<Integer>{ 0, 1, 4, 6 }, 'A', 8, null, 'H',
                 new Map<Integer, Integer>{ 1 => 43, 2 => 44, 3 => 42, 5 => 41, 6 => 44, 7 => 42 },
                 new Map<Integer, Integer>{ 1 => 41, 2 => 45, 3 => 42, 5 => 41, 6 => 45, 7 => 42 },
@@ -242,7 +242,7 @@ public class XlsxBuilder {
             // B/C/D/E blank spacers); F (Cost) stands alone. Total row value displays in C.
             pkg.addSheet(buildTypeSheet('Continuing Care',
                 new List<String>{ 'Description', 'Cost' }, continuingCareRecords, 1,
-                new List<Decimal>{ 27, 20, 15, 15, 20, 17 }, 'Continuing Care', new List<Integer>{ 0, 5 },
+                new List<Decimal>{ 27, 20, 15, 15, 20, 19 }, 'Continuing Care', new List<Integer>{ 0, 5 },
                 'A', 8, null, 'F',
                 new Map<Integer, Integer>{ 0 => 43, 1 => 45, 2 => 45, 3 => 45, 4 => 42 },
                 new Map<Integer, Integer>{ 0 => 41, 1 => 45, 2 => 45, 3 => 45, 4 => 42 },
@@ -253,7 +253,7 @@ public class XlsxBuilder {
             // Cost is in column F. A:E form one bordered box (Description in A,
             // B/C/D/E blank spacers); F (Cost) stands alone. Total row value displays in C.
             pkg.addSheet(buildTypeSheet('Future Care',
-                new List<String>{ 'Description', 'Cost' }, futureCareRecords, 1, new List<Decimal>{ 22, 20, 15, 15, 20, 17 },
+                new List<String>{ 'Description', 'Cost' }, futureCareRecords, 1, new List<Decimal>{ 22, 20, 15, 15, 20, 20 },
                 'Future Care', new List<Integer>{ 0, 5 }, 'A', 8, null, 'F',
                 new Map<Integer, Integer>{ 0 => 43, 1 => 45, 2 => 45, 3 => 45, 4 => 42 },
                 new Map<Integer, Integer>{ 0 => 41, 1 => 45, 2 => 45, 3 => 45, 4 => 42 },
