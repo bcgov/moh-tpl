@@ -8,22 +8,8 @@ public with sharing class XlsxGenerationAsyncQueueable implements Queueable {
     private Id caseId;
     private Id logId;
     private String selectedTemplate;
+    private String documentTitle;
 
-    /**
-    * Params: Id caseId, String selectedTemplate
-    * Creates a queueable job for single XLSX generation with a selected template.
-    */
-    public XlsxGenerationAsyncQueueable(Id caseId, String selectedTemplate) {
-        this(caseId, selectedTemplate, null);
-    }
-
-    /**
-    * Params: Id caseId, Id logId
-    * Creates a queueable job for single XLSX generation against an existing log record.
-    */
-    public XlsxGenerationAsyncQueueable(Id caseId, Id logId) {
-        this(caseId, null, logId);
-    }
 
     /**
     * Params: Id caseId, String selectedTemplate, Id logId
@@ -32,11 +18,13 @@ public with sharing class XlsxGenerationAsyncQueueable implements Queueable {
     public XlsxGenerationAsyncQueueable(
         Id caseId,
         String selectedTemplate,
-        Id logId
+        Id logId,
+        String documentTitle
     ) {
         this.caseId = caseId;
         this.logId = logId;
         this.selectedTemplate = selectedTemplate;
+        this.documentTitle = documentTitle;
     }
 
     /**
@@ -47,7 +35,7 @@ public with sharing class XlsxGenerationAsyncQueueable implements Queueable {
         try {
             LogService.markDocxGenerationProcessingById(Id.valueOf(logId),String.valueOf(context.getJobId()));
 
-            String contentDocumentId = DocxGeneratorController.generateSingleXlsxSyncProcess(caseId,selectedTemplate);
+            String contentDocumentId = DocxGeneratorController.generateSingleXlsxSyncProcess(caseId,selectedTemplate,documentTitle);
 
             LogService.markDocxGenerationCompletedById(Id.valueOf(logId),String.valueOf(context.getJobId()),contentDocumentId);
         } 
