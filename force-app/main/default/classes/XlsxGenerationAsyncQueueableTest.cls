@@ -1,6 +1,8 @@
 @IsTest
 private class XlsxGenerationAsyncQueueableTest {
 
+    private static final String TEMPLATE_MINISTERS_CERT = System.Label.TPL_DocGen_Template_Ministers_Cert;
+
     // Creates shared Case test data used by the queueable tests.
     @TestSetup
     static void setupTestData() {
@@ -24,16 +26,6 @@ private class XlsxGenerationAsyncQueueableTest {
         return logRecord;
     }
 
-    // Covers the two-argument (caseId, selectedTemplate) constructor without executing the queueable.
-    @IsTest
-    static void constructorWithoutLogIdCanBeCreated() {
-        Case c = getTestCase();
-
-        XlsxGenerationAsyncQueueable queueableJob = new XlsxGenerationAsyncQueueable(c.Id, 'TestTemplate');
-
-        System.assertNotEquals(null, queueableJob, 'Queueable instance should be created using constructor without log id.');
-    }
-
     // Covers the execute try block and verifies XLSX generation completes successfully.
     @IsTest
     static void executeCoversTryBlockAndCompletesLog() {
@@ -41,7 +33,7 @@ private class XlsxGenerationAsyncQueueableTest {
         Log__c logRecord = createGenerationLog(c.Id);
 
         Test.startTest();
-        Id jobId = System.enqueueJob(new XlsxGenerationAsyncQueueable(c.Id, logRecord.Id));
+        Id jobId = System.enqueueJob(new XlsxGenerationAsyncQueueable(c.Id, TEMPLATE_MINISTERS_CERT, logRecord.Id, 'Test Ministry Certificate'));
         Test.stopTest();
 
         System.assertNotEquals(null, jobId, 'Queueable job id should be returned.');
@@ -65,7 +57,7 @@ private class XlsxGenerationAsyncQueueableTest {
         Id fakeCaseId = '500000000000001AAA';
 
         Test.startTest();
-        Id jobId = System.enqueueJob(new XlsxGenerationAsyncQueueable(fakeCaseId, logRecord.Id));
+        Id jobId = System.enqueueJob(new XlsxGenerationAsyncQueueable(fakeCaseId, TEMPLATE_MINISTERS_CERT, logRecord.Id, 'Test Ministry Certificate'));
         Test.stopTest();
 
         System.assertNotEquals(null, jobId, 'Queueable job id should still be returned even when execution fails.');
