@@ -7,9 +7,6 @@
 */
 
 public with sharing class HealthIdeasApiIntegration {
-
-    @TestVisible
-    private static List<Integer> timeoutValues = new List<Integer>();
     
     private static final Boolean ENABLE_DEBUG_LOGS = false;
     
@@ -427,9 +424,6 @@ public with sharing class HealthIdeasApiIntegration {
             while (retryCount > 0) {
                 try {
                     req.setTimeout(timeValue);
-                    if (Test.isRunningTest()) {
-                        timeoutValues.add(timeValue);
-                    }
                     res = new Http().send(req);
 
                     if (res.getStatusCode() == TPL_Constants.HTTP_STATUS_OK) {

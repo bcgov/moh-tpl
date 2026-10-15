@@ -9,6 +9,8 @@
 private class HealthIdeasApiIntegrationTest {
 
     private static Integer callCount = 0;
+    private static List<Integer> timeoutValues = new List<Integer>();
+    private static final Integer BASE_TIMEOUT = 40000;
     private static final String LONG_CCI = 'x'.repeat(1200);
 
     // Detects whether the outgoing HttpRequest is the OAuth/token request.
@@ -109,6 +111,7 @@ private class HealthIdeasApiIntegrationTest {
 
             if (exceptionMessage != null) {
                 callCount++;
+                timeoutValues.add(BASE_TIMEOUT * callCount);
                 if (stillFailing) throw new CalloutException(exceptionMessage);
                 return healthContentResponse('CCI123');
             }
@@ -516,8 +519,8 @@ private class HealthIdeasApiIntegrationTest {
     @IsTest
     static void testRetry_TimeoutException_ExhaustsAllAttempts() {
         Account testAccount = getTestAccount();
-        HealthIdeasApiIntegration.timeoutValues.clear();
         callCount = 0;
+        timeoutValues.clear();
         Test.setMock(HttpCalloutMock.class, new ConfigurableMock(TPL_Constants.TIMEOUT_ERROR_MESSAGE));
 
         Test.startTest();
@@ -527,20 +530,17 @@ private class HealthIdeasApiIntegrationTest {
 
         System.assertEquals(false, result.success);
         System.assertEquals(TPL_Constants.MAX_ATTEMPTS, callCount, 'Expected the callout to be attempted MAX_ATTEMPTS times.');
+        System.assertEquals(new List<Integer>{40000, 80000, 120000}, timeoutValues, 'Expected incremental timeout values for each retry.');
         System.assertEquals(Label.TPL_HI_Callout_Failure_Message, result.errorMessage, 'Expected the generic UI failure message.');
         List<Log__c> logs = [SELECT Error_Message__c FROM Log__c WHERE Method_Name__c = 'sendHealthIdeasRequest' ORDER BY CreatedDate DESC LIMIT 1];
         System.assertEquals(1, logs.size(), 'Expected a log to be created.');
         System.assert(logs[0].Error_Message__c.contains(TPL_Constants.TIMEOUT_ERROR_MESSAGE), 'Expected timeout error after maximum retry attempts.');
-        System.assertEquals(40000, HealthIdeasApiIntegration.timeoutValues[0]);
-        System.assertEquals(80000, HealthIdeasApiIntegration.timeoutValues[1]);
-        System.assertEquals(120000, HealthIdeasApiIntegration.timeoutValues[2]);
     }
 
     // Covers the timeout exception thrown once, then a real success on the 2nd attempt.
     @IsTest
     static void testRetry_TimeoutException_SucceedsOnSecondAttempt() {
         Account testAccount = getTestAccount();
-        HealthIdeasApiIntegration.timeoutValues.clear();
         callCount = 0;
         Test.setMock(HttpCalloutMock.class, new ConfigurableMock(TPL_Constants.TIMEOUT_ERROR_MESSAGE, 1));
 
@@ -551,8 +551,7 @@ private class HealthIdeasApiIntegrationTest {
 
         System.assertEquals(true, result.success, 'Expected success on the second attempt after a single timeout.');
         System.assertEquals(2, callCount, 'Expected exactly 2 calls: one timeout, then one success.');
-        System.assertEquals(40000, HealthIdeasApiIntegration.timeoutValues[0]);
-        System.assertEquals(80000, HealthIdeasApiIntegration.timeoutValues[1]);
+        System.assertEquals(new List<Integer>{40000, 80000}, timeoutValues, 'Expected incremental timeout values for each retry.');
     }
 
     // Covers all retry attempts returning a real HTTP 408 response, exhausting MAX_ATTEMPTS.
