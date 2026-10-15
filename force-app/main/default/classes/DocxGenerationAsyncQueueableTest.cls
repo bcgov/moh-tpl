@@ -26,15 +26,6 @@ private class DocxGenerationAsyncQueueableTest {
         return logRecord;
     }
     
-    // Covers the two-argument constructor without executing the queueable.
-    @IsTest
-    static void constructorWithoutLogIdCanBeCreated() {
-        Case c = getTestCase();
-        
-        DocxGenerationAsyncQueueable queueableJob = new DocxGenerationAsyncQueueable(c.Id, TEMPLATE_MINISTERS_CERT);
-        
-        System.assertNotEquals(null, queueableJob, 'Queueable instance should be created using constructor without log id.');
-    }
     
     // Covers the execute try block and verifies DOCX generation completes successfully.
     @IsTest
@@ -43,7 +34,7 @@ private class DocxGenerationAsyncQueueableTest {
         Log__c logRecord = createGenerationLog(c.Id);
         
         Test.startTest();
-        Id jobId = System.enqueueJob(new DocxGenerationAsyncQueueable(c.Id, TEMPLATE_MINISTERS_CERT, logRecord.Id));
+        Id jobId = System.enqueueJob(new DocxGenerationAsyncQueueable(c.Id, TEMPLATE_MINISTERS_CERT, logRecord.Id, 'Test Ministry Certificate'));
         Test.stopTest();
         
         System.assertNotEquals(null, jobId, 'Queueable job id should be returned.');
@@ -66,7 +57,7 @@ private class DocxGenerationAsyncQueueableTest {
         Id fakeCaseId = '500000000000001AAA';
         
         Test.startTest();
-        Id jobId = System.enqueueJob(new DocxGenerationAsyncQueueable(fakeCaseId, TEMPLATE_MINISTERS_CERT, logRecord.Id));
+        Id jobId = System.enqueueJob(new DocxGenerationAsyncQueueable(fakeCaseId, TEMPLATE_MINISTERS_CERT, logRecord.Id, 'Test Ministry Certificate'));
         Test.stopTest();
         
         System.assertNotEquals(null, jobId, 'Queueable job id should still be returned even when execution fails.');

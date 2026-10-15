@@ -152,7 +152,7 @@ private class DocxGeneratorControllerTest {
         DocxGeneratorController.testTotalPrintableRows = 0;
         
         Test.startTest();
-        String result = DocxGeneratorController.generateDocument(caseId, TEMPLATE_NAME, TPL_Constants.OUTPUT_FORMAT_DOCX);
+        String result = DocxGeneratorController.generateDocument(caseId, TEMPLATE_NAME, 'Test Ministry Certificate', TPL_Constants.OUTPUT_FORMAT_DOCX);
         Test.stopTest();
         
         System.assertNotEquals(null, result, 'Sync generation should return a ContentDocumentId.');
@@ -167,7 +167,7 @@ private class DocxGeneratorControllerTest {
         Id caseId = getCaseId();
         
         Test.startTest();
-        String result = DocxGeneratorController.generateSingleDocxFileSyncProcess(caseId, TEMPLATE_NAME);
+        String result = DocxGeneratorController.generateSingleDocxFileSyncProcess(caseId, TEMPLATE_NAME, 'Test Ministry Certificate');
         Test.stopTest();
         
         System.assertNotEquals(null, result, 'Direct sync process should return a ContentDocumentId.');
@@ -183,7 +183,7 @@ private class DocxGeneratorControllerTest {
         Id caseId = getCaseId();
         
         Test.startTest();
-        String result = DocxGeneratorController.generateSingleDocxSyncProcess(caseId, TEMPLATE_NAME);
+        String result = DocxGeneratorController.generateSingleDocxSyncProcess(caseId, TEMPLATE_NAME, 'Test Ministry Certificate');
         Test.stopTest();
         
         System.assertNotEquals(null, result, 'Direct sync builder method should return a ContentDocumentId.');
@@ -203,7 +203,7 @@ private class DocxGeneratorControllerTest {
         DocxGeneratorController.testTotalPrintableRows = AsyncLimitValue + 1;
         
         Test.startTest();
-        String result = DocxGeneratorController.generateDocument(caseId, TEMPLATE_NAME, TPL_Constants.OUTPUT_FORMAT_DOCX);
+        String result = DocxGeneratorController.generateDocument(caseId, TEMPLATE_NAME, 'Test Ministry Certificate', TPL_Constants.OUTPUT_FORMAT_DOCX);
         Test.stopTest();
         
         System.assertNotEquals(null, result, 'Async single DOCX path should return an async response.');
@@ -240,11 +240,7 @@ static void testGenerateDocumentHandlesInvalidCaseId() {
 
     Test.startTest();
 
-    String result = DocxGeneratorController.generateDocument(
-        fakeCaseId,
-        TEMPLATE_NAME,
-        TPL_Constants.OUTPUT_FORMAT_DOCX
-    );
+    String result = DocxGeneratorController.generateDocument(fakeCaseId,TEMPLATE_NAME,'Test Ministry Certificate',TPL_Constants.OUTPUT_FORMAT_DOCX);
 
     Test.stopTest();
 
@@ -267,7 +263,7 @@ static void testGenerateDocumentHandlesInvalidCaseId() {
         DocxGeneratorController.testTotalPrintableRows = DocxGeneratorController.getAsyncSingleDocPrintableHccRowLimit() - 1;
 
         Test.startTest();
-        String result = DocxGeneratorController.generateDocument(caseId, TEMPLATE_NAME, TPL_Constants.OUTPUT_FORMAT_XLSX);
+        String result = DocxGeneratorController.generateDocument(caseId, TEMPLATE_NAME, 'Test Ministry Certificate', TPL_Constants.OUTPUT_FORMAT_XLSX);
         Test.stopTest();
 
         System.assertNotEquals(null, result, 'XLSX generation should return a ContentDocumentId.');
@@ -287,7 +283,7 @@ static void testGenerateDocumentHandlesInvalidCaseId() {
         DocxGeneratorController.testTotalPrintableRows = DocxGeneratorController.getXlsxAsyncPrintableHccRowLimit();
 
         Test.startTest();
-        String result = DocxGeneratorController.generateDocument(caseId, TEMPLATE_NAME, TPL_Constants.OUTPUT_FORMAT_XLSX);
+        String result = DocxGeneratorController.generateDocument(caseId, TEMPLATE_NAME, 'Test Ministry Certificate', TPL_Constants.OUTPUT_FORMAT_XLSX);
         Test.stopTest();
 
         System.assertNotEquals(null, result, 'XLSX async path should return an async response.');
@@ -316,7 +312,7 @@ static void testGenerateDocumentHandlesInvalidCaseId() {
         Id caseId = getCaseId();
 
         Test.startTest();
-        String result = DocxGeneratorController.generateSingleXlsxSyncProcess(caseId, TEMPLATE_NAME);
+        String result = DocxGeneratorController.generateSingleXlsxSyncProcess(caseId, TEMPLATE_NAME, 'Test Ministry Certificate');
         Test.stopTest();
 
         System.assertNotEquals(null, result, 'Direct XLSX sync process should return a ContentDocumentId.');
@@ -335,7 +331,7 @@ static void testGenerateDocumentHandlesInvalidCaseId() {
         DocxGeneratorController.testTotalPrintableRows = null;
         
         Test.startTest();
-        String result = DocxGeneratorController.generateDocument(caseId, TEMPLATE_NAME, TPL_Constants.OUTPUT_FORMAT_DOCX);
+        String result = DocxGeneratorController.generateDocument(caseId, TEMPLATE_NAME, 'Test Ministry Certificate', TPL_Constants.OUTPUT_FORMAT_DOCX);
         Test.stopTest();
         
         System.assertNotEquals(null, result, 'generateDocument should work when row count is calculated from Healthcare_Cost__c records.');

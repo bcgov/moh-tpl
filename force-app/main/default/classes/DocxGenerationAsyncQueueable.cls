@@ -8,23 +8,18 @@ public with sharing class DocxGenerationAsyncQueueable implements Queueable {
     private Id caseId;
     private String selectedTemplate;
     private Id logId;
+    private String documentTitle;
+    
     
     /**
-Params: Id caseId, String selectedTemplate
+Params: Id caseId, String selectedTemplate, Id logId, String documentTitle
 * Creates a queueable job for single DOCX generation.
 */
-    public DocxGenerationAsyncQueueable(Id caseId, String selectedTemplate) {
-        this(caseId, selectedTemplate, null);
-    }
-    
-    /**
-Params: Id caseId, String selectedTemplate, Id logId
-* Creates a queueable job for single DOCX generation.
-*/
-    public DocxGenerationAsyncQueueable(Id caseId, String selectedTemplate, Id logId) {
+    public DocxGenerationAsyncQueueable(Id caseId, String selectedTemplate, Id logId, String documentTitle) {
         this.caseId = caseId;
         this.selectedTemplate = selectedTemplate;
         this.logId = logId;
+        this.documentTitle = documentTitle;
     }
     
     
@@ -36,7 +31,7 @@ Params: QueueableContext context
         try {
             LogService.markDocxGenerationProcessingById(logId, context.getJobId());
             
-            String contentDocumentId = DocxGeneratorController.generateSingleDocxFileSyncProcess(caseId, selectedTemplate);
+            String contentDocumentId = DocxGeneratorController.generateSingleDocxFileSyncProcess(caseId, selectedTemplate, documentTitle);
             
             LogService.markDocxGenerationCompletedById(logId, context.getJobId(), contentDocumentId);
         } 

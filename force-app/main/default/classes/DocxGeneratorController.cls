@@ -30,7 +30,7 @@ Params: Id caseId, String selectedTemplate, String outputFormat
 * Generates the selected document and returns a ContentDocumentId or async job response.
 */
     @AuraEnabled
-    public static String generateDocument(Id caseId, String selectedTemplate, String outputFormat) {
+    public static String generateDocument(Id caseId, String selectedTemplate, String documentTitle, String outputFormat) {
         try {
             if (TPL_Constants.OUTPUT_FORMAT_XLSX.equalsIgnoreCase(outputFormat)) {
                 Integer totalXlsxRows = (Test.isRunningTest() && testTotalPrintableRows != null)
@@ -39,7 +39,7 @@ Params: Id caseId, String selectedTemplate, String outputFormat
 
                 if (totalXlsxRows < getXlsxAsyncPrintableHccRowLimit()) {
                     try {
-                        return generateSingleXlsxSyncProcess(caseId, selectedTemplate);
+                        return generateSingleXlsxSyncProcess(caseId, selectedTemplate, documentTitle);
                     }
                      catch (Exception e) {
                         LogService.markDocxGenerationFailed(null, caseId, null, String.valueOf(e.getMessage()), e.getStackTraceString(), TPL_Constants.CLASS_DOCX_GENERATOR_CONTROLLER, TPL_Constants.METHOD_GENERATE_DOCUMENT);
@@ -47,7 +47,7 @@ Params: Id caseId, String selectedTemplate, String outputFormat
                     }
                 }
 
-                String xlsxJobId = enqueueSingleXlsxGenerationAsyncProcess(caseId, selectedTemplate);
+                String xlsxJobId = enqueueSingleXlsxGenerationAsyncProcess(caseId, selectedTemplate, documentTitle);
                 return asyncResponse(xlsxJobId);
             } 
 
@@ -58,14 +58,14 @@ Params: Id caseId, String selectedTemplate, String outputFormat
 
             if (totalPrintableRows <=  getAsyncSingleDocPrintableHccRowLimit()) {
                 try {
-                    return generateSingleDocxFileSyncProcess(caseId, selectedTemplate);
+                    return generateSingleDocxFileSyncProcess(caseId, selectedTemplate, documentTitle);
                 } catch (Exception e) {
                     LogService.markDocxGenerationFailed(null, caseId, null, String.valueOf(e.getMessage()), e.getStackTraceString(), TPL_Constants.CLASS_DOCX_GENERATOR_CONTROLLER, TPL_Constants.METHOD_GENERATE_DOCUMENT);
                     return failedGenerationResponse();
                 }
             } 
              
-            String docxJobId = enqueueSingleDocxGenerationAsyncProcess(caseId, selectedTemplate);
+            String docxJobId = enqueueSingleDocxGenerationAsyncProcess(caseId, selectedTemplate, documentTitle);
             return asyncResponse(docxJobId);
 
         } catch (Exception e) {
@@ -74,17 +74,18 @@ Params: Id caseId, String selectedTemplate, String outputFormat
     }
 
     /**
-    Params: Id recordId, String selectedTemplate
+    Params: Id recordId, String selectedTemplate, String documentTitle
     * Generates an XLSX healthcare cost export synchronously. Returns the created ContentDocumentId as text.
     */
-    public static String generateSingleXlsxSyncProcess(Id recordId, String selectedTemplate) {
+    public static String generateSingleXlsxSyncProcess(Id recordId, String selectedTemplate, String documentTitle) {
         Case caseRecord = loadCaseForDocgen(recordId);
 
-        XlsxBuilder builder = new XlsxBuilder().setCaseData(caseRecord);
+        //XlsxBuilder builder = new XlsxBuilder().setCaseData(caseRecord);
+        XlsxBuilder builder = new XlsxBuilder().setCaseData(caseRecord).setDocumentType(selectedTemplate);
         populateHealthcareCostSectionsXlsx(builder, recordId);
 
         Blob xlsxBlob = builder.build();
-        String fileName = DocxFormatHelper.generatedFileName(selectedTemplate, 'xlsx');
+        String fileName = DocxFormatHelper.generatedFileName(selectedTemplate, documentTitle, 'xlsx');
         return String.valueOf(DocxFormatHelper.createContentDocument(recordId, fileName, xlsxBlob, null));
     }
 
@@ -174,15 +175,15 @@ Params: Id caseId, String selectedTemplate, String outputFormat
 Params: Id recordId, String selectedTemplate
 * Generates a DOCX synchronously and saves it. Returns the created ContentDocumentId as text.
 */
-    public static String generateSingleDocxFileSyncProcess(Id recordId, String selectedTemplate) {
-        return generateSingleDocxSyncProcess(recordId, selectedTemplate);
+    public static String generateSingleDocxFileSyncProcess(Id recordId, String selectedTemplate, String documentTitle) {
+        return generateSingleDocxSyncProcess(recordId, selectedTemplate, documentTitle);
     }
     
     /**
 Params: Id recordId, String selectedTemplate
 * Generates a single DOCX synchronously or starts async generation when row limits require it. Returns the ContentDocumentId or async response text.
 */
-    public static String generateSingleDocxSyncProcess(Id recordId, String selectedTemplate) {
+    public static String generateSingleDocxSyncProcess(Id recordId, String selectedTemplate, String documentTitle) {
         Case caseRecord = loadCaseForDocgen(recordId);
         List<TPL_DocGen_Signature__c> sigs = loadSigningAuthorities();
         String sigName  = sigs.isEmpty() ? '' : sigs[0].Name__c;
@@ -196,7 +197,7 @@ Params: Id recordId, String selectedTemplate
         populateHealthcareCostSections(builder, recordId);
         
         Blob docxBlob = builder.build();
-        String fileName = DocxFormatHelper.generatedFileName(selectedTemplate, 'docx');
+        String fileName = DocxFormatHelper.generatedFileName(selectedTemplate, documentTitle, 'docx');
         return String.valueOf(DocxFormatHelper.createContentDocument(recordId, fileName, docxBlob, null));
     }
     
@@ -295,11 +296,11 @@ Params: DocxBuilder builder, Id recordId
 Params: Id caseId, String selectedTemplate
 * Enqueues async single DOCX generation. Returns the serialized async job response.
 */
-    private static String enqueueSingleDocxGenerationAsyncProcess(Id caseId, String selectedTemplate) {
+    private static String enqueueSingleDocxGenerationAsyncProcess(Id caseId, String selectedTemplate, String documentTitle) {
         Log__c logRecord = buildGenerationLog(caseId, null, TPL_Constants.STATUS_PROCESSING, null);
         LogService.upsertLogsInSystemMode(new List<SObject>{ logRecord });
         
-        Id jobId = System.enqueueJob(new DocxGenerationAsyncQueueable(caseId, selectedTemplate, logRecord.Id));
+        Id jobId = System.enqueueJob(new DocxGenerationAsyncQueueable(caseId, selectedTemplate, logRecord.Id, documentTitle));
         
         logRecord.JobId__c = String.valueOf(jobId);
         LogService.upsertLogsInSystemMode(new List<SObject>{ logRecord });
@@ -311,11 +312,11 @@ Params: Id caseId, String selectedTemplate
 Params: Id caseId
 * Enqueues async single XLSX generation. Returns the serialized async job response.
 */
-    private static String enqueueSingleXlsxGenerationAsyncProcess(Id caseId, String selectedTemplate) {
+    private static String enqueueSingleXlsxGenerationAsyncProcess(Id caseId, String selectedTemplate, String documentTitle) {
         Log__c logRecord = buildGenerationLog(caseId, null, TPL_Constants.STATUS_PROCESSING, null);
         LogService.upsertLogsInSystemMode(new List<SObject>{ logRecord });
 
-        Id jobId = System.enqueueJob(new XlsxGenerationAsyncQueueable(caseId, selectedTemplate, logRecord.Id));
+        Id jobId = System.enqueueJob(new XlsxGenerationAsyncQueueable(caseId, selectedTemplate, logRecord.Id, documentTitle));
 
         logRecord.JobId__c = String.valueOf(jobId);
         LogService.upsertLogsInSystemMode(new List<SObject>{ logRecord });

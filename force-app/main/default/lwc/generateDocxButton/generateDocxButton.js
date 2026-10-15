@@ -293,6 +293,7 @@ export default class GenerateDocxButton extends LightningElement {
             const requestPayload = {
                 caseId: this.recordId,
                 selectedTemplate: this.selectedTemplateName,
+                documentTitle: this.documentTitle,
                 outputFormat: this.outputFileFormat
             };
            // console.log('[GenerateDocxButton] Calling generateDocument Apex', requestPayload);

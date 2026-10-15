@@ -77,9 +77,9 @@ Params: Decimal value
 Params: String selectedTemplate, String fileExtension
 * Builds the generated file name. Returns the selected template name plus the formatted timestamp and file extension.
 */
-    public static String generatedFileName(String selectedTemplate, String fileExtension) {
-        String filePrefix = String.isNotBlank(selectedTemplate) && selectedTemplate.contains(TPL_Constants.DOCGEN_TEMPLATE_CASE_HISTORY) ? TPL_Constants.DOCGEN_TEMPLATE_CASE_HISTORY : TPL_Constants.DOCGEN_FILE_PREFIX_MINISTERS_CERTIFICATE;
-        return filePrefix + ' ' + Datetime.now().format('MMMM dd, yyyy') + '.' + fileExtension;
+    public static String generatedFileName(String selectedTemplate, String documentTitle, String fileExtension) {
+        
+        return documentTitle + '.' + fileExtension;
     }
     
     /**

@@ -35,6 +35,7 @@ public class XlsxBuilder {
     private String birthDate      = '';
     private String incidentDate   = '';
     private Decimal totalCost     = 0;
+    private Boolean isCaseHistoryCert = false;
 
     private List<List<Object>> ambulanceRecords      = new List<List<Object>>();
     private List<List<Object>> hospitalRecords       = new List<List<Object>>();
@@ -70,6 +71,14 @@ public class XlsxBuilder {
         this.birthDate     = DocxFormatHelper.formatDate(c.Date_of_Birth__c);
         this.incidentDate  = DocxFormatHelper.formatDate(c.Incident_Date__c);
         this.totalCost     = DocxFormatHelper.decimalValue(c.Total_Case_Value__c);
+        return this;
+    }
+
+    public XlsxBuilder setDocumentType(String selectedTemplate) {
+        this.isCaseHistoryCert =
+            String.isNotBlank(selectedTemplate) &&
+            selectedTemplate.contains(System.Label.TPL_DocGen_Template_Case_History);
+
         return this;
     }
 
@@ -159,7 +168,8 @@ public class XlsxBuilder {
     * populated Healthcare Cost type.
     */
     public Blob build() {
-        List<String> sheetNames = new List<String>{ 'Certificate', 'Summary' };
+       // List<String> sheetNames = new List<String>{ 'Certificate', 'Summary' };
+        List<String> sheetNames = isCaseHistoryCert ? new List<String>{ 'Summary' } : new List<String>{ 'Certificate', 'Summary' };
         if (!ambulanceRecords.isEmpty())      sheetNames.add('Ambulance');
         if (!hospitalRecords.isEmpty())       sheetNames.add('Hospital');
         if (!mspRecords.isEmpty())            sheetNames.add('MSP');
@@ -172,7 +182,10 @@ public class XlsxBuilder {
 
         // Each sheet is streamed to the ZipWriter as it's built, so heap scales with
         // the largest single sheet rather than the sum of all sheets.
-        pkg.addSheet(buildCertificateSheet(logoBody));
+        if (!isCaseHistoryCert) {
+            pkg.addSheet(buildCertificateSheet(logoBody));
+        }
+
         pkg.addSheet(buildSummarySheet());
 
         if (!ambulanceRecords.isEmpty()) {
@@ -208,7 +221,7 @@ public class XlsxBuilder {
             pkg.addSheet(buildTypeSheet('MSP',
                 new List<String>{ 'Date of Service', 'Location Type', 'Description of Service', 'Fee Item', 'Diagnostic', 'Cost', 'Practitioner Name' },
                 mspRecords, 5, new List<Decimal>{ 14.4, 31.5, 24, 24, 18, 16, 25 }, 'Medical',
-                new List<Integer>{ 0, 1, 2, 3, 4, 5, 6 }, 'A', 8, new Set<String>{ 'B', 'C', 'D', 'E' }, 'G'));
+                new List<Integer>{ 0, 1, 2, 3, 4, 5, 6 }, 'A', 8, new Set<String>{ 'B', 'C', 'D', 'E', 'G' }, 'G'));
             mspRecords = null;
         }
         if (!pharmaRecords.isEmpty()) {
@@ -381,7 +394,7 @@ public class XlsxBuilder {
             cellXml('B', 26, 32, System.Label.TPL_DocGen_Doc_Label_Present_Value_Total_Claim, false) +
             formulaCurrencyCell('E', 26, 33, 'E' + pastTotalRow + '+E' + futureTotalRow));
 
-        List<Decimal> summaryColumnWidths = new List<Decimal>{ 4.75, 20.875, 25, 25, 17.875, 15, 8.43, 8.43, 8.43, 8.43, 8.43, 8.43, 8.43, 8.43, 8.43 };
+        List<Decimal> summaryColumnWidths = new List<Decimal>{ 4.75, 20.875, 25, 25, 22, 15, 8.43, 8.43, 8.43, 8.43, 8.43, 8.43, 8.43, 8.43, 8.43 };
         return new XlsxPackageService.Sheet('Summary', rows)
             .withPageOrientation('landscape')
             .withPrintScale(computePrintScalePercent(summaryColumnWidths, PRINT_TARGET_WIDTH_INCHES * SUMMARY_PRINT_SCALE_MULTIPLIER))
@@ -472,7 +485,7 @@ public class XlsxBuilder {
 
         List<String> mergeRefs = new List<String>();
         String rows = '';
-        rows += dataTabTitleRow(2, mergeRefs, titleEndCol);
+        rows += dataTabTitleRow(2, mergeRefs, titleEndCol, sheetName);
         rows += heightRow(4, HEADER_BLOCK_ROW_HEIGHT, headerBlockLabelValueCell(caseCol, 4, 'Case #: ', caseNumber));
         rows += heightRow(5, HEADER_BLOCK_ROW_HEIGHT,
             headerBlockLabelValueCell('A', 5, 'Name: ', contactName) +
@@ -493,6 +506,13 @@ public class XlsxBuilder {
 
         rows += typeSheetTotalRow(lastDataRow + 2, currencyColIndex, firstDataRow, lastDataRow, columnOverrides, sheetName, totalLabelCol, totalLabelStyle, totalValueCol);
 
+        if (isCaseHistoryCert) {
+            Integer caseHistoryRow = lastDataRow + 4;
+            rows += mergedRichRow(caseHistoryRow, 'A' + caseHistoryRow + ':' + titleEndCol + caseHistoryRow, 6, mergeRefs, 20, new List<TextRun>{ new TextRun(System.Label.TPL_DocGen_Doc_CH_Section_16_1, 'Arial', 10, false, true) });
+            caseHistoryRow++;
+            rows += mergedRichRow(caseHistoryRow, 'A' + caseHistoryRow + ':' + titleEndCol + caseHistoryRow, 6, mergeRefs, 20, new List<TextRun>{ new TextRun(System.Label.TPL_DocGen_Doc_CH_Section_16_2, 'Arial', 10, false, true) });
+        }
+        
         return new XlsxPackageService.Sheet(sheetName, rows)
             .withPageOrientation('landscape')
             .withPrintScale(computePrintScalePercent(columnWidths, PRINT_TARGET_WIDTH_INCHES))
@@ -523,9 +543,12 @@ public class XlsxBuilder {
     /**
     * Builds the data tab's title row, merged and centered in bold Helvetica.
     */
-    private String dataTabTitleRow(Integer rowNum, List<String> mergeRefsAccumulator, String endCol) {
+    private String dataTabTitleRow(Integer rowNum, List<String> mergeRefsAccumulator, String endCol, String sheetName ) {
         mergeRefsAccumulator.add('A' + rowNum + ':' + endCol + rowNum);
-        return rowXml(rowNum, textCellXml('A', rowNum, 36, 'Healthcare Services and Costs Record Part 1'));
+        If(sheetName !=null && sheetName != 'Future Care'){
+            return rowXml(rowNum, textCellXml('A', rowNum, 36, 'Healthcare Services and Costs Record Part 1'));
+        }
+        return rowXml(rowNum, textCellXml('A', rowNum, 36, 'Healthcare Services and Costs Record Part 2'));
     }
 
     /**
