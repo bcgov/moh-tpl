@@ -12,6 +12,7 @@ public with sharing class TPL_Constants {
     public static final String STATUS_FAILED = 'Failed';
     public static final Integer MAX_ATTEMPTS = 3;
     public static final String TIMEOUT_ERROR_MESSAGE = 'Read timed out';
+    public static final Integer HI_TIMEOUT_INCREMENT_MILLISECONDS = 40000;
     public static final String TIMEOUT_FIELD_NAME = 'Time_Out_Value_MilliSeconds__c';
     public static final Integer DEFAULT_TIMEOUT_VALUE = 120000;
     public static final Integer HTTP_STATUS_OK = 200;
