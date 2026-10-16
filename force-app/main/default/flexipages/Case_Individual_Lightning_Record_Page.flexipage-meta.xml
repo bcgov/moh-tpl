@@ -126,8 +126,8 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
-                <componentName>cfDocGen_Card</componentName>
-                <identifier>c_cfDocGen_Card</identifier>
+                <componentName>generateDocxButton</componentName>
+                <identifier>c_generateDocxButton</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
