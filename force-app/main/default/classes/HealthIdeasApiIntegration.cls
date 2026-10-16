@@ -7,7 +7,7 @@
 */
 
 public with sharing class HealthIdeasApiIntegration {
-
+    
     private static final Boolean ENABLE_DEBUG_LOGS = false;
     
     //Helper method for consistent logging throughout the class.
