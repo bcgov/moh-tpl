@@ -250,8 +250,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>TPL_DocGen_MC_Attached_File_Format</shortDescription>
-        <value>Attached File Format (defaulted to PDF), tells a PDF will be automatically attached
-            in the related tab Files section of the case record on document generation.</value>
+        <value>The file is available in the Files section of the Attachments and Document Generation tabs of the case record.</value>
     </labels>
     <labels>
         <fullName>TPL_DocGen_MC_Download_Document</fullName>
@@ -1036,6 +1035,34 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Used to display an error message when the HealthIdeas callout fails.</shortDescription>
-        <value>Unable to retrieve Health Ideas data right now. Please try again in a few minutes. If it still doesn't work, contact support.</value>
+        <value>Unable to retrieve Health Ideas data right now. Please try again in a few minutes. If it still doesn&apos;t work, contact support.</value>
+    </labels>
+    <labels>
+        <fullName>TPL_DocGen_Download_Excel</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>TPL_DocGen_Download_Excel</shortDescription>
+        <value>Download Excel</value>
+    </labels>
+    <labels>
+        <fullName>TPL_DocGen_Excel_File_Alt</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>TPL_DocGen_Excel_File_Alt</shortDescription>
+        <value>Excel file</value>
+    </labels>
+    <labels>
+        <fullName>TPL_DocGen_Output_Label_Excel</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>TPL_DocGen_Output_Label_Excel</shortDescription>
+        <value>Microsoft Excel</value>
+    </labels>
+    <labels>
+        <fullName>TPL_DocGen_Output_Label_Word_Disabled</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>TPL_DocGen_Output_Label_Word_Disabled</shortDescription>
+        <value>Microsoft Word (not available due to report size)</value>
     </labels>
 </CustomLabels>
