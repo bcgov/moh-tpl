@@ -193,7 +193,7 @@ public class XlsxBuilder {
             // Total row: label in A, value in C.
             pkg.addSheet(buildTypeSheet('Ambulance',
                 new List<String>{ 'Date of Service', 'Location Responded', 'Destination', 'Cost' },
-                ambulanceRecords, 3, new List<Decimal>{ 16, 4.2, 22, 8, 15, 20, 18.50 }, 'Ambulance',
+                ambulanceRecords, 3, new List<Decimal>{ 15.38, 3.63, 30.25, 7.38, 38.50, 19.38, 40.63 }, 'Ambulance',
                 new List<Integer>{ 0, 1, 3, 6 }, 'A', 8, null, 'G',
                 new Map<Integer, Integer>{ 1 => 43, 2 => 42, 3 => 43, 4 => 44, 5 => 42 },
                 new Map<Integer, Integer>{ 1 => 41, 2 => 42, 3 => 41, 4 => 45, 5 => 42 },
@@ -207,7 +207,7 @@ public class XlsxBuilder {
             // Service Type/Days/Cost in E/F/G.
             pkg.addSheet(buildTypeSheet('Hospital',
                 new List<String>{ 'Admission Date', 'Discharge Date', 'Facility', 'Service Type', 'Days', 'Cost' },
-                hospitalRecords, 5, new List<Decimal>{ 17, 20, 7, 45.15, 28, 10, 15 }, 'Hospital',
+                hospitalRecords, 5, new List<Decimal>{ 16.38, 19.38, 13.88, 46.25, 32.63, 9.38, 17.63 }, 'Hospital',
                 new List<Integer>{ 0, 1, 2, 4, 5, 6 }, 'A', 8, null, 'G',
                 new Map<Integer, Integer>{ 2 => 43, 3 => 42 },
                 new Map<Integer, Integer>{ 2 => 41, 3 => 42 },
@@ -220,7 +220,7 @@ public class XlsxBuilder {
             // merges A2:I2. Data columns A-G contiguous, no spacer columns.
             pkg.addSheet(buildTypeSheet('MSP',
                 new List<String>{ 'Date of Service', 'Location Type', 'Description of Service', 'Fee Item', 'Diagnostic', 'Cost', 'Practitioner Name' },
-                mspRecords, 5, new List<Decimal>{ 14.4, 31.5, 24, 24, 18, 16, 25 }, 'Medical',
+                mspRecords, 5, new List<Decimal>{ 13.75, 33.75, 23.38, 25.13, 17.38, 15.38, 26.63 }, 'Medical',
                 new List<Integer>{ 0, 1, 2, 3, 4, 5, 6 }, 'A', 8, new Set<String>{ 'B', 'C', 'D', 'E', 'G' }, 'G'));
             mspRecords = null;
         }
@@ -229,7 +229,7 @@ public class XlsxBuilder {
             // their spacer columns are E, F:G:H.
             pkg.addSheet(buildTypeSheet('Pharmacare',
                 new List<String>{ 'Date of Service', 'Name of Drug', 'Cost', 'Practitioner Name' },
-                pharmaRecords, 2, new List<Decimal>{ 15.75, 8, 18.4, 24.5, 14, 0.75, 12, 28 }, 'Pharmacy',
+                pharmaRecords, 2, new List<Decimal>{ 15.13, 7.38, 27.13, 31.63, 13.25, 0.46, 11.38, 49 }, 'Pharmacy',
                 new List<Integer>{ 0, 1, 4, 6 }, 'A', 8, null, 'H',
                 new Map<Integer, Integer>{ 1 => 43, 2 => 44, 3 => 42, 5 => 41, 6 => 44, 7 => 42 },
                 new Map<Integer, Integer>{ 1 => 41, 2 => 45, 3 => 42, 5 => 41, 6 => 45, 7 => 42 },
@@ -242,7 +242,7 @@ public class XlsxBuilder {
             // B/C/D/E blank spacers); F (Cost) stands alone. Total row value displays in C.
             pkg.addSheet(buildTypeSheet('Continuing Care',
                 new List<String>{ 'Description', 'Cost' }, continuingCareRecords, 1,
-                new List<Decimal>{ 27, 20, 15, 15, 20, 19 }, 'Continuing Care', new List<Integer>{ 0, 5 },
+                new List<Decimal>{ 26.38, 23.50, 14.38, 32.13, 19.38, 40 }, 'Continuing Care', new List<Integer>{ 0, 5 },
                 'A', 8, null, 'F',
                 new Map<Integer, Integer>{ 0 => 43, 1 => 45, 2 => 45, 3 => 45, 4 => 42 },
                 new Map<Integer, Integer>{ 0 => 41, 1 => 45, 2 => 45, 3 => 45, 4 => 42 },
@@ -253,7 +253,7 @@ public class XlsxBuilder {
             // Cost is in column F. A:E form one bordered box (Description in A,
             // B/C/D/E blank spacers); F (Cost) stands alone. Total row value displays in C.
             pkg.addSheet(buildTypeSheet('Future Care',
-                new List<String>{ 'Description', 'Cost' }, futureCareRecords, 1, new List<Decimal>{ 22, 20, 15, 15, 20, 20 },
+                new List<String>{ 'Description', 'Cost' }, futureCareRecords, 1, new List<Decimal>{ 21.38, 28.75, 14.38, 31.50, 19.38, 40 },
                 'Future Care', new List<Integer>{ 0, 5 }, 'A', 8, null, 'F',
                 new Map<Integer, Integer>{ 0 => 43, 1 => 45, 2 => 45, 3 => 45, 4 => 42 },
                 new Map<Integer, Integer>{ 0 => 41, 1 => 45, 2 => 45, 3 => 45, 4 => 42 },

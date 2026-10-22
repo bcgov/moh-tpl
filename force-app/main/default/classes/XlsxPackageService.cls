@@ -167,9 +167,11 @@ public class XlsxPackageService {
         * can be discarded immediately after this call returns.
         */
         public void addSheet(Sheet sheet) {
+            Boolean showPageFooter = true;
             Integer sheetIndex = nextSheetIndex++;
             Boolean hasDrawing = sheet.logoImage != null;
-            zip.addEntry('xl/worksheets/sheet' + sheetIndex + '.xml', Blob.valueOf(worksheet(sheet, hasDrawing)));
+            showPageFooter = (sheetIndex == 1 && sheet.name == 'Certificate') ? false : true;
+            zip.addEntry('xl/worksheets/sheet' + sheetIndex + '.xml', Blob.valueOf(worksheet(sheet, hasDrawing, showPageFooter)));
             if (hasDrawing) {
                 zip.addEntry('xl/worksheets/_rels/sheet' + sheetIndex + '.xml.rels', Blob.valueOf(worksheetDrawingRels()));
                 zip.addEntry('xl/drawings/drawing1.xml',            Blob.valueOf(drawing(sheet.logoAnchorCol, sheet.logoAnchorRow)));
@@ -263,7 +265,7 @@ public class XlsxPackageService {
     * default row height, merged-cell ranges, and an optional drawing reference (for the
     * logo). Returns the generated XML.
     */
-    private static String worksheet(Sheet sheet, Boolean hasDrawing) {
+    private static String worksheet(Sheet sheet, Boolean hasDrawing, Boolean showPageFooter) {
         String sheetFormatXml = '';
         if (sheet.defaultRowHeight != null) {
             sheetFormatXml = '<sheetFormatPr defaultRowHeight="' + sheet.defaultRowHeight + '" customHeight="1"/>';
@@ -298,11 +300,13 @@ public class XlsxPackageService {
         // without one (the Certificate) instead use sheetPr's pageSetUpPr fitToPage="1"
         // plus pageSetup fitToWidth="1" fitToHeight="0" — "shrink to 1 page wide,
         // however many pages tall" — since there's no target physical width for it.
-        String sheetPrXml = sheet.printScalePercent == null ? '<sheetPr><pageSetUpPr fitToPage="1"/></sheetPr>' : '';
-        String pageSetupAttrs = sheet.printScalePercent != null
-            ? 'scale="' + sheet.printScalePercent + '"'
-            : 'fitToWidth="1" fitToHeight="0"';
-        String printSetupXml = '<pageMargins left="0.7" right="0.7" top="0.75" bottom="0.75" header="0.3" footer="0.3"/>' +
+        String sheetPrXml = '<sheetPr><pageSetUpPr fitToPage="1"/></sheetPr>';
+        String pageNumberAttrs = sheet.name == 'Summary'
+            ? ' firstPageNumber="1" useFirstPageNumber="1"'
+            : '';
+        String pageSetupAttrs = 'fitToWidth="1" fitToHeight="0"' + pageNumberAttrs;
+        String printSetupXml =
+            '<pageMargins left="0.7" right="0.7" top="0.75" bottom="0.75" header="0.3" footer="0.3"/>' +
             '<pageSetup orientation="' + sheet.pageOrientation + '" ' + pageSetupAttrs + '/>';
         // Preset footer matching Excel's built-in "Page 1, [filename]" combo: &P is the
         // page number, &F is the workbook's actual saved file name (which already
@@ -310,7 +314,11 @@ public class XlsxPackageService {
         // 2026.xlsx"), centered. The literal "&" in each field code is escaped as
         // "&amp;" here because this is XML text content, not a formatting exemption —
         // Excel's own writer does the same when you inspect a saved file's raw XML.
-        String headerFooterXml = '<headerFooter><oddFooter>&amp;CPage &amp;P, &amp;F</oddFooter></headerFooter>';
+        String headerFooterXml = '';
+        if (showPageFooter) {
+            headerFooterXml = '<headerFooter><oddFooter>&amp;CPage &amp;P, &amp;F</oddFooter></headerFooter>';
+        }
+        
         return DocgenConstants.XML_DECLARATION +
             '<worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships">' +
             sheetPrXml +
