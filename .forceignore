@@ -12,3 +12,7 @@ package.xml
 **/__tests__/**
 
 node_modules/
+
+
+force-app/main/default/customMetadata/IDP_Jwt_Configuration.HealthIdeas.md-meta.xml
+force-app/main/default/customMetadata/IDP_ClientCredentials.PatientEncounters.md-meta.xml
