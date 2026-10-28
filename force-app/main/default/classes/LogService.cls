@@ -388,7 +388,217 @@ public without sharing class LogService {
             return;
         }
 
+
+        Database.UpsertResult[] results =
         Database.upsert(recordsToUpsert, false, AccessLevel.SYSTEM_MODE);
+
+    for (Integer i = 0; i < results.size(); i++) {
+        if (!results[i].isSuccess()) {
+            SObject failedRecord = recordsToUpsert[i];
+
+            for (Database.Error err : results[i].getErrors()) {
+                System.debug(
+                    LoggingLevel.ERROR,
+                    'Log upsert failed. ' +
+                    'RecordType=' + String.valueOf(failedRecord.getSObjectType()) +
+                    ', RecordId=' + String.valueOf(failedRecord.get('Id')) +
+                    ', StatusCode=' + String.valueOf(err.getStatusCode()) +
+                    ', Message=' + err.getMessage() +
+                    ', Fields=' + String.valueOf(err.getFields())
+                );
+            }
+        }
+    }
+}
+
+
+    /**
+     * Builds a DOCX generation Log__c record with common values populated.
+     */
+    public static Log__c buildGenerationLog(Id caseId, String jobId, String status, String message) {
+        Log__c logRecord = new Log__c();
+        logRecord.JobId__c = jobId;
+        logRecord.Record_Id__c = String.valueOf(caseId);
+        logRecord.Running_User__c = UserInfo.getUserId();
+        logRecord.Class_Name__c = TPL_Constants.CLASS_DOCX_GENERATOR_CONTROLLER;
+        logRecord.Method_Name__c = TPL_Constants.METHOD_GENERATE_DOCUMENT;
+        logRecord.Status__c = status;
+        logRecord.Error_Message__c = message;
+        return logRecord;
+    }
+
+    /**
+     * Writes a DOCX generation log record.
+     */
+    public static void writeGenerationLog(Id caseId, String jobId, String status, String message) {
+        upsertLogsInSystemMode(new List<SObject>{ buildGenerationLog(caseId, jobId, status, message) });
+    }
+
+    /**
+     * Loads a DOCX generation log by Id.
+     */
+    public static Log__c getGenerationLogById(Id logId) {
+        if (logId == null) return null;
+
+        List<Log__c> logs = [
+            SELECT Id, JobId__c, Record_Id__c, Running_User__c, Class_Name__c, Method_Name__c,
+                   Status__c, Error_Message__c, Generated_File_Ids__c
+            FROM Log__c
+            WHERE Id = :logId
+            WITH SYSTEM_MODE
+            LIMIT 1
+        ];
+
+        return logs.isEmpty() ? null : logs[0];
+    }
+
+    /**
+     * Loads the latest DOCX generation log for the current user and Case.
+     */
+    public static Log__c getLatestGenerationLog(Id caseId) {
+        String caseIdString = String.valueOf(caseId);
+        List<Log__c> logs = [
+            SELECT Id, JobId__c, Record_Id__c, Running_User__c, Class_Name__c, Method_Name__c, Status__c, Error_Message__c, Generated_File_Ids__c
+            FROM Log__c
+            WHERE Record_Id__c = :caseIdString
+              AND Running_User__c = :UserInfo.getUserId()
+              AND Class_Name__c = :TPL_Constants.CLASS_DOCX_GENERATOR_CONTROLLER
+              AND Method_Name__c = :TPL_Constants.METHOD_GENERATE_DOCUMENT
+            WITH SYSTEM_MODE
+            ORDER BY CreatedDate DESC
+            LIMIT 1
+        ];
+
+        return logs.isEmpty() ? buildGenerationLog(caseId, null, null, null) : logs[0];
+    }
+
+    /**
+     * Updates an existing DOCX generation log record.
+     */
+    public static void updateGenerationLog(Log__c logRecord, String jobId, String status, String message) {
+        if (logRecord == null) return;
+
+        if (jobId != null) {
+            logRecord.JobId__c = jobId;
+        }
+        logRecord.Status__c = status;
+        logRecord.Error_Message__c = message;
+        upsertLogsInSystemMode(new List<SObject>{ logRecord });
+    }
+
+    /**
+     * Marks an existing DOCX generation log as processing without changing its message fields.
+     */
+    public static void markDocxGenerationProcessingById(Id logId, String jobId) {
+        Log__c logRecord = getGenerationLogById(logId);
+        if (logRecord == null) return;
+
+        if (jobId != null) {
+            logRecord.JobId__c = jobId;
+        }
+        logRecord.Status__c = TPL_Constants.STATUS_PROCESSING;
+        upsertLogsInSystemMode(new List<SObject>{ logRecord });
+    }
+
+    /**
+     * Marks an existing DOCX generation log as completed and stores the generated ContentDocumentId.
+     */
+    public static void markDocxGenerationCompletedById(Id logId, String jobId, String contentDocumentId) {
+        Log__c logRecord = getGenerationLogById(logId);
+        if (logRecord == null) return;
+
+        if (jobId != null) {
+            logRecord.JobId__c = jobId;
+        }
+
+        logRecord.Status__c = TPL_Constants.STATUS_COMPLETED;
+        logRecord.Generated_File_Ids__c = contentDocumentId;
+        logRecord.Error_Message__c = null;
+        upsertLogsInSystemMode(new List<SObject>{ logRecord });
+    }
+
+    /**
+     * Marks the latest DOCX generation log for the current Case/user as completed and stores generated file ids.
+     */
+    public static void markLatestDocxGenerationCompleted(Id caseId, List<Id> contentDocumentIds) {
+        List<String> idStrings = new List<String>();
+        for (Id contentDocumentId : contentDocumentIds) {
+            idStrings.add(String.valueOf(contentDocumentId));
+        }
+
+        Log__c logRecord = getLatestGenerationLog(caseId);
+        if (logRecord == null) return;
+
+        logRecord.Status__c = TPL_Constants.STATUS_COMPLETED;
+        logRecord.Generated_File_Ids__c = String.join(idStrings, DocgenConstants.PIPE_DELIMITER);
+        logRecord.Error_Message__c = null;
+        upsertLogsInSystemMode(new List<SObject>{ logRecord });
+    }
+
+    /**
+     * Marks the latest DOCX generation log for the current Case/user as failed with a generic UI message and stack trace.
+     */
+    public static void markLatestDocxGenerationFailed(
+        Id caseId,
+        String jobId,
+        String errorMessage,
+        String stackTrace,
+        String className,
+        String methodName
+    ) {
+        try {
+            Log__c latestLog = getLatestGenerationLog(caseId);
+            markDocxGenerationFailed(
+                latestLog == null ? null : latestLog.Id,
+                caseId,
+                jobId,
+                errorMessage,
+                stackTrace,
+                className,
+                methodName
+            );
+        } catch (Exception loggingException) {
+            System.debug(LoggingLevel.ERROR,
+                'LogService: could not mark latest DOCX generation log failed: '
+                + loggingException.getMessage());
+        }
+    }
+
+    /**
+     * Applies DOCX failure fields to an already resolved generation log.
+     */
+    public static void markDocxGenerationFailed(
+        Id logId,
+        Id caseId,
+        String jobId,
+        String errorMessage,
+        String stackTrace,
+        String className,
+        String methodName
+    ) {
+        Log__c logRecord;
+
+        if (logId != null) {
+            logRecord = [
+                SELECT Id, JobId__c, Record_Id__c, Running_User__c, Class_Name__c, Method_Name__c,
+                    Status__c, Error_Message__c, Stack_Trace__c
+                FROM Log__c
+                WHERE Id = :logId
+                WITH SYSTEM_MODE
+                LIMIT 1
+            ];
+        } else {
+            logRecord = buildGenerationLog(caseId, jobId, TPL_Constants.STATUS_FAILED, errorMessage);
+        }
+
+        logRecord.Status__c = TPL_Constants.STATUS_FAILED;
+        logRecord.Error_Message__c = errorMessage;
+        logRecord.Stack_Trace__c = stackTrace;
+        logRecord.Class_Name__c = className;
+        logRecord.Method_Name__c = methodName;
+        logRecord.Record_Id__c = caseId == null ? null : String.valueOf(caseId);
+        logRecord.JobId__c = jobId;
+        upsertLogsInSystemMode(new List<SObject>{ logRecord });
     }
 
     public static void logExtendedStatus(Id batchId, Id rootBatchJobId) {

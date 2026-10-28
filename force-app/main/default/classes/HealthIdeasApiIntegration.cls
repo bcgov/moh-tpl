@@ -7,7 +7,7 @@
 */
 
 public with sharing class HealthIdeasApiIntegration {
-
+    
     private static final Boolean ENABLE_DEBUG_LOGS = false;
     
     //Helper method for consistent logging throughout the class.
@@ -411,7 +411,6 @@ public with sharing class HealthIdeasApiIntegration {
             req.setEndpoint('callout:HealthIdeas');
             req.setMethod('POST');
             req.setHeader('Content-Type', 'application/json');
-            req.setTimeout(timeValue);
             req.setBody(JSON.serialize(new Map<String, Object>{
                 'requester' => requesterUserName,
                 'personalHealthNumber' => acc.PHN__pc,
@@ -424,6 +423,7 @@ public with sharing class HealthIdeasApiIntegration {
             // Retry mechanism for handling timeouts, up to MAX_ATTEMPTS.
             while (retryCount > 0) {
                 try {
+                    req.setTimeout(timeValue);
                     res = new Http().send(req);
 
                     if (res.getStatusCode() == TPL_Constants.HTTP_STATUS_OK) {
@@ -442,6 +442,7 @@ public with sharing class HealthIdeasApiIntegration {
                         LogService.buildAndInsertErrorLog('HealthIdeasApiIntegration', 'sendHealthIdeasRequest', String.valueOf(e.getMessage()), String.valueOf(e.getStackTraceString()), acc.Id);
                         return buildFailure(result, label.TPL_HI_Callout_Failure_Message);
                     }
+                    timeValue += TPL_Constants.HI_TIMEOUT_INCREMENT_MILLISECONDS;
                     retryCount--;
                 } 
             }
