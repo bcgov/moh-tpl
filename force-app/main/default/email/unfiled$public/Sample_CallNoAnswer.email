@@ -1,0 +1,11 @@
+<p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span id="docs-internal-guid-03fe1f4d-ac64-d3ce-35a1-49b8e50bd10e"><span style="font-size: 14.6666666666667px; font-family: Arial; color: rgb(0, 0, 0); vertical-align: baseline; white-space: pre-wrap; background-color: transparent;">Hi {!Lead.FirstName}!</span></span></p>
+&nbsp;
+
+<p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span id="docs-internal-guid-03fe1f4d-ac64-d3ce-35a1-49b8e50bd10e"><span style="font-size: 14.6666666666667px; font-family: Arial; color: rgb(0, 0, 0); vertical-align: baseline; white-space: pre-wrap; background-color: transparent;">I must have just missed you. &nbsp;Do you have time to chat tomorrow so I can answer any questions you may have?</span></span></p>
+&nbsp;
+
+<p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span id="docs-internal-guid-03fe1f4d-ac64-d3ce-35a1-49b8e50bd10e"><span style="font-size: 14.6666666666667px; font-family: Arial; color: rgb(0, 0, 0); vertical-align: baseline; white-space: pre-wrap; background-color: transparent;">Sincerely,</span></span></p>
+
+<p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span id="docs-internal-guid-03fe1f4d-ac64-d3ce-35a1-49b8e50bd10e"><span style="font-size: 14.6666666666667px; font-family: Arial; color: rgb(0, 0, 0); vertical-align: baseline; white-space: pre-wrap; background-color: transparent;">{!User.FirstName}</span></span></p>
+
+<p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span id="docs-internal-guid-03fe1f4d-ac64-d3ce-35a1-49b8e50bd10e"><span style="font-size: 14.6666666666667px; font-family: Arial; color: rgb(0, 0, 0); vertical-align: baseline; white-space: pre-wrap; background-color: transparent;">{!User.Phone}</span></span></p>

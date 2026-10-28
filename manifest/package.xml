@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+<!-- RFC-20260728-PROD-TPL-Release 0.7.0 -->
+<!-- BCMOHAM 33729 33764-->
+    <types>
+		<members>mspRecordsCase</members>
+		<name>LightningComponentBundle</name>
+	</types>
+	<version>67.0</version>
+</Package>

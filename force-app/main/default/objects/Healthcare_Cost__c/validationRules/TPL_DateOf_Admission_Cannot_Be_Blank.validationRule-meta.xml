@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>TPL_DateOf_Admission_Cannot_Be_Blank</fullName>
+    <active>true</active>
+    <description>Ensures that users cannot create hospitalization record without date of admission. This maintains data integrity by requiring key healthcare cost details before overriding total cost.</description>
+    <errorConditionFormula>$Setup.Data_Migration_Check__c.Bypass_Flow_Validations__c = FALSE &amp;&amp; ISBLANK(Source_System_ID__c) &amp;&amp;
+
+AND(
+RecordType.Name = &quot;Hospitalization&quot;,
+ISNULL( Date_of_Admission__c )
+)</errorConditionFormula>
+    <errorMessage>Please enter Date of Admission.</errorMessage>
+</ValidationRule>

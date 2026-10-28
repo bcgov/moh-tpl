@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>TPL_Closed_Case_Validation</fullName>
+    <active>true</active>
+    <description>Changing Status from Closed to Reopened</description>
+    <errorConditionFormula>$Setup.Data_Migration_Check__c.Bypass_Flow_Validations__c = FALSE &amp;&amp;
+OR (
+AND(
+	ISPICKVAL( PRIORVALUE( Status ) , &quot;Closed&quot;),
+	ISPICKVAL( Status , &quot;Open&quot;)
+    ),
+AND (
+	ISPICKVAL( PRIORVALUE( Status ) , &quot;Reopened&quot;),
+	ISPICKVAL( Status , &quot;Open&quot;)
+	),
+AND (
+	ISPICKVAL( PRIORVALUE( Status ) , &quot;Open&quot;),
+	ISPICKVAL( Status , &quot;Reopened&quot;)
+	)
+)</errorConditionFormula>
+    <errorMessage>We can only change the status from Open to Close, Closed to Reopen and Reopen to Closed</errorMessage>
+</ValidationRule>

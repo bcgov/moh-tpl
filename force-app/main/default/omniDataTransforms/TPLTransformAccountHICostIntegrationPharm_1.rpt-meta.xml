@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OmniDataTransform xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>false</active>
+    <assignmentRulesUsed>false</assignmentRulesUsed>
+    <deletedOnSuccess>false</deletedOnSuccess>
+    <description>TPL_DR_TransformWeather_ForecastCurrent Example of a DataRaptor Transform with concatenate formulas and mixed subnode and array output.</description>
+    <errorIgnored>false</errorIgnored>
+    <expectedInputJson>{
+    &quot;HI&quot;: [
+        {
+      MSP fields
+        },
+        {
+      Hospital Fields
+        },
+        {
+            &quot;DIN&quot;: &quot;1234567&quot;,
+            &quot;NameofDrug&quot;: &quot;ABCD&quot;,
+            &quot;Amount of Drug&quot;: &quot;150&quot;,
+            &quot;DateodService&quot;: &quot;2022-06-10&quot;
+      &quot;RecordTypeIdPharm&quot;: &quot;0123J0000001SaEQAU&quot;
+        }
+    ],
+    &quot;CaseId&quot;: &quot;5003J000008nYamQAE&quot;
+}</expectedInputJson>
+    <expectedOutputJson>{
+  &quot;Current&quot; : {
+    &quot;CityState&quot; : &quot;Schenectady, New York&quot;,
+    &quot;Condition&quot; : &quot;Heavy Snow&quot;,
+    &quot;TempC&quot; : -2.5,
+    &quot;TempF&quot; : 27.5
+  },
+  &quot;CurrentIcon&quot; : &quot;www.weatherbit.io/static/img/icons/s03d.png&quot;,
+  &quot;Forecast&quot; : [ {
+    &quot;Condition&quot; : &quot;Heavy Snow&quot;,
+    &quot;Date&quot; : &quot;2019-01-26&quot;,
+    &quot;HiLoTempC&quot; : &quot;-0.8/-5.7&quot;,
+    &quot;HiLoTempF&quot; : &quot;30.5/21.7&quot;
+  }, {
+    &quot;Condition&quot; : &quot;Light Snow&quot;,
+    &quot;Date&quot; : &quot;2019-01-27&quot;,
+    &quot;HiLoTempC&quot; : &quot;-0.2/-5.1&quot;,
+    &quot;HiLoTempF&quot; : &quot;31.7/22.8&quot;
+  }, {
+    &quot;Condition&quot; : &quot;Flurries&quot;,
+    &quot;Date&quot; : &quot;2019-01-28&quot;,
+    &quot;HiLoTempC&quot; : &quot;-0.6/-7.8&quot;,
+    &quot;HiLoTempF&quot; : &quot;31.0/18.7&quot;
+  }, {
+    &quot;Condition&quot; : &quot;Clear sky&quot;,
+    &quot;Date&quot; : &quot;2019-01-29&quot;,
+    &quot;HiLoTempC&quot; : &quot;-3.7/-7.7&quot;,
+    &quot;HiLoTempF&quot; : &quot;25.3/18.1&quot;
+  }, {
+    &quot;Condition&quot; : &quot;Clear sky&quot;,
+    &quot;Date&quot; : &quot;2019-01-30&quot;,
+    &quot;HiLoTempC&quot; : &quot;-4.3/-6.8&quot;,
+    &quot;HiLoTempF&quot; : &quot;24.2/19.7&quot;
+  } ],
+  &quot;ForecastIcon&quot; : &quot;www.weatherbit.io/static/img/icons/s01d.png&quot;
+}</expectedOutputJson>
+    <fieldLevelSecurityEnabled>false</fieldLevelSecurityEnabled>
+    <inputType>JSON</inputType>
+    <isManagedUsingStdDesigner>false</isManagedUsingStdDesigner>
+    <name>TPLTransformAccountHICostIntegrationPharm</name>
+    <nullInputsIncludedInOutput>false</nullInputsIncludedInOutput>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLTransformAccountHICostIntegrationPharm49365291984000936</globalKey>
+        <inputFieldName>searchRequest:asOfDate</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLTransformAccountHICostIntegrationPharm</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>searchRequest:RefDate</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLTransformAccountHICostIntegrationPharm4921910936463988</globalKey>
+        <inputFieldName>searchRequest:requester</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLTransformAccountHICostIntegrationPharm</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>searchRequest:userName</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLTransformAccountHICostIntegrationPharm8330796137943719</globalKey>
+        <inputFieldName>pharmacare:encounterId</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLTransformAccountHICostIntegrationPharm</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>pharmacare:SourceSystemId</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLTransformAccountHICostIntegrationPharm5548194232434257</globalKey>
+        <inputFieldName>searchRequest:personalHealthNumber</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLTransformAccountHICostIntegrationPharm</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>searchRequest:PHN</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLTransformAccountHICostIntegrationPharm044301387384747204</globalKey>
+        <inputFieldName>pharmacare:costType</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLTransformAccountHICostIntegrationPharm</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>pharmacare:CostType</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLTransformAccountHICostIntegrationPharm13424559480196852</globalKey>
+        <inputFieldName>pharmacare:din</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLTransformAccountHICostIntegrationPharm</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>pharmacare:PharmDIN</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLTransformAccountHICostIntegrationPharmCustom7952</globalKey>
+        <inputFieldName>pharmacare:practitionerLastName</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLTransformAccountHICostIntegrationPharm</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>pharmacare:PractitionerLastName</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLTransformAccountHICostIntegrationPharm8201421962940278</globalKey>
+        <inputFieldName>pharmacare:phn</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLTransformAccountHICostIntegrationPharm</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>pharmacare:PHN</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLTransformAccountHICostIntegrationPharmCustom6312</globalKey>
+        <inputFieldName>pharmacare:practitionerFirstName</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLTransformAccountHICostIntegrationPharm</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>pharmacare:PractitionerFirstName</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLTransformAccountHICostIntegrationPharm9727431070508761</globalKey>
+        <inputFieldName>RecordTypeIdPharm</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLTransformAccountHICostIntegrationPharm</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>pharmacare:RecordTypeIdPharm</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLTransformAccountHICostIntegrationPharm34396776404304874</globalKey>
+        <inputFieldName>AccountId</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLTransformAccountHICostIntegrationPharm</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>pharmacare:AccountId</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLTransformAccountHICostIntegrationPharm5496859252125473</globalKey>
+        <inputFieldName>pharmacare:dateOfService</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLTransformAccountHICostIntegrationPharm</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>pharmacare:DateofService</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLTransformAccountHICostIntegrationPharm7903384734995264</globalKey>
+        <inputFieldName>pharmacare:costOfDrug</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLTransformAccountHICostIntegrationPharm</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>pharmacare:PharmCostOfDrug</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLTransformAccountHICostIntegrationPharm5915471443395169</globalKey>
+        <inputFieldName>pharmacare:nameOfDrug</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLTransformAccountHICostIntegrationPharm</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>pharmacare:PharmNameOfDrug</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLTransformAccountHICostIntegrationPharm9470608169552162</globalKey>
+        <inputFieldName>pharmacare:practitioner_name</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLTransformAccountHICostIntegrationPharm</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>pharmacare:PractitionerName</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <outputType>JSON</outputType>
+    <previewJsonData>{
+  &quot;AccountId&quot; : &quot;0013J00000RrhgwQAB&quot;,
+  &quot;RecordTypeIdPharm&quot; : &quot;0123J0000001SaJQAU&quot;,
+  &quot;searchRequest&quot; : {
+    &quot;requester&quot; : &quot;Crystal&quot;,
+    &quot;personalHealthNumber&quot; : &quot;9111111112&quot;,
+    &quot;asOfDate&quot; : &quot;1972-03-11T00:00:00&quot;
+  },
+  &quot;pharmacare&quot; : [ {
+    &quot;phn&quot; : &quot;9111111112&quot;,
+    &quot;din&quot; : &quot;893706&quot;,
+    &quot;nameOfDrug&quot; : &quot;IMOVANE TAB 17.5MG&quot;,
+    &quot;dateOfService&quot; : &quot;2014-03-22T00:00:00&quot;,
+    &quot;practitionerId&quot; : &quot;Unknown-Unknown Identifier&quot;,
+    &quot;practitionerFirstName&quot; : &quot;Mary&quot;,
+    &quot;practitionerLastName&quot; : &quot;Don&quot;,
+    &quot;costOfDrug&quot; : &quot;20&quot;,
+    &quot;costType&quot; : &quot;Pharmacare&quot;,
+    &quot;encounterId&quot; : &quot;2199627823&quot;
+  }, {
+    &quot;phn&quot; : &quot;9111111112&quot;,
+    &quot;din&quot; : &quot;893706&quot;,
+    &quot;nameOfDrug&quot; : &quot;IMOVANE TAB 8.5MG&quot;,
+    &quot;dateOfService&quot; : &quot;2014-03-22T00:00:00&quot;,
+    &quot;practitionerId&quot; : &quot;Unknown-Unknown Identifier&quot;,
+    &quot;practitionerFirstName&quot; : &quot;Mark&quot;,
+    &quot;practitionerLastName&quot; : &quot;Don&quot;,
+    &quot;costOfDrug&quot; : &quot;40&quot;,
+    &quot;costType&quot; : &quot;Pharmacare&quot;,
+    &quot;encounterId&quot; : &quot;2199627824&quot;
+  } ],
+  &quot;msp&quot; : [ ],
+  &quot;hospitalizations&quot; : [ ]
+}</previewJsonData>
+    <processSuperBulk>false</processSuperBulk>
+    <responseCacheTtlMinutes>0.0</responseCacheTtlMinutes>
+    <rollbackOnError>false</rollbackOnError>
+    <sourceObject>json</sourceObject>
+    <sourceObjectDefault>false</sourceObjectDefault>
+    <synchronousProcessThreshold>-1.0</synchronousProcessThreshold>
+    <type>Transform</type>
+    <uniqueName>TPLTransformAccountHICostIntegrationPharm_1</uniqueName>
+    <versionNumber>1.0</versionNumber>
+    <xmlDeclarationRemoved>false</xmlDeclarationRemoved>
+</OmniDataTransform>

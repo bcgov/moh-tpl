@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>TPL_Tear_Level_Validation</fullName>
+    <active>true</active>
+    <description>Prevent Population of CCI level when Service Type not Surgical Day Care</description>
+    <errorConditionFormula>ISPICKVAL( Service_Type__c , &quot;Surgical Day Care&quot;) &amp;&amp; ISBLANK(TEXT( CCI_Level__c ))</errorConditionFormula>
+    <errorDisplayField>CCI_Level__c</errorDisplayField>
+    <errorMessage>Select Tear Level when Service Type is Surgical Day Care. Otherwise, keep it empty.</errorMessage>
+</ValidationRule>

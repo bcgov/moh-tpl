@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <layouts>
+        <layout>Account Layout</layout>
+        <sections>
+            <label><!-- Account Summary --></label>
+            <section>Account Summary</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Facility Account</layout>
+        <sections>
+            <label><!-- Address Information --></label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Fields --></label>
+            <section>Fields</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Person Account Layout</layout>
+        <layoutType>PersonAccount</layoutType>
+        <sections>
+            <label><!-- Account Summary --></label>
+            <section>Account Summary</section>
+        </sections>
+    </layouts>
+    <quickActions>
+        <label><!-- Child Account --></label>
+        <name>Child_Account</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- Get Records --></label>
+        <name>Get_Records</name>
+    </quickActions>
+    <recordTypes>
+        <description><!-- To be used with Business Account for Class Action Case --></description>
+        <label><!-- Business --></label>
+        <name>Business</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- To be used with Hospital, Urgent Care Facility, Medical Image Facility. --></description>
+        <label><!-- Facility --></label>
+        <name>Facility</name>
+    </recordTypes>
+    <validationRules>
+        <errorMessage><!-- Facility Account has been Deactivated and can no longer be editable. --></errorMessage>
+        <name>TPL_Facility_fields_cannot_be_editable</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- First Name should be filled. --></errorMessage>
+        <name>TPL_First_Name_Mandatory_Check</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Site Code must be 3 Digit Numeric value. --></errorMessage>
+        <name>TPL_Site_Code_Numeric_only</name>
+    </validationRules>
+    <webLinks>
+        <label><!-- GoogleMaps --></label>
+        <name>GoogleMaps</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- GoogleNews --></label>
+        <name>GoogleNews</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- GoogleSearch --></label>
+        <name>GoogleSearch</name>
+    </webLinks>
+</CustomObjectTranslation>

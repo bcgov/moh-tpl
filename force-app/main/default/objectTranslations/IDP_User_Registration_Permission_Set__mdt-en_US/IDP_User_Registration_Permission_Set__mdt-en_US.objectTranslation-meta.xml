@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>User Registration Permission Set</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>User Registration Permission Sets</value>
+    </caseValues>
+    <layouts>
+        <layout>User Registration Permission Set Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- Permission Set or Permission Set Group required --></errorMessage>
+        <name>Permission_Set_or_Permission_Set_Group</name>
+    </validationRules>
+</CustomObjectTranslation>

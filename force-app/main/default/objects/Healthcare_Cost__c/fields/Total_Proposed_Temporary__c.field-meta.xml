@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Total_Proposed_Temporary__c</fullName>
+    <formula>IF( Cost_Include__c &amp;&amp; RecordTypeName__c != &apos;Continuing_Care&apos; &amp;&amp; RecordTypeName__c != &apos;Future_Care&apos;,
+IF(ISBLANK(Total_Cost_Override__c),
+Total_Costs_Standard__c,
+Total_Cost_Override__c),
+0)
+
++
+
+IF( OR(RecordTypeName__c = &apos;Continuing_Care&apos;, RecordTypeName__c = &apos;Future_Care&apos;),
+Cost__c,
+0)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Total Proposed (change confirmation)</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackTrending>false</trackTrending>
+    <type>Currency</type>
+</CustomField>

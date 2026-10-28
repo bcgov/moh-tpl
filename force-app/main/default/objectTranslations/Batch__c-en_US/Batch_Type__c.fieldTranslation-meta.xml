@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <label><!-- Batch Type --></label>
+    <name>Batch_Type__c</name>
+    <picklistValues>
+        <masterLabel>Class Action</masterLabel>
+        <translation><!-- Class Action --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Motor Vehicle</masterLabel>
+        <translation><!-- Motor Vehicle --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Non Class Action Multiple Type</masterLabel>
+        <translation><!-- Non Class Action Multiple Type --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Private</masterLabel>
+        <translation><!-- Private --></translation>
+    </picklistValues>
+</CustomFieldTranslation>

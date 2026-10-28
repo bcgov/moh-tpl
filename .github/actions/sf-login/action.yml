@@ -1,0 +1,53 @@
+name: Salesforce Login
+description: Authenticate to Salesforce via OAuth2 password flow and set SF_INSTANCE_NAME
+
+inputs:
+  sf_username:
+    required: true
+    description: Username of the integration user
+  sf_client_id:
+    required: true
+    description: Consumer Key of the Connected App / External Client App
+  sf_jwt_key:
+    required: true
+    description: Contents of the server.key private key file (PEM format, multiline)
+  sf_login_url:
+    required: true
+    description: https://login.salesforce.com for prod, https://test.salesforce.com for sandboxes
+
+runs:
+  using: composite
+  steps:
+    - name: Login to Salesforce
+      shell: bash
+      run: |
+        echo "Logging into Salesforce..."
+        
+         # Write private key to an ephemeral file with restricted permissions
+        KEY_FILE="$(mktemp)"
+        chmod 600 "$KEY_FILE"
+        echo "${{ inputs.sf_jwt_key }}" > "$KEY_FILE"
+
+        # Authenticate — the CLI handles the JWT signing, POST to /services/oauth2/token,
+        # and stores the resulting access token under the alias
+        sf org login jwt \
+          --client-id "${{ inputs.sf_client_id }}" \
+          --jwt-key-file "$KEY_FILE" \
+          --username "${{ inputs.sf_username }}" \
+          --instance-url "${{ inputs.sf_login_url }}" \
+          --alias sf-target \
+          --set-default
+
+        # Immediately delete the private key from the runner filesystem
+        rm -f "$KEY_FILE"
+
+        # Extract the instance URL from the stored auth info and derive the instance name
+        SF_INSTANCE_URL=$(sf org display --target-org sf-target --json | jq -r '.result.instanceUrl')
+        SF_INSTANCE_NAME=$(echo "$SF_INSTANCE_URL" | awk -F[/:] '{print $4}' | cut -d'.' -f1)
+
+        # Re-alias to the actual instance name (keeps downstream steps that reference
+        # $SF_INSTANCE_NAME working unchanged)
+        sf alias set "$SF_INSTANCE_NAME"="${{ inputs.sf_username }}"
+
+        echo "SF_INSTANCE_NAME=$SF_INSTANCE_NAME" >> $GITHUB_ENV
+        echo "Authenticated as ${{ inputs.sf_username }} → $SF_INSTANCE_NAME"

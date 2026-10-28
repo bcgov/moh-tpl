@@ -1,0 +1,238 @@
+{
+    "dataSource": {
+        "contextVariables": [
+        ],
+        "orderBy": {
+        },
+        "type": null,
+        "value": {
+        }
+    },
+    "enableLwc": true,
+    "isFlex": true,
+    "lwc": {
+        "DeveloperName": "cfDocGen_Card_2_CGI",
+        "Id": "0RbAs000003hMJhKAM",
+        "ManageableState": "unmanaged",
+        "MasterLabel": "cfDocGen_Card_2_CGI",
+        "NamespacePrefix": "c"
+    },
+    "selectableMode": "Multi",
+    "states": [
+        {
+            "actions": [
+            ],
+            "childCards": [
+            ],
+            "components": {
+                "layer-0": {
+                    "children": [
+                        {
+                            "children": [
+                                {
+                                    "class": "slds-col ",
+                                    "element": "outputField",
+                                    "elementLabel": "Block-1-Text-0",
+                                    "key": "element_element_block_0_0_outputField_0_0",
+                                    "name": "Text",
+                                    "parentElementKey": "element_block_0_0",
+                                    "property": {
+                                        "card": "{card}",
+                                        "mergeField": "%3Cp%3EFor%20Ministry%20Certificate:%3C/p%3E%0A%3Cul%3E%0A%3Cli%3ESelect%20Ministry%20Certificate%20template%20and%20proceed%20further.%3C/li%3E%0A%3Cli%3EGive%20a%20Document%20Name%20to%20Ministry%20Certificate%20and%20select%20the%20download%20type%20(i.e.%20word%20/%20PDF).%20By%20default,%20word%20is%20selected.%3C/li%3E%0A%3Cli%3EAttached%20File%20Format%20(defaulted%20to%20PDF),%20tells%20a%20PDF%20will%20be%20automatically%20attached%20in%20the%20related%20tab%20Files%20section%20of%20the%20case%20record%20on%20document%20generation.%3C/li%3E%0A%3Cli%3EDownload%20the%20document.%3C/li%3E%0A%3Cli%3ESign%20the%20certificate.%3C/li%3E%0A%3Cli%3EGo%20to%20files%20tab%20in%20the%20TPL%20app.%20Selected%20Signed%20Certificates%20library%20into%20the%20files.%3C/li%3E%0A%3Cli%3EUpload%20the%20signed%20certificate%20in%20that%20&ldquo;Signed%20Certificates&rdquo;%20library.%20(The%20library%20contains%20security%20to%20preserve%20signed%20documents%20from%20deletion).%3C/li%3E%0A%3Cli%3EGo%20to%20the%20related%20tabs%20of%20the%20selected%20case,%20in%20the%20files%20upload%20the%20document%20from%20signed%20certificate%20library.%3C/li%3E%0A%3Cli%3ETry%20to%20delete%20the%20newly%20signed%20certificate.%20The%20analyst%20will%20not%20have%20permission%20to%20delete%20the%20file.%3C/li%3E%0A%3C/ul%3E%0A%3Cp%3E&nbsp;%20For%20Case%20History%20Template:%3C/p%3E%0A%3Cul%3E%0A%3Cli%3ESelect%20Case%20History%20template%20and%20proceed%20further.%3C/li%3E%0A%3Cli%3EGive%20a%20Document%20Name%20to%20Ministry%20Certificate%20and%20select%20the%20download%20type%20(i.e.%20word%20/%20PDF).%20By%20default,%20word%20is%20selected.%3C/li%3E%0A%3Cli%3EAttached%20File%20Format%20(defaulted%20to%20PDF),%20tells%20a%20PDF%20will%20be%20automatically%20attached%20in%20the%20related%20tab%20Files%20section%20of%20the%20case%20record%20on%20document%20generation.%3C/li%3E%0A%3Cli%3EDownload%20the%20document.%3C/li%3E%0A%3C/ul%3E",
+                                        "record": "{record}"
+                                    },
+                                    "size": {
+                                        "default": "12",
+                                        "isResponsive": false
+                                    },
+                                    "stateIndex": 0,
+                                    "styleObject": {
+                                        "sizeClass": "slds-size_12-of-12"
+                                    },
+                                    "type": "text"
+                                },
+                                {
+                                    "class": "slds-col ",
+                                    "element": "action",
+                                    "elementLabel": "Start",
+                                    "key": "element_element_block_0_0_action_1_0",
+                                    "name": "Action",
+                                    "parentElementKey": "element_block_0_0",
+                                    "property": {
+                                        "actionList": [
+                                            {
+                                                "actionIndex": 0,
+                                                "contextId": "\\{recordId}",
+                                                "draggable": true,
+                                                "isOpen": true,
+                                                "key": "1686585713337-oak8v23og",
+                                                "label": "Action",
+                                                "reRenderFlyout": true,
+                                                "stateAction": {
+                                                    "channelName": "close_modal",
+                                                    "flyoutLwc": "doc-generation-sample-fnd-single-docx-serverside-lwc-english",
+                                                    "flyoutParams": {
+                                                        "ContextId": "{recordId}"
+                                                    },
+                                                    "flyoutType": "OmniScripts",
+                                                    "hasExtraParams": true,
+                                                    "id": "flex-action-1775775712706",
+                                                    "layoutType": "lightning",
+                                                    "openFlyoutIn": "Modal",
+                                                    "openUrlIn": "Current Window",
+                                                    "osName": "docGenerationSample/fndSingleDocxServersideLwc/English",
+                                                    "type": "Flyout"
+                                                }
+                                            }
+                                        ],
+                                        "buttonVariant": "brand",
+                                        "card": "{card}",
+                                        "displayAsButton": true,
+                                        "flyoutChannel": "close_modal",
+                                        "flyoutDetails": {
+                                            "openFlyoutIn": "Modal"
+                                        },
+                                        "hideActionIcon": true,
+                                        "iconName": "standard-default",
+                                        "iconOnly": false,
+                                        "label": "Start",
+                                        "reRenderFlyout": true,
+                                        "record": "{record}",
+                                        "showSpinner": "false",
+                                        "stateObj": "{record}"
+                                    },
+                                    "size": {
+                                        "default": "12",
+                                        "isResponsive": false
+                                    },
+                                    "stateIndex": 0,
+                                    "styleObject": {
+                                        "sizeClass": "slds-size_12-of-12"
+                                    },
+                                    "type": "element",
+                                    "userUpdatedElementLabel": true
+                                }
+                            ],
+                            "class": "slds-col ",
+                            "element": "block",
+                            "elementLabel": "Block-1",
+                            "name": "Block",
+                            "property": {
+                                "card": "{card}",
+                                "collapsedByDefault": false,
+                                "collapsible": false,
+                                "label": "Block",
+                                "record": "{record}"
+                            },
+                            "size": {
+                                "default": "12",
+                                "isResponsive": false
+                            },
+                            "stateIndex": 0,
+                            "styleObject": {
+                                "class": "slds-p-around_x-small",
+                                "padding": [
+                                    {
+                                        "size": "x-small",
+                                        "type": "around"
+                                    }
+                                ],
+                                "sizeClass": "slds-size_12-of-12"
+                            },
+                            "type": "block"
+                        }
+                    ]
+                }
+            },
+            "conditions": {
+                "group": [
+                ],
+                "id": "state-condition-object",
+                "isParent": true
+            },
+            "definedActions": {
+                "actions": [
+                ]
+            },
+            "documents": [
+            ],
+            "fields": [
+            ],
+            "isSmartAction": false,
+            "name": "Active",
+            "omniscripts": [
+            ],
+            "smartAction": {
+            },
+            "styleObject": {
+                "class": "slds-card slds-p-around_x-small slds-m-bottom_x-small",
+                "container": {
+                    "class": "slds-card"
+                },
+                "margin": [
+                    {
+                        "size": "x-small",
+                        "type": "bottom"
+                    }
+                ],
+                "padding": [
+                    {
+                        "size": "x-small",
+                        "type": "around"
+                    }
+                ],
+                "size": {
+                    "default": "12",
+                    "isResponsive": false
+                },
+                "sizeClass": "slds-size_12-of-12"
+            }
+        }
+    ],
+    "theme": "slds",
+    "title": "DocGen_Card",
+    "xmlJson": [
+        {
+            "@attributes": {
+                "targets": "lightning__AppPage"
+            },
+            "property": [
+                {
+                    "@attributes": {
+                        "name": "debug",
+                        "type": "Boolean"
+                    }
+                },
+                {
+                    "@attributes": {
+                        "name": "recordId",
+                        "type": "String"
+                    }
+                }
+            ]
+        },
+        {
+            "@attributes": {
+                "targets": "lightning__RecordPage"
+            },
+            "property": [
+                {
+                    "@attributes": {
+                        "name": "debug",
+                        "type": "Boolean"
+                    }
+                }
+            ]
+        }
+    ],
+    "xmlObject": {
+        "targetConfigs": "PHRhcmdldENvbmZpZyB0YXJnZXRzPSJsaWdodG5pbmdfX0FwcFBhZ2UiPgogICAgICAgICAgICAgICAgICAgICAgPHByb3BlcnR5IG5hbWU9ImRlYnVnIiB0eXBlPSJCb29sZWFuIi8+CiAgICAgICAgICAgICAgICAgICAgICA8cHJvcGVydHkgbmFtZT0icmVjb3JkSWQiIHR5cGU9IlN0cmluZyIvPgogICAgICAgICAgICAgICAgICA8L3RhcmdldENvbmZpZz4KICAgICAgICAgICAgICAgICAgPHRhcmdldENvbmZpZyB0YXJnZXRzPSJsaWdodG5pbmdfX1JlY29yZFBhZ2UiPgogICAgICAgICAgICAgICAgICAgICAgPHByb3BlcnR5IG5hbWU9ImRlYnVnIiB0eXBlPSJCb29sZWFuIi8+CiAgICAgICAgICAgICAgICAgIDwvdGFyZ2V0Q29uZmlnPg==",
+        "targets": {
+            "target": [
+                "lightning__RecordPage",
+                "lightning__AppPage",
+                "lightning__HomePage"
+            ]
+        }
+    }
+}

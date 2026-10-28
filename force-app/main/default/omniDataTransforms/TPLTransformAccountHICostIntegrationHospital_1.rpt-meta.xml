@@ -1,0 +1,350 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OmniDataTransform xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>false</active>
+    <assignmentRulesUsed>false</assignmentRulesUsed>
+    <deletedOnSuccess>false</deletedOnSuccess>
+    <description>TPL_DR_TransformWeather_ForecastCurrent Example of a DataRaptor Transform with concatenate formulas and mixed subnode and array output.</description>
+    <errorIgnored>false</errorIgnored>
+    <expectedInputJson>{
+    &quot;HI&quot;: [
+        {
+      MSP fields
+        },
+        {
+      Hospital Fields
+        },
+        {
+            &quot;DIN&quot;: &quot;1234567&quot;,
+            &quot;NameofDrug&quot;: &quot;ABCD&quot;,
+            &quot;Amount of Drug&quot;: &quot;150&quot;,
+            &quot;DateodService&quot;: &quot;2022-06-10&quot;
+      &quot;RecordTypeIdPharm&quot;: &quot;0123J0000001SaEQAU&quot;
+        }
+    ],
+    &quot;CaseId&quot;: &quot;5003J000008nYamQAE&quot;
+}</expectedInputJson>
+    <expectedOutputJson>{
+  &quot;Current&quot; : {
+    &quot;CityState&quot; : &quot;Schenectady, New York&quot;,
+    &quot;Condition&quot; : &quot;Heavy Snow&quot;,
+    &quot;TempC&quot; : -2.5,
+    &quot;TempF&quot; : 27.5
+  },
+  &quot;CurrentIcon&quot; : &quot;www.weatherbit.io/static/img/icons/s03d.png&quot;,
+  &quot;Forecast&quot; : [ {
+    &quot;Condition&quot; : &quot;Heavy Snow&quot;,
+    &quot;Date&quot; : &quot;2019-01-26&quot;,
+    &quot;HiLoTempC&quot; : &quot;-0.8/-5.7&quot;,
+    &quot;HiLoTempF&quot; : &quot;30.5/21.7&quot;
+  }, {
+    &quot;Condition&quot; : &quot;Light Snow&quot;,
+    &quot;Date&quot; : &quot;2019-01-27&quot;,
+    &quot;HiLoTempC&quot; : &quot;-0.2/-5.1&quot;,
+    &quot;HiLoTempF&quot; : &quot;31.7/22.8&quot;
+  }, {
+    &quot;Condition&quot; : &quot;Flurries&quot;,
+    &quot;Date&quot; : &quot;2019-01-28&quot;,
+    &quot;HiLoTempC&quot; : &quot;-0.6/-7.8&quot;,
+    &quot;HiLoTempF&quot; : &quot;31.0/18.7&quot;
+  }, {
+    &quot;Condition&quot; : &quot;Clear sky&quot;,
+    &quot;Date&quot; : &quot;2019-01-29&quot;,
+    &quot;HiLoTempC&quot; : &quot;-3.7/-7.7&quot;,
+    &quot;HiLoTempF&quot; : &quot;25.3/18.1&quot;
+  }, {
+    &quot;Condition&quot; : &quot;Clear sky&quot;,
+    &quot;Date&quot; : &quot;2019-01-30&quot;,
+    &quot;HiLoTempC&quot; : &quot;-4.3/-6.8&quot;,
+    &quot;HiLoTempF&quot; : &quot;24.2/19.7&quot;
+  } ],
+  &quot;ForecastIcon&quot; : &quot;www.weatherbit.io/static/img/icons/s01d.png&quot;
+}</expectedOutputJson>
+    <fieldLevelSecurityEnabled>false</fieldLevelSecurityEnabled>
+    <inputType>JSON</inputType>
+    <isManagedUsingStdDesigner>false</isManagedUsingStdDesigner>
+    <name>TPLTransformAccountHICostIntegrationHospital</name>
+    <nullInputsIncludedInOutput>false</nullInputsIncludedInOutput>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLTransformAccountHICostIntegrationHospitalCustom0jIAs000000360rMAAItem16</globalKey>
+        <inputFieldName>hospitalizations:interventionCodesCci</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLTransformAccountHICostIntegrationHospital</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>hospitalizations:HospitalCCI</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLTransformAccountHICostIntegrationHospitalCustom0jIAs000000360rMAAItem15</globalKey>
+        <inputFieldName>hospitalizations:encounterId</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLTransformAccountHICostIntegrationHospital</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>hospitalizations:SourceSystemId</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLTransformAccountHICostIntegrationHospitalCustom0jIAs000000360rMAAItem14</globalKey>
+        <inputFieldName>hospitalizations:diagTreatmentSvcs</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLTransformAccountHICostIntegrationHospital</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>hospitalizations:HospitalDiagnosticTreatmentService</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLTransformAccountHICostIntegrationHospitalCustom0jIAs000000360rMAAItem13</globalKey>
+        <inputFieldName>searchRequest:requester</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLTransformAccountHICostIntegrationHospital</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>searchRequest:userName</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLTransformAccountHICostIntegrationHospitalCustom0jIAs000000360rMAAItem12</globalKey>
+        <inputFieldName>searchRequest:personalHealthNumber</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLTransformAccountHICostIntegrationHospital</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>searchRequest:PHN</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLTransformAccountHICostIntegrationHospitalCustom0jIAs000000360rMAAItem11</globalKey>
+        <inputFieldName>searchRequest:asOfDate</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLTransformAccountHICostIntegrationHospital</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>searchRequest:RefDate</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLTransformAccountHICostIntegrationHospitalCustom0jIAs000000360rMAAItem10</globalKey>
+        <inputFieldName>hospitalizations:facilityCode</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLTransformAccountHICostIntegrationHospital</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>hospitalizations:HospitalSiteCode</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLTransformAccountHICostIntegrationHospitalCustom0jIAs000000360rMAAItem9</globalKey>
+        <inputFieldName>hospitalizations:costType</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLTransformAccountHICostIntegrationHospital</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>hospitalizations:CostType</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLTransformAccountHICostIntegrationHospitalCustom0jIAs000000360rMAAItem8</globalKey>
+        <inputFieldName>hospitalizations:phn</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLTransformAccountHICostIntegrationHospital</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>hospitalizations:PHN</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLTransformAccountHICostIntegrationHospitalCustom0jIAs000000360rMAAItem7</globalKey>
+        <inputFieldName>AccountId</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLTransformAccountHICostIntegrationHospital</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>hospitalizations:AccountId</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLTransformAccountHICostIntegrationHospitalCustom0jIAs000000360rMAAItem6</globalKey>
+        <inputFieldName>hospitalizations:dateOfDischarge</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLTransformAccountHICostIntegrationHospital</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>hospitalizations:HospitalDateofDischarge</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLTransformAccountHICostIntegrationHospitalCustom0jIAs000000360rMAAItem5</globalKey>
+        <inputFieldName>hospitalizations:dateOfAdmission</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLTransformAccountHICostIntegrationHospital</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>hospitalizations:HopitalDateofAdmission</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLTransformAccountHICostIntegrationHospitalCustom0jIAs000000360rMAAItem4</globalKey>
+        <inputFieldName>hospitalizations:careLevel</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLTransformAccountHICostIntegrationHospital</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>hospitalizations:HospitalServiceType2</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLTransformAccountHICostIntegrationHospitalCustom0jIAs000000360rMAAItem3</globalKey>
+        <inputFieldName>RecordTypeIdHospital</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLTransformAccountHICostIntegrationHospital</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>hospitalizations:RecordTypeIdHospital</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLTransformAccountHICostIntegrationHospitalCustom0jIAs000000360rMAAItem2</globalKey>
+        <inputFieldName>hospitalizations:locationOfIncident</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLTransformAccountHICostIntegrationHospital</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>hospitalizations:HospitalLocationOfIncident</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>TPLTransformAccountHICostIntegrationHospitalCustom0jIAs000000360rMAAItem17</globalKey>
+        <inputFieldName>hospitalizations:descOfIncident</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>TPLTransformAccountHICostIntegrationHospital</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>hospitalizations:HospitalDescriptionOfIncident</outputFieldName>
+        <outputObjectName>json</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <outputType>JSON</outputType>
+    <previewJsonData>{
+  &quot;AccountId&quot; : &quot;0013J00000RrhgwQAB&quot;,
+  &quot;RecordTypeIdHospital&quot; : &quot;0123J0000001SaHQAU&quot;,
+  &quot;searchRequest&quot; : {
+    &quot;requester&quot; : &quot;Crystal&quot;,
+    &quot;personalHealthNumber&quot; : &quot;9111111111&quot;,
+    &quot;asOfDate&quot; : &quot;2000-08-22T00:00:00&quot;
+  },
+  &quot;pharmacare&quot; : [ ],
+  &quot;msp&quot; : [ ],
+  &quot;hospitalizations&quot; : [ {
+    &quot;phn&quot; : &quot;9111111111&quot;,
+    &quot;dateOfAdmission&quot; : &quot;2009-07-16T00:00:00&quot;,
+    &quot;dateOfDischarge&quot; : &quot;2009-07-21T00:00:00&quot;,
+    &quot;noOfDays&quot; : 5,
+    &quot;facilityCode&quot; : &quot;101&quot;,
+    &quot;facility&quot; : &quot;Vancouver General Hospital&quot;,
+    &quot;careLevelGroup&quot; : &quot;Inpatient&quot;,
+    &quot;careLevelCode&quot; : &quot;A&quot;,
+    &quot;careLevel&quot; : &quot;Acute Care&quot;,
+    &quot;locationOfIncident&quot; : &quot;Not Applicable&quot;,
+    &quot;descOfIncident&quot; : &quot;Not Applicable&quot;,
+    &quot;diagTreatmentSvcs&quot; : &quot;Coronary Artery Bypass Graft (CABG) (031)&quot;,
+    &quot;entryCode&quot; : &quot;D&quot;,
+    &quot;entryCodeDescription&quot; : &quot;Direct&quot;,
+    &quot;interventionCodesCci&quot; : &quot;1IJ76LAXXQ,1KR58LA,1LZ37LAGB,1LZ37LAFP,1GZ31CAND,1GJ55CANG&quot;,
+    &quot;costType&quot; : &quot;Hospitalizations&quot;,
+    &quot;encounterId&quot; : 2123869835
+  }, {
+    &quot;phn&quot; : &quot;9111111111&quot;,
+    &quot;dateOfAdmission&quot; : &quot;2009-07-16T00:00:00&quot;,
+    &quot;dateOfDischarge&quot; : &quot;2009-07-21T00:00:00&quot;,
+    &quot;noOfDays&quot; : 5,
+    &quot;facilityCode&quot; : &quot;101&quot;,
+    &quot;facility&quot; : &quot;Vancouver General Hospital&quot;,
+    &quot;careLevelGroup&quot; : &quot;Inpatient&quot;,
+    &quot;careLevelCode&quot; : &quot;A&quot;,
+    &quot;careLevel&quot; : &quot;Acute Care&quot;,
+    &quot;locationOfIncident&quot; : &quot;Not Applicable&quot;,
+    &quot;descOfIncident&quot; : &quot;Not Applicable&quot;,
+    &quot;diagTreatmentSvcs&quot; : &quot;Coronary Artery Bypass Graft (CABG) (032)&quot;,
+    &quot;entryCode&quot; : &quot;D&quot;,
+    &quot;entryCodeDescription&quot; : &quot;Direct&quot;,
+    &quot;interventionCodesCci&quot; : &quot;1IJ76LAXXQ,1KR58LA,1LZ37LAGB,1LZ37LAFP,1GZ31CAND,1GJ55CANG&quot;,
+    &quot;costType&quot; : &quot;Hospitalizations&quot;,
+    &quot;encounterId&quot; : 2123869836
+  } ]
+}</previewJsonData>
+    <processSuperBulk>false</processSuperBulk>
+    <responseCacheTtlMinutes>0.0</responseCacheTtlMinutes>
+    <rollbackOnError>false</rollbackOnError>
+    <sourceObject>json</sourceObject>
+    <sourceObjectDefault>false</sourceObjectDefault>
+    <synchronousProcessThreshold>-1.0</synchronousProcessThreshold>
+    <type>Transform</type>
+    <uniqueName>TPLTransformAccountHICostIntegrationHospital_1</uniqueName>
+    <versionNumber>1.0</versionNumber>
+    <xmlDeclarationRemoved>false</xmlDeclarationRemoved>
+</OmniDataTransform>

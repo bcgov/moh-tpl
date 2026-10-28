@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Email Template to confirm rescheduling of a service appointment.</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>Rescheduled Service Appointment Confirmation Email</name>
+    <style>none</style>
+    <subject>Your service appointment is rescheduled</subject>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

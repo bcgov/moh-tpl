@@ -1,0 +1,7 @@
+<p dir="""" ltr=""""><span docs-internal-guid-03fe1f4d-ac70-b21a-30c3-5b783f2afa8e="""" id=""""><span 14.6666666666667px="""" font-size:="""" style="""">Hi!</span></span><br />
+<br />
+<span docs-internal-guid-03fe1f4d-ac70-b21a-30c3-5b783f2afa8e="""" id=""""><span 14.6666666666667px="""" font-size:="""" style="""">My name is {!User.FirstName} and I am your new Account Manager. &nbsp;I&rsquo;m very excited to be working with you and would like to schedule some time to introduce myself and get a firmer understanding of your needs. When would be convenient for you?</span></span><br />
+<br />
+<span docs-internal-guid-03fe1f4d-ac70-b21a-30c3-5b783f2afa8e="""" id=""""><span 14.6666666666667px="""" font-size:="""" style="""">Sincerely,</span></span><br />
+<span docs-internal-guid-03fe1f4d-ac70-b21a-30c3-5b783f2afa8e="""" id=""""><span 14.6666666666667px="""" font-size:="""" style="""">{!User.FirstName}</span></span><br />
+<span docs-internal-guid-03fe1f4d-ac70-b21a-30c3-5b783f2afa8e="""" id=""""><span 14.6666666666667px="""" font-size:="""" style="""">{!User.Phone}</span></span></p>

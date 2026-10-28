@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<InsuranceBrokerageSettings xmlns="http://soap.sforce.com/2006/04/metadata">
+    <brokerageTransGranularity>DETAILS_LEVEL</brokerageTransGranularity>
+    <insBrkBillingCtxDef>InsBillingTransactionContext__stdctx</insBrkBillingCtxDef>
+    <insBrkBillingCtxSchedGrpMap>BSGEntitiesMapping</insBrkBillingCtxSchedGrpMap>
+    <insBrkBillingCtxTnxMapping>InsBillingTransactionMapping</insBrkBillingCtxTnxMapping>
+    <iptEnabledForBrokerage>false</iptEnabledForBrokerage>
+    <iptdEnabledForBrokerage>false</iptdEnabledForBrokerage>
+</InsuranceBrokerageSettings>

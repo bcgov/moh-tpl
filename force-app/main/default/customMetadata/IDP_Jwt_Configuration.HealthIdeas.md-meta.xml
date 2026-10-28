@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>HealthIdeas</label>
+    <protected>false</protected>
+    <values>
+        <field>Algorithm__c</field>
+        <value xsi:type="xsd:string">RS256</value>
+    </values>
+    <values>
+        <field>Aud__c</field>
+        <value xsi:type="xsd:string">https://login.microsoftonline.com/31f660a5-192a-4db3-92ba-ca424f1b259e/oauth2/v2.0/token</value>
+    </values>
+    <values>
+        <field>Auth_Provider_Name__c</field>
+        <value xsi:type="xsd:string">HealthIdeas</value>
+    </values>
+    <values>
+        <field>Authority__c</field>
+        <value xsi:type="xsd:string">https://login.microsoftonline.com/31f660a5-192a-4db3-92ba-ca424f1b259e</value>
+    </values>
+    <values>
+        <field>Callback_URL__c</field>
+        <value xsi:type="xsd:string">https://bcmohtpl.my.salesforce.com/services/authcallback/HealthIdeas</value>
+    </values>
+    <values>
+        <field>Iss__c</field>
+        <value xsi:type="xsd:string">a00a8b81-980e-41ff-b4d8-aee7b9d72663</value>
+    </values>
+    <values>
+        <field>Jti__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>PEM__c</field>
+        <value xsi:type="xsd:string">PLACEHOLDER</value>
+    </values>
+    <values>
+        <field>Scope__c</field>
+        <value xsi:type="xsd:string">api://827db024-00a3-4688-9d2f-cbeae0d85530/.default</value>
+    </values>
+    <values>
+        <field>Sub__c</field>
+        <value xsi:type="xsd:string">a00a8b81-980e-41ff-b4d8-aee7b9d72663</value>
+    </values>
+    <values>
+        <field>Token_End_Point__c</field>
+        <value xsi:type="xsd:string">https://login.microsoftonline.com/31f660a5-192a-4db3-92ba-ca424f1b259e/oauth2/v2.0/token</value>
+    </values>
+    <values>
+        <field>Typ__c</field>
+        <value xsi:type="xsd:string">JWT</value>
+    </values>
+    <values>
+        <field>X5t__c</field>
+        <value xsi:type="xsd:string">G4SC8ilXZU6Clxu2R3acIUOXzQ8=</value>
+    </values>
+    <values>
+        <field>thumbprint__c</field>
+        <value xsi:type="xsd:string">1B8482F22957654E82971BB647769C214397CD0F</value>
+    </values>
+</CustomMetadata>

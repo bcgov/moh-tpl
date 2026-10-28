@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Certificate_Service_Type__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF(
+  AND(
+    LEN(Service_Provided_by_Facility__r.Name) &gt;= 4,
+    NOT(ISBLANK(VALUE(MID(Service_Provided_by_Facility__r.Name, 1, 3)))),
+    MID(Service_Provided_by_Facility__r.Name, 4, 1) = &quot;-&quot;
+  ),
+  MID(Service_Provided_by_Facility__r.Name, 5, LEN(Service_Provided_by_Facility__r.Name)),
+  Service_Provided_by_Facility__r.Name
+)</formula>
+    <label>Certificate Service Type</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

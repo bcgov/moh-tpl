@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SceGlobalModelOptOutSettings xmlns="http://soap.sforce.com/2006/04/metadata">
+    <enableConfigurableSceGlobalModelOptOut>false</enableConfigurableSceGlobalModelOptOut>
+    <sceGlobalModelOptOut>false</sceGlobalModelOptOut>
+</SceGlobalModelOptOutSettings>
