@@ -664,7 +664,7 @@ private class HealthIdeasApiIntegrationTest {
 
         System.assertEquals(false, result.success, 'Expected failure once all MAX_ATTEMPTS return HTTP 500.');
         System.assertEquals(TPL_Constants.MAX_ATTEMPTS, callCount, 'Expected the callout to be attempted MAX_ATTEMPTS times.');
-        System.assertEquals(Label.TPL_HI_Callout_Failure_Message, result.errorMessage, 'Expected the generic UI failure message.');
+        System.assertEquals(Label.TPL_HI_Service_Unavailable_Message, result.errorMessage, 'Expected the generic UI failure message.');
         List<Log__c> logs = [SELECT Error_Message__c FROM Log__c WHERE Method_Name__c = 'sendHealthIdeasRequest' ORDER BY CreatedDate DESC LIMIT 1];
         System.assertEquals(1, logs.size(), 'Expected a log to be created.');
         System.assert(logs[0].Error_Message__c.contains(String.valueOf(TPL_Constants.HTTP_STATUS_INTERNAL_SERVER_ERROR)), 'Expected internal server error via HTTP 500 responses.');
@@ -682,7 +682,11 @@ private class HealthIdeasApiIntegrationTest {
             HealthIdeasApiIntegration.getHealthcareCostsForAccountandSetDate(testAccount.Id, Date.newInstance(2025, 1, 1), false);
         Test.stopTest();
 
-        assertFailedImmediatelyNoRetry(result, 'Service Unavailable');
+        System.assertEquals(false, result.success, 'Expected failure once all MAX_ATTEMPTS return HTTP 503.');
+        System.assertEquals(Label.TPL_HI_Service_Unavailable_Message, result.errorMessage, 'Expected the Service Unavailable UI failure message.');
+        List<Log__c> logs = [SELECT Error_Message__c FROM Log__c WHERE Method_Name__c = 'sendHealthIdeasRequest' ORDER BY CreatedDate DESC LIMIT 1];
+        System.assertEquals(1, logs.size(), 'Expected a log to be created.');
+        System.assert(logs[0].Error_Message__c.contains(String.valueOf(TPL_Constants.HTTP_STATUS_SERVICE_UNAVAILABLE)), 'Expected service unavailable error via HTTP 503 responses.');
     }
 
     // Covers a non-timeout CalloutException failing immediately without any retry.
