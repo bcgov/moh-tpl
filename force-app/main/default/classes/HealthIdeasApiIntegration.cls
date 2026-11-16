@@ -407,6 +407,7 @@ public with sharing class HealthIdeasApiIntegration {
         try {
 
             Integer timeValue = getTimeOutInteger(TPL_Constants.HI_BATCH_CONFIGURATION_RECORD_NAME, TPL_Constants.TIMEOUT_FIELD_NAME);
+            Set<Integer> retryableStatusCodes  = new Set<Integer>{TPL_Constants.HTTP_STATUS_INTERNAL_SERVER_ERROR,TPL_Constants.HTTP_STATUS_SERVICE_UNAVAILABLE};
             HttpRequest req = new HttpRequest();
             req.setEndpoint('callout:HealthIdeas');
             req.setMethod('POST');
@@ -431,7 +432,7 @@ public with sharing class HealthIdeasApiIntegration {
                         result.responseBody = res.getBody();
                         return result;
                     }
-                    if (res.getStatusCode() != TPL_Constants.HTTP_STATUS_REQUEST_TIMEOUT && res.getStatusCode() != TPL_Constants.HTTP_STATUS_INTERNAL_SERVER_ERROR) {
+                    if (res.getStatusCode() != TPL_Constants.HTTP_STATUS_REQUEST_TIMEOUT && !retryableStatusCodes .contains(res.getStatusCode())) {
                         string errorMessage = res != null ? 'Status Code: ' + res.getStatusCode() + ', Status: ' + res.getStatus() + ', Response Body: ' + res.getBody() : '';
                         LogService.buildAndInsertErrorLog( 'HealthIdeasApiIntegration', 'sendHealthIdeasRequest', errorMessage, '' , acc.Id);
                         return buildFailure(result,  Label.TPL_HI_Callout_Failure_Message);
@@ -448,7 +449,7 @@ public with sharing class HealthIdeasApiIntegration {
             }
             String errorMessage = res != null ? 'Status Code: ' + res.getStatusCode() + ', Status: ' + res.getStatus() + ', Response Body: ' + res.getBody() : '';
             LogService.buildAndInsertErrorLog('HealthIdeasApiIntegration', 'sendHealthIdeasRequest', errorMessage, '' , acc.Id);
-            return buildFailure(result, label.TPL_HI_Callout_Failure_Message);
+            return buildFailure(result, res != null &&  retryableStatusCodes .contains(res.getStatusCode()) ? Label.TPL_HI_Service_Unavailable_Message: Label.TPL_HI_Callout_Failure_Message);
         }
         catch (Exception e) {
             LogService.buildAndInsertErrorLog('HealthIdeasApiIntegration', 'sendHealthIdeasRequest', String.valueOf(e.getMessage()), String.valueOf(e.getStackTraceString()), acc.Id);

@@ -1065,4 +1065,11 @@
         <shortDescription>TPL_DocGen_Output_Label_Word_Disabled</shortDescription>
         <value>Microsoft Word (not available due to report size)</value>
     </labels>
+    <labels>
+        <fullName>TPL_HI_Service_Unavailable_Message</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Displayed when the HealthIdeas service is unavailable during a callout.</shortDescription>
+        <value>HealthIdeas Service is temporarily unavailable. Please try again in a few minutes. If you still have trouble, contact support.</value>
+    </labels>
 </CustomLabels>
